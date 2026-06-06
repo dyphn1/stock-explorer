@@ -20,6 +20,7 @@ from src.pages.operation_checkup import _render_operation_checkup
 from src.pages.financial_health import _render_financial_health
 from src.pages.peer_comparison import _render_peer_comparison
 from src.pages.group_structure import _render_group_structure
+from src.pages.category_browser import _render_category_browser
 
 
 # ── 初始化 ────────────────────────────────────────────
@@ -32,6 +33,11 @@ def get_client():
 def load_and_render_page(client: FinMindClient, stock_id: str):
     """根據 session_state['page'] 渲染對應頁面"""
     page = st.session_state.get("page", "名片")
+
+    # 分類瀏覽不需要特定股票，獨立渲染
+    if page == "分類瀏覽":
+        _render_category_browser(client)
+        return
 
     data = get_stock_data(client, stock_id)
     if data is None:
@@ -52,6 +58,8 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         _render_peer_comparison(data, client)
     elif page == "集團架構":
         _render_group_structure(data)
+    elif page == "分類瀏覽":
+        _render_category_browser(client)
 
 
 def _render_navbar(data: dict, current_page: str):
@@ -72,7 +80,7 @@ def _render_navbar(data: dict, current_page: str):
             st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
 
     # 分頁標籤
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽"]
     cols = st.columns(len(pages))
     for i, p in enumerate(pages):
         with cols[i]:

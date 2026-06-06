@@ -14,6 +14,8 @@ from src.services.analogy_engine import (
     get_pbr_analogy,
     get_dividend_analogy,
 )
+from src.pages._router_base import filter_by_timeline
+from src.pages.timeline_controls import render_timeline_selector
 
 
 def _section_title(title: str):
@@ -52,6 +54,10 @@ def _render_financial_health(data: dict):
     st.markdown(f"*賺多少？花多少？剩多少？*")
     st.markdown("---")
 
+    # ── M3: 時間軸選擇器 ──────────────────────────────
+    render_timeline_selector(key_prefix="fh_")
+    st.markdown("---")
+
     # ── 1. 利潤漏斗 ──────────────────────────────────
     _section_title("利潤漏斗：錢從哪裡來、往哪裡去？")
 
@@ -62,9 +68,10 @@ def _render_financial_health(data: dict):
     net_income = 0
 
     if financial is not None and len(financial) > 0:
+        filtered_financial = filter_by_timeline(financial, date_col="date")
         try:
-            latest_date = financial["date"].max()
-            latest = financial[financial["date"] == latest_date]
+            latest_date = filtered_financial["date"].max()
+            latest = filtered_financial[filtered_financial["date"] == latest_date]
 
             revenue = _find_value(latest, ["營業收入", "收入", "Revenue", "revenue"])
             gross_profit = _find_value(latest, ["營業毛利", "毛利", "Gross Profit", "gross_profit"])
@@ -117,7 +124,9 @@ def _render_financial_health(data: dict):
 
     with col2:
         # ROE
-        roe = _calc_roe(financial, balance_sheet)
+        filtered_financial_roe = filter_by_timeline(financial, date_col="date") if financial is not None and len(financial) > 0 else financial
+        filtered_balance_roe = filter_by_timeline(balance_sheet, date_col="date") if balance_sheet is not None and len(balance_sheet) > 0 else balance_sheet
+        roe = _calc_roe(filtered_financial_roe, filtered_balance_roe)
         if roe is not None:
             _白话_card("ROE", f"{roe:.1f}%", get_roe_analogy(roe))
         else:
@@ -152,9 +161,10 @@ def _render_financial_health(data: dict):
     _section_title("資產負債結構：公司家底有多厚？")
 
     if balance_sheet is not None and len(balance_sheet) > 0:
+        filtered_balance = filter_by_timeline(balance_sheet, date_col="date")
         try:
-            latest_date = balance_sheet["date"].max()
-            latest = balance_sheet[balance_sheet["date"] == latest_date]
+            latest_date = filtered_balance["date"].max()
+            latest = filtered_balance[filtered_balance["date"] == latest_date]
 
             total_assets = _find_value(latest, ["資產總計", "總資產", "Total Assets", "total_assets"])
             total_liabilities = _find_value(latest, ["負債總計", "總負債", "Total Liabilities", "total_liabilities"])
@@ -209,9 +219,10 @@ def _render_financial_health(data: dict):
     _section_title("現金流量：公司真的有在賺錢嗎？")
 
     if cash_flow is not None and len(cash_flow) > 0:
+        filtered_cashflow = filter_by_timeline(cash_flow, date_col="date")
         try:
-            latest_date = cash_flow["date"].max()
-            latest = cash_flow[cash_flow["date"] == latest_date]
+            latest_date = filtered_cashflow["date"].max()
+            latest = filtered_cashflow[filtered_cashflow["date"] == latest_date]
 
             operating_cf = _find_value(latest, ["營業活動", "經營活動", "Operating", "operating"])
             investing_cf = _find_value(latest, ["投資活動", "Investing", "investing"])

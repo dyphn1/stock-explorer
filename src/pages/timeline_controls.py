@@ -1,0 +1,128 @@
+"""
+時間軸控制元件 — M3
+提供時間範圍選擇器與資料過濾功能
+"""
+
+import streamlit as st
+import pandas as pd
+from datetime import datetime, timedelta
+
+
+# 時間範圍對應的天數
+_TIMELINE_OPTIONS = {
+    "1Y": 365,
+    "3Y": 365 * 3,
+    "5Y": 365 * 5,
+    "ALL": None,
+}
+
+_TIMELINE_LABELS = {
+    "1Y": "1 年",
+    "3Y": "3 年",
+    "5Y": "5 年",
+    "ALL": "全部",
+}
+
+
+def render_timeline_selector(key_prefix: str = "") -> str:
+    """
+    渲染時間軸選擇器（按鈕風格）。
+
+    Args:
+        key_prefix: session_state key 的前綴，避免多頁面衝突。
+
+    Returns:
+        選擇的時間範圍字串（"1Y" / "3Y" / "5Y" / "ALL"）
+    """
+    state_key = f"{key_prefix}timeline_range" if key_prefix else "timeline_range"
+
+    # 初始化預設值
+    if state_key not in st.session_state:
+        st.session_state[state_key] = "3Y"
+
+    current = st.session_state[state_key]
+
+    st.markdown(
+        """
+        <div style="display:flex;align-items:center;gap:0.5rem;margin:0.5rem 0 1rem 0;">
+            <span style="font-size:0.9rem;color:#5D6D7E;font-weight:600;">📅 時間範圍：</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    cols = st.columns(4)
+    options = ["1Y", "3Y", "5Y", "ALL"]
+
+    for i, opt in enumerate(options):
+        with cols[i]:
+            label = _TIMELINE_LABELS[opt]
+            is_active = current == opt
+
+            # 使用 CSS 樣式讓選中的按鈕看起來不同
+            if is_active:
+                st.markdown(
+                    f"""
+                    <style>
+                    div[data-testid="stHorizontalBlock"]:nth-of-type(1)
+                    > div:nth-child({i+1}) button {{
+                        background: #3498DB !important;
+                        color: white !important;
+                        border-color: #3498DB !important;
+                        font-weight: 700 !important;
+                    }}
+                    </style>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+            if st.button(
+                label,
+                key=f"{key_prefix}timeline_btn_{opt}",
+                use_container_width=True,
+                type="primary" if is_active else "secondary",
+            ):
+                st.session_state[state_key] = opt
+                st.rerun()
+
+    return st.session_state[state_key]
+
+
+def filter_by_timeline(
+    df: pd.DataFrame,
+    date_col: str = "date",
+    key_prefix: str = "",
+) -> pd.DataFrame:
+    """
+    根據 session_state 中的時間範圍過濾 dataframe。
+
+    Args:
+        df: 要過濾的 dataframe，必須包含 date_col 欄位。
+        date_col: 日期欄位名稱。
+        key_prefix: session_state key 的前綴，需與 render_timeline_selector 一致。
+
+    Returns:
+        過濾後的 dataframe。
+    """
+    if df is None or len(df) == 0:
+        return df
+
+    state_key = f"{key_prefix}timeline_range" if key_prefix else "timeline_range"
+    selected_range = st.session_state.get(state_key, "3Y")
+
+    # ALL 不做過濾
+    if selected_range == "ALL":
+        return df
+
+    days = _TIMELINE_OPTIONS.get(selected_range)
+    if days is None:
+        return df
+
+    # 確保日期欄位是 datetime 類型
+    try:
+        dates = pd.to_datetime(df[date_col])
+        cutoff = pd.Timestamp.now() - pd.Timedelta(days=days)
+        mask = dates >= cutoff
+        return df[mask].reset_index(drop=True)
+    except Exception:
+        return df

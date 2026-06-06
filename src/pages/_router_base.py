@@ -3,6 +3,8 @@
 """
 
 import pandas as pd
+import streamlit as st
+from datetime import datetime, timedelta
 from src.data.finmind_client import FinMindClient
 
 
@@ -135,3 +137,45 @@ def _info_card(title: str, content: str, icon: str = "💡"):
         <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.3rem;line-height:1.6;">{content}</div>
     </div>
     """, unsafe_allow_html=True)
+
+
+# ── M3: Timeline helpers ──────────────────────────────────
+
+_TIMELINE_DAYS = {
+    "1Y": 365,
+    "3Y": 365 * 3,
+    "5Y": 365 * 5,
+    "ALL": None,
+}
+
+
+def filter_by_timeline(df: pd.DataFrame, date_col: str = "date") -> pd.DataFrame:
+    """
+    根據 session_state['timeline_range'] 過濾 dataframe。
+
+    Args:
+        df: 要過濾的 dataframe，必須包含 date_col 欄位。
+        date_col: 日期欄位名稱，預設為 'date'。
+
+    Returns:
+        過濾後的 dataframe（ALL 或異常時回傳原始 df）。
+    """
+    if df is None or len(df) == 0:
+        return df
+
+    selected = st.session_state.get("timeline_range", "3Y")
+
+    if selected == "ALL":
+        return df
+
+    days = _TIMELINE_DAYS.get(selected)
+    if days is None:
+        return df
+
+    try:
+        dates = pd.to_datetime(df[date_col])
+        cutoff = pd.Timestamp.now() - pd.Timedelta(days=days)
+        mask = dates >= cutoff
+        return df[mask].reset_index(drop=True)
+    except Exception:
+        return df

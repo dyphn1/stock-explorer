@@ -7,6 +7,8 @@ import streamlit as st
 import pandas as pd
 from src.services.chart import create_revenue_trend_chart, create_price_chart, create_institutional_chart
 from src.services.analogy_engine import get_yoy_analogy, get_revenue_analogy, get_volume_analogy, get_institutional_analogy
+from src.pages._router_base import filter_by_timeline
+from src.pages.timeline_controls import render_timeline_selector
 
 
 def _section_title(title: str):
@@ -46,11 +48,16 @@ def _render_operation_checkup(data: dict):
     st.markdown(f"*靠什麼賺錢？穩不穩？隨時間怎麼變？*")
     st.markdown("---")
 
+    # ── M3: 時間軸選擇器 ──────────────────────────────
+    render_timeline_selector(key_prefix="oc_")
+    st.markdown("---")
+
     # ── 1. 營收趨勢 ──────────────────────────────────
     _section_title("營收趨勢：公司生意做多大？")
 
     if len(monthly_revenue) > 0:
-        fig = create_revenue_trend_chart(monthly_revenue, f"{stock_name} 月營收趨勢")
+        filtered_revenue = filter_by_timeline(monthly_revenue, date_col="date")
+        fig = create_revenue_trend_chart(filtered_revenue, f"{stock_name} 月營收趨勢")
         st.plotly_chart(fig, use_container_width=True)
 
         # 營收白話解讀
@@ -93,7 +100,8 @@ def _render_operation_checkup(data: dict):
     _section_title("股價走勢：市場怎麼看這家公司？")
 
     if daily_price is not None and len(daily_price) > 0:
-        fig = create_price_chart(daily_price, f"{stock_name} 股價走勢")
+        filtered_price = filter_by_timeline(daily_price, date_col="date")
+        fig = create_price_chart(filtered_price, f"{stock_name} 股價走勢")
         st.plotly_chart(fig, use_container_width=True)
 
         if latest_price:
@@ -120,11 +128,12 @@ def _render_operation_checkup(data: dict):
     _section_title("法人動向：大戶在想什麼？")
 
     if institutional is not None and len(institutional) > 0:
-        fig = create_institutional_chart(institutional, f"{stock_name} 三大法人買賣超")
+        filtered_institutional = filter_by_timeline(institutional, date_col="date")
+        fig = create_institutional_chart(filtered_institutional, f"{stock_name} 三大法人買賣超")
         st.plotly_chart(fig, use_container_width=True)
 
         # 近期法人動向總結
-        recent = institutional.tail(5)
+        recent = filtered_institutional.tail(5)
         net_buy_total = (recent["buy"] - recent["sell"]).sum()
         _白话_card(
             "近 5 日法人買賣超",
