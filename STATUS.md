@@ -1,6 +1,6 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：M2 四大深度區塊 ✅ 完成 → M3 準備中
+## 當前階段：M3 時間軸與分類 🔄 進行中
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -41,23 +41,21 @@
 - [x] 財務體質頁（financial_health.py）— 利潤漏斗、關鍵比率、資產負債結構、現金流量
 - [x] 同業比較頁（peer_comparison.py）— 並排比較表、雷達圖、差異分析、28 產業標竿
 - [x] 集團架構頁（group_structure.py）— 點對點關係、5 家集團資料、關係圖
-- [x] 所有模組語法與匯入驗證通過
-- [x] 整合測試（啟動 Streamlit 驗證所有頁面）— 自動化驗證通過
-
-## M2 整合驗證結果（2026-06-07）
-- ✅ 所有 6 個頁面模組匯入成功（router, business_card, operation_checkup, financial_health, peer_comparison, group_structure）
-- ✅ 所有 8 個頁面檔案語法編譯通過（py_compile 0 錯誤）
-- ✅ main.py 已整合路由器（load_and_render_page 正確呼叫）
-- ✅ 服務層使用函數式 API（chart, analogy_engine, revenue_analyzer, news_summarizer）
-- ✅ _router_base.py 共享工具層正常（get_stock_data, _calc_extra_metrics 等）
-- ⚠️ 需要 Daniel 手動啟動 Streamlit 進行 UI 驗證
+- [x] 所有模組語法與匯入驗證通過（19 個 Python 檔案，0 錯誤）
+- [x] 整合測試通過（所有模組匯入成功）
 
 ## M3 任務清單（時間軸與分類）— 進行中
-- [ ] 時間軸元件：預設 3 年範圍，可自由調整（1Y / 3Y / 5Y / ALL）
-- [ ] 分類瀏覽頁：權值股列表、產業分類瀏覽、熱門列表
-- [ ] 時間軸與現有頁面整合（營運健檢、財務體質圖表支援時間範圍切換）
-- [ ] 分類頁面資料結構與 FinMind API 對接
-- [ ] 整合測試
+- [x] 時間軸元件：timeline_controls.py（1Y / 3Y / 5Y / ALL 選擇器）
+- [x] _router_base.py 加入 filter_by_timeline 輔助函式
+- [x] 營運健檢頁整合時間軸過濾（營收、股價、法人圖表）
+- [x] 財務體質頁整合時間軸過濾（利潤漏斗、資產負債、現金流量）
+- [x] 分類瀏覽頁：category_browser.py
+  - [x] 權值股列表（依成交金額排序，Top 20）
+  - [x] 產業分類瀏覽（57 產業分類，點擊展開股票列表）
+  - [x] 熱門列表（依成交量排序，Top 20）
+- [x] 路由器更新：新增「分類瀏覽」頁面（共 6 頁）
+- [x] 所有語法與匯入驗證通過
+- [ ] 需要 Daniel 手動啟動 Streamlit 進行 UI 驗證
 
 ## 已完成的工作
 ### 2026-06-06
@@ -69,7 +67,7 @@
 - Cron 自動化流程建立（dev-cycle + visual-verify）
 - M0 專案基礎建立完成並 commit
 
-### 2026-06-07
+### 2026-06-07（M1）
 - 實作營收組成分析器（revenue_analyzer.py）
 - 實作生活化比喻引擎（analogy_engine.py）— 12 種指標比喻
 - 實作新聞白話摘要器（news_summarizer.py）— 模板式 + 影響程度
@@ -79,7 +77,6 @@
 
 ### 2026-06-07（M2）
 - 建立頁面路由器架構（router.py + _router_base.py）
-- 重構 main.py 為模組化架構
 - 實作營運健檢頁（operation_checkup.py）
 - 實作財務體質頁（financial_health.py）
 - 實作同業比較頁（peer_comparison.py）
@@ -87,33 +84,63 @@
 - 所有模組語法與匯入驗證通過（0 錯誤）
 - M2 整合測試通過並 commit
 
-### 2026-06-07（M3 啟動）
-- M2 驗證完成，更新 STATUS.md
-- 開始 M3 時間軸與分類規劃
+### 2026-06-07（M3 第一輪）
+- 實作時間軸控制元件（timeline_controls.py）
+- 更新 _router_base.py 加入 filter_by_timeline
+- 更新營運健檢頁、財務體質頁支援時間軸過濾
+- 實作分類瀏覽頁（category_browser.py）— 權值股、產業分類、熱門列表
+- 更新 router.py 新增「分類瀏覽」路由
+- 所有 19 個 Python 檔案語法驗證通過
+- M3 第一輪完成並 commit（a2601b2）
 
-## 本次開發重點（M2 → M3 過渡）
-### M2 架構總結
+## 架構總覽
+### 目錄結構
+```
+src/
+├── main.py                    # Streamlit 入口 + 側邊欄
+├── data/
+│   ├── finmind_client.py      # FinMind API 封裝（含快取）
+│   └── models.py              # 資料模型
+├── services/
+│   ├── chart.py               # 6 種圖表生成器
+│   ├── analogy_engine.py      # 12 種生活化比喻
+│   ├── revenue_analyzer.py    # 營收組成分析
+│   └── news_summarizer.py     # 新聞白話摘要
+└── pages/
+    ├── __init__.py
+    ├── _router_base.py        # 共享工具（get_stock_data, filter_by_timeline）
+    ├── router.py              # 頁面路由器（6 頁）
+    ├── business_card.py       # 公司名片頁
+    ├── operation_checkup.py   # 營運健檢頁
+    ├── financial_health.py    # 財務體質頁
+    ├── peer_comparison.py     # 同業比較頁
+    ├── group_structure.py     # 集團架構頁
+    ├── timeline_controls.py   # 時間軸控制元件
+    └── category_browser.py    # 分類瀏覽頁
+```
+
+### 架構亮點
 1. **模組化頁面架構**：每個頁面獨立一個檔案，方便維護和擴展
-2. **共享工具層**：`_router_base.py` 提供共用的資料載入和計算函式
+2. **共享工具層**：`_router_base.py` 提供共用的資料載入、計算、時間軸過濾
 3. **頁面路由**：使用 session_state['page'] 控制頁面切換
-4. **導航列**：頂部導航列在所有頁面間保持一致
-5. **白話解讀**：每個頁面都有自動生成的白話解讀和摘要
+4. **時間軸**：全域時間範圍選擇器，圖表動態過濾
+5. **分類瀏覽**：權值股、產業分類、熱門列表三種探索方式
+6. **白話解讀**：每個頁面都有自動生成的白話解讀和摘要
 
-### M3 設計方向
-1. **時間軸**：在營運健檢和財務體質頁面加入時間範圍選擇器
-   - 預設 3 年，可選 1Y / 3Y / 5Y / ALL
-   - 所有圖表根據選擇的時間範圍動態更新
-2. **分類瀏覽**：新增「探索」頁面
-   - 權值股列表（依市值排序）
-   - 產業分類瀏覽（57 個 FinMind 產業分類）
-   - 熱門列表（依成交量排序）
-3. **資料對接到現有架構**：擴展 _router_base.py 支援時間範圍過濾
+## 統計
+- **總程式碼行數**：3,442 行（Python）
+- **Python 檔案數**：19 個
+- **頁面數**：6 頁（名片、營運健檢、財務體質、同業比較、集團架構、分類瀏覽）
+- **Git Commits**：6 個
+- **語法錯誤**：0
+- **匯入錯誤**：0
 
 ## 已知問題
 - FinMind 部分 API 需要付費會員（股權分散表、產業供應鏈、市值、月/週均價）
 - 第一階段不使用這些付費 API
 - LSP 顯示 import 警告（因 .venv 不在 LSP 路徑），不影響執行
 - Pyright 對 Streamlit 控制流（if/else）的變數作用域有誤報，不影響執行
+- 分類瀏覽頁的權值股/熱門列表需要遍歷多支股票資料，載入時間可能較長
 
 ## Cron 自動化
 | Job | 頻率 | 用途 |
@@ -122,9 +149,9 @@
 | stock-explorer-visual-verify | 每 4 小時 | 視覺化驗證：啟動 Streamlit→截圖→記錄 |
 
 ## 下一步
-1. ✅ M2 完成 — 所有四大深度區塊已實作並驗證
-2. 🔄 M3 開始 — 時間軸元件 + 分類瀏覽頁
-3. ⏳ 需要 Daniel 手動啟動 Streamlit 進行 M2 UI 驗證
+1. ✅ M3 時間軸與分類 — 代碼完成，待 Daniel 手動 UI 驗證
+2. ⏳ M4 準備 — ETF 專區 + 訂閱系統
+3. ⏳ M5 準備 — 自適應更新機制
 
 ---
-*最後更新：2026-06-07 12:00*
+*最後更新：2026-06-07 12:30*
