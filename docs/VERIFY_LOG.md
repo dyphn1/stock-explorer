@@ -183,3 +183,113 @@ M5 自適應更新的代碼實現完整，所有檔案（adaptive_engine.py、ev
 ---
 
 *驗證時間：2026-06-07 15:30 | 方式：代碼審查 + Streamlit 啟動驗證*
+
+---
+
+## 驗證報告 #3 — M5 最終全方位驗證（Import + Streamlit + 全模組）
+
+**日期**：2026-06-07
+**驗證方式**：Import 驗證 + 全模組匯入測試 + Streamlit 啟動驗證 + 健康檢查
+**驗證者**：股識視覺化驗證工程師（自動排程）
+
+---
+
+## 環境驗證
+
+| 項目 | 結果 |
+|------|------|
+| Port 8501 | ✅ 未被佔用（lsof 確認） |
+| Import 驗證 | ✅ `from src.pages.router import load_and_render_page` 成功 |
+| 全模組匯入 | ✅ 22/22 Python 模組全部匯入成功（0 錯誤） |
+| Streamlit 啟動 | ✅ HTTP 200（headless mode, port 8501） |
+| Streamlit 健康檢查 | ✅ `/_stcore/health` 返回 "ok" |
+| Streamlit Message WS | ✅ HTTP 200（WebSocket endpoint 可用） |
+
+---
+
+## 全模組匯入測試明細
+
+| # | 模組 | 狀態 |
+|---|------|------|
+| 1 | `src.main` | ✅ |
+| 2 | `src.data.finmind_client` | ✅ |
+| 3 | `src.data.models` | ✅ |
+| 4 | `src.services.chart` | ✅ |
+| 5 | `src.services.analogy_engine` | ✅ |
+| 6 | `src.services.revenue_analyzer` | ✅ |
+| 7 | `src.services.news_summarizer` | ✅ |
+| 8 | `src.services.watchlist` | ✅ |
+| 9 | `src.services.adaptive_engine` | ✅ |
+| 10 | `src.pages.router` | ✅ |
+| 11 | `src.pages._router_base` | ✅ |
+| 12 | `src.pages.business_card` | ✅ |
+| 13 | `src.pages.operation_checkup` | ✅ |
+| 14 | `src.pages.financial_health` | ✅ |
+| 15 | `src.pages.peer_comparison` | ✅ |
+| 16 | `src.pages.group_structure` | ✅ |
+| 17 | `src.pages.timeline_controls` | ✅ |
+| 18 | `src.pages.category_browser` | ✅ |
+| 19 | `src.pages.etf_browser` | ✅ |
+| 20 | `src.pages.etf_detail` | ✅ |
+| 21 | `src.pages.watchlist_page` | ✅ |
+| 22 | `src.pages.event_dashboard` | ✅ |
+
+---
+
+## M5 驗證標準對照
+
+| 標準 | 狀態 | 說明 |
+|------|------|------|
+| 十秒測試 | ✅ 代碼設計符合 | 事件儀表板有使用說明，事件有嚴重程度標籤和中文解釋 |
+| PPT 風格 | ✅ 代碼設計符合 | 橫幅使用漸層背景，事件使用 expander+badge |
+| 數據來源標明 | ✅ 已有 | 免責聲明仍然存在（main.py） |
+| 無投資建議字眼 | ✅ 已確認 | 無「買進/賣出/推薦」等字眼 |
+| 所有 import 成功 | ✅ 已通過 | 22/22 模組 runtime 實測 |
+| Streamlit 正常啟動 | ✅ 已通過 | HTTP 200 + healthz "ok" |
+
+---
+
+## 與前次驗證比較
+
+| 項目 | 驗證 #2 | 驗證 #3 |
+|------|---------|---------|
+| Import 驗證 | ✅ | ✅ |
+| 全模組匯入 | 未測試 | ✅ 22/22 |
+| Streamlit 啟動 | ✅ HTTP 200 | ✅ HTTP 200 |
+| Streamlit 健康檢查 | 未測試 | ✅ healthz "ok" |
+| WebSocket | 未測試 | ✅ HTTP 200 |
+| 新 Bug | 0 | 0 |
+
+---
+
+## 客觀描述
+
+M5 自適應更新的全部代碼已實現到位。本次驗證使用更完整的方法：
+1. 逐一匯入全部 22 個 Python 模組，全部成功
+2. Streamlit 在 headless 模式成功啟動（port 8501）
+3. `_stcore/health` 健康檢查通過（返回 "ok"）
+4. WebSocket message endpoint 可用
+
+程式碼零錯誤、零匯入失敗。FinMind API login 成功（由 `finmind_client.py` 初始化時自動觸發）。
+
+---
+
+## 新發現問題
+
+**無新 Bug 發現。**
+
+---
+
+## 仍待 Daniel 手動 UI 驗證項目
+
+1. 側邊欄 → 「🔔 事件儀表板」按鈕是否正確導向
+2. 事件儀表板 → 空狀態（無事件記錄時）是否正常顯示說明
+3. 股票頁面 → 集團型公司（如 2317 鴻海）是否顯示「集團分析」框架橫幅
+4. 股票頁面 → 事件提醒（high/medium severity）是否正確顯示
+5. 股票頁面 → 資料新鮮度詳情（expander）是否可展開
+6. ETF 頁面（0050 等）→ 是否自動導向 ETF 詳細頁
+7. M4 驗證（ETF 專區、我的關注、價格提醒 popover UI）
+
+---
+
+*驗證時間：2026-06-07 19:09 | 方式：Import 驗證 + 全模組匯入測試 + Streamlit 啟動 + 健康檢查*
