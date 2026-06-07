@@ -3,6 +3,14 @@
 Streamlit 入口 — M2 完整版
 """
 
+import sys
+from pathlib import Path
+
+# 確保 src/ 的父目錄在 Python path 中，使 from src.xxx 絕對 import 能正確運作
+_project_root = str(Path(__file__).resolve().parent.parent)
+if _project_root not in sys.path:
+    sys.path.insert(0, _project_root)
+
 import streamlit as st
 from src.pages.router import load_and_render_page
 
