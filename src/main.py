@@ -118,6 +118,11 @@ with st.sidebar:
         st.session_state["page"] = "我的關注"
         st.rerun()
 
+    # M5: 事件儀表板快捷入口
+    if st.button("🔔 事件儀表板", key="sidebar_events", use_container_width=True):
+        st.session_state["page"] = "事件儀表板"
+        st.rerun()
+
     st.markdown("---")
     st.markdown("""
     <div class="disclaimer">

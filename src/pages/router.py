@@ -1,5 +1,5 @@
 """
-股識 Stock Explorer — M4 ETF 與訂閱
+股識 Stock Explorer — M5 自適應更新
 頁面路由器：根據 session_state['page'] 顯示不同頁面
 """
 
@@ -24,6 +24,17 @@ from src.pages.category_browser import _render_category_browser
 from src.pages.etf_browser import _render_etf_browser
 from src.pages.etf_detail import _render_etf_detail
 from src.pages.watchlist_page import _render_watchlist_page
+from src.pages.event_dashboard import (
+    _render_event_dashboard,
+    _render_freshness_indicator,
+    _render_adaptive_banner,
+    _render_event_alerts,
+)
+from src.services.adaptive_engine import (
+    detect_company_type,
+    run_auto_detection,
+    check_data_freshness,
+)
 
 
 # ── 初始化 ────────────────────────────────────────────
@@ -59,11 +70,28 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
     if page == "我的關注":
         _render_watchlist_page(client)
         return
+    if page == "事件儀表板":
+        _render_event_dashboard(client)
+        return
 
     data = get_stock_data(client, stock_id)
     if data is None:
         st.error(f"找不到股票代號 {stock_id}")
         return
+
+    # M5: 自動事件偵測（背景執行，不阻塞頁面）
+    with st.spinner("🔍 檢查近期事件..."):
+        new_events = run_auto_detection(stock_id, data)
+
+    # M5: 自適應框架橫幅
+    _render_adaptive_banner(data)
+
+    # M5: 事件提醒
+    _render_event_alerts(stock_id)
+
+    # M5: 資料新鮮度指標
+    freshness = check_data_freshness(stock_id, data)
+    _render_freshness_indicator(freshness)
 
     # ETF 導向 ETF 詳細頁
     if _is_etf(client, stock_id):
@@ -105,7 +133,7 @@ def _render_navbar(data: dict, current_page: str):
             st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
 
     # 分頁標籤
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板"]
     cols = st.columns(len(pages))
     for i, p in enumerate(pages):
         with cols[i]:
