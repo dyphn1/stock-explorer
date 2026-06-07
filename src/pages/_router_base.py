@@ -114,12 +114,10 @@ def _find_financial_value(df, keywords: list) -> float:
 
 
 def _section_title(title: str):
-    import streamlit as st
     st.markdown(f"### 📊 {title}")
 
 
 def _白话_card(label: str, value: str, analogy: str = ""):
-    import streamlit as st
     st.markdown(f"""
     <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
         <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
@@ -130,7 +128,6 @@ def _白话_card(label: str, value: str, analogy: str = ""):
 
 
 def _info_card(title: str, content: str, icon: str = "💡"):
-    import streamlit as st
     st.markdown(f"""
     <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
         <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
