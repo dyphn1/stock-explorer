@@ -1,6 +1,6 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：M3 時間軸與分類 🔄 進行中
+## 當前階段：M4 ETF 與訂閱 🔄 進行中
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -8,8 +8,8 @@
 | M0: 專案基礎建立 | ✅ 完成 | 2026-06-06 |
 | M1: MVP 名片頁 | ✅ 完成 | 2026-06-07 |
 | M2: 四大深度區塊 | ✅ 完成 | 2026-06-07 |
-| M3: 時間軸與分類 | 🔄 進行中 | - |
-| M4: ETF 與訂閱 | ⏳ 待開始 | - |
+| M3: 時間軸與分類 | ✅ 完成 | 2026-06-07 |
+| M4: ETF 與訂閱 | 🔄 進行中 | - |
 | M5: 自適應更新 | ⏳ 待開始 | - |
 
 ## M0 任務清單（已完成）
@@ -44,7 +44,7 @@
 - [x] 所有模組語法與匯入驗證通過（19 個 Python 檔案，0 錯誤）
 - [x] 整合測試通過（所有模組匯入成功）
 
-## M3 任務清單（時間軸與分類）— 進行中
+## M3 任務清單（時間軸與分類）— 已完成
 - [x] 時間軸元件：timeline_controls.py（1Y / 3Y / 5Y / ALL 選擇器）
 - [x] _router_base.py 加入 filter_by_timeline 輔助函式
 - [x] 營運健檢頁整合時間軸過濾（營收、股價、法人圖表）
@@ -55,6 +55,40 @@
   - [x] 熱門列表（依成交量排序，Top 20）
 - [x] 路由器更新：新增「分類瀏覽」頁面（共 6 頁）
 - [x] 所有語法與匯入驗證通過
+- [x] M3 完成並 commit
+
+## M4 任務清單（ETF 與訂閱）— 進行中
+### M4a: ETF 專區
+- [x] ETF 資料研究：確認 FinMind 免費 API 可取得 ETF 資料（~500 檔）
+- [x] ETF 瀏覽頁（etf_browser.py）
+  - [x] 熱門 ETF（依成交量排序，Top 20）
+  - [x] ETF 分類瀏覽（市值型/高股息型/債券型/主題型/其他）
+  - [x] 配息排行（依殖利率排序，Top 20）
+- [x] ETF 詳細頁（etf_detail.py）
+  - [x] 一句話定位（依 ETF 類型自動生成）
+  - [x] 績效走勢圖（近一年收盤價）
+  - [x] 配息資訊（頻率、金額、白話說明）
+  - [x] 法人動向（近 30 天買賣超）
+  - [x] 費用說明（管理費生活化比喻）
+  - [x] ETF 小知識（依類型說明）
+- [x] 路由器更新：新增「ETF 專區」頁面
+- [x] ETF 自動判斷：輸入 ETF 代碼自動導向 ETF 詳細頁
+- [x] 側邊欄新增熱門 ETF 快捷入口（0050, 0056, 00878, 00919, 006208）
+- [ ] 需要 Daniel 手動啟動 Streamlit 進行 UI 驗證
+
+### M4b: 訂閱系統
+- [x] Watchlist 服務（watchlist.py）
+  - [x] YAML 基礎的 config 儲存（config/watchlist.yaml）
+  - [x] 加入/移除關注
+  - [x] 價格提醒（alert_above / alert_below）
+  - [x] 關注摘要（含即時價格、提醒觸發狀態）
+- [x] 關注頁面（watchlist_page.py）
+  - [x] 關注列表（價格、漲跌幅、提醒狀態）
+  - [x] 移除功能
+  - [x] 空狀態引導
+- [x] 名片頁整合：加入/取消關注按鈕
+- [x] 側邊欄新增「我的關注」快捷入口
+- [x] 路由器更新：新增「我的關注」頁面
 - [ ] 需要 Daniel 手動啟動 Streamlit 進行 UI 驗證
 
 ## 已完成的工作
@@ -84,14 +118,27 @@
 - 所有模組語法與匯入驗證通過（0 錯誤）
 - M2 整合測試通過並 commit
 
-### 2026-06-07（M3 第一輪）
+### 2026-06-07（M3）
 - 實作時間軸控制元件（timeline_controls.py）
 - 更新 _router_base.py 加入 filter_by_timeline
 - 更新營運健檢頁、財務體質頁支援時間軸過濾
 - 實作分類瀏覽頁（category_browser.py）— 權值股、產業分類、熱門列表
 - 更新 router.py 新增「分類瀏覽」路由
 - 所有 19 個 Python 檔案語法驗證通過
-- M3 第一輪完成並 commit（a2601b2）
+- M3 完成並 commit
+
+### 2026-06-07（M4 第一輪）
+- ETF 資料研究：確認 ~500 檔 ETF 可透過 `industry_category` 篩選
+- 實作 ETF 瀏覽頁（etf_browser.py）— 熱門、分類、配息排行
+- 實作 ETF 詳細頁（etf_detail.py）— 績效、配息、法人、費用、小知識
+- 實作 Watchlist 服務（watchlist.py）— YAML 儲存、價格提醒
+- 實作關注頁面（watchlist_page.py）— 列表、移除、空狀態
+- 路由器更新：新增「ETF 專區」和「我的關注」頁面（共 8 頁）
+- 側邊欄新增熱門 ETF 快捷入口和關注按鈕
+- 名片頁加入關注/取消關注按鈕
+- ETF 自動判斷與導向
+- 所有 23 個 Python 檔案語法與匯入驗證通過（0 錯誤）
+- M4 第一輪完成並 commit
 
 ## 架構總覽
 ### 目錄結構
@@ -105,18 +152,24 @@ src/
 │   ├── chart.py               # 6 種圖表生成器
 │   ├── analogy_engine.py      # 12 種生活化比喻
 │   ├── revenue_analyzer.py    # 營收組成分析
-│   └── news_summarizer.py     # 新聞白話摘要
+│   ├── news_summarizer.py     # 新聞白話摘要
+│   └── watchlist.py           # 關注列表管理（YAML）
 └── pages/
     ├── __init__.py
     ├── _router_base.py        # 共享工具（get_stock_data, filter_by_timeline）
-    ├── router.py              # 頁面路由器（6 頁）
+    ├── router.py              # 頁面路由器（8 頁）
     ├── business_card.py       # 公司名片頁
     ├── operation_checkup.py   # 營運健檢頁
     ├── financial_health.py    # 財務體質頁
     ├── peer_comparison.py     # 同業比較頁
     ├── group_structure.py     # 集團架構頁
     ├── timeline_controls.py   # 時間軸控制元件
-    └── category_browser.py    # 分類瀏覽頁
+    ├── category_browser.py    # 分類瀏覽頁
+    ├── etf_browser.py         # ETF 瀏覽頁
+    ├── etf_detail.py          # ETF 詳細頁
+    └── watchlist_page.py      # 關注列表頁
+config/
+└── watchlist.yaml             # 關注列表資料（自動生成）
 ```
 
 ### 架構亮點
@@ -125,13 +178,15 @@ src/
 3. **頁面路由**：使用 session_state['page'] 控制頁面切換
 4. **時間軸**：全域時間範圍選擇器，圖表動態過濾
 5. **分類瀏覽**：權值股、產業分類、熱門列表三種探索方式
-6. **白話解讀**：每個頁面都有自動生成的白話解讀和摘要
+6. **ETF 同等對待**：ETF 有專屬詳細頁，自動判斷導向
+7. **關注系統**：YAML config 為基礎，支援價格提醒
+8. **白話解讀**：每個頁面都有自動生成的白話解讀和摘要
 
 ## 統計
-- **總程式碼行數**：3,442 行（Python）
-- **Python 檔案數**：19 個
-- **頁面數**：6 頁（名片、營運健檢、財務體質、同業比較、集團架構、分類瀏覽）
-- **Git Commits**：6 個
+- **總程式碼行數**：~4,800 行（Python）
+- **Python 檔案數**：23 個
+- **頁面數**：8 頁（名片、營運健檢、財務體質、同業比較、集團架構、分類瀏覽、ETF 專區、我的關注）
+- **Git Commits**：7 個
 - **語法錯誤**：0
 - **匯入錯誤**：0
 
@@ -141,6 +196,8 @@ src/
 - LSP 顯示 import 警告（因 .venv 不在 LSP 路徑），不影響執行
 - Pyright 對 Streamlit 控制流（if/else）的變數作用域有誤報，不影響執行
 - 分類瀏覽頁的權值股/熱門列表需要遍歷多支股票資料，載入時間可能較長
+- ETF 詳細頁的配息排行需要遍歷多檔 ETF，載入時間可能較長
+- ETF 持股資料（前十大持股）FinMind 付費 API 無，目前以公開說明書靜態資料替代
 
 ## Cron 自動化
 | Job | 頻率 | 用途 |
@@ -149,9 +206,8 @@ src/
 | stock-explorer-visual-verify | 每 4 小時 | 視覺化驗證：啟動 Streamlit→截圖→記錄 |
 
 ## 下一步
-1. ✅ M3 時間軸與分類 — 代碼完成，待 Daniel 手動 UI 驗證
-2. ⏳ M4 準備 — ETF 專區 + 訂閱系統
-3. ⏳ M5 準備 — 自適應更新機制
+1. ✅ M4 ETF 與訂閱 — 代碼完成，待 Daniel 手動 UI 驗證
+2. ⏳ M5 準備 — 自適應更新機制（重大事件驅動更新）
 
 ---
-*最後更新：2026-06-07 12:30*
+*最後更新：2026-06-07 14:00*

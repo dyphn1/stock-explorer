@@ -75,7 +75,7 @@ with st.sidebar:
     )
 
     st.markdown("---")
-    st.markdown("### 快速瀏覽")
+    st.markdown("### 📈 熱門股票")
 
     # 熱門股票
     hot_stocks = [
@@ -94,6 +94,29 @@ with st.sidebar:
             st.session_state["stock_id"] = sid
             st.session_state["page"] = "名片"  # 重置到名片頁
             st.rerun()
+
+    st.markdown("---")
+    st.markdown("### 🏷️ 熱門 ETF")
+
+    hot_etfs = [
+        ("0050", "元大台灣50"),
+        ("0056", "元大高股息"),
+        ("00878", "國泰永續高股息"),
+        ("00919", "群益台灣精選高息"),
+        ("006208", "富邦台50"),
+    ]
+
+    for sid, name in hot_etfs:
+        if st.button(f"{sid} {name}", key=f"etf_{sid}", use_container_width=True):
+            st.session_state["stock_id"] = sid
+            st.session_state["page"] = "名片"
+            st.rerun()
+
+    # 我的關注快捷入口
+    st.markdown("---")
+    if st.button("📋 我的關注", key="sidebar_watchlist", use_container_width=True):
+        st.session_state["page"] = "我的關注"
+        st.rerun()
 
     st.markdown("---")
     st.markdown("""

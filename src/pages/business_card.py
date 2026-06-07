@@ -33,7 +33,7 @@ def _render_business_card(data: dict, client):
     extra_metrics = data["extra_metrics"]
 
     # Header
-    col1, col2 = st.columns([3, 1])
+    col1, col2, col3 = st.columns([3, 1, 1])
     with col1:
         st.markdown(f"**{stock_name}** `{stock_id}` ｜ {industry}")
     with col2:
@@ -42,6 +42,16 @@ def _render_business_card(data: dict, client):
             change = latest_price["change"]
             sign = "+" if change >= 0 else ""
             st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
+    with col3:
+        from src.services.watchlist import is_in_watchlist, add_to_watchlist, remove_from_watchlist
+        if is_in_watchlist(stock_id):
+            if st.button("❌ 取消關注", key=f"unwatch_{stock_id}", use_container_width=True):
+                remove_from_watchlist(stock_id)
+                st.rerun()
+        else:
+            if st.button("➕ 加入關注", key=f"watch_{stock_id}", use_container_width=True):
+                add_to_watchlist(stock_id, stock_name)
+                st.rerun()
 
     st.markdown("---")
 

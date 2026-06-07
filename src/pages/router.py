@@ -1,5 +1,5 @@
 """
-股識 Stock Explorer — M2 四大深度區塊
+股識 Stock Explorer — M4 ETF 與訂閱
 頁面路由器：根據 session_state['page'] 顯示不同頁面
 """
 
@@ -21,6 +21,9 @@ from src.pages.financial_health import _render_financial_health
 from src.pages.peer_comparison import _render_peer_comparison
 from src.pages.group_structure import _render_group_structure
 from src.pages.category_browser import _render_category_browser
+from src.pages.etf_browser import _render_etf_browser
+from src.pages.etf_detail import _render_etf_detail
+from src.pages.watchlist_page import _render_watchlist_page
 
 
 # ── 初始化 ────────────────────────────────────────────
@@ -30,18 +33,42 @@ def get_client():
     return FinMindClient(cache_dir=".cache")
 
 
+def _is_etf(client: FinMindClient, stock_id: str) -> bool:
+    """判斷一檔股票是否為 ETF"""
+    try:
+        info = client.get_stock_info(stock_id)
+        if len(info) > 0:
+            industry = str(info.iloc[0].get("industry_category", ""))
+            return "etf" in industry.lower()
+    except Exception:
+        pass
+    return False
+
+
 def load_and_render_page(client: FinMindClient, stock_id: str):
     """根據 session_state['page'] 渲染對應頁面"""
     page = st.session_state.get("page", "名片")
 
-    # 分類瀏覽不需要特定股票，獨立渲染
+    # 不需要特定股票的頁面，獨立渲染
     if page == "分類瀏覽":
         _render_category_browser(client)
+        return
+    if page == "ETF 專區":
+        _render_etf_browser(client)
+        return
+    if page == "我的關注":
+        _render_watchlist_page(client)
         return
 
     data = get_stock_data(client, stock_id)
     if data is None:
         st.error(f"找不到股票代號 {stock_id}")
+        return
+
+    # ETF 導向 ETF 詳細頁
+    if _is_etf(client, stock_id):
+        _render_navbar(data, page)
+        _render_etf_detail(data, client)
         return
 
     # 渲染導航列
@@ -58,8 +85,6 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         _render_peer_comparison(data, client)
     elif page == "集團架構":
         _render_group_structure(data)
-    elif page == "分類瀏覽":
-        _render_category_browser(client)
 
 
 def _render_navbar(data: dict, current_page: str):
@@ -80,7 +105,7 @@ def _render_navbar(data: dict, current_page: str):
             st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
 
     # 分頁標籤
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注"]
     cols = st.columns(len(pages))
     for i, p in enumerate(pages):
         with cols[i]:
