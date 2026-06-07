@@ -199,6 +199,13 @@
 - 所有 22 模組匯入驗證通過（0 錯誤）
 - Git commit: `bc9a88c`
 
+### 2026-06-08（Bug 修復）
+- **ISSUE-006 修復**：`src/main.py` 缺少 `sys.path` 設定，導致 Streamlit 啟動時 `from src.xxx` 絕對 import 全部失敗（`ModuleNotFoundError: No module named 'src'`）
+  - 根因：Streamlit 跑 `src/main.py` 時，Python 將 `src/` 加入 path 而非專案根目錄
+  - 修復：在 `main.py` 頂部加入 `sys.path.insert(0, _project_root)`，使用 `Path(__file__).resolve().parent.parent` 取得專案根目錄
+  - 三階段驗證全部通過（22 模組 import ✅、11 頁面渲染 ✅、內容煙測 ✅）
+  - Git commit: `c22098e`
+
 ## 架構總覽
 ### 目錄結構
 ```
@@ -273,11 +280,12 @@ config/
 
 ## 下一步
 1. ✅ M0-M5 所有里程碑 — 代碼完成
-2. ✅ ISSUE-001～004 — 已修復
-3. ⏳ Daniel 手動 UI 驗證（事件儀表板、自適應框架橫幅、事件提醒、新鮮度指標）
-4. ⏳ Daniel 手動驗證 M4（ETF 專區、我的關注、價格提醒 UI）
-5. 📋 專案進入打磨階段 — 等待 UI 驗證回饋後進行細節調整
+2. ✅ ISSUE-001～004, 006 — 已修復
+3. ✅ Gate 1-3 驗證全部通過（22 模組 import、11 頁面渲染、內容煙測）
+4. ⏳ Daniel 手動 UI 驗證（事件儀表板、自適應框架橫幅、事件提醒、新鮮度指標）
+5. ⏳ Daniel 手動驗證 M4（ETF 專區、我的關注、價格提醒 UI）
+6. 📋 專案進入打磨階段 — 等待 UI 驗證回饋後進行細節調整
 
 ---
 
-*最後更新：2026-06-07 22:35*
+*最後更新：2026-06-08 07:08*
