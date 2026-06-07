@@ -9,6 +9,7 @@ from src.services.watchlist import (
     load_watchlist,
     remove_from_watchlist,
     get_watchlist_summary,
+    update_alerts,
 )
 
 
@@ -173,7 +174,7 @@ def _render_watchlist_page(client: FinMindClient):
         )
 
         # Action buttons row
-        col1, col2, col3 = st.columns([1, 1, 6])
+        col1, col2, col3, col4 = st.columns([1, 1, 1, 5])
         with col1:
             if st.button("查看名片", key=f"wl_card_{stock_id}", use_container_width=True):
                 st.session_state["stock_id"] = stock_id
@@ -186,6 +187,47 @@ def _render_watchlist_page(client: FinMindClient):
                     st.rerun()
                 else:
                     st.error("移除失敗")
+        with col3:
+            with st.popover("🔔 設定提醒", key=f"wl_alert_{stock_id}"):
+                st.markdown(f"**{name}** ({stock_id})")
+                st.markdown("---")
+
+                # Show current alert values
+                current_above = alert_above if alert_above is not None else 0.0
+                current_below = alert_below if alert_below is not None else 0.0
+
+                new_above = st.number_input(
+                    "上限價格（高於此價提醒）",
+                    min_value=0.0,
+                    value=current_above,
+                    step=0.5,
+                    key=f"wl_above_{stock_id}",
+                )
+                new_below = st.number_input(
+                    "下限價格（低於此價提醒）",
+                    min_value=0.0,
+                    value=current_below,
+                    step=0.5,
+                    key=f"wl_below_{stock_id}",
+                )
+
+                save_col, clear_col = st.columns(2)
+                with save_col:
+                    if st.button("儲存", key=f"wl_save_alert_{stock_id}", use_container_width=True):
+                        above_val = new_above if new_above > 0 else None
+                        below_val = new_below if new_below > 0 else None
+                        if update_alerts(stock_id, above_val, below_val):
+                            st.success("提醒已儲存")
+                            st.rerun()
+                        else:
+                            st.error("儲存失敗")
+                with clear_col:
+                    if st.button("清除提醒", key=f"wl_clear_alert_{stock_id}", use_container_width=True):
+                        if update_alerts(stock_id, None, None):
+                            st.success("提醒已清除")
+                            st.rerun()
+                        else:
+                            st.error("清除失敗")
 
     # ── Footer hint ────────────────────────────────────────────
     st.markdown("---")

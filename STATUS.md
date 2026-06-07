@@ -1,6 +1,6 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：M4 ETF 與訂閱 🔄 進行中
+## 當前階段：M4 ETF 與訂閱 🔄 進行中（Bug 修復輪次）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -140,6 +140,16 @@
 - 所有 23 個 Python 檔案語法與匯入驗證通過（0 錯誤）
 - M4 第一輪完成並 commit
 
+### 2026-06-07（Bug 修復輪次）
+- **ISSUE-001 修復**：關注頁面新增價格提醒設定 UI
+  - `watchlist_page.py`：新增「🔔 設定提醒」按鈕 + `st.popover` 輸入上限/下限
+  - `watchlist.py`：新增 `update_alerts()` 函數
+- **ISSUE-002 改善**：擴展 ETF 分類關鍵字（精確匹配 + 通用關鍵字）
+- **ISSUE-003 改善**：`_is_etf()` 加入 `industry_category` 參數，三層判斷順序
+- **ISSUE-004 修復**：ETF 瀏覽頁加入 `@st.cache_data` 快取（`_cached_get_stock_info` + `_get_all_etf_prices`）
+- 所有 15 個 Python 檔案語法驗證通過（0 錯誤）
+- 所有匯入與邏輯單元測試通過
+
 ## 架構總覽
 ### 目錄結構
 ```
@@ -206,8 +216,9 @@ config/
 | stock-explorer-visual-verify | 每 4 小時 | 視覺化驗證：啟動 Streamlit→截圖→記錄 |
 
 ## 下一步
-1. ✅ M4 ETF 與訂閱 — 代碼完成，待 Daniel 手動 UI 驗證
-2. ⏳ M5 準備 — 自適應更新機制（重大事件驅動更新）
+1. ✅ M4 ETF 與訂閱 — 代碼完成
+2. ⏳ Daniel 手動 UI 驗證（ETF 專區、我的關注、價格提醒 UI）
+3. ⏳ M5 準備 — 自適應更新機制（重大事件驅動更新）
 
 ---
-*最後更新：2026-06-07 14:00*
+*最後更新：2026-06-07 15:00*

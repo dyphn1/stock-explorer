@@ -34,15 +34,29 @@ def save_watchlist(entries: list) -> None:
         yaml.dump(entries, f, allow_unicode=True, default_flow_style=False, sort_keys=False)
 
 
-def _is_etf(stock_id: str, name: str) -> bool:
-    """Determine if a stock is an ETF based on name or id patterns."""
+def _is_etf(stock_id: str, name: str, industry_category: str = None) -> bool:
+    """Determine if a stock is an ETF.
+
+    Priority:
+    1. Use FinMind industry_category if available (most reliable)
+    2. Fall back to name heuristic
+    3. Fall back to stock_id pattern (least reliable)
+    """
+    # 1. Use FinMind industry_category if provided
+    if industry_category and "etf" in industry_category.lower():
+        return True
+    # 2. Name heuristic
     name_lower = name.lower()
-    # Common ETF indicators in Taiwanese market
-    etf_keywords = ["etf", "00", "50", "56", "6208", "高息", "股息", "債券"]
-    # Check if name contains ETF keyword
     if "etf" in name_lower:
         return True
-    # Check stock_id patterns common for ETFs (many ETFs start with 00)
+    # Common ETF name patterns in Taiwanese market
+    etf_name_keywords = ["高息", "高殖", "股息", "債券", "美債", "公司債",
+                         "電信", "半導體", "AI", "ESG", "5G", "電動車",
+                         "主題型", "杠杆", "反向", "2倍", "-1X", "正2", "反1"]
+    for kw in etf_name_keywords:
+        if kw in name:
+            return True
+    # 3. stock_id pattern (least reliable, last resort)
     if stock_id.startswith("00") and len(stock_id) == 4:
         return True
     return False
@@ -95,6 +109,27 @@ def is_in_watchlist(stock_id: str) -> bool:
     """Check if stock is watched."""
     entries = load_watchlist()
     return any(e.get("stock_id") == stock_id for e in entries)
+
+
+def update_alerts(stock_id: str, alert_above: float = None, alert_below: float = None) -> bool:
+    """Update alert_above and alert_below for a watchlist entry.
+    
+    Args:
+        stock_id: The stock identifier to update.
+        alert_above: Price threshold for upper alert (None to clear).
+        alert_below: Price threshold for lower alert (None to clear).
+    
+    Returns:
+        True if the entry was found and updated, False otherwise.
+    """
+    entries = load_watchlist()
+    for entry in entries:
+        if entry.get("stock_id") == stock_id:
+            entry["alert_above"] = alert_above
+            entry["alert_below"] = alert_below
+            save_watchlist(entries)
+            return True
+    return False
 
 
 def get_watchlist_summary(client) -> list:

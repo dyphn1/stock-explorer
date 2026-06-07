@@ -8,6 +8,51 @@ import pandas as pd
 from src.data.finmind_client import FinMindClient
 
 
+@st.cache_data(ttl=3600)
+def _cached_get_stock_info(_client: FinMindClient):
+    """Cache the full stock info table so it's only fetched once across sub-views."""
+    return _client.get_stock_info()
+
+
+@st.cache_data(ttl=3600)
+def _get_all_etf_prices(_client: FinMindClient, etf_ids_tuple):
+    """Fetch daily prices for all ETFs once; returns a DataFrame keyed by stock_id.
+
+    Cached for 1 hour so switching between sub-views avoids redundant fetches.
+    """
+    ids = list(etf_ids_tuple)
+    rows = []
+    for sid in ids:
+        try:
+            daily = _client.get_daily_price(sid)
+            if daily is not None and len(daily) > 0:
+                latest = daily.iloc[-1]
+                close = float(latest.get("close", 0) or 0)
+                volume = int(latest.get("Trading_Volume", 0) or 0)
+                money = float(latest.get("Trading_money", 0) or 0)
+                prev_close = float(daily.iloc[-2]["close"]) if len(daily) >= 2 else close
+                change = close - prev_close
+                change_pct = (change / prev_close * 100) if prev_close > 0 else 0.0
+                rows.append({
+                    "stock_id": sid,
+                    "close": close,
+                    "trading_volume": volume,
+                    "trading_money": money,
+                    "change": change,
+                    "change_pct": change_pct,
+                })
+        except Exception:
+            rows.append({
+                "stock_id": sid,
+                "close": 0,
+                "trading_volume": 0,
+                "trading_money": 0,
+                "change": 0,
+                "change_pct": 0.0,
+            })
+    return pd.DataFrame(rows).set_index("stock_id")
+
+
 def _render_etf_browser(client: FinMindClient):
     """ETF 瀏覽主頁"""
 
@@ -33,10 +78,10 @@ def _render_etf_browser(client: FinMindClient):
     </div>
     """, unsafe_allow_html=True)
 
-    # ── 取得 ETF 股票清單 ──────────────────────────────────
+    # ── 取得 ETF 股票清單（cached） ──────────────────────────
     with st.spinner("載入 ETF 資料中…"):
         try:
-            all_stock_info = client.get_stock_info()
+            all_stock_info = _cached_get_stock_info(client)
         except Exception as e:
             st.error(f"無法取得股票資訊：{e}")
             return
@@ -56,6 +101,11 @@ def _render_etf_browser(client: FinMindClient):
     st.markdown(f"<div style='color:#7F8C8D;font-size:0.85rem;'>共找到 <b>{len(etf_info)}</b> 檔 ETF</div>",
                 unsafe_allow_html=True)
 
+    # ── 預取所有 ETF 價格（一次的迭代，全部 cache）────────────
+    etf_ids = tuple(sorted(etf_info["stock_id"].tolist()))
+    with st.spinner("正在取得 ETF 價格（首次載入需時較長，之後切換頁籤將加速）…"):
+        price_df = _get_all_etf_prices(client, etf_ids)
+
     # ── 子頁面選擇 ──────────────────────────────────────────
     st.markdown("---")
     sub_view = st.radio(
@@ -66,61 +116,42 @@ def _render_etf_browser(client: FinMindClient):
     )
 
     if sub_view == "🔥 熱門 ETF":
-        _render_hot_etfs(client, etf_info)
+        _render_hot_etfs(etf_info, price_df)
     elif sub_view == "📂 ETF 分類":
-        _render_etf_categories(client, etf_info)
+        _render_etf_categories(etf_info, price_df)
     elif sub_view == "💰 配息排行":
-        _render_dividend_ranking(client, etf_info)
+        _render_dividend_ranking(client, etf_info, price_df)
 
 
 # ════════════════════════════════════════════════════════════
 # 子頁面 A: 熱門 ETF（依成交量排序）
 # ════════════════════════════════════════════════════════════
 
-def _render_hot_etfs(client: FinMindClient, etf_info: pd.DataFrame):
+def _render_hot_etfs(etf_info: pd.DataFrame, price_df: pd.DataFrame):
     """熱門 ETF：取最近一日成交量最高的前 20 檔"""
     st.markdown("### 🔥 熱門 ETF（依成交量）")
 
-    etf_volume = []
-    candidate_etfs = etf_info.sort_values("stock_id")
-
-    progress = st.progress(0, text="正在取得成交量…")
-    total = len(candidate_etfs)
-
-    for idx, (_, row) in enumerate(candidate_etfs.iterrows()):
+    # Build candidates from cached price data
+    records = []
+    for _, row in etf_info.sort_values("stock_id").iterrows():
         sid = row["stock_id"]
-        try:
-            daily = client.get_daily_price(sid)
-            if daily is not None and len(daily) > 0:
-                latest = daily.iloc[-1]
-                volume = int(latest.get("Trading_Volume", 0) or 0)
-                money = float(latest.get("Trading_money", 0) or 0)
-                close = float(latest.get("close", 0) or 0)
-                prev_close = float(daily.iloc[-2]["close"]) if len(daily) >= 2 else close
-                change = close - prev_close
-                change_pct = (change / prev_close * 100) if prev_close > 0 else 0.0
-                etf_volume.append({
-                    "stock_id": sid,
-                    "stock_name": row.get("stock_name", sid),
-                    "trading_volume": volume,
-                    "trading_money": money,
-                    "close": close,
-                    "change": change,
-                    "change_pct": change_pct,
-                })
-        except Exception:
-            pass
+        if sid in price_df.index:
+            p = price_df.loc[sid]
+            records.append({
+                "stock_id": sid,
+                "stock_name": row.get("stock_name", sid),
+                "trading_volume": int(p.get("trading_volume", 0) or 0),
+                "trading_money": float(p.get("trading_money", 0) or 0),
+                "close": float(p.get("close", 0) or 0),
+                "change": float(p.get("change", 0) or 0),
+                "change_pct": float(p.get("change_pct", 0) or 0),
+            })
 
-        if idx % 10 == 0:
-            progress.progress(min((idx + 1) / total, 1.0), text=f"已處理 {idx + 1}/{total} 檔…")
-
-    progress.empty()
-
-    if not etf_volume:
+    if not records:
         st.info("暫無成交量資料。")
         return
 
-    df_volume = pd.DataFrame(etf_volume).sort_values("trading_volume", ascending=False).head(20)
+    df_volume = pd.DataFrame(records).sort_values("trading_volume", ascending=False).head(20)
     df_volume["排名"] = range(1, len(df_volume) + 1)
 
     st.markdown("#### 前 20 大熱門 ETF")
@@ -150,11 +181,38 @@ def _render_hot_etfs(client: FinMindClient, etf_info: pd.DataFrame):
 # ════════════════════════════════════════════════════════════
 
 # 分類關鍵字（依 stock_name 匹配）
+# 優先順序：先匹配精確/高置信度關鍵字，再匹配通用關鍵字
 ETF_CATEGORY_KEYWORDS = {
-    "市值型": ["50", "56", "6208", "台灣", "加權", "大盤"],
-    "高股息型": ["股息", "高息", "高殖", "股利", "存股"],
-    "債券型": ["債券", "債", "政府債", "公司債", "美債"],
-    "主題型": ["電動車", "AI", "半導體", "5G", "ESG", "生技", "醫療"],
+    "市值型": [
+        # 精確匹配（高置信度）
+        "元大台灣50", "富邦台50", "元大台股", "大盤", "加權",
+        # 一般關鍵字
+        "50", "56", "6208", "台灣",
+    ],
+    "高股息型": [
+        # 精確匹配
+        "元大高股息", "國泰永續", "國泰高股息", "元大臺灣高息",
+        "富邦高股息", "復華高股息", "凱基優選", "FT臺灣",
+        "群益精選", "永豐優息存股", "統一MIT",
+        # 一般關鍵字
+        "股息", "高息", "高殖", "股利", "存股", "優息",
+    ],
+    "債券型": [
+        # 精確匹配
+        "國泰美債", "富邦美債", "元大美債", "永豐美債",
+        "群益美債", "復華美債", "中信美債", "統一美債",
+        # 一般關鍵字
+        "債券", "債", "政府債", "公司債", "美債", "投資等級",
+    ],
+    "主題型": [
+        # 精確匹配
+        "元大全球AI", "國泰AI", "富邦NASDAQ", "元大未來關鍵科技",
+        "新光車電", "中信電池", "群益半導體", "富邦半導體",
+        "元大生技", "國泰基因", "富邦基因",
+        # 一般關鍵字
+        "電動車", "AI", "半導體", "5G", "ESG", "生技", "醫療",
+        "網安", "資安", "太空", "元宇宙", "電競", "遊戲",
+    ],
 }
 
 
@@ -167,7 +225,7 @@ def _classify_etf(stock_name: str) -> str:
     return "其他"
 
 
-def _render_etf_categories(client: FinMindClient, etf_info: pd.DataFrame):
+def _render_etf_categories(etf_info: pd.DataFrame, price_df: pd.DataFrame):
     """ETF 分類：將 ETF 依類型分組，可展開查看"""
     st.markdown("### 📂 ETF 分類")
 
@@ -175,26 +233,16 @@ def _render_etf_categories(client: FinMindClient, etf_info: pd.DataFrame):
     etf_info = etf_info.copy()
     etf_info["etf_category"] = etf_info["stock_name"].apply(_classify_etf)
 
-    # 取得每檔 ETF 的最新價格
+    # 取得每檔 ETF 的最新價格（from cached price_df）
     etf_with_price = []
-    progress = st.progress(0, text="正在取得價格…")
-    total = len(etf_info)
-
-    for idx, (_, row) in enumerate(etf_info.iterrows()):
+    for _, row in etf_info.iterrows():
         sid = row["stock_id"]
-        try:
-            daily = client.get_daily_price(sid)
-            if daily is not None and len(daily) > 0:
-                latest = daily.iloc[-1]
-                close = float(latest.get("close", 0) or 0)
-                prev_close = float(daily.iloc[-2]["close"]) if len(daily) >= 2 else close
-                change = close - prev_close
-                change_pct = (change / prev_close * 100) if prev_close > 0 else 0.0
-            else:
-                close = 0
-                change = 0
-                change_pct = 0.0
-        except Exception:
+        if sid in price_df.index:
+            p = price_df.loc[sid]
+            close = float(p.get("close", 0) or 0)
+            change = float(p.get("change", 0) or 0)
+            change_pct = float(p.get("change_pct", 0) or 0)
+        else:
             close = 0
             change = 0
             change_pct = 0.0
@@ -207,11 +255,6 @@ def _render_etf_categories(client: FinMindClient, etf_info: pd.DataFrame):
             "change": change,
             "change_pct": change_pct,
         })
-
-        if idx % 20 == 0:
-            progress.progress(min((idx + 1) / total, 1.0), text=f"已處理 {idx + 1}/{total} 檔…")
-
-    progress.empty()
 
     df_cat = pd.DataFrame(etf_with_price)
     if df_cat.empty:
@@ -297,9 +340,10 @@ def _render_etf_categories(client: FinMindClient, etf_info: pd.DataFrame):
 # 子頁面 C: 配息排行（依殖利率排序）
 # ════════════════════════════════════════════════════════════
 
-def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame):
+def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, price_df: pd.DataFrame):
     """配息排行：取最近年度股利換算殖利率，排序前 20 檔"""
     st.markdown("### 💰 配息排行（依殖利率）")
+    st.caption("⏳ 配息排行需取得股利資料，首次載入可能較慢，請耐心等候…")
 
     etf_dividends = []
     candidate_etfs = etf_info.sort_values("stock_id")
@@ -310,17 +354,15 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame):
     for idx, (_, row) in enumerate(candidate_etfs.iterrows()):
         sid = row["stock_id"]
         try:
-            # 取得股利資料
+            # 取得股利資料（still needed — no shared cache for dividends)
             div_df = client.get_dividend(sid)
-            # 取得最新價格
-            daily = client.get_daily_price(sid)
 
-            if daily is not None and len(daily) > 0:
-                latest = daily.iloc[-1]
-                close = float(latest.get("close", 0) or 0)
-                prev_close = float(daily.iloc[-2]["close"]) if len(daily) >= 2 else close
-                change = close - prev_close
-                change_pct = (change / prev_close * 100) if prev_close > 0 else 0.0
+            # 取得最新價格（from cached price_df — avoids redundant fetches)
+            if sid in price_df.index:
+                p = price_df.loc[sid]
+                close = float(p.get("close", 0) or 0)
+                change = float(p.get("change", 0) or 0)
+                change_pct = float(p.get("change_pct", 0) or 0)
             else:
                 close = 0
                 change = 0
