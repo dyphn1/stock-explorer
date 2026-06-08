@@ -13,14 +13,55 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 
 ### Role Definitions
 
-| Role | Type | Responsibility | Decision Scope |
-|------|------|---------------|----------------|
-| **Daniel (Client)** | Human | End-user, UX quality judgment | Final decision on UI/visual/info architecture |
-| **Product Manager** | Main agent | Global planning, prioritization, milestone management, team coordination | Task assignment, progress tracking, cross-module consistency, reflection & plan adjustment |
-| **System Architect** | sub-agent | Layered architecture, data flow, error handling, cross-module integration | Technical solutions, architecture changes |
-| **Developer** | sub-agent | Write code, import checks, git commits | Implementation details, tech stack choices |
-| **QA Engineer** | script | Functional verification (import, rendering, smoke test) | Quality gate, issue reporting |
-| **Design Reviewer** | sub-agent | UX quality, theme alignment, code review | Design-implementation alignment |
+| Role | Type | Responsibility | Decision Scope | Ideal Model |
+|------|------|---------------|----------------|-------------|
+| **Daniel (Client)** | Human | End-user, UX quality judgment | Final decision on UI/visual/info architecture | — |
+| **Product Manager** | Main agent | Global planning, prioritization, milestone management, team coordination | Task assignment, progress tracking, cross-module consistency, reflection & plan adjustment | `claude-sonnet-4` (strong reasoning, multi-step planning) |
+| **System Architect** | sub-agent | Layered architecture, data flow, error handling, cross-module integration | Technical solutions, architecture changes | `claude-sonnet-4` (deep technical analysis) |
+| **Developer** | sub-agent | Write code, import checks, git commits | Implementation details, tech stack choices | `claude-sonnet-4` or `gpt-4o` (code generation) |
+| **QA Engineer** | script + vision agent | Functional verification (import, rendering, smoke test) + screenshot analysis | Quality gate, issue reporting | `gpt-4o` or `claude-sonnet-4` (vision for screenshot analysis) |
+| **Design Reviewer** | sub-agent | UX quality, theme alignment, code review, visual inspection | Design-implementation alignment | `claude-sonnet-4` (design reasoning + vision) |
+
+### Model Assignment Rules
+
+**Critical: Each role should use its ideal model, not a single model for everything.**
+
+- **PM tasks** (planning, coordination, reflection): Use `claude-sonnet-4` or equivalent strong reasoning model
+- **Architecture analysis** (technical deep-dives): Use `claude-sonnet-4` or equivalent
+- **Code implementation** (writing code): Use `claude-sonnet-4` or `gpt-4o` — whichever is stronger at code generation
+- **QA/Verification** (screenshot analysis, visual inspection): Use a model with strong vision capabilities (`gpt-4o`, `claude-sonnet-4`)
+- **Design Review** (UX judgment, visual assessment): Use `claude-sonnet-4` with vision enabled
+
+**Current environment**: Only `openrouter/owl-alpha` is available. When multiple models are available, the PM should assign the appropriate model to each sub-agent via the `model` parameter in `delegate_task`.
+
+### Verification Strategy (Updated 2026-06-08)
+
+**Screenshot-based visual verification is now the primary QA method.**
+
+1. **Layer 0** (static): `_verify_layer0.py` — syntax, import, key uniqueness
+2. **Layer 1** (rendering): `_verify_layer1.py` — AppTest page rendering
+3. **Layer 2** (interaction): `_verify_layer2.py` — Playwright interaction testing
+4. **Layer 3** (visual/UX): **Screenshot + Vision Agent** — capture screenshots at key interaction points, analyze with vision model for layout issues, contrast problems, broken elements
+
+**Screenshot verification flow:**
+```bash
+# 1. Start Streamlit
+uv run streamlit run src/main.py --server.port 8501 --server.headless true &
+
+# 2. Capture screenshots at key pages
+uv run python scripts/capture_screenshots.py
+
+# 3. Analyze with vision agent
+# (PM delegates to QA Engineer role with vision model)
+```
+
+**What to check in screenshots:**
+- Layout breaks (overlapping elements, misaligned columns)
+- Color contrast (text readable against background)
+- Missing elements (buttons, charts, text that should be present)
+- Visual consistency (fonts, spacing, colors match DESIGN_SYSTEM)
+- Loading states (spinners appear during data loading)
+- Error states (error messages are user-friendly)
 
 ### Collaboration Principles
 
