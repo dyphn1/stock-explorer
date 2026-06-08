@@ -12,29 +12,7 @@ from src.services.analogy_engine import (
     get_roe_analogy,
     get_per_analogy,
 )
-
-
-def _section_title(title: str):
-    st.markdown(f"### 📊 {title}")
-
-
-def _白话_card(label: str, value: str, analogy: str = ""):
-    st.markdown(f"""
-    <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
-        <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
-        <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{value}</div>
-        <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{analogy}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def _info_card(title: str, content: str, icon: str = "💡"):
-    st.markdown(f"""
-    <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
-        <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
-        <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.3rem;line-height:1.6;">{content}</div>
-    </div>
-    """, unsafe_allow_html=True)
+from src.pages._router_base import _section_title, _info_card
 
 
 # 產業標竿對應表（產業 → 標竿公司）
@@ -95,16 +73,16 @@ def _find_fallback_benchmark(industry: str, stock_id: str):
 
 def _render_single_company_view(data: dict, stock_name: str, industry: str):
     """Show single-company data when no benchmark is available."""
-    st.warning(f"⚠️ 找不到「{industry}」的同業標竿公司，以下僅顯示 {stock_name} 的指標")
+    st.warning(f"找不到「{industry}」的同業標竿公司，以下僅顯示 {stock_name} 的指標")
     # Show the target company's key metrics in a simple table/card
     metrics = {}
-    if data.get("per_pbr") is not None and not data["per_pbr"].empty:
-        latest = data["per_pbr"].iloc[-1]
+    if data.get("latest_per_pbr") is not None and not data["latest_per_pbr"].empty:
+        latest = data["latest_per_pbr"].iloc[-1]
         metrics["本益比"] = latest.get("PE_ratio", "—")
         metrics["股價淨值比"] = latest.get("PB_ratio", "—")
         metrics["殖利率"] = latest.get("dividend_yield", "—")
-    if data.get("financial_statements") is not None and not data["financial_statements"].empty:
-        latest_fs = data["financial_statements"].iloc[-1]
+    if data.get("financial") is not None and not data["financial"].empty:
+        latest_fs = data["financial"].iloc[-1]
         # extract whatever fields are available
         for field, label in [("net_profit_margin", "淨利率"), ("ROE", "ROE")]:
             if field in latest_fs:
@@ -147,7 +125,7 @@ def _render_peer_comparison(data: dict, client):
             return
 
     if is_fallback:
-        st.info("⚠️ 此產業無預設標竿，已自動選取同業最大公司作為基準")
+        st.info("此產業無預設標竿，已自動選取同業最大公司作為基準")
 
     # 避免自己跟自己比
     if benchmark_id == stock_id:

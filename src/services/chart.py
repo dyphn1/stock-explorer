@@ -153,7 +153,7 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
         )
         fig.update_yaxes(title_text="價格")
         fig.add_annotation(
-            text="⚠️ 僅有單日資料，以長條圖呈現",
+            text="只有1天的資料，改用長條圖顯示",
             xref="paper", yref="paper", x=0.5, y=-0.25,
             showarrow=False, font=dict(size=13, color="#7F8C8D"),
         )
@@ -375,7 +375,7 @@ def create_price_area_chart(df: pd.DataFrame, title: str = "收盤價走勢") ->
         )
         fig.update_yaxes(title_text="價格")
         fig.add_annotation(
-            text="⚠️ 僅有單一期間資料，以長條圖呈現",
+            text="只有1期的資料，改用長條圖顯示",
             xref="paper", yref="paper", x=0.5, y=-0.25,
             showarrow=False, font=dict(size=13, color="#7F8C8D"),
         )
