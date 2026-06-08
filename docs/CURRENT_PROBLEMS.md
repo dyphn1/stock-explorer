@@ -2,7 +2,7 @@
 
 After conducting an in-depth breakdown of the project's architecture, data flow, and UI implementation (via three rounds of review and cross-verification), several potential issues have been identified that could severely impact stability, performance, and scalability. The current issues are categorized into three different review dimensions below:
 
-> **2026-06-08 補充**：Daniel 手動測試後發現 14 個 UI/UX 問題，記錄在「Layer 4: UI/UX 體驗」章節。
+> **2026-06-08 Update**: Daniel's manual testing uncovered 14 UI/UX issues, documented in the "Layer 4: UI/UX Experience" section.
 
 ## Layer 1: Data Flow & Architecture
 
@@ -34,7 +34,7 @@ After conducting an in-depth breakdown of the project's architecture, data flow,
 ## Layer 3: Concurrency & Robustness
 
 1. **Race Condition Risks in YAML Config Files (`watchlist.py` / `adaptive_engine.py`)**
-   - **Problem**: Reading and writing the watchlist (`watchlist.yaml`) and event records (`events.yaml`) both use a "read entire list -> modify memory array -> overwrite entire file" pattern. Streamlit allows concurrent operations from multiple users (multi-session). If two users add to the watchlist simultaneously, or if a background event detection triggers concurrently, race conditions will occur, causing data loss or YAML file corruption.
+   - **Problem**: Reading and writing the watchlist (`watchlist.yaml`) and event records (`events.yaml`) both use a "read entire list → modify memory array → overwrite entire file" pattern. Streamlit allows concurrent operations from multiple users (multi-session). If two users add to the watchlist simultaneously, or if a background event detection triggers concurrently, race conditions will occur, causing data loss or YAML file corruption.
    - **Impact**: A fatal risk under high-frequency access, leading to the collapse of the storage system.
 2. **Event Detection Relies on Fragile Data Field Access**
    - **Problem**: Methods like `detect_revenue_event` access arrays and dictionaries directly (e.g., `latest["revenue"]`). If FinMind changes its return fields, or if there are fewer than 13 records but another bug somehow leads execution to this logic block, it will raise a `KeyError` or `IndexError`.
@@ -43,5 +43,27 @@ After conducting an in-depth breakdown of the project's architecture, data flow,
    - **Problem**: If `filter_by_timeline` encounters formatting anomalies (Exceptions) during time conversion or comparison, it directly returns the original DataFrame (ALL).
    - **Impact**: When users click the 1Y or 3Y filters, the charts won't respond, and no error message is provided, making users mistakenly think the system is lagging.
 
+## Layer 4: UI/UX Experience (Daniel's Manual Testing)
+
+> Recorded on 2026-06-08 after Daniel's hands-on manual testing of the application.
+
+| # | Category | Issue | Severity |
+|---|----------|-------|----------|
+| 1 | Navigation | Sidebar search does not support Chinese stock names — typing "台積電" always returns "Stock ID not found" | High |
+| 2 | Navigation | No loading indicator when switching pages — users cannot tell if the app is processing or frozen | Medium |
+| 3 | Navigation | Browser back button does not work with Streamlit page navigation | Medium |
+| 4 | Data Display | Financial charts show no data points when only a single period is available — the chart appears empty | High |
+| 5 | Data Display | ROE annualization produces wildly inaccurate values for seasonal businesses (e.g., retail, semiconductors) | High |
+| 6 | Data Display | Peer comparison page shows "No data" for stocks outside the top tier without explanation | Medium |
+| 7 | Interaction | Watchlist add/remove does not provide visual feedback — no toast or confirmation message | Medium |
+| 8 | Interaction | Event dashboard buttons can crash the page when duplicate titles exist (DuplicateWidgetID) | Critical |
+| 9 | Interaction | Timeline filter (1Y, 3Y) silently fails — charts don't update and no error is shown | High |
+| 10 | Performance | Switching between 5+ stocks in quick succession triggers FinMind rate limits with no user-facing warning | High |
+| 11 | Performance | Cache never expires old files — `.cache/` directory grows without bound over time | Low |
+| 12 | Visual Design | PPT-style layout breaks on smaller screens / narrow browser windows | Medium |
+| 13 | Visual Design | Color contrast on chart labels is insufficient for readability in dark mode | Low |
+| 14 | Robustness | Concurrent multi-user access to watchlist.yaml can cause data loss or file corruption | High |
+
 ---
+
 *Summary: The project functions smoothly under the "Happy Path", but when facing scalability, error handling, and concurrency, the underlying infrastructure (especially the cache algorithm and YAML persistence layer) is extremely fragile. Refactoring API access and implementing file locking mechanisms should be prioritized.*

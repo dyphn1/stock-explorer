@@ -1,235 +1,235 @@
-# 股識 Stock Explorer — 設計系統規範
+# 股識 Stock Explorer — Design System Specification
 
-> 這是一份「開發前必須遵循」的設計基準。所有新功能、新頁面、新元件，在寫任何一行程式碼之前，必須先確認符合本文件規範。
-
----
-
-## 一、設計哲學
-
-### 核心原則
-1. **歷史學家，不是股評家** — 只說「這家公司發生了什麼」，不給買賣建議
-2. **PPT 風格** — 一頁一個重點，圖片為主文字為輔
-3. **十秒測試** — 新手看十秒後能複述核心概念
-4. **新手友善** — 所有專業術語必須有白話翻譯
-
-### 設計決策優先級
-```
-正確性 > 清晰度 > 完整性 > 美觀
-```
-寧可少顯示，也不要顯示錯誤或令人困惑的內容。
+> This is a "must-follow before development" design baseline. All new features, new pages, and new components must be confirmed against this document before writing a single line of code.
 
 ---
 
-## 二、版面區域劃分
+## I. Design Philosophy
 
-頁面必須嚴格區分三個區域，不可混雜：
+### Core Principles
+1. **Historian, not stock picker** — Only say "what happened to this company," never give buy/sell advice
+2. **PPT style** — One key point per page, image-first with text as supplement
+3. **Ten-second test** — A novice can summarize the core concept after ten seconds
+4. **Beginner-friendly** — All professional terms must have plain-language translations
+
+### Design Decision Priority
+```
+Correctness > Clarity > Completeness > Aesthetics
+```
+It is better to show less than to show incorrect or confusing content.
+
+---
+
+## II. Layout Zone Division
+
+Pages must strictly separate three zones — no mixing:
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  A 區：頂部導航列（Navbar）                       │
-│  公司名稱 + 價格 + 頁籤                          │
+│  Zone A: Top Navigation Bar (Navbar)             │
+│  Company name + price + tabs                     │
 ├──────────┬──────────────────────────────────────┤
 │          │                                      │
-│  B 區    │  C 區：主內容區                       │
-│  側邊欄  │  純資料 + 圖表                        │
-│  導航    │  不含操作元件                          │
+│  Zone B  │  Zone C: Main Content Area           │
+│  Sidebar │  Pure data + charts                  │
+│  Nav     │  No interactive controls             │
 │          │                                      │
 └──────────┴──────────────────────────────────────┘
 ```
 
-### A 區：頂部導航列
-- **左**：公司名稱 + 股號 + 產業標籤
-- **右**：目前價格 + 漲跌
-- **下方**：頁籤（名片 / 營運健檢 / 財務體質 / 同業比較 / 集團架構 / 分類瀏覽 / ETF 專區 / 我的關注 / 事件儀表板）
-- 頁籤當前頁面用 `**▎頁籤名**` 粗體顯示，其他用 `st.button`
-- **不可放置**：搜尋框、篩選器、任何操作元件
+### Zone A: Top Navigation Bar
+- **Left**: Company name + stock ticker + industry tag
+- **Right**: Current price + change
+- **Below**: Tabs (Business Card / Operational Checkup / Financial Health / Peer Comparison / Group Structure / Category Browse / ETF Zone / My Watchlist / Event Dashboard)
+- Active tab shown in bold `**▎Tab Name**`, others as `st.button`
+- **Must NOT contain**: search box, filters, or any interactive controls
 
-### B 區：側邊欄
-- **功能**：全域導航（搜尋、熱門股票、熱門 ETF、我的關注、事件儀表板）
-- **行為**：
-  - 預設展開（`initial_sidebar_state="expanded"`）
-  - 收起後必須能再次展開（不可消失）
-  - 點擊股票後 `session_state["stock_id"]` + `session_state["page"] = "名片"` + `st.rerun()`
-- **不可放置**：圖表、資料表格、頁面內容
+### Zone B: Sidebar
+- **Function**: Global navigation (search, hot stocks, hot ETFs, my watchlist, event dashboard)
+- **Behavior**:
+  - Default expanded (`initial_sidebar_state="expanded"`)
+  - Must be re-expandable after collapsing (must not disappear)
+  - On stock click: set `session_state["stock_id"]` + `session_state["page"] = "Business Card"` + `st.rerun()`
+- **Must NOT contain**: charts, data tables, or page content
 
-### C 區：主內容區
-- **功能**：純資料展示 + 圖表
-- **原則**：
-  - 一頁一個核心訊息
-  - 圖表佔比 > 文字佔比
-  - 操作元件（時間範圍、指標切換）放在內容區頂部，與資料明確區隔
-  - 資料更新時，操作元件不動
+### Zone C: Main Content Area
+- **Function**: Pure data display + charts
+- **Principles**:
+  - One core message per page
+  - Charts take more space than text
+  - Interactive controls (time range, metric toggles) placed at the top of the content area, clearly separated from data
+  - Controls remain stable when data refreshes
 
 ---
 
-## 三、元件規範
+## III. Component Specifications
 
-### 3.1 顏色系統
+### 3.1 Color System
 
-| 用途 | 顏色 | 色碼 |
-|------|------|------|
-| 主強調色 | 藍 | `#3498DB` |
-| 正面/漲 | 綠 | `#27AE60` |
-| 負面/跌 | 紅 | `#E74C3C` |
-| 背景卡片 | 淺灰 | `#F8F9FA` |
-| 背景警告 | 淺黃 | `#FEF9E7` |
-| 背景提示 | 淺橘 | `#FFF8F0` |
-| 文字主色 | 深灰 | `#2C3E50` |
-| 文字副色 | 灰 | `#7F8C8D` |
+| Purpose | Color | Hex Code |
+|---------|-------|----------|
+| Primary accent | Blue | `#3498DB` |
+| Positive / Up | Green | `#27AE60` |
+| Negative / Down | Red | `#E74C3C` |
+| Card background | Light gray | `#F8F9FA` |
+| Warning background | Light yellow | `#FEF9E7` |
+| Tip background | Light orange | `#FFF8F0` |
+| Primary text | Dark gray | `#2C3E50` |
+| Secondary text | Gray | `#7F8C8D` |
 
-**規則**：
-- 紅綠只用於漲跌、買賣超方向
-- 藍色只用於「可點擊的選擇」
-- 不可用紅綠藍以外的顏色做狀態指示
+**Rules**:
+- Red/green only for price direction (up/down) and buy/sell signals
+- Blue only for "clickable selections"
+- No colors other than red, green, or blue may be used for status indication
 
-### 3.2 按鈕
+### 3.2 Buttons
 
-| 類型 | 樣式 | 使用場景 |
-|------|------|----------|
-| 主要操作 | `use_container_width=True`，預設色 | 查看、搜尋 |
-| 頁籤 | `use_container_width=True`，預設色 | 導航列頁籤 |
-| 側邊欄項目 | `use_container_width=True`，預設色 | 熱門股票、ETF |
+| Type | Style | Usage |
+|------|-------|-------|
+| Primary action | `use_container_width=True`, default color | View, search |
+| Tab | `use_container_width=True`, default color | Navigation bar tabs |
+| Sidebar item | `use_container_width=True`, default color | Hot stocks, ETFs |
 
-**規則**：
-- 所有按鈕必須有唯一的 `key`
-- key 格式：`{功能}_{stock_id}` 或 `{功能}_{頁面}_{stock_id}`
-- 不可重複的 key（會導致 `StreamlitDuplicateElementKey` crash）
+**Rules**:
+- All buttons must have a unique `key`
+- Key format: `{function}_{stock_id}` or `{function}_{page}_{stock_id}`
+- No duplicate keys (causes `StreamlitDuplicateElementKey` crash)
 
-### 3.3 卡片
+### 3.3 Cards
 
 ```html
-<!-- 資訊卡片（藍邊） -->
+<!-- Info card (blue border) -->
 <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
-    <div style="font-size:0.85rem;color:#7F8C8D;">{標籤}</div>
-    <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{數值}</div>
-    <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{白話}</div>
+    <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
+    <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{value}</div>
+    <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{plain_language}</div>
 </div>
 
-<!-- 提示卡片（橘邊） -->
+<!-- Tip card (orange border) -->
 <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
-    <div style="font-weight:600;color:#2C3E50;">{icon} {標題}</div>
-    <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.3rem;line-height:1.6;">{內容}</div>
+    <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
+    <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.3rem;line-height:1.6;">{content}</div>
 </div>
 ```
 
-### 3.4 圖表
+### 3.4 Charts
 
-**通用規則**：
-- 使用 Plotly（不可用 matplotlib 直接嵌入）
-- 背景透明或深色（配合整體深色主題）
-- 所有圖表必須有標題
-- 比例尺必須自動調整（不可固定比例導致資料被裁切）
-- 圖表高度自適應資料量
+**General Rules**:
+- Use Plotly (do not embed matplotlib directly)
+- Transparent or dark background (to match the overall dark theme)
+- All charts must have titles
+- Scales must auto-adjust (fixed scales that clip data are not allowed)
+- Chart height adapts to data volume
 
-**長條圖**：
-- 底部固定（y 軸從 0 開始）
-- 縮放時調整 y 軸高度，不可整體縮放導致裁切
+**Bar Charts**:
+- Baseline fixed (y-axis starts at 0)
+- On zoom, adjust y-axis height — do not scale the entire chart in a way that causes clipping
 
-**甘特圖/時間圖**：
-- x 軸為時間，可水平滾動
-- y 軸為項目，固定間距
-- 縮放時調整軸間距，不可裁切內容
+**Gantt / Timeline Charts**:
+- x-axis is time, horizontally scrollable
+- y-axis is items, fixed spacing
+- On zoom, adjust axis spacing — do not clip content
 
-**比較圖**：
-- 兩家並排時，比例尺必須一致
-- 必須標明領先/落後的具體項目
-- 不可同時顯示多種類型的座標（如價格 + 乖離率），除非圖表可切換
+**Comparison Charts**:
+- When two companies are side by side, scales must be identical
+- Must clearly indicate which specific items are leading/trailing
+- Do not display multiple types of axes simultaneously (e.g., price + deviation rate) unless the chart has a toggle
 
-**圖表操作**：
-- 不可有「複數個座標系」同時顯示（紅綠買賣 + 箭頭 + 負值座標）
-- 如果需要顯示不同類型的指標，提供切換機制
-- 負值座標只在特定指標（如乖離率）出現時才合理
+**Chart Interactions**:
+- Do not display "multiple coordinate systems" simultaneously (red/green buy/sell + arrows + negative-value axes)
+- If different types of metrics need to be displayed, provide a toggle mechanism
+- Negative-value axes are only reasonable for specific metrics (e.g., deviation rate)
 
-### 3.5 側邊欄
+### 3.5 Sidebar
 
-- 搜尋框：`label_visibility="collapsed"`，placeholder 為「例如：2330 或 台積電」
-- 熱門股票/ETF：每個項目一個 `st.button`，key 為 `hot_{sid}` / `etf_{sid}`
-- 點擊後設定 `session_state["stock_id"]` 和 `session_state["page"]`，然後 `st.rerun()`
-- 側邊欄收起後，Streamlit 預設會顯示展開按鈕（不可用 CSS 隱藏此按鈕）
+- Search box: `label_visibility="collapsed"`, placeholder is "e.g.: 2330 or TSMC"
+- Hot stocks/ETFs: one `st.button` per item, key is `hot_{sid}` / `etf_{sid}`
+- On click, set `session_state["stock_id"]` and `session_state["page"]`, then `st.rerun()`
+- After sidebar collapse, Streamlit shows the expand button by default (do not hide this button with CSS)
 
 ---
 
-## 四、互動模式規範
+## IV. Interaction Pattern Specifications
 
-### 4.1 頁面切換
+### 4.1 Page Switching
 
-**必須有 loading 狀態**：
-- 任何頁面切換（包括側邊欄點擊、頁籤點擊）必須顯示 `st.spinner` 或 `st.progress`
-- 不可讓畫面「凍結」超過 0.5 秒而無任何反饋
-- 資料載入期間，操作元件保持可用
+**Must have a loading state**:
+- Any page switch (sidebar click, tab click) must show `st.spinner` or `st.progress`
+- The screen must not "freeze" for more than 0.5 seconds without any feedback
+- Interactive controls remain available during data loading
 
-**切換流程**：
+**Switching flow**:
 ```
-使用者點擊 → 顯示 spinner → 載入資料 → 渲染頁面 → 隱藏 spinner
+User click → show spinner → load data → render page → hide spinner
 ```
 
-### 4.2 資料更新 vs UI 刷新
+### 4.2 Data Update vs. UI Refresh
 
-- **資料更新**：在 service layer 處理，不直接操作 UI
-- **UI 刷新**：只在 router 層用 `st.rerun()` 觸發
-- **不可**在資料層（`src/data/`）中呼叫任何 Streamlit API
-- **不可**在 service layer（`src/services/`）中呼叫任何 Streamlit API
+- **Data update**: handled in the service layer, does not directly manipulate the UI
+- **UI refresh**: only triggered via `st.rerun()` at the router layer
+- **Must NOT** call any Streamlit API in the data layer (`src/data/`)
+- **Must NOT** call any Streamlit API in the service layer (`src/services/`)
 
-### 4.3 時間範圍選擇
+### 4.3 Time Range Selection
 
-- 選擇時間範圍後，資料必須重新載入
-- 如果資料沒變，代表 cache 機制有問題或 API 未正確呼叫
-- 時間範圍選擇器放在內容區頂部，與圖表明確區隔
+- After selecting a time range, data must be reloaded
+- If data does not change, it indicates a caching issue or the API was not called correctly
+- Time range selector is placed at the top of the content area, clearly separated from charts
 
-### 4.4 錯誤處理
+### 4.4 Error Handling
 
-- 找不到股票：顯示 `st.error("找不到股票代號 {stock_id}")`，不 crash
-- API 失敗：顯示 `st.warning("資料暫時無法取得，請稍後再試")`，不 crash
-- 空資料：顯示 `st.info("目前無資料可顯示")`，不 crash
-- **任何情況下不可讓 Streamlit 拋出未捕獲的 exception**
-
----
-
-## 五、PPT 風格具體規範
-
-### 5.1 一頁一重點
-- 每個頁面只回答一個問題：
-  - 名片頁：這家公司靠什麼賺錢？
-  - 營運健檢：靠什麼賺錢？穩不穩？
-  - 財務體質：賺多少？花多少？剩多少？
-  - 同業比較：跟產業第一名差在哪？
-  - 集團架構：母公司跟子公司的關係？
-
-### 5.2 文字限制
-- 每頁文字總量不超過 200 字（不含圖表標題）
-- 每個白話解釋不超過 2 句話
-- 標語不超過 15 字
-
-### 5.3 圖表比例
-- 圖表佔頁面面積 > 60%
-- 每個頁面最多 3 個圖表
-- 圖表之間有明確分隔（`st.markdown("---")`）
-
-### 5.4 字型
-- 全局使用 `Noto Sans TC`
-- 標題：`font-weight: 700`
-- 數值：`font-size: 1.6rem, font-weight: 700`
-- 標籤：`font-size: 0.85rem, color: #7F8C8D`
-- 白話：`font-size: 0.85rem, color: #27AE60, font-style: italic`
+- Stock not found: show `st.error("Stock ID {stock_id} not found")`, do not crash
+- API failure: show `st.warning("Data temporarily unavailable, please try again later")`, do not crash
+- Empty data: show `st.info("No data available to display at this time")`, do not crash
+- **Under no circumstances should Streamlit throw an uncaught exception**
 
 ---
 
-## 六、開發前檢查清單
+## V. PPT Style Detailed Specifications
 
-在寫任何新頁面或新功能之前，必須確認：
+### 5.1 One Key Point Per Page
+- Each page answers only one question:
+  - Business Card: How does this company make money?
+  - Operational Checkup: How does it make money? How stable is it?
+  - Financial Health: How much is earned? How much is spent? How much is left?
+  - Peer Comparison: How does it differ from the industry leader?
+  - Group Structure: What is the relationship between parent and subsidiaries?
 
-- [ ] 符合版面區域劃分（A 區導航、B 區側邊欄、C 區內容）
-- [ ] 顏色使用符合顏色系統
-- [ ] 按鈕 key 唯一且有命名規則
-- [ ] 頁面切換有 loading 狀態
-- [ ] 資料層不依賴 Streamlit
-- [ ] 錯誤處理完善（找不到、API 失敗、空資料）
-- [ ] 圖表比例尺自動調整
-- [ ] 文字量符合 PPT 風格限制
-- [ ] 側邊欄行為正確（可收起可展開）
-- [ ] 十秒測試通過（新手能理解核心訊息）
+### 5.2 Text Limits
+- Total text per page must not exceed 200 characters (excluding chart titles)
+- Each plain-language explanation must not exceed 2 sentences
+- Taglines must not exceed 15 characters
+
+### 5.3 Chart Proportion
+- Charts must occupy > 60% of the page area
+- Maximum 3 charts per page
+- Charts must be clearly separated (`st.markdown("---")`)
+
+### 5.4 Typography
+- Global font: `Noto Sans TC`
+- Headings: `font-weight: 700`
+- Values: `font-size: 1.6rem, font-weight: 700`
+- Labels: `font-size: 0.85rem, color: #7F8C8D`
+- Plain-language: `font-size: 0.85rem, color: #27AE60, font-style: italic`
 
 ---
 
-*建立日期：2026-06-08*
-*維護者：主 agent（PM）*
+## VI. Pre-Development Checklist
+
+Before writing any new page or feature, confirm the following:
+
+- [ ] Complies with layout zone division (Zone A navbar, Zone B sidebar, Zone C content)
+- [ ] Color usage conforms to the color system
+- [ ] Button keys are unique and follow naming conventions
+- [ ] Page switching has a loading state
+- [ ] Data layer does not depend on Streamlit
+- [ ] Error handling is complete (not found, API failure, empty data)
+- [ ] Chart scales auto-adjust
+- [ ] Text volume conforms to PPT style limits
+- [ ] Sidebar behavior is correct (collapsible and expandable)
+- [ ] Passes the ten-second test (a beginner can understand the core message)
+
+---
+
+*Created: 2026-06-08*
+*Maintainer: Main agent (PM)*

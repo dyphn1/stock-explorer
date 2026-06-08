@@ -1,290 +1,290 @@
-# 股識 Stock Explorer — 架構定義
+# 股識 Stock Explorer — Architecture Definition
 
-> 這是一份「開發前必須遵循」的架構分層規範。所有新功能必須依照本文件的分層與資料流開發。
+> This is a "must-follow before development" architecture layering specification. All new features must be developed according to the layers and data flow defined in this document.
 
 ---
 
-## 一、分層架構
+## I. Layered Architecture
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  展示層 (View)                                      │
+│  Presentation Layer (View)                          │
 │  src/pages/*.py                                     │
-│  職責：純渲染，接收 data dict，產生 Streamlit UI     │
-│  禁止：直接呼叫 FinMind API、直接讀寫 file/cache     │
+│  Responsibility: Pure rendering, receives data dict, produces Streamlit UI │
+│  Forbidden: Directly calling FinMind API, directly reading/writing file/cache │
 ├─────────────────────────────────────────────────────┤
-│  路由層 (Router)                                    │
+│  Routing Layer (Router)                             │
 │  src/pages/router.py                                │
-│  職責：管理 session_state、選擇 View、協調資料載入    │
-│  禁止：直接產生 UI 元件、直接打 API                  │
+│  Responsibility: Manages session_state, selects View, coordinates data loading │
+│  Forbidden: Directly producing UI components, directly calling API │
 ├─────────────────────────────────────────────────────┤
-│  業務邏輯層 (Service)                               │
+│  Business Logic Layer (Service)                     │
 │  src/services/*.py                                  │
-│  職責：計算指標、生成圖表、白話轉譯、資料分析         │
-│  禁止：使用任何 Streamlit API、直接讀寫 cache        │
+│  Responsibility: Calculates indicators, generates charts, plain-language translation, data analysis │
+│  Forbidden: Using any Streamlit API, directly reading/writing cache │
 ├─────────────────────────────────────────────────────┤
-│  資料層 (Model/Data)                                │
+│  Data Layer (Model/Data)                            │
 │  src/data/*.py                                      │
-│  職責：FinMind API 封裝、快取管理、資料模型           │
-│  禁止：使用任何 Streamlit API、包含業務邏輯          │
+│  Responsibility: FinMind API wrapper, cache management, data models │
+│  Forbidden: Using any Streamlit API, containing business logic │
 └─────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 二、各層職責明確定義
+## II. Layer Responsibilities — Clearly Defined
 
-### 2.1 資料層 — `src/data/`
+### 2.1 Data Layer — `src/data/`
 
-**檔案**：
-- `finmind_client.py`：FinMind API 封裝，含快取
-- `models.py`：資料型別定義（若需要）
+**Files**:
+- `finmind_client.py`: FinMind API wrapper, including caching
+- `models.py`: Data type definitions (if needed)
 
-**職責**：
-- 打 FinMind API
-- 管理本地檔案快取（讀、寫、TTL 失效）
-- 回傳 pandas DataFrame 或 dict
+**Responsibilities**:
+- Call FinMind API
+- Manage local file caching (read, write, TTL expiration)
+- Return pandas DataFrame or dict
 
-**介面規範**：
+**Interface conventions**:
 ```python
-# ✅ 正確：回傳 DataFrame
+# ✅ Correct: Return DataFrame
 def get_daily_price(self, stock_id: str) -> pd.DataFrame:
     ...
 
-# ✅ 正確：回傳 None 表示無資料（不拋異常）
+# ✅ Correct: Return None to indicate no data (do not raise exception)
 def get_latest_price(self, stock_id: str) -> dict | None:
     ...
 
-# ❌ 錯誤：在資料層決定是否顯示 spinner
-# ❌ 錯誤：在資料層做「取 200 筆後排序取前 20」这种混有業務邏輯的操作
+# ❌ Wrong: Deciding in the data layer whether to show a spinner
+# ❌ Wrong: Performing business-logic operations like "take 200 records, sort, then take top 20" in the data layer
 ```
 
-**禁止**：
-- 不可 import streamlit
-- 不可包含排序、篩選前 N 筆等業務邏輯（除非是 API 本身參數）
-- 不可在資料層做 progress bar 操作
+**Forbidden**:
+- Must not import streamlit
+- Must not contain business logic such as sorting or filtering top N records (unless it is an API parameter itself)
+- Must not perform progress bar operations in the data layer
 
-### 2.2 業務邏輯層 — `src/services/`
+### 2.2 Business Logic Layer — `src/services/`
 
-**檔案**：
-- `chart.py`：Plotly 圖表生成函式庫（純輸入 data → 輸出 fig）
-- `analogy_engine.py`：白話轉譯引擎（數值 → 生活化比喻）
-- `revenue_analyzer.py`：營收分析（營收資料 → 分析結果）
-- `news_summarizer.py`：新聞摘要（新聞列表 → 摘要文字）
-- `adaptive_engine.py`：事件偵測、新鮮度檢查
+**Files**:
+- `chart.py`: Plotly chart generation library (pure input data → output fig)
+- `analogy_engine.py`: Plain-language translation engine (numerical values → everyday-life analogies)
+- `revenue_analyzer.py`: Revenue analysis (revenue data → analysis results)
+- `news_summarizer.py`: News summarization (news list → summary text)
+- `adaptive_engine.py`: Event detection, freshness checking
 
-**職責**：
-- 接收 DataFrame/dict，回傳計算結果或圖表物件
-- 所有圖表在這一層生成
-- 所有數值計算在這一層完成
+**Responsibilities**:
+- Receive DataFrame/dict, return computed results or chart objects
+- All charts are generated at this layer
+- All numerical calculations are completed at this layer
 
-**介面規範**：
+**Interface conventions**:
 ```python
-# ✅ 正確：純函數，輸入 data → 輸出 fig
+# ✅ Correct: Pure function, input data → output fig
 def create_revenue_trend_chart(revenue_df: pd.DataFrame) -> go.Figure:
     ...
 
-# ✅ 正確：純函數，輸入數值 → 輸出文字
+# ✅ Correct: Pure function, input value → output text
 def get_gross_margin_analogy(margin: float) -> str:
     ...
 
-# ❌ 錯誤：在 service 層用 st.plotly_chart()
-# ❌ 錯誤：在 service 層用 st.spinner()
+# ❌ Wrong: Using st.plotly_chart() in the service layer
+# ❌ Wrong: Using st.spinner() in the service layer
 ```
 
-**禁止**：
-- 不可 import streamlit
-- 不可直接呼叫 FinMind API（必須透過 data layer）
-- 不可有 side effect（寫檔、寫 cache 等）
+**Forbidden**:
+- Must not import streamlit
+- Must not directly call FinMind API (must go through data layer)
+- Must not have side effects (writing files, writing cache, etc.)
 
-### 2.3 路由層 — `src/pages/router.py`
+### 2.3 Routing Layer — `src/pages/router.py`
 
-**職責**：
-- 讀取 `session_state["page"]` 決定顯示哪個 View
-- 讀取 `session_state["stock_id"]` 決定顯示哪支股票
-- 呼叫 `_router_base.get_stock_data()` 統一載入資料
-- 管理「不需要特定股票的頁面」（分類瀏覽、ETF 專區、我的關注、事件儀表板）
-- 處理頁面切換時的 loading 狀態
+**Responsibilities**:
+- Read `session_state["page"]` to determine which View to display
+- Read `session_state["stock_id"]` to determine which stock to display
+- Call `_router_base.get_stock_data()` to uniformly load data
+- Manage "pages that don't require a specific stock" (category browser, ETF section, my watchlist, event dashboard)
+- Handle loading state during page switches
 
-**資料流**：
+**Data flow**:
 ```
 session_state["stock_id"]
     ↓
 router.load_and_render_page(client, stock_id)
     ↓
-_router_base.get_stock_data(client, stock_id)  ← 統一入口
+_router_base.get_stock_data(client, stock_id)  ← single entry point
     ↓
-檢查 get_stock_data 內部並行/分批邏輯
+Check get_stock_data internal parallel/batch logic
     ↓
-FinMindClient → 快取 → 回傳 data dict
+FinMindClient → cache → return data dict
     ↓
-交給對應的 View function
+Pass to the corresponding View function
 ```
 
-**規範**：
-- Router 是唯一可以決定「什麼時候載入什麼資料」的地方
-- 不可在 View 層重複載入已經在 router 層載好的資料
-- 必須在頁面切換時顯示 `st.spinner`
+**Conventions**:
+- Router is the only place that can decide "when to load what data"
+- Must not duplicate data already loaded at the router layer in the View layer
+- Must display `st.spinner` during page switches
 
-### 2.4 展示層 — `src/pages/*.py`
+### 2.4 Presentation Layer — `src/pages/*.py`
 
-**檔案**（每個檔案對應一個頁面）：
-- `business_card.py`：公司名片
-- `operation_checkup.py`：營運健檢
-- `financial_health.py`：財務體質
-- `peer_comparison.py`：同業比較
-- `group_structure.py`：集團架構
-- `category_browser.py`：分類瀏覽
-- `etf_browser.py`：ETF 專區
-- `etf_detail.py`：ETF 詳細
-- `watchlist_page.py`：我的關注
-- `event_dashboard.py`：事件儀表板
+**Files** (each file corresponds to one page):
+- `business_card.py`: Company business card
+- `operation_checkup.py`: Operational checkup
+- `financial_health.py`: Financial health
+- `peer_comparison.py`: Peer comparison
+- `group_structure.py`: Group structure
+- `category_browser.py`: Category browser
+- `etf_browser.py`: ETF section
+- `etf_detail.py`: ETF detail
+- `watchlist_page.py`: My watchlist
+- `event_dashboard.py`: Event dashboard
 
-**職責**：
-- 接收 `data` dict + `client`（如果需要額外查詢）
-- 呼叫 `src/services/` 的函式生成圖表
-- 用 Streamlit API 渲染 UI
+**Responsibilities**:
+- Receive `data` dict + `client` (if additional queries are needed)
+- Call `src/services/` functions to generate charts
+- Render UI using Streamlit API
 
-**規範**：
+**Conventions**:
 ```python
-# ✅ 正確：View 接收 data dict，呼叫 service 生成圖表
+# ✅ Correct: View receives data dict, calls service to generate chart
 def _render_business_card(data: dict, client: FinMindClient):
     st.markdown(f"## {data['stock_name']}")
     fig = create_revenue_pie_chart(data["monthly_revenue"])
     st.plotly_chart(fig)
 
-# ✅ 正確：View 可以在需要時透過 client 額外查詢
-# 但僅限於「該頁面專用」的小量查詢，不可重複 _router_base 已載入的全部資料
+# ✅ Correct: View can make additional queries through client when needed
+# But only for "page-specific" small queries, must not duplicate all data already loaded by _router_base
 def _render_peer_comparison(data: dict, client: FinMindClient):
     benchmark_id = get_benchmark(data["industry"])
-    benchmark_data = get_stock_data(client, benchmark_id)  # 額外查詢標竿
+    benchmark_data = get_stock_data(client, benchmark_id)  # additional benchmark query
     ...
 
-# ❌ 錯誤：在 View 中重新載入該頁面已經有的全部資料
-# ❌ 錯誤：在 View 中呼叫 client.get_daily_price() 之類的基礎查詢（應在 router/base 統一做）
+# ❌ Wrong: Reloading all data already available to the page in the View
+# ❌ Wrong: Calling basic queries like client.get_daily_price() in the View (should be done uniformly in router/base)
 ```
 
-**禁止**：
-- 不可直接讀寫 cache file
-- 不可做複雜的數值計算（應在 service 層）
-- 不可有業務邏輯（如判斷是否是集團企業，應在 service 層）
+**Forbidden**:
+- Must not directly read/write cache files
+- Must not perform complex numerical calculations (should be in service layer)
+- Must not contain business logic (e.g., determining whether a company is a group enterprise should be in service layer)
 
 ---
 
-## 三、資料流規範
+## III. Data Flow Conventions
 
-### 3.1 標準資料流
+### 3.1 Standard Data Flow
 
 ```
-使用者操作（側邊欄 / 頁籤 / 搜尋）
-    → st.session_state 更新
+User action (sidebar / tab / search)
+    → st.session_state update
     → st.rerun()
     → router.load_and_render_page()
-        → _router_base.get_stock_data()（單一入口）
-            → FinMindClient（含快取）
-            → 回傳 data dict
-        → 選擇 View function
-            → View 呼叫 services/ 生成圖表
-            → View 用 st.* 渲染
+        → _router_base.get_stock_data() (single entry point)
+            → FinMindClient (with caching)
+            → Return data dict
+        → Select View function
+            → View calls services/ to generate charts
+            → View renders with st.*
 ```
 
-### 3.2 禁止的反向依賴
+### 3.2 Forbidden Reverse Dependencies
 
 ```
-❌ View → 直接 → Data layer（跳過 service）
-❌ Service → 直接 → View（service 不可有 UI）
-❌ Data layer → 直接 → View（data 不可有 UI）
-❌ View → 寫入 → session_state 以外的狀態（用 st.session_state）
+❌ View → directly → Data layer (skipping service)
+❌ Service → directly → View (service must not have UI)
+❌ Data layer → directly → View (data must not have UI)
+❌ View → writes to → state other than session_state (use st.session_state)
 ```
 
-### 3.3 資料快取策略
+### 3.3 Data Caching Strategy
 
-| 資料類型 | 快取 TTL | 更新時機 |
-|----------|----------|----------|
-| 日收盤價 | 1 天 | 每日收盤後 |
-| 月營收 | 1 天 | 每月 10 日後 |
-| 財報 | 1 天 | 每季公布後 |
-| 公司基本資訊 | 7 天 | 過期後更新 |
-| 新聞 | 1 天 | 每日更新 |
+| Data Type | Cache TTL | Update Timing |
+|-----------|-----------|---------------|
+| Daily closing price | 1 day | After market close |
+| Monthly revenue | 1 day | After the 10th of each month |
+| Financial report | 1 day | After quarterly announcement |
+| Company basic info | 7 days | Updated after expiration |
+| News | 1 day | Daily update |
 
-**規範**：
-- 快取由 `FinMindClient` 統一管理
-- 不可在 View 或 Service 層自己做快取
-- 不可在 View 層用 `st.cache_data`（會導致 session 間共享難以除錯）
+**Conventions**:
+- Caching is uniformly managed by `FinMindClient`
+- Must not implement your own caching in the View or Service layer
+- Must not use `st.cache_data` in the View layer (causes cross-session sharing that is difficult to debug)
 
 ---
 
-## 四、頁面切換機制
+## IV. Page Switching Mechanism
 
-### 4.1 State 管理
+### 4.1 State Management
 
-所有頁面狀態由 `session_state` 管理：
+All page state is managed by `session_state`:
 
 ```python
-# 全域 state
-st.session_state["stock_id"]      # 目前股票代碼
-st.session_state["page"]           # 目前頁面名稱
-st.session_state["industry_filter"] # 產業篩選（如果使用）
+# Global state
+st.session_state["stock_id"]      # Current stock ID
+st.session_state["page"]           # Current page name
+st.session_state["industry_filter"] # Industry filter (if used)
 
-# 頁面內 state（用前綴區分）
-st.session_state["peer_benchmark"] # 同業比較的標竿
-st.session_state["compare_stocks"] # 比較的股票列表
+# In-page state (distinguished by prefix)
+st.session_state["peer_benchmark"] # Benchmark for peer comparison
+st.session_state["compare_stocks"] # List of stocks to compare
 ```
 
-### 4.2 切換流程
+### 4.2 Switching Flow
 
 ```
-側邊欄按鈕 / 頁籤按鈕
-    → st.session_state["stock_id"] = sid  （如果需要）
+Sidebar button / tab button
+    → st.session_state["stock_id"] = sid  (if needed)
     → st.session_state["page"] = page_name
-    → st.rerun()  # 觸發整個頁面重繪
+    → st.rerun()  # Trigger full page repaint
 ```
 
-**原則**：
-- 不使用 `st.switch_page()`（它會失去 session_state）
-- 不手動清除不需要的 state
-- 頁面切換時，router 負責用 `st.spinner` 包裝資料載入
+**Principles**:
+- Do not use `st.switch_page()` (it loses session_state)
+- Do not manually clear unnecessary state
+- When switching pages, router is responsible for wrapping data loading with `st.spinner`
 
-### 4.3 獨立頁面
+### 4.3 Standalone Pages
 
-以下頁面不需要 `stock_id`，由 router 直接導向：
-- `分類瀏覽`（`category_browser.py`）
-- `ETF 專區`（`etf_browser.py`）
-- `我的關注`（`watchlist_page.py`）
-- `事件儀表板`（`event_dashboard.py`）
+The following pages do not require `stock_id` and are directly routed by the router:
+- `Category Browser` (`category_browser.py`)
+- `ETF Section` (`etf_browser.py`)
+- `My Watchlist` (`watchlist_page.py`)
+- `Event Dashboard` (`event_dashboard.py`)
 
-這些頁面自行管理自己的資料載入與 state。
-
----
-
-## 五、錯誤處理分層
-
-| 層級 | 處理方式 |
-|------|----------|
-| Data layer | API 失敗時回傳 None 或空 DataFrame，**不拋異常** |
-| Service layer | 收到 None/空資料時回傳 None 或空 fig，**不拋異常** |
-| View layer | 收到 None 時顯示 `st.info()` 或跳過該區塊，**不 crash** |
-| Router layer | `get_stock_data` 回傳 None 時顯示 `st.error()` 並 return |
-
-**原則**：任何層級都不可讓未捕獲的 exception 到達 Streamlit。
+These pages manage their own data loading and state.
 
 ---
 
-## 六、開發前架構檢查清單
+## V. Error Handling by Layer
 
-在寫任何新代码之前：
+| Layer | Handling Method |
+|-------|-----------------|
+| Data layer | Return None or empty DataFrame on API failure, **do not raise exception** |
+| Service layer | Return None or empty fig when receiving None/empty data, **do not raise exception** |
+| View layer | Display `st.info()` or skip the section when receiving None, **do not crash** |
+| Router layer | Display `st.error()` and return when `get_stock_data` returns None |
 
-- [ ] 確認放在正確的層（data / service / page / router）
-- [ ] 確認沒有跨越層級直接向 API 或向 Streamlit
-- [ ] 確認資料流方向正確（View → Service → Data，不可反向）
-- [ ] 確認 error handling 在各層都到位
-- [ ] 確認 session_state 管理在 router 或 View 層（不在 Data/Service 層）
-- [ ] 確認按鈕 key 唯一
-- [ ] 確認頁面切換有 spinner
-- [ ] 確認快取由 FinMindClient 統一管理
-- [ ] 沒有在 View 層用 `st.cache_data`（全域 cache 會影響其他 session）
+**Principle**: No layer may allow an uncaught exception to reach Streamlit.
 
 ---
 
-*建立日期：2026-06-08*
-*維護者：主 agent（PM）*
+## VI. Pre-Development Architecture Checklist
+
+Before writing any new code:
+
+- [ ] Confirm it is placed in the correct layer (data / service / page / router)
+- [ ] Confirm there are no cross-layer direct calls to API or to Streamlit
+- [ ] Confirm data flow direction is correct (View → Service → Data, no reverse)
+- [ ] Confirm error handling is in place at every layer
+- [ ] Confirm session_state management is at the router or View layer (not Data/Service layer)
+- [ ] Confirm button keys are unique
+- [ ] Confirm page switches have a spinner
+- [ ] Confirm caching is uniformly managed by FinMindClient
+- [ ] No use of `st.cache_data` in the View layer (global cache affects other sessions)
+
+---
+
+*Created: 2026-06-08*
+*Maintainer: Main agent (PM)*
