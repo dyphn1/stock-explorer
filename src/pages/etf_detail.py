@@ -8,6 +8,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from src.data.finmind_client import FinMindClient
 from src.pages._router_base import _section_title, _白话_card, _info_card, filter_by_timeline
+from src.services.chart import create_price_area_chart
 
 
 def _get_etf_one_liner(stock_name: str) -> str:
@@ -122,27 +123,9 @@ def _render_etf_detail(data: dict, client: FinMindClient):
             df_price = df_price[df_price["date"] >= cutoff].reset_index(drop=True)
 
             if len(df_price) > 0:
-                fig = go.Figure()
-                fig.add_trace(go.Scatter(
-                    x=df_price["date"],
-                    y=df_price["close"],
-                    mode="lines",
-                    name="收盤價",
-                    line=dict(color="#3498DB", width=2),
-                    fill="tozeroy",
-                    fillcolor="rgba(52, 152, 219, 0.1)",
-                ))
-                fig.update_layout(
-                    title=f"{stock_name} 近一年收盤價走勢",
-                    xaxis_title="日期",
-                    yaxis_title="價格",
-                    height=400,
-                    margin=dict(l=40, r=40, t=60, b=40),
-                    plot_bgcolor="white",
-                    paper_bgcolor="white",
+                fig = create_price_area_chart(
+                    df_price, title=f"{stock_name} 近一年收盤價走勢"
                 )
-                fig.update_xaxes(showgrid=True, gridcolor="#F0F0F0")
-                fig.update_yaxes(showgrid=True, gridcolor="#F0F0F0")
                 st.plotly_chart(fig, use_container_width=True)
             else:
                 st.info("近一年無價格資料")

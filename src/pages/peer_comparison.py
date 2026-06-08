@@ -5,6 +5,7 @@
 
 import streamlit as st
 import pandas as pd
+from src.data.finmind_client import FinMindClient
 from src.services.chart import create_comparison_radar
 from src.services.analogy_engine import (
     get_gross_margin_analogy,
@@ -69,6 +70,54 @@ INDUSTRY_BENCHMARKS = {
 }
 
 
+@st.cache_data(ttl=3600)
+def _find_fallback_benchmark(industry: str, stock_id: str):
+    """Find the largest company in the same industry as a fallback benchmark."""
+    try:
+        client = FinMindClient()
+        all_stocks = client.get_stock_info()  # cached full-universe call
+        if all_stocks is None or all_stocks.empty:
+            return None
+        # Filter same industry, Exclude self
+        peers = all_stocks[
+            (all_stocks["industry_category"] == industry) &
+            (all_stocks["stock_id"] != stock_id)
+        ]
+        if peers.empty:
+            return None
+        # Sort by stock_id ascending (proxy for market establishment)
+        peers = peers.sort_values("stock_id")
+        best = peers.iloc[0]
+        return (best["stock_id"], best["stock_name"])
+    except Exception:
+        return None
+
+
+def _render_single_company_view(data: dict, stock_name: str, industry: str):
+    """Show single-company data when no benchmark is available."""
+    st.warning(f"⚠️ 找不到「{industry}」的同業標竿公司，以下僅顯示 {stock_name} 的指標")
+    # Show the target company's key metrics in a simple table/card
+    metrics = {}
+    if data.get("per_pbr") is not None and not data["per_pbr"].empty:
+        latest = data["per_pbr"].iloc[-1]
+        metrics["本益比"] = latest.get("PE_ratio", "—")
+        metrics["股價淨值比"] = latest.get("PB_ratio", "—")
+        metrics["殖利率"] = latest.get("dividend_yield", "—")
+    if data.get("financial_statements") is not None and not data["financial_statements"].empty:
+        latest_fs = data["financial_statements"].iloc[-1]
+        # extract whatever fields are available
+        for field, label in [("net_profit_margin", "淨利率"), ("ROE", "ROE")]:
+            if field in latest_fs:
+                metrics[label] = latest_fs[field]
+
+    if metrics:
+        for label, value in metrics.items():
+            st.metric(label, value)
+    else:
+        st.info("目前無法取得此公司的指標資料")
+    st.caption(f"💡 如需同業比較，請在側邊欄切換到其他具有標竿公司的產業")
+
+
 def _render_peer_comparison(data: dict, client):
     """同業比較主頁"""
     stock_id = data["stock_id"]
@@ -85,14 +134,20 @@ def _render_peer_comparison(data: dict, client):
 
     # 決定標竿公司
     benchmark_id, benchmark_name = INDUSTRY_BENCHMARKS.get(industry, (None, None))
+    is_fallback = False
 
     if benchmark_id is None:
-        st.warning(f"「{industry}」目前沒有設定標竿公司。")
-        benchmark_id = st.text_input("輸入標竿公司股票代號", placeholder="例如：2330")
-        if not benchmark_id:
-            st.info("請輸入標竿公司股票代號")
+        with st.spinner("正在尋找同業標竿..."):
+            fallback = _find_fallback_benchmark(industry, stock_id)
+        if fallback:
+            benchmark_id, benchmark_name = fallback
+            is_fallback = True
+        else:
+            _render_single_company_view(data, stock_name, industry)
             return
-        benchmark_name = benchmark_id
+
+    if is_fallback:
+        st.info("⚠️ 此產業無預設標竿，已自動選取同業最大公司作為基準")
 
     # 避免自己跟自己比
     if benchmark_id == stock_id:
@@ -107,7 +162,8 @@ def _render_peer_comparison(data: dict, client):
         bench_data = _get_benchmark_data(client, benchmark_id)
 
     if bench_data is None:
-        st.error(f"無法載入標竿公司 {benchmark_name} 的資料")
+        st.error(f"無法載入標竿公司 {benchmark_name} 的資料，以下僅顯示 {stock_name} 的指標")
+        _render_single_company_view(data, stock_name, industry)
         return
 
     st.markdown("---")
