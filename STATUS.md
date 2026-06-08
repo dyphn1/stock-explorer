@@ -231,6 +231,18 @@
 - Layer 0 + Layer 1 全綠（51/51 + 18/18）
 - Git commit: `a6dd78f`
 
+### 2026-06-09（Design Review 修復）
+- **BUG 修復**：`_render_single_company_view` 使用錯誤的 data dict keys（per_pbr → latest_per_pbr, financial_statements → financial），導致指標提取為 dead code
+- **DRY**：移除 peer_comparison.py 重複的 card helpers，改由 _router_base import
+- **TONE**：移除 st.warning/st.info 重複的 emoji；圖表標註改為更白話的中文
+- Git commit: `a135900`
+
+### 2026-06-09（P2 修復）
+- **P2-3 修復**：深色模式圖表對比度 — 新增 `_get_chart_colors()` + `_apply_theme_layout()` 共用主題色彩系統，替換所有硬編碼色彩
+- **P2-4 修復**：快取目錄 LRU 清理 — 超過 500 檔或 100MB 時自動淘汰最舊檔案，加入 debug logging
+- Layer 0 + Layer 1 全綠
+- Git commit: `cf27a4c`
+
 ## 架構總覽
 ### 目錄結構
 ```
@@ -336,8 +348,8 @@ Per `docs/DESIGN_REVIEW.md` consolidated roadmap:
 ||---|-------|--------|--------|--------||
 || 1 | Browser back button doesn't work (st.query_params) | High | Next | P2 ||
 || 2 | Layout breaks on small screens (CSS media queries + st.tabs) | High | Queued | P2 ||
-|| 3 | Dark mode chart label contrast (shared CHART_TEMPLATE) | Medium | Queued | P2 ||
-|| 4 | Cache directory grows unbounded (LRU eviction) | Low | Queued | P2 ||
+|| 3 | Dark mode chart label contrast (shared CHART_TEMPLATE) | Medium | ✅ Done | P2 || `cf27a4c` ||
+|| 4 | Cache directory grows unbounded (LRU eviction) | Low | ✅ Done | P2 || `cf27a4c` ||
 || 5 | Fragile column name access in event detection | Medium | Queued | P2 ||
 
 ### Pending Daniel Confirmation (3 items)
@@ -361,6 +373,6 @@ See `docs/PENDING_REVIEW.md` for details:
 | 2026-06-08 21:27 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
 | 2026-06-08 23:30 | ✅ 無新 Bug | ✅ 無未完成任務 | — | 全局反思完成，等待 Daniel UI 驗證 |
 || 2026-06-09 01:41 | ✅ 50/50 (L0) | ✅ 18/18 (L1) | — | P0 全部修復完成，Layer 0 + Layer 1 全綠 |
-|| 2026-06-09 (P1) | ✅ 51/51 (L0) | ✅ 18/18 (L1) | — | P1-1~9 全部完成（8 項修復），L0+L1 全綠 |
+|| 2026-06-09 (P2) | ✅ 51/51 (L0) | ✅ 18/18 (L1) | — | P2-3 + P2-4 完成，L0+L1 全綠 |
 
 *最後更新：2026-06-09*
