@@ -280,14 +280,30 @@ config/
 
 ## Next Steps
 
-### Current Sprint: P0 Bug Fixes (4 items, auto-implementing)
+### ✅ P0 Bug Fixes — COMPLETED (2026-06-09)
 
-| # | Issue | Priority | Status |
-|---|-------|----------|--------|
-| 1 | DuplicateWidgetID crash in event dashboard | P0 | Auto-fix |
-| 2 | API abuse in `get_stock_info` — full list per stock | P0 | Auto-fix |
-| 3 | Daily cache invalidation — `end_date` in cache key | P0 | Auto-fix |
-| 4 | Race conditions in YAML file operations | P0 | Auto-fix |
+| # | Issue | Fix | Commit |
+|---|-------|-----|--------|
+| 1 | DuplicateWidgetID crash in event dashboard | Enumerate index keys | `ff1c708` |
+| 2 | API abuse in `get_stock_info` — full list per stock | Shared `_fetch_all_stock_info()` + `search_stocks()` | `ff1c708` |
+| 3 | Daily cache invalidation — `end_date` in cache key | Remove `end` from cache key + `_cleanup_cache()` | `ff1c708` |
+| 4 | Race conditions in YAML file operations | `filelock` + atomic write (`os.replace`) | `ff1c708` |
+
+### Current Sprint: P1 Fixes (next priority band)
+
+Per `docs/DESIGN_REVIEW.md` consolidated roadmap (recommended order):
+
+| # | Issue | Effort | Status |
+|---|-------|--------|--------|
+| 1 | Crude ROE annualization — quarterly × 4 misleading (TTM) | Medium | Next |
+| 2 | No loading indicator on page switch (st.spinner) | Low | Queued |
+| 3 | ETF determination missing `industry_category` param | Low | Queued |
+| 4 | Watchlist add/remove — no visual feedback | Low | Queued |
+| 5 | Unhandled API rate limit — silent failures | Medium | Queued |
+| 6 | Sidebar name search UI already done (P0-3) | Done | ✅ |
+| 7 | Timeline filter silent failure | Low | Queued |
+| 8 | Peer comparison dead-end for non-benchmark stocks | Medium | Queued |
+| 9 | Single-period data shows empty charts | Medium | Queued |
 
 ### Pending Daniel Confirmation (3 items)
 
@@ -296,10 +312,6 @@ See `docs/PENDING_REVIEW.md` for details:
 2. Seasonal industry list for ROE note
 3. ETF classification severity (P0 or P1?)
 
-### Upcoming: P1 Fixes (10 items, after P0 complete)
-
-See `docs/DESIGN_REVIEW.md` for full roadmap.
-
 ---
 
 ## 驗證紀錄
@@ -307,11 +319,12 @@ See `docs/DESIGN_REVIEW.md` for full roadmap.
 | 日期 | Gate 1 (Import) | Gate 2 (Render) | Gate 3 (Smoke) | 備註 |
 |------|-----------------|-----------------|----------------|------|
 | 2026-06-08 11:12 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
-|| 2026-06-08 13:16 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
-||| 2026-06-08 15:17 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
-|||| 2026-06-08 17:21 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
-||| 2026-06-08 19:25 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
-||||| 2026-06-08 21:27 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
-||||| 2026-06-08 23:30 | ✅ 無新 Bug | ✅ 無未完成任務 | — | 全局反思完成，等待 Daniel UI 驗證 |
+| 2026-06-08 13:16 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
+| 2026-06-08 15:17 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
+| 2026-06-08 17:21 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
+| 2026-06-08 19:25 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
+| 2026-06-08 21:27 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
+| 2026-06-08 23:30 | ✅ 無新 Bug | ✅ 無未完成任務 | — | 全局反思完成，等待 Daniel UI 驗證 |
+| 2026-06-09 01:41 | ✅ 50/50 (L0) | ✅ 18/18 (L1) | — | P0 全部修復完成，Layer 0 + Layer 1 全綠 |
 
-*最後更新：2026-06-08 23:30*
+*最後更新：2026-06-09 01:41*
