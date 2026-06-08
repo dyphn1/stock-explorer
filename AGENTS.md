@@ -24,48 +24,73 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 
 ### Model Assignment
 
-**Available models** (from `~/.hermes/config.yaml`):
+**Available models** (all via `provider: openrouter`):
 
-| Model | Provider | Best For |
-|-------|----------|----------|
-| `openrouter/owl-alpha` | openrouter | Default, general reasoning |
-| `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | openrouter | Fallback, large context |
-| `custom/gemma4:e4b` | ollama (local) | Local inference, privacy |
-| `openrouter/google/gemma-4-31b-it:free` | openrouter | **Vision** (screenshot analysis) |
-| `openrouter/meta-llama/llama-3.2-3b-instruct:free` | openrouter | Web extraction |
-| `openrouter/nvidia/nemotron-3-nano-30b-a3b:free` | openrouter | Compression |
-| `grok-4.20-reasoning` | x_search | Search |
+| Model | Size | Strength |
+|-------|------|----------|
+| `openrouter/owl-alpha` | — | Default, balanced reasoning |
+| `openrouter/google/gemma-4-31b-it:free` | 31B | **Vision** (screenshot analysis), strong reasoning |
+| `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | 120B | **Large context**, complex codebases |
+| `openrouter/meta-llama/llama-3.2-3b-instruct:free` | 3B | **Fast**, simple tasks, web extraction |
+| `openrouter/nvidia/nemotron-3-nano-30b-a3b:free` | 30B | **Compression**, summarization |
+
+**Do NOT use:**
+- `custom/gemma4:e4b` (local ollama) — too weak for real work, only for trivial tasks
+- `grok-4.20-reasoning` — not configured
 
 **Role → Model mapping:**
 
-| Role | Model | Reason |
-|------|-------|--------|
-| Product Manager | `openrouter/owl-alpha` | Default, strong reasoning |
-| System Architect | `openrouter/owl-alpha` or `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | Deep technical analysis; use nemotron for large codebases |
-| Developer | `openrouter/owl-alpha` | Code generation |
-| QA Engineer (Visual) | `openrouter/google/gemma-4-31b-it:free` | **Vision model** for screenshot analysis |
-| Design Reviewer | `openrouter/google/gemma-4-31b-it:free` | **Vision model** for visual inspection |
+| Role | Model | Why |
+|------|-------|-----|
+| **Product Manager** | `openrouter/owl-alpha` | Default, strong planning & reasoning |
+| **System Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | 120B for deep analysis of large codebases |
+| **Developer** | `openrouter/owl-alpha` or `openrouter/google/gemma-4-31b-it:free` | Code generation; use gemma for complex refactors |
+| **Design Reviewer** | `openrouter/google/gemma-4-31b-it:free` | **Vision** for visual inspection + strong reasoning |
+| **QA Engineer (Visual)** | `openrouter/google/gemma-4-31b-it:free` | **Vision** for screenshot analysis |
+| **QA Engineer (Quick check)** | `openrouter/meta-llama/llama-3.2-3b-instruct:free` | Fast pass for simple verifications |
 
 **Usage in `delegate_task`:**
 ```python
-# For vision-based tasks (QA, Design Review):
+# Vision task (screenshot analysis, visual QA):
 delegate_task(
     goal="Analyze screenshots for visual issues",
     model="openrouter/google/gemma-4-31b-it:free",
     provider="openrouter",
+    role="leaf",
+    toolsets=["vision", "file"],
     ...
 )
 
-# For text-based tasks (Architect, Developer):
+# Deep architecture analysis (large codebase):
 delegate_task(
-    goal="Analyze architecture issues",
+    goal="Analyze architecture issues across the full codebase",
+    model="openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+    provider="openrouter",
+    role="leaf",
+    toolsets=["terminal", "file"],
+    ...
+)
+
+# Standard development task:
+delegate_task(
+    goal="Implement a specific fix",
     model="openrouter/owl-alpha",
     provider="openrouter",
+    role="leaf",
+    toolsets=["terminal", "file"],
+    ...
+)
+
+# Quick verification / simple task:
+delegate_task(
+    goal="Run quick verification check",
+    model="openrouter/meta-llama/llama-3.2-3b-instruct:free",
+    provider="openrouter",
+    role="leaf",
+    toolsets=["terminal", "file"],
     ...
 )
 ```
-
-**Key principle**: Use `gemma-4-31b-it:free` for ALL vision/screenshot tasks. Use `owl-alpha` for text reasoning. Use `nemotron-3-super-120b` when context is very large.
 
 ### Verification Strategy (Updated 2026-06-08)
 
