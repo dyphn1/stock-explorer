@@ -146,21 +146,24 @@ _TIMELINE_DAYS = {
 }
 
 
-def filter_by_timeline(df: pd.DataFrame, date_col: str = "date") -> pd.DataFrame:
+def filter_by_timeline(
+    df: pd.DataFrame, date_col: str = "date", timeline_key: str = "timeline_range"
+) -> pd.DataFrame:
     """
-    根據 session_state['timeline_range'] 過濾 dataframe。
+    根據 session_state[timeline_key] 過濾 dataframe。
 
     Args:
         df: 要過濾的 dataframe，必須包含 date_col 欄位。
         date_col: 日期欄位名稱，預設為 'date'。
+        timeline_key: session_state 中的時間軸 key，預設為 'timeline_range'。
 
     Returns:
-        過濾後的 dataframe（ALL 或異常時回傳原始 df）。
+        過濾後的 dataframe。過濾失敗或結果為空時回傳原始 df 並顯示提示。
     """
     if df is None or len(df) == 0:
         return df
 
-    selected = st.session_state.get("timeline_range", "3Y")
+    selected = st.session_state.get(timeline_key, "3Y")
 
     if selected == "ALL":
         return df
@@ -173,6 +176,17 @@ def filter_by_timeline(df: pd.DataFrame, date_col: str = "date") -> pd.DataFrame
         dates = pd.to_datetime(df[date_col])
         cutoff = pd.Timestamp.now() - pd.Timedelta(days=days)
         mask = dates >= cutoff
-        return df[mask].reset_index(drop=True)
-    except Exception:
+        filtered_df = df[mask].reset_index(drop=True)
+    except (ValueError, TypeError, KeyError) as e:
+        st.warning(f"⚠️ 時間軸過濾失敗（{e}），已顯示全部資料")
         return df
+    except Exception as e:
+        st.warning(f"⚠️ 時間軸過濾異常，已顯示全部資料")
+        return df
+
+    # Filtered result is empty — fall back to full data with info
+    if len(filtered_df) == 0:
+        st.info("📌 此時間範圍內無資料，已切換至全部資料")
+        return df
+
+    return filtered_df
