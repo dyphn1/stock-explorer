@@ -206,6 +206,31 @@
   - 三階段驗證全部通過（22 模組 import ✅、11 頁面渲染 ✅、內容煙測 ✅）
   - Git commit: `c22098e`
 
+### 2026-06-09（P0 Bug 修復）
+- **P0-1 修復**：DuplicateWidgetID crash — event dashboard 改用 enumerate index keys
+- **P0-2 修復**：API abuse in get_stock_info — 新增 `_fetch_all_stock_info()` + `search_stocks()` 全列表快取
+- **P0-3 修復**：Daily cache invalidation — 移除 `end_date` 的 cache key + 加入 `_cleanup_cache()`
+- **P0-4 修復**：YAML race conditions — `filelock` + atomic write (`os.replace`)
+- Layer 0 + Layer 1 全綠（50/50 + 18/18）
+- Git commit: `ff1c708`
+
+### 2026-06-09（P1 修復 — 第一輪）
+- **P1-1 修復**：ROE 年化計算改用 TTM（Trailing Twelve Months），消除季度 × 4 的誤導
+- **P1-2 修復**：頁面切換加入 `st.spinner` 載入指示器
+- **P1-3 修復**：ETF 判斷邏輯加入 `industry_category` 參數
+- **P1-4 修復**：關注列表新增/移除加入 `st.toast` 視覺回饋
+- **P1-5 修復**：FinMind API 速率限制偵測 + `st.warning` 提醒
+- **P1-6 修復**：Sidebar 中文搜尋已在 P0-3 一併完成
+- **P1-7 修復**：Timeline filter 異常處理 + `st.warning` + 日期範圍標註
+- Layer 0 + Layer 1 全綠
+- Git commits: `db16077`, `ad4b1dc`, `4e3358f`, `6b1ec4b`, `2e7d260`
+
+### 2026-06-09（P1 修復 — 第二輪）
+- **P1-8 修復**：同業比較頁死胡同消除 — 無預設標竿時自動選取同業最大公司作為基準，最差情況顯示單公司指標
+- **P1-9 修復**：單期資料空白圖修復 — K 線圖改以分組長條圖呈現 OHLC，新增 `create_price_area_chart()` 集中化 ETF 價格走勢
+- Layer 0 + Layer 1 全綠（51/51 + 18/18）
+- Git commit: `a6dd78f`
+
 ## 架構總覽
 ### 目錄結構
 ```
@@ -289,21 +314,31 @@ config/
 | 3 | Daily cache invalidation — `end_date` in cache key | Remove `end` from cache key + `_cleanup_cache()` | `ff1c708` |
 | 4 | Race conditions in YAML file operations | `filelock` + atomic write (`os.replace`) | `ff1c708` |
 
-### Current Sprint: P1 Fixes
-
-Per `docs/DESIGN_REVIEW.md` consolidated roadmap (recommended order):
+### ✅ P1 Fixes — COMPLETED (2026-06-09)
 
 || # | Issue | Effort | Status | Commit ||
-|---|-------|--------|--------|--------|
-| 1 | Crude ROE annualization — quarterly × 4 misleading (TTM) | Medium | ✅ Done | `db16077` |
-| 2 | No loading indicator on page switch (st.spinner) | Low | ✅ Done | `ad4b1dc` |
-| 3 | ETF determination missing `industry_category` param | Low | ✅ Done | `4e3358f` |
-| 4 | Watchlist add/remove — no visual feedback | Low | ✅ Done | `4e3358f` |
-| 5 | Unhandled API rate limit — silent failures | Medium | ✅ Done | `6b1ec4b` |
-| 6 | Sidebar name search UI already done (P0-3) | Done | ✅ | `ff1c708` |
-| 7 | Timeline filter silent failure | Low | ✅ Done | `2e7d260` |
-| 8 | Peer comparison dead-end for non-benchmark stocks | Medium | Next |
-| 9 | Single-period data shows empty charts | Medium | Queued |
+||---|-------|--------|--------|--------||
+|| 1 | Crude ROE annualization — quarterly × 4 misleading (TTM) | Medium | ✅ Done | `db16077` ||
+|| 2 | No loading indicator on page switch (st.spinner) | Low | ✅ Done | `ad4b1dc` ||
+|| 3 | ETF determination missing `industry_category` param | Low | ✅ Done | `4e3358f` ||
+|| 4 | Watchlist add/remove — no visual feedback | Low | ✅ Done | `4e3358f` ||
+|| 5 | Unhandled API rate limit — silent failures | Medium | ✅ Done | `6b1ec4b` ||
+|| 6 | Sidebar name search UI already done (P0-3) | Done | ✅ | `ff1c708` ||
+|| 7 | Timeline filter silent failure | Low | ✅ Done | `2e7d260` ||
+|| 8 | Peer comparison dead-end for non-benchmark stocks | Medium | ✅ Done | `a6dd78f` ||
+|| 9 | Single-period data shows empty charts | Medium | ✅ Done | `a6dd78f` ||
+
+### Current Sprint: P2 Polish
+
+Per `docs/DESIGN_REVIEW.md` consolidated roadmap:
+
+|| # | Issue | Effort | Status | Priority ||
+||---|-------|--------|--------|--------||
+|| 1 | Browser back button doesn't work (st.query_params) | High | Next | P2 ||
+|| 2 | Layout breaks on small screens (CSS media queries + st.tabs) | High | Queued | P2 ||
+|| 3 | Dark mode chart label contrast (shared CHART_TEMPLATE) | Medium | Queued | P2 ||
+|| 4 | Cache directory grows unbounded (LRU eviction) | Low | Queued | P2 ||
+|| 5 | Fragile column name access in event detection | Medium | Queued | P2 ||
 
 ### Pending Daniel Confirmation (3 items)
 
@@ -326,6 +361,6 @@ See `docs/PENDING_REVIEW.md` for details:
 | 2026-06-08 21:27 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
 | 2026-06-08 23:30 | ✅ 無新 Bug | ✅ 無未完成任務 | — | 全局反思完成，等待 Daniel UI 驗證 |
 || 2026-06-09 01:41 | ✅ 50/50 (L0) | ✅ 18/18 (L1) | — | P0 全部修復完成，Layer 0 + Layer 1 全綠 |
-|| 2026-06-09 (P1) | ✅ 51/51 (L0) | ✅ 18/18 (L1) | — | P1-1~7 全部完成（6 項新修復），L0+L1 全綠 |
+|| 2026-06-09 (P1) | ✅ 51/51 (L0) | ✅ 18/18 (L1) | — | P1-1~9 全部完成（8 項修復），L0+L1 全綠 |
 
 *最後更新：2026-06-09*
