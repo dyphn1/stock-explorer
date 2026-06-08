@@ -13,14 +13,14 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 
 ### 角色定義
 
-| 角色 | 職責 | 決策範圍 |
-|------|------|----------|
-| **Daniel（客戶端）** | 最終使用者，體驗品質判斷 | UI/視覺/資訊架構的最終決策 |
-| **主 Agent（PM）** | 全局規劃、優先級、反思、協調團隊 | 任務分派、進度管理、跨模組一致性 |
-| **系統架構師** | 分層架構、資料流、錯誤處理規範 | 技術方案、架構調整 |
-| **前端/UX Agent** | 設計風格指南、元件規範、互動模式 | 視覺呈現、使用者體驗 |
-| **後端/開發 Agent** | 功能實作、bug 修復、code review | 實現細節、技術選型 |
-| **QA/測試 Agent** | 驗證 script、功能測試、報告 | 品質把關、問題回報 |
+| 角色 | 類型 | 職責 | 決策範圍 |
+|------|------|------|----------|
+| **Daniel（客戶端）** | 人類 | 最終使用者，體驗品質判斷 | UI/視覺/資訊架構的最終決策 |
+| **產品經理** | 主 agent | 全局規劃、優先級排序、里程碑管理、協調團隊 | 任務分派、進度管理、跨模組一致性、反思調整規劃 |
+| **系統架構師** | sub-agent | 分層架構、資料流、錯誤處理規範、跨模組整合 | 技術方案、架構調整 |
+| **開發者** | sub-agent | 寫 code、import 檢查、commit | 實現細節、技術選型 |
+| **QA 工程師** | script | 功能驗證（import、渲染、煙測） | 品質把關、問題回報 |
+| **設計評審** | sub-agent | 體驗品質、主題一致性、code review | 設計與實作的對齊 |
 
 ### 協作原則
 
@@ -28,6 +28,8 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 2. **體驗品質 → 寫入 PENDING_REVIEW.md 請 Daniel 確認**（視覺美感、資訊架構、白話品質、直覺性）
 3. **全局反思優先**：每次開發前反思全局狀態，檢查跨模組一致性
 4. **驗證用 script**：機械性驗證用 script；需要推理的用 sub-agent
+5. **團隊參與設計**：PM 協調多個 sub-agent 從各自角色角度討論，不是 PM 一人全包
+6. **角色定義要記錄在專案上**：團隊角色、協作流程寫入 AGENTS.md，不能只靠 prompt 臨時定義
 
 ### 開發流程
 
@@ -35,10 +37,18 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 設計 > 分析 > 反思 > 歸納整理 > 重新設計 → 循環到沒缺口才實作
 ```
 
-每個功能完成後必須通過三階段驗證：
-- **Gate 1**：Import 檢查
-- **Gate 2**：Streamlit 啟動 + 頁面渲染
-- **Gate 3**：內容煙測
+### 工作流（每次 cron 觸發）
+
+```
+全局反思 → Bug 修復 → 新功能開發 → Code Review → 反思與調整 → 更新報告
+```
+
+1. **全局反思**：讀 STATUS.md + ISSUES.md + PENDING_REVIEW.md，判斷當前狀態
+2. **Bug 修復**：如果有未修復 bug → 修復 sub-agent → verify script → 清除 bug
+3. **新功能開發**：如果無 bug → 開發 sub-agent → verify script → 標記完成
+4. **Code Review**：code review sub-agent 檢查品質、一致性、主題對齊
+5. **反思與調整**：綜合驗證 + 評審結果，決定是否需要修復或調整規劃
+6. **Daniel 確認**：如果涉及體驗品質問題 → 寫入 PENDING_REVIEW.md
 
 ### 驗證方式
 
@@ -63,15 +73,8 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 | `docs/ARCHITECTURE.md` | 架構定義（分層、資料流、錯誤處理） |
 | `docs/CURRENT_PROBLEMS.md` | 目前已知問題（含 Daniel 手動測試的 UI/UX 問題） |
 | `docs/PENDING_REVIEW.md` | 待 Daniel 確認的體驗品質問題 |
-
-- **不要急著寫 code**：先思考多次再動手
-- **團隊參與設計**：PM 協調多個 sub-agent 從各自角色角度討論，不是 PM 一人全包
-- **角色定義要記錄在專案上**：團隊角色、協作流程寫入 AGENTS.md，不能只靠 prompt 臨時定義
-- **驗證要分層**：
-  - Layer 0：語法 + import + key 掃描（靜態）
-  - Layer 1：AppTest 渲染測試（渲染時 exception）
-  - Layer 2：Playwright 互動測試（模擬使用者操作）
-  - Layer 3：體驗品質（視覺/比例/美感）→ 寫入 PENDING_REVIEW.md 請 Daniel 確認
+| `docs/PRODUCT_VISION.md` | 產品願景、核心理念、里程碑 |
+| `docs/TECHNICAL_DESIGN.md` | 技術設計、API 研究、頁面詳細設計 |
 
 ## Tech Stack & Architecture
 
