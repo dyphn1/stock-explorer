@@ -1,0 +1,22 @@
+events:
+- date: '2026-06-07'
+  detected_at: '2026-06-07T23:21:37'
+  severity: medium
+  stock_id: '2317'
+  summary: 最近月營收 8594 億元，較去年同期增加 40%。表現亮眼，關注後續動能。
+  title: 營收 YoY 成長 40%
+  type: revenue_surge
+- date: '2026-06-09'
+  detected_at: '2026-06-09T01:32:12'
+  severity: medium
+  stock_id: '2330'
+  summary: 注意事件：訂單
+  title: 有能耐分食台積電訂單？Intel今年股價漲幅破200% 阮慕驊：白宮撐腰改變情勢 - Yahoo股市
+  type: news_medium
+- date: '2026-06-09'
+  detected_at: '2026-06-09T01:32:25'
+  severity: medium
+  stock_id: '2317'
+  summary: 注意事件：訂單
+  title: 緯穎、鴻海、廣達…台灣伺服器大廠稱霸全球AI訂單！韓媒超羨慕，點名「這家」市值比肩韓股前20大 - 今周刊
+  type: news_medium

@@ -31,6 +31,9 @@ class FinMindClient:
 
         self._loader = DataLoader()
 
+        # P0 fix: clean up expired cache files on init
+        self._cleanup_cache()
+
     # ── 內部快取方法 ──────────────────────────────────
 
     def _cache_key(self, prefix: str, **params) -> str:
@@ -72,18 +75,55 @@ class FinMindClient:
             self._write_cache(key, df)
         return df
 
+    def _cleanup_cache(self):
+        """Remove expired cache files to prevent unbounded disk growth."""
+        try:
+            now = datetime.now()
+            for path in self.cache_dir.glob("*.json"):
+                mtime = datetime.fromtimestamp(path.stat().st_mtime)
+                if now - mtime > self.cache_ttl:
+                    path.unlink(missing_ok=True)
+        except Exception:
+            pass  # Non-critical; don't crash on cache cleanup
+
+    # ── 內部資料取得 ──────────────────────────────────
+
+    def _fetch_all_stock_info(self) -> pd.DataFrame:
+        """取得全部股票基本資訊，使用單一快取 key（不含 stock_id）。
+
+        解決 P0-3 問題：避免每次 get_stock_info(stock_id) 都產生不同
+        cache key 導致重複呼叫 API 抓取同一份全量資料。
+        """
+        def fetch():
+            return self._loader.taiwan_stock_info()
+
+        return self._fetch_or_cache("all_stock_info", fetch)
+
     # ── 公開 API ──────────────────────────────────────
 
     def get_stock_info(self, stock_id: str = None) -> pd.DataFrame:
-        """取得股票基本資訊"""
+        """取得股票基本資訊（先取全量資料再記憶體內過濾）"""
+        df = self._fetch_all_stock_info()
+        if stock_id and len(df) > 0:
+            df = df[df["stock_id"] == stock_id]
+        return df
 
-        def fetch():
-            df = self._loader.taiwan_stock_info()
-            if stock_id:
-                df = df[df["stock_id"] == stock_id]
-            return df
+    def search_stocks(self, query: str) -> pd.DataFrame:
+        """搜尋股票：完全比對 stock_id 或部分比對 stock_name（中文名稱）。
 
-        return self._fetch_or_cache("stock_info", fetch, stock_id=stock_id)
+        Args:
+            query: 搜尋關鍵字（股票代號或中文名稱）
+
+        Returns:
+            符合條件的股票 DataFrame，無符合則回傳空 DataFrame
+        """
+        df = self._fetch_all_stock_info()
+        if not query or len(df) == 0:
+            return df.iloc[:0]  # empty DataFrame with same schema
+
+        mask_id = df["stock_id"] == query.strip()
+        mask_name = df["stock_name"].str.contains(query.strip(), na=False)
+        return df[mask_id | mask_name]
 
     def get_daily_price(self, stock_id: str, start_date: str = None, end_date: str = None) -> pd.DataFrame:
         """取得日收盤價"""
@@ -97,8 +137,9 @@ class FinMindClient:
                 stock_id=stock_id, start_date=start_date, end_date=end_date
             )
 
+        # P0 fix: exclude 'end' from cache key to prevent daily cache invalidation
         return self._fetch_or_cache("daily_price", fetch,
-                                     stock_id=stock_id, start=start_date, end=end_date)
+                                     stock_id=stock_id, start=start_date)
 
     def get_monthly_revenue(self, stock_id: str, start_date: str = None) -> pd.DataFrame:
         """取得月營收"""

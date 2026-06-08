@@ -4,34 +4,58 @@ Stores watchlist in config/watchlist.yaml
 """
 
 import json
+import os
+import tempfile
 from pathlib import Path
 from datetime import datetime
 
 import yaml
+from filelock import FileLock
 
 # Relative to project root (where streamlit is launched from)
 WATCHLIST_PATH = Path("config/watchlist.yaml")
+WATCHLIST_LOCK = Path("config/watchlist.lock")
+
+
+def _atomic_write(path: Path, content_bytes: bytes):
+    """Write to temp file then atomically replace — prevents partial writes."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp_path = tempfile.mkstemp(dir=str(path.parent))
+    try:
+        os.write(fd, content_bytes)
+        os.close(fd)
+        os.replace(tmp_path, str(path))
+    except Exception:
+        os.close(fd)
+        try:
+            os.unlink(tmp_path)
+        except OSError:
+            pass
+        raise
 
 
 def load_watchlist() -> list:
     """Read YAML, return list of watchlist entries. Return empty list if file doesn't exist."""
-    if not WATCHLIST_PATH.exists():
-        return []
-    try:
-        with open(WATCHLIST_PATH, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-        if isinstance(data, list):
-            return data
-        return []
-    except Exception:
-        return []
+    lock = FileLock(str(WATCHLIST_LOCK), timeout=10)
+    with lock:
+        if not WATCHLIST_PATH.exists():
+            return []
+        try:
+            with open(WATCHLIST_PATH, "r", encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+            if isinstance(data, list):
+                return data
+            return []
+        except Exception:
+            return []
 
 
 def save_watchlist(entries: list) -> None:
-    """Write list to YAML."""
-    WATCHLIST_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(WATCHLIST_PATH, "w", encoding="utf-8") as f:
-        yaml.dump(entries, f, allow_unicode=True, default_flow_style=False, sort_keys=False)
+    """Write list to YAML using atomic write under file lock."""
+    lock = FileLock(str(WATCHLIST_LOCK), timeout=10)
+    with lock:
+        content = yaml.dump(entries, allow_unicode=True, default_flow_style=False, sort_keys=False)
+        _atomic_write(WATCHLIST_PATH, content.encode("utf-8"))
 
 
 def _is_etf(stock_id: str, name: str, industry_category: str = None) -> bool:

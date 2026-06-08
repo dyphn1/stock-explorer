@@ -143,8 +143,31 @@ with st.sidebar:
 
 # ── 主內容 ────────────────────────────────────────────
 
-# 決定要顯示的股票
-stock_id = search_input.strip() if search_input else st.session_state.get("stock_id", None)
+# 決定要顯示的股票（支援中文名稱搜尋）
+stock_id = None
+
+if search_input and search_input.strip():
+    query = search_input.strip()
+    if query.isdigit() and len(query) == 4:
+        # 看起來像是股票代號（4 位數字），直接使用
+        stock_id = query
+    else:
+        # 可能是中文名稱，使用搜尋
+        matches = client.search_stocks(query)
+        if len(matches) == 1:
+            # 只有 1 筆符合，自動導航
+            stock_id = matches.iloc[0]["stock_id"]
+        elif len(matches) > 1:
+            # 多筆符合，讓使用者選擇
+            options = [f"{row['stock_id']} {row['stock_name']}" for _, row in matches.iterrows()]
+            selected = st.sidebar.selectbox("找到多筆符合的股票：", options, key="search_select")
+            if selected:
+                stock_id = selected.split()[0]
+        else:
+            # 沒有符合
+            st.sidebar.error("找不到符合的股票")
+else:
+    stock_id = st.session_state.get("stock_id", None)
 
 if not stock_id:
     # 歡迎頁面

@@ -5,17 +5,24 @@
 
 import yaml
 import os
+import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
 import pandas as pd
+from filelock import FileLock
 
 # ── 配置 ───────────────────────────────────────────────
 EVENTS_CONFIG_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
     "config",
     "events.yaml",
+)
+EVENTS_LOCK_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+    "config",
+    "events.lock",
 )
 
 # 嚴重程度分數映射
@@ -34,22 +41,45 @@ NEWS_MEDIUM_KEYWORDS = [
 ]
 
 
+# ── Atomic write ──────────────────────────────────────────
+
+def _atomic_write(path: str, content_bytes: bytes):
+    """Write to temp file then atomically replace — prevents partial writes."""
+    parent = os.path.dirname(path)
+    os.makedirs(parent, exist_ok=True)
+    fd, tmp_path = tempfile.mkstemp(dir=parent)
+    try:
+        os.write(fd, content_bytes)
+        os.close(fd)
+        os.replace(tmp_path, path)
+    except Exception:
+        os.close(fd)
+        try:
+            os.unlink(tmp_path)
+        except OSError:
+            pass
+        raise
+
+
 # ── 事件記錄管理 ──────────────────────────────────────────
 
 def _load_events() -> list:
     """載入事件記錄"""
-    if not os.path.exists(EVENTS_CONFIG_PATH):
-        return []
-    with open(EVENTS_CONFIG_PATH, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f) or {}
-    return data.get("events", [])
+    lock = FileLock(EVENTS_LOCK_PATH, timeout=10)
+    with lock:
+        if not os.path.exists(EVENTS_CONFIG_PATH):
+            return []
+        with open(EVENTS_CONFIG_PATH, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+        return data.get("events", [])
 
 
 def _save_events(events: list):
-    """儲存事件記錄"""
-    os.makedirs(os.path.dirname(EVENTS_CONFIG_PATH), exist_ok=True)
-    with open(EVENTS_CONFIG_PATH, "w", encoding="utf-8") as f:
-        yaml.dump({"events": events}, f, allow_unicode=True, default_flow_style=False)
+    """儲存事件記錄（atomic write under file lock）"""
+    lock = FileLock(EVENTS_LOCK_PATH, timeout=10)
+    with lock:
+        content = yaml.dump({"events": events}, allow_unicode=True, default_flow_style=False)
+        _atomic_write(EVENTS_CONFIG_PATH, content.encode("utf-8"))
 
 
 def record_event(

@@ -72,6 +72,8 @@ def _render_event_dashboard(client):
                 dates[date] = []
             dates[date].append(event)
 
+        # P0 fix: use enumerate index for unique button keys (prevents DuplicateWidgetID)
+        evt_idx = 0
         for date, events in sorted(dates.items(), reverse=True):
             st.markdown(f"**{date}**")
             for event in events:
@@ -85,10 +87,11 @@ def _render_event_dashboard(client):
                 with st.expander(f"{badge} {event_type} — {title}"):
                     st.markdown(f"**股票代號：** `{stock_id}`")
                     st.markdown(f"**摘要：** {summary}")
-                    if st.button("查看名片", key=f"evt_{stock_id}_{title[:20]}"):
+                    if st.button("查看名片", key=f"evt_{evt_idx}"):
                         st.session_state["stock_id"] = stock_id
                         st.session_state["page"] = "名片"
                         st.rerun()
+                evt_idx += 1
 
             st.markdown("")
 
