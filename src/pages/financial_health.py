@@ -14,6 +14,7 @@ from src.services.analogy_engine import (
     get_pbr_analogy,
     get_dividend_analogy,
 )
+from src.services.roe_calculator import calc_roe_ttm, is_seasonal_industry
 from src.pages._router_base import filter_by_timeline
 from src.pages.timeline_controls import render_timeline_selector
 
@@ -124,11 +125,21 @@ def _render_financial_health(data: dict):
 
     with col2:
         # ROE
+        industry = data.get("industry", "")
         filtered_financial_roe = filter_by_timeline(financial, date_col="date") if financial is not None and len(financial) > 0 else financial
         filtered_balance_roe = filter_by_timeline(balance_sheet, date_col="date") if balance_sheet is not None and len(balance_sheet) > 0 else balance_sheet
-        roe = _calc_roe(filtered_financial_roe, filtered_balance_roe)
-        if roe is not None:
-            _白话_card("ROE", f"{roe:.1f}%", get_roe_analogy(roe))
+        roe_result = calc_roe_ttm(filtered_financial_roe, filtered_balance_roe)
+        if roe_result is not None:
+            roe = roe_result["roe"]
+            method = roe_result["method"]
+            label = "ROE（近4季）" if method == "TTM" else f"ROE（{method}）"
+            analogy = get_roe_analogy(roe)
+            if is_seasonal_industry(industry):
+                if method != "TTM":
+                    analogy = f"⚠ {method}數據，此產業具明顯季節性 — {analogy}"
+                else:
+                    analogy = f"⚠ 此產業具明顯季節性，ROE 波動大 — {analogy}"
+            _白话_card(label, f"{roe:.1f}%", analogy)
         else:
             _白话_card("ROE", "資料不足", "股東權益報酬率")
 
@@ -270,30 +281,3 @@ def _find_value(df, keywords: list) -> float:
                 if pd.notna(val) and val != 0:
                     return float(val)
     return 0.0
-
-
-def _calc_roe(financial_df, balance_sheet_df) -> float:
-    """計算 ROE = 淨利 / 股東權益"""
-    if financial_df is None or len(financial_df) == 0:
-        return None
-    if balance_sheet_df is None or len(balance_sheet_df) == 0:
-        return None
-
-    try:
-        # 最新一季淨利
-        latest_date = financial_df["date"].max()
-        latest_financial = financial_df[financial_df["date"] == latest_date]
-        net_income = _find_value(latest_financial, ["淨利", "本期淨利", "Net Income", "net_income"])
-
-        # 最新股東權益
-        latest_bs_date = balance_sheet_df["date"].max()
-        latest_bs = balance_sheet_df[balance_sheet_df["date"] == latest_bs_date]
-        equity = _find_value(latest_bs, ["權益總計", "股東權益", "Total Equity", "total_equity"])
-
-        if net_income > 0 and equity > 0:
-            # 年化淨利（假設是單季）
-            return round(net_income * 4 / equity * 100, 1)
-    except Exception:
-        pass
-
-    return None
