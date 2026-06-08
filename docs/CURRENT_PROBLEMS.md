@@ -2,6 +2,8 @@
 
 After conducting an in-depth breakdown of the project's architecture, data flow, and UI implementation (via three rounds of review and cross-verification), several potential issues have been identified that could severely impact stability, performance, and scalability. The current issues are categorized into three different review dimensions below:
 
+> **2026-06-08 補充**：Daniel 手動測試後發現 14 個 UI/UX 問題，記錄在「Layer 4: UI/UX 體驗」章節。
+
 ## Layer 1: Data Flow & Architecture
 
 1. **API Abuse and Cache Design Flaws in `get_stock_info`**
