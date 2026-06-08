@@ -3,6 +3,7 @@
 事件偵測 + 公司類型判斷 + 分析框架推薦
 """
 
+import logging
 import yaml
 import os
 import tempfile
@@ -12,6 +13,8 @@ from typing import Optional
 
 import pandas as pd
 from filelock import FileLock
+
+logger = logging.getLogger(__name__)
 
 # ── 配置 ───────────────────────────────────────────────
 EVENTS_CONFIG_PATH = os.path.join(
@@ -39,6 +42,92 @@ NEWS_MEDIUM_KEYWORDS = [
     "擴廠", "擴產", "訂單", "合約", "合作", "策略聯盟",
     "漲價", "降價", "漲息", "降息",
 ]
+
+
+# ── Column name mapping & safe accessors ────────────────────
+
+# FinMind API column names can change between versions.
+# Each detection method declares its required columns here.
+# If a column is missing from the DataFrame, we log a warning and
+# gracefully skip that detection instead of raising KeyError.
+
+COLUMN_ALIASES: dict[str, list[str]] = {
+    # Map logical name → list of possible FinMind column names (first match wins)
+    "revenue": ["revenue", "Revenue", "營收"],
+    "close": ["close", "Close", "收盤價", "封關價"],
+    "date": ["date", "Date", "日期", "trade_date", "Trading_Date"],
+    "title": ["title", "Title", "新聞標題", "news_title"],
+}
+
+_MISSING_COL_WARNED: set[str] = set()  # prevent log spam — warn once per column
+
+
+def _resolve_column(df: pd.DataFrame, logical_name: str) -> Optional[str]:
+    """Return the actual column name in *df* for *logical_name*, or None."""
+    aliases = COLUMN_ALIASES.get(logical_name, [logical_name])
+    for candidate in aliases:
+        if candidate in df.columns:
+            return candidate
+    # No match found
+    return None
+
+
+def _safe_get(row: pd.Series, logical_name: str, default=None):
+    """
+    Safely get a value from a pandas Series (row) using column alias mapping.
+    Returns *default* (None by default) and logs a warning on first miss.
+    """
+    # Try aliases first
+    aliases = COLUMN_ALIASES.get(logical_name, [logical_name])
+    for candidate in aliases:
+        try:
+            val = row[candidate]
+            if val is not None and (not isinstance(val, float) or not pd.isna(val)):
+                return val
+        except KeyError:
+            continue
+
+    # Fallback: try the logical name itself directly
+    try:
+        val = row[logical_name]
+        if val is not None and (not isinstance(val, float) or not pd.isna(val)):
+            return val
+    except KeyError:
+        pass
+
+    # Warn once per logical_name to avoid spam
+    if logical_name not in _MISSING_COL_WARNED:
+        _MISSING_COL_WARNED.add(logical_name)
+        available = list(row.index) if hasattr(row, "index") else "?"
+        logger.warning(
+            "Column for '%s' not found in DataFrame row. "
+            "Available columns: %s. Using default=%s. "
+            "Detection may be skipped or degraded.",
+            logical_name, available, default,
+        )
+    return default
+
+
+def _require_columns(df: pd.DataFrame, *logical_names: str) -> Optional[dict[str, str]]:
+    """
+    Check that all *logical_names* can be resolved in *df*.
+    Returns a dict mapping logical_name → actual column name, or None if any
+    required column is missing (with a logged warning).
+    """
+    mapping: dict[str, str] = {}
+    for name in logical_names:
+        actual = _resolve_column(df, name)
+        if actual is None:
+            if name not in _MISSING_COL_WARNED:
+                _MISSING_COL_WARNED.add(name)
+                logger.warning(
+                    "Required column '%s' (aliases: %s) not found in DataFrame "
+                    "columns %s. Skipping detection.",
+                    name, COLUMN_ALIASES.get(name, [name]), list(df.columns),
+                )
+            return None
+        mapping[name] = actual
+    return mapping
 
 
 # ── Atomic write ──────────────────────────────────────────
@@ -148,12 +237,18 @@ def detect_revenue_event(monthly_revenue: pd.DataFrame) -> Optional[dict]:
     if len(monthly_revenue) < 13:
         return None
 
+    # Resolve required columns — gracefully skip if missing
+    col_map = _require_columns(monthly_revenue, "revenue")
+    if col_map is None:
+        return None
+    rev_col = col_map["revenue"]
+
     try:
         latest = monthly_revenue.iloc[-1]
         year_ago = monthly_revenue.iloc[-13]  # 前年第13個月前的資料
 
-        latest_rev = latest["revenue"]
-        year_ago_rev = year_ago["revenue"]
+        latest_rev = latest[rev_col]
+        year_ago_rev = year_ago[rev_col]
         yoy_pct = ((latest_rev - year_ago_rev) / year_ago_rev) * 100
 
         if abs(yoy_pct) < 30:
@@ -184,11 +279,25 @@ def detect_news_event(news: pd.DataFrame) -> list:
     if len(news) == 0:
         return events
 
+    # Resolve required columns — gracefully skip if missing
+    col_map = _require_columns(news, "title")
+    if col_map is None:
+        return events
+    title_col = col_map["title"]
+    # date column is optional — best-effort
+    date_col = _resolve_column(news, "date")
+
     for i in range(min(5, len(news))):
         try:
-            title = str(news.iloc[i].get("title", ""))
-            date_str = str(news.iloc[i].get("date", ""))[:10]
+            title = str(news.iloc[i][title_col]) if title_col in news.columns else ""
+            if date_col and date_col in news.columns:
+                date_str = str(news.iloc[i][date_col])[:10]
+            else:
+                date_str = ""
         except (IndexError, KeyError):
+            continue
+
+        if not title or title == "nan":
             continue
 
         # 檢查重大關鍵字
@@ -224,10 +333,16 @@ def detect_price_abnormal(daily_prices: pd.DataFrame, threshold: float = 7.0) ->
     if len(daily_prices) < 2:
         return None
 
+    # Resolve required columns — gracefully skip if missing
+    col_map = _require_columns(daily_prices, "close")
+    if col_map is None:
+        return None
+    close_col = col_map["close"]
+
     try:
         latest = daily_prices.iloc[-1]
         prev = daily_prices.iloc[-2]
-        change_pct = ((latest["close"] - prev["close"]) / prev["close"]) * 100
+        change_pct = ((latest[close_col] - prev[close_col]) / prev[close_col]) * 100
 
         if abs(change_pct) < threshold:
             return None
@@ -238,7 +353,7 @@ def detect_price_abnormal(daily_prices: pd.DataFrame, threshold: float = 7.0) ->
             "severity": "high",
             "title": f"股價單日{direction} {abs(change_pct):.1f}%",
             "summary": (
-                f"收盤價 {latest['close']:.0f} 元，"
+                f"收盤價 {latest[close_col]:.0f} 元，"
                 f"較前一交易日{direction} {abs(change_pct):.1f}%。"
                 f"單日波動劇烈，建議關注相關公告。"
             ),
@@ -318,18 +433,22 @@ def check_data_freshness(stock_id: str, data: dict) -> dict:
     daily_price = data.get("daily_price")
     if daily_price is not None and len(daily_price) > 0:
         try:
-            latest_date = str(daily_price.iloc[-1]["date"])[:10]
-            date_obj = datetime.strptime(latest_date, "%Y-%m-%d")
-            days_old = (datetime.now() - date_obj).days
-            status = "fresh" if days_old <= 3 else ("stale" if days_old <= 7 else "very_stale")
-            freshness["items"].append({
-                "label": "股價資料",
-                "date": latest_date,
-                "days_old": days_old,
-                "status": status,
-            })
-            if status != "fresh":
-                freshness["needs_update"] = True
+            date_col = _resolve_column(daily_price, "date")
+            if date_col is None:
+                logger.debug("No 'date' column found in daily_price DataFrame; skipping freshness check.")
+            else:
+                latest_date = str(daily_price.iloc[-1][date_col])[:10]
+                date_obj = datetime.strptime(latest_date, "%Y-%m-%d")
+                days_old = (datetime.now() - date_obj).days
+                status = "fresh" if days_old <= 3 else ("stale" if days_old <= 7 else "very_stale")
+                freshness["items"].append({
+                    "label": "股價資料",
+                    "date": latest_date,
+                    "days_old": days_old,
+                    "status": status,
+                })
+                if status != "fresh":
+                    freshness["needs_update"] = True
         except (KeyError, IndexError, ValueError):
             pass
 
@@ -337,18 +456,22 @@ def check_data_freshness(stock_id: str, data: dict) -> dict:
     monthly_rev = data.get("monthly_revenue")
     if monthly_rev is not None and len(monthly_rev) > 0:
         try:
-            latest_date = str(monthly_rev.iloc[-1]["date"])[:10]
-            date_obj = datetime.strptime(latest_date, "%Y-%m-%d")
-            days_old = (datetime.now() - date_obj).days
-            status = "fresh" if days_old <= 35 else ("stale" if days_old <= 60 else "very_stale")
-            freshness["items"].append({
-                "label": "營收資料",
-                "date": latest_date,
-                "days_old": days_old,
-                "status": status,
-            })
-            if status != "fresh":
-                freshness["needs_update"] = True
+            date_col = _resolve_column(monthly_rev, "date")
+            if date_col is None:
+                logger.debug("No 'date' column found in monthly_revenue DataFrame; skipping freshness check.")
+            else:
+                latest_date = str(monthly_rev.iloc[-1][date_col])[:10]
+                date_obj = datetime.strptime(latest_date, "%Y-%m-%d")
+                days_old = (datetime.now() - date_obj).days
+                status = "fresh" if days_old <= 35 else ("stale" if days_old <= 60 else "very_stale")
+                freshness["items"].append({
+                    "label": "營收資料",
+                    "date": latest_date,
+                    "days_old": days_old,
+                    "status": status,
+                })
+                if status != "fresh":
+                    freshness["needs_update"] = True
         except (KeyError, IndexError, ValueError):
             pass
 
