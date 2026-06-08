@@ -18,6 +18,48 @@ except ImportError:
     DataLoader = None
 
 
+# ── Rate Limit Detection ──────────────────────────────
+
+class FinMindRateLimitError(Exception):
+    """Raised when FinMind API rate limit is detected (e.g. HTTP 429)."""
+    pass
+
+
+# Module-level rate limit tracking (per-process, suitable for Streamlit)
+_consecutive_failures: int = 0
+_last_failure_time: Optional[datetime] = None
+_RATE_LIMIT_THRESHOLD: int = 3  # Show warning after this many consecutive empty responses
+
+
+def _record_api_failure():
+    """Increment consecutive failure counter and record failure time."""
+    global _consecutive_failures, _last_failure_time
+    _consecutive_failures += 1
+    _last_failure_time = datetime.now()
+
+
+def _record_api_success():
+    """Reset consecutive failure counter on a successful API call."""
+    global _consecutive_failures
+    _consecutive_failures = 0
+
+
+def get_rate_limit_status() -> dict:
+    """Return current rate limit detection status for UI integration.
+
+    Returns:
+        dict with keys:
+            is_limited (bool): True if consecutive_failures >= threshold
+            consecutive_failures (int): Number of consecutive empty/failed API responses
+            last_failure (datetime|None): Timestamp of most recent failure
+    """
+    return {
+        "is_limited": _consecutive_failures >= _RATE_LIMIT_THRESHOLD,
+        "consecutive_failures": _consecutive_failures,
+        "last_failure": _last_failure_time,
+    }
+
+
 class FinMindClient:
     """FinMind API 封裝，含本地快取"""
 
@@ -64,15 +106,34 @@ class FinMindClient:
         df.to_json(path, orient="records", date_format="iso")
 
     def _fetch_or_cache(self, prefix: str, fetch_fn, **params) -> pd.DataFrame:
-        """先查快取，沒有才 fetch"""
+        """先查快取，沒有才 fetch。追蹤連續失敗以偵測 rate limit。"""
         key = self._cache_key(prefix, **params)
         cached = self._read_cache(key)
         if cached is not None and len(cached) > 0:
+            _record_api_success()
             return cached
 
-        df = fetch_fn()
+        try:
+            df = fetch_fn()
+        except Exception as e:
+            # Detect HTTP 429 rate limit from FinMind / requests
+            error_msg = str(e)
+            if "429" in error_msg or "rate" in error_msg.lower():
+                _record_api_failure()
+                raise FinMindRateLimitError(
+                    f"FinMind API rate limit hit: {error_msg}"
+                ) from e
+            # Other exceptions — still count as failure for rate limit tracking
+            _record_api_failure()
+            raise
+
         if df is not None and len(df) > 0:
+            _record_api_success()
             self._write_cache(key, df)
+        else:
+            # Empty DataFrame — potential rate limit symptom
+            _record_api_failure()
+
         return df
 
     def _cleanup_cache(self):

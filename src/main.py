@@ -67,6 +67,11 @@ def get_client():
 
 client = get_client()
 
+# ── Rate Limit 狀態指示 ──────────────────────────────
+from src.data.finmind_client import get_rate_limit_status
+_rate_status = get_rate_limit_status()
+if _rate_status["is_limited"]:
+    st.sidebar.warning("⚠️ FinMind API 暫時受限，資料可能不完整。請稍後再試。")
 
 # ── 側邊欄：搜尋 ──────────────────────────────────────
 
