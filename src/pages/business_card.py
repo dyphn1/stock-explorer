@@ -47,10 +47,15 @@ def _render_business_card(data: dict, client):
         if is_in_watchlist(stock_id):
             if st.button("❌ 取消關注", key=f"unwatch_{stock_id}", use_container_width=True):
                 remove_from_watchlist(stock_id)
+                st.toast("🗑️ 已移除關注")
                 st.rerun()
         else:
             if st.button("➕ 加入關注", key=f"watch_{stock_id}", use_container_width=True):
-                add_to_watchlist(stock_id, stock_name)
+                added = add_to_watchlist(stock_id, stock_name, industry_category=industry)
+                if added:
+                    st.toast("✅ 已加入關注")
+                else:
+                    st.toast("⚠️ 此股票已在關注列表中")
                 st.rerun()
 
     st.markdown("---")

@@ -91,6 +91,7 @@ def add_to_watchlist(
     name: str,
     alert_above: float = None,
     alert_below: float = None,
+    industry_category: str = None,
 ) -> bool:
     """Add entry if not already present. Return True if added, False if already exists."""
     entries = load_watchlist()
@@ -101,7 +102,7 @@ def add_to_watchlist(
             return False
 
     # Determine type
-    etf_type = "etf" if _is_etf(stock_id, name) else "stock"
+    etf_type = "etf" if _is_etf(stock_id, name, industry_category) else "stock"
 
     new_entry = {
         "stock_id": stock_id,

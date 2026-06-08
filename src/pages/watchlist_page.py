@@ -183,7 +183,7 @@ def _render_watchlist_page(client: FinMindClient):
         with col2:
             if st.button("移除", key=f"wl_remove_{stock_id}", use_container_width=True):
                 if remove_from_watchlist(stock_id):
-                    st.success(f"已移除 {name}")
+                    st.toast("🗑️ 已移除關注")
                     st.rerun()
                 else:
                     st.error("移除失敗")
