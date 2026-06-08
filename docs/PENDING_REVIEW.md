@@ -1,26 +1,29 @@
-# 股識 Stock Explorer — 待 Daniel 確認事項
+# Stock Explorer — Pending Daniel Review
 
-## 🔔 需要手動 UI 驗證（M4 + M5）
+> Items here require human judgment and cannot be auto-resolved by agents.
 
-由於 cron 環境無法啟動 Streamlit 進行瀏覽器截圖，以下功能需要 Daniel 手動啟動 Streamlit 確認 UI 渲染效果。
+## 🎨 Design Decisions
 
-### M4 驗證項目
-1. **ETF 專區頁** → 三個子頁面（熱門、分類、配息）切換是否正常
-2. **ETF 詳細頁** → 績效走勢圖、配息資訊、費用說明是否正確顯示
-3. **我的關注** → 空狀態引導是否正常顯示
-4. **名片頁** → 加入/取消關注按鈕是否正確顯示
-5. **價格提醒 UI** → 關注頁面的「🔔 設定提醒」按鈕 + popover 輸入框
+### 1. Navbar: 9-button row vs `st.tabs()` dropdown
+- **Issue**: The 9-button navbar wraps badly on narrow screens (UX Issue 12)
+- **Proposal**: Replace with `st.tabs()` which handles narrow screens natively
+- **Trade-off**: `st.tabs()` has different visual style; loses the PPT-style button look
+- **Decision needed**: Keep 9-button row (and fix with CSS media queries) or switch to `st.tabs()`?
+- **File**: `src/pages/router.py` (lines 136-147)
 
-### M5 驗證項目
-1. **側邊欄** →「🔔 事件儀表板」按鈕是否正確導向
-2. **事件儀表板** → 空狀態提示是否正確顯示
-3. **集團型公司頁面** → 是否顯示「集團分析」框架橫幅
-4. **資料新鮮度** → 展開/收合是否正常
-5. **自動事件偵測** → 載入股票頁面時是否正常執行（不報錯）
+### 2. Seasonal Industry List
+- **Issue**: ROE seasonal note (UX Issue 5) requires a list of "known seasonal industries"
+- **Proposal**: Which industries should get the warning label?
+- **Default suggestion**: 觀光餐旅 (tourism), 農漁業 (agriculture), 零售 (retail), 半導體 (semiconductors)
+- **Decision needed**: Confirm industry list or defer seasonal note to post-MVP
+- **File**: `src/pages/financial_health.py`
 
-## 📋 方向性決策（暫無）
-
-目前無待確認的方向性決策。
+### 3. ETF Classification Severity
+- **Issue**: ETF misclassification (ARCH Issue 5) ranked P1, but may be P0 for M4 readiness
+- **Impact**: Beginners exploring ETFs see the wrong analysis framework
+- **Decision needed**: Upgrade to P0 (fix now) or keep P1 (fix after P0 band)?
+- **File**: `src/services/watchlist.py`
 
 ---
-*最後更新：2026-06-08 11:12*
+
+*Updated: 2026-06-08 by PM after design review*

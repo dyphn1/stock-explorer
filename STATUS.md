@@ -278,13 +278,27 @@ config/
 | stock-explorer-dev-cycle | 每 2 小時 | 主開發循環：讀取進度→分派任務→更新狀態 |
 | stock-explorer-visual-verify | 每 4 小時 | 視覺化驗證：啟動 Streamlit→截圖→記錄 |
 
-## 下一步
-1. ✅ M0-M5 所有里程碑 — 代碼完成
-2. ✅ ISSUE-001～004, 006 — 已修復
-3. ✅ Gate 1-3 驗證全部通過（22 模組 import、11 頁面渲染、內容煙測）
-4. ⏳ Daniel 手動 UI 驗證（事件儀表板、自適應框架橫幅、事件提醒、新鮮度指標）
-5. ⏳ Daniel 手動驗證 M4（ETF 專區、我的關注、價格提醒 UI）
-6. 📋 專案進入打磨階段 — 等待 UI 驗證回饋後進行細節調整
+## Next Steps
+
+### Current Sprint: P0 Bug Fixes (4 items, auto-implementing)
+
+| # | Issue | Priority | Status |
+|---|-------|----------|--------|
+| 1 | DuplicateWidgetID crash in event dashboard | P0 | Auto-fix |
+| 2 | API abuse in `get_stock_info` — full list per stock | P0 | Auto-fix |
+| 3 | Daily cache invalidation — `end_date` in cache key | P0 | Auto-fix |
+| 4 | Race conditions in YAML file operations | P0 | Auto-fix |
+
+### Pending Daniel Confirmation (3 items)
+
+See `docs/PENDING_REVIEW.md` for details:
+1. Navbar: 9-button row vs `st.tabs()`?
+2. Seasonal industry list for ROE note
+3. ETF classification severity (P0 or P1?)
+
+### Upcoming: P1 Fixes (10 items, after P0 complete)
+
+See `docs/DESIGN_REVIEW.md` for full roadmap.
 
 ---
 
