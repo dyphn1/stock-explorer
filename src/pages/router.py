@@ -62,19 +62,24 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
 
     # 不需要特定股票的頁面，獨立渲染
     if page == "分類瀏覽":
-        _render_category_browser(client)
+        with st.spinner("載入分類瀏覽..."):
+            _render_category_browser(client)
         return
     if page == "ETF 專區":
-        _render_etf_browser(client)
+        with st.spinner("載入 ETF 專區..."):
+            _render_etf_browser(client)
         return
     if page == "我的關注":
-        _render_watchlist_page(client)
+        with st.spinner("載入我的關注..."):
+            _render_watchlist_page(client)
         return
     if page == "事件儀表板":
-        _render_event_dashboard(client)
+        with st.spinner("載入事件儀表板..."):
+            _render_event_dashboard(client)
         return
 
-    data = get_stock_data(client, stock_id)
+    with st.spinner("載入股票資料..."):
+        data = get_stock_data(client, stock_id)
     if data is None:
         st.error(f"找不到股票代號 {stock_id}")
         return
@@ -96,7 +101,8 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
     # ETF 導向 ETF 詳細頁
     if _is_etf(client, stock_id):
         _render_navbar(data, page)
-        _render_etf_detail(data, client)
+        with st.spinner("載入 ETF 詳細頁..."):
+            _render_etf_detail(data, client)
         return
 
     # 渲染導航列
@@ -104,15 +110,20 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
 
     # 分頁渲染
     if page == "名片":
-        _render_business_card(data, client)
+        with st.spinner("載入名片頁..."):
+            _render_business_card(data, client)
     elif page == "營運健檢":
-        _render_operation_checkup(data)
+        with st.spinner("載入營運健檢..."):
+            _render_operation_checkup(data)
     elif page == "財務體質":
-        _render_financial_health(data)
+        with st.spinner("載入財務體質..."):
+            _render_financial_health(data)
     elif page == "同業比較":
-        _render_peer_comparison(data, client)
+        with st.spinner("載入同業比較..."):
+            _render_peer_comparison(data, client)
     elif page == "集團架構":
-        _render_group_structure(data)
+        with st.spinner("載入集團架構..."):
+            _render_group_structure(data)
 
 
 def _render_navbar(data: dict, current_page: str):
