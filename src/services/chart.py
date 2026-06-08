@@ -9,6 +9,72 @@ from plotly.subplots import make_subplots
 import pandas as pd
 
 
+# ── Theme-aware color scheme ─────────────────────────────
+# Strategy: use colors that provide sufficient contrast in BOTH
+# light and dark Streamlit themes.  Semi-transparent values let
+# the background show through, creating natural adaptation.
+#
+# - Text / axis labels: #555555 — readable on white AND dark bg
+# - Grid lines: rgba(128,128,128,0.15) — subtle on both themes
+# - Muted / annotation text: #7F8C8D — mid-gray, works both ways
+# - Divider / connector: rgba(128,128,128,0.3) — subtle structural line
+# - Trace border: rgba(255,255,255,0.8) — soft white blend
+
+def _get_chart_colors() -> dict:
+    """Return a dict of theme-aware colors for chart styling.
+
+    These values are chosen to have adequate contrast in both
+    Streamlit light mode (white-ish bg) and dark mode (dark bg).
+    """
+    return {
+        "text": "#555555",                     # axis & label text
+        "title": "#333333",                    # chart titles — slightly darker
+        "grid": "rgba(128,128,128,0.15)",      # grid lines
+        "muted": "#7F8C8D",                    # muted / annotation text
+        "divider": "rgba(128,128,128,0.3)",    # connector / structural lines
+        "border": "rgba(255,255,255,0.8)",     # pie / funnel borders
+    }
+
+
+def _apply_theme_layout(fig: go.Figure) -> go.Figure:
+    """Apply theme-aware layout defaults to a Plotly figure.
+
+    Sets transparent backgrounds (so Streamlit theme is inherited),
+    and applies theme-aware font / grid / axis colors that work in
+    both light and dark mode.
+    """
+    colors = _get_chart_colors()
+
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color=colors["text"]),
+    )
+
+    # Apply axis styling — subplots may have xaxis2/yaxis2 etc.
+    fig.update_xaxes(
+        tickfont=dict(color=colors["text"]),
+        title_font=dict(color=colors["text"]),
+        gridcolor=colors["grid"],
+        zerolinecolor=colors["grid"],
+        linecolor=colors["grid"],
+    )
+    fig.update_yaxes(
+        tickfont=dict(color=colors["text"]),
+        title_font=dict(color=colors["text"]),
+        gridcolor=colors["grid"],
+        zerolinecolor=colors["grid"],
+        linecolor=colors["grid"],
+    )
+
+    # Make annotation text use muted color by default
+    for ann in fig.layout.annotations or []:
+        if ann.font and ann.font.color is None:
+            ann.font.color = colors["muted"]
+
+    return fig
+
+
 def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -> go.Figure:
     """
     營收來源圓餅圖
@@ -17,11 +83,14 @@ def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -
     if not revenue_items:
         fig = go.Figure()
         fig.add_annotation(text="暫無營收組成資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
         return fig
 
     labels = [item["name"] for item in revenue_items]
     values = [item["value"] for item in revenue_items]
     descriptions = [item.get("description", "") for item in revenue_items]
+
+    theme = _get_chart_colors()
 
     # 自定義顏色
     colors = px.colors.qualitative.Set3[:len(labels)]
@@ -30,7 +99,7 @@ def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -
         labels=labels,
         values=values,
         hole=0.4,
-        marker=dict(colors=colors, line=dict(color="#fff", width=2)),
+        marker=dict(colors=colors, line=dict(color=theme["border"], width=2)),
         textinfo="label+percent",
         textposition="outside",
         hovertemplate="<b>%{label}</b><br>" +
@@ -40,13 +109,12 @@ def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -
     )])
 
     fig.update_layout(
-        title=dict(text=title, font=dict(size=20), x=0.5),
+        title=dict(text=title, font=dict(size=20, color=theme["title"]), x=0.5),
         showlegend=True,
         legend=dict(orientation="h", yanchor="bottom", y=-0.2),
         margin=dict(t=60, b=60, l=20, r=20),
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
     )
+    _apply_theme_layout(fig)
 
     return fig
 
@@ -56,6 +124,7 @@ def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢")
     if df is None or len(df) == 0:
         fig = go.Figure()
         fig.add_annotation(text="暫無營收資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
         return fig
 
     # 計算年增率
@@ -99,14 +168,15 @@ def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢")
             row=2, col=1
         )
 
+    theme = _get_chart_colors()
+
     fig.update_layout(
-        title=dict(text=title, font=dict(size=18), x=0.5),
+        title=dict(text=title, font=dict(size=18, color=theme["title"]), x=0.5),
         showlegend=False,
         margin=dict(t=60, b=40, l=60, r=20),
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
         height=450,
     )
+    _apply_theme_layout(fig)
 
     fig.update_yaxes(title_text="億元", row=1, col=1)
     fig.update_yaxes(title_text="%", row=2, col=1)
@@ -119,6 +189,7 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
     if df is None or len(df) == 0:
         fig = go.Figure()
         fig.add_annotation(text="暫無股價資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
         return fig
 
     df = df.copy()
@@ -131,6 +202,7 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
         ohlc_labels = ["開盤", "最高", "最低", "收盤"]
         ohlc_values = [row["open"], row["max"], row["min"], row["close"]]
         ohlc_colors = ["#F39C12", "#2ECC71", "#E74C3C", "#3498DB"]
+        theme = _get_chart_colors()
 
         fig = go.Figure()
         for label, val, color in zip(ohlc_labels, ohlc_values, ohlc_colors):
@@ -142,20 +214,19 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
             ))
 
         fig.update_layout(
-            title=dict(text=f"{title}（僅單日資料）", font=dict(size=18), x=0.5),
+            title=dict(text=f"{title}（僅單日資料）", font=dict(size=18, color=theme["title"]), x=0.5),
             showlegend=True,
             legend=dict(orientation="h", yanchor="bottom", y=-0.15),
             margin=dict(t=60, b=60, l=60, r=20),
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
             height=400,
             barmode="group",
         )
+        _apply_theme_layout(fig)
         fig.update_yaxes(title_text="價格")
         fig.add_annotation(
             text="只有1天的資料，改用長條圖顯示",
             xref="paper", yref="paper", x=0.5, y=-0.25,
-            showarrow=False, font=dict(size=13, color="#7F8C8D"),
+            showarrow=False, font=dict(size=13, color=theme["muted"]),
         )
         return fig
 
@@ -196,15 +267,16 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
         row=2, col=1
     )
 
+    theme = _get_chart_colors()
+
     fig.update_layout(
-        title=dict(text=title, font=dict(size=18), x=0.5),
+        title=dict(text=title, font=dict(size=18, color=theme["title"]), x=0.5),
         showlegend=False,
         margin=dict(t=60, b=40, l=60, r=20),
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
         height=400,
         xaxis_rangeslider_visible=False,
     )
+    _apply_theme_layout(fig)
 
     fig.update_yaxes(title_text="價格", row=1, col=1)
     fig.update_yaxes(title_text="張數(千)", row=2, col=1)
@@ -227,9 +299,12 @@ def create_funnel_chart(revenue: float, gross_profit: float,
     if not valid:
         fig = go.Figure()
         fig.add_annotation(text="暫無財務資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
         return fig
 
     stages, values = zip(*valid)
+
+    theme = _get_chart_colors()
 
     fig = go.Figure(go.Funnel(
         y=stages,
@@ -238,18 +313,17 @@ def create_funnel_chart(revenue: float, gross_profit: float,
         texttemplate="%{x:,.1f} 億<br>%{percentInitial}",
         marker=dict(
             color=["#3498DB", "#2ECC71", "#F39C12", "#E74C3C"],
-            line=dict(width=2, color="#fff")
+            line=dict(width=2, color=theme["border"])
         ),
-        connector=dict(line=dict(color="#BDC3C7", width=2)),
+        connector=dict(line=dict(color=theme["divider"], width=2)),
     ))
 
     fig.update_layout(
-        title=dict(text=title, font=dict(size=18), x=0.5),
+        title=dict(text=title, font=dict(size=18, color=theme["title"]), x=0.5),
         margin=dict(t=60, b=40, l=100, r=20),
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
         height=350,
     )
+    _apply_theme_layout(fig)
 
     return fig
 
@@ -263,6 +337,7 @@ def create_comparison_radar(metrics: dict, target_name: str,
     if not metrics:
         fig = go.Figure()
         fig.add_annotation(text="暫無比較資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
         return fig
 
     categories = list(metrics.keys())
@@ -291,6 +366,8 @@ def create_comparison_radar(metrics: dict, target_name: str,
         fillcolor="rgba(231, 76, 60, 0.2)",
     ))
 
+    theme = _get_chart_colors()
+
     fig.update_layout(
         polar=dict(
             radialaxis=dict(visible=True, range=[0, max(max(target_values), max(benchmark_values)) * 1.1])
@@ -298,9 +375,9 @@ def create_comparison_radar(metrics: dict, target_name: str,
         showlegend=True,
         legend=dict(orientation="h", yanchor="bottom", y=-0.15),
         margin=dict(t=40, b=60, l=40, r=40),
-        paper_bgcolor="rgba(0,0,0,0)",
         height=400,
     )
+    _apply_theme_layout(fig)
 
     return fig
 
@@ -310,6 +387,7 @@ def create_institutional_chart(df: pd.DataFrame, title: str = "三大法人買�
     if df is None or len(df) == 0:
         fig = go.Figure()
         fig.add_annotation(text="暫無法人資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
         return fig
 
     df = df.copy()
@@ -329,16 +407,17 @@ def create_institutional_chart(df: pd.DataFrame, title: str = "三大法人買�
         hovertemplate="%{x|%Y/%m/%d}<br>買賣超: %{y:,.0f} 張<extra></extra>"
     ))
 
-    fig.add_hline(y=0, line_dash="dash", line_color="#7F8C8D")
+    theme = _get_chart_colors()
+
+    fig.add_hline(y=0, line_dash="dash", line_color=theme["divider"])
 
     fig.update_layout(
-        title=dict(text=title, font=dict(size=16), x=0.5),
+        title=dict(text=title, font=dict(size=16, color=theme["title"]), x=0.5),
         showlegend=False,
         margin=dict(t=50, b=40, l=60, r=20),
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
         height=250,
     )
+    _apply_theme_layout(fig)
 
     fig.update_yaxes(title_text="張數(千)")
 
@@ -350,6 +429,7 @@ def create_price_area_chart(df: pd.DataFrame, title: str = "收盤價走勢") ->
     if df is None or len(df) == 0:
         fig = go.Figure()
         fig.add_annotation(text="暫無價格資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
         return fig
 
     df = df.copy()
@@ -359,6 +439,7 @@ def create_price_area_chart(df: pd.DataFrame, title: str = "收盤價走勢") ->
     # ── 單一期間 fallback：單根長條圖 ──────────────────────
     if len(df) < 2:
         row = df.iloc[0]
+        theme = _get_chart_colors()
         fig = go.Figure()
         fig.add_trace(go.Bar(
             x=["收盤價"], y=[row["close"]],
@@ -366,22 +447,23 @@ def create_price_area_chart(df: pd.DataFrame, title: str = "收盤價走勢") ->
             hovertemplate="收盤價: %{y:,.2f}<extra></extra>",
         ))
         fig.update_layout(
-            title=dict(text=f"{title}（僅單一期間）", font=dict(size=18), x=0.5),
+            title=dict(text=f"{title}（僅單一期間）", font=dict(size=18, color=theme["title"]), x=0.5),
             showlegend=False,
             margin=dict(t=60, b=60, l=60, r=20),
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
             height=400,
         )
+        _apply_theme_layout(fig)
         fig.update_yaxes(title_text="價格")
         fig.add_annotation(
             text="只有1期的資料，改用長條圖顯示",
             xref="paper", yref="paper", x=0.5, y=-0.25,
-            showarrow=False, font=dict(size=13, color="#7F8C8D"),
+            showarrow=False, font=dict(size=13, color=theme["muted"]),
         )
         return fig
 
     # ── 正常：折線 + 面積 ──────────────────────────────────
+    theme = _get_chart_colors()
+
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=df["date"],
@@ -393,15 +475,14 @@ def create_price_area_chart(df: pd.DataFrame, title: str = "收盤價走勢") ->
         fillcolor="rgba(52, 152, 219, 0.1)",
     ))
     fig.update_layout(
-        title=dict(text=title, font=dict(size=18), x=0.5),
+        title=dict(text=title, font=dict(size=18, color=theme["title"]), x=0.5),
         xaxis_title="日期",
         yaxis_title="價格",
         height=400,
         margin=dict(l=40, r=40, t=60, b=40),
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
     )
-    fig.update_xaxes(showgrid=True, gridcolor="#F0F0F0")
-    fig.update_yaxes(showgrid=True, gridcolor="#F0F0F0")
+    _apply_theme_layout(fig)
+    fig.update_xaxes(showgrid=True, gridcolor=theme["grid"])
+    fig.update_yaxes(showgrid=True, gridcolor=theme["grid"])
 
     return fig

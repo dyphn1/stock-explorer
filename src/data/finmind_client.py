@@ -5,12 +5,15 @@ FinMind API Client 封裝
 
 import os
 import json
+import logging
 import hashlib
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 try:
     from FinMind.data import DataLoader
@@ -136,14 +139,66 @@ class FinMindClient:
 
         return df
 
+    # LRU eviction thresholds
+    _MAX_CACHE_FILES = 500
+    _MAX_CACHE_BYTES = 100 * 1024 * 1024  # 100 MB
+
     def _cleanup_cache(self):
-        """Remove expired cache files to prevent unbounded disk growth."""
+        """Remove expired cache files, then LRU-evict if over size/count thresholds.
+
+        Two-phase cleanup:
+        1. TTL expiry: remove files older than cache_ttl
+        2. LRU eviction: if total files > _MAX_CACHE_FILES or total size > _MAX_CACHE_BYTES,
+           delete oldest files (by mtime) until under threshold
+        """
         try:
             now = datetime.now()
+            expired_count = 0
+
+            # Phase 1: TTL expiry
             for path in self.cache_dir.glob("*.json"):
-                mtime = datetime.fromtimestamp(path.stat().st_mtime)
-                if now - mtime > self.cache_ttl:
-                    path.unlink(missing_ok=True)
+                try:
+                    mtime = datetime.fromtimestamp(path.stat().st_mtime)
+                    if now - mtime > self.cache_ttl:
+                        path.unlink(missing_ok=True)
+                        expired_count += 1
+                except OSError:
+                    pass
+
+            # Phase 2: LRU eviction — collect remaining files
+            files = []
+            total_size = 0
+            for path in self.cache_dir.glob("*.json"):
+                try:
+                    stat = path.stat()
+                    files.append((path, stat.st_mtime, stat.st_size))
+                    total_size += stat.st_size
+                except OSError:
+                    pass
+
+            total_files = len(files)
+            evicted_count = 0
+
+            # Evict oldest by mtime until under both thresholds
+            if total_files > self._MAX_CACHE_FILES or total_size > self._MAX_CACHE_BYTES:
+                files.sort(key=lambda f: f[1])  # sort by mtime ascending (oldest first)
+                for path, mtime, size in files:
+                    if total_files <= self._MAX_CACHE_FILES and total_size <= self._MAX_CACHE_BYTES:
+                        break
+                    try:
+                        path.unlink(missing_ok=True)
+                        total_files -= 1
+                        total_size -= size
+                        evicted_count += 1
+                    except OSError:
+                        pass
+
+            # Log cleanup stats
+            if expired_count > 0 or evicted_count > 0:
+                logger.info(
+                    "Cache cleanup: expired=%d, evicted=%d, remaining_files=%d, remaining_size=%.1fKB",
+                    expired_count, evicted_count, total_files, total_size / 1024,
+                )
         except Exception:
             pass  # Non-critical; don't crash on cache cleanup
 

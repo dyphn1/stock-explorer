@@ -8,7 +8,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from src.data.finmind_client import FinMindClient
 from src.pages._router_base import _section_title, _白话_card, _info_card, filter_by_timeline
-from src.services.chart import create_price_area_chart
+from src.services.chart import create_price_area_chart, _get_chart_colors
 
 
 def _get_etf_one_liner(stock_name: str) -> str:
@@ -228,6 +228,7 @@ def _render_etf_detail(data: dict, client: FinMindClient):
                         name="賣超",
                         marker_color="#E74C3C",
                     ))
+                    _tc = _get_chart_colors()
                     fig.update_layout(
                         title=f"{stock_name} 近 30 日法人買賣超",
                         xaxis_title="日期",
@@ -235,12 +236,12 @@ def _render_etf_detail(data: dict, client: FinMindClient):
                         barmode="relative",
                         height=350,
                         margin=dict(l=40, r=40, t=60, b=40),
-                        plot_bgcolor="white",
-                        paper_bgcolor="white",
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        plot_bgcolor="rgba(0,0,0,0)",
                         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
                     )
-                    fig.update_xaxes(showgrid=True, gridcolor="#F0F0F0")
-                    fig.update_yaxes(showgrid=True, gridcolor="#F0F0F0")
+                    fig.update_xaxes(showgrid=True, gridcolor=_tc["grid"])
+                    fig.update_yaxes(showgrid=True, gridcolor=_tc["grid"])
                     st.plotly_chart(fig, use_container_width=True)
                 else:
                     # 若找不到買/賣欄位，直接顯示表格
