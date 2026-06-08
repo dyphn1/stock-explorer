@@ -24,19 +24,48 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 
 ### Model Assignment
 
-**Current environment**: `openrouter/owl-alpha` is the only configured model. All sub-agents use it.
+**Available models** (from `~/.hermes/config.yaml`):
 
-**When multiple models are available** (configured in `config.yaml`), the PM should assign the appropriate model to each sub-agent via the `model` parameter in `delegate_task`:
+| Model | Provider | Best For |
+|-------|----------|----------|
+| `openrouter/owl-alpha` | openrouter | Default, general reasoning |
+| `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | openrouter | Fallback, large context |
+| `custom/gemma4:e4b` | ollama (local) | Local inference, privacy |
+| `openrouter/google/gemma-4-31b-it:free` | openrouter | **Vision** (screenshot analysis) |
+| `openrouter/meta-llama/llama-3.2-3b-instruct:free` | openrouter | Web extraction |
+| `openrouter/nvidia/nemotron-3-nano-30b-a3b:free` | openrouter | Compression |
+| `grok-4.20-reasoning` | x_search | Search |
 
-| Role | Preferred Model | Reason |
-|------|----------------|--------|
-| Product Manager | `claude-sonnet-4` or equivalent | Strong reasoning, multi-step planning |
-| System Architect | `claude-sonnet-4` or equivalent | Deep technical analysis |
-| Developer | `claude-sonnet-4` or `gpt-4o` | Code generation strength |
-| QA Engineer (Visual) | `gpt-4o` or `claude-sonnet-4` | Vision capabilities for screenshot analysis |
-| Design Reviewer | `claude-sonnet-4` | Design reasoning + vision |
+**Role → Model mapping:**
 
-**Key principle**: Each role should use its ideal model, not a single model for everything. When only one model is available, all roles use it.
+| Role | Model | Reason |
+|------|-------|--------|
+| Product Manager | `openrouter/owl-alpha` | Default, strong reasoning |
+| System Architect | `openrouter/owl-alpha` or `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | Deep technical analysis; use nemotron for large codebases |
+| Developer | `openrouter/owl-alpha` | Code generation |
+| QA Engineer (Visual) | `openrouter/google/gemma-4-31b-it:free` | **Vision model** for screenshot analysis |
+| Design Reviewer | `openrouter/google/gemma-4-31b-it:free` | **Vision model** for visual inspection |
+
+**Usage in `delegate_task`:**
+```python
+# For vision-based tasks (QA, Design Review):
+delegate_task(
+    goal="Analyze screenshots for visual issues",
+    model="openrouter/google/gemma-4-31b-it:free",
+    provider="openrouter",
+    ...
+)
+
+# For text-based tasks (Architect, Developer):
+delegate_task(
+    goal="Analyze architecture issues",
+    model="openrouter/owl-alpha",
+    provider="openrouter",
+    ...
+)
+```
+
+**Key principle**: Use `gemma-4-31b-it:free` for ALL vision/screenshot tasks. Use `owl-alpha` for text reasoning. Use `nemotron-3-super-120b` when context is very large.
 
 ### Verification Strategy (Updated 2026-06-08)
 
