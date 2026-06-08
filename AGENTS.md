@@ -13,26 +13,30 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 
 ### Role Definitions
 
-| Role | Type | Responsibility | Decision Scope | Ideal Model |
-|------|------|---------------|----------------|-------------|
-| **Daniel (Client)** | Human | End-user, UX quality judgment | Final decision on UI/visual/info architecture | — |
-| **Product Manager** | Main agent | Global planning, prioritization, milestone management, team coordination | Task assignment, progress tracking, cross-module consistency, reflection & plan adjustment | `claude-sonnet-4` (strong reasoning, multi-step planning) |
-| **System Architect** | sub-agent | Layered architecture, data flow, error handling, cross-module integration | Technical solutions, architecture changes | `claude-sonnet-4` (deep technical analysis) |
-| **Developer** | sub-agent | Write code, import checks, git commits | Implementation details, tech stack choices | `claude-sonnet-4` or `gpt-4o` (code generation) |
-| **QA Engineer** | script + vision agent | Functional verification (import, rendering, smoke test) + screenshot analysis | Quality gate, issue reporting | `gpt-4o` or `claude-sonnet-4` (vision for screenshot analysis) |
-| **Design Reviewer** | sub-agent | UX quality, theme alignment, code review, visual inspection | Design-implementation alignment | `claude-sonnet-4` (design reasoning + vision) |
+| Role | Type | Responsibility | Decision Scope |
+|------|------|---------------|----------------|
+| **Daniel (Client)** | Human | End-user, UX quality judgment | Final decision on UI/visual/info architecture |
+| **Product Manager** | Main agent | Global planning, prioritization, milestone management, team coordination | Task assignment, progress tracking, cross-module consistency, reflection & plan adjustment |
+| **System Architect** | sub-agent | Layered architecture, data flow, error handling, cross-module integration | Technical solutions, architecture changes |
+| **Developer** | sub-agent | Write code, import checks, git commits | Implementation details, tech stack choices |
+| **QA Engineer** | script + vision agent | Functional verification (import, rendering, smoke test) + screenshot analysis | Quality gate, issue reporting |
+| **Design Reviewer** | sub-agent | UX quality, theme alignment, code review, visual inspection | Design-implementation alignment |
 
-### Model Assignment Rules
+### Model Assignment
 
-**Critical: Each role should use its ideal model, not a single model for everything.**
+**Current environment**: `openrouter/owl-alpha` is the only configured model. All sub-agents use it.
 
-- **PM tasks** (planning, coordination, reflection): Use `claude-sonnet-4` or equivalent strong reasoning model
-- **Architecture analysis** (technical deep-dives): Use `claude-sonnet-4` or equivalent
-- **Code implementation** (writing code): Use `claude-sonnet-4` or `gpt-4o` — whichever is stronger at code generation
-- **QA/Verification** (screenshot analysis, visual inspection): Use a model with strong vision capabilities (`gpt-4o`, `claude-sonnet-4`)
-- **Design Review** (UX judgment, visual assessment): Use `claude-sonnet-4` with vision enabled
+**When multiple models are available** (configured in `config.yaml`), the PM should assign the appropriate model to each sub-agent via the `model` parameter in `delegate_task`:
 
-**Current environment**: Only `openrouter/owl-alpha` is available. When multiple models are available, the PM should assign the appropriate model to each sub-agent via the `model` parameter in `delegate_task`.
+| Role | Preferred Model | Reason |
+|------|----------------|--------|
+| Product Manager | `claude-sonnet-4` or equivalent | Strong reasoning, multi-step planning |
+| System Architect | `claude-sonnet-4` or equivalent | Deep technical analysis |
+| Developer | `claude-sonnet-4` or `gpt-4o` | Code generation strength |
+| QA Engineer (Visual) | `gpt-4o` or `claude-sonnet-4` | Vision capabilities for screenshot analysis |
+| Design Reviewer | `claude-sonnet-4` | Design reasoning + vision |
+
+**Key principle**: Each role should use its ideal model, not a single model for everything. When only one model is available, all roles use it.
 
 ### Verification Strategy (Updated 2026-06-08)
 
