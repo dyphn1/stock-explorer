@@ -289,20 +289,20 @@ config/
 | 3 | Daily cache invalidation — `end_date` in cache key | Remove `end` from cache key + `_cleanup_cache()` | `ff1c708` |
 | 4 | Race conditions in YAML file operations | `filelock` + atomic write (`os.replace`) | `ff1c708` |
 
-### Current Sprint: P1 Fixes (next priority band)
+### Current Sprint: P1 Fixes
 
 Per `docs/DESIGN_REVIEW.md` consolidated roadmap (recommended order):
 
-| # | Issue | Effort | Status |
-|---|-------|--------|--------|
-| 1 | Crude ROE annualization — quarterly × 4 misleading (TTM) | Medium | Next |
-| 2 | No loading indicator on page switch (st.spinner) | Low | Queued |
-| 3 | ETF determination missing `industry_category` param | Low | Queued |
-| 4 | Watchlist add/remove — no visual feedback | Low | Queued |
-| 5 | Unhandled API rate limit — silent failures | Medium | Queued |
-| 6 | Sidebar name search UI already done (P0-3) | Done | ✅ |
-| 7 | Timeline filter silent failure | Low | Queued |
-| 8 | Peer comparison dead-end for non-benchmark stocks | Medium | Queued |
+|| # | Issue | Effort | Status | Commit ||
+|---|-------|--------|--------|--------|
+| 1 | Crude ROE annualization — quarterly × 4 misleading (TTM) | Medium | ✅ Done | `db16077` |
+| 2 | No loading indicator on page switch (st.spinner) | Low | ✅ Done | `ad4b1dc` |
+| 3 | ETF determination missing `industry_category` param | Low | ✅ Done | `4e3358f` |
+| 4 | Watchlist add/remove — no visual feedback | Low | ✅ Done | `4e3358f` |
+| 5 | Unhandled API rate limit — silent failures | Medium | ✅ Done | `6b1ec4b` |
+| 6 | Sidebar name search UI already done (P0-3) | Done | ✅ | `ff1c708` |
+| 7 | Timeline filter silent failure | Low | ✅ Done | `2e7d260` |
+| 8 | Peer comparison dead-end for non-benchmark stocks | Medium | Next |
 | 9 | Single-period data shows empty charts | Medium | Queued |
 
 ### Pending Daniel Confirmation (3 items)
@@ -325,6 +325,7 @@ See `docs/PENDING_REVIEW.md` for details:
 | 2026-06-08 19:25 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
 | 2026-06-08 21:27 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
 | 2026-06-08 23:30 | ✅ 無新 Bug | ✅ 無未完成任務 | — | 全局反思完成，等待 Daniel UI 驗證 |
-| 2026-06-09 01:41 | ✅ 50/50 (L0) | ✅ 18/18 (L1) | — | P0 全部修復完成，Layer 0 + Layer 1 全綠 |
+|| 2026-06-09 01:41 | ✅ 50/50 (L0) | ✅ 18/18 (L1) | — | P0 全部修復完成，Layer 0 + Layer 1 全綠 |
+|| 2026-06-09 (P1) | ✅ 51/51 (L0) | ✅ 18/18 (L1) | — | P1-1~7 全部完成（6 項新修復），L0+L1 全綠 |
 
-*最後更新：2026-06-09 01:41*
+*最後更新：2026-06-09*
