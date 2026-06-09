@@ -1,4 +1,4 @@
-# Stock Explorer — Technical Debt Report
+# Stock Explorer Technical Debt Report
 
 > **Date**: 2026-06-09
 > **Reviewer**: System Architect

@@ -1,23 +1,23 @@
-# Stock Explorer — Cron 角色職責圖
+# Stock Explorer - Cron Role Map
 
-## Cron 主題輪替（每 3 個 cycle 一輪）
+## Cron Theme Rotation
 
 | Cycle | 主題 | 說明 |
 |-------|------|------|
-| 1 | 🔧 開發 | 修 bug、實作新功能 |
-| 2 | 💡 討論 | 功能規劃、未來發展方向 |
-| 3 | 🔍 檢討 | 缺失檢討、優化產品、競品研究 |
+| 1 | 🔧 Development | Fix bugs and implement features |
+| 2 | 💡 Discussion | Feature planning and future direction |
+| 3 | 🔍 Review | Gap analysis, product optimization, competitor research |
 
 ---
 
-## 角色列表
+## Roles
 
 | 角色 | 模型 | 職責 |
 |------|------|------|
-| **Cron** | — | 發起主題、叫起團隊 |
-| **PM** | owl-alpha | 協調、彙整、分派工作 |
-| **Architect** | nemotron-120b | 架構分析、技術方案 |
-| **Developer** | owl-alpha | 實作、修復 |
+| **Cron** | - | Start the theme and wake up the team |
+| **PM** | owl-alpha | Coordinate, synthesize, and assign work |
+| **Architect** | nemotron-120b | Architecture analysis and technical proposals |
+| **Developer** | owl-alpha | Implementation and bug fixes |
 | **Design Reviewer** | gemma-31b | 視覺/UX 審查 |
 | **QA Engineer** | gemma-31b | 驗證、競品研究 |
 | **Challenger** | gpt-oss-120b:free | 質疑、反證、確保目標一致 |
@@ -78,7 +78,7 @@ Challenger 確認：目標一致 → 通過
 ### 6. QA Engineer（品質保證）
 - **開發主題**：執行驗證（L0/L1/L2）
 - **討論主題**：評估測試策略
-- **檢討主題**：執行競品功能比對、寫入 `docs/COMPETITOR_RESEARCH.md`
+- **Review theme**: run competitor comparison and write to `docs/research/competitor_research.md`
 
 ### 7. Challenger（質疑者）⭐ NEW
 - **所有主題**：聆聽團隊討論，質疑每個決定
@@ -99,10 +99,10 @@ Challenger 確認：目標一致 → 通過
 | 檔案 | 用途 | 更新時機 |
 |------|------|----------|
 | `STATUS.md` | 專案整體狀態、里程碑、上次 cron 結果 | 每次 cron 結束 |
-| `docs/ISSUES.md` | 已知 bug、待修問題 | 發現新問題時 |
-| `docs/PENDING_REVIEW.md` | 等待 Daniel 決策的事項 | 需要人工判斷時 |
-| `docs/CURRENT_PROBLEMS.md` | 目前已知的所有問題（含非 bug） | 檢討主題時 |
-| `docs/COMPETITOR_RESEARCH.md` | 競品研究報告 | 檢討主題時 |
+| `docs/status/issues.md` | Known bugs and follow-up items | When new issues are found |
+| `docs/status/pending_review.md` | Items waiting for Daniel's decision | When human judgment is needed |
+| `docs/status/current_problems.md` | All known problems, including non-bugs | During review themes |
+| `docs/research/competitor_research.md` | Competitor research report | During review themes |
 | `docs/CHALLENGE_LOG.md` | 質疑者反證記錄 | 每次有反證時 |
 
 ### 交接流程

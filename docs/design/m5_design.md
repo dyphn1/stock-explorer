@@ -1,12 +1,12 @@
-# 股識 Stock Explorer — M5 設計文件：自適應更新
+# Stock Explorer M5 Design Document: Adaptive Updates
 
-## 設計目標
+## Design Goals
 
-根據產品願景文件 (PRODUCT_VISION.md)：
-- 內容隨公司變化而更新
-- 重大事件驅動更新：收購、合併、重大虧損等觸發內容重生
-- 適應不同公司類型：集團與單一公司使用不同分析框架
-- 重大事件後 24 小時內內容更新
+Based on the product vision document:
+- Content updates as the company changes.
+- Major events trigger content regeneration, such as acquisitions, mergers, or major losses.
+- Different company types use different analysis frameworks.
+- Content updates within 24 hours after major events.
 
 ## 核心概念
 

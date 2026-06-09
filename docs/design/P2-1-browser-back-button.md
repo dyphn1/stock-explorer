@@ -1,4 +1,4 @@
-# P2-1: Browser Back Button Doesn't Work — Design Document
+# P2-1: Browser Back Button Does Not Work - Design Document
 
 **Date:** 2026-06-09  
 **Status:** Design Complete  

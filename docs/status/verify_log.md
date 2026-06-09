@@ -1,4 +1,4 @@
-# 股識 Stock Explorer — 視覺化驗證日誌
+# Stock Explorer Visual Verification Log
 
 ---
 

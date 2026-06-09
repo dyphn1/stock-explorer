@@ -1,4 +1,4 @@
-# Stock Explorer — 側邊欄缺口分析
+# Stock Explorer Sidebar Gap Analysis
 
 **日期：** 2026-06-09
 **依據：** SIDEBAR_RESEARCH.md（業界研究）+ 目前 main.py 側邊欄實作

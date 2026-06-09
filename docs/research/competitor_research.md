@@ -1,8 +1,8 @@
-# Stock Explorer — 競品研究報告
+# Stock Explorer Competitor Research Report
 
-**日期：** 2026-06-09
-**作者：** QA Engineer (Hermes)
-**目的：** 分析台股資訊競爭產品，找出市場落差與新功能靈感
+**Date:** 2026-06-09
+**Author:** QA Engineer (Hermes)
+**Purpose:** Analyze Taiwanese stock information competitors and identify market gaps and feature ideas
 
 ---
 

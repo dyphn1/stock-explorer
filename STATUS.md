@@ -1,8 +1,8 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔍 檢討輪次（競品研究）✅ 完成
+## 當前階段：🔧 開發輪次（新功能實作）
 
-## 本輪主題：🔍 檢討 — 競品研究與技術債審查（2026-06-09）✅
+## 本輪主題：🔧 開發 — 競品研究新功能實作（2026-06-09）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -264,12 +264,12 @@
 
 ### 2026-06-09（🔍 檢討 — 競品研究與技術債審查）
 - **QA Engineer 競品研究**：完成 6 大競品分析（財報狗、GoodInfo、CMoney、玩股網、FinMind、延伸競品）
-  - 產出 `docs/COMPETITOR_RESEARCH.md`（619 行）
-  - 10 項新功能靈感寫入 `docs/ISSUES.md`（3 P0 + 4 P1 + 3 P2）
+  - Produced `docs/research/competitor_research.md` (619 lines)
+  - Added 10 feature ideas to `docs/status/issues.md` (3 P0 + 4 P1 + 3 P2)
   - 最大功能缺口：除權息資訊、推播通知系統、多清單 Watchlist
   - Stock Explorer 獨特優勢：PPT 風格教育體驗、自適應分析框架、白話解釋引擎
 - **Architect 技術債審查**：完成全程式碼審查
-  - 產出 `docs/TECH_DEBT.md`（364 行）
+  - Produced `docs/status/tech_debt.md` (364 lines)
   - 19 項技術債項目，6 大類別
   - 最嚴重：4+ 檔案重複 card helpers、10 次序列 API 呼叫、YAML 無法擴展
   - 建議立即處理：2h（移除重複 code + 加入部分資料渲染）
@@ -359,8 +359,8 @@ config/
 - **新功能靈感 10 項**寫入 docs/ISSUE.md（3 P0 + 4 P1 + 3 P2）
 - **關鍵發現**：最大缺口為除權息資訊、推播通知、多清單 Watchlist
 - **戰略建議**：不與競品競爭即時數據/選股工具，全力發展教育差異化
-- 寫入 `docs/COMPETITOR_RESEARCH.md`（619 行）
-- 寫入 `docs/ISSUES.md`（219 行，10 個新功能項目）
+- Wrote `docs/research/competitor_research.md` (619 lines)
+- Wrote `docs/status/issues.md` (219 lines, 10 new feature items)
 
 ### Next Steps
 
@@ -370,7 +370,7 @@ config/
 
 #### ⏳ New Feature Candidates (from competitor research, pending Daniel's review)
 
-See `docs/ISSUES.md` for 10 new items labeled 來源: 競品研究:
+See `docs/status/issues.md` for 10 new items labeled `source: competitor research`:
 - **P0**: 除權息行事曆, 推播通知系統, 多 Watchlist 清單
 - **P1**: 市場溫度計, Portfolio 損益管理, PPT 自動生成, 自訂事件門檻
 - **P2**: 影音教學, 美股支援, 全球市場地圖
@@ -379,9 +379,9 @@ See `docs/ISSUES.md` for 10 new items labeled 來源: 競品研究:
 
 1. **Seasonal industry list** — Which industries should trigger the ROE seasonal warning? (Default: 觀光餐旅, 農漁業, 零售, 半導體)
 2. **ETF classification severity** — Upgrade to P0 or keep as P1?
-3. **New feature prioritization** — Review 10 competitor-research features in `docs/ISSUES.md`
+3. **New feature prioritization** - Review 10 competitor-research features in `docs/status/issues.md`
 
-#### 🔮 Tech Debt (documented in docs/TECH_DEBT.md)
+#### 🔮 Tech Debt (documented in `docs/status/tech_debt.md`)
 
 - Immediate (2h): Remove duplicated card helpers, add partial data rendering
 - Short-term (13h): Parallel API calls, input validation, debounce guards
@@ -412,7 +412,7 @@ See `docs/ISSUES.md` for 10 new items labeled 來源: 競品研究:
 
 ### Current Sprint: P2 Polish — ✅ ALL COMPLETE (2026-06-09)
 
-Per `docs/DESIGN_REVIEW.md` consolidated roadmap:
+Per `docs/design/design_review.md` consolidated roadmap:
 
 | # | Issue | Effort | Status | Priority | Commit |
 |---|-------|--------|--------|----------|--------|
@@ -424,7 +424,7 @@ Per `docs/DESIGN_REVIEW.md` consolidated roadmap:
 
 ### Pending Daniel Confirmation (2 items unresolved)
 
-See `docs/PENDING_REVIEW.md` for details:
+See `docs/status/pending_review.md` for details:
 1. ✅ Navbar: 9-button row vs `st.tabs()`? → **RESOLVED**: `st.radio(horizontal=True)`
 2. ⏳ Seasonal industry list for ROE note — needs Daniel's input
 3. ⏳ ETF classification severity (P0 or P1?) — needs Daniel's input

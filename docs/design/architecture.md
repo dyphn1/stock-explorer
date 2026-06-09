@@ -1,4 +1,4 @@
-# 股識 Stock Explorer — Architecture Definition
+# Stock Explorer Architecture Definition
 
 > This is a "must-follow before development" architecture layering specification. All new features must be developed according to the layers and data flow defined in this document.
 

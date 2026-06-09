@@ -1,11 +1,11 @@
-# 股識 Stock Explorer — M4 設計文件
+# Stock Explorer M4 Design Document
 
-## M4a: ETF 專區
+## M4a: ETF Section
 
-### 設計原則
-- ETF 與個股同等對待，不是附屬功能
-- 從「這檔 ETF 持有什麼」到「為什麼買這檔 ETF」
-- 白話解釋 ETF 策略，讓新手理解差異
+### Design Principles
+- Treat ETFs the same as individual stocks; they are not a side feature.
+- Move from "what does this ETF hold" to "why would someone buy this ETF".
+- Explain ETF strategies in plain language so beginners can understand the differences.
 
 ### 頁面結構
 1. **ETF 名片頁**（與個股名片並列）

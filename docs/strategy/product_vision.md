@@ -1,23 +1,23 @@
-# 股識 (Stock Explorer) - 產品願景
+# Stock Explorer Product Vision
 
-## 核心定位
-**歷史學家，不是股評家**
-- 不喊買進不喊賣出，只說「這家公司這些年發生了什麼事」
-- 帶使用者從「不懂」到「認識這家公司是做什麼的」
-- 焦點在公司本質而非股價走勢
+## Core Positioning
+**Historian, not a stock picker**
+- Do not say buy or sell; only explain what has happened to the company over time.
+- Help users move from "I don't understand" to "I know what this company does."
+- Focus on the company itself, not short-term price movement.
 
-## 產品名稱
-- **名稱**：股識
-- **英文**：Stock Explorer
-- **Tagline**：認識一家公司，從這裡開始
+## Product Name
+- **Name**: 股識
+- **English**: Stock Explorer
+- **Tagline**: Start by understanding the company
 
-## 目標使用者
-- 新手投資者：想理解股市但被專業術語嚇到
-- 好奇的觀察者：對身邊公司如何賺錢感興趣
-- 長期投資者：想了解持有公司的基本面變化
-- 拒絕對象：短線交易者、追求快速獲利者
+## Target Users
+- Beginner investors who want to understand the market but feel overwhelmed by jargon.
+- Curious observers who want to know how companies around them make money.
+- Long-term investors who want to understand changes in the companies they hold.
+- Not for short-term traders or people chasing quick profits.
 
-## 市場痛點（經過觀察驗證）
+## Market Pain Points
 1. **資訊過載但理解不足**：財報狗等工具提供海量數據但缺乏白話解釋
 2. **碎片化認知**：需要從多個網站拼湊公司完整畫面
 3. **事後諸葛**：多分析工具解釋過去但不幫助理解未來變數

@@ -2,7 +2,7 @@
 
 > Analysis date: 2026-06-08
 > Analyst: Frontend/UX Agent
-> Scope: Layer 4 UI/UX issues from `CURRENT_PROBLEMS.md` (14 issues)
+> Scope: Layer 4 UI/UX issues from `docs/status/current_problems.md` (14 issues)
 
 ---
 

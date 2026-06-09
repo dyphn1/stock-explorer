@@ -1,19 +1,19 @@
-# Stock Explorer — 問題與功能追蹤
+# Stock Explorer Issue Tracker
 
-> 所有需要追蹤的 bug、功能請求、設計決策都記錄在此。
-> 每個項目標註來源和優先級。
+> Track every bug, feature request, and design decision here.
+> Each item should include its source and priority.
 
 ---
 
-## 格式說明
+## Format
 
 ```
 ### [編號] 簡短標題
-- **來源：** 競品研究 / Bug Report / Design Review / PM 決策
-- **優先級：** P0 / P1 / P2
-- **狀態：** 📋 待辦 / 🔄 進行中 / ✅ 完成 / ❌ 取消
-- **說明：** 詳細描述
-- **相關檔案：** 影響的程式碼檔案
+- **Source:** Competitor research / bug report / design review / PM decision
+- **Priority:** P0 / P1 / P2
+- **Status:** 📋 Todo / 🔄 In progress / ✅ Done / ❌ Canceled
+- **Description:** Detailed explanation
+- **Related files:** Code files affected
 ```
 
 ---
@@ -38,7 +38,7 @@
   - 預估殖利率（以目前股價計算）
 - **資料可行性：** FinMind 有 `TaiwanStockDividend` API
 - **相關檔案：** `src/pages/business_card.py`
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 A
+- **Reference:** `docs/research/competitor_research.md` - Inspiration A
 
 ---
 
@@ -57,7 +57,7 @@
   - 使用者自訂通知條件
 - **技術：** Background worker + SMTP（第一階段）
 - **相關檔案：** `src/services/adaptive_engine.py`、新增 `src/services/notifier.py`
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 B
+- **Reference:** `docs/research/competitor_research.md` - Inspiration B
 
 ---
 
@@ -74,7 +74,7 @@
   - watchlist_page.py 改為多標籤分頁
   - 名片页加入「加入哪個清單」選擇器
 - **相關檔案：** `config/watchlist.yaml`、`src/services/watchlist.py`、`src/pages/watchlist_page.py`
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 C
+- **Reference:** `docs/research/competitor_research.md` - Inspiration C
 
 ---
 
@@ -97,7 +97,7 @@
   - 呈現：體感溫度（🔥熱/😊正常/🥶冷）+ 白話說明
 - **資料可行性：** FinMind 有 `TaiwanStockInstitutionalInvestorsBuySell`
 - **相關檔案：** `src/pages/event_dashboard.py`、新增 `src/services/market_thermal.py`
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 D
+- **Reference:** `docs/research/competitor_research.md` - Inspiration D
 
 ---
 
@@ -115,7 +115,7 @@
   - 已實現損益（歷史交易）
   - 組合總報酬率
 - **相關檔案：** `config/watchlist.yaml`、`src/services/watchlist.py`、`src/pages/watchlist_page.py`
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 E
+- **Reference:** `docs/research/competitor_research.md` - Inspiration E
 
 ---
 
@@ -133,7 +133,7 @@
   - 使用 python-pptx + 各頁面爬取資料
 - **技術：** `python-pptx` 庫
 - **相關檔案：** 所有頁面模組
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 F
+- **Reference:** `docs/research/competitor_research.md` - Inspiration F
 
 ---
 
@@ -150,7 +150,7 @@
   - 新增事件類型（法人買賣超連續 N 天、營收連 N 月衰退）
   - 新增加定頁面
 - **相關檔案：** `src/services/adaptive_engine.py`、新增設定頁面
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 G
+- **Reference:** `docs/research/competitor_research.md` - Inspiration G
 
 ---
 
@@ -167,7 +167,7 @@
   - 每個指標下方可以嵌入 30 秒白話解釋影片
   - 製作成本高，建議 M5 後人工製作或嵌入現有 YouTube 資源
 - **相關檔案：** 所有頁面模組
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 H
+- **Reference:** `docs/research/competitor_research.md` - Inspiration H
 
 ---
 
@@ -181,7 +181,7 @@
   - 目標：已熟悉台股分析架構、想延伸到美股的使用者
   - **需 Daniel 確認是否要支援美股**
 - **相關檔案：** 所有頁面模組
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 I
+- **Reference:** `docs/research/competitor_research.md` - Inspiration I
 
 ---
 
@@ -194,7 +194,7 @@
   - Stock Explorer 版本可偏「基本面理解」而非「交易熱度」
   - 呈現：🟢上涨 🔴下跌 ↔️持平 + 白話說明各市場狀態
 - **相關檔案：** 新増頁面
-- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 J
+- **Reference:** `docs/research/competitor_research.md` - Inspiration J
 
 ---
 
@@ -216,4 +216,4 @@
 ---
 
 *最後更新：2026-06-09（競品研究輪次）*
-*新功能來源：docs/COMPETITOR_RESEARCH.md 競品研究報告*
+*New feature source: `docs/research/competitor_research.md` competitor research report*

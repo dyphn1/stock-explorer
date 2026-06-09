@@ -1,4 +1,4 @@
-# 股識 Stock Explorer — Design System Specification
+# Stock Explorer Design System Specification
 
 > This is a "must-follow before development" design baseline. All new features, new pages, and new components must be confirmed against this document before writing a single line of code.
 

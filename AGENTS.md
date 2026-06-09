@@ -3,7 +3,7 @@ name: "stock-explorer-agents"
 description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with precise architecture, commands, conventions, and domain knowledge."
 ---
 
-# 股識 Stock Explorer - AI Developer Guide
+# Stock Explorer AI Developer Guide
 
 > A Streamlit-based web application using Python and the FinMind API to provide plain-language, PPT-style educational dashboards for Taiwanese stocks. Designed for novices, it translates complex financial data into understandable stories without offering stock-picking advice.
 
@@ -13,14 +13,71 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 
 ### Role Definitions
 
-| Role | Type | Responsibility | Decision Scope |
-|------|------|---------------|----------------|
-| **Daniel (Client)** | Human | End-user, UX quality judgment | Final decision on UI/visual/info architecture |
-| **Product Manager** | Main agent | Global planning, prioritization, milestone management, team coordination | Task assignment, progress tracking, cross-module consistency, reflection & plan adjustment |
-| **System Architect** | sub-agent | Layered architecture, data flow, error handling, cross-module integration | Technical solutions, architecture changes |
-| **Developer** | sub-agent | Write code, import checks, git commits | Implementation details, tech stack choices |
-| **QA Engineer** | script + vision agent | Functional verification (import, rendering, smoke test) + screenshot analysis | Quality gate, issue reporting |
-| **Design Reviewer** | sub-agent | UX quality, theme alignment, code review, visual inspection | Design-implementation alignment |
+| Role | Type | Model | Responsibility |
+|------|------|-------|---------------|
+| **Daniel (Client)** | Human | — | End-user, UX quality judgment, final decision on UI/visual/info architecture |
+| **Product Manager** | Main agent | `owl-alpha` | Global planning, prioritization, milestone management, team coordination. **Does NOT do technical work.** |
+| **System Architect** | sub-agent | `nemotron-120b` | Layered architecture, data flow, error handling, cross-module integration, tech debt analysis |
+| **Developer** | sub-agent | `owl-alpha` | Write code, import checks, git commits, implementation details |
+| **Design Reviewer** | sub-agent | `gemma-31b` | UX quality, theme alignment, code review, visual inspection |
+| **QA Engineer** | sub-agent | `gemma-31b` | Functional verification (L0/L1/L2), screenshot analysis, **competitor research** |
+| **Challenger** | sub-agent | `gpt-oss-120b` | **Challenge every decision**, ensure team alignment, 3-round challenge process |
+
+> **Detailed role cards:** See `docs/workflow/ROLE_CARDS.md` for full role definitions, responsibilities per theme, and work guidelines.
+
+### Development Cycle
+
+```
+Design > Analyze > Reflect > Synthesize > Redesign → loop until no gaps remain, then implement
+```
+
+### Workflow (per cron trigger)
+
+**Cron Theme Rotation** (every 3 cycles):
+1. **🔧 開發** — Fix bugs, implement features. Workflow: `docs/workflow/dev.md`
+2. **💡 討論** — Feature planning, future direction. Workflow: `docs/workflow/discuss.md`
+3. **🔍 檢討** — Gap analysis, optimization, **competitor research**. Workflow: `docs/workflow/review.md`
+
+**State Handoff Mechanism:**
+All state is stored in project files — NOT in the cron prompt. Each cron run:
+1. PM reads state from `STATUS.md`, `docs/status/issues.md`, `docs/status/pending_review.md`, `docs/status/current_problems.md`
+2. PM reads the corresponding workflow file (`docs/workflow/{dev,discuss,review}.md`)
+3. PM reads `docs/workflow/ROLE_CARDS.md` to understand each role's responsibilities
+4. PM spawns sub-agents with role-specific context
+5. Team discusses → Challenger challenges (3 rounds) → PM synthesizes → Developer implements
+6. Results written back to state files
+7. Cron prompt stays stable — only the project state changes
+
+**Team Discussion + Challenge Flow:**
+```
+Cron initiates theme
+    ↓
+PM reads state files + workflow file + role cards
+    ↓
+PM spawns sub-agents (Architect, Developer, Designer, QA) with role context
+    ↓
+Sub-agents analyze & report (parallel)
+    ↓
+PM synthesizes → forms "team preliminary decision"
+    ↓
+PM spawns Challenger with the preliminary decision
+    ↓
+Round 1: Challenger questions → Team responds
+Round 2: Challenger questions → Team responds  
+Round 3: Challenger questions → Team responds
+    ↓
+Challenger confirms alignment
+    ↓
+PM delegates work to Developer
+    ↓
+Developer implements → Verification → State files updated
+```
+
+**Competitor Research** (every 3rd cycle — 檢討 theme):
+- QA Engineer researches competitor products on the web
+- Compares features with Stock Explorer
+- Writes findings to `docs/research/competitor_research.md`
+- New feature ideas → `docs/status/issues.md` (tagged `source: competitor research`)
 
 ### Model Assignment
 
@@ -124,7 +181,7 @@ uv run python scripts/capture_screenshots.py
 ### Collaboration Principles
 
 1. **Functional bugs → auto-fix, don't bother Daniel** (import errors, runtime errors, blank pages)
-2. **UX quality → write to PENDING_REVIEW.md for Daniel's confirmation** (visual aesthetics, info architecture, plain-language quality, intuitiveness)
+2. **UX quality -> write to `docs/status/pending_review.md` for Daniel's confirmation** (visual aesthetics, info architecture, plain-language quality, intuitiveness)
 3. **Global reflection first**: reflect on global state before each development, check cross-module consistency
 4. **Verification via script**: mechanical verification via script; reasoning-heavy tasks via sub-agents
 5. **Team involvement in design**: PM facilitates multi-sub-agent discussion from each role's perspective — not PM doing everything alone
@@ -148,7 +205,7 @@ Design > Analyze > Reflect > Synthesize > Redesign → loop until no gaps remain
 
 **State Handoff Mechanism:**
 All state is stored in project files — NOT in cron prompts. Each cron run:
-1. Reads state from `STATUS.md`, `docs/ISSUES.md`, `docs/PENDING_REVIEW.md`, `docs/CURRENT_PROBLEMS.md`
+1. Reads state from `STATUS.md`, `docs/status/issues.md`, `docs/status/pending_review.md`, `docs/status/current_problems.md`
 2. PM coordinates team discussion (mandatory — never skip)
 3. Sub-agents do reasoning work (never PM alone)
 4. Results written back to state files
@@ -164,8 +221,8 @@ Developer implements → Verification → State files updated
 **Competitor Research** (every 3rd cycle — 檢討 theme):
 - QA Engineer researches competitor products on the web
 - Compares features with Stock Explorer
-- Writes findings to `docs/COMPETITOR_RESEARCH.md`
-- New feature ideas → `docs/ISSUES.md` (tagged `來源: 競品研究`)
+- Writes findings to `docs/research/competitor_research.md`
+- New feature ideas -> `docs/status/issues.md` (tagged `source: competitor research`)
 
 ### Verification (Layered)
 
@@ -184,12 +241,12 @@ Run: `uv run python _verify_all.py --skip-l2` (L2 requires Playwright)
 
 | File | Content |
 |------|---------|
-| `docs/DESIGN_SYSTEM.md` | Design system (layout, colors, components, interaction, PPT style) |
-| `docs/ARCHITECTURE.md` | Architecture (layers, data flow, error handling) |
-| `docs/CURRENT_PROBLEMS.md` | Known issues (including Daniel's manual UI/UX findings) |
-| `docs/PENDING_REVIEW.md` | UX quality issues pending Daniel's confirmation |
-| `docs/PRODUCT_VISION.md` | Product vision, core philosophy, milestones |
-| `docs/TECHNICAL_DESIGN.md` | Technical design, API research, page specs |
+| `docs/design/design_system.md` | Design system (layout, colors, components, interaction, PPT style) |
+| `docs/design/architecture.md` | Architecture (layers, data flow, error handling) |
+| `docs/status/current_problems.md` | Known issues (including Daniel's manual UI/UX findings) |
+| `docs/status/pending_review.md` | UX quality issues pending Daniel's confirmation |
+| `docs/strategy/product_vision.md` | Product vision, core philosophy, milestones |
+| `docs/design/technical_design.md` | Technical design, API research, page specs |
 
 ## Tech Stack & Architecture
 
@@ -202,10 +259,24 @@ Run: `uv run python _verify_all.py --skip-l2` (L2 requires Playwright)
 config/
   watchlist.yaml
 docs/
-  M4_DESIGN.md
-  PRODUCT_VISION.md
-  TECHNICAL_DESIGN.md
-  ...
+  design/
+    m4_design.md
+    design_system.md
+    technical_design.md
+    ...
+  strategy/
+    product_vision.md
+  status/
+    issues.md
+    pending_review.md
+    current_problems.md
+  research/
+    competitor_research.md
+  workflow/
+    main.md
+    dev.md
+    discuss.md
+    review.md
 src/
   data/
     finmind_client.py

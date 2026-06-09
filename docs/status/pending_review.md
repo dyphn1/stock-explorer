@@ -1,4 +1,4 @@
-# Stock Explorer — Pending Daniel Review
+# Stock Explorer Pending Daniel Review
 
 > Items here require human judgment and cannot be auto-resolved by agents.
 
@@ -11,10 +11,10 @@
 - **File**: `src/pages/router.py`
 
 ### 2. Seasonal Industry List
-- **Issue**: ROE seasonal note (UX Issue 5) requires a list of "known seasonal industries"
-- **Proposal**: Which industries should get the warning label?
-- **Default suggestion**: 觀光餐旅 (tourism), 農漁業 (agriculture), 零售 (retail), 半導體 (semiconductors)
-- **Decision needed**: Confirm industry list or defer seasonal note to post-MVP
+- **Issue**: The ROE seasonal note (UX Issue 5) needs a list of known seasonal industries.
+- **Proposal**: Which industries should receive the warning label?
+- **Default suggestion**: Tourism, agriculture, retail, and semiconductors.
+- **Decision needed**: Confirm the industry list or defer the seasonal note until after MVP.
 - **File**: `src/pages/financial_health.py`
 
 ### 3. ETF Classification Severity

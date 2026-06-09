@@ -1,4 +1,4 @@
-# Stock Explorer — Sidebar UX Design Specification
+# Stock Explorer Sidebar UX Design Specification
 
 **Date:** 2026-06-09
 **Author:** UX Research Agent (Hermes)

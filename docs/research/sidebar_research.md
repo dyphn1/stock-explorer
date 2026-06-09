@@ -1,4 +1,4 @@
-# Sidebar UX Research — Stock & Financial Dashboards
+# Sidebar UX Research - Stock & Financial Dashboards
 
 **Date:** 2026-06-09
 **Author:** UX Research Agent (Hermes)

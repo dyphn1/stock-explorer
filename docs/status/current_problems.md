@@ -1,6 +1,6 @@
-# Stock Explorer — Comprehensive Project Problem Analysis Report
+# Stock Explorer Comprehensive Problem Analysis Report
 
-After conducting an in-depth breakdown of the project's architecture, data flow, and UI implementation (via three rounds of review and cross-verification), several potential issues have been identified that could severely impact stability, performance, and scalability. The current issues are categorized into three different review dimensions below:
+After reviewing the architecture, data flow, and UI implementation across three rounds of cross-checking, we identified several issues that could seriously affect stability, performance, and scalability. The issues are grouped into the review dimensions below:
 
 > **2026-06-08 Update**: Daniel's manual testing uncovered 14 UI/UX issues, documented in the "Layer 4: UI/UX Experience" section.
 

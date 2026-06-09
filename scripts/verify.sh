@@ -16,7 +16,7 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PORT=8501
 STREAMLIT_PID=""
-REPORT_FILE="$PROJECT_DIR/docs/verify_report.md"
+REPORT_FILE="$PROJECT_DIR/docs/status/verify_report.md"
 
 # ── Colors ──────────────────────────────────────────────────────────────────
 RED='\033[0;31m'

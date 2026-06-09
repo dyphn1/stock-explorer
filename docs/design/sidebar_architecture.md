@@ -1,4 +1,4 @@
-# Stock Explorer — Sidebar Architecture Redesign
+# Stock Explorer Sidebar Architecture Redesign
 
 **Date:** 2026-06-09
 **Author:** System Architect (Hermes)

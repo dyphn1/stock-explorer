@@ -2,7 +2,7 @@
 
 > Reviewer: Design Reviewer sub-agent
 > Date: 2026-06-08
-> Documents reviewed: PRODUCT_VISION.md, DESIGN_SYSTEM.md, ARCHITECTURE_FIXES.md, UX_IMPROVEMENTS.md
+> Documents reviewed: `docs/strategy/product_vision.md`, `docs/design/design_system.md`, `docs/design/architecture_fixes.md`, `docs/design/ux_improvements.md`
 
 ---
 
