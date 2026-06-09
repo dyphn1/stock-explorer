@@ -4,12 +4,11 @@
 
 ## 🎨 Design Decisions
 
-### 1. Navbar: 9-button row vs `st.tabs()` dropdown
-- **Issue**: The 9-button navbar wraps badly on narrow screens (UX Issue 12)
-- **Proposal**: Replace with `st.tabs()` which handles narrow screens natively
-- **Trade-off**: `st.tabs()` has different visual style; loses the PPT-style button look
-- **Decision needed**: Keep 9-button row (and fix with CSS media queries) or switch to `st.tabs()`?
-- **File**: `src/pages/router.py` (lines 136-147)
+### 1. Navbar: 9-button row vs `st.tabs()` dropdown — ✅ RESOLVED
+- **Decision**: Use `st.radio(horizontal=True)` — preserves bidirectional sync with URL/session_state, native responsive behavior (wraps to dropdown on narrow screens), minimal code change, stable public API.
+- **Rationale**: `st.tabs()` cannot sync with `session_state["page"]` for sidebar/URL navigation. CSS media queries are fragile and don't solve discoverability. `st.radio` gives the best of both worlds.
+- **Implemented**: 2026-06-09 in P2-2 sprint.
+- **File**: `src/pages/router.py`
 
 ### 2. Seasonal Industry List
 - **Issue**: ROE seasonal note (UX Issue 5) requires a list of "known seasonal industries"
@@ -26,4 +25,4 @@
 
 ---
 
-*Updated: 2026-06-08 by PM after design review*
+*Updated: 2026-06-09 by PM after P2-2 implementation*

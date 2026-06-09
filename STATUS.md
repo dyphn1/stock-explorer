@@ -251,6 +251,15 @@
 - Layer 0 + Layer 1 全綠（52/52 + 18/18）
 - Git commit: `af59018`
 
+### 2026-06-09（P2-2 小螢幕響應式佈局）
+- **P2-2 實作**：小螢幕響應式佈局修復
+  - 替換 9 按鈕導航為 `st.radio(horizontal=True)`（桌面水平排列、窄螢幕自動收折）
+  - 新增 `_render_navbar_minimal()` 讓非股票頁面也有一致導航
+  - `initial_sidebar_state` 改為 `"auto"`（窄螢幕自動收合側邊欄）
+  - 新增響應式 CSS（768px/600px 斷點，調整容器 padding）
+- Layer 0 + Layer 1 全綠（52/52 + 18/18）
+- 解決 PENDING_REVIEW #1：使用 `st.radio` 而非 `st.tabs()`（保留雙向頁面同步）
+
 ## 架構總覽
 ### 目錄結構
 ```
@@ -356,8 +365,8 @@ Per `docs/DESIGN_REVIEW.md` consolidated roadmap:
 || # | Issue | Effort | Status | Priority ||
 ||---|-------|--------|--------|--------||
 ||| 1 | Browser back button doesn't work (st.query_params) | High | ✅ Done | P2 || `af59018` ||
-||| 2 | Layout breaks on small screens (CSS media queries + st.tabs) | High | Next | P2 ||
-|| 3 | Dark mode chart label contrast (shared CHART_TEMPLATE) | Medium | ✅ Done | P2 || `cf27a4c` ||
+||| 2 | Layout breaks on small screens (CSS media queries + st.tabs) | High | ✅ Done | P2 || — ||
+||| 3 | Dark mode chart label contrast (shared CHART_TEMPLATE) | Medium | ✅ Done | P2 || `cf27a4c` ||
 || 4 | Cache directory grows unbounded (LRU eviction) | Low | ✅ Done | P2 || `cf27a4c` ||
 || 5 | Fragile column name access in event detection | Medium | ✅ Done | P2 || `8d3ba2b` ||
 
