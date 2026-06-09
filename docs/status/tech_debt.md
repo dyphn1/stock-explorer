@@ -293,13 +293,13 @@ Stock Explorer is a well-structured Streamlit application with clean modular arc
 
 | # | Item | Effort | Impact |
 |---|------|--------|--------|
-| 1 | Consolidate `_find_value` / `_find_financial_value` | 20 min | Prevents divergence |
-| 2 | Remove duplicate card helpers from page modules | 30 min | DRY compliance |
-| 3 | Remove duplicate `filter_by_timeline` from `timeline_controls.py` | 10 min | Dead code removal |
-| 4 | Unify `_is_etf` logic | 10 min | Consistency |
-| 5 | Remove unused dependencies (`dotenv`, `tqdm`) | 5 min | Cleanliness |
-| 6 | Add `uv.lock` or pin dependency versions | 30 min | Reproducibility |
-| 7 | Add input validation for `stock_id` | 20 min | Security/UX |
+|| 1 | Consolidate `_find_value` / `_find_financial_value` | 20 min | Prevents divergence | ✅ Done (2026-06-10) |
+| 2 | Remove duplicate card helpers from page modules | 30 min | DRY compliance | ✅ Already clean (2026-06-10) |
+| 3 | Remove duplicate `filter_by_timeline` from `timeline_controls.py` | 10 min | Dead code removal | ✅ Already clean (2026-06-10) |
+| 4 | Unify `_is_etf` logic | 10 min | Consistency | ✅ Already clean (2026-06-10) |
+| 5 | Remove unused dependencies (`dotenv`, `tqdm`) | 5 min | Cleanliness | ✅ Done (2026-06-10) |
+| 6 | Add `uv.lock` or pin dependency versions | 30 min | Reproducibility | ✅ Done (2026-06-10) |
+| 7 | Add input validation for `stock_id` | 20 min | Security/UX | ✅ Done (2026-06-10) |
 
 **Subtotal: ~2 hours**
 

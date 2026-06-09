@@ -1,8 +1,8 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔧 開發輪次（新功能實作）
+## 當前階段：🔧 開發輪次（技術債清理）
 
-## 本輪主題：🔧 開發 — 競品研究新功能實作（2026-06-09）
+## 本輪主題：🔧 開發 — 即時技術債清理（2026-06-10）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -262,6 +262,13 @@
 - Layer 0 + Layer 1 全綠（52/52 + 18/18）
 - 解決 PENDING_REVIEW #1：使用 `st.radio` 而非 `st.tabs()`（保留雙向頁面同步）
 
+### 2026-06-10（🔧 開發 — 即時技術債清理）
+- **DRY  consolidation**：`_find_value` / `_find_financial_value` 統一為單一 `_find_financial_value`，更新 3 個消費者（financial_health, peer_comparison, roe_calculator）
+- **Dead code**：移除 `_find_value` 别名、移除未使用 deps（python-dotenv, tqdm）
+- **Input validation**：新增 `src/services/validation.py`，4 位數字股票代碼驗證，整合至 main.py
+- 所有語法與匯入驗證通過（0 錯誤）
+- Git commits: `94c25b7`, `e06e09b`
+
 ### 2026-06-09（🔍 檢討 — 競品研究與技術債審查）
 - **QA Engineer 競品研究**：完成 6 大競品分析（財報狗、GoodInfo、CMoney、玩股網、FinMind、延伸競品）
   - Produced `docs/research/competitor_research.md` (619 lines)
@@ -453,4 +460,5 @@ See `docs/status/pending_review.md` for details:
 || 2026-06-09 19:23 | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸，等待 Daniel 決策 |
 || 2026-06-09 21:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | 🔍 檢討輪次：競品研究+技術債審查完成 |
 
-*最後更新：2026-06-09 21:xx*
+|| 2026-06-10 00:xx | ✅ (L0) | ✅ (L1) | — | 即時技術債清理完成，DRY + dead code + input validation，L0+L1 全綠 |
+|*最後更新：2026-06-10 00:xx*
