@@ -195,22 +195,99 @@
 
 ---
 
+---
+
+## 💡 Discussion Round — 2026-06-10 (Team Discussion + Challenger)
+
+### Process Summary
+- **Architect** analyzed technical feasibility of all 10 feature candidates
+- **Design Reviewer** evaluated UX impact and alignment with "historian" positioning
+- **Developer** estimated implementation costs (62-84h total for 5 features)
+- **Challenger** raised 3 rounds of challenges, verdict: **roadmap needs revision**
+
+### Challenger's Key Objections (Round 1-3)
+1. **C05 (Portfolio P&L) is a positioning violation** — contradicts "historian, not stock picker"
+2. **C02 (Notifications) critically under-prioritized** — P0 gap, all competitors have it
+3. **C06 (PPT Generation) strategically misranked** — leverages unique PPT-style advantage
+4. **Roadmap doesn't advance educational mission** — 4/5 core values untouched
+5. **M5 event detection unverified** — building C07 on unvalidated foundation
+
+### Revised Roadmap (Post-Challenger)
+
+#### Phase 1 — Foundation + Quick Win
+- **C06: Auto-Generate Stock Analysis PPT** (moved from Phase 4 → Phase 1)
+  - Rationale: Leverages existing PPT-style CSS, zero new API calls, drives organic sharing
+  - Risk: Medium (python-pptx + kaleido dependency)
+  - Estimate: 18-24h
+- **C07: Customizable Event Thresholds** (kept in Phase 1)
+  - Rationale: Builds settings infrastructure for reuse by C02, C04
+  - Risk: Medium
+  - Estimate: 10-14h
+  - **Prerequisite**: Verify M5 event detection with real FinMind data first
+
+#### Phase 2 — Notification + Market Awareness
+- **C02: Notification/Push System — Phase 1 Email** (moved from Phase 3 → Phase 2)
+  - Rationale: P0 gap, all competitors have it, makes M5 event detection valuable
+  - Risk: High (requires background worker architecture investigation)
+  - Estimate: 14-18h
+  - **Approach**: Start with "pull on next visit" model, investigate external cron for true push
+- **C04: Market Thermometer** (kept in Phase 2)
+  - Rationale: Pure education, beginner-friendly, homepage feature
+  - Risk: Medium-High (market-wide data aggregation)
+  - Estimate: 12-16h
+
+#### Phase 3 — Portfolio (Conditional)
+- **C05: Portfolio P&L Management** (moved from Phase 1 → Phase 3, **conditional**)
+  - Rationale: Challenger flagged positioning risk — needs Daniel's approval
+  - **Requires Daniel confirmation**: Should we add portfolio tracking or stay pure "historian"?
+  - If approved: Reframe as "Paper Portfolio for Learning" with educational framing, no P&L display
+  - Risk: High (positioning risk, not just technical risk)
+  - Estimate: 8-12h (if approved)
+
+#### Rejected / Needs Daniel Input
+- C05 as originally designed (cost basis + P&L tracking) — **REJECTED** unless Daniel approves reframing
+
+### New Feature Ideas from Discussion
+
+#### [ISSUE-D01] M5 Event Detection Verification
+- **Source:** Team discussion (Challenger Round 3)
+- **Priority:** P0
+- **Status:** 📋 Todo
+- **Description:** Before building C07 (Custom Thresholds) on top of the adaptive engine, verify that M5 event detection works with real FinMind data. Currently the detection logic is code-complete but unvalidated in production.
+- **Related files:** `src/services/adaptive_engine.py`, `config/events.yaml`
+
+#### [ISSUE-D02] Background Worker Architecture Investigation
+- **Source:** Team discussion (Challenger Round 2)
+- **Priority:** P0
+- **Status:** 📋 Todo
+- **Description:** C02 (Notifications) requires background processing but Streamlit is request-response only. Need to investigate and decide on architecture: external cron job, APScheduler daemon thread, or "pull on next visit" model.
+- **Related files:** New `scripts/notification_worker.py`, `src/services/notifier.py`
+
+#### [ISSUE-D03] Event Retention Policy
+- **Source:** Architect analysis
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:** Events accumulate indefinitely in events.yaml. Add retention policy — prune events older than 90 days. ~10-line addition to adaptive_engine.py.
+- **Related files:** `src/services/adaptive_engine.py`, `config/events.yaml`
+
+---
+
 ## 📊 Statistics
 
 | Status | Count |
 |--------|-------|
-| 📋 Todo | 10 |
+| 📋 Todo | 12 |
 | 🔄 In progress | 0 |
-| ✅ Done | 0 |
+| ✅ Done | 1 |
 | ❌ Canceled | 0 |
 
 | Priority | Count |
 |----------|-------|
-| P0 | 3 |
-| P1 | 4 |
+| P0 | 4 |
+| P1 | 5 |
 | P2 | 3 |
 
 ---
 
-*Last updated: 2026-06-09 (competitor research round)*
-*New feature source: `docs/research/competitor_research.md` competitor research report*
+*Last updated: 2026-06-10 (team discussion + challenger round)*
+*Source: Team discussion with Architect, Design Reviewer, Developer, Challenger*

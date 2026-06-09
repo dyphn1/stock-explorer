@@ -1,8 +1,8 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔧 開發輪次（技術債清理）
+## 當前階段：💡 討論輪次（功能路線圖規劃）
 
-## 本輪主題：🔧 開發 — 即時技術債清理（2026-06-10）
+## 本輪主題：💡 討論 — 功能路線圖規劃（2026-06-10）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -383,6 +383,24 @@ config/
 - Wrote `docs/research/competitor_research.md` (619 lines)
 - Wrote `docs/status/issues.md` (219 lines, 10 new feature items)
 
+### 2026-06-10（💡 討論 — 功能路線圖規劃 + Challenger）
+- **團隊討論**：Architect、Designer、Developer 平行分析 10 個競品功能候選
+- **Architect 建議**：3 個方向 — Track & Share (C05+C06)、Stay Informed (C02)、Market Pulse (C04+C07)
+- **Designer 建議**：優先 C02 (通知) + C06 (PPT)，最高 UX 價值
+- **Developer 估算**：C05 (8-12h) < C07 (10-14h) < C04 (12-16h) < C02 (14-18h) < C06 (18-24h)
+- **Challenger 3 輪挑戰**：
+  - Round 1: C05 違反「歷史學家」定位；路線圖是競品驅動而非願景驅動
+  - Round 2: C07 是進階功能非初心者需求；C02 應為 Phase 1；C06 策略性排序錯誤
+  - Round 3: 路線圖未推進教育使命（5 大核心價值 4 個未觸及）；M5 未驗證
+- **Challenger 裁決**：路線圖需要重大修訂
+- **修訂後路線圖**：
+  - Phase 1: C06 (PPT 生成) + C07 (自訂事件門檻)
+  - Phase 2: C02 ( Email 通知) + C04 (市場溫度計)
+  - Phase 3: C05 (投資組合損益，需 Daniel 批准)
+- **新增前提項目**：ISSUE-D01 (M5 驗證)、ISSUE-D02 (背景架構調查)、ISSUE-D03 (事件保留策略)
+- **等待 Daniel 決策**：投資組合定位、路線圖核准、季節性產業清單、ETF 分類嚴重度
+- Git commits: (文件更新，無代碼變更)
+
 ### Next Steps
 
 #### ✅ All P0/P1/P2 Fixes — COMPLETED (2026-06-09)
@@ -475,5 +493,8 @@ See `docs/status/pending_review.md` for details:
 || 2026-06-09 21:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | 🔍 檢討輪次：競品研究+技術債審查完成 |
 
 || 2026-06-10 00:xx | ✅ (L0) | ✅ (L1) | — | 即時技術債清理完成，DRY + dead code + input validation，L0+L1 全綠 |
-|| 2026-06-10 02:xx | ✅ 54/54 (L0) | ✅ 15/15 (L1) | — | 部分資料載入 + 單元測試，L0+L1 全綠（3 L1 失敗為既有基線） |
-|*最後更新：2026-06-10 02:xx*
+||| 2026-06-10 02:xx | ✅ 54/54 (L0) | ✅ 15/15 (L1) | — | 部分資料載入 + 單元測試，L0+L1 全綠（3 L1 失敗為既有基線） |
+||*最後更新：2026-06-10 06:xx* |||
+
+||| 2026-06-10 04:xx | ✅ 54/54 (L0) | ✅ 15/15 (L1) | — | 多清單關注系統實作完成 (ISSUE-C03)，L0+L1 全綠（3 L1 失敗為既有基線） |
+||| 2026-06-10 06:xx | — | — | — | 💡 討論輪次：團隊討論 + Challenger 完成，產出修訂路線圖，等待 Daniel 決策 |
