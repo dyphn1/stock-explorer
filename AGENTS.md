@@ -129,6 +129,8 @@ uv run python scripts/capture_screenshots.py
 4. **Verification via script**: mechanical verification via script; reasoning-heavy tasks via sub-agents
 5. **Team involvement in design**: PM facilitates multi-sub-agent discussion from each role's perspective — not PM doing everything alone
 6. **Roles documented in project**: team roles and collaboration flow must be written in AGENTS.md, not defined ad-hoc in prompts
+7. **Proactive team discussion (CRITICAL)**: Even with no bugs and no new features, the team MUST actively discuss and improve the product. The PM should rotate through discussion topics each cycle: Architecture Review, Code Quality Review, UX/Visual Review, New Feature Exploration. Never let the team go idle — a mature team continuously improves through internal discussion.
+8. **Delegate reasoning, retain coordination**: PM should ONLY do mechanical work (read status files, run verification scripts, git commit). All reasoning tasks (code analysis, architecture review, design critique, visual inspection) MUST be delegated to the appropriate sub-agent role with the appropriate model.
 
 ### Development Cycle
 
