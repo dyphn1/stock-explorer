@@ -8,7 +8,7 @@
 ## Format
 
 ```
-### [編號] 簡短標題
+### [ID] Short Title
 - **Source:** Competitor research / bug report / design review / PM decision
 - **Priority:** P0 / P1 / P2
 - **Status:** 📋 Todo / 🔄 In progress / ✅ Done / ❌ Canceled
@@ -18,202 +18,202 @@
 
 ---
 
-## 🔴 P0 — 必須修復/實作
+## 🔴 P0 — Must Fix / Implement
 
 ---
 
-### [ISSUE-C01] 除權息行事曆
-- **來源：** 競品研究
-- **優先級：** P0
-- **狀態：** 📋 待辦
-- **說明：**
-  - GoodInfo、財報狗都有完整的除權息資訊
-  - 新手最常問的問題之一：「台積電什麼時候配息、配多少？」
-  - 目前 Stock Explorer 完全無法回答這個問題
-  - 建議在名片頁新增「配息資訊」區塊
-- **建議實作：**
-  - 近 5 年除權息日程（除息日、除權日）
-  - 歷年股利（現金股利、股票股利）
-  - 白話說明（如：「過去 5 年，台積電每季配息約 2.75 元」）
-  - 預估殖利率（以目前股價計算）
-- **資料可行性：** FinMind 有 `TaiwanStockDividend` API
-- **相關檔案：** `src/pages/business_card.py`
-- **Reference:** `docs/research/competitor_research.md` - Inspiration A
+### [ISSUE-C01] Ex-Dividend Calendar
+- **Source:** Competitor research
+- **Priority:** P0
+- **Status:** 📋 Todo
+- **Description:**
+  - GoodInfo and Dogga (財報狗) both have complete ex-dividend information
+  - One of the most common beginner questions: "When does TSMC pay dividends and how much?"
+  - Stock Explorer currently cannot answer this question at all
+  - Recommendation: add a "Dividend Information" section to the Business Card page
+- **Suggested Implementation:**
+  - Ex-dividend/ex-rights schedule for the past 5 years (ex-dividend date, ex-rights date)
+  - Historical dividends (cash dividends, stock dividends)
+  - Plain-language explanation (e.g., "Over the past 5 years, TSMC has paid approximately NT$2.75 per quarter")
+  - Estimated dividend yield (calculated from current stock price)
+- **Data Feasibility:** FinMind has the `TaiwanStockDividend` API
+- **Related files:** `src/pages/business_card.py`
+- **Reference:** `docs/research/competitor_research.md` — Inspiration A
 
 ---
 
-### [ISSUE-C02] 推播通知系統
-- **來源：** 競品研究
-- **優先級：** P0
-- **狀態：** 📋 待辦
-- **說明：**
-  - 財報狗有 Line Notify；CMoney 有 App Push
-  - 事件偵測引擎已經有資料，但無法主動通知用戶
-  - 第一階段：email 通知（成本低）
-  - 第二階段：Line Notify（需要 Bot 帳號）
-- **建議實作：**
-  - 營收異動 ±30%
-  - 股價異動 ±7%
-  - 使用者自訂通知條件
-- **技術：** Background worker + SMTP（第一階段）
-- **相關檔案：** `src/services/adaptive_engine.py`、新增 `src/services/notifier.py`
-- **Reference:** `docs/research/competitor_research.md` - Inspiration B
+### [ISSUE-C02] Notification / Push System
+- **Source:** Competitor research
+- **Priority:** P0
+- **Status:** 📋 Todo
+- **Description:**
+  - 財報狗 has Line Notify; CMoney has App Push
+  - The event detection engine already has the data but cannot proactively notify users
+  - Phase 1: email notification (low cost)
+  - Phase 2: Line Notify (requires Bot account)
+- **Suggested Implementation:**
+  - Revenue change ±30%
+  - Stock price change ±7%
+  - User-customizable notification conditions
+- **Technology:** Background worker + SMTP (Phase 1)
+- **Related files:** `src/services/adaptive_engine.py`, new `src/services/notifier.py`
+- **Reference:** `docs/research/competitor_research.md` — Inspiration B
 
 ---
 
-### [ISSUE-C03] 多 Watchlist 清單
-- **來源：** 競品研究
-- **優先級：** P0
-- **狀態：** 📋 待辦
-- **說明：**
-  - Yahoo Finance、財報狗都支援多個 watchlist
-  - 目前只有一個「我的關注」清單，缺乏分類管理能力
-  - 使用者需要分別追蹤「存股標的」「觀察名單」「高殖利率」等
-- **建議實作：**
-  - watchlist.yaml 重構为 `lists` 結構
-  - watchlist_page.py 改為多標籤分頁
-  - 名片页加入「加入哪個清單」選擇器
-- **相關檔案：** `config/watchlist.yaml`、`src/services/watchlist.py`、`src/pages/watchlist_page.py`
-- **Reference:** `docs/research/competitor_research.md` - Inspiration C
+### [ISSUE-C03] Multiple Watchlist Lists
+- **Source:** Competitor research
+- **Priority:** P0
+- **Status:** 📋 Todo
+- **Description:**
+  - Yahoo Finance and 財報狗 both support multiple watchlists
+  - Currently there is only one "My Watchlist" with no categorization capability
+  - Users need to separately track "divend stocks", "watchlist", "high dividend yield", etc.
+- **Suggested Implementation:**
+  - Refactor `watchlist.yaml` to a `lists` structure
+  - Change `watchlist_page.py` to multi-tab pages
+  - Add a "Add to which list?" selector on the Business Card page
+- **Related files:** `config/watchlist.yaml`, `src/services/watchlist.py`, `src/pages/watchlist_page.py`
+- **Reference:** `docs/research/competitor_research.md` — Inspiration C
 
 ---
 
-## 🟡 P1 — 重要但非關鍵
+## 🟡 P1 — Important but Not Critical
 
 ---
 
-### [ISSUE-C04] 市場溫度計
-- **來源：** 競品研究
-- **優先級：** P1
-- **狀態：** 📋 待辦
-- **說明：**
-  - 玩股網有「股市溫度計」；CMoney 有市場情緒指標
-  - 新手想知道「現在市場是熱還是冷？」
-  - 建議在主頁或事件儀表板加入市場溫度指示器
-- **建議實作：**
-  - 三大法人買賣超（5 日均值）
-  - 大盤成交量（熱 vs 冷）
-  - 漲停/跌停家數比
-  - 呈現：體感溫度（🔥熱/😊正常/🥶冷）+ 白話說明
-- **資料可行性：** FinMind 有 `TaiwanStockInstitutionalInvestorsBuySell`
-- **相關檔案：** `src/pages/event_dashboard.py`、新增 `src/services/market_thermal.py`
-- **Reference:** `docs/research/competitor_research.md` - Inspiration D
+### [ISSUE-C04] Market Thermometer
+- **Source:** Competitor research
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:**
+  - 玩股網 has a "Stock Market Thermometer"; CMoney has market sentiment indicators
+  - Beginners want to know "Is the market hot or cold right now?"
+  - Recommendation: add a market temperature indicator to the home page or event dashboard
+- **Suggested Implementation:**
+  - Three major institutional investors buy/sell surplus (5-day average)
+  - Market trading volume (hot vs. cold)
+  - Ratio of limit-up / limit-down stocks
+  - Presentation: feel-temperature (🔥 Hot / 😊 Normal / 🥶 Cold) + plain-language explanation
+- **Data Feasibility:** FinMind has `TaiwanStockInstitutionalInvestorsBuySell`
+- **Related files:** `src/pages/event_dashboard.py`, new `src/services/market_thermal.py`
+- **Reference:** `docs/research/competitor_research.md` — Inspiration D
 
 ---
 
-### [ISSUE-C05] Portfolio 損益管理
-- **來源：** 競品研究
-- **優先級：** P1
-- **狀態：** 📋 待辦
-- **說明：**
-  - CMoney 有完整的 Portfolio 管理功能
-  - 目前 Watchlist 只有價格提醒，沒有持倉損益管理
-  - Watchlist 進化为 Portfolio：加入成本價、持有數量
-- **建議實作：**
-  - 每股成本價、持有數量
-  - 未實現損益（即時）
-  - 已實現損益（歷史交易）
-  - 組合總報酬率
-- **相關檔案：** `config/watchlist.yaml`、`src/services/watchlist.py`、`src/pages/watchlist_page.py`
-- **Reference:** `docs/research/competitor_research.md` - Inspiration E
+### [ISSUE-C05] Portfolio P&L Management
+- **Source:** Competitor research
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:**
+  - CMoney has comprehensive portfolio management features
+  - Current Watchlist only has price alerts; no position P&L management
+  - Evolve Watchlist into Portfolio: add cost basis, holdings quantity
+- **Suggested Implementation:**
+  - Cost per share, number of shares held
+  - Unrealized P&L (real-time)
+  - Realized P&L (historical trades)
+  - Overall portfolio return rate
+- **Related files:** `config/watchlist.yaml`, `src/services/watchlist.py`, `src/pages/watchlist_page.py`
+- **Reference:** `docs/research/competitor_research.md` — Inspiration E
 
 ---
 
-### [ISSUE-C06] 個股分析 PPT 自動生成
-- **來源：** 競品研究
-- **優先級：** P1
-- **狀態：** 📋 待辦
-- **說明：**
-  - 玩股網有一鍵生成分析簡報功能
-  - Stock Explorer 已有 PPT 風格 CSS，可直接用 python-pptx 生成真正的 PPT
-  - 差異化：Stock Explorer 的 PPT 風格比玩股網更精美、更有教育性
-- **建議實作：**
-  - 每頁加入「下載 PPT」按鈕
-  - 包含：公司名片、營運健檢重點、財務體質摘要、同業比較雷達圖
-  - 使用 python-pptx + 各頁面爬取資料
-- **技術：** `python-pptx` 庫
-- **相關檔案：** 所有頁面模組
-- **Reference:** `docs/research/competitor_research.md` - Inspiration F
+### [ISSUE-C06] Auto-Generate Stock Analysis PPT
+- **Source:** Competitor research
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:**
+  - 玩股網 has a one-click analysis report generation feature
+  - Stock Explorer already has PPT-style CSS; can directly use python-pptx to generate real PPT files
+  - Differentiation: Stock Explorer's PPT style is more polished and more educational than 玩股網's
+- **Suggested Implementation:**
+  - Add a "Download PPT" button on each page
+  - Include: Company Business Card, Operations Health Check highlights, Financial Health Summary, Peer Comparison Radar Chart
+  - Use python-pptx + scraped data from each page
+- **Technology:** `python-pptx` library
+- **Related files:** All page modules
+- **Reference:** `docs/research/competitor_research.md` — Inspiration F
 
 ---
 
-### [ISSUE-C07] 用戶自訂事件門檻
-- **來源：** 競品研究
-- **優先級：** P1
-- **狀態：** 📋 待辦
-- **說明：**
-  - 延伸自 M5 事件偵測引擎
-  - 目前使用固定閾值（營收±30%、股價±7%）
-  - 允許用戶自訂敏感度和事件類型
-- **建議實作：**
-  - 使用者調整敏感度
-  - 新增事件類型（法人買賣超連續 N 天、營收連 N 月衰退）
-  - 新增加定頁面
-- **相關檔案：** `src/services/adaptive_engine.py`、新增設定頁面
-- **Reference:** `docs/research/competitor_research.md` - Inspiration G
+### [ISSUE-C07] Customizable Event Thresholds
+- **Source:** Competitor research
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:**
+  - Extension of the M5 event detection engine
+  - Currently uses fixed thresholds (revenue ±30%, stock price ±7%)
+  - Allow users to customize sensitivity and event types
+- **Suggested Implementation:**
+  - User-adjustable sensitivity
+  - New event types (institutional investors buying/selling for N consecutive days, revenue declining for N consecutive months)
+  - Add a settings page
+- **Related files:** `src/services/adaptive_engine.py`, new settings page
+- **Reference:** `docs/research/competitor_research.md` — Inspiration G
 
 ---
 
-## 🟢 P2 — 加分功能/未來考慮
+## 🟢 P2 — Nice-to-Have / Future Consideration
 
 ---
 
-### [ISSUE-C08] 影音教學
-- **來源：** 競品研究
-- **優先級：** P2
-- **狀態：** 📋 待辦
-- **說明：**
-  - CMoney 有大量投資教學影片
-  - 每個指標下方可以嵌入 30 秒白話解釋影片
-  - 製作成本高，建議 M5 後人工製作或嵌入現有 YouTube 資源
-- **相關檔案：** 所有頁面模組
-- **Reference:** `docs/research/competitor_research.md` - Inspiration H
+### [ISSUE-C08] Video Tutorials
+- **Source:** Competitor research
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - CMoney has a large number of investment tutorial videos
+  - Each metric could have a 30-second plain-language explanation video embedded below it
+  - High production cost; recommend post-M5 manual production or embedding existing YouTube resources
+- **Related files:** All page modules
+- **Reference:** `docs/research/competitor_research.md` — Inspiration H
 
 ---
 
-### [ISSUE-C09] 美股支援
-- **來源：** 競品研究
-- **優先級：** P2
-- **狀態：** 📋 待辦
-- **說明：**
-  - 財報狗支援美股 500+ 公司
-  - FinMind 已有美股資料
-  - 目標：已熟悉台股分析架構、想延伸到美股的使用者
-  - **需 Daniel 確認是否要支援美股**
-- **相關檔案：** 所有頁面模組
-- **Reference:** `docs/research/competitor_research.md` - Inspiration I
+### [ISSUE-C09] US Stock Support
+- **Source:** Competitor research
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - 財報狗 supports 500+ US stocks
+  - FinMind already has US stock data
+  - Target: users already familiar with the Taiwan stock analysis framework who want to extend to US stocks
+  - **Requires Daniel confirmation on whether to support US stocks**
+- **Related files:** All page modules
+- **Reference:** `docs/research/competitor_research.md` — Inspiration I
 
 ---
 
-### [ISSUE-C10] 全球市場地圖
-- **來源：** 競品研究
-- **優先級：** P2
-- **狀態：** 📋 待辦
-- **說明：**
-  - 玩股網有全球股市地圖
-  - Stock Explorer 版本可偏「基本面理解」而非「交易熱度」
-  - 呈現：🟢上涨 🔴下跌 ↔️持平 + 白話說明各市場狀態
-- **相關檔案：** 新増頁面
-- **Reference:** `docs/research/competitor_research.md` - Inspiration J
+### [ISSUE-C10] Global Market Map
+- **Source:** Competitor research
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - 玩股網 has a global stock market map
+  - The Stock Explorer version can lean toward "fundamental understanding" rather than "trading heat"
+  - Presentation: 🟢 Up 🔴 Down ↔️ Flat + plain-language explanation of each market status
+- **Related files:** New page
+- **Reference:** `docs/research/competitor_research.md` — Inspiration J
 
 ---
 
-## 📊 統計
+## 📊 Statistics
 
-| 狀態 | 數量 |
-|------|------|
-| 📋 待辦 | 10 |
-| 🔄 進行中 | 0 |
-| ✅ 完成 | 0 |
-| ❌ 取消 | 0 |
+| Status | Count |
+|--------|-------|
+| 📋 Todo | 10 |
+| 🔄 In progress | 0 |
+| ✅ Done | 0 |
+| ❌ Canceled | 0 |
 
-| 優先級 | 數量 |
-|---------|------|
+| Priority | Count |
+|----------|-------|
 | P0 | 3 |
 | P1 | 4 |
 | P2 | 3 |
 
 ---
 
-*最後更新：2026-06-09（競品研究輪次）*
+*Last updated: 2026-06-09 (competitor research round)*
 *New feature source: `docs/research/competitor_research.md` competitor research report*

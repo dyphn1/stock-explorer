@@ -1,17 +1,17 @@
-# 🔧 開發主題工作流（DEV WORKFLOW）
+# 🔧 Development Topic Workflow (DEV WORKFLOW)
 
-> 當 STATUS.md 指定主題為「開發」時，PM 按照此工作流執行。
-
----
-
-## 開發主題工作目标
-- 修復 `docs/status/issues.md` 中的 bug
-- 實作新功能
-- 通過 L0/L1 驗證
+> When STATUS.md specifies the topic as "Development," the PM follows this workflow.
 
 ---
 
-## 流程圖（完整）
+## Development Topic Goals
+- Fix bugs in `docs/status/issues.md`
+- Implement new features
+- Pass L0/L1 verification
+
+---
+
+## Flow Diagram (Complete)
 
 ```mermaid
 flowchart TD
@@ -51,71 +51,71 @@ flowchart TD
 
 ---
 
-## PM 的任務（詳細）
+## PM Tasks (Detailed)
 
-### Step 1：讀取狀態
+### Step 1: Read Status
 ```
-讀取以下檔案：
-1. STATUS.md → 確認本次主題為「開發」
-2. docs/status/issues.md → 列出所有未解決的 issues
-3. docs/status/current_problems.md → 了解已知問題
+Read the following files:
+1. STATUS.md → Confirm the current topic is "Development"
+2. docs/status/issues.md → List all unresolved issues
+3. docs/status/current_problems.md → Understand known problems
 ```
 
-### Step 2：分派工作
+### Step 2: Dispatch Work
 ```
-根據 issue 類型分派：
+Dispatch based on issue type:
 - Bug fix → Developer
-- 需要架構分析 → 先分派 Architect
-- 需要設計審查 → 確認 Design Reviewer 參與
+- Requires architecture analysis → Dispatch to Architect first
+- Requires design review → Confirm Design Reviewer participation
 ```
 
-### Step 3：驗證與提交
+### Step 3: Verification and Commit
 ```
-1. 確認 Developer 執行 L0/L1 驗證通過
-2. 確認 ISSUES.md 已更新
-3. 確認 STATUS.md 已更新
+1. Confirm Developer executes L0/L1 verification passed
+2. Confirm ISSUES.md has been updated
+3. Confirm STATUS.md has been updated
 4. git commit
 ```
 
 ---
 
-## Sub-agent 的任務
+## Sub-agent Tasks
 
 ### Developer 🔧
-1. 讀取被指派的 issue
-2. 讀取相關 source code
-3. 分析根因（不要盲目 trial-and-error）
-4. 實作修復
-5. 執行 `uv run python _verify_layer0.py`
-6. 執行 `uv run python _verify_layer1.py`
-7. 驗證通過後 git commit（英文 message）
-8. 清除 ISSUES.md 中對應的 issue
+1. Read the assigned issue
+2. Read the relevant source code
+3. Analyze the root cause (don't blindly trial-and-error)
+4. Implement the fix
+5. Execute `uv run python _verify_layer0.py`
+6. Execute `uv run python _verify_layer1.py`
+7. git commit after verification passes (English message)
+8. Remove the corresponding issue from ISSUES.md
 
 ### QA Engineer 🧪
-1. 執行 L0 驗證
-2. 執行 L1 驗證
-3. 報告所有失敗項目
-4. 確認 bug 已修復
+1. Execute L0 verification
+2. Execute L1 verification
+3. Report all failed items
+4. Confirm the bug has been fixed
 
 ### Challenger 🔥
-**在開發主題中，Challenger 只負責質疑「優先級」：**
-- 這個 bug 真的需要現在修嗎？
-- 修復的優先級正確嗎？
-- 有沒有更重要的 issue 被忽略了？
+**In the development topic, the Challenger is only responsible for questioning "priorities":**
+- Does this bug really need to be fixed now?
+- Is the fix priority correct?
+- Are there more important issues being overlooked?
 
 ---
 
-## 狀態更新
+## Status Update
 
-PM 必須在 STATUS.md 更新：
+PM must update in STATUS.md:
 
 ```markdown
-## 驗證紀錄
-| 日期 | Gate 1 (Import) | Gate 2 (Render) | Gate 3 (Smoke) | 備註 |
-|------|-----------------|-----------------|----------------|------|
-| YYYY-MM-DD HH:MM | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | 修復 ISSUE-XXX |
+## Verification Log
+| Date | Gate 1 (Import) | Gate 2 (Render) | Gate 3 (Smoke) | Notes |
+|------|-----------------|-----------------|----------------|-------|
+| YYYY-MM-DD HH:MM | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Fix ISSUE-XXX |
 ```
 
 ---
 
-*最後更新：2026-06-09*
+*Last updated: 2026-06-09*

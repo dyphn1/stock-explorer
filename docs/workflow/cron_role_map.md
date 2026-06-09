@@ -2,8 +2,8 @@
 
 ## Cron Theme Rotation
 
-| Cycle | 主題 | 說明 |
-|-------|------|------|
+| Cycle | Theme | Description |
+|-------|-------|-------------|
 | 1 | 🔧 Development | Fix bugs and implement features |
 | 2 | 💡 Discussion | Feature planning and future direction |
 | 3 | 🔍 Review | Gap analysis, product optimization, competitor research |
@@ -12,146 +12,146 @@
 
 ## Roles
 
-| 角色 | 模型 | 職責 |
-|------|------|------|
+| Role | Model | Responsibility |
+|------|-------|----------------|
 | **Cron** | - | Start the theme and wake up the team |
 | **PM** | owl-alpha | Coordinate, synthesize, and assign work |
 | **Architect** | nemotron-120b | Architecture analysis and technical proposals |
 | **Developer** | owl-alpha | Implementation and bug fixes |
-| **Design Reviewer** | gemma-31b | 視覺/UX 審查 |
-| **QA Engineer** | gemma-31b | 驗證、競品研究 |
-| **Challenger** | gpt-oss-120b:free | 質疑、反證、確保目標一致 |
+| **Design Reviewer** | gemma-31b | Visual/UX review |
+| **QA Engineer** | gemma-31b | Verification, competitor research |
+| **Challenger** | gpt-oss-120b:free | Question, counter-prove, ensure goal alignment |
 
 ---
 
-## 反證流程（MANDATORY）
+## Challenge Process (MANDATORY)
 
-**每個重要決定都必須經過至少 3 輪反證：**
+**Every important decision must go through at least 3 rounds of challenge:**
 
 ```
-Round 1: 團隊提出方案
+Round 1: Team proposes a plan
     ↓
-Challenger 質疑（為什麼？有其他方案？風險是什麼？）
+Challenger questions (Why? Are there alternatives? What are the risks?)
     ↓
-Round 2: 團隊回應質疑、修正方案
+Round 2: Team responds to questions, revises the plan
     ↓
-Challenger 再次質疑（漏洞？矛盾？）
+Challenger questions again (Loopholes? Contradictions?)
     ↓
-Round 3: 團隊最終回應
+Round 3: Team gives final response
     ↓
-Challenger 確認：目標一致 → 通過
+Challenger confirms: goals are aligned → Approved
 ```
 
-**目標：** 不是為了反對而反對，而是透過反證確保每個決定都經得起考驗。
+**Goal:** Not to oppose for the sake of opposing, but to ensure every decision can withstand scrutiny through the challenge process.
 
 ---
 
-## 各角色在每次 Cron 的職責
+## Each Role's Responsibilities per Cron
 
-### 1. Cron（發起者）
-- 讀取 `STATUS.md` 決定本次主題
-- 叫起 Main agent（PM）
-- 寫入 `STATUS.md` 記錄本次主題
+### 1. Cron (Initiator)
+- Reads `STATUS.md` to determine the theme for this cycle
+- Wakes up the Main Agent (PM)
+- Writes the current theme to `STATUS.md`
 
-### 2. Main Agent / PM（協調者）
-- 讀取所有狀態檔案
-- 發起團隊討論（standup）
-- 彙整各角色意見
-- **至少 3 輪反證**後才能確認決定
-- 寫回狀態檔案
+### 2. Main Agent / PM (Coordinator)
+- Reads all status files
+- Initiates team discussion (standup)
+- Synthesizes input from all roles
+- Decisions can only be confirmed after **at least 3 rounds of challenges**
+- Writes back to status files
 
-### 3. System Architect（架構師）
-- **開發主題**：分析技術可行性、提出架構方案
-- **討論主題**：評估新功能的技术影響
-- **檢討主題**：審視架構債務、提出重構建議
+### 3. System Architect
+- **Development theme:** Analyze technical feasibility, propose architecture plans
+- **Discussion theme:** Evaluate technical impact of new features
+- **Review theme:** Examine technical debt, propose refactoring recommendations
 
-### 4. Developer（開發者）
-- **開發主題**：實作功能、修 bug
-- **討論主題**：評估實作成本、給出時間估算
-- **檢討主題**：重構程式碼、優化效能
+### 4. Developer
+- **Development theme:** Implement features, fix bugs
+- **Discussion theme:** Estimate implementation cost, provide time estimates
+- **Review theme:** Refactor code, optimize performance
 
-### 5. Design Reviewer（設計審查）
-- **開發主題**：審查 UI/UX 實作
-- **討論主題**：提供設計方向建議
-- **檢討主題**：比對競品設計、提出改進
+### 5. Design Reviewer
+- **Development theme:** Review UI/UX implementation
+- **Discussion theme:** Provide design direction recommendations
+- **Review theme:** Compare competitor designs, propose improvements
 
-### 6. QA Engineer（品質保證）
-- **開發主題**：執行驗證（L0/L1/L2）
-- **討論主題**：評估測試策略
-- **Review theme**: run competitor comparison and write to `docs/research/competitor_research.md`
+### 6. QA Engineer
+- **Development theme:** Execute verification (L0/L1/L2)
+- **Discussion theme:** Evaluate testing strategy
+- **Review theme:** Run competitor comparison and write to `docs/research/competitor_research.md`
 
-### 7. Challenger（質疑者）⭐ NEW
-- **所有主題**：聆聽團隊討論，質疑每個決定
-- 要求至少 3 輪反證才能確認一個決定
-- 確保團隊目標一致
-- 質疑重點：
-  - 這個方案真的解決了問題嗎？
-  - 有沒有更簡單/更好的方案？
-  - 風險是什麼？有沒有遺漏？
-  - 各角色的意見有沒有矛盾？
+### 7. Challenger ⭐ NEW
+- **All themes:** Listen to team discussions, question every decision
+- Require at least 3 rounds of challenges before confirming any decision
+- Ensure team goal alignment
+- Key questions:
+  - Does this plan actually solve the problem?
+  - Is there a simpler/better alternative?
+  - What are the risks? Anything missing?
+  - Are there contradictions between roles' opinions?
 
 ---
 
-## 狀態交接機制
+## State Handoff Mechanism
 
-### 狀態檔案（全部留在專案內）
+### Status Files (all kept within the project)
 
-| 檔案 | 用途 | 更新時機 |
-|------|------|----------|
-| `STATUS.md` | 專案整體狀態、里程碑、上次 cron 結果 | 每次 cron 結束 |
+| File | Purpose | When Updated |
+|------|---------|--------------|
+| `STATUS.md` | Overall project state, milestones, last cron results | Every cron run ends |
 | `docs/status/issues.md` | Known bugs and follow-up items | When new issues are found |
 | `docs/status/pending_review.md` | Items waiting for Daniel's decision | When human judgment is needed |
 | `docs/status/current_problems.md` | All known problems, including non-bugs | During review themes |
 | `docs/research/competitor_research.md` | Competitor research report | During review themes |
-| `docs/CHALLENGE_LOG.md` | 質疑者反證記錄 | 每次有反證時 |
+| `docs/CHALLENGE_LOG.md` | Challenger's challenge records | Whenever a challenge occurs |
 
-### 交接流程
+### Handoff Flow
 
 ```
-Cron 發起主題
+Cron initiates theme
     ↓
-PM 讀取所有狀態檔案
+PM reads all status files
     ↓
-PM 發起團隊討論（delegate_task 給 Architect、Developer、Designer、QA）
+PM initiates team discussion (delegate_task to Architect, Developer, Designer, QA)
     ↓
-各角色回傳意見/結果
+Each role returns opinions/results
     ↓
-PM 彙整 → 提出方案
+PM synthesizes → proposes a plan
     ↓
-Challenger 質疑（Round 1）
+Challenger questions (Round 1)
     ↓
-PM 協調團隊回應 → 修正方案
+PM coordinates team response → revised plan
     ↓
-Challenger 質疑（Round 2）
+Challenger questions (Round 2)
     ↓
-PM 協調團隊回應 → 最終方案
+PM coordinates team response → final plan
     ↓
-Challenger 質疑（Round 3）
+Challenger questions (Round 3)
     ↓
-Challenger 確認：目標一致
+Challenger confirms: goals are aligned
     ↓
-PM 分派工作給 Developer
+PM assigns work to Developer
     ↓
-Developer 實作 → 驗證 → commit
+Developer implements → verifies → commits
     ↓
-PM 更新所有狀態檔案（含 CHALLENGE_LOG.md）
+PM updates all status files (including CHALLENGE_LOG.md)
     ↓
-結束
+Done
 ```
 
 ---
 
-## 基本資訊
+## Basic Info
 
-**可用模型（all via `provider: openrouter`）：**
+**Available models (all via `provider: openrouter`):**
 
-| 模型 | 角色 |
-|------|------|
-| `openrouter/owl-alpha` | PM、Developer |
+| Model | Role(s) |
+|-------|---------|
+| `openrouter/owl-alpha` | PM, Developer |
 | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | Architect |
-| `openrouter/google/gemma-4-31b-it:free` | Design Reviewer、QA Engineer |
-| `openrouter/xai/gpt-oss-120b:free` | **Challenger（質疑者）** |
+| `openrouter/google/gemma-4-31b-it:free` | Design Reviewer, QA Engineer |
+| `openrouter/openai/gpt-oss-120b:free` | **Challenger** |
 
 ---
 
-*最後更新：2026-06-09*
+*Last updated: 2026-06-09*

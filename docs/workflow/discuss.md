@@ -1,198 +1,198 @@
-# 💡 討論主題工作流（DISCUSS WORKFLOW）
+# 💡 Discussion Topic Workflow (DISCUSS WORKFLOW)
 
-> 當 STATUS.md 指定主題為「討論」時，PM 按照此工作流執行。
-
----
-
-## 討論主題工作目标
-- 討論新功能方向
-- 評估未來發展路線
-- 收集各角色意見
-- 形成團隊共識
+> When STATUS.md specifies the topic as "Discussion", the PM follows this workflow.
 
 ---
 
-## 流程圖（完整）
+## Discussion Topic Objectives
+- Discuss new feature directions
+- Evaluate future development roadmap
+- Gather input from all roles
+- Form team consensus
+
+---
+
+## Flowchart (Complete)
 
 ```mermaid
 flowchart TD
-    A([💡 討論主題開始]) --> B[PM 讀取 STATUS.md]
-    B --> C[PM 讀取所有狀態檔案]
-    C --> D[PM 讀取 COMPETITOR_RESEARCH.md]
+    A([💡 Discussion Topic Start]) --> B[PM reads STATUS.md]
+    B --> C[PM reads all status files]
+    C --> D[PM reads COMPETITOR_RESEARCH.md]
     
-    D --> E[PM 呼叫 Architect]
-    E --> F[Architect 分析技術可行性]
-    F --> G[Architect 提出 2-3 個功能方向]
+    D --> E[PM calls Architect]
+    E --> F[Architect analyzes technical feasibility]
+    F --> G[Architect proposes 2-3 feature directions]
     
-    D --> H[PM 呼叫 Design Reviewer]
-    H --> I[Design Reviewer 評估 UX 影響]
-    I --> J[Design Reviewer 提供設計方向]
+    D --> H[PM calls Design Reviewer]
+    H --> I[Design Reviewer evaluates UX impact]
+    I --> J[Design Reviewer provides design direction]
     
-    D --> K[PM 呼叫 Developer]
-    K --> L[Developer 評估實作成本]
-    L --> M[Developer 給出時間估算]
+    D --> K[PM calls Developer]
+    K --> L[Developer estimates implementation cost]
+    L --> M[Developer provides time estimates]
     
-    G --> N[PM 彙整所有意見]
+    G --> N[PM consolidates all opinions]
     J --> N
     M --> N
     
-    N --> O[PM 形成「團隊初步決議」]
-    O --> P[PM 呼叫 Challenger]
+    N --> O[PM forms "team preliminary decision"]
+    O --> P[PM calls Challenger]
     P --> Q{Challenger Round 1}
     
-    Q --> R1[Challenger 質疑: 功能方向]
-    R1 --> S1[團隊回應]
+    Q --> R1[Challenger questions: feature direction]
+    R1 --> S1[Team responds]
     S1 --> T1{Challenger Round 2}
     
-    T1 --> R2[Challenger 質疑: 優先級]
-    R2 --> S2[團隊回應]
+    T1 --> R2[Challenger questions: priority]
+    R2 --> S2[Team responds]
     S2 --> T2{Challenger Round 3}
     
-    T2 --> R3[Challenger 質疑: 目標對齊]
-    R3 --> S3[團隊最終回應]
-    S3 --> U{Challenger 確認?}
+    T2 --> R3[Challenger questions: goal alignment]
+    R3 --> S3[Team final response]
+    S3 --> U{Challenger confirms?}
     
-    U -- 否 --> V[團隊重新討論]
+    U -- No --> V[Team re-discusses]
     V --> O
     
-    U -- 是 --> W[PM 寫入 PENDING_REVIEW.md]
-    W --> X[PM 更新 STATUS.md]
-    X --> Y[PM 回報 Daniel]
-    Y --> Z([結束])
+    U -- Yes --> W[PM writes PENDING_REVIEW.md]
+    W --> X[PM updates STATUS.md]
+    X --> Y[PM reports to Daniel]
+    Y --> Z([End])
 ```
 
 ---
 
-## 三輪反證流程（詳細）
+## Three-Round Challenge Process (Detailed)
 
-### Round 1：功能方向質疑
+### Round 1: Feature Direction Challenge
 ```
-Challenger 問：
-- 這個功能方向真的符合產品願景嗎？
-- 有沒有其他更好的方向？
-- 競品怎麼做的？我們為什麼要這樣做？
+Challenger asks:
+- Does this feature direction truly align with the product vision?
+- Are there other better directions?
+- How do competitors do it? Why are we doing it this way?
 
-團隊回應：
-- Architect 補充技術分析
-- Design 補充 UX 分析
-- Developer 補充成本分析
-```
-
-### Round 2：優先級質疑
-```
-Challenger 問：
-- 這個功能的優先級正確嗎？
-- 有沒有更重要的事要先做？
-- 這個時間點做這個功能合適嗎？
-
-團隊回應：
-- PM 根據 STATUS.md 優先級回應
-- 各角色補充意見
+Team responds:
+- Architect supplements technical analysis
+- Design supplements UX analysis
+- Developer supplements cost analysis
 ```
 
-### Round 3：目標對齊質疑
+### Round 2: Priority Challenge
 ```
-Challenger 問：
-- 這個方案有助於達成專案目標嗎？
-- 各角色的意見有沒有矛盾？
-- 有沒有遺漏的風險？
+Challenger asks:
+- Is the priority of this feature correct?
+- Are there more important things to do first?
+- Is this the right time to build this feature?
 
-團隊回應：
-- 最終確認或修正方案
-```
-
----
-
-## PM 的任務（詳細）
-
-### Step 1：讀取狀態
-```
-1. STATUS.md → 確認本次主題為「討論」
-2. docs/status/issues.md → 了解目前 issues
-3. docs/status/pending_review.md → 了解待決策事項
-4. docs/research/competitor_research.md → 了解競品動態
-5. docs/strategy/product_vision.md → 校對產品願景
+Team responds:
+- PM responds based on STATUS.md priorities
+- Each role supplements with opinions
 ```
 
-### Step 2：呼叫 sub-agents（敏捷討論）
+### Round 3: Goal Alignment Challenge
 ```
-同時呼叫（parallel）：
-- Architect：分析技術可行性、提出功能方向
-- Design Reviewer：評估 UX 影響、提供設計方向
-- Developer：評估實作成本
-```
+Challenger asks:
+- Does this proposal help achieve the project goals?
+- Are there contradictions between the roles' opinions?
+- Are there any overlooked risks?
 
-### Step 3：彙整決議
-```
-收集所有 sub-agent 意見後：
-1. PM 形成「團隊初步決議」
-2. 記錄各角色的不同意見
-3. 準備進入反證階段
-```
-
-### Step 4：反證階段
-```
-1. 呼叫 Challenger，提供「團隊初步決議」
-2. 進行至少 3 輪反證
-3. 每輪記錄質疑內容和團隊回應
-4. Challenger 確認後才能往下走
-```
-
-### Step 5：寫入文件
-```
-1. 新功能建議 → docs/status/issues.md（標記 source: team discussion）
-2. 需要 Daniel 決策 → docs/status/pending_review.md
-3. 更新 STATUS.md
+Team responds:
+- Final confirmation or revision of the proposal
 ```
 
 ---
 
-## Sub-agent 的任務
+## PM Tasks (Detailed)
+
+### Step 1: Read Status
+```
+1. STATUS.md → Confirm this topic is "Discussion"
+2. docs/status/issues.md → Understand current issues
+3. docs/status/pending_review.md → Understand pending decisions
+4. docs/research/competitor_research.md → Understand competitor trends
+5. docs/strategy/product_vision.md → Verify product vision alignment
+```
+
+### Step 2: Call Sub-agents (Agile Discussion)
+```
+Call simultaneously (parallel):
+- Architect: Analyze technical feasibility, propose feature directions
+- Design Reviewer: Evaluate UX impact, provide design direction
+- Developer: Estimate implementation cost
+```
+
+### Step 3: Consolidate Decision
+```
+After collecting all sub-agent opinions:
+1. PM forms "team preliminary decision"
+2. Record differing opinions from each role
+3. Prepare to enter the challenge phase
+```
+
+### Step 4: Challenge Phase
+```
+1. Call Challenger, provide "team preliminary decision"
+2. Conduct at least 3 rounds of challenges
+3. Record challenge content and team responses for each round
+4. Cannot proceed until Challenger confirms
+```
+
+### Step 5: Write to Files
+```
+1. New feature suggestions → docs/status/issues.md (tagged source: team discussion)
+2. Items requiring Daniel's decision → docs/status/pending_review.md
+3. Update STATUS.md
+```
+
+---
+
+## Sub-agent Tasks
 
 ### Architect 🏗️
-1. 讀取 `docs/design/architecture.md`
-2. 讀取 `docs/research/competitor_research.md`
-3. 提出 2-3 個技術可行的功能方向
-4. 分析每個方向的技术影響
-5. 回應 Challenger 的質疑
+1. Read `docs/design/architecture.md`
+2. Read `docs/research/competitor_research.md`
+3. Propose 2-3 technically feasible feature directions
+4. Analyze the technical impact of each direction
+5. Respond to Challenger's challenges
 
 ### Design Reviewer 🎨
-1. 讀取 `docs/design/design_system.md`
-2. 評估新功能的 UX 影響
-3. 提供設計方向建議
-4. 參考競品設計模式
-5. 回應 Challenger 的質疑
+1. Read `docs/design/design_system.md`
+2. Evaluate the UX impact of new features
+3. Provide design direction suggestions
+4. Reference competitor design patterns
+5. Respond to Challenger's challenges
 
 ### Developer 💻
-1. 評估每個功能方向的實作成本
-2. 給出時間估算
-3. 分析技術風險
-4. 回應 Challenger 的質疑
+1. Estimate the implementation cost of each feature direction
+2. Provide time estimates
+3. Analyze technical risks
+4. Respond to Challenger's challenges
 
 ### Challenger 🔥
-1. **聆聽**所有 sub-agent 的意見
-2. **質疑**功能方向的合理性
-3. **質疑**優先級是否正確
-4. **質疑**是否與產品目標對齊
-5. 至少 3 輪反證後才確認
+1. **Listen** to all sub-agent opinions
+2. **Challenge** the validity of feature directions
+3. **Challenge** whether priorities are correct
+4. **Challenge** whether they align with product goals
+5. Confirm only after at least 3 rounds of challenges
 
 ---
 
-## 狀態更新
+## Status Update
 
-PM 必須在 STATUS.md 更新：
+PM must update in STATUS.md:
 
 ```markdown
-## 💡 討論記錄 - YYYY-MM-DD
-- **主題**：[討論主題]
-- **Architect 建議**：[建議內容]
-- **Designer 建議**：[建議內容]
-- **Developer 評估**：[成本估算]
-- **Challenger 反證**：[3 輪摘要]
-- **最終決議**：[決議內容]
-- **待 Daniel 決策**：[寫入 PENDING_REVIEW.md 的項目]
+## 💡 Discussion Record - YYYY-MM-DD
+- **Topic**: [Discussion topic]
+- **Architect suggestion**: [Suggestion content]
+- **Designer suggestion**: [Suggestion content]
+- **Developer estimate**: [Cost estimate]
+- **Challenger challenges**: [3-round summary]
+- **Final decision**: [Decision content]
+- **Pending Daniel's decision**: [Items written to PENDING_REVIEW.md]
 ```
 
 ---
 
-*最後更新：2026-06-09*
+*Last updated: 2026-06-09*

@@ -6,614 +6,615 @@
 
 ---
 
-## 目錄
+## Table of Contents
 
-1. [競爭對手概覽表格](#1-競爭對手概覽表格)
-2. [各競爭對手深入分析](#2-各競爭對手深入分析)
-3. [與 Stock Explorer 的詳細比較](#3-與-stock-explorer-的詳細比較)
-4. [功能缺口分析](#4-功能缺口分析)
-5. [新功能靈感（來源：競品研究）](#5-新功能靈感)
-6. [建議](#6-建議)
+1. [Competitor Overview Table](#1-competitor-overview-table)
+2. [In-Depth Analysis of Each Competitor](#2-in-depth-analysis-of-each-competitor)
+3. [Detailed Comparison with Stock Explorer](#3-detailed-comparison-with-stock-explorer)
+4. [Feature Gap Analysis](#4-feature-gap-analysis)
+5. [New Feature Ideas (Source: Competitor Research)](#5-new-feature-ideas-source-competitor-research)
+6. [Recommendations](#6-recommendations)
 
 ---
 
-## 1. 競爭對手概覽表格
+## 1. Competitor Overview Table
 
-| 維度 | 財報狗 | GoodInfo | CMoney | 玩股網 | FinMind | **Stock Explorer** |
+| Dimension | StatementDog | GoodInfo | CMoney | WantGoo | FinMind | **Stock Explorer** |
 |------|--------|----------|--------|--------|---------|-------------------|
-| **定位** | 財報分析專家 | 全方位台股入口 | 投資決策平台 | 股市社群＋資料 | API + 資料平台 | 新手教育導向 |
-| **目標用戶** | 中年紀行投資人 | 所有投資人 | 重度投資人 | 中短線交易者 | 開發者/量化 | **新手投資人** |
-| **UI 風格** | 數據密集表格 | 傳統入口網站 | App 風格 | 論壇+圖表極簡風 | API 文件+圖表 | **PPT 風格** |
-| **白話解釋** | 部分（v2 改善中） | 無 | 有（重點摘要） | 無 | 無（API 原始資料） | **核心特色** |
-| **圖表類型** | K線+財報圖 | K線+技術指標 | 多元圖表 | 基本 K線 | 需自建 | **Plotly 互動圖表** |
-| **分類瀏覽** | ✅ 產業分類 | ✅ 產業分類 | ✅ 主題分類 | ✅ 自選分類 | ✅ API 查詢 | ✅ 三大分類 |
-| **ETF 專區** | ✅ 有 | ✅ 有 | ✅ 完整 | ✅ 基本 | ✅ API | ✅ 獨立頁面 |
-| **事件偵測** | ⚠️ 基本面通知 | ⚠️ 股價通知 | ✅ 完整通知 | ⚠️ 零星新聞 | ❌ | ✅ 自適應引擎 |
-| **同業比較** | ✅ 完整 | ⚠️ 基本 | ✅ 完整 | ❌ | ❌ | ✅ 標竿導向 |
-| **集團架構** | ⚠️ 精簡子公司 | ❌ | ⚠️ 部分 | ❌ | ❌ | ✅ 點對點 |
-| **定價模型** | 免費+付費會員 | 免費（廣告） | 免費+訂閱制 | 免費+VIP | 免費 tier+付費 | **免費開源** |
-| **Mobile** | ✅ RWD 網站 | ✅ RWD 網站 | ✅ 原生 App | ✅ RWD+App | ❌ API only | ⚠️ Streamlit 限制 |
-| **教育屬性** | ⚠️ 中等 | ❌ 低 | ⚠️ 中等 | ❌ 低 | ❌ 無 | **核心：教育導向** |
+| **Positioning** | Financial Report Analysis Expert | All-in-One TW Stock Portal | Investment Decision Platform | Stock Community + Data | API + Data Platform | Beginner Education-Oriented |
+| **Target Users** | Mid-Career Investors | All Investors | Heavy Investors | Mid/Short-Term Traders | Developers/Quants | **Beginner Investors** |
+| **UI Style** | Data-Dense Tables | Traditional Portal | App Style | Forum + Minimal Charts | API Docs + Charts | **PPT Style** |
+| **Plain-Language Explanation** | Partial (improving in v2) | None | Yes (Key Summaries) | None | None (raw API data) | **Core Feature** |
+| **Chart Types** | Candlestick + Financial Charts | Candlestick + Technical Indicators | Diverse Charts | Basic Candlestick | Build Your Own | **Plotly Interactive Charts** |
+| **Category Browsing** | ✅ Industry Categories | ✅ Industry Categories | ✅ Theme Categories | ✅ Watchlist Categories | ✅ API Query | ✅ Three Major Categories |
+| **ETF Section** | ✅ Yes | ✅ Yes | ✅ Complete | ✅ Basic | ✅ API | ✅ Dedicated Page |
+| **Event Detection** | ⚠️ Fundamental Alerts | ⚠️ Price Alerts | ✅ Full Alerts | ⚠️ Sporadic News | ❌ | ✅ Adaptive Engine |
+| **Peer Comparison** | ✅ Complete | ⚠️ Basic | ✅ Complete | ❌ | ❌ | ✅ Benchmark-Oriented |
+| **Group Structure** | ⚠️ Simplified Subsidiaries | ❌ | ⚠️ Partial | ❌ | ❌ | ✅ Point-to-Point |
+| **Pricing Model** | Free + Paid Membership | Free (Ad-Supported) | Free + Subscription | Free + VIP | Free Tier + Paid | **Free & Open Source** |
+| **Mobile** | ✅ RWD Website | ✅ RWD Website | ✅ Native App | ✅ RWD + App | ❌ API Only | ⚠️ Streamlit Limitations |
+| **Educational** | ⚠️ Medium | ❌ Low | ⚠️ Medium | ❌ Low | ❌ None | **Core: Education-Oriented** |
 
 ---
 
-## 2. 各競爭對手深入分析
+## 2. In-Depth Analysis of Each Competitor
 
-### 2.1 財報狗 (statementdog.com)
+### 2.1 StatementDog (statementdog.com)
 
-**基本資訊**
-- 台股最大的財報分析平台之一，經營超過 10 年
-- 主打「聽得懂的財報分析」
-- 行動版網站支援良好（RWD）
+**Basic Information**
+- One of the largest financial report analysis platforms in Taiwan, operating for over 10 years
+- Focuses on "understandable financial report analysis"
+- Good mobile website support (RWD)
 
-**核心功能**
-- **財報分析**：損益表、資產負債表、現金流量表的視覺化解讀
-- **殖利率分析**：歷史殖利率區間、預估股利
-- **美股也有支援**：約 500+ 美股公司
-- **地圖功能**：公司全球營收地理分佈
-- **债务分析**：負債比、利息覆蓋倍數等債務指標
-- **Line Notify 通知**：可設定基本面事件通知
+**Core Features**
+- **Financial Report Analysis:** Visual interpretation of income statements, balance sheets, and cash flow statements
+- **Dividend Yield Analysis:** Historical dividend yield ranges, estimated dividends
+- **US Stock Support:** Approximately 500+ US companies
+- **Map Feature:** Geographic distribution of company revenue worldwide
+- **Debt Analysis:** Debt ratios, interest coverage ratio, and other debt indicators
+- **Line Notify Alerts:** Configurable fundamental event notifications
 
-**目標用戶**
-- 中長期投資人（存股族、價值投資）
-- 30-50 歲，有一定投資經驗但不具財報專業
-- 想理解公司基本面但不想看生硬數字
+**Target Users**
+- Mid-to-long-term investors (dividend investors, value investors)
+- Ages 30-50, with some investment experience but no financial reporting expertise
+- Want to understand company fundamentals without looking at raw numbers
 
-**UI 風格**
-- 資訊密集但比傳統入口網站更有設計感
-- 每個指標下方附帶白話解釋（近年 v2 版本大幅改善）
-- 有「一句話摘要」功能，但深度表格仍是主要瀏覽方式
-- 以文字報告為主，圖表為輔
+**UI Style**
+- Information-dense but more designed than traditional portals
+- Plain-language explanations below each indicator (greatly improved in recent v2)
+- Has a "one-sentence summary" feature, but deep tables remain the primary browsing method
+- Text reports as the main focus, charts as supplementary
 
-**定價模型**
-- 基本功能免費（部分數據有延遲）
-- 付費會員（月費制）：即時數據、完整財報歷史、美股完整功能
+**Pricing Model**
+- Basic features free (some data delayed)
+- Paid membership (monthly): real-time data, complete financial report history, full US stock features
 
-**與 Stock Explorer 的關鍵差異**
-- ✅ 財報狗的白話解釋正在改善中，是其核心發展方向
-- ❌ 缺乏 PPT 風格一次一重點的呈現方式
-- ❌ 沒有「自適應分析框架」— 不會因公司類型不同而調整分析角度
-- ❌ 集團架構拆解不夠深入
-- ✅ 有 Line Notify 通知系統（Stock Explorer 目前無推播能力）
-- ✅ 美股支援（Stock Explorer 僅台股）
+**Key Differences from Stock Explorer**
+- ✅ StatementDog's plain-language explanations are improving, which is its core development direction
+- ❌ Lacks the PPT-style one-key-point-at-a-time presentation approach
+- ❌ No "adaptive analysis framework" — does not adjust analysis perspectives based on company type
+- ❌ Group structure breakdown is not deep enough
+- ✅ Has Line Notify alert system (Stock Explorer currently has no push notification capability)
+- ✅ US stock support (Stock Explorer is Taiwan stocks only)
 
 ---
 
 ### 2.2 GoodInfo.tw
 
-**基本資訊**
-- 台灣老牌股票資訊網站，介面傳統但功能完整
-- 免費、純靠廣告營收
-- 類似於早期的 Yahoo 奇摩股市
+**Basic Information**
+- A long-standing Taiwanese stock information website, traditional interface but complete features
+- Free, ad-supported revenue model
+- Similar to early Yahoo奇摩股市
 
-**核心功能**
-- **即時報價與 K 線圖**：基本技術分析圖表
-- **三大法人買賣超**：外資、投信、自營商動態
-- **月營收、季財報**：原始數據表格呈現
-- **除息息公告**：除權息日程和現金股利資訊
-- **類股分類瀏覽**：台灣所有上市櫃公司的產業分類
-- **融資融券**：信用交易數據
+**Core Features**
+- **Real-Time Quotes & Candlestick Charts:** Basic technical analysis charts
+- **Three Major Institutional Investors:** Foreign investment, investment trust, and proprietary trader activity
+- **Monthly Revenue, Quarterly Reports:** Raw data table presentation
+- **Ex-Dividend Announcements:** Ex-dividend/ex-rights schedules and cash dividend information
+- **Industry Category Browsing:** Industry categories for all TW listed/OTC companies
+- **Margin Trading:** Credit transaction data
 
-**目標用戶**
-- 所有層級的投資人（從新手到資深）
-- 習慣傳統入口網站操作模式的中老年投資人
-- 需要快速查閱原始數據的使用者
+**Target Users**
+- All levels of investors (from beginners to experienced)
+- Mid-to-older-aged investors accustomed to traditional portal operation patterns
+- Users who need to quickly look up raw data
 
-**UI 風格**
-- 傳統入口網站風格，資訊密集的表格
-- 藍色/灰色的保守配色，無過多視覺設計
-- 以文字和表格為主，圖表僅基本 K 線
-- 導覽路徑深，需要多次點擊才能到達目標頁面
-- 行動版為 RWD 自適應
+**UI Style**
+- Traditional portal style, information-dense tables
+- Conservative blue/gray color scheme, minimal visual design
+- Text and tables as the main focus, charts limited to basic candlesticks
+- Deep navigation paths, requiring multiple clicks to reach target pages
+- Mobile version uses RWD adaptation
 
-**定價模型**
-- 完全免費（廣告支持）
+**Pricing Model**
+- Completely free (ad-supported)
 
-**與 Stock Explorer 的關鍵差異**
-- ❌ GoodInfo 是「數據提供者」而非「數據解釋者」
-- ❌ 完全沒有白話解釋
-- ❌ 圖表類型單調，僅基本 K 線和柱狀圖
-- ✅ 提供非常完整的原始財報數據
-- ✅ 除權息資訊完整（Stock Explorer 尚未有這個功能）
-- ❓ GoodInfo 的使用者是「數據查找者」，Stock Explorer 的使用者是「數據學習者」— 本質上不同
+**Key Differences from Stock Explorer**
+- ❌ GoodInfo is a "data provider" not a "data interpreter"
+- ❌ Completely lacks plain-language explanations
+- ❌ Monotonous chart types, only basic candlestick and bar charts
+- ✅ Provides very complete raw financial report data
+- ✅ Complete ex-dividend information (Stock Explorer does not yet have this feature)
+- ❓ GoodInfo's users are "data seekers," Stock Explorer's users are "data learners" — fundamentally different
 
 ---
 
 ### 2.3 CMoney
 
-**基本資訊**
-- 台灣最大的投資分析平台之一，有強大的 App 生態系
-- 除自己的平台外，也替多家券商提供投資分析內容
-- 提供選股工具、新聞、研究報告的一站式平台
+**Basic Information**
+- One of the largest investment analysis platforms in Taiwan, with a powerful app ecosystem
+- In addition to its own platform, also provides investment analysis content for multiple brokerages
+- A one-stop platform offering stock screening tools, news, and research reports
 
-**核心功能**
-- **選股工具（王牌功能）**：多條件篩選（技術面、基本面、籌碼面）
-- **AI 選股**：AI 模型推薦買進/賣出標的
-- **研究報告**：法人和分析師報告的整合
-- **新聞快訊**：即時的台股新聞推播
-- **Portfolio 管理**：自選股組合的績效追蹤
-- **影音教學**：投資教學影片
+**Core Features**
+- **Stock Screening Tools (Flagship Feature):** Multi-condition filtering (technical, fundamental, chip analysis)
+- **AI Stock Picking:** AI model-recommended buy/sell targets
+- **Research Reports:** Integration of institutional and analyst reports
+- **News Alerts:** Real-time TW stock news push notifications
+- **Portfolio Management:** Performance tracking of watchlist combinations
+- **Video Tutorials:** Investment education videos
 
-**目標用户**
-- 重度投資人（每天盯盤、頻繁交易）
-- 需要使用選股工具篩選標的的投資人
-- 想要一站式投資決策平台的用戶
-- 部分新手用戶（使用影音教學功能）
+**Target Users**
+- Heavy investors (watch the market daily, trade frequently)
+- Investors who need to use stock screening tools to filter targets
+- Users who want a one-stop investment decision platform
+- Some beginner users (using video tutorial features)
 
-**UI 風格**
-- App 風格強烈（主要使用場景是手機）
-- 以深色主題、App 底部導航為主
-- 內容卡片式呈現，可快速滑動瀏覽
-- 首頁有大量數據卡片（大盤、持股、新聞）
+**UI Style**
+- Strong app-oriented style (primary usage scenario is mobile)
+- Dark theme, app bottom navigation as the main pattern
+- Card-style content presentation, quick swipe browsing
+- Homepage has many data cards (market index, holdings, news)
 
-**定價模型**
-- 基本功能免費
-- 進階功能需要付費訂閱（選股條件數量、AI 選股額度）
-- 券商訂閱制（透過券商 App 使用 CMoney 內容）
+**Pricing Model**
+- Basic features free
+- Advanced features require paid subscription (number of screening conditions, AI stock picking quota)
+- Brokerage subscription model (using CMoney content through brokerage apps)
 
-**與 Stock Explorer 的關鍵差異**
-- ❌ CMoney 是「選股導向」，Stock Explorer 是「理解導向」
-- ❌ CMoney 直接喊買進賣出，Stock Explorer 定位為「歷史學家，不是股評家」
-- ✅ CMoney 的選股工具非常強大（Stock Explorer 無此功能，但路線不同）
-- ✅ CMoney 有 App，Mobile 體驗更成熟
-- ✅ 新聞快訊和推播功能完善
-- ❌ 缺乏白話解釋和教育架構
-
+**Key Differences from Stock Explorer**
+- ❌ CMoney is "stock-picking oriented," Stock Explorer is "understanding oriented"
+- ❌ CMoney directly calls buy/sell, Stock Explorer positions itself as a "historian, not a stock critic"
+- ✅ CMoney's stock screening tools are very powerful (Stock Explorer doesn't have this feature, but the direction is different)
+- ✅ CMoney has an app, more mature mobile experience
+- ✅ News alerts and push notification features are comprehensive
+- ❌ Lacks plain-language explanations and educational framework
 
 ---
 
-### 2.4 玩股網 (wantgoo.com)
+### 2.4 WantGoo (wantgoo.com)
 
-**基本資訊**
-- 台灣知名的股票社群＋資料平台
-- 有大量使用者生成的內容（UGC）
-- 近期的全球股市地圖是其差異化亮點
+**Basic Information**
+- A well-known Taiwanese stock community + data platform
+- Has a large amount of user-generated content (UGC)
+- Recent global stock market map is its differentiating highlight
 
-**核心功能**
-- **全球股市地圖**：以熱力地圖呈現全球市場漲跌幅（產品差異化亮點）
-- **股市溫度計**：以「體感溫度」方式呈現市場過熱/過冷
-- **財務數據**：基本財報、營收數據
-- **個股分析器**：快速產生個股分析報告（可下載 PPT）
-- **使用者論壇**：使用者討論區
-- **排行功能**：以各種指標排名台股公司（殖利率、成長率等）
+**Core Features**
+- **Global Stock Market Map:** Heat map showing global market gains/losses (product differentiation highlight)
+- **Market Thermometer:** Presents market overheating/cooling in a "feels-like temperature" format
+- **Financial Data:** Basic financial reports, revenue data
+- **Stock Analyzer:** Quickly generates stock analysis reports (downloadable as PPT)
+- **User Forums:** User discussion areas
+- **Ranking Feature:** Ranks TW companies by various indicators (dividend yield, growth rate, etc.)
 
-**目標用戶**
-- 中短線交易者
-- 喜歡看討論區、社群互動的投資人
-- 需要快速取得排名/篩選結果的使用者
+**Target Users**
+- Mid-to-short-term traders
+- Investors who enjoy forums and community interaction
+- Users who need to quickly obtain ranking/filtering results
 
-**UI 風格**
-- 乾淨簡潔的現代設計
-- 大量使用資訊圖表（infographic）風格
-- 全球股市地圖的視覺化效果突出
-- 以圖表為主、文字為輔
+**UI Style**
+- Clean, modern design
+- Heavy use of infographic-style presentation
+- Global stock market map visualization is outstanding
+- Charts as the main focus, text as supplementary
 
-**定價模型**
-- 免費（廣告营收）
-- VIP 會員去廣告 + 額外功能
+**Pricing Model**
+- Free (ad-supported revenue)
+- VIP membership removes ads + additional features
 
-**與 Stock Explorer 的關鍵差異**
-- ✅ **全球股市地圖**：視覺化呈現全球市場的溫度的做法值得借鏡
-- ✅ **股市溫度計**：用簡單的「體感」概念讓新手直覺理解市場狀態
-- ✅ **[新功能靈感] 個股分析 PPT 下載**：用戶可下載個股分析簡報（但品質普通）
-- ❌ 玩側重短線交易，Stock 側重長期理解
-- ❌ 沒有白話解釋架構
+**Key Differences from Stock Explorer**
+- ✅ **Global Stock Market Map:** The approach of visualizing global market temperature is worth learning from
+- ✅ **Market Thermometer:** Uses a simple "feels-like" concept to let beginners intuitively understand market conditions
+- ✅ **[New Feature Idea] Stock Analysis PPT Download:** Users can download stock analysis presentations (but quality is average)
+- ❌ WantGoo focuses on short-term trading, Stock Explorer focuses on long-term understanding
+- ❌ No plain-language explanation framework
 
 ---
 
 ### 2.5 FinMind (finmindtrade.com)
 
-**基本資料**
-- 台灣最大的金融資料 API 供應商之一
-- 開源資料集 + 付費 API tier
-- Stock Explorer 使用的底層資料供應商
+**Basic Information**
+- One of the largest financial data API providers in Taiwan
+- Open-source datasets + paid API tier
+- The underlying data provider used by Stock Explorer
 
-**核心功能**
-- **API 服務**：Python SDK、REST API
-- **50+ 資料台股資料集**：股價、財報、籌碼、ETF 等
-- **Dashboard（付費）**：內建簡易儀表板（功能較基礎）
-- **資料實驗室**：線上 SQL 查詢（付費功能）
-- **數據商城**：客製化資料集
+**Core Features**
+- **API Services:** Python SDK, REST API
+- **50+ TW Stock Datasets:** Stock prices, financial reports, chip data, ETFs, etc.
+- **Dashboard (Paid):** Built-in simple dashboard (relatively basic features)
+- **Data Lab:** Online SQL queries (paid feature)
+- **Data Marketplace:** Custom datasets
 
-**目標用戶**
-- 開發者（建立自己的股票分析應用）
-- 量化交易者（策略開發）
-- 資料科學家（金融資料研究）
-- **不是**一般投資人
+**Target Users**
+- Developers (building their own stock analysis applications)
+- Quantitative traders (strategy development)
+- Data scientists (financial data research)
+- **Not** general investors
 
-**UI 風格**
-- 開發者導向的技術文件風格
-- Dashboard 僅是附帶功能，UI 簡單
-- 以 API 文件和程式碼範例為中心
+**UI Style**
+- Developer-oriented technical documentation style
+- Dashboard is only a secondary feature, simple UI
+- Centered around API documentation and code examples
 
-**定價模型**
-- 免費 tier（有限制的 API 呼叫次數 + 部分資料集）
-- 付費 tier（更多 API 次數、完整資料集）
+**Pricing Model**
+- Free tier (limited API calls + partial datasets)
+- Paid tier (more API calls, complete datasets)
 
-**與 Stock Explorer 的關鍵差異**
-- 🔄 **互補關係，非競爭對手**：FinMind 是 Stock Explorer 的資料供應商
-- ❌ Finance 的 Dashboard 功能極弱，沒有指標解釋能力
-- ❌ 完全沒有教育導向設計
-- ✅ Finance 是競爭者但也有合作的空間
-
----
-
-### 2.6 其他值得注意的競爭者
-
-#### 2.6.1 Yahoo 奇摩股市 (tw.stock.yahoo.com)
-
-**基本資訊**
-- 台灣最大的免費股票資訊入口
-- 市佔率最高，但缺乏深度分析
-
-**核心功能**
-- 即時報價、K 線、新聞
-- 自選股（Watchlist）
-- 基本財報數據
-- 討論區（評價兩極）
-
-**與 Stock Explorer 差異**
-- 資訊密集但解釋貧乏
-- 自選股功能完整但缺乏教育元素
-
-#### 2.6.2 鉅亨網 (anue.cnyes.com)
-
-**中心功能**
-- 新聞導向，大量即時新聞
-- 台、港、美、中股市
-- 經濟數據行事歷
-- 影音節目
-
-**差異**
-- 專業新聞網站，非分析平台
-
-#### 2.6.3 TEJ（台灣經濟新報）
-
-**定位**
-- 專業金融資料庫（類似台灣版 Bloomberg）
-- 年費制，價格高昂
-- 目標是專業機構和研究員
-
-**差異**
-- 完全不同受眾，對 Stock Explorer 無直接競爭
-
-#### 2.6.4 JZ Invest（投資助手 App）
-
-**定位**
-- 行動端量化投資 App
-- 通知系統做得非常完整
-- 以通知驅動使用（alert-first）
-
-**差異**
-- Alert-first vs 教育-first
+**Key Differences from Stock Explorer**
+- 🔄 **Complementary relationship, not a competitor:** FinMind is Stock Explorer's data provider
+- ❌ FinMind's Dashboard features are extremely weak, with no indicator explanation capability
+- ❌ Completely lacks education-oriented design
+- ✅ FinMind is a competitor but also has room for collaboration
 
 ---
 
-## 3. 與 Stock Explorer 的詳細比較
+### 2.6 Other Notable Competitors
 
-### 3.1 定位比較圖
+#### 2.6.1 Yahoo奇摩股市 (tw.stock.yahoo.com)
+
+**Basic Information**
+- The largest free stock information portal in Taiwan
+- Highest market share, but lacks deep analysis
+
+**Core Features**
+- Real-time quotes, candlesticks, news
+- Watchlist
+- Basic financial report data
+- Forums (mixed reviews)
+
+**Differences from Stock Explorer**
+- Information-dense but explanation-poor
+- Complete watchlist features but lacks educational elements
+
+#### 2.6.2 Anue (anue.cnyes.com)
+
+**Core Features**
+- News-oriented, large volume of real-time news
+- TW, HK, US, and CN stock markets
+- Economic data calendar
+- Video programs
+
+**Differences**
+- Professional news website, not an analysis platform
+
+#### 2.6.3 TEJ (Taiwan Economic Journal)
+
+**Positioning**
+- Professional financial database (similar to a Taiwanese version of Bloomberg)
+- Annual subscription, high price
+- Targets professional institutions and researchers
+
+**Differences**
+- Completely different audience, no direct competition with Stock Explorer
+
+#### 2.6.4 JZ Invest (Investment Assistant App)
+
+**Positioning**
+- Mobile quantitative investment app
+- Very comprehensive notification system
+- Alert-first driven usage
+
+**Differences**
+- Alert-first vs education-first
+
+---
+
+## 3. Detailed Comparison with Stock Explorer
+
+### 3.1 Positioning Comparison Chart
 
 ```
-教育 ←──────────────────────────────→ 專業
+Education ←──────────────────────────────→ Professional
 
-Stock Explorer    財報狗      GoodInfo     CMoney     玩股網
-     ●              ●            ●            ●          ●
-    新手           中階          所有         重度交易者   中短線
-    理解導向       分析導向      數據入口     選股導向     交易導向
+Stock Explorer    StatementDog     GoodInfo     CMoney     WantGoo
+     ●                ●               ●            ●          ●
+     Beginner         Mid-level       All          Heavy      Mid/Short-Term
+     Understanding    Analysis        Data Portal  Stock-     Trading
+     Oriented         Oriented                     Picking    Oriented
+                                                  Oriented
 ```
 
-### 3.2 Stock Explorer 獨有的功能（競爭對手做不到的）
+### 3.2 Stock Explorer's Unique Features (What Competitors Can't Do)
 
-| 獨特功能 | 說明 | 競爭落差程度 |
+| Unique Feature | Description | Competitive Gap Level |
 |---------|------|------------|
-| **PPT 風格一次一重點** | 一張投影片一個概念，圖片為主文字為輔 | 🟡 中（玩股網有類似 infographic，但非 PPT 結構） |
-| **白話解釋引擎** | 12+ 種生活化比喻（如：毛利率→每賣 100 元賺幾元） | 🟡 中（財報狗正在改善中） |
-| **自適應分析框架** | 依公司類型（集團/單一/ETF）推薦不同分析角度 | 🔴 高（無競品做到） |
-| **標竿導向同業比較** | 自動比較產業第一名，給出差距原因 | 🔴 高（大部分競品只是並排數字） |
-| **點對點集團架構** | 母公司→子公司，附業務和比例 | 🔴 高（只有財報狗有基本功能） |
-| **事件偵測引擎** | 營收異動±30%、新聞、股價±7%自動偵測 | 🟡 中（CMoney 通知系統較完整） |
-| **教育系統架構** | 產品定位就是「認識一家公司」🡒 不喊買賣 | 🔴 高（所有競爭對手都以「選股」為終極目標） |
-| **自适应内容** | 重大事件触发内容更新 | 🟡 中（手动為主） |
-| **十秒測試** | 对新手友好的理解门槛要求 | 🔴 高（業界標準不同） |
-| **開源透明** | 所有程式碼在 GitHub 上公開 | 🟢 低（CMoney 有開放 API tier） |
+| **PPT-Style One Point at a Time** | One concept per slide, images as primary, text as supplementary | 🟡 Medium (WantGoo has similar infographics, but not PPT structure) |
+| **Plain-Language Explanation Engine** | 12+ everyday analogies (e.g., gross margin → how much profit per $100 sold) | 🟡 Medium (StatementDog is improving) |
+| **Adaptive Analysis Framework** | Recommends different analysis perspectives based on company type (group/single/ETF) | 🔴 High (no competitor does this) |
+| **Benchmark-Oriented Peer Comparison** | Automatically compares against industry #1, explains gap reasons | 🔴 High (most competitors just display numbers side by side) |
+| **Point-to-Point Group Structure** | Parent company → subsidiaries, with business descriptions and ratios | 🔴 High (only StatementDog has basic functionality) |
+| **Event Detection Engine** | Revenue changes ±30%, news, stock price ±7% auto-detection | 🟡 Medium (CMoney's notification system is more complete) |
+| **Educational System Architecture** | Product positioning is "understand a company" → no buy/sell calls | 🔴 High (all competitors ultimately aim for "stock picking") |
+| **Adaptive Content** | Major events trigger content updates | 🟡 Medium (mostly manual) |
+| **Ten-Second Test** | Beginner-friendly comprehension threshold requirement | 🔴 High (industry standard is different) |
+| **Open Source Transparency** | All code publicly available on GitHub | 🟡 Low (CMoney has an open API tier) |
 
-### 3.3 競爭對手有、Stock Explorer 還沒有的功能
+### 3.3 Features Competitors Have That Stock Explorer Doesn't Yet
 
-| 缺失功能 | 競品參考 | 優先級 |
+| Missing Feature | Competitor Reference | Priority |
 |---------|---------|-------|
-| **推播通知（Line/App）** | 財報狗（Line Notify）、CMoney（App Push）、JZ Invest | 🔴 高 |
-| **除權息行事曆** | GoodInfo（完整除權息日程） | 🔴 高 |
-| **AI 選股/推薦** | CMoney（AI 選股）、玩股網（排名工具） | 🟡 中（路線不同） |
-| **全球/國際股市** | 玩股網（全球地圖）、GoodInfo（國際指數） | 🟢 低（首階段聚焦台股） |
-| **Portfolio 績效追蹤** | CMoney（持股追蹤、已實現/未實現損益） | 🟡 中 |
-| **影音教學** | CMoney（投資課程） | 🟡 中 |
-| **量化回測** | JZ Invest、財報狗（部分） | 🟢 低（不同路線） |
-| **個股分析 PPT 下載** | 玩股網（自動生成分析簡報） | 🟡 中 |
-| **市場溫度計/恐慌指數** | 玩股網（體感溫度）、CMoney（市場情緒指標） | 🟡 中 |
-| **多清單 Watchlist** | Yahoo Finance、財報狗（多 watchlist + Line 推播） | 🟡 中 |
-| **討論區/社群功能** | 玩股網、GoodInfo（留言板） | 🟢 低（教育定位不需） |
-| **原速即時更新（WebSocket）** | 財報狗、CMoney（即時價格） | 🟡 中（Streamlit 限制，需要架構調整） |
+| **Push Notifications (Line/App)** | StatementDog (Line Notify), CMoney (App Push), JZ Invest | 🔴 High |
+| **Ex-Dividend Calendar** | GoodInfo (complete ex-dividend schedule) | 🔴 High |
+| **AI Stock Picking/Recommendations** | CMoney (AI stock picking), WantGoo (ranking tools) | 🟡 Medium (different direction) |
+| **Global/International Markets** | WantGoo (global map), GoodInfo (international indices) | 🟢 Low (Phase 1 focuses on TW stocks) |
+| **Portfolio Performance Tracking** | CMoney (holdings tracking, realized/unrealized P&L) | 🟡 Medium |
+| **Video Tutorials** | CMoney (investment courses) | 🟡 Medium |
+| **Quantitative Backtesting** | JZ Invest, StatementDog (partial) | 🟢 Low (different direction) |
+| **Stock Analysis PPT Download** | WantGoo (auto-generated analysis presentations) | 🟡 Medium |
+| **Market Thermometer/Fear Index** | WantGoo (feels-like temperature), CMoney (market sentiment indicators) | 🟡 Medium |
+| **Multiple Watchlists** | Yahoo Finance, StatementDog (multiple watchlists + Line push) | 🟡 Medium |
+| **Real-Time Updates (WebSocket)** | StatementDog, CMoney (real-time prices) | 🟡 Medium (Streamlit limitations, requires architecture changes) |
+| **Forums/Community Features** | WantGoo, GoodInfo (message boards) | 🟢 Low (education positioning doesn't need it) |
 
 ---
 
-## 4. 功能缺口分析
+## 4. Feature Gap Analysis
 
-### 4.1 P0 缺口（核心體驗差距，缺少會負面影響）
+### 4.1 P0 Gaps (Core Experience Gaps, Missing These Negatively Impacts Users)
 
-#### 缺口 1：除權息資訊
-- **現狀**：Stock Explorer 完全沒有除權息資訊
-- **競品參考**：GoodInfo 有完整除權息日程；財報狗有殖利率分析
-- **使用者情境**：「我想知道台積電什麼時候配息、配多少？」— 目前 Stock Explorer 無法回答
-- **資料可行性**：FinMind 有「TaiwanStockDividend」API（需確認免費 tier 是否包含）
+#### Gap 1: Ex-Dividend Information
+- **Current State:** Stock Explorer has no ex-dividend information at all
+- **Competitor Reference:** GoodInfo has complete ex-dividend schedules; StatementDog has dividend yield analysis
+- **User Scenario:** "I want to know when TSMC pays dividends and how much?" — Stock Explorer currently cannot answer this
+- **Data Feasibility:** FinMind has a "TaiwanStockDividend" API (need to confirm if free tier includes it)
 
-#### 缺口 2：推播通知系統
-- **現狀**：Stock Explorer 有事件偵測引擎，但無法把事件「推播」出去
-- **競品參考**：財報狗有 Line Notify；CMoney 有 App Push
-- **使用者情境**：「台積電營收衰退 30% 我想第一时间知道」— 需要主動開 App 才能看到
-- **實作建議**：先做 email 通知（成本低），再做 Line Notify（需要 Bot 帳號）
+#### Gap 2: Push Notification System
+- **Current State:** Stock Explorer has an event detection engine, but cannot "push" events out
+- **Competitor Reference:** StatementDog has Line Notify; CMoney has App Push
+- **User Scenario:** "I want to know immediately when TSMC revenue drops 30%" — requires actively opening the app to see
+- **Implementation Suggestion:** Start with email notifications (low cost), then add Line Notify (requires Bot account)
 
-#### 缺口 3：多個 Watchlist
-- **現狀**：只有一個「我的關注」清單
-- **競品參考**：Yahoo Finance（多個 watchlist）；財報狗（多個清單+Line 推播）
-- **使用者情境**：我想分別追蹤「存股標的」「觀察名單」「高殖利率」三類
-- **實作建議**：在 watchlist.yaml 加入 `lists` 結構
+#### Gap 3: Multiple Watchlists
+- **Current State:** Only one "My Watchlist"
+- **Competitor Reference:** Yahoo Finance (multiple watchlists); StatementDog (multiple lists + Line push)
+- **User Scenario:** I want to separately track "dividend stocks," "watchlist," and "high dividend yield" categories
+- **Implementation Suggestion:** Add a `lists` structure to watchlist.yaml
 
-### 4.2 P1 缺口（重要但非關鍵差距）
+### 4.2 P1 Gaps (Important but Non-Critical Gaps)
 
-#### 缺口 4：市場溫度/情緒指標
-- **現狀**：無總經或市場情緒指標
-- **競品參考**：玩股網「股市溫度計」
-- **使用者情境**：新手想知道「現在市場是熱還是冷？」
-- **資料可行性**：FinMind 有「TaiwanStockInstitutionalInvestorsBuySell」可計算法人動向
+#### Gap 4: Market Temperature/Sentiment Indicators
+- **Current State:** No macroeconomic or market sentiment indicators
+- **Competitor Reference:** WantGoo "Market Thermometer"
+- **User Scenario:** Beginners want to know "is the market hot or cold right now?"
+- **Data Feasibility:** FinMind has "TaiwanStockInstitutionalInvestorsBuySell" which can calculate institutional investor trends
 
-#### 缺口 5：Portfolio 損益追蹤
-- **現狀**：Watchlist 只有價格提醒，沒有持倉損益管理
-- **競品參考**：CMoney（完整 Portfolio 管理）
-- **使用者情境**：我想知道我的「存股組合」目前整體報酬率
-- **實作建議**：在 watchlist 加入「持有數量」「成本價」欄位
+#### Gap 5: Portfolio P&L Tracking
+- **Current State:** Watchlist only has price alerts, no position P&L management
+- **Competitor Reference:** CMoney (complete portfolio management)
+- **User Scenario:** I want to know the current overall return rate of my "dividend portfolio"
+- **Implementation Suggestion:** Add "quantity held" and "cost basis" fields to watchlist
 
-#### 缺口 6：個股分析報告下載
-- **現狀**：無法下載當前分析頁面
-- **競品參考**：玩股網（一鍵生成 PPT）
-- **使用者情境**：想和朋友分享某公司的分析
-- **實作建議**：使用 python-pptx 自動生成 PPT（已有基礎）
+#### Gap 6: Stock Analysis Report Download
+- **Current State:** Cannot download the current analysis page
+- **Competitor Reference:** WantGoo (one-click PPT generation)
+- **User Scenario:** Want to share a company analysis with friends
+- **Implementation Suggestion:** Use python-pptx to auto-generate PPT (foundation already exists)
 
-### 4.3 P2 缺口（加分功能差距）
+### 4.3 P2 Gaps (Nice-to-Have Feature Gaps)
 
-#### 缺口 7：美股/國際股市
-- **現狀**：僅支援台股
-- **競品參考**：財報狗（美股 500+）；GoodInfo（國際指數）
-- **建議**：M5 後考慮，FinMind 已有美股資料
+#### Gap 7: US Stocks/International Markets
+- **Current State:** Only supports TW stocks
+- **Competitor Reference:** StatementDog (500+ US stocks); GoodInfo (international indices)
+- **Suggestion:** Consider after M5, FinMind already has US stock data
 
-#### 缺口 8：量化指標/選股條件
-- **現狀**：無技術面指標（如均線、RSI、布林通道等）
-- **競品參考**：CMoney（完整技術指標 + 選股）
-- **建議**：教學取向 vs 選股取向的路線抉擇 — 建議先維持教育定位
+#### Gap 8: Quantitative Indicators/Stock Screening Conditions
+- **Current State:** No technical indicators (e.g., moving averages, RSI, Bollinger Bands, etc.)
+- **Competitor Reference:** CMoney (complete technical indicators + screening)
+- **Suggestion:** Teaching-oriented vs stock-picking-oriented direction choice — recommend maintaining education positioning for now
 
 ---
 
-## 5. 新功能靈感
+## 5. New Feature Ideas
 
-> **標籤：來源：競品研究**
+> **Tag: Source: Competitor Research**
 
-### 🔴 高優先級新功能
+### 🔴 High Priority New Features
 
-#### 靈感 A：除權息行事曆（來自 GoodInfo + 財報狗）
+#### Idea A: Ex-Dividend Calendar (from GoodInfo + StatementDog)
 ```
-描述：在名片頁新增「配息資訊」區塊
-  - 近 5 年除權息日程（除息日、除權日）
-  - 歷年股利（現金股利、股票股利）
-  - 白話說明：「過去 5 年，台積電每季配息約 2.75 元」
-  - 預估殖利率（以目前股價計算）
-資料：FinMind TaiwanStockDividend
-頁面：business_card.py（新增 section）
-競品落差：🔴 嚴重缺失
+Description: Add a "Dividend Information" section to the business card page
+  - Ex-dividend/ex-rights schedule for the past 5 years (ex-dividend date, ex-rights date)
+  - Historical dividends (cash dividends, stock dividends)
+  - Plain-language explanation: "Over the past 5 years, TSMC paid approximately $2.75 per quarter"
+  - Estimated dividend yield (calculated at current stock price)
+Data: FinMind TaiwanStockDividend
+Page: business_card.py (new section)
+Competitive Gap: 🔴 Severely Missing
 ```
 
-#### 靈感 B：推播通知系統（來自財報狗 Line Notify）
+#### Idea B: Push Notification System (from StatementDog Line Notify)
 ```
-描述：設定通知條件後，主動通知用戶
-  第一階段：email 通知（成本低）
-    - 營收異動 ±30%
-    - 股價異動 ±7%
-    - 事件偵測引擎已有資料，只需加上发送層
+Description: After setting notification conditions, proactively notify users
+  Phase 1: Email notifications (low cost)
+    - Revenue changes ±30%
+    - Stock price changes ±7%
+    - Event detection engine already has the data, just need to add a sending layer
   
-  第二階段：Line Notify（需要 Bot 帳號）
-    - 付费功能或高級會員專屬
-    - 财報狗的成功模式：Line Notify 是其付費转化率最高的功能
-技術：Background worker + SMTP（第一階段）
-競品落差：🔴 嚴重缺失 — 所有競品都有通知能力
+  Phase 2: Line Notify (requires Bot account)
+    - Paid feature or premium membership exclusive
+    - StatementDog's successful model: Line Notify is their highest converting paid feature
+Technology: Background worker + SMTP (Phase 1)
+Competitive Gap: 🔴 Severely Missing — all competitors have notification capabilities
 ```
 
-#### 靈感 C：多個 Watchlist 清單（來自 Yahoo Finance）
+#### Idea C: Multiple Watchlist Lists (from Yahoo Finance)
 ```
-描述：允許使用者建立多個關注清單
-  結構範例：
-    - 「存股清單」（穩定配息股）
-    - 「觀察名單」（想買但還沒買）
-    - 「高殖利率」
+Description: Allow users to create multiple watchlists
+  Structure example:
+    - "Dividend List" (stable dividend-paying stocks)
+    - "Watchlist" (want to buy but haven't yet)
+    - "High Dividend Yield"
   
-  修改檔案：
-    - watchlist.yaml 結構重構（list_name, stocks[]）
-    - watchlist_page.py（多標籤分頁）
-    - 名片頁加入「加入哪個清單」選擇器
-競品落差：🔴 P0 缺口
+  Files to modify:
+    - watchlist.yaml structure refactor (list_name, stocks[])
+    - watchlist_page.py (multi-tab pages)
+    - Business card page add "which list to join" selector
+Competitive Gap: 🔴 P0 Gap
 ```
 
-### 🟡 中優先級新功能
+### 🟡 Medium Priority New Features
 
-#### 靈感 D：市場溫度計（來自玩股網）
+#### Idea D: Market Thermometer (from WantGoo)
 ```
-描述：主頁新增「市場溫度」指示器
-  計算方式：
-    - 三大法人買賣超（5 日均值）
-    - 大盤成交量（熱vs冷）
-    - 漲停/跌停家數比
-  呈現：體感溫度（🔥熱/😊正常/🥶冷）+ 白話說明
-  頁面：主頁或事件儀表板新增 section
-競品落差：🟡 P1 缺口
-```
-
-#### 靈感 E：Portfolio 損益管理（來自 CMoney）
-```
-描述：Watchlist 進化 — 加入持倉管理
-  新功能：
-    - 每股成本價
-    - 持有數量
-    - 未實現損益（即時）
-    - 已實現損益（歷史交易）
-    - 組合的總報酬率
-  頁面：進化現有的 watchlist_page.py
-競品落差：🟡 P1 缺口
+Description: Add a "Market Temperature" indicator to the homepage
+  Calculation method:
+    - Three major institutional investors buy/sell (5-day average)
+    - Market trading volume (hot vs cold)
+    - Ratio of limit-up/limit-down stocks
+  Presentation: Feels-like temperature (🔥Hot/😊Normal/🥶Cold) + plain-language explanation
+  Page: New section on homepage or event dashboard
+Competitive Gap: 🟡 P1 Gap
 ```
 
-#### 靈感 F：個股分析 PPT 自動生成（來自玩股網、延伸 Stock Explorer 的 PPT 風格）
+#### Idea E: Portfolio P&L Management (from CMoney)
 ```
-描述：一鍵下載目前分析結果為 PPT 簡報
-  利用現有的 PPT 風格 CSS，用 python-pptx 生成真正的 PPT
-  包含：
-    - 公司名片
-    - 營運健檢重點
-    - 財務體質摘要
-    - 同業比較雷達圖
-  技術：python-pptx + 各頁面爬取資料
-  頁面：每頁加入「下載 PPT」按鈕
-競品落差：🟡 P1 缺口
-  差異化：Stock Explorer 的 PPT 風格比玩股網更精美、更有教育性
+Description: Watchlist evolution — add position management
+  New features:
+    - Cost per share
+    - Quantity held
+    - Unrealized P&L (real-time)
+    - Realized P&L (historical trades)
+    - Total portfolio return rate
+  Page: Evolve existing watchlist_page.py
+Competitive Gap: 🟡 P1 Gap
 ```
 
-#### 靈感 G：用戶自訂事件門檻（延伸自事件偵測引擎）
+#### Idea F: Stock Analysis PPT Auto-Generation (from WantGoo, extending Stock Explorer's PPT style)
 ```
-描述：讓用戶自定義事件偵測閾值
-  目前：固定（營收±30%、股價±7%）
-  進化：
-    - 用戶調整敏感度
-    - 新增事件類型（法人買賣超連續 N 天、營收連 N 月衰退）
-  頁面：設定頁面（新頁面）
-競品落差：🟡 差異化特色
-```
-
-### 🟢 低優先級/未來考慮
-
-#### 靈感 H：影音教學（來自 CMoney）
-```
-描述：每個指標下方嵌入 30 秒白話解釋影片
-  製作成本高，建議 M5 後人工製作
-  例如：什麼是「本益比」？30 秒動畫解釋
+Description: One-click download of current analysis results as a PPT presentation
+  Leverage existing PPT-style CSS, use python-pptx to generate actual PPT
+  Includes:
+    - Company business card
+    - Operations health check highlights
+    - Financial health summary
+    - Peer comparison radar chart
+  Technology: python-pptx + data from each page
+  Page: Add "Download PPT" button on each page
+Competitive Gap: 🟡 P1 Gap
+  Differentiation: Stock Explorer's PPT style is more refined and more educational than WantGoo's
 ```
 
-#### 靈感 I：美股支援（來自財報狗）
+#### Idea G: User-Defined Event Thresholds (extending from Event Detection Engine)
 ```
-描述：延伸支援美股（AAPL, MSFT, GOOG...）
-  FinMind 支援美股資料
-  目標用戶：已熟悉台股分析架構，想延伸到美股的使用者
-  時程：M5 後
+Description: Let users customize event detection thresholds
+  Current: Fixed (revenue ±30%, stock price ±7%)
+  Evolution:
+    - User-adjustable sensitivity
+    - New event types (institutional investors buying/selling for N consecutive days, revenue declining for N consecutive months)
+  Page: Settings page (new page)
+Competitive Gap: 🟡 Differentiating Feature
 ```
 
-#### 靈感 J：全球市場地圖（來自玩股網，差異化延伸）
+### 🟢 Low Priority/Future Consideration
+
+#### Idea H: Video Tutorials (from CMoney)
 ```
-描述：以簡化地圖呈現全球市場狀態
-  以台股為主，以下為輔：
-    - 美國（道瓊、NASDAQ、S&P 500）
-    - 歐洲（德國 DAX、英國 FTSE）
-    - 日本（日經 225）
-    - 中國（上證、深證）
-  呈現：🟢上涨 🔴下跌 ↔️持平 + 不等比視覺化
-  頁面：主頁 section 或獨立頁面
-  差異化：玩股網的地圖偏向「交易熱度」，Stock Explorer 偏「基本面理解」
+Description: Embed 30-second plain-language explanation videos below each indicator
+  High production cost, recommend manual production after M5
+  Example: What is "P/E Ratio"? 30-second animated explanation
+```
+
+#### Idea I: US Stock Support (from StatementDog)
+```
+Description: Extended support for US stocks (AAPL, MSFT, GOOG...)
+  FinMind supports US stock data
+  Target users: Those already familiar with TW stock analysis framework, wanting to extend to US stocks
+  Timeline: After M5
+```
+
+#### Idea J: Global Market Map (from WantGoo, differentiated extension)
+```
+Description: Simplified map showing global market status
+  TW stocks as primary, others as supplementary:
+    - US (Dow Jones, NASDAQ, S&P 500)
+    - Europe (Germany DAX, UK FTSE)
+    - Japan (Nikkei 225)
+    - China (Shanghai Composite, Shenzhen Composite)
+  Presentation: 🟢Up 🔴Down ↔️Flat + disproportionate visualization
+  Page: Homepage section or standalone page
+  Differentiation: WantGoo's map leans toward "trading heat," Stock Explorer leans toward "fundamental understanding"
 ```
 
 ---
 
-## 6. 建議
+## 6. Recommendations
 
-### 6.1 戰略定位建議
+### 6.1 Strategic Positioning Recommendations
 
-**Stock Explorer 的最佳定位不是「取代」競品，而是「教育橋樑」**
+**Stock Explorer's best positioning is not to "replace" competitors, but to serve as an "education bridge"**
 
 ```
-使用旅程假設：
-1. 新手先用「股識」（Stock Explorer）理解公司本質
-2. 開始投資後，需要數據工具時自然流向 GoodInfo / 財報狗
-3. 變成熟練投資人後，向下一個層級流動
+Assumed User Journey:
+1. Beginners first use "Stock Explorer" to understand a company's essence
+2. After starting to invest, they naturally flow to GoodInfo / StatementDog when they need data tools
+3. After becoming experienced investors, they move to the next level
 
-→ 股識的 KPI 不應該是 DAU/留存率
-→ 應該是「使用者學到了什麼」和「是否成功建立投資認知」
+→ Stock Explorer's KPI should not be DAU/retention rate
+→ It should be "what did users learn" and "did they successfully build investment awareness"
 ```
 
-**建議：不與競品正面競爭以下功能**
-- ❌ 即時報價速度（vs GoodInfo）
-- ❌ 選股工具（vs CMoney）
-- ❌ 社群功能（vs 玩股網）
-- ❌ 技術分析深度（vs 財報狗）
+**Recommendation: Do not directly compete with competitors on the following features**
+- ❌ Real-time quote speed (vs GoodInfo)
+- ❌ Stock screening tools (vs CMoney)
+- ❌ Community features (vs WantGoo)
+- ❌ Technical analysis depth (vs StatementDog)
 
-**建議：全力發展以下差異化**
-- ✅ 白話解釋品質（vs 所有競品）
-- ✅ PPT 風格教育體驗（vs 所有競品）
-- ✅ 自適應分析框架（vs 所有競品）
-- ✅ 事件偵測與通知（近期可做）
-- ✅ 開源可信任形象（vs 商業競品）
+**Recommendation: Fully develop the following differentiators**
+- ✅ Plain-language explanation quality (vs all competitors)
+- ✅ PPT-style educational experience (vs all competitors)
+- ✅ Adaptive analysis framework (vs all competitors)
+- ✅ Event detection and notifications (achievable in the near term)
+- ✅ Open source trust image (vs commercial competitors)
 
-### 6.2 功能開發路線建議
+### 6.2 Feature Development Roadmap Recommendations
 
-**第一階段（M5 收尾 + 除權息）**
-1. ✅ 除權息資訊加入名片頁（靈感 A）
-2. ✅ 推播通知系統 email 版（靈感 B）
-3. ✅ 多 Watchlist 清單（靈感 C）
+**Phase 1 (M5 Wrap-Up + Ex-Dividend)**
+1. ✅ Add ex-dividend information to business card page (Idea A)
+2. ✅ Push notification system email version (Idea B)
+3. ✅ Multiple watchlist lists (Idea C)
 
-**第二階段（市場 + 匯出）**
-4. 🔄 市場溫度計（靈感 D）
-5. 🔄 Portfolio 損益管理（靈感 E）
-6. 🔄 PPT 自動生成（靈感 F）
+**Phase 2 (Market + Export)**
+4. 🔄 Market thermometer (Idea D)
+5. 🔄 Portfolio P&L management (Idea E)
+6. 🔄 PPT auto-generation (Idea F)
 
-**第三階段（個人化 + 國際）**
-7. 📋 自訂事件門檻（靈感 G）
-8. 📋 影音教學（靈感 H）
-9. 📋 美股支援（靈感 I）
-10. 📋 全球市場地圖（靈感 J）
+**Phase 3 (Personalization + International)**
+7. 📋 Custom event thresholds (Idea G)
+8. 📋 Video tutorials (Idea H)
+9. 📋 US stock support (Idea I)
+10. 📋 Global market map (Idea J)
 
-### 6.3 護城河建議
+### 6.3 Moat Recommendations
 
-**Stock Explorer 可以建立的護城河：**
+**Moats that Stock Explorer can build:**
 
-1. **教育內容積累**：白話解釋引擎的比喻庫、模板庫 — 競品難以快速複製
-2. **用戶認知路徑**：3 年使用經驗建立的「公司理解流程」— 競爭者難挖角用戶的思維架構
-3. **開源信任背書**：「我的分析邏輯完全透明」— 商業競品無法做到
-4. **自適應框架資料**：隨著公司增加，分析框架推薦越來越精準 — 資料網絡效應
+1. **Educational Content Accumulation:** The plain-language explanation engine's analogy library, template library — difficult for competitors to quickly replicate
+2. **User Cognitive Pathway:** A "company understanding process" built over 3 years of usage experience — competitors cannot easily poach users' mental frameworks
+3. **Open Source Trust Endorsement:** "My analysis logic is completely transparent" — commercial competitors cannot achieve this
+4. **Adaptive Framework Data:** As more companies are added, analysis framework recommendations become increasingly accurate — data network effects
 
-### 6.4 需要 Daniel 確認的決策
+### 6.4 Decisions Requiring Daniel's Confirmation
 
-1. **推播通知**：email（低成本、低觸及）vs Line Notify（需要 Bot 帳號、高觸及）？
-2. **路線抉擇**：是否要加入任何「選股」功能，堅持純教育定位？
-3. **國際化**：是否要支援美股？這會影響名片頁和比較邏輯
-4. **影音內容**：自行製作 vs 嵌入現有 YouTube 資源 vs 放弃
+1. **Push Notifications:** Email (low cost, low reach) vs Line Notify (requires Bot account, high reach)?
+2. **Direction Choice:** Whether to add any "stock screening" features, insisting on pure education positioning?
+3. **Internationalization:** Whether to support US stocks? This would affect the business card page and comparison logic
+4. **Video Content:** Self-produced vs embedding existing YouTube resources vs abandoning
 
 ---
 
-## 附錄：競品定價模型比較
+## Appendix: Competitor Pricing Model Comparison
 
-| 平台 | 免費 tier | 付費方案 | ARPU 估算 | 商業模式 |
+| Platform | Free Tier | Paid Plans | Estimated ARPU | Business Model |
 |------|----------|---------|----------|---------|
-| 財報狗 | 即時數據延遲、功能受限 | 月費會員（約 300-500 NTD/月） | 中 | 訂閱制 |
-| GoodInfo | 完全免費 | 無 | 低（廣告） | 廣告 |
-| CMoney | 基本功能 | 月費/年費（約 500-2000+ NTD/月） | 中高 | 訂閱制 + B2B 授權 |
-| 玩股網 | 完全免費 | VIP 去廣告（低價） | 低 | 廣告 + VIP |
-| FinMind | 有限 API 呼叫 | 月費（約 1000-5000+ NTD/月） | 中 | SaaS API |
-| **Stock Explorer** | 完全免費開源 | 無 | 零 | **开源/免费** |
+| StatementDog | Delayed real-time data, limited features | Monthly membership (~$300-500 NTD/month) | Medium | Subscription |
+| GoodInfo | Completely free | None | Low (Ads) | Advertising |
+| CMoney | Basic features | Monthly/annual (~$500-2000+ NTD/month) | Medium-High | Subscription + B2B Licensing |
+| WantGoo | Completely free | VIP ad removal (low price) | Low | Advertising + VIP |
+| FinMind | Limited API calls | Monthly (~$1000-5000+ NTD/month) | Medium | SaaS API |
+| **Stock Explorer** | Completely free & open source | None | Zero | **Open Source/Free** |
 
 ---
 
-## 結論
+## Conclusion
 
-Stock Explorer 的核心差異化 — **教育導向 + PPT 風格 + 白話解釋 + 自適應框架** — 在目前的台股平台市場中是獨特且有價值的。
+Stock Explorer's core differentiators — **education-oriented + PPT style + plain-language explanations + adaptive framework** — are unique and valuable in the current TW stock platform market.
 
-最大的三個必須補齊的缺口：
-1. **除權息資訊**（GoodInfo 競品有，新手最常問的問題）
-2. **推播通知**（財報狗、CMoney 都有，留存關鍵）
-3. **多清單 Watchlist**（基本功能缺失）
+The three biggest gaps that must be filled:
+1. **Ex-Dividend Information** (GoodInfo has it, the most common question from beginners)
+2. **Push Notifications** (StatementDog and CMoney both have it, key to retention)
+3. **Multiple Watchlist Lists** (basic feature gap)
 
-以上新功能的**靈感來源均為競品研究**，實作優先級依照缺口分析排序。
+All of the above new feature **ideas come from competitor research**, with implementation priority based on gap analysis ranking.
 
 ---
 
-*研究日期：2026-06-09 | 下次更新：2026-06-12（三輪循環）*
+*Research Date: 2026-06-09 | Next Update: 2026-06-12 (three-cycle rotation)*
