@@ -299,17 +299,21 @@
 #### [ISSUE-TD-B01] FinMindRateLimitError Silently Swallowed
 - **Source:** Architect tech debt review (2026-06-10)
 - **Priority:** P1
-- **Status:** 📋 Todo
+- **Status:** ✅ Done
 - **Description:** `FinMindRateLimitError` is raised in `finmind_client.py` but caught by the generic `except Exception` in `_fetch()` inner function. Users never see rate limit warnings.
+- **Fix:** Added separate `except FinMindRateLimitError` block in `_fetch()` that sets `st.session_state["_rate_limited"] = True` before returning None.
 - **Effort:** 15 minutes
+- **Commit:** `ef162e4`
 - **Related files:** `src/pages/_router_base.py`, `src/data/finmind_client.py`
 
 #### [ISSUE-TD-E01] No Tests for Event Detection Algorithms
 - **Source:** Architect tech debt review (2026-06-10)
 - **Priority:** P0
-- **Status:** 📋 Todo
+- **Status:** ✅ Done
 - **Description:** Zero tests for `detect_revenue_event()`, `detect_price_abnormal()`, `detect_news_event()`, `check_data_freshness()`, `detect_company_type()`, `extract_dividend_summary()`, and `validate_stock_id()`. These are the core value-add algorithms.
+- **Fix:** Added 59 new unit tests across 7 test classes: TestValidateStockId (9), TestDetectRevenueEvent (8), TestDetectPriceAbnormal (8), TestDetectNewsEvent (8), TestCheckDataFreshness (7), TestDetectCompanyType (10), TestExtractDividendSummary (9). Total: 88 tests (29 existing + 59 new), all passing.
 - **Effort:** 3 hours
+- **Commit:** `09c66ab`
 - **Related files:** `tests/test_business_logic.py`, `src/services/adaptive_engine.py`, `src/services/validation.py`
 
 ### New Design Issues (from Design Reviewer)
@@ -325,9 +329,11 @@
 #### [ISSUE-DR-02] st.cache_data in View Layer (Architecture Violation)
 - **Source:** Design comparison review (2026-06-10)
 - **Priority:** P1
-- **Status:** 📋 Todo
+- **Status:** ✅ Done
 - **Description:** `peer_comparison.py:51` and `etf_browser.py:12,18` use `@st.cache_data` in View layer, violating architecture Section 3.3.
+- **Fix:** Removed `@st.cache_data(ttl=3600)` from `_find_fallback_benchmark` in peer_comparison.py and `_cached_get_stock_info` + `_get_all_etf_prices` in etf_browser.py. Data caching is handled by FinMindClient in the data layer.
 - **Effort:** 30 minutes
+- **Commit:** `ef162e4`
 - **Related files:** `src/pages/peer_comparison.py`, `src/pages/etf_browser.py`
 
 #### [ISSUE-DR-03] Financial Health Page Text-Heavy (PPT Style Violation)
@@ -396,15 +402,15 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 
 | Status | Count |
 |--------|-------|
-| 📋 Todo | 22 |
+| 📋 Todo | 19 |
 | 🔄 In progress | 0 |
-| ✅ Done | 4 |
+| ✅ Done | 7 |
 | ❌ Canceled | 0 |
 
 | Priority | Count |
 |----------|-------|
-| P0 | 5 |
-| P1 | 9 |
+| P0 | 4 |
+| P1 | 7 |
 | P2 | 9 |
 
 ---

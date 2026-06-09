@@ -1,8 +1,8 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔍 檢討輪次（競品研究 + 技術債審查）
+## 當前階段：🔧 開發輪次（技術債清理 + 測試補充）
 
-## 本輪主題：🔍 檢討 — 全面審查（2026-06-10）
+## 本輪主題：🔧 開發 — P0 技術債修復（2026-06-10）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -528,13 +528,25 @@ See `docs/status/pending_review.md` for details:
 || 2026-06-09 15:15 | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸 ||
 | 2026-06-09 17:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸，等待 Daniel 決策 |
 || 2026-06-09 19:23 | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸，等待 Daniel 決策 |
-|| 2026-06-09 21:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | 🔍 檢討輪次：競品研究+技術債審查完成 |
+||| 2026-06-09 21:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | 🔍 檢討輪次：競品研究+技術債審查完成 |
 
-|| 2026-06-10 00:xx | ✅ (L0) | ✅ (L1) | — | 即時技術債清理完成，DRY + dead code + input validation，L0+L1 全綠 |
-||| 2026-06-10 02:xx | ✅ 54/54 (L0) | ✅ 15/15 (L1) | — | 部分資料載入 + 單元測試，L0+L1 全綠（3 L1 失敗為既有基線） |
-||*最後更新：2026-06-10 08:xx* |||
+### 2026-06-10（🔧 開發 — 即時技術債清理）
+- **DRY consolidation**：`_find_value` / `_find_financial_value` 統一為單一 `_find_financial_value`，更新 3 個消費者
+- **Dead code**：移除 `_find_value` 别名、移除未使用 deps（python-dotenv, tqdm）
+- **Input validation**：新增 `src/services/validation.py`，4 位數字股票代碼驗證，整合至 main.py
+- Git commits: `94c25b7`, `e06e09b`
 
-||| 2026-06-10 04:xx | ✅ 54/54 (L0) | ✅ 15/15 (L1) | — | 多清單關注系統實作完成 (ISSUE-C03)，L0+L1 全綠（3 L1 失敗為既有基線） |
-||| 2026-06-10 06:xx | — | — | — | 💡 討論輪次：團隊討論 + Challenger 完成，產出修訂路線圖，等待 Daniel 決策 |
-||| 2026-06-10 08:xx | ✅ 54/54 (L0) | ✅ 15/15 (L1) | — | ISSUE-D03 + Tech Debt #9 完成，L0+L1 全綠（3 L1 失敗為既有基線） |
+### 2026-06-10（🔧 開發 — 部分資料載入 + 單元測試）
+- **TD #8 實作**：`get_stock_data()` 部分資料載入 — 每個 API 呼叫獨立 try/except
+- **單元測試**：新增 `tests/test_business_logic.py`，29 個測試全部通過
+- Layer 0：54/54 ✅ | Layer 1：15/15 ✅（3 個失敗為既有 event detection 基線，非回歸）
+- Git commit: `4a71e80`
+
+### 2026-06-10（🔧 開發 — P0 技術債修復）
+- **TD-B01 修復**：`FinMindRateLimitError` 不再被 `_fetch()` 的 generic `except Exception` 吞沒 — 加入獨立 `except FinMindRateLimitError` block，設定 `st.session_state["_rate_limited"] = True` 讓 UI 可顯示警告
+- **TD-E01 修復**：新增 59 個單元測試（7 類），涵蓋 event detection、validation、dividend 演算法 — 總計 88 測試全部通過
+- **DR-02 修復**：移除 `peer_comparison.py` 和 `etf_browser.py` View 層的 `@st.cache_data`（架構違規）
+- Layer 0：54/54 ✅ | Layer 1：15/15 ✅（3 L1 失敗為既有基線）
+- Git commits: `ef162e4`, `09c66ab`
+
 ---
