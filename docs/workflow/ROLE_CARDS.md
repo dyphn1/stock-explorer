@@ -7,14 +7,14 @@
 
 ## Role Overview
 
-| Role | Model | Type | Core Responsibility |
-|------|-------|------|---------------------|
-| **Product Manager (PM)** | `owl-alpha` | Main Agent | Coordination, topic initiation, status handoff, summary reporting |
-| **System Architect** | `nemotron-120b` | Sub-Agent | Architecture analysis, technical feasibility, technical debt |
-| **Developer** | `owl-alpha` | Sub-Agent | Implementation, bug fixing, verification |
-| **Design Reviewer** | `gemma-31b` | Sub-Agent | UX/visual review, design system alignment |
-| **QA Engineer** | `gemma-31b` | Sub-Agent | Functional verification, competitor research |
-| **Challenger** | `gpt-oss-120b` | Sub-Agent | Challenges, counter-arguments, ensuring goal alignment |
+| Role | Primary Model | **Fallback Model** | Type | Core Responsibility |
+|------|---------------|-------------------|------|---------------------|
+| **Product Manager (PM)** | `openrouter/owl-alpha` | `openrouter/meta-llama/llama-3.2-3b-instruct:free` | Main Agent | Coordination, topic initiation, status handoff, summary reporting |
+| **System Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | `openrouter/nvidia/nemotron-3-nano-30b-a3b:free` | Sub-Agent | Architecture analysis, technical feasibility, technical debt |
+| **Developer** | `openrouter/owl-alpha` | `openrouter/google/gemma-4-31b-it:free` | Sub-Agent | Implementation, bug fixing, verification |
+| **Design Reviewer** | `openrouter/google/gemma-4-31b-it:free` | `openrouter/google/gemma-4-31b-it:free` | Sub-Agent | UX/visual review, design system alignment |
+| **QA Engineer** | `openrouter/google/gemma-4-31b-it:free` | `openrouter/meta-llama/llama-3.2-3b-instruct:free` | Sub-Agent | Functional verification, competitor research |
+| **Challenger** | `openrouter/openai/gpt-oss-120b:free` | `openrouter/meta-llama/llama-3.2-3b-instruct:free` | Sub-Agent | Challenges, counter-arguments, ensuring goal alignment |
 
 ---
 

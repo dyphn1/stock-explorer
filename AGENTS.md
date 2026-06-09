@@ -14,14 +14,14 @@ description: "AGENTS.md for Stock Explorer (股識). Provides AI agents with pre
 ### Role Definitions
 
 | Role | Type | Model | Responsibility |
-|------|------|-------|---------------|
+|------|------|-------|-----------------|
 | **Daniel (Client)** | Human | — | End-user, UX quality judgment, final decision on UI/visual/info architecture |
-| **Product Manager** | Main agent | `owl-alpha` | Global planning, prioritization, milestone management, team coordination. **Does NOT do technical work.** |
-| **System Architect** | sub-agent | `nemotron-120b` | Layered architecture, data flow, error handling, cross-module integration, tech debt analysis |
-| **Developer** | sub-agent | `owl-alpha` | Write code, import checks, git commits, implementation details |
-| **Design Reviewer** | sub-agent | `gemma-31b` | UX quality, theme alignment, code review, visual inspection |
-| **QA Engineer** | sub-agent | `gemma-31b` | Functional verification (L0/L1/L2), screenshot analysis, **competitor research** |
-| **Challenger** | sub-agent | `gpt-oss-120b` | **Challenge every decision**, ensure team alignment, 3-round challenge process |
+| **Product Manager** | Main agent | `owl-alpha` | [Product Manager role](docs/roles/pm.md) |
+| **System Architect** | sub-agent | `nemotron-120b` | [System Architect role](docs/roles/architect.md) |
+| **Developer** | sub-agent | `owl-alpha` | [Developer role](docs/roles/developer.md) |
+| **Design Reviewer** | sub-agent | `gemma-31b` | [Design Reviewer role](docs/roles/designer.md) |
+| **QA Engineer** | sub-agent | `gemma-31b` | [QA Engineer role](docs/roles/qa.md) |
+| **Challenger** | sub-agent | `gpt-oss-120b` | [Challenger role](docs/roles/challenger.md) |
 
 > **Detailed role cards:** See `docs/workflow/ROLE_CARDS.md` for full role definitions, responsibilities per theme, and work guidelines.
 
@@ -247,6 +247,33 @@ Run: `uv run python _verify_all.py --skip-l2` (L2 requires Playwright)
 | `docs/status/pending_review.md` | UX quality issues pending Daniel's confirmation |
 | `docs/strategy/product_vision.md` | Product vision, core philosophy, milestones |
 | `docs/design/technical_design.md` | Technical design, API research, page specs |
+| `memories/index.md` | Memory structure overview (session, repo, user scopes) |
+
+### Memories & State Persistence
+
+The project uses a **`memories/`** directory to store structured markdown files that act as a lightweight, file‑based memory store for sub-agents. This keeps all state version‑controlled alongside the code.
+
+**Directory Layout:**
+```
+memories/
+│   index.md          # Overview of the memory structure
+│
+├── session/          # Temporary notes for the current cron cycle
+│   └── plan.md       # High‑level plan for the current round (PM)
+│
+├── repo/             # Repository‑scoped facts (architecture, design system, conventions)
+│   └── architecture.md
+│
+└── user/             # Persistent user preferences and long‑term insights
+    └── preferences.md
+```
+
+**How Sub‑Agents Use It:**
+- **Read** – Before performing any task, an agent reads the relevant markdown files (e.g., the PM reads `memories/session/plan.md` to know the current objectives).
+- **Write** – When a decision should survive beyond the current run, the agent writes to `memories/repo/` (e.g., the Architect updates `memories/repo/architecture.md`).
+- **Update** – For transient information that only lives for the current cycle, agents update files under `memories/session/`.
+
+**PM Responsibility:** The PM creates/updates `memories/session/plan.md` at the start of each cron run and commits any changes to the `memories/` directory together with the rest of the project.
 
 ## Tech Stack & Architecture
 

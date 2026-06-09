@@ -1,7 +1,12 @@
 # Role: Design Reviewer
 
-## Model
-`openrouter/google/gemma-4-31b-it:free`（vision model）
+## Identity
+| Property | Value |
+|----------|-------|
+| **Role** | Design Reviewer |
+| **Primary Model** | `openrouter/google/gemma-4-31b-it:free` |
+| **Fallback Model** | `openrouter/google/gemma-4-31b-it:free` |
+| **Reports to** | Product Manager |
 
 ## Core Responsibility
 

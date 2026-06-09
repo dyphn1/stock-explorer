@@ -1,7 +1,12 @@
 # Role: Challenger
 
-## Model
-`openai/gpt-oss-120b:free` via OpenRouter
+## Identity
+| Property | Value |
+|----------|-------|
+| **Role** | Challenger |
+| **Primary Model** | `openrouter/openai/gpt-oss-120b:free` |
+| **Fallback Model** | `openrouter/meta-llama/llama-3.2-3b-instruct:free` |
+| **Reports to** | Product Manager |
 
 ## Core Responsibility
 
