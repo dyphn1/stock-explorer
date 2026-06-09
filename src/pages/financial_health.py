@@ -15,7 +15,7 @@ from src.services.analogy_engine import (
     get_dividend_analogy,
 )
 from src.services.roe_calculator import calc_roe_ttm, is_seasonal_industry
-from src.pages._router_base import filter_by_timeline, _section_title, _白话_card, _info_card, _find_value
+from src.pages._router_base import filter_by_timeline, _section_title, _白话_card, _info_card, _find_financial_value
 from src.pages.timeline_controls import render_timeline_selector
 
 
@@ -51,10 +51,10 @@ def _render_financial_health(data: dict):
             latest_date = filtered_financial["date"].max()
             latest = filtered_financial[filtered_financial["date"] == latest_date]
 
-            revenue = _find_value(latest, ["營業收入", "收入", "Revenue", "revenue"])
-            gross_profit = _find_value(latest, ["營業毛利", "毛利", "Gross Profit", "gross_profit"])
-            operating_income = _find_value(latest, ["營業利益", "營業利潤", "Operating Income", "operating_income"])
-            net_income = _find_value(latest, ["淨利", "本期淨利", "Net Income", "net_income"])
+            revenue = _find_financial_value(latest, ["營業收入", "收入", "Revenue", "revenue"])
+            gross_profit = _find_financial_value(latest, ["營業毛利", "毛利", "Gross Profit", "gross_profit"])
+            operating_income = _find_financial_value(latest, ["營業利益", "營業利潤", "Operating Income", "operating_income"])
+            net_income = _find_financial_value(latest, ["淨利", "本期淨利", "Net Income", "net_income"])
         except Exception:
             pass
 
@@ -154,9 +154,9 @@ def _render_financial_health(data: dict):
             latest_date = filtered_balance["date"].max()
             latest = filtered_balance[filtered_balance["date"] == latest_date]
 
-            total_assets = _find_value(latest, ["資產總計", "總資產", "Total Assets", "total_assets"])
-            total_liabilities = _find_value(latest, ["負債總計", "總負債", "Total Liabilities", "total_liabilities"])
-            total_equity = _find_value(latest, ["權益總計", "股東權益", "Total Equity", "total_equity"])
+            total_assets = _find_financial_value(latest, ["資產總計", "總資產", "Total Assets", "total_assets"])
+            total_liabilities = _find_financial_value(latest, ["負債總計", "總負債", "Total Liabilities", "total_liabilities"])
+            total_equity = _find_financial_value(latest, ["權益總計", "股東權益", "Total Equity", "total_equity"])
 
             if total_assets > 0:
                 col1, col2, col3 = st.columns(3)
@@ -212,9 +212,9 @@ def _render_financial_health(data: dict):
             latest_date = filtered_cashflow["date"].max()
             latest = filtered_cashflow[filtered_cashflow["date"] == latest_date]
 
-            operating_cf = _find_value(latest, ["營業活動", "經營活動", "Operating", "operating"])
-            investing_cf = _find_value(latest, ["投資活動", "Investing", "investing"])
-            financing_cf = _find_value(latest, ["籌資活動", "融資活動", "Financing", "financing"])
+            operating_cf = _find_financial_value(latest, ["營業活動", "經營活動", "Operating", "operating"])
+            investing_cf = _find_financial_value(latest, ["投資活動", "Investing", "investing"])
+            financing_cf = _find_financial_value(latest, ["籌資活動", "融資活動", "Financing", "financing"])
 
             col1, col2, col3 = st.columns(3)
             with col1:

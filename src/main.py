@@ -12,6 +12,7 @@ if _project_root not in sys.path:
     sys.path.insert(0, _project_root)
 
 import streamlit as st
+from src.services.validation import validate_stock_id
 from src.pages.router import load_and_render_page
 
 # ── 頁面設定 ──────────────────────────────────────────
@@ -231,9 +232,13 @@ stock_id = None
 
 if search_input and search_input.strip():
     query = search_input.strip()
-    if query.isdigit() and len(query) == 4:
-        # 看起來像是股票代號（4 位數字），直接使用
-        stock_id = query
+    if query.isdigit():
+        # 看起來像是股票代號，先驗證格式
+        is_valid, result = validate_stock_id(query)
+        if is_valid:
+            stock_id = result
+        else:
+            st.sidebar.error(f"❌ {result}")
     else:
         # 可能是中文名稱，使用搜尋
         matches = client.search_stocks(query)
