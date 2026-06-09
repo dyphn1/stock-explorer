@@ -350,7 +350,7 @@ Per `docs/DESIGN_REVIEW.md` consolidated roadmap:
 || 2 | Layout breaks on small screens (CSS media queries + st.tabs) | High | Queued | P2 ||
 || 3 | Dark mode chart label contrast (shared CHART_TEMPLATE) | Medium | ✅ Done | P2 || `cf27a4c` ||
 || 4 | Cache directory grows unbounded (LRU eviction) | Low | ✅ Done | P2 || `cf27a4c` ||
-|| 5 | Fragile column name access in event detection | Medium | Queued | P2 ||
+|| 5 | Fragile column name access in event detection | Medium | ✅ Done | P2 || `8d3ba2b` ||
 
 ### Pending Daniel Confirmation (3 items)
 

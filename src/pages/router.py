@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 
 from src.data.finmind_client import FinMindClient
+from src.pages.url_sync import navigate_to
 from src.pages._router_base import (
     get_stock_data,
     _calc_extra_metrics,
@@ -152,7 +153,6 @@ def _render_navbar(data: dict, current_page: str):
                 st.markdown(f"**▎{p}**")
             else:
                 if st.button(p, key=f"nav_{p}", use_container_width=True):
-                    st.session_state["page"] = p
-                    st.rerun()
+                    navigate_to(page=p)
 
     st.markdown("---")

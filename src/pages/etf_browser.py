@@ -6,6 +6,7 @@ ETF 瀏覽頁 — 熱門 ETF、ETF 分類、配息排行三大區塊
 import streamlit as st
 import pandas as pd
 from src.data.finmind_client import FinMindClient
+from src.pages.url_sync import navigate_to
 
 
 @st.cache_data(ttl=3600)
@@ -171,9 +172,7 @@ def _render_hot_etfs(etf_info: pd.DataFrame, price_df: pd.DataFrame):
             unsafe_allow_html=True,
         )
         if cols[5].button("查看", key=f"hot_{row['stock_id']}", use_container_width=True):
-            st.session_state["stock_id"] = row["stock_id"]
-            st.session_state["page"] = "名片"
-            st.rerun()
+            navigate_to(page="名片", stock_id=row["stock_id"])
 
 
 # ════════════════════════════════════════════════════════════
@@ -331,9 +330,7 @@ def _render_etf_categories(etf_info: pd.DataFrame, price_df: pd.DataFrame):
                             key=f"cat_{row['stock_id']}",
                             use_container_width=True,
                         ):
-                            st.session_state["stock_id"] = row["stock_id"]
-                            st.session_state["page"] = "名片"
-                            st.rerun()
+                            navigate_to(page="名片", stock_id=row["stock_id"])
 
 
 # ════════════════════════════════════════════════════════════
@@ -451,9 +448,7 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
             unsafe_allow_html=True,
         )
         if cols[6].button("查看", key=f"div_{row['stock_id']}", use_container_width=True):
-            st.session_state["stock_id"] = row["stock_id"]
-            st.session_state["page"] = "名片"
-            st.rerun()
+            navigate_to(page="名片", stock_id=row["stock_id"])
 
     # 白話補充
     st.markdown("""

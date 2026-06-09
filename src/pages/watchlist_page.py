@@ -5,6 +5,7 @@
 
 import streamlit as st
 from src.data.finmind_client import FinMindClient
+from src.pages.url_sync import navigate_to
 from src.services.watchlist import (
     load_watchlist,
     remove_from_watchlist,
@@ -177,9 +178,7 @@ def _render_watchlist_page(client: FinMindClient):
         col1, col2, col3, col4 = st.columns([1, 1, 1, 5])
         with col1:
             if st.button("查看名片", key=f"wl_card_{stock_id}", use_container_width=True):
-                st.session_state["stock_id"] = stock_id
-                st.session_state["page"] = "名片"
-                st.rerun()
+                navigate_to(page="名片", stock_id=stock_id)
         with col2:
             if st.button("移除", key=f"wl_remove_{stock_id}", use_container_width=True):
                 if remove_from_watchlist(stock_id):

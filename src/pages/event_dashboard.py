@@ -5,6 +5,7 @@
 
 import streamlit as st
 import pandas as pd
+from src.pages.url_sync import navigate_to
 from src.services.adaptive_engine import (
     get_all_recent_events,
     get_events_for_stock,
@@ -88,9 +89,7 @@ def _render_event_dashboard(client):
                     st.markdown(f"**股票代號：** `{stock_id}`")
                     st.markdown(f"**摘要：** {summary}")
                     if st.button("查看名片", key=f"evt_{evt_idx}"):
-                        st.session_state["stock_id"] = stock_id
-                        st.session_state["page"] = "名片"
-                        st.rerun()
+                        navigate_to(page="名片", stock_id=stock_id)
                 evt_idx += 1
 
             st.markdown("")

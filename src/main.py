@@ -58,6 +58,10 @@ st.markdown("""
 
 
 # ── 初始化 ────────────────────────────────────────────
+from src.pages.url_sync import sync_url_to_session, navigate_to
+
+# Sync URL ↔ session_state (browser back/forward support)
+sync_url_to_session()
 
 @st.cache_resource
 def get_client():
@@ -104,9 +108,7 @@ with st.sidebar:
 
     for sid, name in hot_stocks:
         if st.button(f"{sid} {name}", key=f"hot_{sid}", use_container_width=True):
-            st.session_state["stock_id"] = sid
-            st.session_state["page"] = "名片"  # 重置到名片頁
-            st.rerun()
+            navigate_to(page="名片", stock_id=sid)
 
     st.markdown("---")
     st.markdown("### 🏷️ 熱門 ETF")
@@ -121,20 +123,16 @@ with st.sidebar:
 
     for sid, name in hot_etfs:
         if st.button(f"{sid} {name}", key=f"etf_{sid}", use_container_width=True):
-            st.session_state["stock_id"] = sid
-            st.session_state["page"] = "名片"
-            st.rerun()
+            navigate_to(page="名片", stock_id=sid)
 
     # 我的關注快捷入口
     st.markdown("---")
     if st.button("📋 我的關注", key="sidebar_watchlist", use_container_width=True):
-        st.session_state["page"] = "我的關注"
-        st.rerun()
+        navigate_to(page="我的關注")
 
     # M5: 事件儀表板快捷入口
     if st.button("🔔 事件儀表板", key="sidebar_events", use_container_width=True):
-        st.session_state["page"] = "事件儀表板"
-        st.rerun()
+        navigate_to(page="事件儀表板")
 
     st.markdown("---")
     st.markdown("""

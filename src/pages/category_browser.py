@@ -6,6 +6,7 @@
 import streamlit as st
 import pandas as pd
 from src.data.finmind_client import FinMindClient
+from src.pages.url_sync import navigate_to
 
 
 def _render_category_browser(client: FinMindClient):
@@ -108,9 +109,7 @@ def _render_top_stocks_by_value(client: FinMindClient, all_stock_info: pd.DataFr
         cols[3].markdown(row["industry"])
         cols[4].markdown(row["成交金額"])
         if cols[5].button("查看", key=f"val_{row['stock_id']}", use_container_width=True):
-            st.session_state["stock_id"] = row["stock_id"]
-            st.session_state["page"] = "名片"
-            st.rerun()
+            navigate_to(page="名片", stock_id=row["stock_id"])
 
 
 # ════════════════════════════════════════════════════════════
@@ -186,9 +185,7 @@ def _render_industry_browser(all_stock_info: pd.DataFrame):
                         key=f"ind_{row['stock_id']}",
                         use_container_width=True,
                     ):
-                        st.session_state["stock_id"] = row["stock_id"]
-                        st.session_state["page"] = "名片"
-                        st.rerun()
+                        navigate_to(page="名片", stock_id=row["stock_id"])
 
 
 # ════════════════════════════════════════════════════════════
@@ -248,9 +245,7 @@ def _render_hot_stocks_by_volume(client: FinMindClient, all_stock_info: pd.DataF
         cols[3].markdown(row["industry"])
         cols[4].markdown(row["成交量"])
         if cols[5].button("查看", key=f"vol_{row['stock_id']}", use_container_width=True):
-            st.session_state["stock_id"] = row["stock_id"]
-            st.session_state["page"] = "名片"
-            st.rerun()
+            navigate_to(page="名片", stock_id=row["stock_id"])
 
 
 # ════════════════════════════════════════════════════════════
