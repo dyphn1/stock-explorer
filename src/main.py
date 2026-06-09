@@ -19,7 +19,7 @@ st.set_page_config(
     page_title="股識 Stock Explorer",
     page_icon="📊",
     layout="wide",
-    initial_sidebar_state="auto",
+    initial_sidebar_state="expanded",
 )
 
 # ── 自定義 CSS（PPT 風格）────────────────────────────
@@ -65,12 +65,26 @@ st.markdown("""
             padding: 0.5rem 0.5rem !important;
         }
     }
+
+    /* Sidebar: ensure collapse toggle is always visible and clickable */
+    section[data-testid="stSidebar"] {
+        overflow-x: visible !important;
+    }
+    section[data-testid="stSidebar"] > div:first-child {
+        overflow-x: visible !important;
+    }
+    /* Style the collapse toggle button */
+    button[kind="header"] {
+        z-index: 999 !important;
+        position: relative !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 
 # ── 初始化 ────────────────────────────────────────────
 from src.pages.url_sync import sync_url_to_session, navigate_to
+from src.data.finmind_client import get_rate_limit_status
 
 # Sync URL ↔ session_state (browser back/forward support)
 sync_url_to_session()
@@ -83,30 +97,10 @@ def get_client():
 
 client = get_client()
 
-# ── Rate Limit 狀態指示 ──────────────────────────────
-from src.data.finmind_client import get_rate_limit_status
-_rate_status = get_rate_limit_status()
-if _rate_status["is_limited"]:
-    st.sidebar.warning("⚠️ FinMind API 暫時受限，資料可能不完整。請稍後再試。")
+# ── 側邊欄 ──────────────────────────────────────────────
 
-# ── 側邊欄：搜尋 ──────────────────────────────────────
-
-with st.sidebar:
-    st.markdown("## 🔍 股識")
-    st.markdown("*認識一家公司，從這裡開始*")
-    st.markdown("---")
-
-    # 搜尋框
-    search_input = st.text_input(
-        "輸入股票代號或名稱",
-        placeholder="例如：2330 或 台積電",
-        label_visibility="collapsed"
-    )
-
-    st.markdown("---")
-    st.markdown("### 📈 熱門股票")
-
-    # 熱門股票
+def _render_sidebar_hot_stocks(client):
+    """Render hot stocks section with collapsible behavior."""
     hot_stocks = [
         ("2330", "台積電"),
         ("2317", "鴻海"),
@@ -117,14 +111,12 @@ with st.sidebar:
         ("2002", "中鋼"),
         ("1301", "台塑"),
     ]
-
     for sid, name in hot_stocks:
-        if st.button(f"{sid} {name}", key=f"hot_{sid}", use_container_width=True):
+        if st.button(f"{sid} {name}", key=f"sidebar_hot_{sid}", use_container_width=True):
             navigate_to(page="名片", stock_id=sid)
 
-    st.markdown("---")
-    st.markdown("### 🏷️ 熱門 ETF")
-
+def _render_sidebar_hot_etfs(client):
+    """Render hot ETFs section."""
     hot_etfs = [
         ("0050", "元大台灣50"),
         ("0056", "元大高股息"),
@@ -132,21 +124,57 @@ with st.sidebar:
         ("00919", "群益台灣精選高息"),
         ("006208", "富邦台50"),
     ]
-
     for sid, name in hot_etfs:
-        if st.button(f"{sid} {name}", key=f"etf_{sid}", use_container_width=True):
+        if st.button(f"{sid} {name}", key=f"sidebar_etf_{sid}", use_container_width=True):
             navigate_to(page="名片", stock_id=sid)
 
-    # 我的關注快捷入口
+def _render_sidebar(client):
+    """Main sidebar rendering function."""
+    st.markdown("## 🔍 股識")
+    st.markdown("*認識一家公司，從這裡開始*")
     st.markdown("---")
-    if st.button("📋 我的關注", key="sidebar_watchlist", use_container_width=True):
-        navigate_to(page="我的關注")
 
-    # M5: 事件儀表板快捷入口
-    if st.button("🔔 事件儀表板", key="sidebar_events", use_container_width=True):
-        navigate_to(page="事件儀表板")
+    # Search box
+    search_input = st.text_input(
+        "搜尋股票",
+        placeholder="例如：2330 或 台積電",
+        label_visibility="collapsed",
+        key="sidebar_search",
+    )
+
+    # Rate limit banner
+    _rate_status = get_rate_limit_status()
+    if _rate_status["is_limited"]:
+        st.warning("⚠️ FinMind API 暫時受限，資料可能不完整。請稍後再試。")
 
     st.markdown("---")
+
+    # Primary navigation
+    st.markdown("### 頁面導航")
+    nav_items = [
+        ("📊", "名片", "sidebar_nav_home"),
+        ("📈", "分類瀏覽", "sidebar_nav_category"),
+        ("🏷️", "ETF 專區", "sidebar_nav_etf"),
+        ("📋", "我的關注", "sidebar_nav_watchlist"),
+        ("🔔", "事件儀表板", "sidebar_nav_events"),
+    ]
+    for icon, label, key in nav_items:
+        if st.button(f"{icon} {label}", key=key, use_container_width=True):
+            navigate_to(page=label)
+
+    st.markdown("---")
+
+    # Hot stocks (collapsible)
+    with st.expander("🔥 熱門股票", expanded=False):
+        _render_sidebar_hot_stocks(client)
+
+    # Hot ETFs (collapsible)
+    with st.expander("🏷️ 熱門 ETF", expanded=False):
+        _render_sidebar_hot_etfs(client)
+
+    st.markdown("---")
+
+    # Disclaimer
     st.markdown("""
     <div class="disclaimer">
     ⚠️ 本工具僅供認識公司使用，<br>
@@ -154,6 +182,11 @@ with st.sidebar:
     投資有風險，請自行評估。
     </div>
     """, unsafe_allow_html=True)
+
+    return search_input
+
+
+search_input = _render_sidebar(client)
 
 
 # ── 主內容 ────────────────────────────────────────────
