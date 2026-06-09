@@ -3,7 +3,7 @@ ROE 計算服務
 支援 TTM（近四季）計算，處理季節性產業
 """
 
-import pandas as pd
+from src.pages._router_base import _find_value
 
 SEASONAL_INDUSTRIES = frozenset({
     "觀光餐旅",
@@ -20,22 +20,8 @@ def is_seasonal_industry(industry: str) -> bool:
     return industry in SEASONAL_INDUSTRIES
 
 
-def _find_value(df, keywords: list) -> float:
-    """從財務資料中根據關鍵字找值"""
-    for _, row in df.iterrows():
-        type_val = str(row.get("type", ""))
-        for kw in keywords:
-            if kw.lower() in type_val.lower():
-                val = row.get("value")
-                if pd.notna(val) and val != 0:
-                    return float(val)
-    return 0.0
-
-
 def calc_roe_ttm(financial_df, balance_sheet_df) -> dict | None:
     """
-    計算 TTM ROE = 最近4季淨利合計 / 平均股東權益
-
     Returns dict with keys: roe, method, quarters_used, ttm_net_income, avg_equity
     Returns None if data insufficient.
     """
