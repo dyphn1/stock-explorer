@@ -9,7 +9,7 @@ from src.data.finmind_client import FinMindClient
 
 
 def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
-    """載入一支股票的所有資料，回傳 dict"""
+    """載入一支股票的所有資料，回傳 dict。每個 API 獨立 try/except，部分失敗不影響其他資料。"""
     stock_info = client.get_stock_info(stock_id)
     if len(stock_info) == 0:
         return None
@@ -17,35 +17,67 @@ def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
     stock_name = stock_info.iloc[0]["stock_name"]
     industry = stock_info.iloc[0]["industry_category"]
 
-    latest_price = client.get_latest_price(stock_id)
-    latest_per_pbr = client.get_latest_per_pbr(stock_id)
-    monthly_revenue = client.get_monthly_revenue(stock_id)
-    daily_price = client.get_daily_price(stock_id)
-    financial = client.get_financial_statement(stock_id)
-    news = client.get_news(stock_id)
-    institutional = client.get_institutional_investors(stock_id)
-    balance_sheet = client.get_balance_sheet(stock_id)
-    cash_flow = client.get_cash_flow(stock_id)
-    dividend = client.get_dividend(stock_id)
-
-    extra_metrics = _calc_extra_metrics(financial, balance_sheet, monthly_revenue)
-
-    return {
+    data = {
         "stock_id": stock_id,
         "stock_name": stock_name,
         "industry": industry,
-        "latest_price": latest_price,
-        "latest_per_pbr": latest_per_pbr,
-        "monthly_revenue": monthly_revenue,
-        "daily_price": daily_price,
-        "financial": financial,
-        "news": news,
-        "institutional": institutional,
-        "balance_sheet": balance_sheet,
-        "cash_flow": cash_flow,
-        "dividend": dividend,
-        "extra_metrics": extra_metrics,
     }
+
+    try:
+        data["latest_price"] = client.get_latest_price(stock_id)
+    except Exception:
+        data["latest_price"] = None
+
+    try:
+        data["latest_per_pbr"] = client.get_latest_per_pbr(stock_id)
+    except Exception:
+        data["latest_per_pbr"] = None
+
+    try:
+        data["monthly_revenue"] = client.get_monthly_revenue(stock_id)
+    except Exception:
+        data["monthly_revenue"] = None
+
+    try:
+        data["daily_price"] = client.get_daily_price(stock_id)
+    except Exception:
+        data["daily_price"] = None
+
+    try:
+        data["financial"] = client.get_financial_statement(stock_id)
+    except Exception:
+        data["financial"] = None
+
+    try:
+        data["news"] = client.get_news(stock_id)
+    except Exception:
+        data["news"] = None
+
+    try:
+        data["institutional"] = client.get_institutional_investors(stock_id)
+    except Exception:
+        data["institutional"] = None
+
+    try:
+        data["balance_sheet"] = client.get_balance_sheet(stock_id)
+    except Exception:
+        data["balance_sheet"] = None
+
+    try:
+        data["cash_flow"] = client.get_cash_flow(stock_id)
+    except Exception:
+        data["cash_flow"] = None
+
+    try:
+        data["dividend"] = client.get_dividend(stock_id)
+    except Exception:
+        data["dividend"] = None
+
+    data["extra_metrics"] = _calc_extra_metrics(
+        data["financial"], data["balance_sheet"], data["monthly_revenue"]
+    )
+
+    return data
 
 
 def _calc_extra_metrics(financial_df, balance_sheet_df, monthly_revenue_df) -> dict:
