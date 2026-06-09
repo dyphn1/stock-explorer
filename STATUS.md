@@ -1,6 +1,6 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：P2 打磨衝刺 ✅ 進行中
+## 當前階段：P2 打磨衝刺 ✅ 完成 → 等待 Daniel 最終 UI 驗證
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -333,9 +333,29 @@ config/
 | stock-explorer-dev-cycle | 每 2 小時 | 主開發循環：讀取進度→分派任務→更新狀態 |
 | stock-explorer-visual-verify | 每 4 小時 | 視覺化驗證：啟動 Streamlit→截圖→記錄 |
 
-## Next Steps
+### Next Steps
 
-### ✅ P0 Bug Fixes — COMPLETED (2026-06-09)
+#### ✅ All P0/P1/P2 Fixes — COMPLETED (2026-06-09)
+
+All 18 issues from the DESIGN_REVIEW consolidated roadmap are resolved:
+- 4 P0 fixes (crash, API abuse, cache, race conditions)
+- 9 P1 fixes (ROE TTM, loading spinner, ETF classification, watchlist feedback, rate limit UI, search, timeline, peer comparison, chart fallbacks)
+- 5 P2 fixes (browser back, responsive layout, dark mode contrast, cache LRU, column access)
+
+#### ⏳ Awaiting Daniel's Input
+
+1. **Seasonal industry list** — Which industries should trigger the ROE seasonal warning? (Default: 觀光餐旅, 農漁業, 零售, 半導體)
+2. **ETF classification severity** — Upgrade to P0 or keep as P1?
+
+#### 🔮 Post-MVP Candidates (not yet planned)
+
+- Layer 2 Playwright interaction tests (`_verify_layer2.py`)
+- Layer 3 visual QA with screenshot analysis
+- Multi-language support (English UI)
+- Export to PDF/PPT
+- User accounts (replace YAML watchlist with database)
+
+---
 
 | # | Issue | Fix | Commit |
 |---|-------|-----|--------|
@@ -358,24 +378,24 @@ config/
 || 8 | Peer comparison dead-end for non-benchmark stocks | Medium | ✅ Done | `a6dd78f` ||
 || 9 | Single-period data shows empty charts | Medium | ✅ Done | `a6dd78f` ||
 
-### Current Sprint: P2 Polish
+### Current Sprint: P2 Polish — ✅ ALL COMPLETE (2026-06-09)
 
 Per `docs/DESIGN_REVIEW.md` consolidated roadmap:
 
-|| # | Issue | Effort | Status | Priority ||
-||---|-------|--------|--------|--------||
-||| 1 | Browser back button doesn't work (st.query_params) | High | ✅ Done | P2 || `af59018` ||
-||| 2 | Layout breaks on small screens (CSS media queries + st.tabs) | High | ✅ Done | P2 || — ||
-||| 3 | Dark mode chart label contrast (shared CHART_TEMPLATE) | Medium | ✅ Done | P2 || `cf27a4c` ||
-|| 4 | Cache directory grows unbounded (LRU eviction) | Low | ✅ Done | P2 || `cf27a4c` ||
-|| 5 | Fragile column name access in event detection | Medium | ✅ Done | P2 || `8d3ba2b` ||
+| # | Issue | Effort | Status | Priority | Commit |
+|---|-------|--------|--------|----------|--------|
+| 1 | Browser back button doesn't work (st.query_params) | High | ✅ Done | P2 | `af59018` |
+| 2 | Layout breaks on small screens (responsive CSS + st.radio) | High | ✅ Done | P2 | `ba7b378` |
+| 3 | Dark mode chart label contrast (shared CHART_TEMPLATE) | Medium | ✅ Done | P2 | `cf27a4c` |
+| 4 | Cache directory grows unbounded (LRU eviction) | Low | ✅ Done | P2 | `cf27a4c` |
+| 5 | Fragile column name access in event detection | Medium | ✅ Done | P2 | `8d3ba2b` |
 
-### Pending Daniel Confirmation (3 items)
+### Pending Daniel Confirmation (2 items unresolved)
 
 See `docs/PENDING_REVIEW.md` for details:
-1. Navbar: 9-button row vs `st.tabs()`?
-2. Seasonal industry list for ROE note
-3. ETF classification severity (P0 or P1?)
+1. ✅ Navbar: 9-button row vs `st.tabs()`? → **RESOLVED**: `st.radio(horizontal=True)`
+2. ⏳ Seasonal industry list for ROE note — needs Daniel's input
+3. ⏳ ETF classification severity (P0 or P1?) — needs Daniel's input
 
 ---
 
@@ -392,6 +412,8 @@ See `docs/PENDING_REVIEW.md` for details:
 | 2026-06-08 23:30 | ✅ 無新 Bug | ✅ 無未完成任務 | — | 全局反思完成，等待 Daniel UI 驗證 |
 || 2026-06-09 01:41 | ✅ 50/50 (L0) | ✅ 18/18 (L1) | — | P0 全部修復完成，Layer 0 + Layer 1 全綠 |
 ||| 2026-06-09 (P2) | ✅ 51/51 (L0) | ✅ 18/18 (L1) | — | P2-3 + P2-4 完成，L0+L1 全綠 ||
-||| 2026-06-09 (P2-1) | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | P2-1 瀏覽器返回按鈕完成，L0+L1 全綠 ||
+| 2026-06-09 (P2-1) | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | P2-1 瀏覽器返回按鈕完成，L0+L1 全綠 |
+| 2026-06-09 (P2-2) | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | P2-2 響應式佈局完成，L0+L1 全綠 |
+| 2026-06-09 11:09 | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | P2 全綠驗證，所有 P0/P1/P2 修復完成 |
 
-*最後更新：2026-06-09*
+*最後更新：2026-06-09 11:09*
