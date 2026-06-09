@@ -81,6 +81,9 @@ st.markdown("""
     /* Hide Streamlit's auto-generated page nav in sidebar */
     section[data-testid="stSidebarNav"] {
         display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        overflow: hidden !important;
     }
     /* Ensure search input text is visible */
     section[data-testid="stSidebar"] input[type="text"] {
@@ -91,6 +94,18 @@ st.markdown("""
         opacity: 1 !important;
     }
 </style>
+
+<script>
+// Force-hide Streamlit's auto-generated sidebar nav
+(function() {
+    var nav = document.querySelector('section[data-testid="stSidebarNav"]');
+    if (nav) {
+        nav.style.display = 'none';
+        nav.style.height = '0';
+        nav.style.overflow = 'hidden';
+    }
+})();
+</script>
 """, unsafe_allow_html=True)
 
 

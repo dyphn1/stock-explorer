@@ -1,8 +1,8 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：P2 打磨衝刺 ✅ 完成 → 🔍 檢討輪次（競品研究）
+## 當前階段：🔍 檢討輪次（競品研究）✅ 完成
 
-## 本輪主題：🔍 檢討 — 競品研究與技術債審查（2026-06-09）
+## 本輪主題：🔍 檢討 — 競品研究與技術債審查（2026-06-09）✅
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -262,6 +262,19 @@
 - Layer 0 + Layer 1 全綠（52/52 + 18/18）
 - 解決 PENDING_REVIEW #1：使用 `st.radio` 而非 `st.tabs()`（保留雙向頁面同步）
 
+### 2026-06-09（🔍 檢討 — 競品研究與技術債審查）
+- **QA Engineer 競品研究**：完成 6 大競品分析（財報狗、GoodInfo、CMoney、玩股網、FinMind、延伸競品）
+  - 產出 `docs/COMPETITOR_RESEARCH.md`（619 行）
+  - 10 項新功能靈感寫入 `docs/ISSUES.md`（3 P0 + 4 P1 + 3 P2）
+  - 最大功能缺口：除權息資訊、推播通知系統、多清單 Watchlist
+  - Stock Explorer 獨特優勢：PPT 風格教育體驗、自適應分析框架、白話解釋引擎
+- **Architect 技術債審查**：完成全程式碼審查
+  - 產出 `docs/TECH_DEBT.md`（364 行）
+  - 19 項技術債項目，6 大類別
+  - 最嚴重：4+ 檔案重複 card helpers、10 次序列 API 呼叫、YAML 無法擴展
+  - 建議立即處理：2h（移除重複 code + 加入部分資料渲染）
+- Layer 0 + Layer 1 全綠（52/52 + 18/18）
+
 ## 架構總覽
 ### 目錄結構
 ```
@@ -335,27 +348,44 @@ config/
 | stock-explorer-dev-cycle | 每 2 小時 | 主開發循環：讀取進度→分派任務→更新狀態 |
 | stock-explorer-visual-verify | 每 4 小時 | 視覺化驗證：啟動 Streamlit→截圖→記錄 |
 
+### 2026-06-09（競品研究）
+- **QA Engineer 競品研究完成**：分析 6 個台股資訊平台 + 4 個延伸競品
+  - 財報狗：數據密集+白話解釋改善中，有 Line Notify
+  - GoodInfo：傳統入口網站，免費+廣告，除權息完整
+  - CMoney：App 生態系強大，AI 選股，CMoney 付費方案成熟
+  - 玩股網：全球股市地圖、股市溫度計、PPT 匯出
+  - FinMind：API/資料供應商，非直接競爭
+  - 延伸競品：Yahoo 奇摩、鉅亨網、TEJ、JZ Invest
+- **新功能靈感 10 項**寫入 docs/ISSUE.md（3 P0 + 4 P1 + 3 P2）
+- **關鍵發現**：最大缺口為除權息資訊、推播通知、多清單 Watchlist
+- **戰略建議**：不與競品競爭即時數據/選股工具，全力發展教育差異化
+- 寫入 `docs/COMPETITOR_RESEARCH.md`（619 行）
+- 寫入 `docs/ISSUES.md`（219 行，10 個新功能項目）
+
 ### Next Steps
 
 #### ✅ All P0/P1/P2 Fixes — COMPLETED (2026-06-09)
+#### ✅ Competitor Research — COMPLETED (2026-06-09)
+#### ✅ Tech Debt Audit — COMPLETED (2026-06-09)
 
-All 18 issues from the DESIGN_REVIEW consolidated roadmap are resolved:
-- 4 P0 fixes (crash, API abuse, cache, race conditions)
-- 9 P1 fixes (ROE TTM, loading spinner, ETF classification, watchlist feedback, rate limit UI, search, timeline, peer comparison, chart fallbacks)
-- 5 P2 fixes (browser back, responsive layout, dark mode contrast, cache LRU, column access)
+#### ⏳ New Feature Candidates (from competitor research, pending Daniel's review)
+
+See `docs/ISSUES.md` for 10 new items labeled 來源: 競品研究:
+- **P0**: 除權息行事曆, 推播通知系統, 多 Watchlist 清單
+- **P1**: 市場溫度計, Portfolio 損益管理, PPT 自動生成, 自訂事件門檻
+- **P2**: 影音教學, 美股支援, 全球市場地圖
 
 #### ⏳ Awaiting Daniel's Input
 
 1. **Seasonal industry list** — Which industries should trigger the ROE seasonal warning? (Default: 觀光餐旅, 農漁業, 零售, 半導體)
 2. **ETF classification severity** — Upgrade to P0 or keep as P1?
+3. **New feature prioritization** — Review 10 competitor-research features in `docs/ISSUES.md`
 
-#### 🔮 Post-MVP Candidates (not yet planned)
+#### 🔮 Tech Debt (documented in docs/TECH_DEBT.md)
 
-- Layer 2 Playwright interaction tests (`_verify_layer2.py`)
-- Layer 3 visual QA with screenshot analysis
-- Multi-language support (English UI)
-- Export to PDF/PPT
-- User accounts (replace YAML watchlist with database)
+- Immediate (2h): Remove duplicated card helpers, add partial data rendering
+- Short-term (13h): Parallel API calls, input validation, debounce guards
+- Medium-term (12h): Database-backed storage, unit tests, dependency cleanup
 
 ---
 
@@ -420,6 +450,7 @@ See `docs/PENDING_REVIEW.md` for details:
 || 2026-06-09 13:13 | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸 ||
 || 2026-06-09 15:15 | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸 ||
 | 2026-06-09 17:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸，等待 Daniel 決策 |
-| 2026-06-09 19:23 | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸，等待 Daniel 決策 |
+|| 2026-06-09 19:23 | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸，等待 Daniel 決策 |
+|| 2026-06-09 21:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | 🔍 檢討輪次：競品研究+技術債審查完成 |
 
-*最後更新：2026-06-09 19:23*
+*最後更新：2026-06-09 21:xx*

@@ -1,148 +1,219 @@
-# 股識 Stock Explorer — 問題追蹤
+# Stock Explorer — 問題與功能追蹤
+
+> 所有需要追蹤的 bug、功能請求、設計決策都記錄在此。
+> 每個項目標註來源和優先級。
 
 ---
 
-## ISSUE-001: 關注頁面缺少價格提醒設定 UI
+## 格式說明
 
-**發現日期**：2026-06-07
-**嚴重度**：🟡 中
-**狀態**：✅ 已修復（2026-06-07）
-**模組**：`src/pages/watchlist_page.py`、`src/services/watchlist.py`
-
-**描述**：
-Watchlist YAML 結構已支援 `alert_above` / `alert_below` 欄位，但關注頁面未提供任何 UI 讓使用者設定價格提醒。
-
-**已修復**：
-- `watchlist_page.py`：在每列新增「🔔 設定提醒」按鈕，使用 `st.popover` 提供上限/下限價格輸入
-- `watchlist.py`：新增 `update_alerts(stock_id, alert_above, alert_below)` 函數
-- 支援清除提醒（設為 None）
-
-**驗證**：語法与匯入測試通過 ✅、邏輯單元測試通過 ✅
+```
+### [編號] 簡短標題
+- **來源：** 競品研究 / Bug Report / Design Review / PM 決策
+- **優先級：** P0 / P1 / P2
+- **狀態：** 📋 待辦 / 🔄 進行中 / ✅ 完成 / ❌ 取消
+- **說明：** 詳細描述
+- **相關檔案：** 影響的程式碼檔案
+```
 
 ---
 
-## ISSUE-002: ETF 自動分類關鍵字可能不完整
-
-**發現日期**：2026-06-07
-**嚴重度**：🟢 低
-**狀態**：✅ 已改善（2026-06-07）
-**模組**：`src/pages/etf_browser.py` L183-215
-
-**描述**：
-ETF 分類使用 `ETF_CATEGORY_KEYWORDS` 字典匹配股票名稱關鍵字，原本關鍵字較少。
-
-**已改善**：
-- 擴展關鍵字列表，加入精確匹配（ETF 全名前綴）和一般關鍵字
-- 市值型：加入「元大台灣50」「富邦台50」等精確匹配
-- 高股息型：加入「元大高股息」「國泰永續」「國泰高股息」等 12 個精確匹配
-- 債券型：加入 8 檔熱門美債 ETF 精確匹配
-- 主題型：加入 AI / 半導體 / 生技等熱門主題精確匹配，擴展「網安」「資安」「太空」「元宇宙」等關鍵字
-- 分類優先順序：先精確匹配後通用關鍵字
-
-**驗證**：`_classify_etf()` 單元測試通過 ✅
+## 🔴 P0 — 必須修復/實作
 
 ---
 
-## ISSUE-003: ETF 關注自動判斷邏輯可能誤判
-
-**發現日期**：2026-06-07
-**嚴重度**：🟢 低
-**狀態**：✅ 已改善（2026-06-07）
-**模組**：`src/services/watchlist.py`
-
-**描述**：
-`_is_etf()` 原本僅使用 `stock_id.startswith("00") and len(stock_id) == 4` 判斷，可能誤判。
-
-**已改善**：
-- 新增可選參數 `industry_category`，優先使用 FinMind API 資料（與 router.py 邏輯一致）
-- 擴展名稱匹配關鍵字：加入「高息」「債券」「AI」「ESG」「杠杆」「反向」等
-- 三層判斷順序：① industry_category → ② 名稱關鍵字 → ③ stock_id 模式（最後手段）
-
-**驗證**：`_is_etf()` 單元測試通過 ✅（5 個測試案例）
-
----
-
-## ISSUE-004: 大量 ETF 首次載入效能問題
-
-**發現日期**：2026-06-07
-**嚴重度**：🟡 中
-**狀態**：✅ 已修復（2026-06-07）
-**模組**：`src/pages/etf_browser.py`
-
-**描述**：
-ETF 瀏覽頁的三個子頁面各自遍歷全部 ETF 取得資料，即使有快取，首次載入仍需大量重複請求。
-
-**已修復**：
-- 新增 `_cached_get_stock_info()` 函式（`@st.cache_data(ttl=3600)`）快取股票清單
-- 新增 `_get_all_etf_prices()` 函式（`@st.cache_data(ttl=3600)`），一次性取得所有 ETF 價格並快取
-- 三個子頁面共用同一份快取的 price_df，切換子頁面時無需重新 fetch
-- 配息排行仍單獨取得股利資料（無共用快取可能），但價格部分已使用快取
-
-**效能改善**：
-- 修改前：3 個子頁面 × ~500 檔 ETF = ~1,500 次獨立的 get_daily_price 遍歷
-- 修改後：1 次遍歷取得所有價格，切換子頁面幾乎瞬間完成
-
-**驗證**：語法檢查通過 ✅、匯入測試通過 ✅
+### [ISSUE-C01] 除權息行事曆
+- **來源：** 競品研究
+- **優先級：** P0
+- **狀態：** 📋 待辦
+- **說明：**
+  - GoodInfo、財報狗都有完整的除權息資訊
+  - 新手最常問的問題之一：「台積電什麼時候配息、配多少？」
+  - 目前 Stock Explorer 完全無法回答這個問題
+  - 建議在名片頁新增「配息資訊」區塊
+- **建議實作：**
+  - 近 5 年除權息日程（除息日、除權日）
+  - 歷年股利（現金股利、股票股利）
+  - 白話說明（如：「過去 5 年，台積電每季配息約 2.75 元」）
+  - 預估殖利率（以目前股價計算）
+- **資料可行性：** FinMind 有 `TaiwanStockDividend` API
+- **相關檔案：** `src/pages/business_card.py`
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 A
 
 ---
 
-## ISSUE-005: 無法進行瀏覽器截圖驗證
-
-**發現日期**：2026-06-07
-**嚴重度**：🟡 中
-**狀態**：✅ 已解決（2026-06-07 第二輪驗證）
-**模組**：驗證流程
-
-**描述**：
-第一輪驗證因終端環境問題，無法啟動 Streamlit 服務進行實際 UI 截圖。
-
-**已解決**：
-- 第二輪驗證（2026-06-07 15:30）成功啟動 Streamlit（headless mode, port 8501）
-- HTTP 200 回應確認服務正常
-- 進程穩定運行超過 135 秒
-- 注意：browser 工具在 cron 環境中不可用，無法進行截圖，但 Streamlit 啟動驗證已通過
-
-**仍待 Daniel 手動 UI 驗證**：
-1. 側邊欄 → 「🔔 事件儀表板」按鈕是否正確導向
-2. 事件儀表板 → 空狀態是否正常顯示（尚未有事件記錄時）
-3. 股票頁面 → 集團型公司是否顯示「集團分析」框架橫幅
-4. 股票頁面 → 資料新鮮度詳情是否可展開
-5. M4 驗證（ETF 專區、我的關注、價格提醒 UI）
+### [ISSUE-C02] 推播通知系統
+- **來源：** 競品研究
+- **優先級：** P0
+- **狀態：** 📋 待辦
+- **說明：**
+  - 財報狗有 Line Notify；CMoney 有 App Push
+  - 事件偵測引擎已經有資料，但無法主動通知用戶
+  - 第一階段：email 通知（成本低）
+  - 第二階段：Line Notify（需要 Bot 帳號）
+- **建議實作：**
+  - 營收異動 ±30%
+  - 股價異動 ±7%
+  - 使用者自訂通知條件
+- **技術：** Background worker + SMTP（第一階段）
+- **相關檔案：** `src/services/adaptive_engine.py`、新增 `src/services/notifier.py`
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 B
 
 ---
 
-## M5 驗證摘要（2026-06-07）
-
-**驗證報告 #2 結論**：
-- ✅ Import 驗證通過（`load_and_render_page` 匯入成功）
-- ✅ Streamlit 啟動驗證通過（HTTP 200, headless mode）
-- ✅ 所有 M5 模組代碼審查通過（adaptive_engine.py + event_dashboard.py + router.py）
-- ✅ 9 個頁面全部註冊
-- ✅ 無新 Bug 發現
-- ⚠️ 無法進行瀏覽器截圖（browser 工具不可用），需 Daniel 手動確認 UI
-
----
-
-## ISSUE-006: Streamlit 啟動時 src.xxx 絕對 import 全部失敗
-
-**發現日期**：2026-06-08
-**嚴重度**：🔴 高
-**狀態**：✅ 已修復（2026-06-08）
-**模組**：`src/main.py`
-
-**描述**：
-當 Streamlit 以 `src/main.py` 作為入口時，Python 會將 `src/` 目錄加入 `sys.path` 而非專案根目錄，導致所有 `from src.xxx` 絕對 import 失敗（`ModuleNotFoundError: No module named 'src'`）。
-Gate 1（import 檢查）通過是因為 `uv run python -c "import src.xxx"` 會自動將 cwd 加入 path，但 Gate 2（Streamlit 啟動 + 頁面渲染）全部 10 個頁面都失敗。
-
-**已修復**：
-- 在 `main.py` 頂部加入 `sys.path` 設定：使用 `Path(__file__).resolve().parent.parent` 取得專案根目錄，插入 `sys.path[0]`
-- 確保所有 `from src.xxx` import 在 Streamlit 啟動時能正確解析
-
-**驗證**：
-- Gate 1: 22 模組 import ✅
-- Gate 2: 11 頁面全部渲染無 stException ✅
-- Gate 3: 主頁歡迎文字 + 側邊欄導航 + 搜尋框 ✅
+### [ISSUE-C03] 多 Watchlist 清單
+- **來源：** 競品研究
+- **優先級：** P0
+- **狀態：** 📋 待辦
+- **說明：**
+  - Yahoo Finance、財報狗都支援多個 watchlist
+  - 目前只有一個「我的關注」清單，缺乏分類管理能力
+  - 使用者需要分別追蹤「存股標的」「觀察名單」「高殖利率」等
+- **建議實作：**
+  - watchlist.yaml 重構为 `lists` 結構
+  - watchlist_page.py 改為多標籤分頁
+  - 名片页加入「加入哪個清單」選擇器
+- **相關檔案：** `config/watchlist.yaml`、`src/services/watchlist.py`、`src/pages/watchlist_page.py`
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 C
 
 ---
 
-*最後更新：2026-06-08 07:08*
+## 🟡 P1 — 重要但非關鍵
+
+---
+
+### [ISSUE-C04] 市場溫度計
+- **來源：** 競品研究
+- **優先級：** P1
+- **狀態：** 📋 待辦
+- **說明：**
+  - 玩股網有「股市溫度計」；CMoney 有市場情緒指標
+  - 新手想知道「現在市場是熱還是冷？」
+  - 建議在主頁或事件儀表板加入市場溫度指示器
+- **建議實作：**
+  - 三大法人買賣超（5 日均值）
+  - 大盤成交量（熱 vs 冷）
+  - 漲停/跌停家數比
+  - 呈現：體感溫度（🔥熱/😊正常/🥶冷）+ 白話說明
+- **資料可行性：** FinMind 有 `TaiwanStockInstitutionalInvestorsBuySell`
+- **相關檔案：** `src/pages/event_dashboard.py`、新增 `src/services/market_thermal.py`
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 D
+
+---
+
+### [ISSUE-C05] Portfolio 損益管理
+- **來源：** 競品研究
+- **優先級：** P1
+- **狀態：** 📋 待辦
+- **說明：**
+  - CMoney 有完整的 Portfolio 管理功能
+  - 目前 Watchlist 只有價格提醒，沒有持倉損益管理
+  - Watchlist 進化为 Portfolio：加入成本價、持有數量
+- **建議實作：**
+  - 每股成本價、持有數量
+  - 未實現損益（即時）
+  - 已實現損益（歷史交易）
+  - 組合總報酬率
+- **相關檔案：** `config/watchlist.yaml`、`src/services/watchlist.py`、`src/pages/watchlist_page.py`
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 E
+
+---
+
+### [ISSUE-C06] 個股分析 PPT 自動生成
+- **來源：** 競品研究
+- **優先級：** P1
+- **狀態：** 📋 待辦
+- **說明：**
+  - 玩股網有一鍵生成分析簡報功能
+  - Stock Explorer 已有 PPT 風格 CSS，可直接用 python-pptx 生成真正的 PPT
+  - 差異化：Stock Explorer 的 PPT 風格比玩股網更精美、更有教育性
+- **建議實作：**
+  - 每頁加入「下載 PPT」按鈕
+  - 包含：公司名片、營運健檢重點、財務體質摘要、同業比較雷達圖
+  - 使用 python-pptx + 各頁面爬取資料
+- **技術：** `python-pptx` 庫
+- **相關檔案：** 所有頁面模組
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 F
+
+---
+
+### [ISSUE-C07] 用戶自訂事件門檻
+- **來源：** 競品研究
+- **優先級：** P1
+- **狀態：** 📋 待辦
+- **說明：**
+  - 延伸自 M5 事件偵測引擎
+  - 目前使用固定閾值（營收±30%、股價±7%）
+  - 允許用戶自訂敏感度和事件類型
+- **建議實作：**
+  - 使用者調整敏感度
+  - 新增事件類型（法人買賣超連續 N 天、營收連 N 月衰退）
+  - 新增加定頁面
+- **相關檔案：** `src/services/adaptive_engine.py`、新增設定頁面
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 G
+
+---
+
+## 🟢 P2 — 加分功能/未來考慮
+
+---
+
+### [ISSUE-C08] 影音教學
+- **來源：** 競品研究
+- **優先級：** P2
+- **狀態：** 📋 待辦
+- **說明：**
+  - CMoney 有大量投資教學影片
+  - 每個指標下方可以嵌入 30 秒白話解釋影片
+  - 製作成本高，建議 M5 後人工製作或嵌入現有 YouTube 資源
+- **相關檔案：** 所有頁面模組
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 H
+
+---
+
+### [ISSUE-C09] 美股支援
+- **來源：** 競品研究
+- **優先級：** P2
+- **狀態：** 📋 待辦
+- **說明：**
+  - 財報狗支援美股 500+ 公司
+  - FinMind 已有美股資料
+  - 目標：已熟悉台股分析架構、想延伸到美股的使用者
+  - **需 Daniel 確認是否要支援美股**
+- **相關檔案：** 所有頁面模組
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 I
+
+---
+
+### [ISSUE-C10] 全球市場地圖
+- **來源：** 競品研究
+- **優先級：** P2
+- **狀態：** 📋 待辦
+- **說明：**
+  - 玩股網有全球股市地圖
+  - Stock Explorer 版本可偏「基本面理解」而非「交易熱度」
+  - 呈現：🟢上涨 🔴下跌 ↔️持平 + 白話說明各市場狀態
+- **相關檔案：** 新増頁面
+- **參考資料：** `docs/COMPETITOR_RESEARCH.md` — 靈感 J
+
+---
+
+## 📊 統計
+
+| 狀態 | 數量 |
+|------|------|
+| 📋 待辦 | 10 |
+| 🔄 進行中 | 0 |
+| ✅ 完成 | 0 |
+| ❌ 取消 | 0 |
+
+| 優先級 | 數量 |
+|---------|------|
+| P0 | 3 |
+| P1 | 4 |
+| P2 | 3 |
+
+---
+
+*最後更新：2026-06-09（競品研究輪次）*
+*新功能來源：docs/COMPETITOR_RESEARCH.md 競品研究報告*
