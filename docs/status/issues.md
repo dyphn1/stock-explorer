@@ -61,7 +61,12 @@
 ### [ISSUE-C03] Multiple Watchlist Lists
 - **Source:** Competitor research
 - **Priority:** P0
-- **Status:** 📋 Todo
+- **Status:** ✅ Done
+- **Description:** (Resolved 2026-06-10)
+  - Multi-watchlist system implemented with full CRUD operations
+  - `watchlist.py` supports multiple named lists
+  - `watchlist_page.py` has multi-tab UI
+  - Business Card page has "Add to which list?" selector
 - **Description:**
   - Yahoo Finance and 財報狗 both support multiple watchlists
   - Currently there is only one "My Watchlist" with no categorization capability
@@ -273,22 +278,136 @@
 
 ---
 
+## 🔍 Review Round — 2026-06-10 (Review Theme)
+
+### Process Summary
+- **Architect** reviewed all remaining 13 tech debt items (down from 19), verified 9 previously "done" items against source code, identified 3 new items
+- **Design Reviewer** audited all 9 pages against design_system.md, found 26 new design issues across 7 categories
+- **Developer** estimated costs for 35 items totaling ~103.4 hours
+- **QA Research**: Web research timed out — using existing competitor data from 2026-06-09 round
+
+### New Technical Debt Items (from Architect)
+
+#### [ISSUE-TD-NewA01] Timeline Constants Duplicated
+- **Source:** Architect tech debt review (2026-06-10)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:** `_TIMELINE_DAYS` in `_router_base.py` and `_TIMELINE_OPTIONS` in `timeline_controls.py` define the same mapping. Risk of divergence.
+- **Effort:** 10 minutes
+- **Related files:** `src/pages/_router_base.py`, `src/pages/timeline_controls.py`
+
+#### [ISSUE-TD-B01] FinMindRateLimitError Silently Swallowed
+- **Source:** Architect tech debt review (2026-06-10)
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:** `FinMindRateLimitError` is raised in `finmind_client.py` but caught by the generic `except Exception` in `_fetch()` inner function. Users never see rate limit warnings.
+- **Effort:** 15 minutes
+- **Related files:** `src/pages/_router_base.py`, `src/data/finmind_client.py`
+
+#### [ISSUE-TD-E01] No Tests for Event Detection Algorithms
+- **Source:** Architect tech debt review (2026-06-10)
+- **Priority:** P0
+- **Status:** 📋 Todo
+- **Description:** Zero tests for `detect_revenue_event()`, `detect_price_abnormal()`, `detect_news_event()`, `check_data_freshness()`, `detect_company_type()`, `extract_dividend_summary()`, and `validate_stock_id()`. These are the core value-add algorithms.
+- **Effort:** 3 hours
+- **Related files:** `tests/test_business_logic.py`, `src/services/adaptive_engine.py`, `src/services/validation.py`
+
+### New Design Issues (from Design Reviewer)
+
+#### [ISSUE-DR-01] Color System Violations Across 6 Files
+- **Source:** Design comparison review (2026-06-10)
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:** 10+ instances of colors outside the design system palette: `#F39C12` (orange), `#2E86C1` (dark blue), `#1B4F72` (navy), `#8E44AD` (purple), `#2ECC71` (non-standard green). Affects: `financial_health.py`, `etf_browser.py`, `watchlist_page.py`, `chart.py`, `operation_checkup.py`.
+- **Effort:** 1 hour
+- **Related files:** 6 files
+
+#### [ISSUE-DR-02] st.cache_data in View Layer (Architecture Violation)
+- **Source:** Design comparison review (2026-06-10)
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:** `peer_comparison.py:51` and `etf_browser.py:12,18` use `@st.cache_data` in View layer, violating architecture Section 3.3.
+- **Effort:** 30 minutes
+- **Related files:** `src/pages/peer_comparison.py`, `src/pages/etf_browser.py`
+
+#### [ISSUE-DR-03] Financial Health Page Text-Heavy (PPT Style Violation)
+- **Source:** Design comparison review (2026-06-10)
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:** `financial_health.py` is the most text-heavy page — 4 sections with detailed explanations, significantly exceeding 200-char limit. Only 1 chart for 4 sections (chart proportion below 60%). Grade: C+.
+- **Effort:** 1.5 hours
+- **Related files:** `src/pages/financial_health.py`
+
+#### [ISSUE-DR-04] Component Inconsistency (Inline HTML vs Shared Components)
+- **Source:** Design comparison review (2026-06-10)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:** 4 pages use inline HTML cards instead of shared `_白话_card()` / `_info_card()`: `business_card.py`, `financial_health.py`, `watchlist_page.py`, `operation_checkup.py`.
+- **Effort:** 2 hours
+- **Related files:** 4 page files
+
+#### [ISSUE-DR-05] Responsive Column Layouts Still Break on Narrow Screens
+- **Source:** Design comparison review (2026-06-10)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:** 6-column layouts in `etf_browser.py` and `category_browser.py` overflow on narrow screens. P2-2 fixed the navbar but column layouts remain broken.
+- **Effort:** 1.5 hours
+- **Related files:** `src/pages/etf_browser.py`, `src/pages/category_browser.py`
+
+### Cost Estimation Summary (from Developer)
+
+| Group | Items | Hours |
+|-------|-------|-------|
+| A1. Immediate (This Week) | 5 quick wins | 1.3 hrs |
+| A2. Short-Term (Next 2 Weeks) | 6 items | 10.8 hrs |
+| A3. Medium-Term (Post-MVP) | 5 items | 11.0 hrs |
+| B. Design Improvements | 8 items | 8.3 hrs |
+| C. New Features | 6 features | 72.0 hrs |
+| **GRAND TOTAL** | **35 items** | **103.4 hrs** |
+| With 20% buffer | | **~124 hrs** |
+
+Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (background worker) → C02 (notifications)
+
+---
+
+## 🧠 Challenger's New Feature Ideas (from Review Round)
+
+#### [ISSUE-C11] Company Timeline Narrative (Story Thread)
+- **Source:** Challenger review (2026-06-10, Round 1)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:** The event dashboard (A-) is a disconnected list. What's missing is a narrative timeline — "Here's what happened to TSMC in the last 3 years, told as a story." The team has all the data (events, revenue, price) but no narrative thread connecting them. This is the #1 thing competitors DON'T have and aligns perfectly with the "historian" positioning and "Story first, data second" core value.
+- **Suggested Implementation:** Add a "Story" tab to each company page that weaves events, revenue milestones, and price movements into a chronological narrative with plain-language explanations.
+- **Related files:** New `src/pages/company_story.py`, `src/services/narrative_engine.py`
+- **Estimate:** 16-24h
+
+#### [ISSUE-C12] Beginner Glossary / Term Tooltip System
+- **Source:** Challenger review (2026-06-10, Round 1)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:** The design system says "All professional terms must have plain-language translations" but there's no systematic glossary or tooltip system. Beginners encounter terms like "ROE," "P/B ratio," "institutional investors" with no inline help. This is a unique educational feature that no competitor has done well.
+- **Suggested Implementation:** Create `src/data/glossary.yaml` with term → plain-language definition. Add hover tooltips or click-to-expand definitions on all financial terms across all pages.
+- **Related files:** `src/data/glossary.yaml`, all page modules
+- **Estimate:** 8-12h
+
+---
+
 ## 📊 Statistics
 
 | Status | Count |
 |--------|-------|
-|| 📋 Todo | 10 |
+| 📋 Todo | 22 |
 | 🔄 In progress | 0 |
-| ✅ Done | 3 |
+| ✅ Done | 4 |
 | ❌ Canceled | 0 |
 
-|| Priority | Count |
+| Priority | Count |
 |----------|-------|
-|| P0 | 4 |
-| P1 | 4 |
-| P2 | 3 |
+| P0 | 5 |
+| P1 | 9 |
+| P2 | 9 |
 
 ---
 
-*Last updated: 2026-06-10 (team discussion + challenger round)*
-*Source: Team discussion with Architect, Design Reviewer, Developer, Challenger*
+*Last updated: 2026-06-10 (review round — Architect, Design Reviewer, Developer, Challenger)*
+*Challenger confirmed findings with adjustments: DR-03 promoted to P0, TD-B01 promoted to P0, C06 moved to Phase 2/3, C03 status reconciled to Done*

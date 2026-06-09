@@ -66,4 +66,71 @@ After reviewing the architecture, data flow, and UI implementation across three 
 
 ---
 
+## Layer 5: Design System Compliance (Round 2 — 2026-06-10)
+
+> Recorded after Design Comparison Review of all page files against `docs/design/design_system.md`.
+
+### Color System Violations
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-006 | `financial_health.py` | 180 | Uses `#F39C12` (orange) for "moderate" debt ratio — orange NOT in design system palette | Medium |
+| D-013 | `etf_browser.py` | 67 | Uses `#2E86C1` (dark blue) — not in design system | Medium |
+| D-013 | `etf_browser.py` | 68 | Uses `#1B4F72` (navy) — not in design system | Medium |
+| D-013 | `etf_browser.py` | 447 | Uses `#8E44AD` (purple) for dividend yield — not in design system | Medium |
+| D-024 | `watchlist_page.py` | 123 | Uses `#2E86C1` (dark blue) — not in design system | Medium |
+| D-024 | `watchlist_page.py` | 124 | Uses `#1B4F72` (navy) — not in design system | Medium |
+| — | `chart.py` | 150,204 | Uses `#4A90D9`, `#2ECC71`, `#F39C12` — close to but not matching design system | Low |
+
+### PPT Style Violations
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-003 | `operation_checkup.py` | 62-70 | Trend messages likely exceed 200-char text limit | Medium |
+| D-007 | `financial_health.py` | multiple | Heavy text content across 4 sections — significantly exceeds 200-char limit | High |
+| D-008 | `financial_health.py` | — | Only 1 chart for 4 sections — chart proportion below 60% | Medium |
+| D-010 | `peer_comparison.py` | 333-367 | Metric analysis text could reach 400+ chars with all metrics | Medium |
+
+### Zone Separation Violations
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-001 | `business_card.py` | 56-72 | Watchlist buttons in navbar (Zone A) — interactive controls should be in Zone C | Medium |
+
+### Architecture Violations
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-012 | `peer_comparison.py` | 51 | `@st.cache_data(ttl=3600)` in View layer — architecture forbids this | High |
+| D-016 | `etf_browser.py` | 12, 18 | `@st.cache_data(ttl=3600)` in View layer — architecture forbids this | High |
+
+### Component Consistency Issues
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-004 | `operation_checkup.py` | 135-175 | Custom gradient card doesn't use `_info_card()` / `_白话_card()` | Low |
+| D-009 | `financial_health.py` | 188-196 | Custom health card doesn't use shared components | Low |
+| D-011 | `peer_comparison.py` | 92 | Uses `st.metric()` instead of `_白话_card()` | Low |
+| D-025 | `watchlist_page.py` | 204-224 | Raw flexbox HTML card instead of `_白话_card()` | Low |
+
+### Responsive Design Issues
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-015 | `etf_browser.py` | 165, 437 | 6-column layout will break on narrow screens | Medium |
+| D-019 | `category_browser.py` | 105 | 6-column layout will break on narrow screens | Medium |
+| — | `main.py` | 58-68 | Media queries only adjust padding — column layouts still break | Medium |
+
+### Accessibility Issues
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-022 | `event_dashboard.py` | 21-26 | Severity badges use emoji without text alternatives | Medium |
+| D-020 | `category_browser.py` | 141 | Hidden label on industry radio — screen reader inaccessible | High |
+| — | `chart.py` | 30 | `#555555` chart text may fail WCAG AA on dark backgrounds | Medium |
+
+---
+
 *Summary: The project functions smoothly under the "Happy Path", but when facing scalability, error handling, and concurrency, the underlying infrastructure (especially the cache algorithm and YAML persistence layer) is extremely fragile. Refactoring API access and implementing file locking mechanisms should be prioritized.*
+
+*Design System Compliance (Round 2): The app has a solid foundation with good loading states, error handling, and zone separation. Main areas for improvement: (1) color system violations across 6 files, (2) text volume control on financial_health.py, (3) component consistency (inline HTML vs shared components), (4) responsive column layouts, (5) chart color standardization. Overall PPT style grade: B-.*

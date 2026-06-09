@@ -9,23 +9,18 @@ from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
 
 
-@st.cache_data(ttl=3600)
-def _cached_get_stock_info(_client: FinMindClient):
+def _cached_get_stock_info(client: FinMindClient):
     """Cache the full stock info table so it's only fetched once across sub-views."""
-    return _client.get_stock_info()
+    return client.get_stock_info()
 
 
-@st.cache_data(ttl=3600)
-def _get_all_etf_prices(_client: FinMindClient, etf_ids_tuple):
-    """Fetch daily prices for all ETFs once; returns a DataFrame keyed by stock_id.
-
-    Cached for 1 hour so switching between sub-views avoids redundant fetches.
-    """
+def _get_all_etf_prices(client: FinMindClient, etf_ids_tuple):
+    """Fetch daily prices for all ETFs once; returns a DataFrame keyed by stock_id."""
     ids = list(etf_ids_tuple)
     rows = []
     for sid in ids:
         try:
-            daily = _client.get_daily_price(sid)
+            daily = client.get_daily_price(sid)
             if daily is not None and len(daily) > 0:
                 latest = daily.iloc[-1]
                 close = float(latest.get("close", 0) or 0)
@@ -354,7 +349,7 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
             # 取得股利資料（still needed — no shared cache for dividends)
             div_df = client.get_dividend(sid)
 
-            # 取得最新價格（from cached price_df — avoids redundant fetches)
+            # 取得最新價格（from cached price_df — avoids redundant fetches）
             if sid in price_df.index:
                 p = price_df.loc[sid]
                 close = float(p.get("close", 0) or 0)

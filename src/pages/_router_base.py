@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta
-from src.data.finmind_client import FinMindClient
+from src.data.finmind_client import FinMindClient, FinMindRateLimitError
 
 
 def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
@@ -41,6 +41,10 @@ def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
     def _fetch(name, fn):
         try:
             return name, fn()
+        except FinMindRateLimitError:
+            # Set session state flag so UI can show a warning
+            st.session_state["_rate_limited"] = True
+            return name, None
         except Exception:
             return name, None
 
@@ -120,6 +124,7 @@ def _find_financial_value(df, keywords: list) -> float:
                 if pd.notna(val) and val != 0:
                     return float(val)
     return 0.0
+
 
 def _section_title(title: str):
     st.markdown(f"### 📊 {title}")

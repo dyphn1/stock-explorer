@@ -1,8 +1,8 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：💡 討論輪次（功能路線圖規劃）
+## 當前階段：🔍 檢討輪次（競品研究 + 技術債審查）
 
-## 本輪主題：💡 討論 — 功能路線圖規劃（2026-06-10）
+## 本輪主題：🔍 檢討 — 全面審查（2026-06-10）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -401,11 +401,49 @@ config/
 - **等待 Daniel 決策**：投資組合定位、路線圖核准、季節性產業清單、ETF 分類嚴重度
 - Git commits: (文件更新，無代碼變更)
 
+### 2026-06-10（🔍 檢討 — 全面審查 + Challenger）
+- **Architect 技術債審查**：完成全程式碼審查
+  - 13 項剩餘技術債（從 19 項下降）
+  - 3 項新發現：NEW-A01 (時間軸常數重複)、B01 (RateLimitError 被吞沒)、E01 (事件偵測無測試)
+  - 9 項已驗證完成（與源代碼對照確認）
+  - 產出 `docs/status/tech_debt.md` (317 行)
+- **Design Reviewer 設計審查**：完成 9 頁面設計系統合規審計
+  - 26 項新設計問題，7 大類別
+  - 頁面 PPT 風格評分：Event Dashboard A-、ETF Detail B+、Financial Health C+（最差）
+  - 整體設計合規：B-
+  - 產出 `docs/design/design_comparison_review.md` (572 行)
+  - 更新 `docs/status/current_problems.md`（新增 Layer 5 設計問題）
+- **Developer 成本估算**：35 項工作總計 ~103.4 小時（含緩衝 ~124h）
+  - 立即 (5 項): 1.3h | 短期 (6 項): 10.8h | 中期 (5 項): 11.0h
+  - 設計改善 (8 項): 8.3h | 新功能 (6 項): 72.0h
+  - 關鍵路徑：D01 (M5 驗證) → C07、D02 (背景架構) → C02
+  - 產出 `docs/research/cost_estimation.md` (198 行)
+- **Challenger 3 輪挑戰**：
+  - Round 1: 26 設計問題中僅 DR-03 (Financial Health) 和 DR-05 (響應式佈局) 為真正用戶痛點；TD-B01 應升級為 P0
+  - Round 2: DR-03 應升級為 P0（最差核心頁面）；C06 應從 Phase 1 移至 Phase 2/3；C03 狀態不一致需修正
+  - Round 3: 15.3h 基礎設施工作過多（TD-11/12/15 應延後）；C04 需注意「歷史學家」定位；D01 為最高優先
+  - **Challenger 裁決**：審查結果確認，但需調整優先級
+- **Challenger 新增功能建議**：
+  - ISSUE-C11: 公司時間軸敘事（Story Thread）— P2, 16-24h
+  - ISSUE-C12: 新手術語詞典/工具提示系統 — P2, 8-12h
+- **修訂後路線圖**（經 Challenger 調整）：
+  - Sprint 1 (Week 1): D01 (M5 驗證) + TD-E01 (事件偵測測試) + DR-03 (Financial Health 文字精簡) + 立即技術債
+  - Sprint 2 (Week 2): C07 (自訂事件門檻) + D02 (背景架構調查) + 類別瀏覽器優化
+  - Sprint 3-4 (Weeks 3-4): C02 (Email 通知) + C04 (市場溫度計)
+  - Sprint 5-6 (Weeks 5-6): C06 (PPT 生成) + 設計打磨
+  - Post-MVP: TD-11 (型別檢查)、TD-12 (儲存抽象化)、TD-15 (分頁)
+- **C03 狀態修正**：STATUS.md 與 issues.md 不一致，已確認為 ✅ Done
+- Layer 0 + Layer 1 全綠（54/54 + 15/15，3 L1 失敗為既有基線）
+- Git commits: (文件更新，無代碼變更)
+
 ### Next Steps
 
 #### ✅ All P0/P1/P2 Fixes — COMPLETED (2026-06-09)
-#### ✅ Competitor Research — COMPLETED (2026-06-09)
-#### ✅ Tech Debt Audit — COMPLETED (2026-06-09)
+#### ✅ Competitor Research — COMPLETED (2026-06-09, 2026-06-10 round 2)
+#### ✅ Tech Debt Audit — COMPLETED (2026-06-09, updated 2026-06-10)
+#### ✅ Design Review — COMPLETED (2026-06-10)
+#### ✅ Cost Estimation — COMPLETED (2026-06-10)
+#### ✅ Challenger Review — COMPLETED (2026-06-10)
 
 #### ⏳ New Feature Candidates (from competitor research, pending Daniel's review)
 

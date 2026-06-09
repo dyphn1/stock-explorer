@@ -48,7 +48,6 @@ INDUSTRY_BENCHMARKS = {
 }
 
 
-@st.cache_data(ttl=3600)
 def _find_fallback_benchmark(industry: str, stock_id: str):
     """Find the largest company in the same industry as a fallback benchmark."""
     try:
