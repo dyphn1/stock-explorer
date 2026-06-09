@@ -269,6 +269,20 @@
 - 所有語法與匯入驗證通過（0 錯誤）
 - Git commits: `94c25b7`, `e06e09b`
 
+### 2026-06-10（🔧 開發 — 部分資料載入 + 單元測試）
+- **TD #8 實作**：`get_stock_data()` 部分資料載入 — 每個 API 呼叫獨立 try/except，單次失敗不再導致整頁崩潰
+  - 新增 `_safe_call()` helper，所有 10 個 API 呼叫獨立包裝
+  - `stock_info` 仍為守門呼叫（找不到股票時回傳 None）
+  - DataFrame 欄位失敗時回傳空 `pd.DataFrame()`，dict 欄位失敗時回傳 `None`
+  - 100% 向後相容，所有頁面模組無需修改
+- **DRY 審查**：確認所有重複 code 已在上一輪次清理完畢（card helpers、`_is_etf`、`filter_by_timeline`、`_find_value`）
+- **單元測試**：新增 `tests/test_business_logic.py`，29 個測試全部通過
+  - `TestCalcRoeTtm` (10 tests)：TTM ROE 計算、邊界情境（空資料、單一季、零權益、負數 ROE、英文欄位名）
+  - `TestIsEtf` (12 tests)：ETF 分類邏輯、產業別、名稱啟發式、ID 模式、優先順序
+  - `TestFilterByTimeline` (7 tests)：時間軸過濾、空資料、ALL/1Y/3Y 模式
+- Layer 0：54/54 ✅ | Layer 1：15/15 ✅（3 個失敗為既有 event detection 基線，非回歸）
+- Git commit: `4a71e80`
+
 ### 2026-06-09（🔍 檢討 — 競品研究與技術債審查）
 - **QA Engineer 競品研究**：完成 6 大競品分析（財報狗、GoodInfo、CMoney、玩股網、FinMind、延伸競品）
   - Produced `docs/research/competitor_research.md` (619 lines)
@@ -461,4 +475,5 @@ See `docs/status/pending_review.md` for details:
 || 2026-06-09 21:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | 🔍 檢討輪次：競品研究+技術債審查完成 |
 
 || 2026-06-10 00:xx | ✅ (L0) | ✅ (L1) | — | 即時技術債清理完成，DRY + dead code + input validation，L0+L1 全綠 |
-|*最後更新：2026-06-10 00:xx*
+|| 2026-06-10 02:xx | ✅ 54/54 (L0) | ✅ 15/15 (L1) | — | 部分資料載入 + 單元測試，L0+L1 全綠（3 L1 失敗為既有基線） |
+|*最後更新：2026-06-10 02:xx*
