@@ -308,7 +308,7 @@ Stock Explorer is a well-structured Streamlit application with clean modular arc
 | # | Item | Effort | Impact |
 |---|------|--------|--------|
 || 8 | Partial data loading in `get_stock_data()` | 1 hour | UX improvement | ✅ Done (2026-06-10) |
-|| 9 | Parallel API calls with ThreadPoolExecutor | 2 hours | Performance |
+| 9 | Parallel API calls with ThreadPoolExecutor | 2 hours | Performance | ✅ Done (2026-06-10) |
 | 10 | Lazy loading per page | 2 hours | Performance |
 || 11 | Add unit tests for core business logic | 4 hours | Quality | ✅ Done (2026-06-10) |
 | 12 | Consolidate static company data into single registry | 2 hours | Maintainability |

@@ -171,6 +171,27 @@ def _save_events(events: list):
         _atomic_write(EVENTS_CONFIG_PATH, content.encode("utf-8"))
 
 
+def prune_old_events(days: int = 90):
+    """移除超過 days 天的事件，控制 events.yaml 檔案大小"""
+    events = _load_events()
+    cutoff = datetime.now() - timedelta(days=days)
+    pruned = []
+    removed = 0
+    for e in events:
+        try:
+            event_date = datetime.strptime(e.get("date", ""), "%Y-%m-%d")
+            if event_date >= cutoff:
+                pruned.append(e)
+            else:
+                removed += 1
+        except (ValueError, KeyError):
+            pruned.append(e)  # 保留日期格式異常的事件
+    if removed > 0:
+        _save_events(pruned)
+        logger.info("Pruned %d events older than %d days (%d remaining)",
+                     removed, days, len(pruned))
+
+
 def record_event(
     stock_id: str,
     event_type: str,
@@ -191,6 +212,7 @@ def record_event(
         "detected_at": datetime.now().isoformat(timespec="seconds"),
     })
     _save_events(events)
+    prune_old_events()
 
 
 def get_events_for_stock(stock_id: str, days: int = 30) -> list:

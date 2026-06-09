@@ -266,8 +266,9 @@
 #### [ISSUE-D03] Event Retention Policy
 - **Source:** Architect analysis
 - **Priority:** P1
-- **Status:** 📋 Todo
-- **Description:** Events accumulate indefinitely in events.yaml. Add retention policy — prune events older than 90 days. ~10-line addition to adaptive_engine.py.
+- **Status:** ✅ Done
+- **Description:** Events accumulate indefinitely in events.yaml. Add retention policy — prune events older than 90 days via `prune_old_events()` called on each `record_event()` write.
+- **Implementation:** `prune_old_events(days=90)` in `adaptive_engine.py`, called automatically after appending new events.
 - **Related files:** `src/services/adaptive_engine.py`, `config/events.yaml`
 
 ---
@@ -276,15 +277,15 @@
 
 | Status | Count |
 |--------|-------|
-| 📋 Todo | 12 |
+|| 📋 Todo | 10 |
 | 🔄 In progress | 0 |
-| ✅ Done | 1 |
+| ✅ Done | 3 |
 | ❌ Canceled | 0 |
 
-| Priority | Count |
+|| Priority | Count |
 |----------|-------|
-| P0 | 4 |
-| P1 | 5 |
+|| P0 | 4 |
+| P1 | 4 |
 | P2 | 3 |
 
 ---

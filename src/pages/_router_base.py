@@ -4,12 +4,13 @@
 
 import pandas as pd
 import streamlit as st
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta
 from src.data.finmind_client import FinMindClient
 
 
 def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
-    """載入一支股票的所有資料，回傳 dict。每個 API 獨立 try/except，部分失敗不影響其他資料。"""
+    """載入一支股票的所有資料，回傳 dict。gate check sequential，其餘資料平行載入。"""
     stock_info = client.get_stock_info(stock_id)
     if len(stock_info) == 0:
         return None
@@ -23,55 +24,31 @@ def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
         "industry": industry,
     }
 
-    try:
-        data["latest_price"] = client.get_latest_price(stock_id)
-    except Exception:
-        data["latest_price"] = None
+    # ── 定義每個 fetch task：(name, lambda) ──
+    tasks = [
+        ("latest_price",         lambda: client.get_latest_price(stock_id)),
+        ("latest_per_pbr",       lambda: client.get_latest_per_pbr(stock_id)),
+        ("monthly_revenue",      lambda: client.get_monthly_revenue(stock_id)),
+        ("daily_price",          lambda: client.get_daily_price(stock_id)),
+        ("financial",            lambda: client.get_financial_statement(stock_id)),
+        ("news",                 lambda: client.get_news(stock_id)),
+        ("institutional",        lambda: client.get_institutional_investors(stock_id)),
+        ("balance_sheet",        lambda: client.get_balance_sheet(stock_id)),
+        ("cash_flow",            lambda: client.get_cash_flow(stock_id)),
+        ("dividend",             lambda: client.get_dividend(stock_id)),
+    ]
 
-    try:
-        data["latest_per_pbr"] = client.get_latest_per_pbr(stock_id)
-    except Exception:
-        data["latest_per_pbr"] = None
+    def _fetch(name, fn):
+        try:
+            return name, fn()
+        except Exception:
+            return name, None
 
-    try:
-        data["monthly_revenue"] = client.get_monthly_revenue(stock_id)
-    except Exception:
-        data["monthly_revenue"] = None
-
-    try:
-        data["daily_price"] = client.get_daily_price(stock_id)
-    except Exception:
-        data["daily_price"] = None
-
-    try:
-        data["financial"] = client.get_financial_statement(stock_id)
-    except Exception:
-        data["financial"] = None
-
-    try:
-        data["news"] = client.get_news(stock_id)
-    except Exception:
-        data["news"] = None
-
-    try:
-        data["institutional"] = client.get_institutional_investors(stock_id)
-    except Exception:
-        data["institutional"] = None
-
-    try:
-        data["balance_sheet"] = client.get_balance_sheet(stock_id)
-    except Exception:
-        data["balance_sheet"] = None
-
-    try:
-        data["cash_flow"] = client.get_cash_flow(stock_id)
-    except Exception:
-        data["cash_flow"] = None
-
-    try:
-        data["dividend"] = client.get_dividend(stock_id)
-    except Exception:
-        data["dividend"] = None
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = {executor.submit(_fetch, name, fn): name for name, fn in tasks}
+        for future in as_completed(futures):
+            name, result = future.result()
+            data[name] = result
 
     data["extra_metrics"] = _calc_extra_metrics(
         data["financial"], data["balance_sheet"], data["monthly_revenue"]
