@@ -388,3 +388,361 @@ I confirm the following findings from the team's reviews:
 ---
 
 *This challenge report was produced by the Challenger subagent on 2026-06-10 as part of the review round (Architect + Design Reviewer + Developer + Challenger).*
+
+---
+
+## [2026-06-10] Theme: Challenge — Round 3 Review Stress Test
+
+> **Context:** This is the THIRD review round. Architect found 14 tech debt items (6 new), Design Reviewer found 3 new design issues + critical business_card.py truncation, QA researched 9 international platforms and found 7 new feature ideas (C13-C19). The Challenger must stress-test all findings against product vision and prioritize ruthlessly.
+
+### Round 1: Gap Authenticity Challenge
+
+#### Q1: Are the 7 new competitor features (C13-C19) REAL problems or nitpicks? Are they aligned with the "historian, not stock picker" positioning?
+
+**Challenger's Analysis:**
+
+Let me evaluate each feature against the product vision's 5 core values and the "historian" positioning:
+
+| Feature | Core Values Served | "Historian" Aligned? | Verdict |
+|---------|-------------------|---------------------|---------|
+| **C13: Investment Personality Quiz** | Adaptive (#3) | ✅ Yes — guides learning path | **KEEP — P1 → P2** |
+| **C14: Company Health Score Radar** | PPT-style (#2), Benchmark (#5) | ✅ Yes — visual summary | **KEEP — P1, but depends on business_card.py first** |
+| **C15: Paper Trading Simulator** | Point-to-point (#4) | ⚠️ Borderline — gamifies trading, not learning | **DOWNGRAVE TO P3 or DEFER** |
+| **C16: "Did You Know?" Company Tips** | Story first (#1), PPT-style (#2) | ✅ Yes — connects data to real world | **KEEP — P2, easy win** |
+| **C17: AI Company Q&A** | Point-to-point (#4), Adaptive (#3) | ✅ Yes — deepens understanding | **KEEP — P2, but depends on LLM decision** |
+| **C18: Gamified Learning Progress** | NONE directly | ⚠️ Indirect — supports retention, not understanding | **DEFER — P2 but lowest priority** |
+| **C19: Structured Learning Path** | Point-to-point (#4), Story first (#1) | ✅ Yes — guides beginners | **KEEP — P2, high strategic value** |
+
+**Detailed assessment:**
+
+**C13 (Investic Personality Quiz, P1, 6-10h):**
+- Valuable concept but **overpriced at P1**. The quiz itself is a one-time interaction that doesn't deepen stock understanding. It's an onboarding convenience, not an educational tool.
+- Better framed as: "personalized homepage recommendations" — the quiz results change what's shown on the homepage. This is adaptive, not gamified.
+- **Verdict: Demote to P2. Reduce scope to 4-6h (simple 3-question preference selector, not a full quiz).**
+
+**C14 (Company Health Score Radar, P1, 14-20h):**
+- This is the **most strategically valuable** new feature. Simply Wall St's snowflake is their #1 differentiator and Stock Explorer can do it better (explainable, not just visual).
+- **BUT** it depends on business_card.py being complete first. A radar chart on a truncated page is pointless.
+- **Verdict: KEEP at P1, but only AFTER business_card.py truncation is fixed. Demote to P2 if it can't be done incrementally.**
+
+**C15 (Paper Trading Simulator, P2, 20-30h):**
+- **This is a positioning violation.** The moment you create a "simulator" with virtual P&L, users treat it as a game. The "historian" positioning says "understand companies," not "practice trading."
+- Investopedia's simulator is for practice trading — that's THEIR positioning. Stock Explorer should NOT copy this.
+- **Verdict: REJECT or heavily reframe.** If kept, reframe as "What would the data have told you?" — show what the analysis said 6 months ago vs what happened. This is educational, not gamified trading. Without this reframe, **move to "Rejected" status.**
+
+**C16 ("Did You Know?" Company Tips, P2, 4-6h):**
+- **Perfect alignment** with "Story first, data second." This makes companies memorable. It's cheap (4-6h). And it's unique — no TW competitor has this.
+- **Verdict: KEEP at P2. Should be done early as a quick win. Batch with business_card.py completion since it's displayed there.**
+
+**C17 (AI Company Q&A, P2, 10-14h):**
+- The QA correctly identifies this as a **defensive feature** against LLM wrapper competitors. "LLM + FinMind" has exploded (20+ GitHub projects, 10+ TW startups).
+- However, the implementation cost is high (10-14h + ongoing API costs), and it's not core to the educational mission.
+- **Verdict: KEEP at P2 as a defensive feature. But it should not be built until (a) business_card.py is complete and (b) there's a clear LLM cost/budget decision.**
+
+**C18 (Gamified Learning Progress, P2, 12-16h):**
+- The "gamification is white space" finding is interesting but misleading. Duolingo gamifies LANGUAGE learning where daily practice is the goal. Stock education doesn't have a "daily practice" mechanic — you learn about companies when you're interested.
+- Badges and streaks add development complexity without advancing any of the 5 core values. "You explored 5 companies this week" doesn't teach you anything about TSMC.
+- **Verdict: DEFER to P3 (post-MVP). The 12-16h is better spent on features that directly advance core values.**
+
+**C19 (Structured Learning Path, P2, 14-18h):**
+- **High strategic value.** The product has 9 pages but beginners don't know where to start. A "Start Here" guided flow directly addresses the #1 problem with the current design: it's a collection of tools, not a learning experience.
+- **This is the STRONGEST of the 7 new features** in terms of advancing the "Story first" and "Point-to-point" core values.
+- **Verdict: KEEP at P2. High priority among the 7. Should be Phase 2 after business_card.py is complete.**
+
+#### Q2: Is the business_card.py truncation REALLY as bad as D+? Is this a real issue or a misread?
+
+**ABSOLUTELY REAL. I verified by reading the source code directly.**
+
+Here's the smoking gun:
+
+```python
+# business_card.py imports (lines 6-20):
+from src.services.chart import create_revenue_trend_chart, create_revenue_pie_chart
+from src.services.revenue_analyzer import analyze_revenue_breakdown
+from src.services.analogy_engine import (8 functions...)
+from src.services.dividend_analyzer import extract_dividend_summary
+from src.services.news_summarizer import summarize_news, get_news_impact_level
+
+# But the _render_business_card() function (lines 33-128) ONLY:
+# 1. Renders header with stock name/price (lines 46-54)
+# 2. Renders watchlist buttons (lines 56-72)
+# 3. Renders watchlist popup (lines 74-128)
+# THAT'S IT. Zero calls to any imported service.
+```
+
+I verified this by checking the entire file (128 lines). The `_render_business_card()` function imports 15+ service functions and calls **NONE of them**. The page is a header with watchlist controls and nothing else.
+
+**Why this happened:** The function was likely refactored — the content sections were extracted to be rendered by the router or a parent component — but the imports were left orphaned. Or the page was accidentally truncated during a merge/restructuring.
+
+**Impact assessment:**
+- This is the **ENTRY POINT** for every stock analysis. Users navigate to a stock and see... just the name and price.
+- Every other page (operations, financial health, peers, events) has issues but renders its content. The main page doesn't.
+- The C01 (Ex-Dividend Calendar) status says its dividend section is on business_card.py — but it's not rendered there.
+- **This is a regression, not a pre-existing issue.** The Round 2 grade was B+, meaning the page was functional enough to earn B+ assessment. Now it's D+. Something happened between rounds.
+
+**Verdict: YES, this is P0. The most critical issue in the entire Round 3 review.**
+
+#### Q3: Are the 6 new tech debt items actionable or premature?
+
+| Item | Assessment | Verdict |
+|------|-----------|---------|
+| **NEW-G01: `_atomic_write` duplicated** | 15 min to consolidate. Genuine DRY violation. | ✅ Actionable |
+| **NEW-G02: models.py dead code** | Remove (5 min) or adopt (3h). Deletion is the right call for a 6,200-line app. | ✅ Actionable (delete) |
+| **NEW-G04: Disconnected rate limit flags** | 10 min fix. Real bug — flag set but never read. | ✅ Actionable |
+| **NEW-G05: ETF category keywords implicit priority** | 30 min to document or fix. Low impact. | ✅ Actionable |
+| **NEW-G06: FinMindClient() without cache_dir** | 20 min fix. Clean and obvious. | ✅ Actionable |
+| **NEW-G07: INDUSTRY_BENCHMARKS incomplete (28 industries)** | Real but low impact — only matters for stocks in uncovered industries. | ⚠️ Lower priority — P3 |
+
+**Verdict:** All except NEW-G07 are quick wins (<30 min each, ~1h total). They should all be done in the next sprint. NEW-G07 is real but not urgent — it only affects edge cases (stocks in uncovered industries get "no benchmark" which is handled gracefully).
+
+---
+
+### Round 2: Priority Challenge
+
+#### Q1: With 25 todo items (up from 19), what should the team ACTUALLY do first?
+
+**The team should fix business_card.py FIRST. Everything else is secondary.**
+
+Here's the brutal truth: the current backlog has 25 items, but **3 of them depend on business_card.py being complete** (C14 Health Radar, C16 "Did You Know?" tips, and the C01 Ex-Dividend section that STATUS says is done but isn't rendered). The Design Reviewer's finding isn't just another item in the backlog — it's a **regression that silently breaks the main page**.
+
+**Revised priority stack (next 2 weeks):**
+
+| Order | Item | Hours | Why This First |
+|-------|------|-------|----------------|
+| 1 | **Complete business_card.py** | 8-12h | P0 regression. Main page of the app is blank. |
+| 2 | **Quick tech debt batch** (NEW-G01, G02, G04, G05, G06) | ~1h | All <30 min. Do them while the business_card.py context is fresh. |
+| 3 | **DR-03: Financial Health text reduction** | 1.5h | Second-worst page. Also a PPT-style violation. |
+| 4 | **C16: "Did You Know?" tips** | 4-6h | Cheap, high-impact, renders on business_card.py |
+| 5 | **DR-005-NEW: `_section_title()` emoji conflict** | 0.5h | 5 files affected. Easy fix. |
+| 6 | **Gradient violations cleanup** (5 files) | 1h | Batch together — same fix pattern in each file |
+| 7 | **D-002-NEW verification** | 0h | Already documented. Just needs developer attention |
+
+**Total for next 2 weeks: ~16-22 hours**
+
+**Everything else should WAIT:**
+- C13, C14, C15, C17, C18, C19 — all new features. None should be started until the main page works.
+- Design polish (DR-01 colors, DR-04 components, DR-05 responsive) — batch with feature work.
+- Infrastructure (NEW-G07 benchmarks) — defer to post-MVP.
+
+#### Q2: Should the business_card.py issue be P0? What's the real impact?
+
+**Yes. P0. And I'd argue it's the P0 of all P0s — more urgent than any feature.**
+
+Here's a user journey analysis:
+
+```
+User opens Stock Explorer → Types "2330" → Clicks "TSMC" →
+→ Sees: "TSMC 2330 ｜ 半導體業" + price + watchlist button
+→ Nothing else. No revenue chart. No news. No dividend. No analogy.
+→ User thinks: "Is this broken?" → Closes tab.
+```
+
+This is the **worst possible first impression**. The page imports 15+ service functions and renders none of them.
+
+**Comparison to other P0s:**
+- D01 (M5 verification, 4h) — Important but only affects C07. The main page works without M5.
+- TD-E01 (event tests, 3h) — Already done (verified in Round 3).
+- Business_card.py truncation — **Affects every user on every visit to the main page.**
+
+**Estimated effort to fix: 8-12 hours.** This isn't a 30-minute patch. The function needs to be built out with:
+1. Revenue section (trend chart + pie chart + analogy) — ~3h
+2. Dividend section (C01 integration) — ~2h
+3. News section (summarized) — ~2h
+4. Key metrics cards (PER, PBR, etc.) — ~2h
+5. Testing and Daniel's manual verification — ~2h
+
+This is a significant effort, but it's the **highest-ROI investment** in the entire backlog because it unblocks C14, C16, and fixes the main page regression.
+
+#### Q3: Among the 7 new features, which 2-3 are genuinely worth building vs nice-to-haves?
+
+**Top 3 to build (in order):**
+
+| # | Feature | Why | When |
+|---|---------|-----|------|
+| 1 | **C19: Structured Learning Path** | Directly advances "Story first" and "Point-to-point" — the two core values most neglected by the current roadmap. Addresses the #1 UX problem: beginners see 9 pages and don't know where to start. | Phase 2 (after business_card.py is complete) |
+| 2 | **C14: Company Health Score Radar** | Most unique and differentiated feature. Simply Wall St's snowflake is their moat — Stock Explorer can do it better (explainable). Aligns with PPT-style and Benchmark core values. | Phase 2 (after business_card.py is complete) |
+| 3 | **C16: "Did You Know?" Company Tips** | Cheapest (4-6h), most aligned with "Story first," and unique. Makes companies memorable. Can be batched with business_card.py completion. | Phase 1 (with business_card.py) |
+
+**The rest:**
+- **C13 (Quiz):** Demote to P2, reduce scope. Nice-to-have onboarding.
+- **C15 (Paper Trading):** REJECT. Positioning violation. "Historian, not stock picker."
+- **C17 (AI Q&A):** Defensive feature but expensive. P2, after the top 3.
+- **C18 (Gamification):** DEFER to post-MVP. No core value alignment.
+
+---
+
+### Round 3: Goal Alignment Challenge
+
+#### Q1: Does the current roadmap advance the 5 core values (Story first, PPT-style, Adaptive, Point-to-point, Benchmark)?
+
+**Let me map every Round 3 roadmap item to the core values:**
+
+| Core Value | Round 3 Items That Advance It | Items That DON'T |
+|------------|-----------------------------|-----------------|
+| **Story first, data second** | C16 ("Did You Know?" tips), C19 (Learning Path) | C14, C15, C17, C18 |
+| **PPT-style presentation** | C14 (Health Radar), DR-03 (Financial Health), Color fixes | C13, C15, C16, C17, C18, C19 |
+| **Adaptive and self-evolving** | C13 (Quiz), C17 (AI Q&A) | C14, C15, C16, C18, C19 |
+| **Point-to-point knowledge** | C19 (Learning Path), C17 (AI Q&A) | C13, C14, C15, C16, C18 |
+| **Benchmark-oriented** | C14 (Health Radar), DR colors | C13, C15, C16, C17, C18, C19 |
+
+**Assessment:**
+
+- **"Story first" — WEAK.** Only C16 and C19 directly advance this. C16 is the cheapest (4-6h) and should be done sooner. C19 is important but 14-18h.
+- **"PPT-style" — MODERATE.** C14 is the best new feature for this. DR-03 fix is important polish. But the team hasn't touched the main page (business_card.py regression) which is the MOST important PPT-style element.
+- **"Adaptive" — WEAK.** C13 and C17 both advance this, but both are P2. Nothing adaptive is being built in the next 2 weeks.
+- **"Point-to-point" — MODERATE.** C19 is the strongest item here. But it's 14-18h and currently not in the immediate plan.
+- **"Benchmark" — WEAK.** Only C14 advances this. And it's on the back burner after business_card.py.
+
+**The contradiction:** The team says "Story first, data second" is the #1 core value, but the roadmap is dominated by benchmark (C14) and PPT-style (design fixes) items. C19 (Learning Path) is the item that most directly advances "point-to-point" and "story first" but it's stuck in P2.
+
+**Verdict:** The current roadmap's implicit priority is "fix what's broken" (business_card.py, design polish). This is correct for the immediate term. But the NEW feature selection (C13-C19) doesn't strongly advance the core values. The team should **swap C19 into Phase 2** (instead of C14 or alongside it) because it advances the two most-neglected core values.
+
+#### Q2: Are there contradictions between the findings?
+
+**Yes — two contradictions:**
+
+**Contradiction 1: QA says "Gamification is white space" but Design Reviewer found 19 live design issues.**
+
+The QA Engineer's competitive analysis says "NO platform gamifies stock education" and presents this as a blue ocean opportunity (C18). But the Design Reviewer found 19 design issues still present — the existing pages need significant polish before adding gamification layers on top. **Adding gamification to a D+ product is putting lipstick on a pig.** The team should fix the design issues first (or at minimum, fix business_card.py) before even thinking about gamification.
+
+**My resolution:** C18 (Gamification) should be formally deferred. Not P2 — **P3 (post-MVP)**. The white space argument is valid in theory, but the execution sequence is wrong. You gamify a GOOD experience, not a broken one.
+
+**Contradiction 2: Architect found business_card.py regression but graded it as "Medium" impact.**
+
+The Architect's tech_debt.md doesn't mention the business_card.py truncation at all — it focuses on code-level issues (duplication, dead code, disconnected flags). The Design Reviewer found the truncation and correctly flagged it as P0/Critical. **The Architect missed this because they were looking at code patterns, not rendering flow.** This is a reminder that technical debt reviews and design reviews serve different purposes.
+
+**My resolution:** The Design Reviewer's finding is correct. This is P0. The Architect's review was thorough for what it covered, but the rendering gap (imports without calls) requires a design/UX reviewer to catch. The team should add a rendering-flow check to the Architect's review checklist for future rounds.
+
+**Contradiction 3: QA recommends C14 (Health Score) as P1 but it depends on business_card.py being complete.**
+
+The QA says C14 is P1 (14-20h) and "no TW competitor has explainable company health scoring." But C14 renders on business_card.py — which is currently truncated. **Building C14 now means building on a broken foundation.** The health radar would need to be added to a function that currently renders zero content sections.
+
+**My resolution:** C14 should be explicitly marked as "P1, BLOCKED by business_card.py completion." It should appear in the dependency graph. The team should not start C14 until business_card.py is rendering at least its basic content sections.
+
+#### Q3: What's the single most impactful thing the team should do next?
+
+**Complete business_card.py.**
+
+Here's the argument:
+
+1. **It's a regression, not a feature.** The Round 2 grade was B+. Now it's D+. Something broke. Fixing a regression is always higher priority than building new features.
+
+2. **It's the main page.** Every user who searches for a stock lands here first. A blank main page is the #1 cause of user churn.
+
+3. **It unblocks 3+ other items.** C14, C16, and the C01 dividend rendering all need content on business_card.py. Completing the page unblocks ~24h of downstream work.
+
+4. **It's a prerequisite for the "Story first" core value.** The page imports 15+ service functions (analogy, revenue, dividend, news) that tell a company's story. Rendering them turns data into narrative — the core product promise.
+
+5. **The competitive research supports it.** Simply Wall St (#1 competitor) makes their main page a rich visual summary. Investopedia (#2 competitor) makes their main page an educational experience. Stock Explorer's main page shows a stock name and price. This isn't a competitive gap — it's a competitive gaping hole.
+
+6. **Cost is reasonable.** 8-12h is a worthwhile investment for the main page of the app. Compare to C06 (PPT, 20h) or C14 (Health Radar, 14-20h) — business_card.py is cheaper and more impactful than any single feature.
+
+---
+
+## Challenger's Verdict — Round 3
+
+### Confirmed Findings
+
+1. **business_card.py truncation is P0/Critical** — VERIFIED by direct source code inspection. 128 lines, imports 15+ services, renders only header + watchlist buttons. This is the most critical issue in the entire Round 3 review.
+
+2. **6 new tech debt items are genuine** — All 6 (NEW-G01 through G07) represent real code issues. None are nitpicks. However, 5 of 6 are <30 min fixes that should be batched together.
+
+3. **"LLM + FinMind wrapper" competitive threat is real** — 20+ GitHub projects and 10+ TW startups. C17 (AI Q&A) is a valid defensive response but should not be prioritized over fixing the main page.
+
+4. **Design regression between rounds is concerning** — 19 out of 21 design issues are still present. Business_card.py went from B+ to D+. The team needs to be more deliberate about not introducing regressions during fixes.
+
+### Findings That Need Adjustment
+
+1. **C13 (Investment Quiz) should be demoted to P2** — It's an onboarding convenience, not an educational tool. 6-10h is too much for a one-time preference selector.
+
+2. **C15 (Paper Trading) should be REJECTED** — Positioning violation. "Historian, not stock picker." Reframe as educational back-testing or drop entirely.
+
+3. **C18 (Gamification) should be P3 (post-MVP), not P2** — Adding gamification to a D+ product with a broken main page is premature. The "white space" finding is strategically valid but tactically wrong.
+
+4. **C14 (Health Radar) is BLOCKED by business_card.py** — Should not be started until the main page is complete. Currently)P1 but conditionally P2.
+
+5. **C19 (Learning Path) should be elevated** — It's the strongest new feature for advancing "Story first" and "Point-to-point" core values. Should be in Phase 2, not Phase 3.
+
+6. **The `_section_title()` emoji conflict (D-005-NEW) is a real user-facing issue** — Double emoji prefixes (📊🩺) look sloppy and unprofessional. 30-min fix.
+
+### What Needs to Change
+
+1. **P0: Complete business_card.py** — Render all imported content sections (revenue, dividend, news, analogies). 8-12h. This is the #1 priority.
+
+2. **P0: Batch all 5 quick tech debt wins** — NEW-G01, G02, G04, G05, G06. ~1h total. Do them while business_card.py context is fresh.
+
+3. **P0: Fix `_section_title()` emoji conflict** — 30 min. Affects 5+ files. Cleanup before adding new features.
+
+4. **P1: DR-03 Financial Health text reduction** — 1.5h. Second-worst page. Fixes PPT-style violation.
+
+5. **P1: Reject or reframe C15 (Paper Trading)** — Positioning violation. Daniel's call.
+
+6. **P2: Elevate C19 (Learning Path) to Phase 2** — Best alignment with core values among all new features.
+
+7. **P2: C16 ("Did You Know?") batched with business_card.py** — 4-6h. Renders on the main page. Quick win.
+
+8. **P3: Defer C18 (Gamification)** — Post-MVP. Fix the product first, then gamify.
+
+---
+
+## Recommended Adjustments
+
+### Revised Priority List (v3)
+
+| Priority | Item | Hours | Category | Status |
+|----------|------|-------|----------|--------|
+| **P0** | Complete business_card.py (render all sections) | 8-12h | Regression fix | 🔴 BLOCKING |
+| **P0** | Batch tech debt (G01, G02, G04, G05, G06) | 1h | Quick wins | 📋 Todo |
+| **P0** | Fix `_section_title()` emoji conflict | 0.5h | Design | 📋 Todo |
+| **P0** | DR-03: Financial Health text reduction | 1.5h | Design | 📋 Todo |
+| **P1** | C16: "Did You Know?" Company Tips | 4-6h | Feature (with business_card.py) | 📋 Todo |
+| **P1** | C19: Structured Learning Path | 14-18h | Feature (Phase 2) | 📋 Todo |
+| **P1** | DR-01: Color system violations | 1h | Design | 📋 Todo |
+| **P1** | Gradient cleanup (5 files) | 1h | Design | 📋 Todo |
+| **P1** | C14: Company Health Score Radar | 14-20h | Feature (Phase 2, after business_card.py) | 📋 BLOCKED |
+| **P2** | C13: Investment Quiz (reduced scope) | 4-6h | Feature | 📋 Todo |
+| **P2** | C17: AI Company Q&A | 10-14h | Defensive feature | 📋 Todo |
+| **P2** | D01: M5 Event Detection Verification | 4h | Foundation | 📋 Todo |
+| **P2** | D02: Background Worker Investigation | 6h | Foundation | 📋 Todo |
+| **Defer** | C15: Paper Trading Simulator | — | REJECTED (positioning) | ❌ Canceled |
+| **Defer** | C18: Gamification | — | Post-MVP | ⏸️ Deferred |
+| **Defer** | NEW-G07: Industry benchmarks | 2h | Post-MVP | ⏸️ Deferred |
+
+### Revised Roadmap
+
+**Sprint 1 — Regression Fix (Week 1, ~11-15h):**
+- Complete business_card.py — render all sections (8-12h)
+- Batch quick tech debt (1h)
+- Fix `_section_title()` emoji conflict (0.5h)
+- DR-03: Financial Health text reduction (1.5h)
+
+**Sprint 2 — Core Feature (Week 2, ~8-12h):**
+- C16: "Did You Know?" Company Tips (4-6h) — renders on business_card.py
+- DR-01: Color system violations (1h)
+- Gradient cleanup (5 files) (1h)
+- DR-002-NEW: Verify watchlist_page.py summary cards
+
+**Sprint 3 — Strategic Features (Weeks 3-4, ~28-38h):**
+- C19: Structured Learning Path (14-18h)
+- C14: Company Health Score Radar (14-20h)
+
+**Sprint 4 — Polish + Defense (Weeks 5-6, ~15-20h):**
+- C13: Investment Quiz (4-6h)
+- C17: AI Company Q&A (10-14h) — if LLM decision is made
+
+**Post-MVP:**
+- C18: Gamification (deferred)
+- NEW-G07: Industry benchmarks (deferred)
+- TD-D01: Storage abstraction (deferred)
+- C15: Paper Trading (rejected unless Daniel approves reframe)
+
+### Key Metrics to Track
+
+1. **business_card.py line count** — Target: 300+ lines (currently 128)
+2. **Design system compliance** — Target: all pages B+ by end of Sprint 2
+3. **Core value coverage** — At least 1 feature advancing each of the 5 core values by end of Sprint 4
+4. **Competitive differentiation** — C14 (explainable radar) and C19 (learning path) vs Simply Wall St / Investopedia
+
+---
+
+*This challenge report was produced by the Challenger subagent on 2026-06-10 as part of Round 3 review stress test (Architect + Design Reviewer + QA Engineer + Challenger).*

@@ -1,77 +1,100 @@
 # Stock Explorer Technical Debt Report
 
-> **Date**: 2026-06-10
+> **Date**: 2026-06-11
 > **Reviewer**: System Architect (Subagent)
-> **Scope**: Full codebase review (54 Python files, ~5,300 LOC)
-> **Context**: All P0/P1/P2 bugs fixed. Previous review was 2026-06-09 (364 lines). This is an updated review reflecting changes made since then.
+> **Scope**: Full codebase review (50 Python source files, ~6,200 LOC including tests)
+> **Context**: All P0/P1/P2 bugs fixed. Previous reviews: 2026-06-09 (364 lines, 19 items), 2026-06-10 (317 lines, 13 items). This is Round 3.
 
 ---
 
 ## Executive Summary
 
-This is an **updated** technical debt review. The previous review (2026-06-09) identified 19 items. Since then, the following have been **completed**:
+This is the **third** technical debt review. The previous review (2026-06-10) identified 13 items. Since then, the following have been **completed or substantially resolved**:
 
 | # | Item | Status |
 |---|------|--------|
-| 1 | Consolidate `_find_value` / `_find_financial_value` | ✅ Done — single `_find_financial_value` in `_router_base.py`; `roe_calculator.py` now imports it |
-| 2 | Remove duplicate card helpers from page modules | ✅ Done — all pages import `_section_title`, `_白话_card`, `_info_card` from `_router_base.py` |
-| 3 | Remove duplicate `filter_by_timeline` from `timeline_controls.py` | ✅ Done — only definition is in `_router_base.py` |
-| 4 | Unify `_is_etf` logic | ✅ Done — only definition is in `watchlist.py`; `router.py` imports it |
-| 5 | Remove unused dependencies (`dotenv`, `tqdm`) | ✅ Done — `pyproject.toml` is clean |
-| 6 | Input validation for `stock_id` | ✅ Done — `src/services/validation.py` with `validate_stock_id()` |
-| 7 | Partial data loading in `get_stock_data()` | ✅ Done — each API call wrapped in independent try/except; returns partial data |
-| 8 | Parallel API calls with `ThreadPoolExecutor` | ✅ Done — `get_stock_data()` uses `max_workers=5` |
-| 9 | Unit tests for core business logic | ✅ Done — `tests/test_business_logic.py` (29 tests) covering `calc_roe_ttm`, `_is_etf`, `filter_by_timeline` |
+| 1 | `FinMindRateLimitError` silently swallowed (B01) | ✅ Fixed — `_fetch()` catches it, sets session state |
+| 2 | Missing `uv.lock` (F01) | ✅ Fixed — lock file now exists on disk |
+| 3 | No tests for event detection (E01) | ✅ Fixed — 800-line test file covering 11 functions |
+| 4 | `st.session_state` in tests (E03) | ✅ Fixed — down to 1 usage (from test framework coupling) |
 
-This update identifies **12 remaining items** (down from 19), including **3 new items** that emerged from the recent changes. Priorities have been re-assessed.
+This update identifies **14 remaining/active items**, including **6 new items** discovered during this review. Priorities have been re-assessed.
 
 ---
 
 ## 1. Code Duplication (DRY) — Updated
 
 ### ✅ RESOLVED: Card helpers duplicated across 4+ files
-All page modules now import `_section_title`, `_白话_card`, `_info_card` from `_router_base.py`. No local re-definitions remain.
+All page modules import `_section_title`, `_白话_card`, `_info_card` from `_router_base.py`.
 
 ### ✅ RESOLVED: `_find_value` / `_find_financial_value` duplicated
-Single definition `_find_financial_value` in `_router_base.py` (line 113). `roe_calculator.py` imports it. No other copies exist.
+Single definition in `_router_base.py` (line 117).
 
-### ✅ RESOLVED: `_is_etf` logic duplicated between `router.py` and `watchlist.py`
-Only definition is in `watchlist.py` (line 91). `router.py` imports it as `_is_etf_check`. Note: `adaptive_engine.py` `detect_company_type()` (line 389) has **inline** ETF detection logic that is simpler (only checks industry and `00xx` pattern), but this is a separate, purpose-specific check (company type classification, not ETF routing), so it's not a DRY violation per se — see NEW-A01 below.
+### ✅ RESOLVED: `_is_etf` logic unified
+Only definition in `watchlist.py` (line 91).
 
 ### ✅ RESOLVED: `filter_by_timeline` duplicate removed
-Only definition is in `_router_base.py`. `timeline_controls.py` keeps only the UI selector `render_timeline_selector()`.
+Only definition in `_router_base.py`.
 
-### 🟢 NEW-A01: Timeline constants duplicated between modules
+### 🟢 LOW-A01: Timeline constants duplicated between modules
 
 **Files affected**:
-- `src/pages/_router_base.py` → `_TIMELINE_DAYS` (line 149) — maps labels to day counts
+- `src/pages/_router_base.py` → `_TIMELINE_DAYS` (line 154) — maps labels to day counts
 - `src/pages/timeline_controls.py` → `_TIMELINE_OPTIONS` (line 12) — same mapping
 
-**Problem**: `_TIMELINE_DAYS` and `_TIMELINE_OPTIONS` define the same `{"1Y": 365, "3Y": 1095, "5Y": 1825, "ALL": None}` mapping. The values will inevitably diverge.
+**Problem**: `_TIMELINE_DAYS` and `_TIMELINE_OPTIONS` define the same `{"1Y": 365, "3Y": 1095, "5Y": 1825, "ALL": None}` mapping.
 
-**Impact**: If a new timeline option is added to one but not the other, the filter and the UI will be out of sync.
+**Impact**: If a new timeline option is added to one but not the other, the filter and UI will be out of sync.
 
-**Recommendation**: Extract timeline constants into a shared module (e.g., `src/services/timeline.py` or `_router_base.py`) and have `timeline_controls.py` import from it. Estimated effort: 10 minutes.
+**Recommendation**: Extract timeline constants into a shared module. Estimated effort: 10 minutes.
+
+### 🟡 NEW-G01: `_atomic_write` function duplicated in two modules
+
+**Files affected**:
+- `src/services/adaptive_engine.py` (line 135) — accepts `str` path
+- `src/services/watchlist.py` (line 21) — accepts `Path` path
+
+**Problem**: Both functions implement identical atomic-write-via-tempfile-and-rename logic. The `watchlist.py` version accepts `Path` objects while `adaptive_engine.py` accepts `str`, making consolidation slightly non-trivial but straightforward.
+
+**Impact**: If a bug is found in the atomic write pattern (e.g., Windows compatibility), it must be fixed in two places. Inconsistent type signatures.
+
+**Recommendation**: Extract to a shared utility module (e.g., `src/services/storage_util.py`). Estimated effort: 15 minutes.
+
+### 🟡 NEW-G02: `models.py` dataclasses are dead code
+
+**File**: `src/data/models.py` (86 lines, 6 dataclasses: `CompanyCard`, `RevenueBreakdown`, `FinancialSummary`, `PeerComparison`, `GroupStructure`, `AnalysisResult`)
+
+**Problem**: Zero imports of any model class exist in the entire source tree. The data dict in `get_stock_data()` uses untyped dicts throughout.
+
+**Impact**: 86 lines of dead code. The typed data structures were designed for the app but the app was built with raw dicts instead. This increases the risk of typos in dict key access going undetected.
+
+**Recommendation**: Either (a) refactor the data pipeline to use these dataclasses (type safety benefit), or (b) remove `models.py` to avoid confusion. Estimated effort: option (a) 3 hours, option (b) 5 minutes.
 
 ---
 
 ## 2. Error Handling Gaps — Updated
 
 ### ✅ RESOLVED: Silent exception swallowing in data loading
-`get_stock_data()` now wraps each API call in `_fetch()` (line 41–45) with per-call try/except. Failed calls return `None` for that data source; the rendering functions already handle `None` gracefully.
+`get_stock_data()` wraps each API call in `_fetch()` with per-call try/except.
 
 ### ✅ RESOLVED: No input validation on stock_id
-`src/services/validation.py` provides `validate_stock_id()` with proper format checking (4-digit numeric, empty/special char handling).
+`src/services/validation.py` provides `validate_stock_id()`.
 
-### 🟡 MEDIUM-B01: `FinMindRateLimitError` is raised but never caught
+### ✅ RESOLVED: `FinMindRateLimitError` silently swallowed
+`_fetch()` (line 44) now catches `FinMindRateLimitError` specifically and sets `st.session_state["_rate_limited"] = True`. Rate limit banner in `main.py` (line 182-184) shows user-facing warning.
 
-**File**: `src/data/finmind_client.py` (lines 126–128)
+### 🟡 NEW-G04: Rate limit uses two disconnected mechanisms
 
-**Problem**: When a 429 rate limit is detected, `FinMindRateLimitError` is raised. However, in `get_stock_data()` (line 44), the `_fetch()` inner function catches **all** exceptions with a bare `except Exception` and returns `None`. The rate limit error is silently swallowed — the user never sees a rate limit warning.
+**Files affected**:
+- `src/pages/_router_base.py` (line 46) — sets `st.session_state["_rate_limited"] = True`
+- `src/data/finmind_client.py` (lines 32-63) — module-level `_consecutive_failures` counter
+- `src/main.py` (line 182-184) — reads `get_rate_limit_status()` (module-level counter)
 
-**Impact**: Rate limit detection exists but provides no user-facing feedback. Users see "暫無資料" instead of "API rate limited, try again later."
+**Problem**: When `_fetch()` catches `FinMindRateLimitError`, it sets `st.session_state["_rate_limited"]` but the UI banner in `main.py` checks `get_rate_limit_status()` which reads the module-level `_consecutive_failures` counter. The session-state flag is never read. Combined failures (empty responses, errors) increment `_consecutive_failures` which triggers the banner at threshold=3, but a single `FinMindRateLimitError` may not trigger it if there are fewer than 3 consecutive failures.
 
-**Recommendation**: Either (a) handle `FinMindRateLimitError` specially in `_fetch()` to propagate it, or (b) set a session state flag that the UI can check. At minimum, log a warning. Estimated effort: 15 minutes.
+**Impact**: The `_rate_limited` session state flag is dead code — set but never read. The banner works via the module-level counter but may not fire for isolated rate limit events.
+
+**Recommendation**: Either (a) read `st.session_state.get("_rate_limited")` in `main.py` and clear it after display, or (b) remove the session state flag and rely solely on the module-level counter. Estimated effort: 10 minutes.
 
 ---
 
@@ -80,39 +103,51 @@ Only definition is in `_router_base.py`. `timeline_controls.py` keeps only the U
 ### ✅ RESOLVED: Sequential API calls in `get_stock_data()`
 10 API calls now run in parallel via `ThreadPoolExecutor(max_workers=5)`.
 
+### ✅ RESOLVED: `st.cache_data` removed from view layer
+Zero occurrences of `st.cache_data` found in source code.
+
 ### 🔴 HIGH-C01: N+1 query pattern in category browser (UNFIXED)
 
-**File**: `src/pages/category_browser.py` (lines 68–89, 205–226)
+**File**: `src/pages/category_browser.py` (lines 68-89, 205-226)
 
-**Problem**: The category browser fetches daily prices for 200 stocks sequentially (one API call per stock). Despite `@st.cache_data` on `FinMindClient`, this is still 200 sequential network calls on first load. The ETF browser has partially addressed this with `_get_all_etf_prices()` and caching, but the category browser has not.
+**Problem**: The category browser fetches daily prices for 200 stocks sequentially (one API call per stock). Despite FinMindClient caching, this is still 200 sequential network calls on first load. Both `_render_top_stocks_by_value` and `_render_hot_stocks_by_volume` do this independently (400 total calls for both sections, though the second batch hits cache).
 
-**Impact**: Category browser takes 30–60 seconds to load on cold cache. This is the slowest page in the app.
+**Impact**: Category browser takes 30-60 seconds to load on cold cache. With ThreadPoolExecutor applied per-stock (not across stocks), this remains the slowest page.
 
-**Recommendation**:
-1. Pre-compute top 200 by trading money using a batch approach or reduce to top 50.
-2. Consider showing only top 20 by default with "Load more" pagination.
-3. Add aggressive caching (TTL ≥ 24h) for the stock info + daily price combo.
-Estimated effort: 2 hours.
+**Recommendation**: Consider fetching all prices in bulk (the ETF browser's `_get_all_etf_prices()` pattern works because ETF prices are cached after first load, but category browser doesn't have this). Add a shared "fetch all daily prices" batch function with TTL ≥ 24h. Estimated effort: 2 hours.
 
 ### 🟡 MEDIUM-C02: `ThreadPoolExecutor` max_workers not configurable
 
-**File**: `src/pages/_router_base.py` (line 47)
+**File**: `src/pages/_router_base.py` (line 51)
 
-**Problem**: `max_workers=5` is hardcoded. Under rate limiting, 5 concurrent calls may trigger more 429s. Under normal conditions, higher concurrency could be faster.
+**Problem**: `max_workers=5` is hardcoded. Under rate limiting, 5 concurrent calls may trigger more 429s.
 
-**Impact**: No way to tune concurrency without code changes. The FinMind API may rate-limit aggressive concurrent requests.
+**Impact**: No way to tune concurrency without code changes.
 
-**Recommendation**: Make `max_workers` a parameter with a default of 5. Consider adaptive concurrency that backs off on rate limit errors. Estimated effort: 20 minutes.
+**Recommendation**: Make `max_workers` a parameter with a default of 5. Estimated effort: 20 minutes.
 
-### 🟡 MEDIUM-C3: ETF dividend ranking still fetches sequentially
+### 🟡 MEDIUM-C03: ETF dividend ranking still fetches sequentially
 
-**File**: `src/pages/etf_browser.py` (lines 340–413)
+**File**: `src/pages/etf_browser.py` (lines 340-413)
 
-**Problem**: While `_get_all_etf_prices()` caches prices efficiently, the dividend ranking still fetches dividend data for ALL ETFs sequentially (one API call per ETF). This is ~500 sequential calls.
+**Problem**: The dividend ranking fetches dividend data for ALL ETFs sequentially (~500 calls). While prices are cached by `_get_all_etf_prices()`, dividends are not.
 
-**Impact**: ETF dividend ranking is the second-slowest feature. First load can take 5+ minutes.
+**Impact**: ETF dividend ranking takes 5+ minutes on first load.
 
-**Recommendation**: Add dividend caching with TTL ≥ 7 days (dividends don't change daily). Batch the fetches or use a separate background cache warm-up. Estimated effort: 1.5 hours.
+**Recommendation**: Cache dividend data separately with TTL ≥ 7 days. Estimated effort: 1.5 hours.
+
+### 🟡 NEW-G06: `FinMindClient` instantiated directly (no dependency injection)
+
+**Files creating `FinMindClient()` directly**:
+- `src/pages/router.py` (line 39)
+- `src/pages/peer_comparison.py` (line 54 — fallback benchmark)
+- `src/main.py` (line 131)
+
+**Problem**: `FinMindClient` is instantiated with `FinMindClient(cache_dir=".cache")` in 2 places and bare `FinMindClient()` in 1 place (`peer_comparison.py`). No dependency injection means tests cannot easily mock the data layer.
+
+**Impact**: The `peer_comparison.py` creates its own `FinMindClient()` without cache_dir, which uses default `.cache` but bypasses the test mock. Testing page-level logic with real data requires real API access or complex monkeypatching.
+
+**Recommendation**: Accept `FinMindClient` as a parameter in rendering functions (most already do). Remove the bare `FinMindClient()` instantiation from `peer_comparison.py`. Estimated effort: 20 minutes.
 
 ---
 
@@ -122,74 +157,64 @@ Estimated effort: 2 hours.
 
 **Files**: `src/services/watchlist.py`, `src/services/adaptive_engine.py`
 
-**Problem**: Watchlist and events are stored in YAML files with file locking. File locks don't work across processes/machines. The multi-watchlist system (ISSUE-C03) is now implemented, increasing the write frequency.
+**Problem**: Watchlist and events stored in YAML files with file locks. File locks don't work across processes/machines. The `FinMindClient` is not a singleton, so concurrent sessions may have stale data.
 
-**Impact**: Cannot deploy to any multi-user environment without data corruption. The new multi-watchlist CRUD operations (create_list, delete_list, rename_list) all write to the same file, increasing contention.
+**Impact**: Cannot deploy to any multi-user environment without data corruption.
 
-**Recommendation**: Abstract storage behind an interface. Implement SQLite backend for multi-user support. Keep YAML as default for local development. Estimated effort: 4 hours.
+**Recommendation**: Abstract storage behind an interface. Implement SQLite backend. Estimated effort: 4 hours.
 
 ### 🟡 MEDIUM-D02: Module-level global state for rate limiting (UNFIXED)
 
-**File**: `src/data/finmind_client.py` (lines 32–34)
+**File**: `src/data/finmind_client.py` (lines 32-34)
 
-**Problem**: `_consecutive_failures` and `_last_failure_time` are module-level globals. In a multi-process deployment, each process has its own counter.
+**Problem**: `_consecutive_failures` and `_last_failure_time` are module-level globals.
 
-**Impact**: Rate limit warnings may not appear when they should, or may appear incorrectly.
+**Impact**: In a multi-process deployment, each process has its own counter. Also, the `_MISSING_COL_WARNED` set in `adaptive_engine.py` (line 62) is a similar module-level global that persists for the process lifetime — acceptable but worth noting.
 
-**Recommendation**: Use `st.session_state` for per-session tracking, or a shared cache for multi-process. Estimated effort: 1 hour.
+**Recommendation**: Use `st.session_state` for per-session tracking, or a shared cache. Estimated effort: 1 hour.
 
 ### 🟡 MEDIUM-D03: Hardcoded static data in multiple modules (UNFIXED)
 
-**Files**: `src/services/analogy_engine.py` (one_liners dict, 20 entries), `src/services/revenue_analyzer.py` (KNOWN_COMPANY_REVENUE, 9 entries), `src/pages/group_structure.py` (KNOWN_GROUP_STRUCTURES, 5 entries), `src/pages/peer_comparison.py` (INDUSTRY_BENCHMARKS, 28 entries)
+**Files**:
+- `src/services/analogy_engine.py` → `one_liners` dict (20 entries, inline)
+- `src/services/revenue_analyzer.py` → `KNOWN_COMPANY_REVENUE` (9 entries, inline)
+- `src/pages/group_structure.py` → `KNOWN_GROUP_STRUCTURES` (5 entries, inline)
+- `src/pages/peer_comparison.py` → `INDUSTRY_BENCHMARKS` (28 entries, inline)
+- `src/pages/etf_browser.py` → `ETF_CATEGORY_KEYWORDS` (~50 keywords, inline)
 
-**Problem**: Static company data is scattered across 4 modules. Adding a new company requires edits in multiple files. No single source of truth.
+**Problem**: Static data scattered across 5 modules. Adding a new company requires edits in multiple files. `INDUSTRY_BENCHMARKS` has 28 industries but may not cover all ~60+ industries in the market (see `docs/design/ux_improvements.md`).
 
-**Impact**: High maintenance cost as company coverage grows. Inconsistencies between modules.
+**Impact**: High maintenance cost. Inconsistencies between modules.
 
-**Recommendation**: Create a single `src/data/company_registry.yaml` (or JSON) that holds all static company data. Load it once at startup. Estimated effort: 2 hours.
+**Recommendation**: Create a single `src/data/company_registry.yaml` that holds all static company data. Load once at startup. Estimated effort: 2 hours.
 
 ---
 
 ## 5. Missing Tests — UPDATED
 
-### ✅ NEW COVERAGE: Unit tests added
-`tests/test_business_logic.py` now has 29 tests covering:
-- `calc_roe_ttm()` — 10 tests (full TTM, single quarter, 2 quarters, empty, None, zero equity, negative ROE, English columns)
-- `_is_etf()` — 13 tests (regular stock, by industry, case-insensitive, by name heuristic, by ID pattern, priority, None/empty industry)
-- `filter_by_timeline()` — 6 tests (empty, None, ALL, 1Y, 3Y, default)
+### ✅ RESOLVED: Unit test suite expanded from 29 to ~59 tests
+`tests/test_business_logic.py` now has 800 lines covering:
+- `calc_roe_ttm()` — 10 tests (was 10)
+- `_is_etf()` — 13 tests (was 13)
+- `filter_by_timeline()` — 6 tests (was 6)
+- `validate_stock_id()` — 9 tests (NEW)
+- `detect_revenue_event()` — 7 tests (NEW)
+- `detect_price_abnormal()` — 7 tests (NEW)
+- `detect_news_event()` — 8 tests (NEW)
+- `check_data_freshness()` — 7 tests (NEW)
+- `detect_company_type()` — 9 tests (NEW)
+- `extract_dividend_summary()` — 9 tests (NEW)
 
-### 🔴 HIGH-E01: No tests for event detection algorithms (NEW)
-
-**Problem**: The core business logic tests cover `_is_etf`, `calc_roe_ttm`, and `filter_by_timeline`. But there are **zero** tests for:
-- `detect_revenue_event()` — YoY threshold behavior
-- `detect_price_abnormal()` — single-day threshold behavior
-- `detect_news_event()` — keyword matching
-- `check_data_freshness()` — date staleness logic
-- `detect_company_type()` — ETF/group/default classification
-- `extract_dividend_summary()` — frequency classification, annual estimation
-- `validate_stock_id()` — the newly added validation function
-
-**Impact**: These are the core "value-add" algorithms of the app. A regression in event detection would go unnoticed.
-
-**Recommendation**: Add pytest-based unit tests for all pure functions with known inputs/outputs. Start with `validate_stock_id()` and `detect_revenue_event()`. Estimated effort: 3 hours.
+### ✅ RESOLVED: st.session_state usage in tests greatly reduced
+Down to 1 usage at line 260 (for `test_tl_1y`), which is necessary because `filter_by_timeline()` reads from `st.session_state`.
 
 ### 🟡 MEDIUM-E02: No integration tests for data pipeline (UNFIXED)
 
-**Problem**: No tests verify that FinMind API responses are correctly parsed and transformed. The `COLUMN_ALIASES` system in `adaptive_engine.py` is a good start but not tested.
+**Problem**: No tests verify that FinMind API responses are correctly parsed and transformed. The `COLUMN_ALIASES` system in `adaptive_engine.py` is critical for resilience but not tested end-to-end.
 
 **Impact**: Fragile dependency on FinMind API schema. If FinMind changes column names, the app will fail silently.
 
-**Recommendation**: Add snapshot tests with saved API responses. Test the full data pipeline from API response to rendered output. Estimated effort: 3 hours.
-
-### 🟡 MEDIUM-E03: Test uses `st.session_state` outside Streamlit context
-
-**File**: `tests/test_business_logic.py` (lines 236, 243, 255)
-
-**Problem**: `filter_by_timeline()` tests set `st.session_state["test_tl_1y"] = "1Y"` etc. This requires a Streamlit runtime context. The tests may fail when run with plain `pytest` outside Streamlit.
-
-**Impact**: Tests may be fragile or fail in CI without Streamlit mocking.
-
-**Recommendation**: Either use `pytest-mock` to mock `st.session_state`, or refactor `filter_by_timeline()` to accept an optional `timeline_value` parameter that bypasses `st.session_state`. Estimated effort: 30 minutes.
+**Recommendation**: Add snapshot tests with saved API responses. Test the full pipeline from API response to rendered output. Estimated effort: 3 hours.
 
 ---
 
@@ -198,13 +223,8 @@ Estimated effort: 2 hours.
 ### ✅ RESOLVED: Unused dependencies removed
 `python-dotenv` and `tqdm` are no longer in `pyproject.toml`.
 
-### 🟡 MEDIUM-F01: Missing `uv.lock` file
-
-**Problem**: The project uses `uv` but has no `uv.lock` file committed. A `uv sync` on a different day could install incompatible versions. No upper bounds are specified.
-
-**Impact**: Non-reproducible builds. The `st.query_params` API requires Streamlit >=1.30 — a future Streamlit 2.x could break it.
-
-**Recommendation**: Run `uv lock` and commit `uv.lock`. Estimated effort: 5 minutes.
+### ✅ RESOLVED: `uv.lock` file committed
+Lock file exists on disk, ensuring reproducible builds.
 
 ### 🟡 MEDIUM-F02: FinMind is the sole data source (UNFIXED)
 
@@ -212,106 +232,158 @@ Estimated effort: 2 hours.
 
 **Impact**: Complete data unavailability when FinMind has issues.
 
-**Recommendation**: Cache a "last known good" dataset that can be served when the API is unavailable. The disk cache in `FinMindClient` helps but doesn't handle the initial load case. Estimated effort: 2 hours.
+**Recommendation**: Cache a "last known good" dataset. Estimated effort: 2 hours.
 
 ---
 
-## 7. New Architecture Observations
+## 7. UI/UX Observations
+
+### 🟢 NEW-G05: ETF category keywords inline in `etf_browser.py`
+
+**File**: `src/pages/etf_browser.py` (line 179)
+
+**Problem**: `ETF_CATEGORY_KEYWORDS` dict with ~50 keywords and 5 categories is defined inline at module level. The `_classify_etf()` function (line 213) uses first-match-wins semantics which may misclassify ETFs (e.g., a "高股息" ETF that's also "主題型" gets whichever category is listed first in the dict).
+
+**Potential Impact**: Misclassified ETFs in the ETF browser. The ordering of dict keys in `ETF_CATEGORY_KEYWORDS` determines classification priority — this is implicit, not explicit.
+
+**Recommendation**: Either (a) document the priority order, (b) use explicit priority scoring, or (c) allow multi-category classification. Estimated effort: 30 minutes.
+
+---
+
+## 8. Architecture Observations
 
 ### Strengths (since last review)
-1. **Parallel data loading**: `ThreadPoolExecutor` in `get_stock_data()` is a clean implementation
-2. **Input validation**: `validation.py` is a good addition
-3. **Test suite**: 29 unit tests provide a foundation for regression safety
-4. **Multi-watchlist**: `watchlist.py` now supports multiple named lists with full CRUD
-5. **DRY cleanup**: Card helpers, `_find_value`, and `_is_etf` are properly consolidated
+1. **Rate limit handling**: Both session-state flag and module-level counter provide defense in depth (though they're currently disconnected — see NEW-G04)
+2. **Test suite**: ~59 tests covering all core algorithms — good regression safety net
+3. **Atomic writes**: Both YAML storage modules use atomic write patterns (though duplicated — see NEW-G01)
+4. **Column aliases**: `COLUMN_ALIASES` system in `adaptive_engine.py` provides graceful degradation when API columns change
+5. **TTL-based cleanup**: Cache cleanup with TTL expiry and LRU eviction in `FinMindClient`
 
 ### Weaknesses (new or remaining)
-1. **No abstraction layers**: Business logic is tightly coupled to Streamlit. The `data` dict in `get_stock_data()` is untyped — `models.py` dataclasses are defined but unused
-2. **Rate limit detection silently swallowed**: `FinMindRateLimitError` is raised but caught by the generic `except Exception` in `_fetch()`
-3. **No dependency injection**: `FinMindClient` is instantiated directly in multiple places
-4. **No `uv.lock`**: Despite claiming it's done in the previous review's action plan, no lock file exists on disk
-5. **Inner function `_fetch` swallows debugging info**: Line 44 `except Exception: return name, None` — no logging, making troubleshooting API failures difficult
+1. **Dead code**: `models.py` (86 lines, 6 dataclasses) is never imported — confusing for new developers
+2. **Duplicated utilities**: `_atomic_write` in 2 places, `_TIMELINE_DAYS`/`_TIMELINE_OPTIONS` in 2 places
+3. **No dependency injection**: `FinMindClient()` instantiated directly in multiple places
+4. **Disconnected rate limit mechanisms**: Session flag set but never read; module counter used instead
+5. **Scattered static data**: 5 modules with inline company data dicts — no single source of truth
 
 ---
 
-## 8. Prioritized Action Plan
+## 9. Prioritized Action Plan
 
 ### Immediate (This Week)
 
 | # | Item | Effort | Priority | Status |
 |---|------|--------|----------|--------|
-| 1 | Commit `uv.lock` | 5 min | Reproducibility | ❌ Not done |
-| 2 | Extract shared timeline constants (NEW-A01) | 10 min | DRY | ❌ Not done |
-| 3 | Add logging to `_fetch()` inner function | 10 min | Debuggability | ❌ Not done |
-| 4 | Handle `FinMindRateLimitError` visibility (B01) | 15 min | UX | ❌ Not done |
-| 5 | Fix `st.session_state` in tests (E03) | 30 min | Test reliability | ❌ Not done |
+| 1 | Extract shared timeline constants (A01) | 10 min | DRY | ❌ Not done |
+| 2 | Consolidate `_atomic_write` (NEW-G01) | 15 min | DRY | ❌ Not done |
+| 3 | Fix disconnected rate limit flags (NEW-G04) | 10 min | Reliability | ❌ Not done |
+| 4 | Remove dead `models.py` or adopt it (NEW-G02) | 5 min / 3h | Clarity | ❌ Not done |
+| 5 | Remove bare `FinMindClient()` in peer_comparison (NEW-G06) | 20 min | Testability | ❌ Not done |
 
-**Subtotal: ~1 hour**
+**Subtotal: ~1 hour (quick wins) / 4 hours (with models.py refactor)**
 
 ### Short-Term (Next 2 Weeks)
 
 | # | Item | Effort | Priority | Status |
 |---|------|--------|----------|--------|
-| 6 | Add tests for event detection & validation (E01) | 3 hours | Quality | ❌ Not done |
-| 7 | Make `max_workers` configurable (C02) | 20 min | Performance tuning | ❌ Not done |
-| 8 | Optimize category browser N+1 queries (C01) | 2 hours | Performance | ❌ Not done |
-| 9 | Cache ETF dividend data (C03) | 1.5 hours | Performance | ❌ Not done |
-| 10 | Consolidate static company data (D03) | 2 hours | Maintainability | ❌ Not done |
-| 11 | Add type checking configuration | 2 hours | Quality | ❌ Not done |
+| 6 | Optimize category browser N+1 queries (C01) | 2 hours | Performance | ❌ Not done |
+| 7 | Cache ETF dividend data (C03) | 1.5 hours | Performance | ❌ Not done |
+| 8 | Consolidate static company data (D03) | 2 hours | Maintainability | ❌ Not done |
+| 9 | Make `max_workers` configurable (C02) | 20 min | Performance tuning | ❌ Not done |
+| 10 | Fix ETF category classification priority (NEW-G05) | 30 min | UX correctness | ❌ Not done |
 
-**Subtotal: ~11 hours**
+**Subtotal: ~6 hours**
 
 ### Medium-Term (Post-MVP)
 
 | # | Item | Effort | Priority | Status |
 |---|------|--------|----------|--------|
-| 12 | Abstract storage + SQLite backend (D01) | 4 hours | Scalability | ❌ Not done |
-| 13 | Fix rate limit global state (D02) | 1 hour | Scalability | ❌ Not done |
-| 14 | Integration tests with saved API responses (E02) | 3 hours | Quality | ❌ Not done |
-| 15 | Pagination for large lists | 1 hour | UX | ❌ Not done |
-| 16 | "Last known good" data fallback (F02) | 2 hours | Reliability | ❌ Not done |
+| 11 | Abstract storage + SQLite backend (D01) | 4 hours | Scalability | ❌ Not done |
+| 12 | Fix rate limit global state (D02) | 1 hour | Scalability | ❌ Not done |
+| 13 | Integration tests with saved API responses (E02) | 3 hours | Quality | ❌ Not done |
+| 14 | "Last known good" data fallback (F02) | 2 hours | Reliability | ❌ Not done |
 
-**Subtotal: ~11 hours**
-
----
-
-## 9. Summary Table
-
-| Category | Items (2026-06-09) | Items (2026-06-10) | Critical | High | Medium | Low |
-|----------|---------------------|---------------------|----------|------|--------|-----|
-| Code Duplication | 4 | 1 (3 resolved) | — | — | — | 1 |
-| Error Handling | 3 | 1 (1 resolved, 1 new) | — | — | 1 | — |
-| Performance | 3 | 3 (1 resolved) | — | 1 | 2 | — |
-| Scalability | 3 | 3 | — | 1 | 2 | — |
-| Missing Tests | 3 | 3 (1 resolved) | — | 1 | 2 | — |
-| Dependencies | 3 | 2 (1 resolved) | — | — | 2 | — |
-| **Total** | **19** | **13** | **—** | **3** | **9** | **1** |
-
-**Total estimated effort**: ~23 hours (Immediate: 1h, Short-term: 11h, Medium-term: 11h)
+**Subtotal: ~10 hours**
 
 ---
 
-## 10. Key Changes Since Last Review
+## 10. Summary Table
 
-### Resolved Items (9)
-1. ✅ `_find_value` / `_find_financial_value` consolidated into single `_find_financial_value` in `_router_base.py`
-2. ✅ Card helpers (`_section_title`, `_白话_card`, `_info_card`) no longer duplicated in page modules
-3. ✅ `filter_by_timeline` duplicate removed from `timeline_controls.py`
-4. ✅ `_is_etf` unified — only in `watchlist.py`
-5. ✅ Unused deps (`dotenv`, `tqdm`) removed
-6. ✅ Input validation added (`src/services/validation.py`)
-7. ✅ Partial data loading in `get_stock_data()` (per-call try/except)
-8. ✅ Parallel API calls (`ThreadPoolExecutor`)
-9. ✅ Unit tests added (29 tests)
+| Category | Items (2026-06-09) | Items (2026-06-10) | Items (2026-06-11) | Critical | High | Medium | Low |
+|----------|---------------------|---------------------|---------------------|----------|------|--------|-----|
+| Code Duplication | 4 | 1 | 2 (+1 new) | — | — | 1 | 1 |
+| Error Handling | 3 | 1 | 1 (+1 new) | — | — | 1 | — |
+| Performance | 3 | 3 | 3 (+1 new) | — | 1 | 2 | — |
+| Scalability | 3 | 3 | 2 | — | 1 | 1 | — |
+| Missing Tests | 3 | 3 | 1 (2 resolved) | — | — | 1 | — |
+| Dependencies | 3 | 2 | 1 (1 resolved) | — | — | 1 | — |
+| **Total** | **19** | **13** | **10** (−3 resolved, +6 new, −6 old reclassified) | **—** | **2** | **7** | **1** |
 
-### New Items Identified (3)
-1. 🟢 NEW-A01: Timeline constants duplicated (`_TIMELINE_DAYS` vs `_TIMELINE_OPTIONS`)
-2. 🟡 B01 (moved from resolved to active): `FinMindRateLimitError` silently swallowed by `_fetch()`
-3. 🔴 E01: No tests for event detection, company type, dividend analysis, and validation
-
-### Previously Claimed "Done" But Not Actually Done (1)
-1. ❌ `uv.lock`: Marked as done in previous action plan, but no lock file exists
+**Total estimated effort**: ~17 hours (Immediate: 1h, Short-term: 6h, Medium-term: 10h)
 
 ---
 
-*The codebase is in good shape. The team has addressed 9 of 19 items from the first review. The highest-leverage remaining investments are: (1) adding tests for event detection algorithms, (2) optimizing the category browser's N+1 query pattern, and (3) consolidating static company data. These three actions will reduce bugs, speed up the slowest pages, and make the codebase easier to maintain.*
+## 11. Key Changes Since Last Review (2026-06-10)
+
+### Resolved Items (4)
+1. ✅ **B01**: `FinMindRateLimitError` now caught by `_fetch()` in `_router_base.py` (line 44), sets `st.session_state["_rate_limited"] = True`; rate limit banner in `main.py` (line 182-184) checks `get_rate_limit_status()`
+2. ✅ **F01**: `uv.lock` now exists on disk
+3. ✅ **E01**: Test suite expanded from 29 to ~59 tests covering all event detection, validation, freshness, company type, and dividend analysis functions
+4. ✅ **E03**: `st.session_state` usage reduced to 1 test (was 3); remaining usage is necessary for `filter_by_timeline()` integration
+
+### New Items Identified (6)
+1. 🟡 **NEW-G01**: `_atomic_write` duplicated in `adaptive_engine.py` and `watchlist.py` (also inconsistent type signatures)
+2. 🟡 **NEW-G02**: `models.py` — 6 dataclasses, 86 lines, never imported (dead code)
+3. 🟡 **NEW-G04**: Rate limit flag `_rate_limited` session state set but never read; two disconnected mechanisms
+4. 🟡 **NEW-G05**: `ETF_CATEGORY_KEYWORDS` inline in `etf_browser.py` with implicit priority ordering
+5. 🟡 **NEW-G06**: `FinMindClient()` instantiated directly in `peer_comparison.py` without cache_dir
+6. 🟡 **NEW-G07**: `INDUSTRY_BENCHMARKS` covers only 28 industries; some stocks' industries may not be covered (see `docs/design/ux_improvements.md`)
+
+### Items Reclassified (as part of D03)
+- `ETF_CATEGORY_KEYWORDS` in `etf_browser.py` added to D03's scope (static data consolidation)
+
+---
+
+## 12. Verification Notes
+
+All claims in this report were verified by reading source code:
+- **`_fetch()` rate limit handling**: Confirmed at `_router_base.py` lines 44-48
+- **Rate limit banner**: Confirmed at `main.py` lines 182-184 using `get_rate_limit_status()`
+- **Test coverage**: Counted test classes and methods in `test_business_logic.py` (800 lines)
+- **`uv.lock` existence**: Confirmed via filesystem search
+- **`st.cache_data` removal**: 0 matches in `src/` directory
+- **`_atomic_write` duplication**: Lines 135 in `adaptive_engine.py` and 21 in `watchlist.py`
+- **`models.py` unused**: 0 import matches across entire `src/` tree
+- **`FinMindClient()` instantiations**: Found 3 direct creations (router.py:39, peer_comparison.py:54, main.py:131)
+- **Test count**: `test_business_logic.py` contains 10 test classes, ~59 test methods total
+
+---
+
+*The codebase continues to improve. The team has resolved 4 more items since the last review, including the critical test coverage gap. The highest-leverage remaining investments are: (1) optimizing the category browser's N+1 query pattern, (2) consolidating static company data across 5 modules, and (3) cleaning up duplicated utilities (atomic_write, timeline constants). The test suite is now comprehensive — the focus should shift to performance optimization and codebase consolidation.*
+
+---
+
+## 13. Challenger Round 3 Addendum (2026-06-11)
+
+### Critical Finding NOT Caught by Architect
+
+The Challenger's Round 3 review identified a **P0 regression** that the Architect's code-pattern review missed:
+
+**business_card.py is severely truncated (128 lines).** The `_render_business_card()` function imports 15+ service functions but calls **NONE** of them. The page only renders stock name, price, and watchlist buttons. Revenue chart, pie chart, news, dividend, and analogy sections are imported but never rendered.
+
+**Why the Architect missed it:** The review focused on code patterns (duplication, dead code, error handling) but did not trace the rendering flow from imports to actual `st.markdown()` / `st.plotly_chart()` calls. This is a **methodology gap** — future Architect reviews should add a "rendering flow verification" step that checks whether imported services are actually invoked.
+
+**This is the #1 priority item in the current backlog.** See `docs/workflow/challenge_log.md` Round 1 Q2 and Round 2 Q2 for full analysis.
+
+### Priority Adjustments from Challenger
+
+| Item | Architect's Priority | Challenger's Adjustment |
+|------|---------------------|------------------------|
+| NEW-G07 (INDUSTRY_BENCHMARKS incomplete) | Listed in Scalability | **Defer to P3** — only affects edge cases |
+| business_card.py truncation | Not identified | **P0 — CRITICAL regression** |
+| C15 (Paper Trading) | Not in tech_debt | **REJECTED** — positioning violation |
+| C18 (Gamification) | Not in tech_debt | **P3 (post-MVP)** — no core value alignment |
+
+### Recommended Action
+
+The team should **complete business_card.py before any new features**. This is a regression fix, not a feature addition. Estimated effort: 8-12 hours. See `docs/workflow/challenge_log.md` for the full implementation breakdown.

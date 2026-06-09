@@ -131,6 +131,103 @@ After reviewing the architecture, data flow, and UI implementation across three 
 
 ---
 
+## Layer 5: Design System Compliance (Round 3 — 2026-06-11)
+
+> Recorded after Round 3 Design Comparison Review. Verification of Round 2 issues (2 fixed, 19 still present, 3 new found).
+
+### P0 — CRITICAL
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-002-NEW | `business_card.py` | 128 | **Page severely truncated** — only 128 lines. Revenue chart, pie chart, news, dividend sections are imported but NEVER rendered. This is the MAIN page of the app. | **Critical** |
+
+### Color System Violations (unchanged from Round 2)
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-006 | `financial_health.py` | 180 | Uses `#F39C12` (orange) for "moderate" debt ratio — orange NOT in design system palette | Medium |
+| D-013 | `etf_browser.py` | 67 | Uses `#2E86C1` (dark blue) — not in design system | Medium |
+| D-013 | `etf_browser.py` | 68 | Uses `#1B4F72` (navy) — not in design system | Medium |
+| D-013 | `etf_browser.py` | 447 | Uses `#8E44AD` (purple) for dividend yield — not in design system | Medium |
+| D-024 | `watchlist_page.py` | 123 | Uses `#2E86C1` (dark blue) — not in design system | Medium |
+| D-024 | `watchlist_page.py` | 124 | Uses `#1B4F72` (navy) — not in design system | Medium |
+
+### Custom Gradient Violations (NEW — not in design system)
+
+| # | File | Lines | Issue | Severity |
+|---|------|-------|-------|----------|
+| D-004 | `operation_checkup.py` | 136, 169 | `linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%)` — custom gradient not in design system | Medium |
+| D-027-NEW | `event_dashboard.py` | 141 | `linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%)` — adaptive banner uses custom gradient | Medium |
+| — | `etf_browser.py` | 61 | `linear-gradient(135deg,#EBF5FB,#EAF2F8)` — ETF explanation card | Medium |
+| — | `watchlist_page.py` | 122 | `linear-gradient(135deg,#EBF5FB,#EAF2F8)` — empty state card | Medium |
+| — | `etf_detail.py` | 110 | `linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%)` — one-liner banner | Medium |
+
+### PPT Style Violations
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-003 | `operation_checkup.py` | 62-70 | Trend messages likely exceed 200-char text limit | Medium |
+| D-007 | `financial_health.py` | multiple | Heavy text content across 4 sections — significantly exceeds 200-char limit | High |
+| D-008 | `financial_health.py` | — | Only 1 chart for 4 sections — chart proportion below 60% | Medium |
+| D-010 | `peer_comparison.py` | 333-367 | Metric analysis text could reach 400+ chars with all metrics | Medium |
+
+### Zone Separation Violations
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-001 | `business_card.py` | 56-72 | Watchlist buttons in navbar (Zone A) — interactive controls should be in Zone C | Medium |
+
+### Component Consistency Issues
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-009 | `financial_health.py` | 188-196 | Custom health card doesn't use shared components | Low |
+| D-011 | `peer_comparison.py` | 92 | Uses `st.metric()` instead of `_白话_card()` | Low |
+| D-025 | `watchlist_page.py` | 204-224 | Raw flexbox HTML card instead of `_白话_card()` | Low |
+| D-028-NEW | `watchlist_page.py` | 84-114 | Summary cards use inline HTML with hardcoded colors instead of shared components | Low |
+
+### Responsive Design Issues
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-015 | `etf_browser.py` | 165, 437 | 6-column layout will break on narrow screens | Medium |
+| D-019 | `category_browser.py` | 105 | 6-column layout will break on narrow screens | Medium |
+| — | `main.py` | 58-68 | Media queries only adjust padding — column layouts still break | Medium |
+
+### Accessibility Issues
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-022 | `event_dashboard.py` | 21-26 | Severity badges use emoji without text alternatives | Medium |
+| D-020 | `category_browser.py` | 141 | Hidden label on industry radio — screen reader inaccessible | High |
+| — | `chart.py` | 30 | `#555555` chart text may fail WCAG AA on dark backgrounds | Medium |
+
+### New Issues Found in Round 3
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-005-NEW | `_router_base.py` | 129-130 | `_section_title()` auto-prepends `📊` emoji — conflicts with pages that already have custom emoji prefixes (e.g., 🩺 becoming 📊 🩺 營運摘要) | Medium |
+| D-027-NEW | `event_dashboard.py` | 141-152 | `_render_adaptive_banner` uses custom gradient HTML instead of standard card | Medium |
+| D-028-NEW | `watchlist_page.py` | 84-114 | Summary cards use inline HTML with hardcoded `#E74C3C`/`#27AE60`/`#3498DB` border colors instead of shared `_白话_card()` component | Low |
+
+### Chart Color Violations (chart.py)
+
+| Line | Illegal Color | Should Be | Notes |
+|------|---------------|-----------|-------|
+| 150 | `#4A90D9` | `#3498DB` | Revenue bar chart |
+| 159, 251, 401 | `#2ECC71` | `#27AE60` | Positive/increasing color |
+| 204 | `#F39C12`, `#2ECC71` | `#3498DB`, `#27AE60` | OHLC single-day fallback colors |
+| 315 | `#2ECC71`, `#F39C12` | `#27AE60`, `#3498DB` | Funnel chart stage colors |
+
+### Fixes Since Round 2 ✅
+
+| # | File | Line | Fix Applied |
+|---|------|------|-------------|
+| D-012 | `peer_comparison.py` | 51 | `@st.cache_data(ttl=3600)` removed from view layer |
+| D-016 | `etf_browser.py` | 12, 18 | `@st.cache_data(ttl=3600)` replaced with module-level cache functions |
+
+---
+
 *Summary: The project functions smoothly under the "Happy Path", but when facing scalability, error handling, and concurrency, the underlying infrastructure (especially the cache algorithm and YAML persistence layer) is extremely fragile. Refactoring API access and implementing file locking mechanisms should be prioritized.*
 
-*Design System Compliance (Round 2): The app has a solid foundation with good loading states, error handling, and zone separation. Main areas for improvement: (1) color system violations across 6 files, (2) text volume control on financial_health.py, (3) component consistency (inline HTML vs shared components), (4) responsive column layouts, (5) chart color standardization. Overall PPT style grade: B-.*
+*Design System Compliance (Round 3 — 2026-06-11): The app has good foundations in loading states, error handling, and zone separation. However, NO design issues were fixed between Round 2 and Round 3 (except 2 architecture violations). Critical new finding: business_card.py is severely truncated (128 lines) — the main content (revenue/news/dividend) is imported but never rendered. 3 new issues found: section title emoji conflict, gradient banners, inline summary cards. Overall PPT style grade: D+ (downgraded from B-).*

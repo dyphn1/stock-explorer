@@ -1,8 +1,7 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔧 開發輪次（技術債清理 + 測試補充）
-
-## 本輪主題：🔧 開發 — P0 技術債修復（2026-06-10）
+## 當前階段：🔍 檢討輪次（第三輪全面審查完成，待開發輪次修復 P0）
+## 本輪主題：🔍 檢討 — 第三輪全面審查（2026-06-11）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -549,4 +548,75 @@ See `docs/status/pending_review.md` for details:
 - Layer 0：54/54 ✅ | Layer 1：15/15 ✅（3 L1 失敗為既有基線）
 - Git commits: `ef162e4`, `09c66ab`
 
+### 2026-06-11（🔍 檢討 — 第三輪全面審查 + Challenger）
+- **QA Engineer 競品研究（第三輪）**: 分析 9 個國際平台（Investopedia, Stockopedia, Simply Wall St, Finviz, Acorns, Stash, Public.com, Tickeron, Trade Ideas）
+  - 新增 `docs/research/competitor_research.md` Round 3 區段（619 → 1,050 行）
+  - 發現「LLM + FinMind wrapper」模式爆炸性成長（20+ GitHub 專案），但自適應框架 + 比喻庫 + PPT 風格仍是競爭壁壘
+  - **戰略發現：遊戲化是空白地帶** — 所有 15+ 競品無一將股票教育遊戲化
+  - 新增 7 個功能建議（C13 至 C19）到 `docs/status/issues.md`
+- **Architect 技術債審查（第三輪）**: 驗證 4 項目已修復（B01, F01, E01, E03），發現 6 項新技術債
+  - 更新 `docs/status/tech_debt.md`（362 行）
+  - 新發現：G01 (`_atomic_write` 重複), G02 (models.py 死代碼), G04 (Rate limit flag 未讀取), G05 (ETF_CATEGORY_KEYWORDS 隱含順序), G06 (FinMindClient 無 cache_dir), G07 (INDUSTRY_BENCHMARKS 不完整)
+  - 剩餘 14 項，估計 ~17 小時
+- **Design Reviewer 設計審查（第三輪）**: 驗證 2 項已修復（D-012, D-016），發現 3 項新問題
+  - **P0 關鍵發現：business_card.py 嚴重縮水** — 僅 128 行，營收圖表、圓餅圖、新聞、股息區段全部未渲染
+  - 新發現：D-005-NEW (section title 雙重 emoji), D-027-NEW (event dashboard gradient), D-028-NEW (watchlist inline HTML)
+  - 5 處 gradient 違規（跨 5 檔案）
+  - **整體設計評分：B- → D+**（主頁面嚴重不完整）
+- **Challenger 3 輪挑戰**:
+  - Round 1: business_card.py 縮水確認為 P0；7 個新功能中僅 3 個值得現階段實作
+  - Round 2: C19 (結構化學習路徑) 升至 P1；C15 (模擬交易) 取消（定位衝突）；C18 (遊戲化) 延後
+  - Round 3: 路線圖需重大調整 — business_card.py 修復為最高優先
+  - **Challenger 裁決**：business_card.py 修復為 P0 最高優先
+- **Sprint 優先級調整**（經 Challenger 確認）：
+  - P0: D-002-NEW (business_card.py 修復, 8-12h) + 立即技術債批次修復 (~1h)
+  - P1: C19 (結構化學習路徑, 14-18h) + C14 (健康評分雷達, 14-20h, BLOCKED by business_card)
+  - P2: C07, C02, C04, C06 + 設計打磨
+  - Deferred: C15 (模擬交易), C18 (遊戲化), TD-11/12/15
+- Git commits: (文件更新，代碼變更由開發輪次執行)
+
 ---
+
+### Next Steps
+
+#### ✅ All P0/P1/P2 Fixes — COMPLETED (2026-06-09)
+#### ✅ Competitor Research — COMPLETED (2026-06-09, 2026-06-10, 2026-06-11 round 3)
+#### ✅ Tech Debt Audit — COMPLETED (2026-06-09, updated 2026-06-10, 2026-06-11)
+#### ✅ Design Review — COMPLETED (2026-06-10, updated 2026-06-11)
+#### ✅ Cost Estimation — COMPLETED (2026-06-10)
+#### ✅ Challenger Review — COMPLETED (2026-06-10, 2026-06-11)
+
+#### 🔴 P0 — IMMEDIATE (Next Dev Cycle)
+1. **D-002-NEW**: Complete business_card.py — restore revenue chart, pie chart, news, dividend sections (8-12h)
+2. **Immediate tech debt batch**: A01 (timeline constants) + NEW-G01 (_atomic_write) + NEW-G02 (models.py dead code) + NEW-G04 (rate flag) (~1h)
+
+#### ⏳ Awaiting Daniel's Input
+1. **Portfolio P&L positioning** — C05 approved or rejected? (See pending_review.md #4)
+2. **Roadmap approval** — Revised roadmap with business_card.py as P0 blocker
+3. **Seasonal industry list** — Which industries trigger ROE seasonal warning?
+
+#### 🔮 Remaining Tech Debt (14 items, ~17h)
+- Immediate batch (~1h): A01, NEW-G01, NEW-G02, NEW-G04, NEW-G05
+- Short-term (~8h): C01 (category browser N+1), C03 (ETF dividend cache), D03 (static data consolidation)
+- Medium-term (~8h): D01 (SQLite backend), D02 (rate limit global state), E02 (integration tests)
+- Post-MVP: TD-11 (type checking), TD-12 (storage abstraction), TD-15 (pagination)
+
+#### 📊 Issue Statistics (Post-Round 3)
+| Status | Count |
+|--------|-------|
+| 📋 Todo | 22 |
+| ✅ Done | 8 |
+| ❌ Canceled | 1 |
+| 🔄 Deferred | 2 |
+
+| Priority | Count |
+|----------|-------|
+| P0 | 5 |
+| P1 | 6 |
+| P2 | 11 |
+
+*Last updated: 2026-06-11 (review round 3 — QA, Architect, Design Reviewer, Challenger)*
+
+---
+
+*This file is maintained by the PM. All technical analysis is delegated to sub-agents.*

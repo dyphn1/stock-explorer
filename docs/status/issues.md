@@ -391,10 +391,179 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 - **Source:** Challenger review (2026-06-10, Round 1)
 - **Priority:** P2
 - **Status:** 📋 Todo
-- **Description:** The design system says "All professional terms must have plain-language translations" but there's no systematic glossary or tooltip system. Beginners encounter terms like "ROE," "P/B ratio," "institutional investors" with no inline help. This is a unique educational feature that no competitor has done well.
+- **Description:** The design system says "All professional terms must have plain-language translations" but there's no systematic glossary or tooltip system. Beginners encounter terms like "ROE," "P/B ratio," "institutional investors" with no inline help. This is a unique educational feature that no competitor has done well. **Validated by Round 3: Investopedia's 10,000+ term glossary confirms the value of this approach.**
 - **Suggested Implementation:** Create `src/data/glossary.yaml` with term → plain-language definition. Add hover tooltips or click-to-expand definitions on all financial terms across all pages.
 - **Related files:** `src/data/glossary.yaml`, all page modules
 - **Estimate:** 8-12h
+
+### [ISSUE-C10] Global Market Map
+- **Source:** Competitor research
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - 玩股網 has a global stock market map
+  - The Stock Explorer version can lean toward "fundamental understanding" rather than "trading heat"
+  - Presentation: 🟢 Up 🔴 Down ↔️ Flat + plain-language explanation of each market status
+- **Related files:** New page
+- **Reference:** `docs/research/competitor_research.md` — Inspiration J
+
+---
+
+## 🌍 Round 3 — Competitor Research (2026-06-10, International + AI)
+
+### New Feature Ideas from Round 3
+
+#### [ISSUE-C13] Investment Personality Quiz
+- **Source:** Competitor research (Round 3, Stash risk quiz)
+- **Priority:** P2 (demoted from P1 — Challenger Round 3: onboarding convenience, not educational tool)
+- **Status:** 📋 Todo
+- **Description:**
+  - Stash has a "Build Your Portfolio" risk preference quiz. Acorns also has onboarding personalization.
+  - Stock Explorer has NO onboarding flow — users land on a page and don't know where to start.
+  - A 5-question quiz ("How long do you plan to invest?", "How do you feel about losses?", etc.) that recommends "You're a dividend explorer → start with TSMC's dividend story" or "You're a growth hunter → start with revenue trends."
+  - Aligns with "historian" positioning: uses quiz results to recommend which analysis perspectives to explore first.
+- **Suggested Implementation:**
+  - New `src/pages/onboarding.py` with 5 multiple-choice questions
+  - Results stored in `session_state["investor_type"]`
+  - Investor type influences homepage recommendations and suggested pages
+  - Types to consider: `dividend_explorer`, `growth_hunter`, `value_sector`, `quality_focused`, `balanced_learner`
+  - Can be retaken anytime from settings
+- **Related files:** New `src/pages/onboarding.py`, `src/pages/homepage.py`
+- **Estimate:** 6-10h
+- **Competitive Gap:** 🟡 No TW competitor has onboarding personalization
+
+---
+
+#### [ISSUE-C14] Company Health Score (Visual Radar)
+- **Source:** Competitor research (Round 3, Simply Wall St snowflake + Stockopedia StockRank)
+- **Priority:** P1 (BLOCKED by business_card.py completion — Challenger Round 3)
+- **Status:** 📋 Todo
+- **Description:**
+  - Simply Wall St's "snowflake" and Stockopedia's "StockRank" both provide at-a-glance company scores.
+  - Stock Explorer's adaptive engine already analyzes all the data needed — it just needs a scoring layer.
+  - A 5-axis radar chart (Profitability, Growth, Financial Health, Dividend, Stability) with a 0-100 score per axis.
+  - Displayed on the business card page as a summary widget + explainable breakdown ("Your Profitability score is 85/100 because your gross margin is 55%, well above industry average").
+  - Differentiates from Simply Wall St: our scores are explainable (plain-language reasoning per axis), not just visual.
+- **Suggested Implementation:**
+  - New `src/services/health_scorer.py` — scoring algorithm per axis using existing financial data
+  - Plotly radar chart on business card page
+  - Plain-language explanation per axis (reuse explanation_engine.py patterns)
+  - Compare mode: overlay two companies' radars (Simply Wall St comparison feature)
+- **Related files:** `src/services/health_scorer.py`, `src/pages/business_card.py`
+- **Estimate:** 14-20h
+- **Competitive Gap:** 🔴 No TW competitor has explainable company health scoring
+
+---
+
+#### [ISSUE-C15] Paper Trading Simulator
+- **Source:** Competitor research (Round 3, Investopedia Simulator)
+- **Priority:** Deferred (Challenger Round 3: positioning violation — "historian, not stock picker")
+- **Status:** ❌ Canceled (requires Daniel approval to reframe as educational back-testing)
+- **Description:**
+  - Investopedia's stock simulator is the gold standard for beginner practice.
+  - NO Taiwanese competitor offers paper trading.
+  - Virtual $1M NTD portfolio: users "buy" stocks based on what they learned on Stock Explorer.
+  - Tracks virtual P&L using real FinMind price data.
+  - Educational framing: "Practice what you learned — no risk, no regret."
+  - Aligns with "historian" position: the goal is "did you understand the company" not "did you make money."
+- **Suggested Implementation:**
+  - New `src/pages/simulator.py` — portfolio management page
+  - Virtual portfolio stored in `config/virtual_portfolio.yaml`
+  - Buy/sell interface with position tracking
+  - P&L calculation using FinMind real-time price feeds (read-only, no real trading)
+  - Performance summary: "You've analyzed 12 companies and 'invested' in 7. Your best pick: +12% (TSMC), worst: -3% (Foxconn)"
+- **Related files:** New `src/pages/simulator.py`, `src/services/virtual_portfolio.py`, `config/virtual_portfolio.yaml`
+- **Estimate:** 20-30h
+- **Competitive Gap:** 🟡 P2 (no TW competitor has this, but also not core to education mission)
+
+---
+
+#### [ISSUE-C16] "Did You Know?" Contextual Company Tips
+- **Source:** Competitor research (Round 3, Stash "Stock Bits")
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - Stash embeds mini-facts next to stock details ("Did you know? TSMC makes 90% of the world's advanced chips").
+  - Stock Explorer can do this one better: contextual facts that match the analysis framework section.
+  - Example on TSMC business card: "Did you know? TSMC's 3nm chips are in every iPhone 15 Pro."
+  - These facts make companies memorable and connect financial data to real-world products.
+- **Suggested Implementation:**
+  - New `src/data/company_facts.yaml` — `{stock_id: [fact1, fact2, ...]}`
+  - Display as a tip card on business card page (randomly rotate facts)
+  - Community contribution: allow users to submit facts (v2)
+  - Could be expanded to per-section facts (operations facts, financial health facts, etc.)
+- **Related files:** New `src/data/company_facts.yaml`, `src/pages/business_card.py`
+- **Estimate:** 4-6h (mostly data collection)
+- **Competitive Gap:** 🟡 Unique feature — no TW competitor has contextual company facts
+
+---
+
+#### [ISSUE-C17] AI Company Q&A
+- **Source:** Competitor research (Round 3, emerging LLM wrapper trend)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - Since 2024, "LLM + FinMind" wrappers have proliferated on GitHub.
+  - Stock Explorer already has the best structured analysis — but lacks freeform Q&A.
+  - Add "Ask about this company" input on each company page.
+  - Uses existing `explanation_engine.py` context + LLM to answer natural language questions.
+  - Example: "Why is TSMC's capex so high?" → "TSMC spends ~$30B/year building new factories because chip demand keeps growing..."
+  - Defense against LLM wrapper competitors: our answers are grounded in verified FinMind data + adaptive framework.
+- **Suggested Implementation:**
+  - New `src/services/qa_engine.py` — formats existing analysis context as LLM prompt
+  - Input box on each company page (subtle, not prominent — add-on, not replacement)
+  - Full conversation context from current page data (reduces hallucination)
+  - Rate limiting to manage API costs
+  - **Architecture decision required:** Use local LLM (privacy, cost) or API (quality, latency)?
+- **Related files:** New `src/services/qa_engine.py`, all company page modules
+- **Estimate:** 10-14h
+- **Competitive Gap:** 🔴 Defensive feature — counters "LLM wrapper" threat from 2024+ TW startups
+
+---
+
+#### [ISSUE-C18] Gamified Learning Progress (Badges + Streaks)
+- **Source:** Competitor research (Round 3, cross-cutting analysis — NO competitor has this)
+- **Priority:** Deferred (Challenger Round 3: no core value alignment, add to D+ product premature)
+- **Status:** 📋 Todo (post-MVP)
+- **Description:**
+  - Cross-cutting analysis across ALL 15+ competitors (TW + international) reveals that NO platform gamifies stock education.
+  - Duolingo proved that gamification (streaks, XP, badges) dramatically increases retention.
+  - Stock Explorer application: track learning progress, award badges, show streaks.
+  - Badges: "Analyst in Training" (analyze 3 companies), "Dividend Detective" (explore dividend data for 5 companies), "Peer Reviewer" (compare 10 peer pairs)
+  - Streak: "You've explored companies for 5 days straight! 🔥"
+  - Progress: "You've completed 4/8 analysis sections for TSMC"
+  - This is a WHITE SPACE that NO competitor occupies — first-mover advantage.
+- **Suggested Implementation:**
+  - New `src/services/gamification.py` — badge definitions, progress tracking, streak calculation
+  - Track in `config/user_progress.yaml`
+  - Badge display on homepage and business card page
+  - Progress bar on company pages ("You've explored 3/7 sections")
+  - **Key design constraint:** Gamification must SUPPORT education, not distract from it (no leaderboards, no social comparison)
+- **Related files:** New `src/services/gamification.py`, `config/user_progress.yaml`, homepage, all company pages
+- **Estimate:** 12-16h
+- **Competitive Gap:** 🔴 Unique — NO competitor (TW or international) gamifies stock education
+
+---
+
+#### [ISSUE-C19] Structured Learning Path with Guidance
+- **Source:** Competitor research (Round 3, Investopedia structured paths + Acorns Money Basics)
+- **Priority:** P1 (elevated from P2 — Challenger Round 3: strongest alignment with "Story first" and "Point-to-point" core values)
+- **Status:** 📋 Todo
+- **Description:**
+  - Investopedia and Acorns both use structured learning paths ("Start here → next → next → quiz").
+  - Stock Explorer's pages ARE a learning path (business card → operations → financial health → peers → events), but there's no explicit guidance or flow.
+  - Beginners see 9 pages in the sidebar and don't know which to click first.
+  - Add an explicit "Start Here" guided flow on homepage that walks through one company end-to-end.
+  - "Start with TSMC → Step 1: What does TSMC make? (Business Card) → Step 2: Is it making money? (Operations) → ..."
+- **Suggested Implementation:**
+  - New `src/pages/learning_path.py` — guided step-by-step walkthrough
+  - Each step embeds the relevant page section with instructional overlay
+  - "Next" button guides to the next analysis step
+  - Complete the path → earn "First Analysis Complete" badge (links to ISSUE-C18)
+  - Multiple paths: "Quick Overview" (3 steps), "Deep Dive" (7 steps), "Dividend Focus" (4 steps)
+- **Related files:** New `src/pages/learning_path.py`, homepage
+- **Estimate:** 14-18h
+- **Competitive Gap:** 🟡 P2 — No TW competitor has guided learning flow
 
 ---
 
@@ -402,7 +571,7 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 
 | Status | Count |
 |--------|-------|
-| 📋 Todo | 19 |
+| 📋 Todo | 25 |
 | 🔄 In progress | 0 |
 | ✅ Done | 7 |
 | ❌ Canceled | 0 |
@@ -410,10 +579,39 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 | Priority | Count |
 |----------|-------|
 | P0 | 4 |
-| P1 | 7 |
-| P2 | 9 |
+| P1 | 8 |
+| P2 | 15 |
 
 ---
 
-*Last updated: 2026-06-10 (review round — Architect, Design Reviewer, Developer, Challenger)*
-*Challenger confirmed findings with adjustments: DR-03 promoted to P0, TD-B01 promoted to P0, C06 moved to Phase 2/3, C03 status reconciled to Done*
+*Last updated: 2026-06-11 (Challenger Round 3 stress test — business_card.py truncation P0 identified, priorities adjusted)*
+
+---
+
+## 🔴 Round 3 Challenger Critical Finding
+
+### [ISSUE-D-002-NEW] business_card.py Severely Truncated — P0 Regression
+- **Source:** Challenger Round 3 direct source code verification (2026-06-11)
+- **Priority:** P0 (CRITICAL — regression from B+ to D+)
+- **Status:** 📋 Todo
+- **Description:**
+  - `business_card.py` is only 128 lines. The `_render_business_card()` function imports 15+ service functions (chart, revenue, analogy, dividend, news) but calls **NONE** of them
+  - Page renders ONLY: stock name, price, watchlist buttons
+  - Revenue chart, pie chart, news, dividend, analogy sections are all imported but never rendered
+  - This is the main entry page of the app — every user sees this broken page first
+  - **Regression:** Round 2 grade was B+, now D+. Something broke between rounds.
+- **Challenger's user journey evidence:**
+  ```
+  User opens Stock Explorer → Types "2330" → Clicks "TSMC" →
+  → Sees: "TSMC 2330 ｜ 半導體業" + price + watchlist button
+  → Nothing else. No revenue chart. No news. No dividend. No analogy.
+  → User thinks: "Is this broken?" → Closes tab.
+  ```
+- **Impact:** Every user on every visit to the main page sees a blank page. #1 cause of user churn.
+- **Estimated effort to fix:** 8-12 hours (revenue section ~3h, dividend section ~2h, news section ~2h, key metrics cards ~2h, testing ~2h)
+- **Unblocks:** C14 (Health Radar), C16 ("Did You Know?"), C01 dividend rendering
+- **Related files:** `src/pages/business_card.py`
+- **Verification:** Direct read of source file confirmed zero calls to imported services
+- **Reference:** `docs/workflow/challenge_log.md` — Round 1 Q2, Round 2 Q2
+
+---
