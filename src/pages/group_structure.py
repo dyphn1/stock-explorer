@@ -7,18 +7,7 @@
 import streamlit as st
 import pandas as pd
 
-
-def _section_title(title: str):
-    st.markdown(f"### 📊 {title}")
-
-
-def _info_card(title: str, content: str, icon: str = "💡"):
-    st.markdown(f"""
-    <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
-        <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
-        <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.3rem;line-height:1.6;">{content}</div>
-    </div>
-    """, unsafe_allow_html=True)
+from src.pages._router_base import _section_title, _info_card
 
 
 # 已知集團架構資料（公開資訊，來自各公司年報）

@@ -113,6 +113,10 @@ def _find_financial_value(df, keywords: list) -> float:
     return 0.0
 
 
+# Backward-compatible alias
+_find_value = _find_financial_value
+
+
 def _section_title(title: str):
     st.markdown(f"### 📊 {title}")
 

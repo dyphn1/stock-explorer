@@ -7,31 +7,8 @@ import streamlit as st
 import pandas as pd
 from src.services.chart import create_revenue_trend_chart, create_price_chart, create_institutional_chart
 from src.services.analogy_engine import get_yoy_analogy, get_revenue_analogy, get_volume_analogy, get_institutional_analogy
-from src.pages._router_base import filter_by_timeline
+from src.pages._router_base import filter_by_timeline, _section_title, _白话_card, _info_card
 from src.pages.timeline_controls import render_timeline_selector
-
-
-def _section_title(title: str):
-    st.markdown(f"### 📊 {title}")
-
-
-def _白话_card(label: str, value: str, analogy: str = ""):
-    st.markdown(f"""
-    <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
-        <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
-        <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{value}</div>
-        <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{analogy}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def _info_card(title: str, content: str, icon: str = "💡"):
-    st.markdown(f"""
-    <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
-        <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
-        <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.3rem;line-height:1.6;">{content}</div>
-    </div>
-    """, unsafe_allow_html=True)
 
 
 def _render_operation_checkup(data: dict):

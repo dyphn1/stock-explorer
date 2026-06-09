@@ -12,7 +12,7 @@ from src.services.analogy_engine import (
     get_roe_analogy,
     get_per_analogy,
 )
-from src.pages._router_base import _section_title, _info_card
+from src.pages._router_base import _section_title, _info_card, _find_value
 
 
 # 產業標竿對應表（產業 → 標竿公司）
@@ -419,15 +419,3 @@ def _render_difference_analysis(metrics: dict, stock_name: str, benchmark_name: 
                    f"這不代表 {stock_name} 不好，而是標竿公司在這些面向表現更強。"
                    f"可以關注 {stock_name} 是否有其他獨特優勢。",
                    "📊")
-
-
-def _find_value(df, keywords: list) -> float:
-    """從財務資料中根據關鍵字找值"""
-    for _, row in df.iterrows():
-        type_val = str(row.get("type", ""))
-        for kw in keywords:
-            if kw.lower() in type_val.lower():
-                val = row.get("value")
-                if pd.notna(val) and val != 0:
-                    return float(val)
-    return 0.0

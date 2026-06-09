@@ -94,19 +94,27 @@ st.markdown("""
         opacity: 1 !important;
     }
 </style>
+""", unsafe_allow_html=True)
 
+# Hide Streamlit's auto-generated sidebar nav via JS injection
+_hide_nav_js = """
 <script>
-// Force-hide Streamlit's auto-generated sidebar nav
 (function() {
-    var nav = document.querySelector('section[data-testid="stSidebarNav"]');
-    if (nav) {
-        nav.style.display = 'none';
-        nav.style.height = '0';
-        nav.style.overflow = 'hidden';
+    function hideNav() {
+        var nav = document.querySelector('section[data-testid="stSidebarNav"]');
+        if (nav) {
+            nav.style.cssText = 'display:none!important;height:0!important;overflow:hidden!important;visibility:hidden!important;';
+        }
     }
+    hideNav();
+    // Use MutationObserver to catch Streamlit re-renders
+    var target = document.querySelector('section[data-testid="stSidebar"]') || document.body;
+    var observer = new MutationObserver(hideNav);
+    observer.observe(target, { childList: true, subtree: true, attributes: true });
 })();
 </script>
-""", unsafe_allow_html=True)
+"""
+st.html(_hide_nav_js)
 
 
 # ── 初始化 ────────────────────────────────────────────

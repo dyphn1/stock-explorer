@@ -4,17 +4,11 @@
 """
 
 import streamlit as st
-import pandas as pd
 
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
 from src.pages._router_base import (
     get_stock_data,
-    _calc_extra_metrics,
-    _find_financial_value,
-    _section_title,
-    _白话_card,
-    _info_card,
 )
 from src.pages.business_card import _render_business_card
 from src.pages.operation_checkup import _render_operation_checkup
@@ -32,10 +26,10 @@ from src.pages.event_dashboard import (
     _render_event_alerts,
 )
 from src.services.adaptive_engine import (
-    detect_company_type,
     run_auto_detection,
     check_data_freshness,
 )
+from src.services.watchlist import _is_etf as _is_etf_check
 
 
 # ── 初始化 ────────────────────────────────────────────
@@ -43,18 +37,6 @@ from src.services.adaptive_engine import (
 @st.cache_resource
 def get_client():
     return FinMindClient(cache_dir=".cache")
-
-
-def _is_etf(client: FinMindClient, stock_id: str) -> bool:
-    """判斷一檔股票是否為 ETF"""
-    try:
-        info = client.get_stock_info(stock_id)
-        if len(info) > 0:
-            industry = str(info.iloc[0].get("industry_category", ""))
-            return "etf" in industry.lower()
-    except Exception:
-        pass
-    return False
 
 
 def _render_navbar_minimal(current_page: str):
@@ -124,7 +106,7 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
     _render_freshness_indicator(freshness)
 
     # ETF 導向 ETF 詳細頁
-    if _is_etf(client, stock_id):
+    if _is_etf_check(stock_id, data["stock_name"], data["industry"]):
         _render_navbar(data, page)
         with st.spinner("載入 ETF 詳細頁..."):
             _render_etf_detail(data, client)
