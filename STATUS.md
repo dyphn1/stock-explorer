@@ -1,6 +1,6 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：M5 自適應更新 ✅ 代碼完成，等待 UI 驗證
+## 當前階段：P2 打磨衝刺 ✅ 進行中
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -243,6 +243,14 @@
 - Layer 0 + Layer 1 全綠
 - Git commit: `cf27a4c`
 
+### 2026-06-09（P2-1 瀏覽器返回按鈕）
+- **P2-1 實作**：瀏覽器返回/前進按鈕支援 — 使用 `st.query_params` 雙向同步 `session_state` 與 URL
+  - 新增 `src/pages/url_sync.py`：`sync_url_to_session()` + `navigate_to()` + `_sync_session_to_url()`
+  - 修改 6 個檔案，替換 13 個導航模式（session_state + rerun → navigate_to）
+  - 支援直接 URL 存取、書籤、無效參數容錯回退
+- Layer 0 + Layer 1 全綠（52/52 + 18/18）
+- Git commit: `af59018`
+
 ## 架構總覽
 ### 目錄結構
 ```
@@ -261,6 +269,7 @@ src/
 └── pages/
     ├── __init__.py
     ├── _router_base.py        # 共享工具（get_stock_data, filter_by_timeline）
+    ├── url_sync.py            # P2-1: URL ↔ session_state 同步（瀏覽器返回支援）
     ├── router.py              # 頁面路由器（9 頁）
     ├── business_card.py       # 公司名片頁
     ├── operation_checkup.py   # 營運健檢頁
@@ -293,7 +302,7 @@ config/
 
 ## 統計
 - **總程式碼行數**：~5,300 行（Python）
-- **Python 檔案數**：27 個
+- **Python 檔案數**：28 個
 - **頁面數**：9 頁（名片、營運健檢、財務體質、同業比較、集團架構、分類瀏覽、ETF 專區、我的關注、事件儀表板）
 - **Git Commits**：9 個
 - **語法錯誤**：0
@@ -346,8 +355,8 @@ Per `docs/DESIGN_REVIEW.md` consolidated roadmap:
 
 || # | Issue | Effort | Status | Priority ||
 ||---|-------|--------|--------|--------||
-|| 1 | Browser back button doesn't work (st.query_params) | High | Next | P2 ||
-|| 2 | Layout breaks on small screens (CSS media queries + st.tabs) | High | Queued | P2 ||
+||| 1 | Browser back button doesn't work (st.query_params) | High | ✅ Done | P2 || `af59018` ||
+||| 2 | Layout breaks on small screens (CSS media queries + st.tabs) | High | Next | P2 ||
 || 3 | Dark mode chart label contrast (shared CHART_TEMPLATE) | Medium | ✅ Done | P2 || `cf27a4c` ||
 || 4 | Cache directory grows unbounded (LRU eviction) | Low | ✅ Done | P2 || `cf27a4c` ||
 || 5 | Fragile column name access in event detection | Medium | ✅ Done | P2 || `8d3ba2b` ||
@@ -373,6 +382,7 @@ See `docs/PENDING_REVIEW.md` for details:
 | 2026-06-08 21:27 | ✅ 22/22 | ✅ 11/11 | ✅ 3/3 | 全綠，無新 Bug |
 | 2026-06-08 23:30 | ✅ 無新 Bug | ✅ 無未完成任務 | — | 全局反思完成，等待 Daniel UI 驗證 |
 || 2026-06-09 01:41 | ✅ 50/50 (L0) | ✅ 18/18 (L1) | — | P0 全部修復完成，Layer 0 + Layer 1 全綠 |
-|| 2026-06-09 (P2) | ✅ 51/51 (L0) | ✅ 18/18 (L1) | — | P2-3 + P2-4 完成，L0+L1 全綠 |
+||| 2026-06-09 (P2) | ✅ 51/51 (L0) | ✅ 18/18 (L1) | — | P2-3 + P2-4 完成，L0+L1 全綠 ||
+||| 2026-06-09 (P2-1) | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | P2-1 瀏覽器返回按鈕完成，L0+L1 全綠 ||
 
 *最後更新：2026-06-09*
