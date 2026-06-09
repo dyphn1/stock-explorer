@@ -25,19 +25,16 @@
 ### [ISSUE-C01] Ex-Dividend Calendar
 - **Source:** Competitor research
 - **Priority:** P0
-- **Status:** 📋 Todo
+- **Status:** ✅ Done
 - **Description:**
   - GoodInfo and Dogga (財報狗) both have complete ex-dividend information
   - One of the most common beginner questions: "When does TSMC pay dividends and how much?"
-  - Stock Explorer currently cannot answer this question at all
-  - Recommendation: add a "Dividend Information" section to the Business Card page
-- **Suggested Implementation:**
-  - Ex-dividend/ex-rights schedule for the past 5 years (ex-dividend date, ex-rights date)
-  - Historical dividends (cash dividends, stock dividends)
-  - Plain-language explanation (e.g., "Over the past 5 years, TSMC has paid approximately NT$2.75 per quarter")
-  - Estimated dividend yield (calculated from current stock price)
-- **Data Feasibility:** FinMind has the `TaiwanStockDividend` API
-- **Related files:** `src/pages/business_card.py`
+  - Stock Explorer now answers this question via integrated dividend analysis
+- **Implementation:**
+  - `src/services/dividend_analyzer.py` — Full dividend analysis engine (frequency classification, TTM estimation, yield calculation, plain-language summaries)
+  - `src/pages/business_card.py` — "💵 配息故事" section with tip card, 3 mini-cards (最近一季/預估全年/殖利率), expandable history table
+  - `src/pages/_router_base.py` — Data loading pipeline includes dividend data fetch
+- **Related files:** `src/pages/business_card.py`, `src/services/dividend_analyzer.py`, `config/watchlist.yaml`
 - **Reference:** `docs/research/competitor_research.md` — Inspiration A
 
 ---
