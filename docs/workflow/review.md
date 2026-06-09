@@ -1,220 +1,220 @@
-# 🔍 檢討主題工作流（REVIEW WORKFLOW）
+# 🔍 Review Workflow (REVIEW WORKFLOW)
 
-> 當 STATUS.md 指定主題為「檢討」時，PM 按照此工作流執行。
-
----
-
-## 檢討主題工作目标
-- 審視產品缺失
-- 優化現有功能
-- **競品研究**：去網路搜尋類似產品，比對功能差距
-- 產生新的 feature 建議
+> When STATUS.md specifies the theme as "Review", the PM follows this workflow.
 
 ---
 
-## 流程圖（完整）
+## Review Theme Objectives
+- Examine product gaps
+- Optimize existing features
+- **Competitor Research**: Search the web for similar products and compare feature gaps
+- Generate new feature suggestions
+
+---
+
+## Flowchart (Complete)
 
 ```mermaid
 flowchart TD
-    A([🔍 檢討主題開始]) --> B[PM 讀取 STATUS.md]
-    B --> C[PM 讀取 CURRENT_PROBLEMS.md]
-    C --> D[PM 讀取 COMPETITOR_RESEARCH.md]
+    A([🔍 Review Theme Start]) --> B[PM reads STATUS.md]
+    B --> C[PM reads CURRENT_PROBLEMS.md]
+    C --> D[PM reads COMPETITOR_RESEARCH.md]
     
-    D --> E[PM 並行呼叫所有 sub-agents]
+    D --> E[PM calls all sub-agents in parallel]
     
-    E --> F[Architect 審視架構債務]
-    E --> G[Design Reviewer 比對競品設計]
-    E --> H[QA Engineer 去網路搜尋競品]
-    E --> I[Developer 評估優化成本]
+    E --> F[Architect reviews architecture debt]
+    E --> G[Design Reviewer compares competitor designs]
+    E --> H[QA Engineer searches the web for competitors]
+    E --> I[Developer estimates optimization costs]
     
-    F --> J[PM 彙整所有發現]
+    F --> J[PM consolidates all findings]
     G --> J
     H --> J
     I --> J
     
-    J --> K[PM 形成「檢討報告」]
-    K --> L[新 feature → ISSUES.md]
-    K --> M[設計改進 → CURRENT_PROBLEMS.md]
-    K --> N[技術債 → TECH_DEBT.md]
+    J --> K[PM forms "Review Report"]
+    K --> L[New features → ISSUES.md]
+    K --> M[Design improvements → CURRENT_PROBLEMS.md]
+    K --> N[Technical debt → TECH_DEBT.md]
     
-    L --> O[PM 呼叫 Challenger]
+    L --> O[PM calls Challenger]
     M --> O
     N --> O
     
     O --> P{Challenger Round 1}
     
-    P --> Q1[Challenger 質疑: 這些真的是差距嗎？]
-    Q1 --> R1[團隊回應]
+    P --> Q1[Challenger questions: Are these really gaps?]
+    Q1 --> R1[Team responds]
     R1 --> S1{Challenger Round 2}
     
-    S1 --> Q2[Challenger 質疑: 優先級正確嗎？]
-    Q2 --> R2[團隊回應]
+    S1 --> Q2[Challenger questions: Is the priority correct?]
+    Q2 --> R2[Team responds]
     R2 --> S2{Challenger Round 3}
     
-    S2 --> Q3[Challenger 質疑: 目標對齊？]
-    Q3 --> R3[團隊最終回應]
-    R3 --> T{Challenger 確認?}
+    S2 --> Q3[Challenger questions: Goal alignment?]
+    Q3 --> R3[Team final response]
+    R3 --> T{Challenger confirms?}
     
-    T -- 否 --> U[團隊重新討論]
+    T -- No --> U[Team re-discusses]
     U --> J
     
-    T -- 是 --> V[PM 更新所有狀態檔案]
-    V --> W[PM 寫入 CHALLENGE_LOG.md]
-    W --> X[PM 回報 Daniel]
-    X --> Z([結束])
+    T -- Yes --> V[PM updates all status files]
+    V --> W[PM writes to CHALLENGE_LOG.md]
+    W --> X[PM reports to Daniel]
+    X --> Z([End])
 ```
 
 ---
 
-## 三輪反證流程（詳細）
+## Three-Round Challenge Process (Detailed)
 
-### Round 1：差距真實性質疑
+### Round 1: Gap Authenticity Challenge
 ```
-Challenger 問：
-- 這些「功能差距」真的是差距嗎？還是我們根本不需要？
-- 競品做了，不代表我們也要做。為什麼我們要做？
-- 有沒有「競品沒做但我們應該做的」？
+Challenger asks:
+- Are these "feature gaps" really gaps? Or do we simply not need them?
+- Just because competitors have it doesn't mean we should too. Why should we build it?
+- Are there things "competitors don't have but we should"?
 
-團隊回應：
-- QA 補充競品研究細節
-- Designer 補充 UX 分析
-- Architect 補充技術可行性
-```
-
-### Round 2：優先級質疑
-```
-Challenger 問：
-- 這些新功能的優先級正確嗎？
-- 應該先做什麼？為什麼？
-- 有沒有更重要的技術債要先處理？
-
-團隊回應：
-- PM 根據 STATUS.md 優先級回應
-- Developer 補充成本分析
+Team responds:
+- QA supplements competitor research details
+- Designer supplements UX analysis
+- Architect supplements technical feasibility
 ```
 
-### Round 3：目標對齊質疑
+### Round 2: Priority Challenge
 ```
-Challenger 問：
-- 這個優化方向符合產品願景嗎？
-- 有沒有矛盾的地方？
-- 風險是什麼？
+Challenger asks:
+- Are the priorities for these new features correct?
+- What should be done first? Why?
+- Is there more important technical debt to address first?
 
-團隊回應：
-- 最終確認或修正方案
-```
-
----
-
-## PM 的任務（詳細）
-
-### Step 1：讀取狀態
-```
-1. STATUS.md → 確認本次主題為「檢討」
-2. docs/status/current_problems.md → 了解已知問題
-3. docs/research/competitor_research.md → 了解上次競品研究結果
-4. docs/status/tech_debt.md → 了解技術債
+Team responds:
+- PM responds based on STATUS.md priorities
+- Developer supplements cost analysis
 ```
 
-### Step 2：並行呼叫 sub-agents
+### Round 3: Goal Alignment Challenge
 ```
-同時呼叫（parallel）：
-- Architect：審視架構債務、提出重構建議
-- Design Reviewer：比對競品設計、提出設計改進
-- QA Engineer：去網路搜尋競品、比對功能差距
-- Developer：評估優化成本
-```
+Challenger asks:
+- Does this optimization direction align with the product vision?
+- Are there any contradictions?
+- What are the risks?
 
-### Step 3：彙整檢討報告
-```
-收集所有 sub-agent 意見後：
-1. 整理功能差距清單
-2. 整理設計改進建議
-3. 整理技術債優先級
-4. 形成「檢討報告」
-```
-
-### Step 4：反證階段
-```
-1. 呼叫 Challenger，提供「檢討報告」
-2. 進行至少 3 輪反證
-3. 每輪記錄質疑內容和團隊回應
-4. Challenger 確認後才能往下走
-```
-
-### Step 5：寫入文件
-```
-1. 新 feature → docs/status/issues.md（標記 source: competitor research）
-2. 設計改進 → docs/status/current_problems.md
-3. 技術債 → docs/status/tech_debt.md
-4. 反證記錄 → docs/workflow/challenge_log.md
-5. 更新 STATUS.md
+Team responds:
+- Final confirmation or plan revision
 ```
 
 ---
 
-## Sub-agent 的任務
+## PM Tasks (Detailed)
 
-### QA Engineer 🧪（競品研究主力）
-1. **去網路搜尋**競品資訊（Yahoo Finance、TradingView、Finviz、財報狗、GoodInfo、CMoney 等）
-2. 比對 Stock Explorer 功能差距
-3. 寫入 `docs/research/competitor_research.md`
-4. 新 feature 建議寫入 `docs/status/issues.md`
+### Step 1: Read Status
+```
+1. STATUS.md → Confirm the current theme is "Review"
+2. docs/status/current_problems.md → Understand known issues
+3. docs/research/competitor_research.md → Understand previous competitor research results
+4. docs/status/tech_debt.md → Understand technical debt
+```
+
+### Step 2: Call Sub-agents in Parallel
+```
+Call simultaneously (parallel):
+- Architect: Review architecture debt, propose refactoring suggestions
+- Design Reviewer: Compare competitor designs, propose design improvements
+- QA Engineer: Search the web for competitors, compare feature gaps
+- Developer: Estimate optimization costs
+```
+
+### Step 3: Consolidate Review Report
+```
+After collecting all sub-agent input:
+1. Organize feature gap list
+2. Organize design improvement suggestions
+3. Organize technical debt priorities
+4. Form the "Review Report"
+```
+
+### Step 4: Challenge Phase
+```
+1. Call Challenger, provide the "Review Report"
+2. Conduct at least 3 rounds of challenges
+3. Record challenge content and team responses for each round
+4. Cannot proceed until Challenger confirms
+```
+
+### Step 5: Write to Files
+```
+1. New features → docs/status/issues.md (tag: source: competitor research)
+2. Design improvements → docs/status/current_problems.md
+3. Technical debt → docs/status/tech_debt.md
+4. Challenge records → docs/workflow/challenge_log.md
+5. Update STATUS.md
+```
+
+---
+
+## Sub-agent Tasks
+
+### QA Engineer 🧪 (Competitor Research Lead)
+1. **Search the web** for competitor information (Yahoo Finance, TradingView, Finviz, StatementDog, GoodInfo, CMoney, etc.)
+2. Compare feature gaps with Stock Explorer
+3. Write to `docs/research/competitor_research.md`
+4. New feature suggestions → `docs/status/issues.md`
 
 ### Architect 🏗️
-1. 讀取 `docs/status/tech_debt.md`
-2. 審視架構債務
-3. 提出重構建議
-4. 分析效能瓶頸
+1. Read `docs/status/tech_debt.md`
+2. Review architecture debt
+3. Propose refactoring suggestions
+4. Analyze performance bottlenecks
 
 ### Design Reviewer 🎨
-1. 比對競品設計
-2. 提出設計改進方案
-3. 審查 DESIGN_SYSTEM.md 是否需要更新
+1. Compare competitor designs
+2. Propose design improvement plans
+3. Review whether DESIGN_SYSTEM.md needs updating
 
 ### Developer 💻
-1. 評估每個優化的實作成本
-2. 給出時間估算
-3. 分析技術風險
+1. Estimate implementation cost for each optimization
+2. Provide time estimates
+3. Analyze technical risks
 
 ### Challenger 🔥
-1. **質疑**功能差距的真實性
-2. **質疑**優先級是否正確
-3. **質疑**是否與產品目標對齊
-4. 至少 3 輪反證後才確認
+1. **Challenge** the authenticity of feature gaps
+2. **Challenge** whether priorities are correct
+3. **Challenge** alignment with product goals
+4. Confirm only after at least 3 rounds of challenges
 
 ---
 
-## 競品研究清單
+## Competitor Research Checklist
 
-QA Engineer 必須在檢討主題時研究以下競品：
+QA Engineer must research the following competitors during the review theme:
 
-| 競品 | 網址 | 研究重點 |
-|------|------|----------|
-| Yahoo Finance | finance.yahoo.com | 總覽、導航、watchlist |
-| TradingView | tradingview.com | 圖表、技術分析、社群 |
-| Finviz | finviz.com | 篩選器、heatmap |
-| 財報狗 | statementdog.com | 白話解釋、教育內容 |
-| GoodInfo | goodinfo.tw | 除權息、基本面 |
-| CMoney | cmoney.tw | App 生態、AI 選股 |
-| 玩股網 | wantgoo.com | 股市溫度、PPT 匯出 |
+| Competitor | URL | Research Focus |
+|------------|-----|----------------|
+| Yahoo Finance | finance.yahoo.com | Overview, navigation, watchlist |
+| TradingView | tradingview.com | Charts, technical analysis, community |
+| Finviz | finviz.com | Screeners, heatmap |
+| StatementDog | statementdog.com | Plain-language explanations, educational content |
+| GoodInfo | goodinfo.tw | Ex-dividend, fundamentals |
+| CMoney | cmoney.tw | App ecosystem, AI stock picking |
+| WantGoo | wantgoo.com | Market temperature, PPT export |
 
 ---
 
-## 狀態更新
+## Status Updates
 
-PM 必須在 STATUS.md 更新：
+PM must update in STATUS.md:
 
 ```markdown
-## 🔍 檢討記錄 - YYYY-MM-DD
-- **競品研究**：QA Engineer 完成 [N] 個競品分析
-- **功能差距**：[N] 項新功能建議
-- **設計改進**：[N] 項改進建議
-- **技術債**：[N] 項待處理
-- **Challenger 反證**：[3 輪摘要]
-- **待 Daniel 決策**：[寫入 PENDING_REVIEW.md 的項目]
+## 🔍 Review Log - YYYY-MM-DD
+- **Competitor Research**: QA Engineer completed [N] competitor analyses
+- **Feature Gaps**: [N] new feature suggestions
+- **Design Improvements**: [N] improvement suggestions
+- **Technical Debt**: [N] items pending
+- **Challenger Challenges**: [3-round summary]
+- **Pending Daniel Decision**: [Items written to PENDING_REVIEW.md]
 ```
 
 ---
 
-*最後更新：2026-06-09*
+*Last updated: 2026-06-09*

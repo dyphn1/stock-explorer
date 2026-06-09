@@ -20,3 +20,38 @@ events:
   summary: 注意事件：訂單
   title: 緯穎、鴻海、廣達…台灣伺服器大廠稱霸全球AI訂單！韓媒超羨慕，點名「這家」市值比肩韓股前20大 - 今周刊
   type: news_medium
+- date: '2026-06-10'
+  detected_at: '2026-06-10T00:11:03'
+  severity: high
+  stock_id: '2454'
+  summary: 收盤價 4475 元，較前一交易日漲 10.0%。單日波動劇烈，建議關注相關公告。
+  title: 股價單日漲 10.0%
+  type: price_abnormal
+- date: '2026-06-10'
+  detected_at: '2026-06-10T00:11:06'
+  severity: high
+  stock_id: '1101'
+  summary: 重大事件：合併
+  title: 水泥雙雄台泥、亞泥4月合併營收分別月減1.6%及月增6.5% - 聯合新聞網
+  type: news_major
+- date: '2026-06-10'
+  detected_at: '2026-06-10T00:11:06'
+  severity: high
+  stock_id: '2317'
+  summary: 重大事件：法說
+  title: 鴻海(2317)法說來了！股價7天漲18%、外資連10天買超30萬張為哪樁？劉揚偉會端什麼好菜上場 - 今周刊
+  type: news_major
+- date: '2026-06-10'
+  detected_at: '2026-06-10T00:11:06'
+  severity: high
+  stock_id: '2317'
+  summary: 重大事件：法說
+  title: 【法說週登場】鴻海、凌華、樺漢營收數據與邊緣 AI 佈局｜豐雲學堂 2026 年 05 月 - sinotrade.co
+  type: news_major
+- date: '2026-06-10'
+  detected_at: '2026-06-10T00:11:06'
+  severity: high
+  stock_id: '2317'
+  summary: 重大事件：法說
+  title: 【法說會本週登場】鴻海、凌華、樺漢營收數據與邊緣 AI 佈局｜豐雲學堂 2026 年 05 月 - sinotrade.
+  type: news_major

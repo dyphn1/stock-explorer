@@ -17,6 +17,7 @@ from src.services.analogy_engine import (
     get_roe_analogy,
     get_pbr_analogy,
 )
+from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.news_summarizer import summarize_news, get_news_impact_level
 
 
@@ -134,6 +135,99 @@ def _render_business_card(data: dict, client):
                 <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;font-style:italic;">{get_pbr_analogy(pbr)}</div>
             </div>
             """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # === 💵 配息故事 (Dividend Story) ===
+    # Extract current price for yield calculation
+    _current_price = None
+    if latest_price and latest_price.get("close"):
+        _current_price = float(latest_price["close"])
+
+    dividend_data = data.get("dividend") if isinstance(data, dict) else None
+    div_summary = extract_dividend_summary(
+        dividend_data,
+        current_price=_current_price,
+    )
+
+    if div_summary["has_data"]:
+        # Plain-language headline (tip card style)
+        st.markdown(
+            f"""<div style="
+                background: #FFF8F0;
+                border-left: 4px solid #F39C12;
+                padding: 12px 16px;
+                border-radius: 4px;
+                margin: 12px 0;
+                font-size: 1.05rem;
+                color: #2C3E50;
+            ">
+                💵 {div_summary['plain_summary']}
+            </div>""",
+            unsafe_allow_html=True,
+        )
+
+        # Three mini-cards
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown(
+                f"""<div style="text-align: center; padding: 8px;">
+                    <div style="font-size: 0.85rem; color: #7F8C8D;">最近一季</div>
+                    <div style="font-size: 1.4rem; font-weight: bold; color: #2C3E50;">
+                        {div_summary['latest_cash_div']:.2f} 元
+                    </div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+        with col2:
+            annual_str = f"{div_summary['estimated_annual']:.2f}" if div_summary['estimated_annual'] else "—"
+            st.markdown(
+                f"""<div style="text-align: center; padding: 8px;">
+                    <div style="font-size: 0.85rem; color: #7F8C8D;">預估全年</div>
+                    <div style="font-size: 1.4rem; font-weight: bold; color: #2C3E50;">
+                        {annual_str} 元
+                    </div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+        with col3:
+            yield_str = f"{div_summary['estimated_yield']:.2f}" if div_summary['estimated_yield'] else "—"
+            st.markdown(
+                f"""<div style="text-align: center; padding: 8px;">
+                    <div style="font-size: 0.85rem; color: #7F8C8D;">殖利率</div>
+                    <div style="font-size: 1.4rem; font-weight: bold; color: #2C3E50;">
+                        {yield_str}%
+                    </div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+
+        # Expandable history table
+        with st.expander("📋 展開查看歷史除權息紀錄", expanded=False):
+            if div_summary["yearly_dividends"]:
+                hist_df = pd.DataFrame(div_summary["yearly_dividends"])
+                # Rename columns for display
+                display_df = hist_df[["year", "cash_div", "ex_date", "status"]].copy()
+                display_df.columns = ["年度", "現金股利", "除息日", "狀態"]
+                if "stock_div" in hist_df.columns:
+                    display_df["股票股利"] = hist_df["stock_div"]
+                st.dataframe(display_df, use_container_width=True, hide_index=True)
+    else:
+        # Show a subtle note for stocks without dividends
+        st.markdown(
+            f"""<div style="
+                background: #F8F9FA;
+                border-left: 4px solid #BDC3C7;
+                padding: 10px 14px;
+                border-radius: 4px;
+                margin: 8px 0;
+                font-size: 0.9rem;
+                color: #7F8C8D;
+            ">
+                💡 {div_summary['plain_summary']}
+            </div>""",
+            unsafe_allow_html=True,
+        )
 
     st.markdown("---")
 
