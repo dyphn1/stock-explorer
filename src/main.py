@@ -78,6 +78,18 @@ st.markdown("""
         z-index: 999 !important;
         position: relative !important;
     }
+    /* Hide Streamlit's auto-generated page nav in sidebar */
+    section[data-testid="stSidebarNav"] {
+        display: none !important;
+    }
+    /* Ensure search input text is visible */
+    section[data-testid="stSidebar"] input[type="text"] {
+        color: #2C3E50 !important;
+    }
+    section[data-testid="stSidebar"] input[type="text"]::placeholder {
+        color: #95A5A6 !important;
+        opacity: 1 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 

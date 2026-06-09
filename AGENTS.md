@@ -140,16 +140,31 @@ Design > Analyze > Reflect > Synthesize > Redesign → loop until no gaps remain
 
 ### Workflow (per cron trigger)
 
+**Cron Theme Rotation** (every 3 cycles):
+1. **🔧 開發** — Fix bugs, implement features
+2. **💡 討論** — Feature planning, future direction
+3. **🔍 檢討** — Gap analysis, optimization, **competitor research**
+
+**State Handoff Mechanism:**
+All state is stored in project files — NOT in cron prompts. Each cron run:
+1. Reads state from `STATUS.md`, `docs/ISSUES.md`, `docs/PENDING_REVIEW.md`, `docs/CURRENT_PROBLEMS.md`
+2. PM coordinates team discussion (mandatory — never skip)
+3. Sub-agents do reasoning work (never PM alone)
+4. Results written back to state files
+5. Cron prompt stays stable — only the project state changes
+
+**Team Discussion Flow:**
 ```
-Global Reflection → Bug Fix → New Feature Development → Code Review → Reflection & Adjustment → Update Report
+Cron initiates theme → PM reads state → PM spawns sub-agents →
+Sub-agents analyze & report → PM synthesizes → PM delegates work →
+Developer implements → Verification → State files updated
 ```
 
-1. **Global Reflection**: Read STATUS.md + ISSUES.md + PENDING_REVIEW.md, assess current state
-2. **Bug Fix**: If unresolved bugs → fix sub-agent → verify script → clear bug entry
-3. **New Feature Development**: If no bugs → dev sub-agent → verify script → mark complete
-4. **Code Review**: Code review sub-agent checks quality, consistency, theme alignment
-5. **Reflection & Adjustment**: Synthesize verification + review results, decide if fixes or plan adjustments needed
-6. **Daniel Confirmation**: If UX quality issue → write to PENDING_REVIEW.md (UX issues only, not functional bugs)
+**Competitor Research** (every 3rd cycle — 檢討 theme):
+- QA Engineer researches competitor products on the web
+- Compares features with Stock Explorer
+- Writes findings to `docs/COMPETITOR_RESEARCH.md`
+- New feature ideas → `docs/ISSUES.md` (tagged `來源: 競品研究`)
 
 ### Verification (Layered)
 
