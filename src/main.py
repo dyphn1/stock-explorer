@@ -19,7 +19,7 @@ st.set_page_config(
     page_title="股識 Stock Explorer",
     page_icon="📊",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",
 )
 
 # ── 自定義 CSS（PPT 風格）────────────────────────────
@@ -52,6 +52,18 @@ st.markdown("""
         font-size: 0.85rem;
         color: #7D6608;
         margin-top: 2rem;
+    }
+
+    /* Responsive adjustments for small screens */
+    @media (max-width: 768px) {
+        .main .block-container {
+            padding: 1rem 1rem !important;
+        }
+    }
+    @media (max-width: 600px) {
+        .main .block-container {
+            padding: 0.5rem 0.5rem !important;
+        }
     }
 </style>
 """, unsafe_allow_html=True)

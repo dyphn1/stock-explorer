@@ -57,24 +57,48 @@ def _is_etf(client: FinMindClient, stock_id: str) -> bool:
     return False
 
 
+def _render_navbar_minimal(current_page: str):
+    """精簡導航列：僅分頁標籤（用於非股票頁面）"""
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板"]
+    current_idx = pages.index(current_page) if current_page in pages else 0
+
+    selected = st.radio(
+        "頁面導航",
+        pages,
+        index=current_idx,
+        horizontal=True,
+        label_visibility="collapsed",
+        key="navbar_radio_minimal",
+    )
+
+    if selected != current_page:
+        navigate_to(page=selected)
+
+    st.markdown("---")
+
+
 def load_and_render_page(client: FinMindClient, stock_id: str):
     """根據 session_state['page'] 渲染對應頁面"""
     page = st.session_state.get("page", "名片")
 
     # 不需要特定股票的頁面，獨立渲染
     if page == "分類瀏覽":
+        _render_navbar_minimal(page)
         with st.spinner("載入分類瀏覽..."):
             _render_category_browser(client)
         return
     if page == "ETF 專區":
+        _render_navbar_minimal(page)
         with st.spinner("載入 ETF 專區..."):
             _render_etf_browser(client)
         return
     if page == "我的關注":
+        _render_navbar_minimal(page)
         with st.spinner("載入我的關注..."):
             _render_watchlist_page(client)
         return
     if page == "事件儀表板":
+        _render_navbar_minimal(page)
         with st.spinner("載入事件儀表板..."):
             _render_event_dashboard(client)
         return
@@ -146,13 +170,18 @@ def _render_navbar(data: dict, current_page: str):
 
     # 分頁標籤
     pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板"]
-    cols = st.columns(len(pages))
-    for i, p in enumerate(pages):
-        with cols[i]:
-            if p == current_page:
-                st.markdown(f"**▎{p}**")
-            else:
-                if st.button(p, key=f"nav_{p}", use_container_width=True):
-                    navigate_to(page=p)
+    current_idx = pages.index(current_page) if current_page in pages else 0
+
+    selected = st.radio(
+        "頁面導航",
+        pages,
+        index=current_idx,
+        horizontal=True,
+        label_visibility="collapsed",
+        key="navbar_radio",
+    )
+
+    if selected != current_page:
+        navigate_to(page=selected)
 
     st.markdown("---")
