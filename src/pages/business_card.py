@@ -19,6 +19,7 @@ from src.services.analogy_engine import (
 )
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.news_summarizer import summarize_news, get_news_impact_level
+from src.services.company_facts import get_company_facts
 from src.services.watchlist import (
     is_in_watchlist,
     is_in_any_list,
@@ -137,6 +138,23 @@ def _render_business_card(data: dict, client):
         💡 {one_liner}
     </div>
     """, unsafe_allow_html=True)
+
+    # 💡 你知道嗎？ Company facts tip card
+    facts = get_company_facts(stock_id)
+    if facts:
+        # Rotate facts on each rerun using session_state
+        fact_key = f"_fact_idx_{stock_id}"
+        if fact_key not in st.session_state:
+            st.session_state[fact_key] = 0
+        idx = st.session_state[fact_key] % len(facts)
+        st.session_state[fact_key] = (idx + 1) % len(facts)
+        current_fact = facts[idx]
+        st.markdown(f"""
+        <div style="background:#F0F7FF;border-left:4px solid #3498DB;border-radius:12px;padding:1.2rem 2rem;margin:1rem 0;text-align:center;">
+            <div style="font-size:0.85rem;color:#3498DB;font-weight:600;margin-bottom:0.4rem;">💡 你知道嗎？</div>
+            <div style="font-size:1.05rem;color:#2C3E50;line-height:1.7;">{current_fact}</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     # 關鍵數字三連卡
     st.markdown("### 📊 關鍵數字")
