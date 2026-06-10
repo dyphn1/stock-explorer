@@ -1206,4 +1206,76 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 
 ---
 
-*Last updated: 2026-06-12 (Review Round 7 — tech debt verification, design compliance, competitor research, 3-round challenger)*
+*Last updated: 2026-06-12 (Review Round 7)*
+
+---
+
+## 💡 Discussion Round 7 — 2026-06-13 (Team Discussion + Challenger 3-Round Challenge)
+
+### Process Summary
+- **Architect** (nemotron-120b): Proposed 3 directions — C28 Story Timeline (template-first), C31+C32 Engagement Duo, C29 Explain Any Metric. Identified 3 new tech debt items (NEW-G18, G19, G20). Recommended D02 pull-on-visit model.
+- **Design Reviewer** (gemma-31b): Ranked features by UX impact. C31 first (highest ROI), C28 second (unique differentiator). Excluded C32 (contradicts historian). Replicated Event Dashboard patterns.
+- **Developer** (owl-alpha): Detailed estimates for all features. Total: ~73h base + 50% buffer = ~109h. Identified technical blockers (NEW-G16, G04, Streamlit constraint).
+- **Challenger** (gpt-oss-120b): **Round 1 ❌ REJECTED** (8 required changes). **Round 2 ⚠️ NEEDS REVISION** (per-sprint buffer, content creation). **Round 3 ✅ CONFIRMED** with 3 conditions.
+
+### Key Changes from Round 6 Plan
+1. **C32 (Market Mood) REMOVED** — contradicts "historian" positioning
+2. **C31 REFRAMED** — from "Daily Financial Challenge" (quiz) to "Daily Company Story" (narrative)
+3. **C29 DEFERRED** to Sprint 5 — only after design grade reaches B
+4. **C28 SPIKE-FIRST** — 3h validation before committing 20h
+5. **Sprint 0 ADDED** — design quality prerequisite (C+ → B)
+6. **50% buffer** applied per sprint (historical underestimation pattern)
+7. **Verification gates** — ten-second test after each sprint
+
+### New Tech Debt Items (from Architect)
+
+#### [ISSUE-NEW-G18] events.yaml Schema Extension for C28
+- **Source**: Architect analysis (Discussion Round 7)
+- **Priority**: P1
+- **Status**: 📋 Todo
+- **Description**: C28 Story Timeline needs richer event data than current schema provides. Missing fields: `related_metrics` (revenue value at time of event), `price_at_event`, `narrative_category` (milestone vs alert vs context).
+- **Effort**: 2-3 hours
+- **Related files**: `config/events.yaml`, `src/services/adaptive_engine.py`
+
+#### [ISSUE-NEW-G19] User Preference/State Storage Abstraction
+- **Source**: Architect analysis (Discussion Round 7)
+- **Priority**: P1
+- **Status**: 📋 Todo
+- **Description**: C31 (challenge streaks), C07 (custom thresholds), D02 (notification read state) all need per-user persistent state. Currently scattered across multiple YAML files with no unified pattern. Create `src/services/user_prefs.py` with unified read/write.
+- **Effort**: 2-3 hours
+- **Related files**: New `src/services/user_prefs.py`, `config/` YAML files
+
+#### [ISSUE-NEW-G20] analogy_engine.py Coverage Gap
+- **Source**: Architect analysis (Discussion Round 7)
+- **Priority**: P1
+- **Status**: 📋 Todo
+- **Description**: analogy_engine covers 8 metrics (revenue, gross margin, PER, PBR, ROE, debt ratio, equity ratio, revenue YoY). Financial health page uses 15+ additional metrics (operating margin, net margin, current ratio, quick ratio, inventory turnover, etc.) with no plain-language explanations. C29 requires coverage for 30+ metrics.
+- **Effort**: 4-6 hours
+- **Related files**: `src/services/analogy_engine.py`
+
+### Status Changes from Discussion Round
+
+| Issue | Previous Status | New Status | Reason |
+|-------|----------------|------------|--------|
+| C32 Market Mood | 📋 Todo | ❌ REMOVED | Contradicts "historian" positioning |
+| C31 Daily Challenge | 📋 Todo | 📋 Todo (reframed) | Renamed to "Daily Company Story" — narrative not quiz |
+| C29 Explain Any Metric | 📋 Todo | 📋 Todo (deferred) | Deferred to Sprint 5 until design grade B |
+
+### Updated Issue Statistics
+
+| Status | Count |
+|--------|-------|
+| 📋 Todo | 33 |
+| 🔄 In progress | 0 |
+| ✅ Done | 12 |
+| ❌ Canceled | 3 |
+
+| Priority | Count |
+|----------|-------|
+| P0 | 4 |
+| P1 | 12 |
+| P2 | 22 |
+
+---
+
+*Last updated: 2026-06-13 (Discussion Round 7 — team discussion + Challenger 3-round challenge)*
