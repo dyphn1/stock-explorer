@@ -3,6 +3,7 @@
 頁面路由器：根據 session_state['page'] 顯示不同頁面
 """
 
+import logging
 import streamlit as st
 
 from src.data.finmind_client import FinMindClient
@@ -30,6 +31,8 @@ from src.services.adaptive_engine import (
     check_data_freshness,
 )
 from src.services.watchlist import _is_etf as _is_etf_check
+
+logger = logging.getLogger(__name__)
 
 
 # ── 初始化 ────────────────────────────────────────────
@@ -92,18 +95,21 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         return
 
     # M5: 自動事件偵測（背景執行，不阻塞頁面）
-    with st.spinner("🔍 檢查近期事件..."):
-        new_events = run_auto_detection(stock_id, data)
+    try:
+        with st.spinner("🔍 檢查近期事件..."):
+            new_events = run_auto_detection(stock_id, data)
 
-    # M5: 自適應框架橫幅
-    _render_adaptive_banner(data)
+        # M5: 自適應框架橫幅
+        _render_adaptive_banner(data)
 
-    # M5: 事件提醒
-    _render_event_alerts(stock_id)
+        # M5: 事件提醒
+        _render_event_alerts(stock_id)
 
-    # M5: 資料新鮮度指標
-    freshness = check_data_freshness(stock_id, data)
-    _render_freshness_indicator(freshness)
+        # M5: 資料新鮮度指標
+        freshness = check_data_freshness(stock_id, data)
+        _render_freshness_indicator(freshness)
+    except Exception as exc:
+        logger.warning("M5 event detection/rendering failed for %s: %s", stock_id, exc)
 
     # ETF 導向 ETF 詳細頁
     if _is_etf_check(stock_id, data["stock_name"], data["industry"]):
