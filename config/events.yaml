@@ -30,13 +30,6 @@ events:
 - date: '2026-06-10'
   detected_at: '2026-06-10T00:11:06'
   severity: high
-  stock_id: '1101'
-  summary: 重大事件：合併
-  title: 水泥雙雄台泥、亞泥4月合併營收分別月減1.6%及月增6.5% - 聯合新聞網
-  type: news_major
-- date: '2026-06-10'
-  detected_at: '2026-06-10T00:11:06'
-  severity: high
   stock_id: '2317'
   summary: 重大事件：法說
   title: 鴻海(2317)法說來了！股價7天漲18%、外資連10天買超30萬張為哪樁？劉揚偉會端什麼好菜上場 - 今周刊

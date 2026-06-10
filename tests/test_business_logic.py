@@ -553,6 +553,13 @@ class TestDetectNewsEvent:
         events = detect_news_event(df)
         assert len(events) <= 5
 
+    def test_false_positive_merged_revenue(self):
+        """合併營收 title should NOT trigger a news_major (false positive)."""
+        df = _make_news_df(["水泥雙雄台泥、亞泥4月合併營收分別月減1.6%及月增6.5%"])
+        events = detect_news_event(df)
+        major = [e for e in events if e["severity"] == "high"]
+        assert len(major) == 0, f"合併營收 should not trigger news_major, got {major}"
+
 
 # ── check_data_freshness() tests ──────────────────────────
 
