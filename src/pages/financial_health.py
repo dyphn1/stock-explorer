@@ -15,6 +15,7 @@ from src.services.analogy_engine import (
     get_dividend_analogy,
 )
 from src.services.roe_calculator import calc_roe_ttm, is_seasonal_industry
+from src.services.dividend_analyzer import extract_dividend_summary
 from src.pages._router_base import filter_by_timeline, _section_title, _白话_card, _info_card, _find_financial_value
 from src.pages.timeline_controls import render_timeline_selector
 
@@ -27,6 +28,7 @@ def _render_financial_health(data: dict):
     cash_flow = data["cash_flow"]
     extra_metrics = data["extra_metrics"]
     latest_per_pbr = data["latest_per_pbr"]
+    dividend = data.get("dividend")
 
     st.markdown(f"## 💪 財務體質 — {stock_name}")
     st.markdown(f"*賺多少？花多少？剩多少？*")
@@ -66,13 +68,7 @@ def _render_financial_health(data: dict):
         # 漏斗白話解釋
         if gross_profit > 0 and net_income > 0:
             margin_pct = net_income / revenue * 100
-            _info_card(
-                "利潤漏斗解讀",
-                f"每 {revenue/1e8:,.0f} 億元的營收，最終能賺進 {net_income/1e8:,.0f} 億元淨利。"
-                f"中間的差距就是成本、費用和稅金。淨利率 {margin_pct:.1f}% 代表每 100 元營收，"
-                f"最終能賺進 {margin_pct:.1f} 元。",
-                "💰",
-            )
+            _info_card("淨利率", f"{margin_pct:.1f}% — 每 100 元營收賺 {margin_pct:.1f} 元", "💰")
     else:
         st.info("暫無損益表資料，無法生成利潤漏斗")
 
@@ -177,7 +173,7 @@ def _render_financial_health(data: dict):
                     health_color = "#E74C3C"
                 elif debt_ratio >= 50:
                     health = "📊 負債比適中，屬於正常範圍"
-                    health_color = "#F39C12"
+                    health_color = "#3498DB"
                 elif debt_ratio >= 30:
                     health = "✅ 財務結構穩健，負債比偏低"
                     health_color = "#27AE60"
@@ -190,7 +186,7 @@ def _render_financial_health(data: dict):
                     <div style="font-weight:600;color:#2C3E50;">🏥 財務體質評估</div>
                     <div style="font-size:1rem;color:#2C3E50;margin-top:0.5rem;">{health}</div>
                     <div style="font-size:0.85rem;color:#7F8C8D;margin-top:0.3rem;">
-                        負債比 {debt_ratio:.1f}% — 每 100 元資產中，有 {debt_ratio:.0f} 元是借來的
+                        負債比 {debt_ratio:.1f}%
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -220,29 +216,60 @@ def _render_financial_health(data: dict):
             with col1:
                 sign = "+" if operating_cf >= 0 else ""
                 _白话_card("營業現金流", f"{sign}{operating_cf/1e8:,.0f} 億",
-                           "本業賺進來的錢" if operating_cf >= 0 else "本業在燒錢")
+                           "⬆ 本業賺錢" if operating_cf >= 0 else "⬇ 本業燒錢")
             with col2:
                 sign = "+" if investing_cf >= 0 else ""
                 _白话_card("投資現金流", f"{sign}{investing_cf/1e8:,.0f} 億",
-                           "賣掉資產或收到投資收益" if investing_cf >= 0 else "花錢投資擴廠或買設備")
+                           "⬆ 回收投資" if investing_cf >= 0 else "⬇ 擴大投資")
             with col3:
                 sign = "+" if financing_cf >= 0 else ""
                 _白话_card("籌資現金流", f"{sign}{financing_cf/1e8:,.0f} 億",
-                           "借錢或增資" if financing_cf >= 0 else "還錢或配息")
+                           "⬆ 借錢或增資" if financing_cf >= 0 else "⬇ 還錢或配息")
 
             # 現金流解讀
             if operating_cf > 0 and investing_cf < 0:
-                _info_card("現金流解讀",
-                           "營業現金流為正、投資現金流為負，代表公司本業賺錢，而且把賺到的錢拿去投資擴廠。"
-                           "這通常是健康的成長型公司的特徵。", "💵")
+                _info_card("現金流解讀", "本業賺錢＋投資擴廠 → 健康成長", "💵")
             elif operating_cf > 0 and investing_cf > 0:
-                _info_card("現金流解讀",
-                           "營業和投資現金流都為正，代表公司本業賺錢，同時也在回收投資。"
-                           "可能是成熟穩定的公司。", "💵")
+                _info_card("現金流解讀", "本業賺錢＋回收投資 → 成熟穩定", "💵")
             elif operating_cf < 0:
-                _info_card("現金流解讀",
-                           "營業現金流為負，代表本業目前還在燒錢。需要關注公司是否有足夠的資金支撐。", "⚠️")
+                _info_card("現金流解讀", "本業燒錢，關注資金支撐", "⚠️")
         except Exception:
             st.info("無法解析現金流量表")
     else:
         st.info("暫無現金流量表資料")
+
+    st.markdown("---")
+
+    # ── 5. 股利指標 ──────────────────────────────────
+    _section_title("股利指標：這家公司有分紅嗎？")
+
+    current_price = None
+    if latest_per_pbr and latest_per_pbr.get("price"):
+        current_price = latest_per_pbr["price"]
+
+    div_summary = extract_dividend_summary(dividend, current_price=current_price)
+
+    if div_summary["has_data"]:
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            latest_div = div_summary["latest_cash_div"]
+            _白话_card("最近配息", f"{latest_div} 元" if latest_div else "—",
+                       "每股現金股利")
+        with col2:
+            est_annual = div_summary["estimated_annual"]
+            annual_str = f"{est_annual} 元" if est_annual else "—"
+            _白话_card("預估年化", annual_str,
+                       "預估全年配息")
+        with col3:
+            est_yield = div_summary["estimated_yield"]
+            _白话_card("預估殖利率", f"{est_yield}%" if est_yield else "—",
+                       "年化股利／股價")
+
+        freq_label = {
+            "quarterly": "季配",
+            "annual": "年配",
+            "irregular": "不穩定",
+        }.get(div_summary["frequency"], "—")
+        _info_card("配息頻率", f"{freq_label} — {div_summary['plain_summary']}", "🎁")
+    else:
+        _info_card("股利資料", div_summary["plain_summary"], "🎁")
