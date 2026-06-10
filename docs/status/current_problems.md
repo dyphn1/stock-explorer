@@ -231,3 +231,69 @@ After reviewing the architecture, data flow, and UI implementation across three 
 *Summary: The project functions smoothly under the "Happy Path", but when facing scalability, error handling, and concurrency, the underlying infrastructure (especially the cache algorithm and YAML persistence layer) is extremely fragile. Refactoring API access and implementing file locking mechanisms should be prioritized.*
 
 *Design System Compliance (Round 3 — 2026-06-11): The app has good foundations in loading states, error handling, and zone separation. However, NO design issues were fixed between Round 2 and Round 3 (except 2 architecture violations). Critical new finding: business_card.py is severely truncated (128 lines) — the main content (revenue/news/dividend) is imported but never rendered. 3 new issues found: section title emoji conflict, gradient banners, inline summary cards. Overall PPT style grade: D+ (downgraded from B-).*
+
+---
+
+## Layer 5: Design System Compliance (Round 4 — 2026-06-12)
+
+> Recorded after Round 4 Design Comparison Review. 25 new issues found (D-029 through D-045). 2 previously identified issues confirmed fixed (D-012, D-016). Overall grade remains D+. 0 pages at A or B grade.
+
+### P0 — CRITICAL
+
+| # | File | Line | Issue | Severity |
+|---|------|------|-------|----------|
+| D-029 | `business_card.py` | 128 | **Page STILL severely truncated.** Only header + watchlist UI rendered. Revenue chart, pie chart, news, dividend sections are imported but never called. The MAIN page of the app is a broken stub. Unchanged from Round 3. | **Critical** |
+
+### Color System Violations — NEW (Round 4)
+
+| # | File | Line | Offending Color | Should Be | Context |
+|---|------|------|-----------------|-----------|---------|
+| D-030 | `group_structure.py` | 239 | `#F39C12` (orange) | `#F39C12` is NOT in design system palette | "Important investment" badge label for 20–49% holdings |
+| D-031 | `watchlist_page.py` | 169,171,197 | `#27AE60`/`#3498DB`/`#E74C3C` as inline badge colors | Acceptable colors but delivered as raw HTML, not shared component | Type badge and alert badge |
+| D-032 | `etf_detail.py` | 110 | `linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%)` | No gradients in design system | One-liner banner — duplicate of D-027 pattern |
+| D-033 | `group_structure.py` | 202 | `linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%)` | No gradients in design system | Group overview banner |
+| D-034 | `peer_comparison.py` | 92 | `st.metric()` with Streamlit default styling | `_白话_card()` | Single-company fallback view |
+| D-035 | `event_dashboard.py` | 145 | `#EBF5FB`, `#D4E6F1` in gradient | No gradients in design system | Adaptive banner |
+
+### PPT Style Violations — NEW (Round 4)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-036 | `financial_health.py` | 70–73 | `_info_card` content for funnel analysis is ~280 Chinese chars — exceeds 200-char limit |
+| D-037 | `financial_health.py` | 234–244 | Cash flow `_info_card` text blocks — 3 blocks total ~500 chars |
+| D-038 | `group_structure.py` | 326–330 | Strategy `_info_card` text ~180 chars for closing sentence; overall page text exceeds 200 chars |
+| D-039 | `watchlist_page.py` | 157–226 | Watchlist item card renders per-stock flexbox row — page is entirely table/list oriented, no chart |
+
+### Zone Separation Violations — NEW (Round 4)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-040 | `business_card.py` | 95–128 | Watchlist popover management UI (text input, selectbox, create button) embedded in Zone A area |
+
+### Component Consistency — NEW (Round 4)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-041 | `category_browser.py` | 170–181 | Stock cards in industry browser use raw HTML `<div>` with inline styles instead of `_白话_card()` |
+| D-042 | `etf_browser.py` | 302–321 | ETF category cards use raw HTML with inline styles instead of `_白话_card()` |
+| D-043 | `etf_browser.py` | 59–119 | ETF explainer card uses custom gradient HTML with illegal colors |
+| D-044 | `etf_detail.py` | 183–188 | Dividend explanation raw HTML card instead of `_info_card()` |
+| D-045 | `etf_detail.py` | 250–256 | Institution explanation raw HTML card instead of `_info_card()` |
+
+### Fixes Since Round 3 ✅
+
+| # | File | Line | Fix Applied |
+|---|------|------|-------------|
+| D-012 | `peer_comparison.py` | 51 | `@st.cache_data` removed from view layer |
+| D-016 | `etf_browser.py` | 12, 18 | `@st.cache_data` replaced with module-level cache functions |
+
+### Cumulative Issue Count
+
+| Round | New Issues | Total | Fixed |
+|-------|-----------|-------|-------|
+| Round 2 (2026-06-10) | 26 | 26 | 2 (D-012, D-016) |
+| Round 3 (2026-06-11) | 3 new | 29 | 0 |
+| Round 4 (2026-06-12) | 25 new | 54 | 0 |
+| **Total** | **54** | **54** | **2** |
+
+**Overall design grade: D+** (unchanged from Round 3 — 0 pages at A or B, 5 pages at D, 5 pages at C)

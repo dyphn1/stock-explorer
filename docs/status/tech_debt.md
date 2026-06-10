@@ -387,3 +387,109 @@ The Challenger's Round 3 review identified a **P0 regression** that the Architec
 ### Recommended Action
 
 The team should **complete business_card.py before any new features**. This is a regression fix, not a feature addition. Estimated effort: 8-12 hours. See `docs/workflow/challenge_log.md` for the full implementation breakdown.
+
+---
+
+## Round 4 Update (2026-06-11)
+
+> **Reviewer**: System Architect (Subagent) — Automated Cron
+> **Scope**: Targeted verification of Round 3 items + new debt discovery
+> **Checks performed**: 6 targeted searches (A through F)
+
+---
+
+### Verification of Round 3 Items
+
+| Item | Description | Round 3 Status | Round 4 Verification |
+|------|-------------|---------------|---------------------|
+| A01 | Timeline constants duplicated (`_TIMELINE_DAYS` / `_TIMELINE_OPTIONS`) | ❌ Not done | ❌ **Still present** — `_router_base.py:154` and `timeline_controls.py:12` |
+| NEW-G01 | `_atomic_write` duplicated in 2 modules | ❌ Not done | ❌ **Still present** — `adaptive_engine.py:135` (str), `watchlist.py:21` (Path) |
+| NEW-G02 | `models.py` dead code (86 lines, 6 dataclasses) | ❌ Not done | ❌ **Still present** — 0 imports across entire `src/` tree |
+| NEW-G04 | Rate limit flag `_rate_limited` set but never read | ❌ Not done | ❌ **Still present** — set at `_router_base.py:46`, read at 0 places; `main.py:182` uses `get_rate_limit_status()` (module counter) |
+| NEW-G05 | `ETF_CATEGORY_KEYWORDS` inline with implicit priority | ❌ Not done | ❌ **Still present** — `etf_browser.py:179`, first-match-wins semantics |
+| NEW-G06 | `FinMindClient()` bare instantiation in `peer_comparison.py` | ❌ Not done | ❌ **Still present** — `peer_comparison.py:54` creates `FinMindClient()` without `cache_dir` |
+| C01 | Category browser N+1 queries (200 sequential calls) | ❌ Not done | ❌ **Still present** — no batch fetch added |
+| C02 | `max_workers=5` hardcoded | ❌ Not done | ❌ **Still present** — `_router_base.py:51` |
+| C03 | ETF dividend ranking sequential (~500 calls) | ❌ Not done | ❌ **Still present** — no dividend cache added |
+| D01 | YAML storage doesn't scale beyond single-user | ❌ Not done | ❌ **Still present** — no storage abstraction |
+| D02 | Module-level global state for rate limiting | ❌ Not done | ❌ **Still present** — `finmind_client.py:32-34` |
+| D03 | Static data scattered across 5 modules | ❌ Not done | ❌ **Still present** — no company registry created |
+| E02 | No integration tests for data pipeline | ❌ Not done | ❌ **Still present** — 88 unit tests, 0 integration tests |
+| F02 | FinMind sole data source, no fallback | ❌ Not done | ❌ **Still present** — no "last known good" cache |
+| Challenger | `business_card.py` truncated (128 lines) | P0 — CRITICAL | ❌ **Still present** — 128 lines, only renders header + watchlist buttons |
+
+**Summary**: Zero Round 3 items were resolved between Round 3 and Round 4. All 14 active items + the Challenger's P0 finding remain open.
+
+---
+
+### New Items Found in Round 4
+
+#### 🔴 NEW-G08: `list_names()` called but not imported in `business_card.py`
+
+**File**: `src/pages/business_card.py` (line 78)
+
+**Problem**: The function `list_names()` is called at line 78 (`existing_lists = list_names()`) but is NOT in the import block (lines 22-30). The import block only includes `is_in_watchlist`, `is_in_any_list`, `get_lists_for_stock`, `add_to_watchlist`, `remove_from_all_lists`, `remove_from_watchlist`, and `create_list`.
+
+**Impact**: This is a latent `NameError` bug. It will crash at runtime when a user clicks "➕ 加入關注" (Add to Watchlist) and the popover tries to list existing watchlist names. The bug is currently masked because the code path requires user interaction to trigger.
+
+**Recommendation**: Add `list_names` to the import block at line 22-30. Estimated effort: 1 minute.
+
+**Priority**: 🔴 HIGH — This is a runtime crash in a user-facing feature (watchlist management on the business card page).
+
+---
+
+#### 🟡 NEW-G09: `business_card.py` imports 15+ service functions but uses only ~5
+
+**File**: `src/pages/business_card.py` (lines 8-30)
+
+**Problem**: The file imports 15 service functions (`create_revenue_trend_chart`, `create_revenue_pie_chart`, `analyze_revenue_breakdown`, 7 analogy functions, `extract_dividend_summary`, `summarize_news`, `get_news_impact_level`) but none of them are called anywhere in the 128-line file. Only the watchlist functions and basic data access are used.
+
+**Impact**: Unnecessary imports increase startup time and create confusion about what the page actually does. This is a symptom of the larger truncation problem (the rendering code that would use these imports was never written).
+
+**Recommendation**: Either (a) complete the business card rendering to use these imports, or (b) remove the unused imports now and re-add them when the rendering code is written. Estimated effort: 5 minutes for option (b).
+
+**Priority**: 🟡 MEDIUM — Code clarity issue; will be resolved naturally when business_card.py is completed.
+
+---
+
+### Updated Summary Table
+
+| Category | Items (Round 3) | Items (Round 4) | Critical | High | Medium | Low |
+|----------|-----------------|-----------------|----------|------|--------|-----|
+| Code Duplication | 2 | 2 | — | — | 1 | 1 |
+| Error Handling | 1 | 1 | — | — | 1 | — |
+| Performance | 3 | 3 | — | 1 | 2 | — |
+| Scalability | 2 | 2 | — | 1 | 1 | — |
+| Missing Tests | 1 | 1 | — | — | 1 | — |
+| Dependencies | 1 | 1 | — | — | 1 | — |
+| **New (Round 4)** | — | **2** | — | **1** | **1** | — |
+| **Total** | **10** | **12** | **—** | **3** | **8** | **1** |
+
+**Total estimated effort**: ~17 hours (unchanged — no items resolved, 2 new small items added)
+
+---
+
+### Round 4 Action Plan Additions
+
+| # | Item | Effort | Priority | Status |
+|---|------|--------|----------|--------|
+| 15 | Add `list_names` to import block in `business_card.py` (NEW-G08) | 1 min | 🔴 HIGH — runtime crash | ❌ Not done |
+| 16 | Remove unused imports from `business_card.py` (NEW-G09) | 5 min | 🟡 MEDIUM — clarity | ❌ Not done |
+
+---
+
+### Key Observations
+
+1. **No progress since Round 3**: All 14 previously identified items remain unresolved. The codebase has not changed since the Round 3 review.
+
+2. **business_card.py is the critical blocker**: The Challenger's P0 finding (truncated business card) remains the #1 priority. Until this is fixed, the app's core page (the stock business card) is non-functional — it only shows a header and watchlist buttons.
+
+3. **NEW-G08 is a hidden crash bug**: The missing `list_names` import means the watchlist feature on the business card page will crash at runtime. This would be caught immediately if the page were tested end-to-end.
+
+4. **Test count stable**: 88 tests in `test_business_logic.py` — no change from Round 3.
+
+5. **No new files**: The file count is identical to Round 3 (same 50 Python files including pycache).
+
+---
+
+*This is the fourth technical debt review. The team has not addressed any items since Round 3. The most impactful actions remain: (1) complete business_card.py (8-12 hours, P0), (2) fix the `list_names` import bug (1 minute, quick win), and (3) consolidate duplicated utilities (atomic_write, timeline constants) for immediate DRY improvements.*

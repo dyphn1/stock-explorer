@@ -691,4 +691,167 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 
 ---
 
-*Last updated: 2026-06-11 (discussion round 4 — team discussion + challenger 3-round challenge)*
+## 🌍 Round 4 — Competitor Research (2026-06-11, New Angles: AI-Native, TW Startups, ELI5)
+
+### Process Summary
+- **Focus areas:** Emerging AI-powered tools (2025-2026), TW fintech startups, international beginner apps, financial literacy platforms, ELI5 approaches
+- **8 new competitors analyzed** not covered in Rounds 1-3
+- **2 critical threats identified:** Plotch.ai (story cards ≈ PPT style) and TW LLM wrapper bots (messaging-native UX)
+- **7 new feature ideas generated** (3 high priority, 3 medium, 1 low)
+
+### New Competitors Analyzed
+
+| Competitor | Type | Threat Level | Key Finding |
+|---|---|---|---|
+| Plotch.ai | AI story cards | 🔴 High | Direct UX overlap with PPT style; social sharing built-in |
+| 股市AI / TW LLM Bots | LINE/Telegram bots | 🔴 High | Messaging-native UX; zero learning curve; proliferating |
+| Yahoo Finance AI Reports | AI summaries | 🟡 Medium | Bull/Bear framing; massive distribution |
+| Magnify / Compose AI | AI doc analysis | 🟡 Medium | Cross-period comparison; no education framework |
+| Kavout | AI stock scoring | 🟢 Low | US-only; no education features |
+| TipRanks | Analyst tracking | 🟢 Low | Active trader audience; not beginner-focused |
+| FinGuild / Communities | Community learning | 🟢 Low | Complements Stock Explorer; validates demand |
+| Taster.finance | Micro-learning | 🟢 Low | Different category; spaced repetition is innovative |
+
+### New Feature Ideas from Round 4
+
+#### [ISSUE-C21] LINE Bot Interface for Stock Explorer
+- **Source:** Competitor research round 4 (股市AI / TW LLM bots)
+- **Priority:** P1 (elevated from P2 — counters critical messaging-native threat)
+- **Status:** 📋 Todo
+- **Description:**
+  - Taiwanese LLM wrapper bots on LINE/Telegram are proliferating — zero learning curve, messaging-native UX
+  - Stock Explorer has NO messaging presence; users must open a website
+  - Phase 1: Read-only bot — user sends "2330" → bot replies with TSMC summary card
+  - Phase 2: Interactive — user taps "Tell me more about revenue" → bot sends revenue card
+  - Phase 3: Push — bot proactively sends event alerts
+  - Technology: LINE Messaging API + FastAPI backend + existing analysis services
+  - Competitive Gap: 🔴 Critical — counters "LLM wrapper bot" threat
+- **Related files:** New `src/bot/line_bot.py`, `src/bot/card_builder.py`
+- **Estimate:** 16-24h for Phase 1
+- **Reference:** `docs/research/competitor_research_round4.md` — Competitor 5
+
+---
+
+#### [ISSUE-C22] Bull Case / Bear Case Balanced Framing
+- **Source:** Competitor research round 4 (Yahoo Finance AI Research Reports)
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:**
+  - Yahoo Finance's AI Research Reports present balanced bull/bear cases for stocks
+  - No TW platform offers balanced framing — most are either neutral or bullish
+  - Add optional "Bull Case / Bear Case" section to business card page
+  - Example for TSMC:
+    - 🐂 Bull Case: "TSMC controls 90% of advanced chip manufacturing. AI demand growing 30%/year."
+    - 🐻 Bear Case: "TSMC spends $30B/year on factories. Geopolitical risk from Taiwan tensions."
+  - Aligns with "historian" positioning: presents multiple perspectives without recommending
+  - Competitive Gap: 🟡 Medium — no TW platform does balanced framing
+- **Related files:** `src/pages/business_card.py`, new `src/services/bull_bear_engine.py`
+- **Estimate:** 8-12h
+- **Reference:** `docs/research/competitor_research_round4.md` — Competitor 3
+
+---
+
+#### [ISSUE-C23] "Why Now" Narrative Card
+- **Source:** Competitor research round 4 (Plotch.ai "Why Now" card)
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:**
+  - Plotch.ai's "Why Now" card connects companies to current events and trends
+  - Stock Explorer's event dashboard shows WHAT happened but not WHY it matters
+  - Add "Why This Company Matters Right Now" card to business card page
+  - Example: "TSMC matters right now because: (1) AI chip demand surging — NVIDIA, Apple, AMD all need 3nm chips. (2) Arizona factories could change global supply chains."
+  - Makes company data feel relevant and timely for beginners
+  - Competitive Gap: 🟡 Medium — connects data to narrative context
+- **Related files:** `src/pages/business_card.py`, new `src/data/why_now.yaml`
+- **Estimate:** 6-10h (manual content for top 20 stocks, then template)
+- **Reference:** `docs/research/competitor_research_round4.md` — Competitor 7
+
+---
+
+#### [ISSUE-C24] Interactive "Calculate It Yourself" Exercises
+- **Source:** Competitor research round 4 (Taster.finance interactive exercises)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - Taster.finance has mini interactive exercises where users manually calculate metrics
+  - Stock Explorer shows metrics but never asks users to calculate them (passive vs. active learning)
+  - Add 5 mini-exercises to financial health page:
+    - "TSMC's annual dividend is $11/share. Stock price is $850. What's the dividend yield?"
+    - "Revenue $100B, costs $60B. What's the gross margin?"
+  - Immediate feedback: "Correct! 1.3% — that's lower than the bank's savings rate."
+  - Competitive Gap: 🟡 Medium — no TW stock platform has interactive exercises
+- **Related files:** `src/pages/financial_health.py`
+- **Estimate:** 4-6h for 5 exercises
+- **Reference:** `docs/research/competitor_research_round4.md` — Competitor 8
+
+---
+
+#### [ISSUE-C25] Social Sharing Buttons
+- **Source:** Competitor research round 4 (Plotch.ai story card sharing)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - Plotch.ai has built-in social sharing — every shared story card = new user acquisition
+  - Stock Explorer has ZERO viral distribution mechanism
+  - Add "Share to LINE / Facebook / Copy Link" buttons to each analysis page
+  - Generate shareable summary card (image format) with key metrics + one analogy
+  - Example share card: "台積電 TSMC ｜ 半導體業 ｜ 毛利率 55% → 每賣100元賺55元 ｜ 🏭 護城河：全球90%先進晶片"
+  - Competitive Gap: 🟡 Medium — zero-cost user acquisition channel
+- **Related files:** All page modules, new `src/services/share_card.py`
+- **Estimate:** 6-10h
+- **Reference:** `docs/research/competitor_research_round4.md` — White Space Analysis
+
+---
+
+#### [ISSUE-C26] "Today's Company" Daily Narrative
+- **Source:** Competitor research round 4 (Taster.finance "Today's Company")
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - Taster.finance uses one company as the example for ALL concepts each day
+  - Creates narrative continuity and daily engagement loop
+  - Add "Company of the Day" to Stock Explorer homepage
+  - All metric explanations on that day use the featured company as the example
+  - Creates reason to return daily (new company each day)
+  - Competitive Gap: 🟢 Low — engagement/retention feature, not core education
+- **Related files:** `src/pages/homepage.py`, new `src/data/company_of_day.yaml`
+- **Estimate:** 4-6h
+- **Reference:** `docs/research/competitor_research_round4.md` — Competitor 8
+
+---
+
+#### [ISSUE-C27] Spaced Repetition Concept Review
+- **Source:** Competitor research round 4 (Taster.finance spaced repetition)
+- **Priority:** P2 (post-MVP)
+- **Status:** 📋 Todo
+- **Description:**
+  - Taster.finance retests previously learned concepts over time (Duolingo model)
+  - Stock Explorer has no retention mechanism — users learn a metric once, never see it again
+  - Track which financial concepts the user has encountered
+  - Periodically retest: "You learned P/E ratio 7 days ago. Quick refresher!"
+  - Competitive Gap: 🟢 Low — unique education feature, no competitor has it
+  - Post-MVP: requires user tracking infrastructure
+- **Related files:** New `src/services/spaced_repetition.py`, `config/user_progress.yaml`
+- **Estimate:** 10-14h
+- **Reference:** `docs/research/competitor_research_round4.md` — Competitor 8
+
+---
+
+### Updated Issue Statistics
+
+| Status | Count |
+|--------|-------|
+| 📋 Todo | 30 |
+| ✅ Done | 7 |
+| ❌ Canceled | 2 |
+| 🔄 In progress | 0 |
+
+| Priority | Count |
+|----------|-------|
+| P0 | 5 |
+| P1 | 9 |
+| P2 | 15 |
+
+---
+
+*Last updated: 2026-06-11 (competitor research round 4 — new angles: AI-native, TW startups, ELI5)*

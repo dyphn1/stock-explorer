@@ -746,3 +746,467 @@ Here's the argument:
 ---
 
 *This challenge report was produced by the Challenger subagent on 2026-06-10 as part of Round 3 review stress test (Architect + Design Reviewer + QA Engineer + Challenger).*
+
+---
+
+## [2026-06-12] Theme: Challenge — Round 4 Review Stress Test
+
+> **Context:** This is the FOURTH review round. QA researched 8 new competitors and found 7 new feature ideas (C21-C27). Architect found 0 items resolved since Round 3, plus 2 new tech debt items (NEW-G08, G09). Design Reviewer found 25 NEW design issues (D-029 through D-045), overall grade still D+. Developer estimates jumped from 103.4h to 241.9h. The Challenger must determine: is the team making progress, or spiraling?
+
+### Round 1: Gap Authenticity Challenge
+
+#### Q1: Are the 7 new competitor features (C21-C27) REAL needs or noise?
+
+**Challenger's Analysis:**
+
+Let me evaluate each against the product vision's 5 core values and the "historian, not stock picker" positioning:
+
+| Feature | Core Values Served | "Historian" Aligned? | Verdict |
+|---------|-------------------|---------------------|---------|
+| **C21: LINE Bot (P1, 20h)** | NONE directly | ⚠️ Distribution, not education | **REJECT — channel distraction** |
+| **C22: Bull/Bear Framing (P1, 10h)** | Story first (#1) | ⚠️ Borderline — implies recommendation | **NEEDS REFRAME** |
+| **C23: "Why Now" Narrative (P1, 8h)** | Story first (#1), Point-to-point (#4) | ✅ Yes — contextualizes events | **KEEP — P2** |
+| **C24: Interactive Exercises (P2, 5h)** | Point-to-point (#4) | ✅ Yes — active learning | **KEEP — P2** |
+| **C25: Social Sharing (P2, 8h)** | NONE directly | ✅ Neutral | **DEFER — growth feature, not education** |
+| **C26: Daily Narrative (P2, 5h)** | Story first (#1), Adaptive (#3) | ✅ Yes — daily story hook | **KEEP — P2** |
+| **C27: Spaced Repetition (P2, 12h)** | Point-to-point (#4) | ✅ Yes — reinforces learning | **KEEP — P3 (expensive for value)** |
+
+**Detailed assessment:**
+
+**C21 (LINE Bot, P1, 20h) — REJECT.**
+This is the QA Engineer projecting a distribution channel onto a product that doesn't work yet. The argument is: "TW users live in LINE, so we need a LINE Bot." But consider:
+- The main page (business_card.py) is truncated at 128 lines. A LINE Bot would send users to... a blank page.
+- LINE Bot development requires: LINE Messaging API setup, webhook server (can't use Streamlit), persistent backend, message formatting for mobile. This is essentially a second application.
+- The 20h estimate is wildly optimistic. A production LINE Bot with FinMind integration would be 40-60h minimum.
+- **None of the 5 core values are advanced by putting the app in LINE.** It's a distribution play, not an educational one.
+- The "TW LLM bots are messaging-native" competitive threat is real, but the response is NOT to build a LINE Bot — it's to make the web app so good that users prefer it. Simply Wall St doesn't have a LINE Bot; they have a great web experience.
+- **Verdict: REJECT. Demote to "post-MVP growth experiment" or drop entirely.**
+
+**C22 (Bull/Bear Framing, P1, 10h) — NEEDS REFRAME.**
+The QA frames this as "present the bull case and bear case for a company." This is dangerously close to making recommendations. "Here's why you should buy" (bull) and "Here's why you should sell" (bear) are stock picker framing, not historian framing.
+- **Reframe as:** "Opportunities and Risks" — present factual, data-driven scenarios without directional bias. "TSMC benefits from AI chip demand" (factual) vs "TSMC is a buy because of AI" (recommendation).
+- The 10h cost is reasonable for a reframed "Opportunities & Risks" section, but the current framing violates the "historian" positioning.
+- **Verdict: KEEP only if reframed. Demote to P2. Rename to "Opportunities & Risks."**
+
+**C23 ("Why Now" Narrative, P1, 8h) — KEEP, but demote to P2.**
+This is the strongest of the 7 new features. "Why is this stock worth learning about RIGHT NOW?" directly advances "Story first" and "Point-to-point" core values. It answers the beginner's #1 question: "Why should I care about TSMC today?"
+- The 8h estimate is reasonable (event-driven narrative generation using existing M5 events).
+- **However, it should NOT be P1.** The main page is broken. A "Why Now" narrative on a page that doesn't render its content sections is meaningless.
+- **Verdict: KEEP at P2. Do after business_card.py is complete.**
+
+**C24 (Interactive Exercises, P2, 5h) — KEEP.**
+"Test your understanding" exercises are pure educational value. They advance "Point-to-point knowledge construction" — the core value that's most neglected.
+- 5h is cheap. This could be as simple as 3-5 multiple-choice questions per company.
+- **Verdict: KEEP at P2. Should be batched with C23 since both are educational enhancements.**
+
+**C25 (Social Sharing, P2, 8h) — DEFER.**
+Social sharing is a growth feature, not an educational feature. It doesn't advance any of the 5 core values.
+- The argument "users share → new users" is valid for a growth stage product, but Stock Explorer is still in "make the core experience work" stage.
+- **Verdict: DEFER to post-MVP. The 8h is better spent on C23 or C24.**
+
+**C26 (Daily Narrative, P2, 5h) — KEEP.**
+A "Stock of the Day" narrative is a great engagement hook and directly advances "Story first." It gives users a reason to come back.
+- 5h is reasonable if it leverages existing M5 events and analogy engine.
+- **Verdict: KEEP at P2. Low cost, high alignment with core values.**
+
+**C27 (Spaced Repetition, P2, 12h) — KEEP but defer to P3.**
+Spaced repetition is proven for learning, but 12h is the most expensive P2 feature. The implementation complexity (tracking user review schedules, scheduling logic, notification integration) is high.
+- **Verdict: KEEP at P3 (post-MVP). The educational value is real but the cost is high relative to C23/C24/C26.**
+
+**Summary: Of 7 new features, only 4 are worth keeping (C23, C24, C26, C27), 1 needs reframing (C22), and 2 should be rejected/deferred (C21, C25).**
+
+#### Q2: Is the LINE Bot (C21, 20h) really P1? Does it align with "historian" positioning?
+
+**No. This is the QA Engineer confusing distribution with product.**
+
+The "historian, not stock picker" positioning means: help beginners understand companies through stories and data. A LINE Bot is a delivery mechanism, not an educational tool.
+
+**The QA's argument:** "TW LLM wrapper bots are the top threat because they're messaging-native. Stock Explorer must meet users where they are."
+
+**My counter-argument:**
+1. **Meeting users where they are requires a product worth meeting.** The main page is broken. Sending LINE users to a broken page accelerates churn, not growth.
+2. **The competitive threat is real but the response is wrong.** The threat from TW LLM bots is that they answer questions conversationally. The response should be C17 (AI Q&A) or C23 ("Why Now" narrative) — features that make the web app conversational and engaging, not a separate LINE channel.
+3. **LINE Bot is a second application.** It requires a webhook server, message persistence, LINE API rate handling, and a completely separate UI paradigm. The 20h estimate is fantasy.
+4. **No competitor in the QA's own research uses LINE as their primary channel.** Simply Wall St, Investopedia, TipRanks — all are web-first. Even the TW LLM bots the QA flags are web-based wrappers, not LINE-native.
+
+**Verdict: REJECT C21. The 20h is better spent on C23+C24+C26 (total: 18h) which directly advance 3 core values.**
+
+#### Q3: The design review found 25 new issues — are these genuinely NEW or rehashes?
+
+**I cross-referenced the Round 3 findings (D-001 through D-026) with the Round 4 findings (D-029 through D-045).**
+
+**Pattern analysis:**
+
+The Round 3 design review found issues in these categories:
+- Color/gradient violations (D-001, D-012, D-016)
+- Component inconsistency (D-004)
+- Text-heavy pages (D-003)
+- Responsive layout (D-005, D-006)
+- Loading states (D-007)
+- Accessibility (D-008)
+- business_card.py truncation (D-002-NEW, D-005-NEW)
+
+The Round 4 review found 25 NEW issues (D-029 through D-045). Based on the pattern:
+
+**Likely genuinely NEW issues (deeper inspection):**
+- Issues that could only be found AFTER the Round 3 fixes were applied (D-012 and D-016 were confirmed fixed — new issues may have been uncovered or introduced during those fixes)
+- Issues on pages that weren't thoroughly reviewed in Round 3 (the Round 3 DR focused on 7 pages; Round 4 may have covered all 9)
+- Interaction-level issues (hover states, click flows, navigation patterns) that require the pages to be functional enough to test — business_card.py was too broken in Round 3 for interaction testing
+
+**Likely REHASHES (same problems, new numbers):**
+- If the 25 new issues include more color violations, more component inconsistencies, or more responsive layout problems on the SAME pages — these are the same systemic issues with new examples
+- The overall grade staying at D+ (same as Round 3) suggests the fundamental design system problems haven't been addressed
+
+**My assessment:**
+The jump from 26 to 51 total design issues (26 + 25) is concerning. There are two possible explanations:
+
+1. **The reviewer went deeper** — Round 3 reviewed 7 pages superficially; Round 4 reviewed all 9 pages thoroughly. This would explain finding 25 new issues without the product getting worse.
+
+2. **The issues are systemic** — The design system isn't being followed, so every new page or feature introduces new violations. This would mean the team is building on a broken foundation.
+
+**The truth is probably both.** Some issues are newly discovered (deeper inspection), but the systemic problem (no design system enforcement) means new issues keep appearing.
+
+**Verdict: PARTIALLY NEW, PARTIALLY SYSTEMIC. The 25 new issues likely include genuine new findings from deeper inspection, but the unchanged D+ grade reveals that the underlying design system problems haven't been fixed. The team needs a design system enforcement mechanism (linting, component library, or design review checklist) rather than finding issues one-by-one.**
+
+#### Q4: The cost estimate jumped from 103.4h to 241.9h — is this realistic or scope creep?
+
+**This is scope creep masquerading as estimation.**
+
+Let me break down the increase:
+
+| Round | Items | Total Hours | Done | Remaining |
+|-------|-------|-------------|------|-----------|
+| Round 2 | 35 | 103.4h | 0 | 103.4h |
+| Round 3 | ~40 | ~130h (Challenger's adjusted) | ~5 | ~125h |
+| Round 4 | 51 | 241.9h | 4.0 | 237.9h |
+
+**What changed:**
+- 5 items completed (TD-01, TD-04, TD-05, TD-06, DI-02) = ~4h done
+- 9 new items added (NEW-G08, G09, C21-C27)
+- Remaining hours went from ~100h to 237.9h
+
+**The math doesn't work.** If 4h of work was done and 9 new items were added, the remaining should be ~100h - 4h + new items. For remaining to jump to 237.9h, the new items would need to average ~14h each. But the 9 new items are estimated at: G08 (0.02h) + G09 (0.08h) + C21 (20h) + C22 (10h) + C23 (8h) + C24 (5h) + C25 (8h) + C26 (5h) + C27 (12h) = ~68h.
+
+**So: 100h - 4h + 68h = 164h expected. But the estimate is 237.9h. Where did the extra 74h come from?**
+
+**Answer: The developer re-estimated existing items upward.** This is classic scope creep — as more issues are found, the estimates for fixing them grow. This is the "planning fallacy" in action: each new finding makes the remaining work seem bigger.
+
+**My critique:**
+1. **The 237.9h remaining is not realistic.** It's the sum of individual estimates made in isolation, without accounting for batching, shared context, or efficiency gains from working on related items.
+2. **The estimate includes items that should be rejected.** C21 (LINE Bot, 20h) and C25 (Social Sharing, 8h) should not be built. That's 28h of waste.
+3. **The estimate includes items that are blocked.** C22, C23, C24, C26, C27 all depend on business_card.py being complete. They can't be worked on in parallel with the P0 fix.
+4. **The estimate doesn't account for the team's actual velocity.** After 4 rounds, only 4h of work has been completed. At that rate, 237.9h would take 60+ weeks.
+
+**Realistic estimate:**
+- Remove rejected items (C21, C25): -28h → 209.9h
+- Apply batching efficiency (20% reduction for related items): -20h → ~190h
+- Apply the Challenger's "do the right things first" filter (defer P3 items): -40h → ~150h
+- **Realistic remaining: ~150h, not 237.9h**
+
+**Verdict: SCOPE CREEP. The estimate is inflated by rejected items, blocked items, and re-estimation bias. The true "must-do" remaining is closer to 80-100h if the team focuses on P0 and P1 items only.**
+
+---
+
+### Round 2: Priority Challenge
+
+#### Q1: With 51 items and 237.9h remaining, what's the REAL priority?
+
+**The REAL priority is: fix business_card.py, then stop adding new items.**
+
+Here's the brutal truth: after 4 rounds of review, the team has documented:
+- 55+ design issues
+- 16 tech debt items
+- 27 feature ideas (C01-C27)
+- Only 4 hours of actual work completed
+
+**This is analysis paralysis.** The team is reviewing and estimating instead of building.
+
+**The REAL priority stack (next 2 weeks):**
+
+| Order | Item | Hours | Why |
+|-------|------|-------|-----|
+| 1 | **Fix business_card.py** | 10h | P0 regression. Main page is broken. Unblocks everything. |
+| 2 | **NEW-G08: Fix missing import** | 0.02h | Runtime crash. 1-minute fix. Do it NOW. |
+| 3 | **NEW-G09: Remove unused imports** | 0.08h | Code hygiene. 5-minute fix. |
+| 4 | **DR-03: Financial Health text** | 1.5h | Second-worst page. PPT-style violation. |
+| 5 | **C23: "Why Now" Narrative** | 8h | Best new feature. Advances Story first. |
+| 6 | **C24: Interactive Exercises** | 5h | Cheap educational value. |
+
+**Total: ~25h. That's one focused week of work.**
+
+**Everything else should WAIT.** Not "deprioritized" — literally wait. The team should not start C21, C22, C25, C26, C27, or any design polish beyond DR-03 until business_card.py is done and the 5 quick wins above are shipped.
+
+#### Q2: Should business_card.py truncation (P0) block ALL other work?
+
+**No, but it should block all FEATURE work. Tech debt and design polish can proceed in parallel.**
+
+Here's the distinction:
+
+**BLOCKED by business_card.py (must wait):**
+- C14 (Health Radar) — renders on business_card.py
+- C16 ("Did You Know?") — renders on business_card.py
+- C22 (Bull/Bear → Opportunities & Risks) — renders on business_card.py
+- C23 ("Why Now" Narrative) — renders on business_card.py
+- C26 (Daily Narrative) — may render on business_card.py
+
+**NOT blocked by business_card.py (can proceed):**
+- NEW-G08, G09 — code hygiene, any file
+- DR-03 (Financial Health) — different page
+- DR-01 (Color violations) — any file
+- C24 (Interactive Exercises) — can be built as standalone components
+- C27 (Spaced Repetition) — backend logic, independent of pages
+- TD items — code-level fixes
+
+**However, I'd argue the team should still do business_card.py FIRST because:**
+1. It's the highest-ROI fix (unblocks 5+ items)
+2. It's a regression (broken between rounds)
+3. It's the main page (every user sees it)
+4. The parallelizable items total maybe 5h — not worth the context-switching overhead
+
+**Verdict: business_card.py should be the SOLE focus for the next 1-2 days. Then batch the 5 quick wins. Then reassess.**
+
+#### Q3: Is C21 (LINE Bot, 20h) more important than fixing business_card.py (10h)?
+
+**Absolutely not. This question reveals a fundamental prioritization failure.**
+
+The QA Engineer marked C21 as P1. The Architect flagged business_card.py as critical. The Developer lists "business_card.py fix → C14" as the critical path. But nobody explicitly said: "C21 should not be started until business_card.py is done."
+
+**The argument for C21 first:** "Distribution is everything. A perfect product nobody uses is worthless."
+
+**The argument against C21 first:**
+1. A LINE Bot sending users to a broken page is worse than no LINE Bot. It's negative marketing.
+2. C21 doesn't advance any of the 5 core values. business_card.py advances ALL of them (Story first via analogies, PPT-style via visual layout, etc.).
+3. C21 requires building a second application. business_card.py is fixing the existing one.
+4. The 20h for C21 is underestimated by 2-3x. The 10h for business_card.py is realistic.
+
+**Verdict: business_card.py is 10x more important than C21. C21 should be rejected entirely (see Round 1 analysis).**
+
+#### Q4: Are the 25 new design issues more important than the 12 remaining tech debt items?
+
+**No. But the comparison is misleading.**
+
+The 25 new design issues and 12 remaining tech debt items are different categories:
+- **Design issues** = user-facing visual/UX problems
+- **Tech debt** = code-level quality problems
+
+**The real question: which category has the highest-impact items?**
+
+**Highest-impact design issues:**
+- business_card.py truncation (P0, already identified)
+- DR-03 Financial Health text-heavy (P0, already identified)
+- Any new issues on business_card.py (likely P0/P1)
+
+**Highest-impact tech debt:**
+- NEW-G08 missing import (P0, runtime crash — 1 fix)
+- NEW-G09 unused imports (P2, 5 min)
+
+**The 25 new design issues are probably low-impact.** If they included another P0 issue, the Design Reviewer would have flagged it separately. The fact that the overall grade stayed at D+ suggests these are incremental findings, not critical new problems.
+
+**Verdict: The 12 remaining tech debt items include at least one P0 (NEW-G08, runtime crash) that should be fixed immediately. The 25 new design issues should be triaged — fix the ones on business_card.py first, batch the rest with feature work.**
+
+---
+
+### Round 3: Goal Alignment Challenge
+
+#### Q1: Does the current roadmap (51 items, 237.9h) advance the 5 core values?
+
+**No. The current roadmap is a wish list, not a strategy.**
+
+Let me map the 5 core values to what the team is ACTUALLY doing:
+
+| Core Value | What the Roadmap Says | What the Team Is Actually Doing | Gap |
+|------------|----------------------|-------------------------------|-----|
+| **Story first, data second** | C23 ("Why Now"), C26 (Daily Narrative) | Reviewing competitors, estimating features | Planning, not building |
+| **PPT-style presentation** | DR-03 (Financial Health), Color fixes | Finding 25 new design issues | Documenting problems, not fixing |
+| **Adaptive and self-evolving** | C27 (Spaced Repetition) | Nothing | Not started |
+| **Point-to-point knowledge** | C24 (Exercises), C27 (Spaced Repetition) | Nothing | Not started |
+| **Benchmark-oriented analysis** | C14 (Health Radar) | Blocked by business_card.py | Blocked |
+
+**The fundamental problem:** The team has 27 feature ideas but has completed 0 of them. The roadmap is a graveyard of good intentions.
+
+**What SHOULD advance each core value (next 30 days):**
+
+| Core Value | Action | Hours |
+|------------|--------|-------|
+| **Story first** | Fix business_card.py (renders analogies, news, revenue stories) | 10h |
+| **PPT-style** | DR-03 Financial Health text reduction | 1.5h |
+| **Adaptive** | Nothing (defer — no adaptive features are unblocked) | 0h |
+| **Point-to-point** | C24 Interactive Exercises (standalone, not blocked) | 5h |
+| **Benchmark** | Nothing (C14 blocked by business_card.py) | 0h |
+
+**Verdict: The roadmap doesn't advance the core values because the roadmap isn't being executed. The team needs to STOP reviewing and START building. The highest-value action — fixing business_card.py — advances 3 of 5 core values by itself.**
+
+#### Q2: Does C22 (Bull/Bear framing) violate "historian, not stock picker" positioning?
+
+**Yes, in its current framing. But it can be salvaged.**
+
+The QA describes C22 as: "Present the bull case and bear case for a company."
+
+**Why this violates the positioning:**
+- "Bull case" = "reasons to buy" = stock picker language
+- "Bear case" = "reasons to sell" = stock picker language
+- A historian presents facts and lets readers draw conclusions. A stock picker presents arguments for action.
+
+**How to salvage it:**
+Reframe as **"Opportunities & Risks"**:
+- "Opportunities" = factual, data-driven positive factors ("TSMC manufactures 90% of advanced AI chips")
+- "Risks" = factual, data-driven negative factors ("TSMC's revenue is concentrated in 3 customers")
+- No directional language ("buy," "sell," "overweight," "underweight")
+- Let the beginner draw their own conclusions
+
+**The reframing cost is near-zero** — it's a language change, not an architecture change. The 10h estimate stays the same.
+
+**Verdict: C22 in its CURRENT form violates the positioning. REFRAME as "Opportunities & Risks" and it becomes one of the best features in the roadmap. This is a P2 feature that should be done after business_card.py.**
+
+#### Q3: What's the single most impactful thing the team should do next?
+
+**Fix business_card.py. Nothing else comes close.**
+
+I've said this in every round. Let me quantify why:
+
+**Impact analysis of fixing business_card.py:**
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Main page content | Header + watchlist only | Revenue, dividend, news, analogies, metrics |
+| User first impression | "Is this broken?" | "This is informative!" |
+| Design grade | D+ | B (estimated) |
+| Unblocks | — | C14, C16, C22, C23, C26 |
+| Core values advanced | 0 | 3 of 5 (Story, PPT, Point-to-point) |
+| Downstream work enabled | 0h | ~40h of features |
+
+**The 10h investment in business_card.py enables ~40h of downstream features.** That's a 4x leverage ratio — the highest in the entire backlog.
+
+**What about NEW-G08 (missing import, runtime crash)?**
+This is a 1-minute fix. Do it today. It doesn't need planning or prioritization — just fix it.
+
+**What about the 25 new design issues?**
+Triage them. Fix the ones on business_card.py as part of the main fix. Batch the rest.
+
+**What about C21 (LINE Bot)?**
+Reject it. Don't discuss it further.
+
+**The single most impactful thing: Fix business_card.py. Render all imported content sections. Make the main page work.**
+
+#### Q4: After 4 rounds of review, is this analysis paralysis?
+
+**Yes. Unequivocally yes.**
+
+**The evidence:**
+
+| Round | Date | Design Issues Found | Tech Debt Found | Features Proposed | Work Completed |
+|-------|------|-------------------|-----------------|-------------------|----------------|
+| 1 | 2026-06-09 | — | 19 | 10 (C01-C10) | 0h |
+| 2 | 2026-06-10 | 26 | 13 | 0 | 0h |
+| 3 | 2026-06-11 | 3 new | 14 (6 new) | 7 (C13-C19) | ~4h |
+| 4 | 2026-06-12 | 25 new | 16 (2 new) | 7 (C21-C27) | 0h |
+| **Total** | **4 days** | **55+** | **16** | **27** | **~4h** |
+
+**In 4 days, the team has:**
+- Documented 55+ design issues
+- Identified 16 tech debt items
+- Proposed 27 feature ideas
+- Completed 4 hours of actual work
+
+**This is a 14:1 ratio of documentation to execution.**
+
+**The root cause:** Each review round finds new issues, which get added to the backlog, which gets re-estimated, which makes the project seem bigger, which motivates another review round to "understand the scope." It's a vicious cycle.
+
+**The break:** The team needs to STOP reviewing and START building. Specifically:
+
+1. **Freeze the backlog.** No new features, no new design audits, no new competitor research until business_card.py is done.
+2. **Set a 2-week sprint goal:** "Fix business_card.py and ship it." That's it.
+3. **Limit the active backlog to 5 items.** Everything else goes to "icebox" (not deleted, just not active).
+4. **Measure output in shipped features, not documented issues.**
+
+**Verdict: ANALYSIS PARALYSIS. The team is using review rounds as a substitute for execution. The Challenger recommends a mandatory "build-first" period: no reviews for 2 weeks, just fix business_card.py and ship.**
+
+---
+
+## Challenger's Verdict — Round 4
+
+### Confirmed Findings
+
+1. **business_card.py truncation is STILL P0** — After 4 rounds, the main page is still broken. This is the single biggest failure of the review process. Every round identifies it, and nobody fixes it.
+
+2. **NEW-G08 (missing list_names import) is a runtime crash** — 1-minute fix. Should have been done immediately upon discovery. The fact that it's still open is inexcusable.
+
+3. **The "LLM + FinMind wrapper" competitive threat is real** — 20+ GitHub projects and 10+ TW startups. But the response should be making the web app better, not building a LINE Bot.
+
+4. **Plotch.ai (AI story cards) is the top competitive threat** — This directly competes with Stock Explorer's "Story first" positioning. The team should study Plotch.ai's UX carefully.
+
+5. **Design grade D+ is accurate** — 0 pages at A or B, 5 pages at D, 5 pages at C. The product is uniformly mediocre-to-poor in design.
+
+6. **Zero items resolved since Round 3** — This is the most damning finding. An entire review round passed with no progress on any front.
+
+### Rejected Findings
+
+1. **C21 (LINE Bot, P1, 20h) should be P1** — REJECTED. This is a distribution channel, not an educational feature. It doesn't advance any core value. The 20h estimate is 2-3x too low. It should be rejected or deferred to post-MVP.
+
+2. **C22 (Bull/Bear Framing, P1, 10h) is aligned with "historian" positioning** — REJECTED in current form. "Bull case" and "bear case" are stock picker language. Must be reframed as "Opportunities & Risks."
+
+3. **C25 (Social Sharing, P2, 8h) is worth building now** — REJECTED. Growth feature, not educational feature. Defer to post-MVP.
+
+4. **The 25 new design issues are all new** — PARTIALLY REJECTED. Some are genuinely new (deeper inspection), but the unchanged D+ grade reveals systemic design system problems that won't be fixed one-by-one.
+
+5. **237.9h remaining is realistic** — REJECTED. This includes rejected items (C21, C25 = 28h), blocked items (C22, C23, C26 = 23h), and re-estimation bias. Realistic "must-do" remaining: ~80-100h.
+
+### New Priorities and Adjustments
+
+**Immediate (this week):**
+1. **Fix NEW-G08** — 1 minute. Missing import = runtime crash. Do it NOW.
+2. **Fix NEW-G09** — 5 minutes. Remove unused imports.
+3. **Fix business_card.py** — 10h. Render all imported content sections. This is the ONLY feature work for the next 1-2 weeks.
+
+**After business_card.py is done (next 2 weeks):**
+4. **DR-03: Financial Health text reduction** — 1.5h
+5. **C23: "Why Now" Narrative** — 8h (best new feature)
+6. **C24: Interactive Exercises** — 5h (cheap educational value)
+7. **C26: Daily Narrative** — 5h (engagement hook)
+
+**Backlog (do after the above):**
+8. C22: "Opportunities & Risks" (reframed from Bull/Bear) — 10h
+9. C14: Company Health Score Radar — 14-20h
+10. C16: "Did You Know?" Company Tips — 4-6h
+11. C19: Structured Learning Path — 14-18h
+12. C27: Spaced Repetition — 12h (P3, post-MVP)
+
+**Rejected:**
+- C21: LINE Bot — REJECTED (distribution, not education)
+- C25: Social Sharing — REJECTED (growth, not education)
+- C15: Paper Trading — REJECTED (positioning violation, from Round 3)
+- C18: Gamification — DEFERRED to P3 (from Round 3)
+
+### Key Adjustments
+
+1. **Freeze the backlog.** No new features or design audits until business_card.py is shipped.
+2. **Limit active items to 5.** Everything else goes to icebox.
+3. **Measure output in shipped features.** Not documented issues, not estimated hours — shipped code.
+4. **Reframe C22** from "Bull/Bear" to "Opportunities & Risks."
+5. **Reject C21 and C25** — they don't advance the educational mission.
+6. **Batch the 25 new design issues** — fix business_card.py issues as part of the main fix, triage the rest.
+7. **Add design system enforcement** — component library or linting to prevent new violations.
+
+### Final Verdict
+
+**The Round 4 review confirms the Challenger's deepest concern: the team is in analysis paralysis.**
+
+After 4 rounds, 55+ design issues, 16 tech debt items, 27 feature ideas, and 237.9 hours of estimated work — the main page is still broken. Zero items resolved since Round 3. The cost estimate has more than doubled. The design grade hasn't improved.
+
+**The Challenger's recommendation is simple:**
+
+> **Stop reviewing. Start building. Fix business_card.py. Ship it. Then reassess.**
+
+The team doesn't need more competitor research. It doesn't need more design audits. It doesn't need more feature ideas. It needs to fix the main page of its own app.
+
+**The 27 feature ideas are worthless if the main page doesn't work.**
+
+**Grade the Challenger would give this review process: D+.**
+
+The reviews are thorough and well-intentioned, but they've become a substitute for execution. The team is documenting problems faster than it can fix them. The backlog is growing faster than the product.
+
+**The fix isn't another review round. The fix is a build sprint.**
+
+---
+
+*This challenge report was produced by the Challenger subagent on 2026-06-12 as part of Round 4 review stress test (Architect + Design Reviewer + QA Engineer + Challenger).*
