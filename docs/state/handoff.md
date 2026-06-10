@@ -1,37 +1,38 @@
-# Handoff – Development
+# Handoff – Review
 
 ## Summary
-- **Topic**: Development (🔧)
-- **Date**: 2026-06-12
-- **Sprint 1 — Foundation Fixes**: ALL COMPLETE ✅
+- **Topic**: Review (🔍)
+- **Date**: 2026-06-13
+- **Sprint Status**: Review complete → Development next
 
-## Completed Items (Sprint 1)
-| Issue | Result |
-|-------|--------|
-| DR-04 | ✅ Component consistency — 4 pages migrated to shared components |
-| DR-05 | ✅ Responsive column layouts + CSS media query |
-| D-005 | ✅ `_section_title()` emoji conflict fixed |
-| D-063+D-069+D-070 | ✅ Chart theme colors fixed |
-| Dead code | ✅ 132+ lines removed (models.py, INDUSTRY_REVENUE_MAP) |
-| NEW-G16 | ✅ ETF detection bug fixed |
-| D01+D04+D05 | ✅ M5 verified, pipeline integrated, financial health redesigned |
+## Completed Items (Review Round 8)
+| Item | Result |
+|------|--------|
+| Competitor Research | 8 new competitors, 6 new features (C36-C41) |
+| Tech Debt Review | 6 items fixed (G01,G02,G10,G11,G12,G14), 3 new found |
+| Design Review | Old palette fully cleaned, 11 new issues (D-073-D-084) |
+| Challenger | 3 rounds completed, review approved with modifications |
 
 ## Key Metrics
-- L0: 54/54 ✅ | L1: 15/15 ✅
-- Design grade: C+ (improving to B in Sprint 0)
-- 12 issues done, 33 todo
+- Tech debt: 14 active + 1 deferred (~14 hours, down from ~19)
+- Design grade: C+ (unchanged, 92 cumulative issues)
+- Total issues: 33 todo (4 P0, 12 P1, 22 P2)
+- 12 issues done, 3 canceled
 
 ## Pending Quick Wins (Sprint 0)
 | Item | Effort |
 |------|--------|
-| A01: Timeline constants duplicated | 10 min |
-| G01: `_atomic_write` duplicated | 15 min |
-| G04: Rate limit flag disconnected | 10 min |
-| NEW-G14: `_is_etf()` logic divergence | 5 min |
+| D-073: Fix #5D6D7E → #7F8C8D in _info_card() | 5 min |
+| D-071: Replace Set3 palette in pie charts | 30 min |
+| D-084: Replace st.bar_chart with Plotly | 30 min |
+| G04: Fix disconnected rate limit flags | 10 min |
+| G06: Fix bare FinMindClient() | 20 min |
+| G17: Verify KNOWN_COMPANY_REVENUE usage | 5 min |
 
 ## Next Cycle Handoff
 Next theme: 🔧 Development → read `docs/state/handoff.md` (this file)
-Next dev cycle: Sprint 0 (Design Quality + Quick wins) → Sprint 1 (C28 Spike + LLM Architecture)
+Next dev cycle: Sprint 0 (Design Quality C+ → B, ~2h) → Sprint 1 (C37 Key Takeaways + C28 Story Timeline spike)
 
-For full discussion context, see `docs/state/handoff_discuss.md`
+For full review context, see `docs/state/handoff_review.md`
+For challenge records, see `docs/logs/challenge_log.md`
 For pending Daniel decisions, see `docs/state/pending_review.md`

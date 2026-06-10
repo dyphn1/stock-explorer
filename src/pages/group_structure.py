@@ -6,8 +6,10 @@
 
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 from src.pages._router_base import _section_title, _info_card
+from src.services.chart import _apply_theme_layout
 
 
 # 已知集團架構資料（公開資訊，來自各公司年報）
@@ -280,7 +282,16 @@ def _render_group_structure(data: dict):
         "營收貢獻 (%)": revenues,
     })
 
-    st.bar_chart(chart_data.set_index("公司"), use_container_width=True)
+    # Plotly grouped bar chart (replaces st.bar_chart for design consistency)
+    fig = px.bar(
+        chart_data,
+        x="公司",
+        y=["持股比例 (%)", "營收貢獻 (%)"],
+        barmode="group",
+        color_discrete_map={"持股比例 (%)": "#3498DB", "營收貢獻 (%)": "#27AE60"},
+    )
+    _apply_theme_layout(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     _info_card("關係圖解讀",
                "上圖顯示母公司對各子公司的持股比例和營收貢獻。持股比例越高，代表母公司對該子公司的控制力越強。"

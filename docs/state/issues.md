@@ -1189,11 +1189,102 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 - **Effort**: 10-12h
 - **Related files**: New `src/services/market_mood.py`, homepage
 
+---
+
+## 🌍 Round 8 — Competitor Research (2026-06-13, New Angles: Social Investing, Narrative Platforms, International Education)
+
+### Process Summary
+- **Focus areas**: Social investing platforms (Public.com), crowdsourced analysis (Seeking Alpha), modern financial data (Koyfin), international education apps (Sharesies, Finary), AI narrative tools (Stocksera), discovery/recommendation engines
+- **8 new competitors analyzed** not covered in Rounds 1-7
+- **6 new feature ideas generated** (all P2 — educational/narrative focus)
+- **Key insight**: Narrative features and data synthesis are becoming table stakes internationally; Stock Explorer's "historian" positioning is validated but needs execution
+
+### New Competitors Analyzed
+
+| Competitor | Type | Region | Relevance |
+|---|---|---|---|
+| Public.com | Social investing + story cards | US | 🔴 High — story cards overlap with PPT-style |
+| Seeking Alpha | Crowdsourced analysis + Quant Rating | US/Global | 🟡 Medium — "Story" focus + "Smart Comment" |
+| Koyfin | Modern financial data + plain-language | US/Global | 🟡 Medium — metric descriptions + dashboards |
+| Finary | Portfolio tracking + education | EU | 🟡 Medium — "Learn" section |
+| Sharesies | Micro-investing + heavy education | NZ | 🟡 Medium — "Discover" section |
+| Stocksera | AI-powered stock analysis + narrative | US | 🔴 High — "Story" tab per stock |
+| The Motley Fool | Long-form narrative stock analysis | US | 🟡 Medium — "Bull vs Bear" debates |
+| NerdWallet | Comparison + education model | US | 🟢 Low — "How it works" explainers |
+
+### New Feature Ideas from Round 8
+
+#### [ISSUE-C36] "How This Company Makes Money" Visual Revenue Tree
+- **Source**: Competitor research round 8 (Public.com revenue tree, Koyfin revenue breakdown)
+- **Priority**: P2
+- **Status**: 📋 Todo
+- **Description**: Stock Explorer currently shows a revenue pie chart (what percentage each segment contributes). What's missing is a visual revenue tree that shows HOW money flows through the business — e.g., "TSMC → 5nm chips (40%) → Apple (25%), NVIDIA (15%), AMD (10%)". Public.com and Koyfin both have hierarchical revenue breakdowns that help beginners understand the business model visually. This is a natural extension of our existing pie chart that aligns with the "historian" positioning — explaining how the company works, not whether to buy it.
+- **Implementation**: Extend `create_revenue_pie_chart()` in `chart.py` with a hierarchical treemap or sunburst chart. Add a "Revenue Tree" tab next to the pie chart on the business card page. Data source: FinMind revenue breakdown + manual curation for top 20 stocks.
+- **Effort**: 10-14h
+- **Competitive Gap**: 🟡 No TW competitor has visual revenue tree; Public.com/Koyfin prove demand internationally
+
+---
+
+#### [ISSUE-C37] "Key Takeaways" Summary Card
+- **Source**: Competitor research round 8 (Seeking Alpha "Key Takeaways", Public.com "Quick Summary")
+- **Priority**: P2
+- **Status**: 📋 Todo
+- **Description**: Seeking Alpha and Public.com both have a "Key Takeaways" or "Quick Summary" card at the top of each stock page — 3-5 bullet points that synthesize the most important information. Stock Explorer's business card page has metrics scattered across sections but no synthesized summary. A beginner opening TSMC's page sees 15+ metrics but doesn't know which 3 matter most. This directly violates the "ten-second test" — a beginner should be able to restate the core concept within 10 seconds.
+- **Implementation**: Add a "📋 重點摘要" card at the top of the business card page with 3-5 auto-generated key takeaways. Use existing analogy_engine.py patterns to generate plain-language summaries. Example: "① 台積電是全球90%先進晶片的製造商 ② 毛利率55%代表每賣100元賺55元 ③ 過去3年營收穩定成長，但資本支出很高"
+- **Effort**: 6-8h
+- **Competitive Gap**: 🟡 No TW competitor has auto-generated key takeaways; aligns with "ten-second test" design principle
+
+---
+
+#### [ISSUE-C38] "Compare Stories" Side-by-Side Narrative Mode
+- **Source**: Competitor research round 8 (Stocksera "Compare Stories", Seeking Alpha side-by-side)
+- **Priority**: P2
+- **Status**: 📋 Todo
+- **Description**: Stocksera and Seeking Alpha allow comparing two companies' narratives side-by-side. Stock Explorer has peer comparison (metrics comparison) but no narrative comparison — "How is TSMC's story different from UMC's story?" This is a natural extension of the peer comparison page that adds a narrative layer to the existing metric comparison. Perfect for the "historian" positioning: instead of "which stock is better?", the question becomes "how are these companies' stories different?"
+- **Implementation**: Add a "故事比較" tab to the existing peer comparison page. Show two companies' key events, revenue milestones, and business models side-by-side with plain-language narrative. Reuse existing event data and analogy engine.
+- **Effort**: 12-16h
+- **Competitive Gap**: 🟡 No TW competitor has narrative comparison; extends existing peer comparison advantage
+
+---
+
+#### [ISSUE-C39] "What Changed Recently" Delta Card
+- **Source**: Competitor research round 8 (Koyfin "Recent Changes", Finary "What's New")
+- **Priority**: P2
+- **Status**: 📋 Todo
+- **Description**: Koyfin and Finary both highlight what changed recently — metrics that moved significantly compared to the previous period. Stock Explorer shows historical data in charts but doesn't explicitly highlight recent changes. Beginners don't know what to look for in a 3-year revenue chart. A "What Changed Recently" card would say: "📈 最近3個月營收成長15%，是過去一年最快的增速" or "📉 毛利率從55%下降到52%，因為晶片價格競爭加劇". This makes the data feel alive and relevant.
+- **Implementation**: Add a "🔄 最近有什麼變化" card to the business card page. Compare current metrics (last 30 days) vs previous period (30-60 days ago). Highlight significant changes (>10%) with plain-language explanations. Reuse existing data pipeline.
+- **Effort**: 8-10h
+- **Competitive Gap**: 🟡 No TW competitor highlights recent changes with plain-language explanations
+
+---
+
+#### [ISSUE-C40] "Beginner Mode" / "Expert Mode" Complexity Toggle
+- **Source**: Competitor research round 8 (Sharesies complexity levels, NerdWallet "Simple View")
+- **Priority**: P2
+- **Status**: 📋 Todo
+- **Description**: Sharesies and NerdWallet both have complexity toggles — a "simple view" that hides advanced metrics and shows only the essentials, and an "advanced view" that shows everything. Stock Explorer currently shows all metrics to all users, which can overwhelm absolute beginners. A "Beginner Mode" would show only: one-liner, revenue pie, key metrics (3-4), and "Did You Know?" facts. "Expert Mode" would show everything. This aligns with the "progressive drill-down" principle in the product vision.
+- **Implementation**: Add a session_state toggle ("🌱 新手模式" / "🔬 進階模式") in the navbar. In Beginner Mode, hide advanced sections (institutional investor charts, detailed financial ratios, debt analysis). Show only the 3-4 most important metrics per section. In Expert Mode, show everything (current behavior).
+- **Effort**: 10-14h
+- **Competitive Gap**: 🟢 No TW competitor has complexity toggle; aligns with "progressive drill-down" design principle
+
+---
+
+#### [ISSUE-C41] "Read Next" Company Recommendation Engine
+- **Source**: Competitor research round 8 (The Motley Fool "Related Stocks", Seeking Alpha "You May Also Like")
+- **Priority**: P2
+- **Status**: 📋 Todo
+- **Description**: The Motley Fool and Seeking Alpha both suggest related companies to research after viewing a stock. Stock Explorer has no discovery mechanism — users must know which stock to search for. A "Read Next" section would say: "After learning about TSMC, you might want to understand its biggest customer: Apple (AAPL)" or "TSMC's main competitor: 聯華電子 (UMC)". This creates a learning path that connects companies through business relationships, not just industry categories.
+- **Implementation**: Add a "📖 接著看" section to the business card page with 2-3 recommended companies. Recommendations based on: (1) same industry (industry #2 player), (2) parent-subsidiary relationships (group structure data), (3) customer-supplier relationships (manual curation for top 20 stocks). Reuse existing group_structure.py data.
+- **Effort**: 6-8h
+- **Competitive Gap**: 🟡 No TW competitor has relationship-based recommendations; extends existing group structure advantage
+
+---
+
 ### Updated Issue Statistics
 
 | Status | Count |
 |--------|-------|
-| 📋 Todo | 31 |
+| 📋 Todo | 37 |
 | 🔄 In progress | 0 |
 | ✅ Done | 12 |
 | ❌ Canceled | 2 |
@@ -1202,11 +1293,11 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 |----------|-------|
 | P0 | 4 |
 | P1 | 10 |
-| P2 | 21 |
+| P2 | 28 |
 
 ---
 
-*Last updated: 2026-06-12 (Review Round 7)*
+*Last updated: 2026-06-13 (Round 8 Competitor Research — 8 new competitors, 6 new feature ideas)*
 
 ---
 

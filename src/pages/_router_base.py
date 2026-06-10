@@ -58,6 +58,10 @@ def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
         data["financial"], data["balance_sheet"], data["monthly_revenue"]
     )
 
+    if st.session_state.get("_rate_limited"):
+        st.warning("⚠️ API 速率限制已達上限，部分資料可能無法載入。請稍後再試。")
+        st.session_state["_rate_limited"] = False  # reset after showing
+
     return data
 
 
@@ -147,7 +151,7 @@ def _info_card(title: str, content: str, icon: str = "💡"):
     st.markdown(f"""
     <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
         <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
-        <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.3rem;line-height:1.6;">{content}</div>
+        <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;line-height:1.6;">{content}</div>
     </div>
     """, unsafe_allow_html=True)
 

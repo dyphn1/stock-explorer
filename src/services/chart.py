@@ -92,8 +92,10 @@ def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -
 
     theme = _get_chart_colors()
 
-    # 自定義顏色
-    colors = px.colors.qualitative.Set3[:len(labels)]
+    # Design system colors — theme-aware, accessible palette
+    colors = ['#3498DB', '#27AE60', '#2C3E50', '#7F8C8D', '#1ABC9C', '#9B59B6', '#E67E22', '#2980B9']
+    # Cycle if more labels than colors
+    colors = [colors[i % len(colors)] for i in range(len(labels))]
 
     fig = go.Figure(data=[go.Pie(
         labels=labels,

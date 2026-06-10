@@ -447,3 +447,97 @@ After reviewing the architecture, data flow, and UI implementation across three 
 ---
 
 *Last updated: 2026-06-12 by PM after Round 6 design review.*
+
+---
+
+## Layer 5: Design System Compliance (Round 7 — 2026-06-13)
+
+> Recorded after Round 7 Design Comparison Review. Verified all previous issues against source code. 0 new color violations from the old palette (F39C12, 2E86C1, 1B4F72, 8E44AD, 2ECC71, 4A90D9 all confirmed cleaned). 0 linear-gradient instances remain. However, 11 new issues found: 8 non-palette colors (#5D6D7E, #F8F9FA, #FEF9E7, #F9E79F, #7D6608, #BDC3C7, #95A5A6), 1 component consistency (st.bar_chart), 1 emoji conflict, 1 Set3 palette. Overall grade: C+ (unchanged).
+
+### Color System Violations — NEW (Round 7)
+
+| # | File | Line | Offending Color | Should Be | Context |
+|---|------|------|-----------------|-----------|---------|
+| D-073 | `_router_base.py` | 150 | `#5D6D7E` | `#7F8C8D` | `_info_card()` content text — affects ALL pages |
+| D-074 | `_router_base.py` | 138 | `#F8F9FA` | Not in palette | `_白话_card()` background — affects ALL pages |
+| D-075 | `event_dashboard.py` | 148 | `#5D6D7E` | `#7F8C8D` | Adaptive banner content |
+| D-076 | `etf_detail.py` | 184,252 | `#5D6D7E` + `#F8F9FA` | `#7F8C8D` + not in palette | Explanation cards |
+| D-077 | `etf_detail.py` | 307 | `#FEF9E7`/`#F9E79F`/`#7D6608` | Not in palette | Disclaimer section |
+| D-078 | `group_structure.py` | 204,219,258 | `#5D6D7E` | `#7F8C8D` | Group description text |
+| D-079 | `business_card.py` | 271 | `#BDC3C7` | Not in palette | Table header border |
+| D-080 | `timeline_controls.py` | 34 | `#5D6D7E` | `#7F8C8D` | Timeline label |
+| D-081 | `main.py` | 50,54 | `#F9E79F`/`#7D6608` | Not in palette | Disclaimer CSS |
+| D-082 | `main.py` | 117 | `#95A5A6` | Not in palette | Sidebar nav text |
+| D-083 | `main.py` | 289 | `#95A5A6` | Not in palette | Welcome page text |
+
+### Component Consistency — NEW (Round 7)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-084 | `group_structure.py` | 283 | Uses `st.bar_chart` (Streamlit native) instead of Plotly — violates chart architecture |
+
+### Emoji Conflict (Still Open)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-005 | `_router_base.py` | 129-130 | `_section_title()` auto-prepends 📊 if title starts below U+2E00 — but some titles with emoji still get double-prefixed |
+
+### Chart Palette (Still Open)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-071 | `chart.py` | 96 | `px.colors.qualitative.Set3` for pie charts — arbitrary colors, should use explicit palette |
+
+### Fixes Since Round 6 ✅
+
+| # | File | Line | Fix Applied |
+|---|------|------|-------------|
+| D-012 | `peer_comparison.py` | 51 | `@st.cache_data` removed from view layer |
+| D-016 | `etf_browser.py` | 12, 18 | `@st.cache_data` replaced with module-level cache |
+| D-059 | `_router_base.py` | 145 | `_info_card()` border changed from `#F39C12` to `#3498DB` |
+
+### Page Grades (Round 7)
+
+| Page | Grade | Change | Notes |
+|------|-------|--------|-------|
+| business_card.py | B | ← No change | 6 minor color violations (D-79, D-83) |
+| chart.py | B+ | ← No change | D-071 Set3 palette remains |
+| _router_base.py | B | ← Upgraded from B+ | D-073 affects all pages via shared components |
+| event_dashboard.py | A- | ← No change | Best-graded page |
+| financial_health.py | C+ | ← No change | |
+| etf_detail.py | C | ← Downgraded from C+ | D-76, D-77 new violations |
+| group_structure.py | D | ← No change | D-078, D-084 |
+| category_browser.py | D | ← No change | |
+| etf_browser.py | C | ← No change | |
+| watchlist_page.py | C | ← No change | |
+| operation_checkup.py | C | ← No change | |
+| peer_comparison.py | C | ← No change | |
+| main.py | C- | ← Downgraded from C | D-81, D-82, D-83 new violations |
+
+### Cumulative Issue Count
+
+| Round | New Issues | Total | Fixed |
+|-------|-----------|-------|-------|
+| Round 2 | 26 | 26 | 2 |
+| Round 3 | 3 | 29 | 0 |
+| Round 4 | 25 | 54 | 0 |
+| Round 5 | 17 | 71 | 2 |
+| Round 6 | 10 | 81 | 1 |
+| Round 7 | 11 | 92 | 0 |
+| **Total** | **92** | **92** | **5** |
+
+**Overall design grade: C+** (unchanged from Round 6)
+
+### Top 5 Recommended Fixes (Round 7)
+
+| Priority | Issue | Effort | Impact |
+|----------|-------|--------|--------|
+| 1 | D-073: Fix `#5D6D7E` → `#7F8C8D` in `_info_card()` | 5 min | Affects all pages globally |
+| 2 | D-071: Replace Set3 palette in pie charts | 30 min | Affects all pie charts |
+| 3 | D-084: Replace `st.bar_chart` with Plotly | 30 min | Single page, architecture compliance |
+| 4 | D-005: Fix `_section_title()` emoji logic | 15 min | Affects all section titles |
+| 5 | D-074: Standardize `#F8F9FA` background usage | 10 min | Affects `_白话_card()` globally |
+
+---
+
+*Last updated: 2026-06-13 by PM after Round 7 design review.*

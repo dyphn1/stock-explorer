@@ -51,7 +51,7 @@ INDUSTRY_BENCHMARKS = {
 def _find_fallback_benchmark(industry: str, stock_id: str):
     """Find the largest company in the same industry as a fallback benchmark."""
     try:
-        client = FinMindClient()
+        client = FinMindClient(cache_dir=".cache")
         all_stocks = client.get_stock_info()  # cached full-universe call
         if all_stocks is None or all_stocks.empty:
             return None
