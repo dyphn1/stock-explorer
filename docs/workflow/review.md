@@ -1,6 +1,6 @@
 # 🔍 Review Workflow (REVIEW WORKFLOW)
 
-> When STATUS.md specifies the theme as "Review", the PM follows this workflow.
+> When the current theme is "Review" (determined from `docs/state/handoff.md`), the PM follows this workflow.
 
 ---
 
@@ -16,9 +16,9 @@
 
 ```mermaid
 flowchart TD
-    A([🔍 Review Theme Start]) --> B[PM reads STATUS.md]
-    B --> C[PM reads CURRENT_PROBLEMS.md]
-    C --> D[PM reads COMPETITOR_RESEARCH.md]
+    A([🔍 Review Theme Start]) --> B[PM reads docs/state/handoff.md]
+    B --> C[PM reads docs/state/current_problems.md]
+    C --> D[PM reads docs/decisions/competitor_research.md]
     
     D --> E[PM calls all sub-agents in parallel]
     
@@ -110,10 +110,10 @@ Team responds:
 
 ### Step 1: Read Status
 ```
-1. STATUS.md → Confirm the current theme is "Review"
-2. docs/status/current_problems.md → Understand known issues
-3. docs/research/competitor_research.md → Understand previous competitor research results
-4. docs/status/tech_debt.md → Understand technical debt
+1. docs/state/handoff.md → Find the 🔍 Review section to restore context
+2. docs/state/current_problems.md → Understand known issues
+3. docs/decisions/competitor_research.md → Understand previous competitor research results
+4. docs/state/tech_debt.md → Understand technical debt
 ```
 
 ### Step 2: Call Sub-agents in Parallel
@@ -144,11 +144,11 @@ After collecting all sub-agent input:
 
 ### Step 5: Write to Files
 ```
-1. New features → docs/status/issues.md (tag: source: competitor research)
-2. Design improvements → docs/status/current_problems.md
-3. Technical debt → docs/status/tech_debt.md
-4. Challenge records → docs/workflow/challenge_log.md
-5. Update STATUS.md
+1. New features → docs/state/issues.md (tag: source: competitor research)
+2. Design improvements → docs/state/current_problems.md
+3. Technical debt → docs/state/tech_debt.md
+4. Challenge records → docs/logs/challenge_log.md
+5. Append to docs/state/handoff.md
 ```
 
 ---
@@ -158,7 +158,7 @@ After collecting all sub-agent input:
 ### QA Engineer 🧪 (Competitor Research Lead)
 1. **Search the web** for competitor information (Yahoo Finance, TradingView, Finviz, StatementDog, GoodInfo, CMoney, etc.)
 2. Compare feature gaps with Stock Explorer
-3. Write to `docs/research/competitor_research.md`
+3. Write to `docs/decisions/competitor_research.md`
 4. New feature suggestions → `docs/status/issues.md`
 
 ### Architect 🏗️
@@ -203,7 +203,7 @@ QA Engineer must research the following competitors during the review theme:
 
 ## Status Update
 
-PM must update in STATUS.md:
+PM must append to `docs/state/handoff.md` under the 🔍 Review section:
 
 ```markdown
 ## 🔍 Review Log - YYYY-MM-DD
@@ -219,7 +219,7 @@ PM must update in STATUS.md:
 
 ## Step 6: Write Handoff File
 
-After completing the review cycle, PM **MUST** write `docs/status/handoff_review.md`:
+After completing the review cycle, PM **MUST** append to `docs/state/handoff.md` under the 🔍 Review section:
 
 ```markdown
 # Handoff – Review

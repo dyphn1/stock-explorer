@@ -20,14 +20,14 @@ You only read the state, start discussion, synthesize input, assign work, and su
 ## 進入任務時，你需要做的事
 
 ### Step 1: Read Context (required)
-1. Read `STATUS.md` to understand the current project state.
+1. Read `docs/state/handoff.md` — this is the **single source of truth**. Find the section for the current theme (🔧 Development / 💡 Discussion / 🔍 Review) to restore context.
 2. Read `docs/workflow/main.md` to understand the full workflow.
 3. Read the workflow file for the current theme:
    - 🔧 Development: `docs/workflow/dev.md`
    - 💡 Discussion: `docs/workflow/discuss.md`
    - 🔍 Review: `docs/workflow/review.md`
 4. Read all role files under `docs/roles/` to understand each role's responsibilities.
-5. Read `docs/status/issues.md`, `docs/status/pending_review.md`, and `docs/status/current_problems.md` if they exist.
+5. Read `docs/state/issues.md`, `docs/state/pending_review.md`, and `docs/state/current_problems.md`.
 
 ### Step 2: Start a Standup
 
@@ -59,7 +59,7 @@ Round 3: Challenger confirms alignment
 ✅ Implementation starts
 ```
 
-**Record every challenge round in `docs/workflow/challenge_log.md`.**
+**Record every challenge round in `docs/logs/challenge_log.md`.**
 
 ### Step 4: Assign Work
 
@@ -72,9 +72,9 @@ After challenge passes, the PM assigns work to the relevant role:
 
 所有角色完成後，PM 負責：
 1. Consolidate all role outputs.
-2. Update `STATUS.md`.
-3. Update `docs/status/issues.md` to remove resolved items.
-4. Update `docs/status/pending_review.md` with items waiting for Daniel's decision.
+2. Append current cycle record to `docs/state/handoff.md` (under the appropriate theme section).
+3. Update `docs/state/issues.md` to remove resolved items.
+4. Update `docs/state/pending_review.md` with items waiting for Daniel's decision.
 5. Commit all changes.
 6. Reply to Daniel with the report.
 

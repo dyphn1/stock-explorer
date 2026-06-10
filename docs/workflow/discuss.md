@@ -1,6 +1,6 @@
 # 💡 Discussion Topic Workflow (DISCUSS WORKFLOW)
 
-> When STATUS.md specifies the topic as "Discussion", the PM follows this workflow.
+> When the current theme is "Discussion" (determined from `docs/state/handoff.md`), the PM follows this workflow.
 
 ---
 
@@ -16,9 +16,9 @@
 
 ```mermaid
 flowchart TD
-    A([💡 Discussion Topic Start]) --> B[PM reads STATUS.md]
-    B --> C[PM reads all status files]
-    C --> D[PM reads COMPETITOR_RESEARCH.md]
+    A([💡 Discussion Topic Start]) --> B[PM reads docs/state/handoff.md]
+    B --> C[PM reads docs/state/issues.md + pending_review.md]
+    C --> D[PM reads docs/decisions/competitor_research.md]
     
     D --> E[PM calls Architect]
     E --> F[Architect analyzes technical feasibility]
@@ -107,11 +107,11 @@ Team responds:
 
 ### Step 1: Read Status
 ```
-1. STATUS.md → Confirm this topic is "Discussion"
-2. docs/status/issues.md → Understand current issues
-3. docs/status/pending_review.md → Understand pending decisions
-4. docs/research/competitor_research.md → Understand competitor trends
-5. docs/strategy/product_vision.md → Verify product vision alignment
+1. docs/state/handoff.md → Find the 💡 Discussion section to restore context
+2. docs/state/issues.md → Understand current issues
+3. docs/state/pending_review.md → Understand pending decisions
+4. docs/decisions/competitor_research.md → Understand competitor trends
+5. docs/domain/product_vision.md → Verify product vision alignment
 ```
 
 ### Step 2: Call Sub-agents (Agile Discussion)
@@ -140,9 +140,9 @@ After collecting all sub-agent opinions:
 
 ### Step 5: Write to Files
 ```
-1. New feature suggestions → docs/status/issues.md (tagged source: team discussion)
-2. Items requiring Daniel's decision → docs/status/pending_review.md
-3. Update STATUS.md
+1. New feature suggestions → docs/state/issues.md (tagged source: team discussion)
+2. Items requiring Daniel's decision → docs/state/pending_review.md
+3. Append to docs/state/handoff.md
 ```
 
 ---
@@ -180,7 +180,7 @@ After collecting all sub-agent opinions:
 
 ## Status Update
 
-PM must update in STATUS.md:
+PM must append to `docs/state/handoff.md` under the 💡 Discussion section:
 
 ```markdown
 ## 💡 Discussion Record - YYYY-MM-DD
@@ -197,7 +197,7 @@ PM must update in STATUS.md:
 
 ## Step 6: Write Handoff File
 
-After completing the discussion cycle, PM **MUST** write `docs/status/handoff_discuss.md`:
+After completing the discussion cycle, PM **MUST** append to `docs/state/handoff.md` under the 💡 Discussion section:
 
 ```markdown
 # Handoff – Discussion
