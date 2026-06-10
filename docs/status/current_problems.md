@@ -87,7 +87,7 @@ After reviewing the architecture, data flow, and UI implementation across three 
 | # | File | Line | Issue | Severity |
 |---|------|------|-------|----------|
 | D-003 | `operation_checkup.py` | 62-70 | Trend messages likely exceed 200-char text limit | Medium |
-| D-007 | `financial_health.py` | multiple | Heavy text content across 4 sections — significantly exceeds 200-char limit | High |
+|| D-007 | `financial_health.py` | multiple | ~~Heavy text content across 4 sections~~ ✅ FIXED 2026-06-12 (ISSUE-D05) | ~~High~~ Resolved |
 | D-008 | `financial_health.py` | — | Only 1 chart for 4 sections — chart proportion below 60% | Medium |
 | D-010 | `peer_comparison.py` | 333-367 | Metric analysis text could reach 400+ chars with all metrics | Medium |
 
@@ -167,7 +167,7 @@ After reviewing the architecture, data flow, and UI implementation across three 
 | # | File | Line | Issue | Severity |
 |---|------|------|-------|----------|
 | D-003 | `operation_checkup.py` | 62-70 | Trend messages likely exceed 200-char text limit | Medium |
-| D-007 | `financial_health.py` | multiple | Heavy text content across 4 sections — significantly exceeds 200-char limit | High |
+|| D-007 | `financial_health.py` | multiple | ~~Heavy text content across 4 sections~~ ✅ FIXED 2026-06-12 (ISSUE-D05) | ~~High~~ Resolved |
 | D-008 | `financial_health.py` | — | Only 1 chart for 4 sections — chart proportion below 60% | Medium |
 | D-010 | `peer_comparison.py` | 333-367 | Metric analysis text could reach 400+ chars with all metrics | Medium |
 

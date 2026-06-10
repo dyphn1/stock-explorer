@@ -339,10 +339,11 @@
 
 #### [ISSUE-DR-03] Financial Health Page Text-Heavy (PPT Style Violation)
 - **Source:** Design comparison review (2026-06-10)
-- **Priority:** P1
-- **Status:** 📋 Todo
-- **Description:** `financial_health.py` is the most text-heavy page — 4 sections with detailed explanations, significantly exceeding 200-char limit. Only 1 chart for 4 sections (chart proportion below 60%). Grade: C+.
-- **Effort:** 1.5 hours
+- **Priority:** P0 (promoted from P1 by Challenger Round 4)
+- **Status:** ✅ Done
+- **Description:** `financial_health.py` was the most text-heavy page — 4 sections with detailed explanations, significantly exceeding 200-char limit. Only 1 chart for 4 sections (chart proportion below 60%). Grade: C+.
+- **Fix (2026-06-12):** Completed as part of ISSUE-D05 integrated redesign. All text blocks reduced to <40 chars each. Dividend gauge added as visual replacement. Component consistency achieved.
+- **Effort:** 4-5h (integrated with C01 dividend gauge)
 - **Related files:** `src/pages/financial_health.py`
 
 #### [ISSUE-DR-04] Component Inconsistency (Inline HTML vs Shared Components)
@@ -912,9 +913,9 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 #### [ISSUE-D05] DR-03 + C01 Financial Health Integrated Redesign
 - **Source:** Discussion Round 5 (Challenger Round 2 — merged DR-03 and C01 financial_health.py)
 - **Priority:** P0
-- **Status:** 📋 Todo
+- **Status:** ✅ Done
 - **Description:** DR-03 (text reduction) and C01 (dividend wiring) both target financial_health.py — must be a single integrated redesign. Specific text-cut targets: (1) Profit funnel _info_card (lines 70-74, ~220 chars → ~35 chars), (2) Eliminate redundant funnel section card (lines 40-75), (3) Cash flow 3-branch _info_card (lines 235-244, ~62 chars → ~16 chars), (4) Debt health HTML block (lines 188-196, ~140 chars → ~20 chars with gauge bar), (5) Balance sheet 3 cards (lines 164-171, ~103 chars → ~15 chars with stacked bar). Add dividend gauge as one visual replacement.
-- **Estimate:** 4-5h
+- **Fix (2026-06-12):** All 3 parts completed. Text reduced across all 4 sections. Dividend gauge added as Section 5. Component consistency achieved — #F39C12 replaced with #3498DB. Line count: 248→275. L0: 54/54 ✅ | L1: 15/15 ✅.
 - **Related files:** `src/pages/financial_health.py`
 
 #### [ISSUE-D06] C14 Health Score Scope Decision
@@ -945,14 +946,14 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 
 | Status | Count |
 |--------|-------|
-| 📋 Todo | 32 |
-| ✅ Done | 7 |
-| ❌ Canceled | 2 |
+| 📋 Todo | 30 |
 | 🔄 In progress | 0 |
+| ✅ Done | 9 |
+| ❌ Canceled | 2 |
 
 | Priority | Count |
 |----------|-------|
-| P0 | 6 |
+| P0 | 4 |
 | P1 | 8 |
 | P2 | 16 |
 

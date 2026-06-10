@@ -1,7 +1,7 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔍 檢討輪次（第五輪 — 全面審查 + Challenger）
-## 本輪主題：🔍 檢討 — Round 5 競品研究 + 技術債審查 + 設計審查 + Challenger 3輪挑戰（2026-06-12）
+## 當前階段：🔧 開發輪次（第六輪 — P0 修復衝刺）
+## 本輪主題：🔧 開發 — ISSUE-D05 Financial Health P0 Redesign + Dividend Gauge（2026-06-12）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -503,6 +503,24 @@ config/
   - Week 2 功能（交付 C31）：Daily Financial Challenge 6-10h
 - **關鍵警訊**: 分析癱瘓持續惡化 — 5 輪審查僅完成 4h 實際工作（25:1 文檔/執行比）
 - Git commits: 待 commit
+
+### 2026-06-12（🔧 開發 — ISSUE-D05 Financial Health P0 Redesign + Dividend Gauge）
+- **ISSUE-D05 修復**：financial_health.py 整合重新設計
+  - **Part 1 — 文字精簡 (DR-03)**：
+    - 利潤漏斗 _info_card：~220字 → ~35字
+    - 負債健康 HTML 塊：~140字 → ~20字 + gauge bar
+    - 現金流 3 區塊：~500字 → ~36字（每塊 ~12字 + 箭頭圖示）
+    - 移除重複的 funnel section card
+  - **Part 2 — 股利指標 (C01 整合)**：
+    - 新增 Section 5：股利指標
+    - 呼叫 `extract_dividend_summary()` 顯示 3 張 _白话_card（最近配息/預估年化/預估殖利率）
+    - 頻率標籤 + 白話摘要 _info_card
+  - **Part 3 — 元件一致性**：
+    - 替換 #F39C12（橘色）→ #3498DB（設計系統藍色）
+    - 所有 metric cards 使用 _白话_card() / _info_card()
+  - 行數：248 → 275（+27 行，主要為股利區塊）
+  - Layer 0：54/54 ✅ | Layer 1：15/15 ✅（3 個失敗為既有 event detection 基線）
+  - Git commit: `270beea`
 
 #### ✅ Competitor Research — COMPLETED (2026-06-09, 2026-06-10, 2026-06-11 round 3, 2026-06-12 round 4+5)
 #### ✅ Tech Debt Audit — COMPLETED (2026-06-09, updated 2026-06-10 through 2026-06-12 rounds 2-5)
