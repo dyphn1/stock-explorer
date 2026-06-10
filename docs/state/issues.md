@@ -1369,4 +1369,92 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 
 ---
 
-*Last updated: 2026-06-13 (Discussion Round 7 — team discussion + Challenger 3-round challenge)*
+---
+
+## 💡 Discussion Round 8 — 2026-06-13 (Team Discussion + Challenger)
+
+### Process Summary
+- **Architect** analyzed technical feasibility of 6 new Round 8 features (C36-C41)
+- **Design Reviewer** evaluated UX impact against PPT-style design system and ten-second test
+- **Developer** estimated implementation costs (40h total base for all 6)
+- **Challenger** raised 3 rounds of challenges, verdict: **REVISE** → accepted after revisions
+
+### Challenger's Key Objections (Round 1-3)
+1. **C40 (Mode Toggle) is a positioning mismatch** — Zone A violation, maintenance burden, contradicts "beginner by default" philosophy
+2. **C38 (Compare Stories) too important for Sprint 5** — most historian-aligned feature, risks being cut
+3. **Sprint capacity overallocation** — adding 40h to existing 73h roadmap creates 113h total (~22.6h/sprint)
+4. **Business card page overload** — C37+C39+C41+C36 all target same page
+5. **No ten-second test verification time** in sprint estimates
+
+### New Feature Proposals (from Round 8 Competitor Research)
+
+#### [ISSUE-C37] Key Takeaways Summary Card
+- **Source:** Competitor research round 8 (Seeking Alpha "Key Takeaways", Public.com "Quick Summary")
+- **Priority:** P2
+- **Status:** 📋 Todo — Approved for Sprint 2
+- **Description:** Add a "📋 重點摘要" card at the top of the business card page with 3-5 auto-generated key takeaways synthesizing the most important information. Uses curated templates for top 20 stocks (primary) + rule-based generation (fallback).
+- **Effort:** 6.5h base
+- **Core Value:** #1 Story first + ten-second test
+- **Related files:** `src/services/analogy_engine.py`, `src/pages/business_card.py`
+
+#### [ISSUE-C39] What Changed Recently Delta Card
+- **Source:** Competitor research round 8 (Koyfin "Recent Changes", Finary "What's New")
+- **Priority:** P2
+- **Status:** 📋 Todo — Approved for Sprint 3
+- **Description:** Add a "🔄 最近有什麼變化" card comparing current metrics (last 30 days) vs previous period. Highlights significant changes (>10%) with plain-language explanations. Max 2 deltas shown.
+- **Effort:** 5.5h base
+- **Core Value:** #3 Adaptive + #1 Story
+- **Related files:** `src/services/adaptive_engine.py`, `src/services/analogy_engine.py`, `src/pages/business_card.py`
+
+#### [ISSUE-C41] Read Next Recommendations
+- **Source:** Competitor research round 8 (The Motley Fool "Related Stocks", Seeking Alpha "You May Also Like")
+- **Priority:** P2
+- **Status:** 📋 Todo — Approved for Sprint 3
+- **Description:** Add a "📖 接著看" section at the bottom of the business card page with 2-3 recommended companies based on industry peers, parent-subsidiary relationships, and customer-supplier relationships.
+- **Effort:** 6.5h base
+- **Core Value:** #4 Point-to-point knowledge construction
+- **Related files:** New `src/services/recommendation_engine.py`, `src/pages/business_card.py`
+
+#### [ISSUE-C38] Compare Stories Side-by-Side (Phase 1)
+- **Source:** Competitor research round 8 (Stocksera "Compare Stories", Seeking Alpha side-by-side)
+- **Priority:** P2
+- **Status:** 📋 Todo — Approved for Sprint 3 (Phase 1)
+- **Description:** Add a "故事比較" tab to the peer comparison page showing two companies' key events, revenue milestones, and business models side-by-side with plain-language narrative. Phase 1: structured comparison without LLM.
+- **Effort:** 8-10h base (Phase 1)
+- **Core Value:** #1 Story + #5 Benchmark
+- **Related files:** `src/services/analogy_engine.py`, `src/pages/peer_comparison.py`
+
+#### [ISSUE-C36] Visual Revenue Tree
+- **Source:** Competitor research round 8 (Public.com revenue tree, Koyfin revenue breakdown)
+- **Priority:** P2
+- **Status:** 📋 Todo — Approved for Sprint 4
+- **Description:** Extend the existing revenue pie chart with a hierarchical treemap showing how money flows through the business. Ships with top 10 stocks (manual curation). Falls back to pie chart for non-curated stocks.
+- **Effort:** 8-9h base (top 10 stocks)
+- **Core Value:** #1 Story + #2 PPT-style
+- **Related files:** `src/services/chart.py`, `src/services/revenue_analyzer.py`, `src/pages/business_card.py`
+
+#### [ISSUE-C40] Beginner/Expert Mode Toggle — CUT
+- **Source:** Competitor research round 8 (Sharesies complexity levels, NerdWallet "Simple View")
+- **Priority:** P2
+- **Status:** ❌ CUT
+- **Description:** Replaced with "beginner mode by default" design principle. Every page must pass the ten-second test in its default state. Advanced detail is always one click away (progressive drill-down). No toggle needed.
+- **Rationale:** Zone A violation, maintenance burden (2 rendering paths per page), contradicts PPT-style philosophy. Designer's alternative achieves same goal at 0h engineering cost.
+
+### Updated Issue Statistics
+
+| Status | Count |
+|--------|-------|
+| 📋 Todo | 38 |
+| 🔄 In progress | 0 |
+| ✅ Done | 12 |
+| ❌ Canceled | 4 |
+
+| Priority | Count |
+|----------|-------|
+| P0 | 4 |
+| P1 | 12 |
+| P2 | 26 |
+
+---
+
+*Last updated: 2026-06-13 (Discussion Round 8 — team discussion + Challenger 3-round challenge)*
