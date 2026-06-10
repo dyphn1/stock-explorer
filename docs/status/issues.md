@@ -258,9 +258,11 @@
 #### [ISSUE-D01] M5 Event Detection Verification
 - **Source:** Team discussion (Challenger Round 3)
 - **Priority:** P0
-- **Status:** 📋 Todo
-- **Description:** Before building C07 (Custom Thresholds) on top of the adaptive engine, verify that M5 event detection works with real FinMind data. Currently the detection logic is code-complete but unvalidated in production.
+- **Status:** ✅ Done
+- **Description:** Before building C07 (Custom Thresholds) on top of the adaptive engine, verify that M5 event detection works with real FinMind data.
+- **Verification (2026-06-12):** `run_auto_detection()` IS called in `router.py:96` on every stock page load. 8 real events in events.yaml from real FinMind data (stocks 2317, 2330, 2454, 1101). False positive exclusion logic exists and works. Dedup with normalized titles exists and works. Added false positive test for 合併營收. Cleaned up stale false positive event. All 89 tests pass.
 - **Related files:** `src/services/adaptive_engine.py`, `config/events.yaml`
+- **Commit:** `b042936`, `d3645c4`
 
 #### [ISSUE-D02] Background Worker Architecture Investigation
 - **Source:** Team discussion (Challenger Round 2)
@@ -905,10 +907,12 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 #### [ISSUE-D04] M5 Event Detection Pipeline Integration
 - **Source:** Discussion Round 5 (Team + Challenger)
 - **Priority:** P0
-- **Status:** 📋 Todo
-- **Description:** M5 event detection engine (adaptive_engine.py, 555 lines) is built but `run_auto_detection()` is never called in the page rendering flow. Must: (1) verify detection accuracy with real FinMind data, (2) integrate call into `_router_base.get_stock_data()`, (3) wire events into event dashboard and page-level event banners.
-- **Estimate:** 4-6h
+- **Status:** ✅ Done
+- **Description:** M5 event detection engine is built and wired. Error isolation added for run_auto_detection() in router.py. False positive filtering and dedup with normalized titles verified working.
+- **Fix (2026-06-12):** Added try/except around all M5 event detection + rendering calls in router.py. Verified false positive exclusion works. Added test for 合併營收 false positive. Cleaned up stale false positive in events.yaml.
+- **Estimate:** 4-6h (actual: ~3h — core integration was already done)
 - **Related files:** `src/services/adaptive_engine.py`, `src/pages/_router_base.py`, `src/pages/event_dashboard.py`
+- **Commit:** `b042936`, `d3645c4`
 
 #### [ISSUE-D05] DR-03 + C01 Financial Health Integrated Redesign
 - **Source:** Discussion Round 5 (Challenger Round 2 — merged DR-03 and C01 financial_health.py)

@@ -662,6 +662,7 @@ See `docs/status/pending_review.md` for details:
 | 2026-06-09 17:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸，等待 Daniel 決策 |
 || 2026-06-09 19:23 | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | Cron 定期驗證，全綠無回歸，等待 Daniel 決策 |
 ||| 2026-06-09 21:xx | ✅ 52/52 (L0) | ✅ 18/18 (L1) | — | 🔍 檢討輪次：競品研究+技術債審查完成 |
+| 2026-06-12（🔧 開發 — ISSUE-D01 M5 驗證 + ISSUE-D04 M5 _pipeline_ 整合）| ✅ 54/54 (L0) | ✅ 15/15 (L1) | ✅ 89/89 (Tests) | D01+D04 完成。M5 引擎已驗證：run_auto_detection() 在 router.py:96 被呼叫，8 個真實事件，False positive 過濾運作正常。Error isolation 加入 router.py。False positive 測試加入。Layer 0 + Layer 1 + 全測試通過。Git commits: b042936, d3645c4 |
 
 ### 2026-06-10（🔧 開發 — 即時技術債清理）
 - **DRY consolidation**：`_find_value` / `_find_financial_value` 統一為單一 `_find_financial_value`，更新 3 個消費者
