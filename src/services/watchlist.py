@@ -339,6 +339,3 @@ def list_names() -> list:
     return list(data.get("lists", {}).keys())
 
 
-def get_list_entries(list_name: str) -> list:
-    """Get the entries for the specified list (same as load_watchlist)."""
-    return load_watchlist(list_name)

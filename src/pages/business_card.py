@@ -242,7 +242,7 @@ def _render_business_card(data: dict, client):
         st.markdown(
             f"""<div style="
                 background: #FFF8F0;
-                border-left: 4px solid #F39C12;
+                border-left: 4px solid #E74C3C;
                 padding: 12px 16px;
                 border-radius: 4px;
                 margin: 12px 0;
@@ -367,7 +367,7 @@ def _render_business_card(data: dict, client):
             impact_class = {"high": "🔴 重大", "medium": "🟡 注意", "low": "🟢 參考"}[impact]
 
             st.markdown(f"""
-            <div style="background:#FFF8F0;border-radius:12px;padding:1.5rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
+            <div style="background:#FFF8F0;border-radius:12px;padding:1.5rem;border-left:4px solid #E74C3C;margin:0.5rem 0;">
                 <div style="font-weight:600;color:#2C3E50;">
                     <span style="margin-right:0.5rem;">{impact_class}</span>
                     📰 {title}
