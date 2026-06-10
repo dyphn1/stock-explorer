@@ -297,3 +297,90 @@ After reviewing the architecture, data flow, and UI implementation across three 
 | **Total** | **54** | **54** | **2** |
 
 **Overall design grade: D+** (unchanged from Round 3 — 0 pages at A or B, 5 pages at D, 5 pages at C)
+
+---
+
+## Layer 5: Design System Compliance (Round 5 — 2026-06-12)
+
+> Recorded after Round 5 Design Comparison Review. business_card.py P0 fix verified (370 lines restored). 17 new issues found (D-046 through D-062). 2 previously identified issues now fixed (D-002-NEW, D-029). Overall grade improved to C-.
+
+### P0 — FIXED ✅
+
+| # | File | Line | Issue | Status |
+|---|------|------|-------|--------|
+| D-002-NEW | `business_card.py` | 128→370 | Page was severely truncated (128 lines). Now fully restored. | ✅ FIXED |
+| D-029 | `business_card.py` | 128→370 | Page STILL severely truncated — unchanged from Round 3. Now resolved. | ✅ FIXED |
+
+### Color System Violations — NEW (Round 5)
+
+| # | File | Line | Offending Color | Should Be | Context |
+|---|------|------|-----------------|-----------|---------|
+| D-046 | `business_card.py` | 136 | `linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%)` | Flat `#EBF5FB` — no gradients in design system | One-liner banner |
+| D-050 | `group_structure.py` | 245 | `#ECF0F1` (border) | Not in design system palette | Subsidiary card border |
+| D-053 | `chart.py` | 315 | `#2ECC71`, `#F39C12` in funnel | `#27AE60`, `#3498DB` | Funnel chart stage colors |
+| D-054 | `chart.py` | 150 | `#4A90D9` | `#3498DB` | Revenue bar chart |
+| D-055 | `chart.py` | 159 | `#2ECC71` | `#27AE60` | Revenue YoY positive color |
+| D-056 | `chart.py` | 204 | `#F39C12`, `#2ECC71` | `#3498DB`, `#27AE60` | OHLC single-day fallback |
+| D-058 | `chart.py` | 401 | `#2ECC71` | `#27AE60` | Institutional chart positive |
+| D-059 | `_router_base.py` | 145 | `#F39C12` (orange) border | `#3498DB` — orange NOT in palette | `_info_card()` shared component — affects ALL pages |
+| D-061 | `main.py` | 49-56 | `#7D6608` text, `#F9E79F` border | `#2C3E50` text — other colors not in palette | Disclaimer CSS class |
+
+### PPT Style Violations — NEW (Round 5)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-049 | `category_browser.py` | 38-49 | Page has 3 unrelated sections (top stocks, industry browser, hot stocks) — violates "one key point per page" principle |
+
+### Zone Separation Violations — NEW (Round 5)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| — | — | — | No new zone violations in Round 5 |
+
+### Component Consistency — NEW (Round 5)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-047 | `business_card.py` | 317-324 | Revenue breakdown cards use `box-shadow` not in design system |
+| D-048 | `category_browser.py` | 170-181 | Industry stock cards use raw HTML instead of `_白话_card()` |
+| D-051 | `group_structure.py` | 202 | Group overview card uses `border-radius:16px` — design system specifies `12px` |
+| D-052 | `group_structure.py` | 283 | Uses `st.bar_chart` (Streamlit native) instead of Plotly — violates chart rules |
+
+### Responsive Design Issues — NEW (Round 5)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| — | — | — | No new responsive issues in Round 5 (D-015, D-019 remain) |
+
+### Accessibility Issues — NEW (Round 5)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| — | — | — | No new accessibility issues in Round 5 (D-020, D-022 remain) |
+
+### Architecture / CSS Issues — NEW (Round 5)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-057 | `chart.py` | 250-251 | Candlestick colors follow Taiwanese convention (red=up) but this is undocumented in design system — creates ambiguity with revenue chart where green=positive |
+| D-060 | `main.py` | 262-270 | Welcome page uses `#95A5A6` text color not in design system palette |
+| D-062 | `main.py` | 27-98 | No CSS custom properties (design tokens) — all values hardcoded. Modern best practice is `:root { --color-primary: #3498DB; }` |
+
+### Fixes Since Round 4 ✅
+
+| # | File | Line | Fix Applied |
+|---|------|------|-------------|
+| D-002-NEW | `business_card.py` | 128→370 | Page restored from 128 to 370 lines — all sections now render |
+| D-029 | `business_card.py` | 128→370 | Truncation issue resolved by restoration |
+
+### Cumulative Issue Count
+
+| Round | New Issues | Total | Fixed |
+|-------|-----------|-------|-------|
+| Round 2 (2026-06-10) | 26 | 26 | 2 (D-012, D-016) |
+| Round 3 (2026-06-11) | 3 new | 29 | 0 |
+| Round 4 (2026-06-12) | 25 new | 54 | 0 |
+| Round 5 (2026-06-12) | 17 new | 71 | 2 (D-002-NEW, D-029) |
+| **Total** | **71** | **71** | **2** |
+
+**Overall design grade: C-** (upgraded from D+ — business_card.py restored from F to B, 1 page at A, 1 at B, 5 at C, 3 at D)

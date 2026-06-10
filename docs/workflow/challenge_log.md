@@ -1210,3 +1210,453 @@ The reviews are thorough and well-intentioned, but they've become a substitute f
 ---
 
 *This challenge report was produced by the Challenger subagent on 2026-06-12 as part of Round 4 review stress test (Architect + Design Reviewer + QA Engineer + Challenger).*
+
+---
+
+## [2026-06-12] Theme: Challenge — Round 5 Review Stress Test
+
+> **Context:** This is the FIFTH review round. QA researched 8 new competitors and proposed 5 new AI-powered features (C28-C32). Architect verified ALL 14 prior tech debt items still unresolved (5 consecutive rounds with zero cleanup) and found 5 new items (NEW-G10 through G14). Design Reviewer found 17 new design issues (D-046 through D-062), overall grade improved from D+ to C- (business_card.py P0 fix). Developer estimates jumped to 313.5h total. The Challenger must determine: is the team finally making progress, or is this another round of the same patterns?
+
+### Round 1: Gap Authenticity Challenge
+
+#### Q1: Are the 5 new competitor features (C28-C32) REAL gaps or "nice to haves"? Is the "High threat" labeling of StockStory and Stockopedia AI justified?
+
+**Challenger's Analysis:**
+
+Let me evaluate each feature against the product vision and the competitive landscape:
+
+| Feature | Inspired By | Core Value | "Historian" Aligned? | Verdict |
+|---------|-------------|------------|---------------------|---------|
+| **C28: AI Company Story Timeline (P1, 16-24h)** | StockStory | Story first (#1) | ⚠️ Borderline — AI-generated vs human-curated | **NEEDS SCRUTINY** |
+| **C29: AI "Explain Any Metric" (P1, 10-14h)** | Stockopedia AI | Point-to-point (#4) | ⚠️ Borderline — AI hallucination risk | **NEEDS SCRUTINY** |
+| **C30: ESG Education (P2, 8-12h)** | 玉山證券 | NONE directly | ✅ Neutral | **DEFER — tangential** |
+| **C31: Daily Financial Challenge (P2, 6-10h)** | Sensical/Finqle | Point-to-point (#4) | ✅ Yes — active learning | **KEEP — P2** |
+| **C32: "Market Mood" Indicator (P2, 4-8h)** | Finimize | Benchmark (#5) | ⚠️ Borderline — overlaps with C04 | **DUPLICATE?** |
+
+**The "High threat" labeling is OVERSTATED.**
+
+The QA flags StockStory and Stockopedia AI as 🔴 High threat. Let me push back:
+
+**StockStory (Singapore AI narrative platform):**
+- StockStory is a **narrative platform** — their entire product is AI-generated stories. Stock Explorer is an **educational tool** — the stories are human-curated analogies and explanations. These are fundamentally different products.
+- StockStory covers TW stocks but is Singapore-based with a different regulatory context and target audience.
+- The "Turning Points" timeline is compelling, but Stock Explorer already has an Event Dashboard (graded A- in Round 2). The timeline concept is already partially implemented.
+- **Verdict: Medium threat at most. Different product, different audience, different UX paradigm (Streamlit vs native app).**
+
+**Stockopedia AI (2025 relaunch with TW Market Education Hub):**
+- This is more concerning because Stockopedia is explicitly targeting TW market education in Traditional Chinese — Stock Explorer's exact niche.
+- However, Stockopedia's "AI Explain" and "AI Stock Story" features are LLM-generated. Stock Explorer's differentiator is **human-curated, trustworthy** explanations. The "historian" positioning is about trust, not speed.
+- The real threat from Stockopedia is NOT that they have AI features — it's that they have **brand recognition and a 2025 relaunch budget**. Stock Explorer is a side project competing against a funded startup.
+- **Verdict: High threat on brand/budget, not on features. The response should be sharpening the "trusted historian" positioning, not copying AI features.**
+
+**The deeper problem: The team is confusing "competitor has it" with "we need it."**
+
+The QA's methodology is: "Competitor X has feature Y → We need feature Y." This is backwards. The correct methodology is: "Our users need Z → Competitor X's feature Y might be one way to deliver Z → Does Y align with our vision?"
+
+Applying this filter:
+- **C28 (AI Story Timeline):** Do users need AI-generated stories? Or do they need better human-curated stories? The product vision says "Story first, data second" — it doesn't say "AI-generated story first." The existing analogy_engine.py already provides human-curated stories. **C28 may be solving a problem that doesn't exist.**
+- **C29 (AI Explain):** Do users need AI to explain metrics? Or do they need better-designed metric cards? The existing _白话_card() system already provides plain-language explanations. **C29 may be replacing a working system with an expensive, unreliable one.**
+- **C30 (ESG):** Do beginners need ESG education? The product vision doesn't mention ESG. This is the QA projecting a trend (ESG is hot in 2025-2026) onto a product that doesn't need it. **DEFER.**
+- **C31 (Daily Challenge):** This is the strongest of the 5. Active learning through daily challenges directly advances "Point-to-point knowledge construction." It's cheap (6-10h) and doesn't require AI. **KEEP.**
+- **C32 (Market Mood):** See Q2 below — this is likely a duplicate of C04.
+
+**Verdict: 3 of 5 features (C28, C29, C30) are "nice to haves" mislabeled as gaps. Only C31 is a genuine educational gap. C32 needs deduplication.**
+
+#### Q2: C32 "Market Mood" (4-8h) vs C04 "Market Thermometer" (12-16h) — aren't these the same feature?
+
+**YES. These are the same feature with different names.**
+
+Let me compare:
+
+| Attribute | C04: Market Thermometer | C32: Market Mood |
+|-----------|------------------------|-------------------|
+| Concept | Market temperature indicator | Market sentiment indicator |
+| Data source | Trading volume, institutional activity | Market sentiment |
+| Display | 🔥 Hot / 😊 Normal / 🥶 Cold | Mood indicator |
+| Cost | 12-16h | 4-8h |
+| Priority | P2 | P2 |
+
+The only difference is scope: C32 is a simpler version (4-8h vs 12-16h). But the concept is identical — both tell the user "the market is hot/cold right now."
+
+**This is a serious process failure.** The QA Engineer proposed C32 without checking whether C04 already exists in the backlog. This means:
+1. The team has **duplicate features** in the backlog
+2. The cost estimation **double-counts** the same work
+3. The priority ranking is **distorted** by duplicates
+
+**Verdict: MERGE C32 into C04. Use the C32 cost estimate (4-8h) as the revised C04 estimate since it's simpler. Remove C32 as a separate item. This alone reduces the backlog by 1 item and 4-8h of phantom work.**
+
+#### Q3: Five rounds with zero tech debt cleanup — is the problem the debt or the process?
+
+**The problem is the PROCESS, not the debt.**
+
+Let me be blunt: 14 tech debt items have survived 5 rounds of review. The Architect has verified them repeatedly. The Developer has estimated them (most are under 30 minutes). The Challenger has flagged them. And yet: **zero resolved.**
+
+This is not a tech debt problem. This is an execution problem.
+
+**The evidence:**
+
+| Round | Tech Debt Items | New Items | Resolved | Cumulative Resolved |
+|-------|----------------|-----------|----------|-------------------|
+| 1 | 19 | — | — | — |
+| 2 | 13 | 3 new | 9 | 9 |
+| 3 | 14 | 6 new | ~5 | ~14 |
+| 4 | 16 | 2 new | 0 | ~14 |
+| 5 | 14 | 5 new | 0 | ~14 |
+
+**The pattern:** Items are found, estimated, added to the backlog, and then ignored. New items are added faster than old items are resolved. The backlog grows. The estimates grow. The team reviews the same items round after round.
+
+**Why this happens:**
+1. **Tech debt is invisible.** Users don't see dead code. They don't see duplicated logic. They see broken pages and missing features. So the team prioritizes visible problems.
+2. **Review rounds reward finding new things.** Each round, the Architect finds new tech debt items. This makes the Architect look thorough. But it doesn't help the product.
+3. **There's no "debt sprint."** The team never dedicates a sprint to cleaning up tech debt. It's always "we'll do it next round." Next round, new items are found instead.
+
+**The fix:**
+1. **Dedicate 10% of each sprint to tech debt.** Not "when we have time" — a dedicated allocation.
+2. **Track "debt resolved" as a metric.** Not just "debt found."
+3. **Cap the active tech debt backlog at 10 items.** If new items are found, old items must be resolved first.
+4. **Batch the quick wins.** NEW-G10 (2 min), NEW-G11 (1 min), NEW-G12 (1 min) — these should be done in a single 15-minute session, not estimated and re-estimated across rounds.
+
+**Verdict: The tech debt is real but minor (132 lines of dead code, a few duplicated functions). The real problem is a review process that rewards finding problems over fixing them. The team needs to shift from "find and document" to "fix and ship."**
+
+---
+
+### Round 2: Priority Challenge
+
+#### Q1: Should the team add AI-powered features (C28, C29) before fixing foundational issues?
+
+**Absolutely not. This is the worst possible priority order.**
+
+Here's the current state:
+- **14 open tech debt items** (5 rounds, zero progress)
+- **54+ design issues** (only 2 fixed across 4 rounds)
+- **Overall design grade: C-** (improved from D+, but still poor)
+- **32 open feature issues** in issues.md
+- **313.5 hours** of estimated work
+
+And the team wants to add **AI-powered features** that require LLM integration?
+
+**The problems with C28 and C29:**
+
+1. **LLM integration is a massive scope increase.** The app currently uses zero LLM APIs. Adding LLM means:
+   - API key management and cost estimation
+   - Prompt engineering and output validation
+   - Error handling for API failures, rate limits, and hallucinations
+   - Streaming response UI (Streamlit's st.write_stream or similar)
+   - Cost per query tracking and budget limits
+   - The 16-24h (C28) and 10-14h (C29) estimates **exclude all of this infrastructure**
+
+2. **AI hallucination directly threatens the "trusted historian" positioning.** The product vision says "All data must cite its source to avoid a black-box feel." An LLM generating company stories or metric explanations is the **definition of a black box**. If the LLM gets a fact wrong (and it will), the "historian" becomes a "fiction writer."
+
+3. **The team can't even fix dead code — how will it manage LLM integration?** NEW-G10 (dead function, 2 min) has been open for 1 round. NEW-G11 (39 lines of dead code, 1 min) has been open for 1 round. If the team can't spend 3 minutes removing dead code, it certainly can't manage the complexity of LLM integration.
+
+4. **The design grade is C-.** Adding AI features to a C- product is adding a premium feature to a broken foundation. Users will see AI-generated stories on a page with orange borders (#F39C12, not in the design system), inconsistent colors, and text-heavy layouts.
+
+**What the team should do instead:**
+
+| Order | Item | Hours | Why |
+|-------|------|-------|-----|
+| 1 | **NEW-G10, G11, G12** (dead code cleanup) | 0.05h | 4 minutes. Do it NOW. |
+| 2 | **D-059** (orange border fix) | 0.25h | 15 minutes. Affects ALL pages. Highest-ROI design fix. |
+| 3 | **D-046** (specific design issue) | 0.25h | 15 minutes. Quick win. |
+| 4 | **D-053-D-058** (chart.py color violations) | 3h | Batch fix. Systemic color problem. |
+| 5 | **D-049** (category_browser.py "one key point" violation) | 1h | Core UX problem. |
+| 6 | **NEW-G14** (_is_etf() dedup) | 0.5h | DRY cleanup. |
+| 7 | **C31** (Daily Financial Challenge) | 6-10h | Best new feature. No AI needed. |
+| 8 | **C30** (ESG Education) | 8-12h | If aligned with vision. |
+
+**Total for foundational work: ~14-17h. That's 2-3 days of focused work.**
+
+**After the foundation is solid, THEN consider AI features — but only if:**
+- The design grade is B or better
+- The tech debt backlog is under 5 items
+- There's a clear LLM cost/budget decision
+- The AI output is clearly labeled as "AI-generated" with source citations
+
+**Verdict: REJECT C28 and C29 for the current roadmap. The team should not add AI features until the design grade is B or better and the tech debt backlog is under 5 items. Focus on foundational work first.**
+
+#### Q2: Is the priority order correct? What should the team ACTUALLY do first?
+
+**The priority order is wrong. Here's what the team should actually do:**
+
+**Phase 0 — Emergency fixes (Day 1, <1 hour):**
+1. NEW-G10: Remove dead `get_list_entries()` — 2 min
+2. NEW-G11: Remove dead `INDUSTRY_REVENUE_MAP` (39 lines) — 1 min
+3. NEW-G12: Remove dead `_section_card` assignment — 1 min
+4. D-059: Replace `#F39C12` with design system color — 15 min
+
+**Total: ~20 minutes. These are all <5-minute fixes that have been open for days.**
+
+**Phase 1 — Foundation (Week 1, ~8 hours):**
+1. D-046: Fix specific design issue — 15 min
+2. D-049: Fix category_browser.py "one key point" violation — 1h
+3. D-053-D-058: Fix chart.py color violations (batch) — 3h
+4. NEW-G14: Deduplicate `_is_etf()` — 30 min
+5. D-062: Implement CSS custom properties/design tokens — 2h
+
+**Phase 2 — Quick feature wins (Week 2, ~10 hours):**
+1. C31: Daily Financial Challenge — 6-10h (no AI, pure educational value)
+2. C32/C04: Merge and implement Market Mood/Thermometer — 4-8h
+
+**Phase 3 — Strategic features (Weeks 3-4, ~30 hours):**
+1. C23: "Why Now" Narrative — 8h (from Round 4, still the best feature)
+2. C24: Interactive Exercises — 5h
+3. C16: "Did You Know?" Company Tips — 4-6h
+4. C19: Structured Learning Path — 14-18h
+
+**Phase 4 — AI features (conditional, post-foundation):**
+1. C29: AI Explain — ONLY if design grade ≥ B and LLM budget approved
+2. C28: AI Story Timeline — ONLY if C29 is successful and hallucination rate < 5%
+
+**Verdict: The current priority order is AI-first, foundation-later. It should be foundation-first, AI-never-unless-conditions-met. The team needs to fix 54 design issues and 14 tech debt items before adding ANY AI features.**
+
+#### Q3: The Developer says highest ROI is NEW-G10/G12 and D-059 — do I agree?
+
+**Yes, and I'd go further.**
+
+The Developer correctly identifies the highest-ROI items:
+- **NEW-G10/G12**: 3 minutes of work, removes dead code, reduces confusion
+- **D-059**: 15 minutes of work, fixes a design violation on ALL pages
+
+But the Developer understates the case. These aren't just "highest ROI" — they're **embarrassingly overdue**. The team has had 5 rounds to fix a 2-minute dead code issue and a 15-minute color fix. The fact that these are still open means the team isn't even doing the bare minimum.
+
+**I'd add:**
+- **NEW-G11**: 1 minute to remove 39 lines of dead code. That's 40 minutes of "work" (finding + removing) to delete 39 lines. The highest ROI in the entire backlog.
+- **D-046**: 15 minutes. Another quick design win.
+
+**The "quick win" batch (NEW-G10, G11, G12, D-059, D-046) totals ~35 minutes and should have been done in Round 1.**
+
+**Verdict: CONFIRM the Developer's assessment. But add urgency: these aren't "next sprint" items — they're "do them right now" items.**
+
+---
+
+### Round 3: Goal Alignment Challenge
+
+#### Q1: Do C28 (AI Narrative) and C29 (AI Explain) align with "Story first, data second"? Or do they replace human-curated narratives with AI-generated ones?
+
+**They REPLACE human-curated narratives with AI-generated ones. This is a fundamental positioning shift.**
+
+The product vision says:
+- "Story first, data second"
+- "Help beginners understand companies through visual, plain-language analysis"
+- "All data must cite its source to avoid a black-box feel"
+
+**C28 (AI Company Story Timeline) directly contradicts these values:**
+
+1. **"Story first" becomes "AI story first."** The current system uses analogy_engine.py — human-written analogies that explain companies in relatable terms. C28 would replace these with LLM-generated narratives. The "story" is no longer curated by a domain expert — it's generated by a model that may hallucinate.
+
+2. **"All data must cite its source" becomes impossible.** When an LLM generates a "company story," what's the source? The training data? The FinMind API? The LLM's parameters? There's no citation chain. The user can't verify the story. This is the **exact "black box"** the product vision warns against.
+
+3. **"Trusted historian" becomes "unreliable narrator."** A historian is trusted because they cite sources, verify facts, and present balanced accounts. An LLM does none of these things reliably. If the AI says "TSMC's revenue grew 50% in 2024" (when it actually grew 30%), the user has no way to know. The "historian" has become a "fiction writer."
+
+**C29 (AI Explain Any Metric) has similar problems:**
+
+1. **The existing _白话_card() system already explains metrics in plain language.** It's human-curated, verified, and consistent. C29 would replace this with LLM-generated explanations that may vary in quality and accuracy.
+
+2. **"Explain any metric" implies the LLM can explain metrics it wasn't trained on.** This is a hallucination risk. The LLM might confidently explain "diluted EPS" incorrectly.
+
+3. **The 10-14h estimate excludes prompt engineering, output validation, and error handling.** Realistically, C29 is 25-40h of work including LLM infrastructure.
+
+**The deeper issue: AI features are a positioning violation.**
+
+The "historian, not stock picker" positioning is about **trust through transparency**. Every piece of data has a source. Every explanation is human-curated. Every analogy is verified.
+
+AI features are about **speed through automation**. The LLM generates content fast, but the user can't verify it. The "historian" becomes a "content generator."
+
+**If the team wants to add AI features, it must:**
+1. **Clearly label all AI output** as "AI-generated — verify with sources"
+2. **Provide source citations** for every AI-generated claim
+3. **Implement hallucination detection** (e.g., cross-check AI output against FinMind data)
+4. **Never replace human-curated content** — AI should supplement, not replace
+5. **Get explicit approval** from Daniel for the positioning shift
+
+**Verdict: C28 and C29 in their current form VIOLATE the "trusted historian" positioning. They should be rejected or heavily redesigned to supplement (not replace) human-curated content. If kept, all AI output must be labeled and source-cited.**
+
+#### Q2: Is there a risk of AI hallucination undermining the "trusted historian" positioning?
+
+**Yes. This is the single biggest risk to the product's credibility.**
+
+Stock education is a **high-trust domain**. Beginners are learning about money. If the app gives them wrong information, they may make bad financial decisions. The "historian" positioning is built on the promise: "We tell you what happened, accurately and transparently."
+
+**AI hallucination scenarios:**
+
+1. **Metric explanation hallucination:** C29 explains "ROE" as "Return on Equity, which measures how much profit a company generates from its stock price." (Wrong — ROE measures profit from equity, not stock price.) A beginner learns the wrong definition.
+
+2. **Company story hallucination:** C28 generates "TSMC was founded in 1987 by Morris Chang with funding from the Singapore government." (Wrong — funding was from the Taiwan government.) A beginner learns the wrong history.
+
+3. **Temporal hallucination:** C28 generates "In 2025, TSMC announced a major expansion into Europe." (May be fabricated — the LLM is trained on data up to a certain date and may "invent" recent events.)
+
+**Each of these undermines trust.** And the user has no way to know which AI-generated claims are correct and which are hallucinations.
+
+**The mitigation is expensive:**
+- Cross-checking AI output against FinMind data: +5-10h
+- Source citation for every claim: +3-5h
+- Hallucination detection heuristics: +3-5h
+- User-facing "AI-generated" labels: +1-2h
+- **Total mitigation cost: +12-22h ON TOP OF the 16-24h (C28) and 10-14h (C29) base estimates**
+
+**Realistic cost with hallucination mitigation:**
+- C28: 16-24h + 12-22h = **28-46h**
+- C29: 10-14h + 12-22h = **22-36h**
+
+**That's 50-82h of work for two features that may still produce unreliable output.**
+
+**Verdict: The hallucination risk is REAL and EXPENSIVE to mitigate. The team should NOT add AI features until it has a clear plan for hallucination detection and source citation. The current estimates (16-24h and 10-14h) are unrealistic by 2-3x.**
+
+#### Q3: Five rounds, 313.5 hours of work identified, but only ~4h of actual implementation done — is the team stuck in analysis paralysis?
+
+**Yes. This is the definition of analysis paralysis.**
+
+Let me update the table from Round 4:
+
+| Round | Date | Design Issues | Tech Debt | Features | Work Done | Ratio (Docs:Build) |
+|-------|------|--------------|-----------|----------|-----------|-------------------|
+| 1 | 2026-06-09 | — | 19 | 10 | 0h | ∞:1 |
+| 2 | 2026-06-10 | 26 | 13 | 0 | 0h | ∞:1 |
+| 3 | 2026-06-11 | 3 new | 14 | 7 | ~4h | 11:1 |
+| 4 | 2026-06-12 | 25 new | 16 | 7 | 0h | ∞:1 |
+| 5 | 2026-06-12 | 17 new | 14 | 5 | ~0h* | ∞:1 |
+| **Total** | **4 days** | **71+** | **14** | **29** | **~4h** | **25:1** |
+
+\* Round 5's only implementation was business_card.py restoration (128→370 lines), which was a P0 fix, not new feature work.
+
+**In 4 days, the team has documented 114 items and completed 4 hours of work. That's a 25:1 ratio of documentation to execution.**
+
+**The root cause is now clear:**
+
+The review process has become self-perpetuating. Each round:
+1. Finds new issues (rewarding thoroughness)
+2. Adds them to the backlog (making the project seem bigger)
+3. Re-estimates the total (making the project seem more complex)
+4. Motivates another review round (to "understand the scope better")
+
+**The team is using reviews as a substitute for the hard work of building.**
+
+**The Challenger's prescription (stronger than Round 4):**
+
+1. **IMMEDIATE: Freeze all reviews for 2 weeks.** No competitor research, no design audits, no tech debt scans. The team has enough documented issues to work on for months.
+
+2. **IMMEDIATE: Do the 20-minute emergency batch.** NEW-G10, G11, G12, D-059, D-046. These should be done TODAY. Not "in the next sprint" — today.
+
+3. **Week 1: Foundation sprint.** Fix D-049, D-053-D-058, D-062, NEW-G14. Target: improve design grade from C- to B.
+
+4. **Week 2: Feature sprint.** Build C31 (Daily Challenge) — the single best new feature. Ship it.
+
+5. **After Week 2: Reassess.** Is the design grade B or better? Is the tech debt backlog under 5 items? If yes, consider C23, C24, C16. If no, continue foundation work.
+
+6. **AI features (C28, C29): Require ALL of the following:**
+   - Design grade ≥ B
+   - Tech debt backlog < 5 items
+   - LLM cost/budget approved by Daniel
+   - Hallucination mitigation plan approved
+   - AI output labeling plan approved
+   - **Estimated realistic cost: 50-82h (not 26-38h)**
+
+**The team doesn't need Round 6. The team needs to stop reviewing and start building.**
+
+**Verdict: ANALYSIS PARALYSIS — confirmed and worsening. The documentation-to-execution ratio has gone from 14:1 (Round 4) to 25:1 (Round 5). The Challenger recommends a mandatory 2-week build sprint with no reviews.**
+
+---
+
+## Challenger's Verdict — Round 5
+
+### Confirmed Findings
+
+1. **business_card.py P0 fix is real and verified** — The restoration from 128→370 lines improved the design grade from D+ to C-. This is the first meaningful progress in 5 rounds. **CONFIRM.**
+
+2. **14 tech debt items still open after 5 rounds** — VERIFIED. This is a process failure, not a debt failure. The items are real but minor. The team's inability to fix them is the problem. **CONFIRM.**
+
+3. **NEW-G10, G11, G12 are trivial quick wins** — 4 minutes total. Should be done immediately. **CONFIRM.**
+
+4. **D-059 (orange border) is the highest-ROI design fix** — 15 minutes, affects all pages, uses a color not in the design system. **CONFIRM.**
+
+5. **C31 (Daily Financial Challenge) is the best new feature** — Cheap (6-10h), no AI needed, directly advances "Point-to-point knowledge." **CONFIRM.**
+
+6. **Design grade C- is accurate** — Improved from D+ but still poor. 71+ design issues found, only 2 fixed. **CONFIRM.**
+
+### Rejected Findings
+
+1. **C28 (AI Story Timeline, P1, 16-24h) should be P1** — REJECTED. This feature violates the "trusted historian" positioning by replacing human-curated narratives with AI-generated ones. The estimate excludes LLM infrastructure (realistic: 28-46h). **Defer to post-foundation.**
+
+2. **C29 (AI Explain, P1, 10-14h) should be P1** — REJECTED. The existing _白话_card() system already provides plain-language explanations. AI hallucination risk is high and expensive to mitigate (realistic: 22-36h). **Defer to post-foundation.**
+
+3. **C30 (ESG Education, P2, 8-12h) is worth building** — REJECTED. ESG is not in the product vision. This is the QA projecting a trend onto a product that doesn't need it. **Defer or drop.**
+
+4. **C32 (Market Mood, P2, 4-8h) is a separate feature from C04** — REJECTED. C32 and C04 are the same feature. **Merge C32 into C04 and use the lower cost estimate.**
+
+5. **StockStory and Stockopedia AI are "High threat"** — PARTIALLY REJECTED. StockStory is a different product (narrative platform vs educational tool). Stockopedia AI is a threat on brand/budget, not on features. The response should be sharpening the "trusted historian" positioning, not copying AI features.
+
+6. **313.5h total estimate is realistic** — REJECTED. This includes rejected items (C28, C29, C30 = 34-46h), duplicate items (C32 = 4-8h), and items with underestimated costs (C28, C29 realistic = 50-82h vs estimated 26-38h). **Realistic "must-do" remaining: ~80-100h if the team focuses on P0 and P1 items only.**
+
+### New Priorities and Adjustments
+
+**Emergency batch (do TODAY, <30 min):**
+1. NEW-G10: Remove dead `get_list_entries()` — 2 min
+2. NEW-G11: Remove dead `INDUSTRY_REVENUE_MAP` — 1 min
+3. NEW-G12: Remove dead `_section_card` assignment — 1 min
+4. D-059: Replace `#F39C12` with design system color — 15 min
+5. D-046: Fix specific design issue — 15 min
+
+**Week 1 — Foundation (target: C- → B):**
+1. D-049: Fix category_browser.py "one key point" violation — 1h
+2. D-053-D-058: Fix chart.py color violations (batch) — 3h
+3. D-062: Implement CSS custom properties/design tokens — 2h
+4. NEW-G14: Deduplicate `_is_etf()` — 30 min
+
+**Week 2 — Feature (ship something):**
+1. C31: Daily Financial Challenge — 6-10h (BEST new feature)
+2. C32/C04: Merge and implement Market Mood — 4-8h
+
+**Backlog (after foundation is solid):**
+- C23: "Why Now" Narrative — 8h
+- C24: Interactive Exercises — 5h
+- C16: "Did You Know?" Company Tips — 4-6h
+- C19: Structured Learning Path — 14-18h
+
+**Rejected or deferred:**
+- C28: AI Story Timeline — REJECTED (positioning violation, defer to post-foundation)
+- C29: AI Explain — REJECTED (positioning violation, defer to post-foundation)
+- C30: ESG Education — REJECTED (not in vision)
+- C32: Market Mood — MERGED into C04
+- C15: Paper Trading — REJECTED (positioning violation, from Round 3)
+- C18: Gamification — DEFERRED to P3 (from Round 3)
+- C21: LINE Bot — REJECTED (from Round 4)
+
+### Key Adjustments
+
+1. **Freeze reviews for 2 weeks.** The team has enough documented issues. No more competitor research, design audits, or tech debt scans until the design grade is B or better.
+
+2. **Do the emergency batch TODAY.** 5 items, 30 minutes. No planning needed — just fix them.
+
+3. **Merge C32 into C04.** Remove the duplicate. Use the lower cost estimate.
+
+4. **Reject C28, C29, C30.** They don't align with the product vision, are expensive, and should not be built on a C- foundation.
+
+5. **Build C31 first among new features.** It's the cheapest, most aligned, and doesn't require AI.
+
+6. **Track "items resolved" not "items found."** The team's metric should be "how many issues did we close this week?" not "how many new issues did we find?"
+
+7. **Require explicit conditions for AI features.** Design grade ≥ B, tech debt < 5 items, LLM budget approved, hallucination mitigation plan approved.
+
+### Final Verdict
+
+**The Round 5 review shows the first glimmer of progress (business_card.py fix, design grade D+ → C-), but the fundamental problem remains: the team is in analysis paralysis.**
+
+After 5 rounds, 71+ design issues, 14 tech debt items, 29 feature ideas, and 313.5 hours of estimated work — the team has completed ~4 hours of actual implementation. The documentation-to-execution ratio is 25:1.
+
+The business_card.py fix proves the team CAN execute. But it took 5 rounds to fix the single most critical issue. The 14 tech debt items prove the team CAN'T prioritize — or won't.
+
+**The Challenger's recommendation:**
+
+> **Stop reviewing. Start building. Do the 30-minute emergency batch TODAY. Then fix the design system. Then ship C31. Then reassess.**
+
+The team doesn't need Round 6. The team needs to close issues, not find them.
+
+**Grade the Challenger would give this review process: C-.**
+
+The reviews are thorough and the findings are accurate. But the process has become self-perpetuating. The team is documenting problems faster than it can fix them. The backlog is growing faster than the product. The only path forward is to stop reviewing and start building.
+
+The business_card.py fix is proof that execution is possible. Now the team needs to do it 14 more times (for the tech debt) and then build something new.
+
+---
+
+*This challenge report was produced by the Challenger subagent on 2026-06-12 as part of Round 5 review stress test (Architect + Design Reviewer + QA Engineer + Challenger).*

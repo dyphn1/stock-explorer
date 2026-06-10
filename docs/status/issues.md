@@ -959,3 +959,179 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 ---
 
 *Last updated: 2026-06-12 (Discussion Round 5 — team discussion + Challenger 3-round challenge)*
+
+---
+
+## 🌍 Round 5 — Competitor Research (2026-06-12, Emerging Trends: 2025-2026 Launches, AI-Native, TW/Asian Market)
+
+### Process Summary
+- **Focus areas:** 2025-2026 AI-first financial education tools, mobile-first stock education apps, novel teaching methods, TW/Asian fintech startups, emerging patterns
+- **8 new competitors analyzed** not covered in Rounds 1-4
+- **2 critical threats identified:** StockStory (AI narratives + TW coverage) and Stockopedia AI (comprehensive AI education + TW coverage)
+- **6 new feature ideas generated** (2 high priority, 3 medium, 1 low)
+
+### New Competitors Analyzed
+
+| Competitor | Type | Threat Level | Key Finding |
+|---|---|---|---|
+| StockStory | AI company narratives | 🔴 High | AI-generated "stock stories" + TW coverage + "Turning Points" timeline = direct overlap with "historian" positioning |
+| Stockopedia AI | AI stock analysis + education | 🔴 High | 2025 AI relaunch added "AI Explain" + "AI Stock Story" + "TW Market Education Hub" |
+| Moomoo / Futubull | AI education features | 🟡 Medium-High | AI Course Generator + Social Learning Feed + Paper Trading with AI Feedback |
+| Sensical | Daily micro-learning | 🟡 Medium | AI-adaptive learning path + Traditional Chinese support (targeting TW/HK) |
+| 玉山證券 | Broker education push | 🟡 Medium | "Beginner Village" + ESG Screener + Investment Health Check |
+| Finqle | Gamified learning (TW) | 🟡 Medium | Swipe-based UX + daily challenges + "Learn & Earn" model; validates gamification demand |
+| Finimize | AI financial newsletter | 🟡 Medium | "Finimize Academy" + "Ask Finimize" AI Q&A + "Market Mood" indicator |
+| TW Telegram Bots | Messaging-native bots | 🟡 Medium-High | Evolving rapidly; now offer structured analysis, interactive charts, paper trading |
+
+### Emerging Trends (2025-2026)
+
+1. **AI-Generated Company Narratives** — becoming table stakes; multiple platforms offer this
+2. **Personalized Learning Paths** — AI-generated adaptive learning is the new standard
+3. **Social + Mobile-First Learning** — TikTok-style feeds, swipe-based UX, messaging-native
+4. **ESG Integration in Education** — growing area of beginner interest
+5. **AI Q&A as Table Stakes** — users expect natural language Q&A
+6. **Gamification of Financial Education** — "Duolingo for finance" model gaining traction
+
+### New Feature Ideas from Round 5
+
+#### [ISSUE-C28] Company Story Timeline with AI-Generated Narrative
+- **Source:** Competitor research round 5 (StockStory AI narratives, Stockopedia AI "AI Stock Story")
+- **Priority:** P1 (elevated from P2 — AI narratives are becoming table stakes; StockStory + Stockopedia AI both have this with TW coverage)
+- **Status:** 📋 Todo
+- **Description:**
+  - StockStory (Singapore, 2025) generates AI narratives for TW stocks with "Turning Points" timeline
+  - Stockopedia AI (2025 relaunch) has "AI Stock Story" + "TW Market Education Hub" in Traditional Chinese
+  - Both directly compete with Stock Explorer's "historian" positioning
+  - Add a "Company Story" tab to each company page with: (1) chronological narrative from FinMind data, (2) "Turning Points" timeline (5-10 key moments), (3) "Story Updates" for recent events, (4) "Compare Stories" for peer comparison
+  - This is the #1 feature gap from Round 5 — AI-generated company narratives are becoming standard
+- **Suggested Implementation:**
+  - New `src/services/narrative_engine.py` — generates company narrative from FinMind data + event history
+  - New `src/pages/company_story.py` — story timeline page with turning points
+  - "Turning Points" algorithm: identify top 5-10 events by impact (revenue spike, price crash, major news)
+  - "Compare Stories" mode: overlay two companies' timelines (extends ISSUE-C11)
+- **Related files:** New `src/services/narrative_engine.py`, new `src/pages/company_story.py`, `src/services/adaptive_engine.py`
+- **Estimate:** 20-30h
+- **Competitive Gap:** 🔴 Critical — AI-generated company narratives are becoming table stakes; StockStory + Stockopedia AI both have this with TW coverage
+- **Reference:** `docs/research/competitor_research_round5.md` — Competitor 2 (StockStory), Competitor 7 (Stockopedia AI)
+
+---
+
+#### [ISSUE-C29] AI-Powered "Explain Any Metric" Feature
+- **Source:** Competitor research round 5 (Stockopedia AI "AI Explain", Finimize "Ask Finimize")
+- **Priority:** P1 (elevated from P2 — AI-powered metric explanations are becoming standard)
+- **Status:** 📋 Todo
+- **Description:**
+  - Stockopedia AI's "AI Explain" lets users highlight any metric and get a plain-language explanation with context
+  - Finimize's "Ask Finimize" Q&A answers natural language questions about any financial concept
+  - Stock Explorer currently shows metrics but offers no contextual explanation — users must already know what "ROE: 28.5%" means
+  - Add an "Explain" button (ℹ️ icon) next to every financial metric across all pages
+  - Clicking opens: (1) what the metric means, (2) how to interpret the current value, (3) what's "good" vs "bad" for this industry, (4) a real-world analogy
+  - Example: "ROE: 28.5% → Return on Equity measures how efficiently a company uses shareholder money. 28.5% means TSMC generates $28.50 profit for every $100 of shareholder equity. This is excellent — the semiconductor industry average is 15%."
+  - Differentiates from ISSUE-C12 (Glossary): glossary is a reference document; "Explain Any Metric" is contextual, inline, and adaptive to the specific value
+- **Suggested Implementation:**
+  - New `src/services/metric_explainer.py` — generates contextual explanations for any metric
+  - Template-based explanations with industry-specific benchmarks
+  - ℹ️ icon next to every metric in all page modules
+  - Expandable tooltip or modal with the explanation
+  - Can be enhanced with LLM in v2 (ISSUE-C17 integration)
+- **Related files:** New `src/services/metric_explainer.py`, all page modules (add ℹ️ icons)
+- **Estimate:** 12-18h
+- **Competitive Gap:** 🔴 High — AI-powered metric explanations are becoming standard; Stockopedia AI already has this
+- **Reference:** `docs/research/competitor_research_round5.md` — Competitor 7 (Stockopedia AI)
+
+---
+
+#### [ISSUE-C30] ESG Education Integration
+- **Source:** Competitor research round 5 (玉山證券 ESG Screener, international ESG education trend)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - 玉山證券 launched an ESG stock screener with plain-language explanations in 2025
+  - International platforms (Sensical, Finimize) increasingly integrate ESG into financial education
+  - Beginners are increasingly asking "Is this company good for the world?" alongside "Is this company profitable?"
+  - No TW stock education platform teaches ESG concepts alongside financial analysis
+  - Add an ESG section to the Business Card page or as a new page
+  - Content: (1) what ESG means (Environmental, Social, Governance), (2) why it matters for investors, (3) how to evaluate a company's ESG performance, (4) plain-language ESG scores for TW companies
+  - Example: "TSMC's ESG Score: 85/100. 🌱 Environmental: A (renewable energy investment, water recycling). 👥 Social: B+ (good benefits, but long fab hours). 🏛️ Governance: A (independent board, transparent reporting)."
+- **Suggested Implementation:**
+  - New `src/services/esg_analyzer.py` — ESG scoring and explanation engine
+  - ESG section on Business Card page (compact) or new ESG page (comprehensive)
+  - Plain-language ESG explanations with emoji indicators (🌱👥🏛️)
+  - ESG data source: TWSE ESG reports, or manual curation for top 50 stocks initially
+- **Related files:** New `src/services/esg_analyzer.py`, `src/pages/business_card.py` or new ESG page
+- **Estimate:** 10-16h
+- **Competitive Gap:** 🟡 Medium — growing area of beginner interest; no TW platform does this well
+- **Reference:** `docs/research/competitor_research_round5.md` — Competitor 4 (玉山證券)
+
+---
+
+#### [ISSUE-C31] Daily Financial Challenge
+- **Source:** Competitor research round 5 (Finqle daily challenges, Taster.finance daily lessons, Sensical weekly quiz)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - Finqle (TW, 2025) has daily financial challenges with points and leaderboards
+  - Taster.finance has daily lessons with "Today's Company" concept
+  - Sensical has weekly quizzes with "Weekly Wisdom" summary cards
+  - Stock Explorer has NO daily engagement mechanism — users visit when they want to look up a stock, with no reason to return daily
+  - Add a "Daily Challenge" card to the homepage — a single question that tests a financial concept using real stock data
+  - Users answer, get immediate feedback, and track their streak
+  - Example: "Today's Challenge: TSMC's stock price is $850. It pays $11 in annual dividends. What's the dividend yield? A) 1.3% B) 2.5% C) 5.0%"
+  - Correct answer → "Correct! 1.3%. That's like a savings account — but TSMC also grows its dividend over time."
+  - Streak tracking: "You've answered 5 days straight! 🔥"
+  - Lightweight gamification — no leaderboards, no social comparison (aligns with ISSUE-C18 design constraints)
+- **Suggested Implementation:**
+  - New `src/services/daily_challenge.py` — challenge generator with question bank
+  - Question bank: 100+ questions covering key financial concepts (dividend yield, P/E, ROE, gross margin, etc.)
+  - Each question uses real FinMind data for a random stock
+  - Streak tracking in `session_state` (no backend required)
+  - Daily challenge card on homepage
+- **Related files:** New `src/services/daily_challenge.py`, `src/pages/homepage.py`
+- **Estimate:** 6-10h
+- **Competitive Gap:** 🟡 Medium — daily engagement loop drives retention; no TW platform does this
+- **Reference:** `docs/research/competitor_research_round5.md` — Competitor 6 (Finqle), Competitor 8 (TW Telegram Bots)
+
+---
+
+#### [ISSUE-C32] "Market Mood" Sentiment Indicator
+- **Source:** Competitor research round 5 (Finimize "Market Mood" indicator)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:**
+  - Finimize has a "Market Mood" indicator (😰 Fear → 😊 Neutral → 🤩 Greed) that aggregates news sentiment, social media buzz, and market data
+  - This validates ISSUE-C04 (Market Thermometer) with a simpler, more engaging UX
+  - Instead of a complex thermometer with multiple data sources, a single emoji-based mood indicator with a one-sentence explanation
+  - Example: "Market Mood: 😊 Neutral — Institutional investors are buying slightly more than selling. No major news today. Market is calm."
+  - Displayed on the homepage or event dashboard
+  - Can be expanded to sector-level mood: "Semiconductor sector mood: 🤩 Greed — AI chip demand news driving optimism"
+- **Suggested Implementation:**
+  - New `src/services/market_mood.py` — sentiment aggregation engine
+  - Data sources: institutional investor buy/sell (FinMind), news event frequency (adaptive engine), market volume
+  - Simple 3-level mood: 😰 Fear / 😊 Neutral / 🤩 Greed
+  - One-sentence plain-language explanation
+  - Display on homepage (compact) and event dashboard (detailed)
+- **Related files:** New `src/services/market_mood.py`, `src/pages/homepage.py`, `src/pages/event_dashboard.py`
+- **Estimate:** 8-12h
+- **Competitive Gap:** 🟢 Low — validates existing ISSUE-C04; Finimize's version is simpler and more engaging
+- **Reference:** `docs/research/competitor_research_round5.md` — Competitor 3 (Finimize)
+
+---
+
+### Updated Issue Statistics
+
+| Status | Count |
+|--------|-------|
+| 📋 Todo | 37 |
+| ✅ Done | 7 |
+| ❌ Canceled | 2 |
+| 🔄 In progress | 0 |
+
+| Priority | Count |
+|----------|-------|
+| P0 | 6 |
+| P1 | 10 |
+| P2 | 21 |
+
+---
+
+*Last updated: 2026-06-12 (Round 5 Competitor Research — 8 new competitors, 5 new feature ideas, 2 critical threats identified)*

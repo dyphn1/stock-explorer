@@ -1,7 +1,7 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔧 開發輪次（第五輪 — P0 回歸修復）
-## 本輪主題：🔧 開發 — business_card.py P0 回歸修復 + NEW-G08 崩潰修復（2026-06-12）
+## 當前階段：🔍 檢討輪次（第五輪 — 全面審查 + Challenger）
+## 本輪主題：🔍 檢討 — Round 5 競品研究 + 技術債審查 + 設計審查 + Challenger 3輪挑戰（2026-06-12）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -474,14 +474,79 @@ config/
 - Import 驗證通過（0 錯誤）
 - Git commit: 待 commit
 
-### Next Steps
+### 2026-06-12（🔍 檢討 — 第五輪全面審查 + Challenger 3 輪挑戰）
+- **QA Engineer 競品研究（第五輪）**: 分析 8 個新競品（Sensical, StockStory, Finimize, 玉山證券, Moomoo/Futubull, Finqle, Stockopedia AI, TW Telegram Bots）
+  - 產出 `docs/research/competitor_research_round5.md` (545 行, ~42KB)
+  - 5 個新功能建議（C28-C32）寫入 `docs/status/issues.md`
+  - 關鍵威脅：StockStory（AI 敘事平台，涵蓋台股）和 Stockopedia AI（2025 漢語化重新上線）
+  - 新興趨勢：AI 敘事成為標配、個人化學習路徑、社交/行動優先學習、ESG 整合
+- **Architect 技術債審查（第五輪）**: 驗證 14 個 Round 4 項目 — 全部未解決（連續 5 輪零進度）
+  - 5 個新項目：NEW-G10（dead `get_list_entries()`，2min）、NEW-G11（dead `INDUSTRY_REVENUE_MAP`，39 行，1min）、NEW-G12（dead `_section_card`，1min）、NEW-G13（`_MISSING_COL_WARNED` 無界增長，延後）、NEW-G14（`_is_etf()` 邏輯重複，30min）
+  - 132+ 行程式碼的 dead code 累積
+  - 更新 `docs/status/tech_debt.md`（499 → ~560 行）
+- **Design Reviewer 設計審查（第五輪）**: business_card.py P0 修復確認（128→370 行，F→B）
+  - 17 個新設計問題（D-046 ~ D-062）
+  - 關鍵發現：D-059 `_info_card()` 橘色邊框影響全部頁面、D-053-D-058 chart.py 6 個色彩違規
+  - 整體評分：D+ → C-
+  - 更新 `docs/design/design_comparison_review_round5.md`（26KB）
+  - 更新 `docs/status/current_problems.md`（新增 Round 5 設計問題層）
+- **Developer 成本估算更新**: 51 項 241.9h → 76 項 313.5h
+  - Challenger 修正：313.5h 含被拒項目，實際必要工作量 ~80-100h（僅 P0/P1）
+  - 更新 `docs/research/cost_estimation.md`（~430 行）
+- **Challenger 3 輪挑戰（第五輪）**:
+  - Round 1: C28/C29/C30 被稱為 "nice to haves" 誤標為缺口；C32 與 C04 重複；5 輪零技術債清理 = 流程問題
+  - Round 2: 團隊不應在基礎未固前添加 AI 功能；設計評分 C- 時添加 AI 功能等於是 premium feature on broken foundation
+  - Round 3: **C28/C29 違反「可信歷史學家」定位** — AI 幻覺風險會破壞信任；分析癱瘓惡化（25:1 文檔/執行比）
+  - **Challenger 裁決**：拒絕 C28、C29、C03、C32；確認 C31（Daily Challenge）為最佳新功能；建議強制 2 週無審查開發衝刺
+  - 緊急批次（今日 <30min）：NEW-G10 + NEW-G11 + NEW-G12 + D-059 + D-046
+  - Week 1 基礎（目標 C- → B）：D-049 + D-053~D-058 + D-062 + NEW-G14
+  - Week 2 功能（交付 C31）：Daily Financial Challenge 6-10h
+- **關鍵警訊**: 分析癱瘓持續惡化 — 5 輪審查僅完成 4h 實際工作（25:1 文檔/執行比）
+- Git commits: 待 commit
 
-#### ✅ All P0/P1/P2 Fixes — COMPLETED (2026-06-09)
-#### ✅ Competitor Research — COMPLETED (2026-06-09, 2026-06-10, 2026-06-11 round 3, 2026-06-12 round 4)
-#### ✅ Tech Debt Audit — COMPLETED (2026-06-09, updated 2026-06-10, 2026-06-11, 2026-06-12)
-#### ✅ Design Review — COMPLETED (2026-06-10, updated 2026-06-11, 2026-06-12)
-#### ✅ Cost Estimation — COMPLETED (2026-06-10, updated 2026-06-12)
-#### ✅ Challenger Review — COMPLETED (2026-06-10, 2026-06-11, 2026-06-12)
+#### ✅ Competitor Research — COMPLETED (2026-06-09, 2026-06-10, 2026-06-11 round 3, 2026-06-12 round 4+5)
+#### ✅ Tech Debt Audit — COMPLETED (2026-06-09, updated 2026-06-10 through 2026-06-12 rounds 2-5)
+#### ✅ Design Review — COMPLETED (2026-06-10, updated 2026-06-12 rounds 2-5)
+#### ✅ Cost Estimation — COMPLETED (2026-06-10, updated 2026-06-12 rounds 4-5)
+#### ✅ Challenger Review — COMPLETED (2026-06-10 through 2026-06-12 rounds 1-5)
+
+#### 🔴 CRITICAL — ANALYSIS PARALYSIS (Challenger Round 5 Verdict)
+**5 review rounds have produced 114 documented items but only ~4h of actual implementation (25:1 ratio).**
+**Challenger mandates: 2-week build sprint with NO reviews.**
+
+#### 🔴 P0 — Emergency Batch (Do TODAY, <30 minutes)
+1. **NEW-G10**: Remove dead `get_list_entries()` in watchlist.py — 2 min
+2. **NEW-G11**: Remove dead `INDUSTRY_REVENUE_MAP` (39 lines) in revenue_analyzer.py — 1 min
+3. **NEW-G12**: Remove dead `_section_card` assignment in operation_checkup.py — 1 min
+4. **D-059**: Fix `_info_card()` orange border (#F39C12 → design system color) — 15 min, affects ALL pages
+5. **D-046**: Remove gradient from business_card.py one-liner — 15 min
+
+#### 📋 Week 1 — Foundation Sprint (Target: C- → B, ~8 hours)
+1. D-049: category_browser.py structural redesign — 1h
+2. D-053-D-058: chart.py color constant violations (batch) — 3h
+3. D-062: CSS custom properties/design tokens — 2h
+4. NEW-G14: Deduplicate `_is_etf()` — 30 min
+
+#### 📋 Week 2 — Feature Sprint (Ship something!, ~10 hours)
+1. **C31**: Daily Financial Challenge — 6-10h (BEST new feature, no AI needed)
+2. **C04/C32**: Merge and implement Market Mood — 4-8h
+
+#### 📋 Backlog (after foundation is solid, grade ≥ B)
+- C23: "Why Now" Narrative — 8h
+- C24: Interactive "Calculate It Yourself" Exercises — 5h
+- C16: "Did You Know?" Company Facts — 4-6h
+- C19: Structured Learning Path — 14-18h
+
+#### ❌ Rejected by Challenger (Round 5)
+- **C28** (AI Story Timeline) — violates "trusted historian" positioning, realistic cost 28-46h
+- **C29** (AI Explain) — replaces human-curated _白话_card(), realistic cost 22-36h
+- **C30** (ESG Education) — not in product vision
+- **C32** (Market Mood) — duplicate of C04, merged
+
+#### 🔮 Remaining Tech Debt (14 items, ~17h — defer until after foundation sprint)
+- Immediate batch (~1h): A01, NEW-G01, NEW-G04, NEW-G05, NEW-G06
+- Short-term (~8h): C01 (category browser N+1), C03 (ETF dividend cache), D03 (static data consolidation)
+- Medium-term (~8h): D01 (SQLite backend), D02 (rate limit global state), E02 (integration tests)
 #### ✅ business_card.py P0 Regression — FIXED (2026-06-12)
 #### ✅ NEW-G08 / NEW-G09 — FIXED (2026-06-12)
 
