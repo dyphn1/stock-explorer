@@ -157,7 +157,7 @@ def _render_hot_etfs(etf_info: pd.DataFrame, price_df: pd.DataFrame):
         sign = "+" if change >= 0 else ""
         color = "#E74C3C" if change >= 0 else "#27AE60"  # 紅漲綠跌（台股慣例）
 
-        cols = st.columns([0.5, 0.8, 1.5, 1.2, 1.2, 0.8])
+        cols = st.columns([0.6, 1, 2, 1.4, 1.4, 1])
         cols[0].markdown(f"**#{int(row['排名'])}**")
         cols[1].markdown(f"`{row['stock_id']}`")
         cols[2].markdown(row["stock_name"])
@@ -429,7 +429,7 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
         sign = "+" if change >= 0 else ""
         color = "#E74C3C" if change >= 0 else "#27AE60"
 
-        cols = st.columns([0.5, 0.8, 1.3, 1, 1, 1, 0.8])
+        cols = st.columns([0.6, 1, 1.5, 1, 1, 1.2, 1])
         cols[0].markdown(f"**#{int(row['排名'])}**")
         cols[1].markdown(f"`{row['stock_id']}`")
         cols[2].markdown(row["stock_name"])

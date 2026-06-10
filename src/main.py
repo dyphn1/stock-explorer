@@ -67,6 +67,29 @@ st.markdown("""
         }
     }
 
+    /* Responsive: make multi-column rows wrap gracefully on narrow screens */
+    @media (max-width: 900px) {
+        div[data-testid="column"] {
+            min-width: 0 !important;
+        }
+        /* Shrink font inside column containers on narrow screens */
+        div[data-testid="stHorizontalBlock"] div[data-testid="column"] p,
+        div[data-testid="stHorizontalBlock"] div[data-testid="column"] span {
+            font-size: 0.75rem !important;
+            word-break: break-all !important;
+        }
+        /* Make buttons inside multi-col rows smaller */
+        div[data-testid="stHorizontalBlock"] div[data-testid="column"] button {
+            font-size: 0.7rem !important;
+            padding: 0.2rem 0.4rem !important;
+            min-height: 0 !important;
+        }
+        /* Shrink markdown text in column rows */
+        div[data-testid="stHorizontalBlock"] div[data-testid="column"] .stMarkdown {
+            font-size: 0.75rem !important;
+        }
+    }
+
     /* Sidebar: ensure collapse toggle is always visible and clickable */
     section[data-testid="stSidebar"] {
         overflow-x: visible !important;

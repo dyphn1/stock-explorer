@@ -102,7 +102,7 @@ def _render_top_stocks_by_value(client: FinMindClient, all_stock_info: pd.DataFr
     # 顯示表格 + 按鈕
     st.markdown("#### 前 20 大權值股")
     for _, row in df_value.iterrows():
-        cols = st.columns([0.6, 1, 1.2, 1.5, 1.2, 0.8])
+        cols = st.columns([0.7, 1, 1.5, 1.8, 1.4, 1])
         cols[0].markdown(f"**#{int(row['排名'])}**")
         cols[1].markdown(f"`{row['stock_id']}`")
         cols[2].markdown(row["stock_name"])
@@ -238,7 +238,7 @@ def _render_hot_stocks_by_volume(client: FinMindClient, all_stock_info: pd.DataF
 
     st.markdown("#### 前 20 大熱門股")
     for _, row in df_volume.iterrows():
-        cols = st.columns([0.6, 1, 1.2, 1.5, 1.2, 0.8])
+        cols = st.columns([0.7, 1, 1.5, 1.8, 1.4, 1])
         cols[0].markdown(f"**#{int(row['排名'])}**")
         cols[1].markdown(f"`{row['stock_id']}`")
         cols[2].markdown(row["stock_name"])
