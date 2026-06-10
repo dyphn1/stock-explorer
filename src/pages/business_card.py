@@ -5,6 +5,7 @@
 
 import streamlit as st
 import pandas as pd
+from datetime import datetime, date
 from src.services.chart import create_revenue_trend_chart, create_revenue_pie_chart
 from src.services.revenue_analyzer import analyze_revenue_breakdown
 from src.services.analogy_engine import (
@@ -134,7 +135,7 @@ def _render_business_card(data: dict, client):
     # 一句話定位
     one_liner = get_one_liner(stock_id, stock_name, industry)
     st.markdown(f"""
-    <div style="font-size:1.3rem;font-weight:500;color:#2C3E50;text-align:center;padding:1.5rem 2rem;background:linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%);border-radius:12px;margin:1rem 0;line-height:1.8;border-left:5px solid #3498DB;">
+    <div style="font-size:1.3rem;font-weight:500;color:#2C3E50;text-align:center;padding:1.5rem 2rem;background:#EBF5FB;border-radius:12px;margin:1rem 0;line-height:1.8;border-left:5px solid #3498DB;">
         💡 {one_liner}
     </div>
     """, unsafe_allow_html=True)
@@ -238,11 +239,42 @@ def _render_business_card(data: dict, client):
     )
 
     if div_summary["has_data"]:
+        # ── Countdown to next ex-dividend date ──
+        _today = date.today()
+        _next_ex_date = None
+        _next_ex_year = None
+        for _d in div_summary["yearly_dividends"]:
+            _ex = _d.get("ex_date", "")
+            if not _ex or _ex == "—":
+                continue
+            try:
+                _ex_dt = pd.Timestamp(_ex).date()
+                if _ex_dt >= _today:
+                    if _next_ex_date is None or _ex_dt < _next_ex_date:
+                        _next_ex_date = _ex_dt
+                        _next_ex_year = _d.get("year", "")
+            except Exception:
+                continue
+
+        if _next_ex_date:
+            _days_left = (_next_ex_date - _today).days
+            st.markdown(
+                f"""<div style="background:#EBF5FB;border-left:4px solid #3498DB;border-radius:12px;padding:1rem 1.5rem;margin:0.8rem 0;text-align:center;">
+                    <div style="font-size:1.1rem;font-weight:600;color:#2C3E50;">
+                        ⏳ 距離除息日還剩 <span style="font-size:1.5rem;color:#3498DB;">{_days_left}</span> 天
+                    </div>
+                    <div style="font-size:0.85rem;color:#7F8C8D;margin-top:0.3rem;">
+                        預計除息日：{_next_ex_date.strftime('%Y/%m/%d')}（{_next_ex_year}）
+                    </div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+
         # Plain-language headline (tip card style)
         st.markdown(
             f"""<div style="
-                background: #FFF8F0;
-                border-left: 4px solid #F39C12;
+                background: #F8F9FA;
+                border-left: 4px solid #3498DB;
                 padding: 12px 16px;
                 border-radius: 4px;
                 margin: 12px 0;
@@ -298,7 +330,49 @@ def _render_business_card(data: dict, client):
                 display_df.columns = ["年度", "現金股利", "除息日", "狀態"]
                 if "stock_div" in hist_df.columns:
                     display_df["股票股利"] = hist_df["stock_div"]
-                st.dataframe(display_df, use_container_width=True, hide_index=True)
+
+                # Add ex-date badge column
+                _today = date.today()
+                _badges = []
+                for _, _row in display_df.iterrows():
+                    _ex = _row["除息日"]
+                    if _ex and _ex != "—":
+                        try:
+                            _ex_dt = pd.Timestamp(_ex).date()
+                            if _ex_dt >= _today:
+                                _badges.append(
+                                    f'<span style="background:#27AE60;color:#FFFFFF;padding:2px 8px;border-radius:10px;font-size:0.75rem;">即將除息</span>'
+                                )
+                            else:
+                                _badges.append(
+                                    f'<span style="background:#3498DB;color:#FFFFFF;padding:2px 8px;border-radius:10px;font-size:0.75rem;">已除息</span>'
+                                )
+                        except Exception:
+                            _badges.append("")
+                    else:
+                        _badges.append("")
+                display_df["除息標記"] = _badges
+
+                # Render as HTML table to support badges
+                html_rows = []
+                _cols = list(display_df.columns)
+                _header = "".join(f'<th style="text-align:left;padding:8px 12px;color:#7F8C8D;font-size:0.85rem;border-bottom:2px solid #BDC3C7;">{c}</th>' for c in _cols)
+                html_rows.append(f"<tr>{_header}</tr>")
+                for _, _r in display_df.iterrows():
+                    _cells = ""
+                    for _c in _cols:
+                        _val = _r[_c]
+                        if _c == "除息標記":
+                            _cells += f'<td style="padding:8px 12px;border-bottom:1px solid #F8F9FA;">{_val}</td>'
+                        else:
+                            _cells += f'<td style="padding:8px 12px;color:#2C3E50;border-bottom:1px solid #F8F9FA;">{_val}</td>'
+                    html_rows.append(f"<tr>{_cells}</tr>")
+                _table_html = (
+                    '<table style="width:100%;border-collapse:collapse;font-size:0.9rem;">'
+                    + "".join(html_rows)
+                    + "</table>"
+                )
+                st.markdown(_table_html, unsafe_allow_html=True)
     else:
         # Show a subtle note for stocks without dividends
         st.markdown(
@@ -367,7 +441,7 @@ def _render_business_card(data: dict, client):
             impact_class = {"high": "🔴 重大", "medium": "🟡 注意", "low": "🟢 參考"}[impact]
 
             st.markdown(f"""
-            <div style="background:#FFF8F0;border-radius:12px;padding:1.5rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
+            <div style="background:#FFF8F0;border-radius:12px;padding:1.5rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
                 <div style="font-weight:600;color:#2C3E50;">
                     <span style="margin-right:0.5rem;">{impact_class}</span>
                     📰 {title}

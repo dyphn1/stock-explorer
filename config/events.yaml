@@ -55,3 +55,31 @@ events:
   summary: 重大事件：合併
   title: 水泥雙雄台泥、亞泥4月合併營收分別月減1.6%及月增6.5% - 聯合新聞網
   type: news_major
+- date: '2026-06-11'
+  detected_at: '2026-06-11T00:51:57'
+  severity: medium
+  stock_id: '2330'
+  summary: 最近月營收 4170 億元，較去年同期增加 30%。表現亮眼，關注後續動能。
+  title: 營收 YoY 成長 30%
+  type: revenue_surge
+- date: '2026-06-11'
+  detected_at: '2026-06-11T00:51:57'
+  severity: medium
+  stock_id: '2330'
+  summary: 注意事件：訂單
+  title: 英特爾傳獲蘋果輝達訂單，台積電續擴建-財經焦點情報站 - CMoney投資網誌
+  type: news_medium
+- date: '2026-06-11'
+  detected_at: '2026-06-11T00:51:57'
+  severity: high
+  stock_id: '2454'
+  summary: 收盤價 4155 元，較前一交易日跌 7.2%。單日波動劇烈，建議關注相關公告。
+  title: 股價單日跌 7.2%
+  type: price_abnormal
+- date: '2026-06-11'
+  detected_at: '2026-06-11T00:52:00'
+  severity: high
+  stock_id: '2317'
+  summary: 重大事件：法說
+  title: 鴻海(2317)法說來了！股價7天漲18％、外資連10天買超30萬張為哪樁？劉揚偉會端什麼好菜上場｜今周重磅 - 旺得富
+  type: news_major
