@@ -1,38 +1,38 @@
-# Handoff – Review
+# Handoff – Development
 
 ## Summary
-- **Topic**: Review (🔍)
+- **Topic**: Development (🔧)
 - **Date**: 2026-06-13
-- **Sprint Status**: Review complete → Development next
+- **Sprint Status**: Sprint 0 complete → Sprint 1 next
 
-## Completed Items (Review Round 8)
+## Completed Items (Sprint 0)
 | Item | Result |
 |------|--------|
-| Competitor Research | 8 new competitors, 6 new features (C36-C41) |
-| Tech Debt Review | 6 items fixed (G01,G02,G10,G11,G12,G14), 3 new found |
-| Design Review | Old palette fully cleaned, 11 new issues (D-073-D-084) |
-| Challenger | 3 rounds completed, review approved with modifications |
+| D-073: Fix #5D6D7E → #7F8C8D in _info_card() | ✅ Fixed |
+| D-071: Replace Set3 palette in pie charts | ✅ Fixed |
+| D-084: Replace st.bar_chart with Plotly | ✅ Fixed |
+| G04: Fix disconnected rate limit flags | ✅ Fixed |
+| G06: Fix bare FinMindClient() | ✅ Fixed |
+| G17: Verify KNOWN_COMPANY_REVENUE usage | ✅ Confirmed in-use |
 
 ## Key Metrics
-- Tech debt: 14 active + 1 deferred (~14 hours, down from ~19)
-- Design grade: C+ (unchanged, 92 cumulative issues)
-- Total issues: 33 todo (4 P0, 12 P1, 22 P2)
-- 12 issues done, 3 canceled
+- Tech debt: 14 active + 1 deferred (~14 hours)
+- Design grade: C+ → B (Sprint 0 improvements)
+- Total issues: 30 todo (5 P0, 9 P1, 15 P2), 12 done, 2 canceled
+- L0: 54/54 ✅ | L1: 15/15 ✅
 
-## Pending Quick Wins (Sprint 0)
+## Pending Quick Wins (Sprint 1)
 | Item | Effort |
 |------|--------|
-| D-073: Fix #5D6D7E → #7F8C8D in _info_card() | 5 min |
-| D-071: Replace Set3 palette in pie charts | 30 min |
-| D-084: Replace st.bar_chart with Plotly | 30 min |
-| G04: Fix disconnected rate limit flags | 10 min |
-| G06: Fix bare FinMindClient() | 20 min |
-| G17: Verify KNOWN_COMPANY_REVENUE usage | 5 min |
+| D-074: Fix #F8F9FA in _白话_card() | 5 min |
+| D-005: Fix _section_title() emoji conflict | 15 min |
+| G05: Fix ETF category classification | 30 min |
+| C01: Ex-dividend countdown + badge | 2-3h |
+| C28: Company Story Timeline spike | 3h |
 
 ## Next Cycle Handoff
-Next theme: 🔧 Development → read `docs/state/handoff.md` (this file)
-Next dev cycle: Sprint 0 (Design Quality C+ → B, ~2h) → Sprint 1 (C37 Key Takeaways + C28 Story Timeline spike)
+Next theme: 🔍 Review → read `docs/state/handoff.md` (this file)
+Next dev cycle: Sprint 1 (C28 Spike + remaining quick wins)
 
-For full review context, see `docs/state/handoff_review.md`
-For challenge records, see `docs/logs/challenge_log.md`
+For full Sprint 0 context, see `docs/state/handoff_dev.md`
 For pending Daniel decisions, see `docs/state/pending_review.md`
