@@ -1,7 +1,7 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔍 檢討輪次（第三輪全面審查完成，待開發輪次修復 P0）
-## 本輪主題：🔍 檢討 — 第三輪全面審查（2026-06-11）
+## 當前階段：🔧 開發輪次（第四輪 — business_card.py P0 修復 + 路線圖重訂）
+## 本輪主題：💡 討論 — 第四輪團隊討論 + Challenger 3 輪挑戰（2026-06-11）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -615,7 +615,59 @@ See `docs/status/pending_review.md` for details:
 | P1 | 6 |
 | P2 | 11 |
 
-*Last updated: 2026-06-11 (review round 3 — QA, Architect, Design Reviewer, Challenger)*
+## 💡 Discussion Record — 2026-06-11 (Round 4 — Stabilization Focus)
+
+### Process Summary
+- **Architect** (nemotron-120b): Analyzed business_card.py regression root cause (commit 9277bbd truncated 173 lines), proposed git-based Option A recovery (45min-3h), recommended Phase 0 stabilization before any features. Key principle: "MVP = stabilize, not add."
+- **Design Reviewer** (gemma-31b): Confirmed business_card.py renders only stock name + price + watchlist. Defined minimum viable card: revenue pie + trend + one-liner + key metrics (Tier 1), dividend + news (Tier 2). C14 Health Score = highest UX impact new feature. Estimated 15h for design-complete MVP.
+- **Developer** (owl-alpha): Detailed 10-subtask breakdown for business_card.py restoration (~10.6h). Root cause: missing import `list_names` (line 78). Revenue breakdown limited to 8 hardcoded companies. Recommended: C07 → C14 → C06 as next 3 features.
+- **Challenger** (gpt-oss-120b): **REJECTED** team preliminary plan. 3 rounds of challenge.
+
+### Challenger Round 1 — Feature Direction
+- C06 (PPT Generation) advances ZERO core values — it's a delivery mechanism for content that isn't ready
+- C01 "Done" status is FALSE — dividend section was never wired into business_card.py
+- Team plan is "feature roadmap disguised as stabilization plan"
+
+### Challenger Round 2 — Priority
+- M5 verification must precede C07 (dependency error in team plan)
+- YAML→SQLite is premature (4h for single-user app)
+- DR-03 (Financial Health text) should be P0 — worst-graded core page, only 1.5h fix
+- 5-minute quick wins should be done TODAY, not batched
+
+### Challenger Round 3 — Goal Alignment
+- ZERO features in team plan advance "Story first" (#1 core value)
+- Building C14 on broken business_card.py = compound risk
+- C02 notification architecture rabbit hole not scoped
+- No verification gates in team plan
+
+### Challenger Verdict: **REJECT** — 10 revision demands issued
+
+### Team Revised Roadmap (Post-Challenger)
+
+| Phase | Items | Hours | Gate |
+|-------|-------|-------|------|
+| **Phase 0 — Stabilize** | business_card.py complete restoration + quick tech debt batch (5 items, ~1h) + DR-03 Financial Health text fix | 11-15h | Main page grades B+, all sections render |
+| **Phase 1 — Foundation** | D01 (M5 verification) + C16 "Did You Know?" tips + C07 Custom Thresholds | 18-22h | M5 accuracy >80% on 10+ stocks |
+| **Phase 2 — Core Features** | C19 Structured Learning Path + C14 Company Health Score + C02 Email Notifications | 44-54h | business_card.py complete, learning path tested |
+| **Phase 3 — Share & Expand** | C06 PPT Generation + C04 Market Thermometer | 34-38h | All pages B+ |
+| **Post-MVP** | YAML→SQLite + C17 AI Q&A + C13 Quiz + TD-11/12/15 | 18-24h | Multi-user need confirmed |
+
+**Total estimated effort: ~125-153h (with 20% buffer: ~150-184h)**
+
+### Key Decisions
+1. **business_card.py is THE P0 blocker** — no new feature work until main page renders all sections
+2. **Git-based recovery (Option A)** — restore from commit 24d785b, rebase multi-list watchlist changes
+3. **C06 moved to Phase 3** — advances zero core values, should not be built before pages are excellent
+4. **C19 elevated to Phase 2** — best alignment with "Story first" core value
+5. **C15 (Paper Trading) CANCELLED** — positioning violation ("historian, not stock picker")
+6. **C18 (Gamification) DEFERRED to post-MVP** — no core value alignment yet
+7. **DR-03 promoted to P0** — highest-ROI fix in backlog (1.5h, worst-graded core page)
+8. **M5 verification must gate C07** — explicit verification report required before C07 starts
+
+### Pending Daniel's Decision
+See `docs/status/pending_review.md` for items requiring human input.
+
+*Last updated: 2026-06-11 (discussion round 4 — team discussion + challenger 3-round challenge)*
 
 ---
 

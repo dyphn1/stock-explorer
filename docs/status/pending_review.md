@@ -39,17 +39,32 @@
 
 ---
 
-## 📋 Roadmap Approval (NEW — 2026-06-10, from Team Discussion)
+## 📋 Roadmap Approval (NEW — 2026-06-11, from Discussion Round 4)
 
-### 5. Revised Feature Roadmap
+### 5. Revised Feature Roadmap (Post-Challenger)
 - **Issue**: After team discussion + 3 rounds of Challenger review, the revised roadmap is:
-  - **Phase 1**: C06 (PPT Generation) + C07 (Custom Thresholds)
-  - **Phase 2**: C02 (Email Notifications) + C04 (Market Thermometer)
-  - **Phase 3**: C05 (Portfolio P&L, conditional on Daniel's approval above)
-  - **New prerequisites**: ISSUE-D01 (M5 verification), ISSUE-D02 (background worker investigation)
-- **Total estimated effort**: ~62-84h (without C05)
+  - **Phase 0 — Stabilize** (11-15h): business_card.py restore + 5 quick tech debt + DR-03 Financial Health
+  - **Phase 1 — Foundation** (18-22h): D01 M5 verification + C16 "Did You Know?" + C07 Custom Thresholds
+  - **Phase 2 — Core Features** (44-54h): C19 Learning Path + C14 Health Score + C02 Email
+  - **Phase 3 — Share & Expand** (34-38h): C06 PPT Generation + C04 Market Thermometer
+  - **Post-MVP** (18-24h): YAML→SQLite + C17 AI Q&A + C13 Quiz
+- **Total estimated effort**: ~125-153h (with 20% buffer: ~150-184h)
+- **Key change**: C06 (PPT Generation) moved from Phase 1 to Phase 3 — advances zero core values, should not be built before pages are excellent
+- **Key change**: C19 (Learning Path) elevated to Phase 2 — best "Story first" alignment
+- **Key change**: C15 (Paper Trading) CANCELLED — positioning violation
 - **Decision needed**: Approve this roadmap or adjust priorities?
 
 ---
 
-*Updated: 2026-06-10 by PM after team discussion + challenger round*
+## 🔴 Critical Blocker (NEW — 2026-06-11)
+
+### 6. business_card.py P0 Regression — Approval to Fix
+- **Issue**: The main page of the app is severely broken. `business_card.py` is only 128 lines — it imports 15+ service functions but renders NONE of them. Every user sees a blank page (stock name + price + watchlist button only).
+- **Impact**: #1 cause of user churn. The 10-second test is impossible to pass.
+- **Proposed fix**: Git-based recovery (restore from commit 24d785b, rebase multi-list watchlist changes). Estimated: 10-12h.
+- **Team recommendation**: Fix BEFORE any new features. This is a regression, not a feature.
+- **Decision needed**: Approve immediate fix? Any concerns about the git-based recovery approach?
+
+---
+
+*Updated: 2026-06-11 by PM after discussion round 4 + challenger 3-round challenge*

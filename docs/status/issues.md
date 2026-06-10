@@ -25,17 +25,18 @@
 ### [ISSUE-C01] Ex-Dividend Calendar
 - **Source:** Competitor research
 - **Priority:** P0
-- **Status:** ✅ Done
+- **Status:** 📋 Todo (status was falsely ✅ Done — dividend section never wired into business_card.py)
 - **Description:**
   - GoodInfo and Dogga (財報狗) both have complete ex-dividend information
   - One of the most common beginner questions: "When does TSMC pay dividends and how much?"
-  - Stock Explorer now answers this question via integrated dividend analysis
+  - `dividend_analyzer.py` service exists and works, but `_render_business_card()` never calls it due to the truncation regression
 - **Implementation:**
-  - `src/services/dividend_analyzer.py` — Full dividend analysis engine (frequency classification, TTM estimation, yield calculation, plain-language summaries)
-  - `src/pages/business_card.py` — "💵 配息故事" section with tip card, 3 mini-cards (最近一季/預估全年/殖利率), expandable history table
-  - `src/pages/_router_base.py` — Data loading pipeline includes dividend data fetch
+  - `src/services/dividend_analyzer.py` — Full dividend analysis engine (frequency classification, TTM estimation, yield calculation, plain-language summaries) ✅ Complete
+  - `src/pages/business_card.py` — "💵 配息故事" section with tip card, 3 mini-cards (最近一季/預估全年/殖利率), expandable history table ❌ Missing (truncated file)
+  - `src/pages/_router_base.py` — Data loading pipeline includes dividend data fetch ✅ Complete
 - **Related files:** `src/pages/business_card.py`, `src/services/dividend_analyzer.py`, `config/watchlist.yaml`
 - **Reference:** `docs/research/competitor_research.md` — Inspiration A
+- **Note:** Service layer is complete. Only the UI rendering in business_card.py needs restoration.
 
 ---
 
@@ -615,3 +616,79 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 - **Reference:** `docs/workflow/challenge_log.md` — Round 1 Q2, Round 2 Q2
 
 ---
+
+
+---
+
+## 💡 Discussion Round 4 — 2026-06-11 (Team Discussion + Challenger)
+
+### Process Summary
+- **Architect** (nemotron-120b): Root cause = commit 9277bbd truncated 173 lines during multi-list watchlist refactor. Recommends git-based Option A recovery (restore from commit 24d785b + rebase multi-list changes). Effort: 45min-3h for restore, but full integration ~10h. "MVP = stabilize, not add."
+- **Design Reviewer** (gemma-31b): Defined minimum viable card (Tier 1: revenue pie + trend + one-liner + key metrics). C14 Health Score = highest UX impact. Estimated 15h for design-complete MVP. C17 AI Q&A = HIGH RISK (hallucination).
+- **Developer** (owl-alpha): 10-subtask breakdown (~10.6h total). Missing import `list_names` at line 78. Revenue breakdown limited to 8 hardcoded companies. C07→C14→C06 recommended order.
+- **Challenger** (gpt-oss-120b): **REJECTED** team plan — 3 rounds of challenge. Key objections: C06 advances zero core values; C01 "Done" is false; plan doesn't advance "Story first"; building C14 on broken page = compound risk.
+
+### Challenger's 3-Round Summary
+| Round | Focus | Key Objection |
+|-------|-------|---------------|
+| 1 | Feature Direction | C06 is delivery mechanism for content that isn't ready; C01 status is wrong |
+| 2 | Priority | M5 must precede C07; YAML→SQLite premature; DR-03 should be P0 |
+| 3 | Goal Alignment | Zero features advance "Story first"; no verification gates; C02 rabbit hole un-scoped |
+
+### Revised Roadmap (Post-Challenger Confirmed)
+
+| Phase | Items | Hours | Gate |
+|-------|-------|-------|------|
+| **Phase 0 — Stabilize** | business_card.py restore + 5 quick tech debt + DR-03 Financial Health | 11-15h | Main page grades B+ |
+| **Phase 1 — Foundation** | D01 M5 verification + C16 "Did You Know?" + C07 Custom Thresholds | 18-22h | M5 accuracy >80% |
+| **Phase 2 — Core Features** | C19 Learning Path + C14 Health Score + C02 Email | 44-54h | business_card.py complete |
+| **Phase 3 — Share & Expand** | C06 PPT Generation + C04 Market Thermometer | 34-38h | All pages B+ |
+| **Post-MVP** | YAML→SQLite + C17 AI Q&A + C13 Quiz + TD-11/12/15 | 18-24h | Multi-user need |
+
+### New Issues from Discussion Round
+
+#### [ISSUE-C20] C01 Ex-Dividend Calendar Status Correction
+- **Source:** Discussion Round 4 (Challenger Round 1)
+- **Priority:** P1
+- **Status:** 📋 Todo
+- **Description:** ISSUE-C01 is marked ✅ Done in issues.md but the dividend rendering section was never wired into business_card.py due to the truncation regression. The `dividend_analyzer.py` service exists and works, but `_render_business_card()` never calls `extract_dividend_summary()`. Must be restored as part of business_card.py fix.
+- **Related files:** `src/pages/business_card.py`, `src/services/dividend_analyzer.py`
+- **Effort:** Included in D-002-NEW fix
+
+#### [ISSUE-DR-06] Financial Health Page P0 Promotion
+- **Source:** Discussion Round 4 (Challenger Round 2)
+- **Priority:** P0 (promoted from P1)
+- **Status:** 📋 Todo
+- **Description:** DR-03 (Financial Health text-heavy) promoted to P0 by Challenger. Only 1.5h fix, worst-graded core page (C+), highest-ROI fix in backlog. Must be done before C06 (PPT Generation) since PPT captures page content.
+- **Related files:** `src/pages/financial_health.py`
+- **Effort:** 1.5 hours
+
+### Status Changes from Discussion Round
+
+| Issue | Previous Status | New Status | Reason |
+|-------|----------------|------------|--------|
+| C06 PPT Generation | Phase 1 | Phase 3 | Advances zero core values; pages must be excellent first |
+| C19 Learning Path | P2 | Phase 2 (P1) | Best "Story first" alignment; addresses #1 UX problem |
+| C15 Paper Trading | Deferred | ❌ Canceled | Positioning violation ("historian, not stock picker") |
+| C18 Gamification | P2 | Deferred post-MVP | No core value alignment for D+ product |
+| DR-03 Financial Health | P1 | P0 | Highest-ROI fix; worst-graded core page |
+| C01 Ex-Dividend | ✅ Done | 📋 Todo (status false) | Never wired into business_card.py |
+
+### Updated Issue Statistics
+
+| Status | Count |
+|--------|-------|
+| 📋 Todo | 23 |
+| ✅ Done | 7 |
+| ❌ Canceled | 2 |
+| 🔄 In progress | 0 |
+
+| Priority | Count |
+|----------|-------|
+| P0 | 5 |
+| P1 | 6 |
+| P2 | 10 |
+
+---
+
+*Last updated: 2026-06-11 (discussion round 4 — team discussion + challenger 3-round challenge)*
