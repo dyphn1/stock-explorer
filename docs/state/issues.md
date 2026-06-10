@@ -25,18 +25,18 @@
 ### [ISSUE-C01] Ex-Dividend Calendar
 - **Source:** Competitor research
 - **Priority:** P0
-- **Status:** 📋 Todo (status was falsely ✅ Done — dividend section never wired into business_card.py)
+- **Status:** ✅ Done
 - **Description:**
   - GoodInfo and Dogga (財報狗) both have complete ex-dividend information
   - One of the most common beginner questions: "When does TSMC pay dividends and how much?"
-  - `dividend_analyzer.py` service exists and works, but `_render_business_card()` never calls it due to the truncation regression
-- **Implementation:**
-  - `src/services/dividend_analyzer.py` — Full dividend analysis engine (frequency classification, TTM estimation, yield calculation, plain-language summaries) ✅ Complete
-  - `src/pages/business_card.py` — "💵 配息故事" section with tip card, 3 mini-cards (最近一季/預估全年/殖利率), expandable history table ❌ Missing (truncated file)
-  - `src/pages/_router_base.py` — Data loading pipeline includes dividend data fetch ✅ Complete
+- **Implementation (all complete):**
+  - `src/services/dividend_analyzer.py` — Full dividend analysis engine ✅
+  - `src/pages/business_card.py` — "💵 配息故事" section with tip card, 3 mini-cards, expandable history table ✅
+  - `src/pages/business_card.py` — Ex-dividend countdown card ("⏳ 距離除息日還剩 N 天") ✅ (2026-06-12, commit `9cbdc73`)
+  - `src/pages/business_card.py` — History table with "即將除息" / "已除息" badges ✅ (2026-06-12, commit `9cbdc73`)
+  - `src/pages/_router_base.py` — Data loading pipeline includes dividend data fetch ✅
 - **Related files:** `src/pages/business_card.py`, `src/services/dividend_analyzer.py`, `config/watchlist.yaml`
 - **Reference:** `docs/research/competitor_research.md` — Inspiration A
-- **Note:** Service layer is complete. Only the UI rendering in business_card.py needs restoration.
 
 ---
 
@@ -324,10 +324,11 @@
 #### [ISSUE-DR-01] Color System Violations Across 6 Files
 - **Source:** Design comparison review (2026-06-10)
 - **Priority:** P1
-- **Status:** 📋 Todo
-- **Description:** 10+ instances of colors outside the design system palette: `#F39C12` (orange), `#2E86C1` (dark blue), `#1B4F72` (navy), `#8E44AD` (purple), `#2ECC71` (non-standard green). Affects: `financial_health.py`, `etf_browser.py`, `watchlist_page.py`, `chart.py`, `operation_checkup.py`.
-- **Effort:** 1 hour
-- **Related files:** 6 files
+- **Status:** ✅ Done
+- **Description:** 10+ instances of colors outside the design system palette: `#F39C12` (orange), `#2E86C1` (dark blue), `#1B4F72` (navy), `#8E44AD` (purple), `#2ECC71` (non-standard green). Also 7 `linear-gradient` instances.
+- **Fix (2026-06-12):** All `#F39C12` replaced with `#3498DB`. All `linear-gradient` replaced with flat `#EBF5FB`. Zero violations remaining in `src/`. Commit `9cbdc73`.
+- **Effort:** ~1h (actual: ~30min)
+- **Related files:** 6 files (business_card.py, financial_health.py, etf_browser.py, watchlist_page.py, chart.py, operation_checkup.py)
 
 #### [ISSUE-DR-02] st.cache_data in View Layer (Architecture Violation)
 - **Source:** Design comparison review (2026-06-10)
@@ -485,19 +486,15 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 #### [ISSUE-C16] "Did You Know?" Contextual Company Tips
 - **Source:** Competitor research (Round 3, Stash "Stock Bits")
 - **Priority:** P2
-- **Status:** 📋 Todo
+- **Status:** ✅ Done
 - **Description:**
-  - Stash embeds mini-facts next to stock details ("Did you know? TSMC makes 90% of the world's advanced chips").
-  - Stock Explorer can do this one better: contextual facts that match the analysis framework section.
-  - Example on TSMC business card: "Did you know? TSMC's 3nm chips are in every iPhone 15 Pro."
-  - These facts make companies memorable and connect financial data to real-world products.
-- **Suggested Implementation:**
-  - New `src/data/company_facts.yaml` — `{stock_id: [fact1, fact2, ...]}`
-  - Display as a tip card on business card page (randomly rotate facts)
-  - Community contribution: allow users to submit facts (v2)
-  - Could be expanded to per-section facts (operations facts, financial health facts, etc.)
-- **Related files:** New `src/data/company_facts.yaml`, `src/pages/business_card.py`
-- **Estimate:** 4-6h (mostly data collection)
+  - Stash embeds mini-facts next to stock details. Stock Explorer does this with contextual facts matching the analysis framework.
+- **Implementation (complete):**
+  - `src/data/company_facts.yaml` — 70 facts for 7 stocks (2330, 2454, 2317, 1101, 2881, 0050) ✅
+  - `src/services/company_facts.py` — Service layer with `get_company_facts()` and `get_random_fact()` ✅
+  - `src/pages/business_card.py` lines 142-157 — UI rendering with rotating tip card ✅
+- **Related files:** `src/data/company_facts.yaml`, `src/services/company_facts.py`, `src/pages/business_card.py`
+- **Estimate:** Already implemented (was 4-6h, done in prior cycle)
 - **Competitive Gap:** 🟡 Unique feature — no TW competitor has contextual company facts
 
 ---
@@ -950,16 +947,16 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 
 | Status | Count |
 |--------|-------|
-| 📋 Todo | 30 |
+| 📋 Todo | 27 |
 | 🔄 In progress | 0 |
-| ✅ Done | 9 |
+| ✅ Done | 12 |
 | ❌ Canceled | 2 |
 
 | Priority | Count |
 |----------|-------|
-| P0 | 4 |
+| P0 | 3 |
 | P1 | 8 |
-| P2 | 16 |
+| P2 | 15 |
 
 ---
 
