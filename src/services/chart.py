@@ -27,8 +27,8 @@ def _get_chart_colors() -> dict:
     Streamlit light mode (white-ish bg) and dark mode (dark bg).
     """
     return {
-        "text": "#555555",                     # axis & label text
-        "title": "#333333",                    # chart titles — slightly darker
+        "text": "#7F8C8D",                     # axis & label text
+        "title": "#2C3E50",                    # chart titles — slightly darker
         "grid": "rgba(128,128,128,0.15)",      # grid lines
         "muted": "#7F8C8D",                    # muted / annotation text
         "divider": "rgba(128,128,128,0.3)",    # connector / structural lines
