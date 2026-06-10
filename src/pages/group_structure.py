@@ -236,7 +236,7 @@ def _render_group_structure(data: dict):
             hold_color = "#E74C3C"
         elif holding >= 20:
             hold_label = "🟡 重要轉投資"
-            hold_color = "#F39C12"
+            hold_color = "#3498DB"
         else:
             hold_label = "🟢 一般投資"
             hold_color = "#27AE60"

@@ -147,7 +147,7 @@ def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢")
             x=df["date"],
             y=df["revenue"] / 1e8,  # 轉為億
             name="月營收",
-            marker_color="#4A90D9",
+            marker_color="#3498DB",
             hovertemplate="%{x|%Y/%m}<br>營收: %{y:,.1f} 億<extra></extra>"
         ),
         row=1, col=1
@@ -156,7 +156,7 @@ def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢")
     # 年增率折線圖
     yoy_data = df.dropna(subset=["yoy"])
     if len(yoy_data) > 0:
-        colors = ["#2ECC71" if v >= 0 else "#E74C3C" for v in yoy_data["yoy"]]
+        colors = ["#27AE60" if v >= 0 else "#E74C3C" for v in yoy_data["yoy"]]
         fig.add_trace(
             go.Bar(
                 x=yoy_data["date"],
@@ -201,7 +201,7 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
         row = df.iloc[0]
         ohlc_labels = ["開盤", "最高", "最低", "收盤"]
         ohlc_values = [row["open"], row["max"], row["min"], row["close"]]
-        ohlc_colors = ["#F39C12", "#2ECC71", "#E74C3C", "#3498DB"]
+        ohlc_colors = ["#3498DB", "#27AE60", "#E74C3C", "#3498DB"]
         theme = _get_chart_colors()
 
         fig = go.Figure()
@@ -248,13 +248,13 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
             close=df["close"],
             name="K線",
             increasing_line_color="#E74C3C",
-            decreasing_line_color="#2ECC71",
+            decreasing_line_color="#27AE60",
         ),
         row=1, col=1
     )
 
     # 成交量
-    colors = ["#E74C3C" if c >= o else "#2ECC71"
+    colors = ["#E74C3C" if c >= o else "#27AE60"
               for c, o in zip(df["close"], df["open"])]
     fig.add_trace(
         go.Bar(
@@ -312,7 +312,7 @@ def create_funnel_chart(revenue: float, gross_profit: float,
         textinfo="value+percent initial",
         texttemplate="%{x:,.1f} 億<br>%{percentInitial}",
         marker=dict(
-            color=["#3498DB", "#2ECC71", "#F39C12", "#E74C3C"],
+            color=["#3498DB", "#27AE60", "#3498DB", "#E74C3C"],
             line=dict(width=2, color=theme["border"])
         ),
         connector=dict(line=dict(color=theme["divider"], width=2)),
@@ -398,7 +398,7 @@ def create_institutional_chart(df: pd.DataFrame, title: str = "三大法人買�
     df["net_buy"] = df["buy"] - df["sell"]
 
     fig = go.Figure()
-    colors = ["#2ECC71" if v >= 0 else "#E74C3C" for v in df["net_buy"]]
+    colors = ["#27AE60" if v >= 0 else "#E74C3C" for v in df["net_buy"]]
 
     fig.add_trace(go.Bar(
         x=df["date"],

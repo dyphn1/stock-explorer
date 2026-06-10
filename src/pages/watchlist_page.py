@@ -120,8 +120,8 @@ def _render_watchlist_page(client: FinMindClient):
         st.markdown(
             """\
             <div style="background:linear-gradient(135deg,#EBF5FB,#EAF2F8);border-radius:14px;
-                        padding:2rem 1.6rem;border-left:5px solid #2E86C1;text-align:center;margin-top:1rem;">
-                <div style="font-size:1.3rem;font-weight:700;color:#1B4F72;margin-bottom:0.8rem;">
+                        padding:2rem 1.6rem;border-left:5px solid #3498DB;text-align:center;margin-top:1rem;">
+                <div style="font-size:1.3rem;font-weight:700;color:#2C3E50;margin-bottom:0.8rem;">
                     📌 尚未加入任何關注標的
                 </div>
                 <div style="font-size:0.92rem;color:#2C3E50;line-height:1.7;">

@@ -59,8 +59,8 @@ def _render_etf_browser(client: FinMindClient):
     # ── 白話解釋卡片 ──────────────────────────────────────
     st.markdown("""
     <div style="background:linear-gradient(135deg,#EBF5FB,#EAF2F8);border-radius:14px;
-                padding:1.4rem 1.6rem;border-left:5px solid #2E86C1;margin-bottom:1.2rem;">
-        <div style="font-weight:700;font-size:1.1rem;color:#1B4F72;margin-bottom:0.4rem;">
+                padding:1.4rem 1.6rem;border-left:5px solid #3498DB;margin-bottom:1.2rem;">
+        <div style="font-weight:700;font-size:1.1rem;color:#2C3E50;margin-bottom:0.4rem;">
             💡 什麼是 ETF？
         </div>
         <div style="font-size:0.92rem;color:#2C3E50;line-height:1.7;">
@@ -439,7 +439,7 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
             unsafe_allow_html=True,
         )
         cols[5].markdown(
-            f"<span style='color:#8E44AD;font-weight:600;'>{row['dividend_yield']:.2f}%</span>",
+            f"<span style='color:#3498DB;font-weight:600;'>{row['dividend_yield']:.2f}%</span>",
             unsafe_allow_html=True,
         )
         if cols[6].button("查看", key=f"div_{row['stock_id']}", use_container_width=True):

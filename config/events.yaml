@@ -48,3 +48,10 @@ events:
   summary: 重大事件：法說
   title: 【法說會本週登場】鴻海、凌華、樺漢營收數據與邊緣 AI 佈局｜豐雲學堂 2026 年 05 月 - sinotrade.
   type: news_major
+- date: '2026-06-10'
+  detected_at: '2026-06-10T20:45:01'
+  severity: high
+  stock_id: '1101'
+  summary: 重大事件：合併
+  title: 水泥雙雄台泥、亞泥4月合併營收分別月減1.6%及月增6.5% - 聯合新聞網
+  type: news_major

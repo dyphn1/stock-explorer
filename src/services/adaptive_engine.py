@@ -4,6 +4,7 @@
 """
 
 import logging
+import re
 import yaml
 import os
 import tempfile
@@ -35,6 +36,15 @@ SEVERITY_SCORES = {"high": 3, "medium": 2, "low": 1}
 NEWS_MAJOR_KEYWORDS = [
     "收購", "合併", "併購", "出售", "分割", "下市", "破產", "重整",
     "法說", "財報", "大虧", "巨虧", "訴訟", "調查", "裁罰", "造假",
+]
+
+# Exclude patterns for keywords that have common false-positive phrases.
+# Each entry: (keyword, list_of_exclude_substrings).
+# If the keyword is found in a title AND any exclude substring is also
+# found in the title, the match is suppressed.
+NEWS_MAJOR_FALSE_POSITIVES: list[tuple[str, list[str]]] = [
+    # "合併營收" = consolidated revenue (not M&A), same for 合併損益/合併報表 etc.
+    ("合併", ["合併營收", "合併損益", "合併報表", "合併財務", "合併營業"]),
 ]
 
 NEWS_MEDIUM_KEYWORDS = [
@@ -293,6 +303,38 @@ def detect_revenue_event(monthly_revenue: pd.DataFrame) -> Optional[dict]:
         return None
 
 
+def _is_false_positive(title: str, keyword: str) -> bool:
+    """Check if *keyword* matched in *title* is actually a false positive.
+
+    Handles the case where a keyword like "合併" appears as part of a
+    longer phrase like "合併營收" (consolidated revenue) which is NOT a
+    major corporate event.
+    """
+    for fp_keyword, exclude_suffixes in NEWS_MAJOR_FALSE_POSITIVES:
+        if fp_keyword == keyword:
+            for suffix in exclude_suffixes:
+                if suffix in title:
+                    return True
+    return False
+
+
+def _normalize_title(title: str) -> str:
+    """Normalize a news title for dedup comparison.
+
+    - Strip leading/trailing whitespace
+    - Collapse multiple spaces into one
+    - Remove common trailing source suffixes like " - Yahoo股市"
+    - Lowercase (for case-insensitive comparison)
+    """
+    normalized = title.strip()
+    # Remove common trailing source patterns: " - SourceName" ｜ " | SourceName"
+    normalized = re.sub(r"\s*[｜|]\s*.+$", "", normalized)
+    normalized = re.sub(r"\s*-\s*\S+\s*$", "", normalized)
+    # Collapse whitespace
+    normalized = re.sub(r"\s+", " ", normalized)
+    return normalized.lower()
+
+
 def detect_news_event(news: pd.DataFrame) -> list:
     """
     從新聞標題偵測重大事件
@@ -322,8 +364,11 @@ def detect_news_event(news: pd.DataFrame) -> list:
         if not title or title == "nan":
             continue
 
-        # 檢查重大關鍵字
-        matched_major = [kw for kw in NEWS_MAJOR_KEYWORDS if kw in title]
+        # 檢查重大關鍵字（with false-positive filtering）
+        matched_major = [
+            kw for kw in NEWS_MAJOR_KEYWORDS
+            if kw in title and not _is_false_positive(title, kw)
+        ]
         if matched_major:
             events.append({
                 "type": "news_major",
@@ -364,7 +409,10 @@ def detect_price_abnormal(daily_prices: pd.DataFrame, threshold: float = 7.0) ->
     try:
         latest = daily_prices.iloc[-1]
         prev = daily_prices.iloc[-2]
-        change_pct = ((latest[close_col] - prev[close_col]) / prev[close_col]) * 100
+        prev_close = prev[close_col]
+        if prev_close == 0 or pd.isna(prev_close):
+            return None
+        change_pct = ((latest[close_col] - prev_close) / prev_close) * 100
 
         if abs(change_pct) < threshold:
             return None
@@ -540,10 +588,19 @@ def run_auto_detection(stock_id: str, data: dict) -> list:
 
     # 記錄新事件（避免重複記錄相同事件）
     existing_events = get_events_for_stock(stock_id, days=7)
-    existing_titles = {e.get("title", "") for e in existing_events}
+    existing_titles = {_normalize_title(e.get("title", "")) for e in existing_events}
 
     for event in new_events:
-        if event["title"] not in existing_titles:
+        normalized = _normalize_title(event["title"])
+        # Exact match on normalized title, or check if the new title is a
+        # near-duplicate (contained within) of an existing one
+        is_dup = False
+        for existing_norm in existing_titles:
+            if normalized == existing_norm or normalized in existing_norm or existing_norm in normalized:
+                is_dup = True
+                break
+        if not is_dup:
+            existing_titles.add(normalized)
             record_event(
                 stock_id=stock_id,
                 event_type=event["type"],
