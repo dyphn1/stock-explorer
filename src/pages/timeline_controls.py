@@ -7,21 +7,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 
-
-# 時間範圍對應的天數
-_TIMELINE_OPTIONS = {
-    "1Y": 365,
-    "3Y": 365 * 3,
-    "5Y": 365 * 5,
-    "ALL": None,
-}
-
-_TIMELINE_LABELS = {
-    "1Y": "1 年",
-    "3Y": "3 年",
-    "5Y": "5 年",
-    "ALL": "全部",
-}
+from src.pages._router_base import _TIMELINE_OPTIONS, _TIMELINE_LABELS
 
 
 def render_timeline_selector(key_prefix: str = "") -> str:

@@ -127,7 +127,10 @@ def _find_financial_value(df, keywords: list) -> float:
 
 
 def _section_title(title: str):
-    st.markdown(f"### 📊 {title}")
+    if title and title[0] > "\u2e00":  # crude emoji/high-codepoint check
+        st.markdown(f"### {title}")
+    else:
+        st.markdown(f"### 📊 {title}")
 
 
 def _白话_card(label: str, value: str, analogy: str = ""):
@@ -151,11 +154,18 @@ def _info_card(title: str, content: str, icon: str = "💡"):
 
 # ── M3: Timeline helpers ──────────────────────────────────
 
-_TIMELINE_DAYS = {
+_TIMELINE_OPTIONS = {
     "1Y": 365,
     "3Y": 365 * 3,
     "5Y": 365 * 5,
     "ALL": None,
+}
+
+_TIMELINE_LABELS = {
+    "1Y": "1 年",
+    "3Y": "3 年",
+    "5Y": "5 年",
+    "ALL": "全部",
 }
 
 
@@ -181,7 +191,7 @@ def filter_by_timeline(
     if selected == "ALL":
         return df
 
-    days = _TIMELINE_DAYS.get(selected)
+    days = _TIMELINE_OPTIONS.get(selected)
     if days is None:
         return df
 

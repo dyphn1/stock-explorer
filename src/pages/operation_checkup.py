@@ -132,10 +132,6 @@ def _render_operation_checkup(data: dict):
     st.markdown("---")
 
     # ── 4. 營運摘要 ──────────────────────────────────
-    _section_card = """
-    <div style="background:#EBF5FB;border-radius:16px;padding:2rem;margin:1rem 0;">
-    """
-
     summary_parts = []
     if yoy is not None:
         if yoy >= 20:

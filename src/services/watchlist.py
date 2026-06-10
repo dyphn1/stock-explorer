@@ -4,35 +4,17 @@ Stores watchlist in config/watchlist.yaml
 Supports multiple named lists.
 """
 
-import json
-import os
-import tempfile
 from pathlib import Path
 from datetime import datetime
 
 import yaml
 from filelock import FileLock
 
+from src.utils import _atomic_write
+
 # Relative to project root (where streamlit is launched from)
 WATCHLIST_PATH = Path("config/watchlist.yaml")
 WATCHLIST_LOCK = Path("config/watchlist.lock")
-
-
-def _atomic_write(path: Path, content_bytes: bytes):
-    """Write to temp file then atomically replace — prevents partial writes."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fd, tmp_path = tempfile.mkstemp(dir=str(path.parent))
-    try:
-        os.write(fd, content_bytes)
-        os.close(fd)
-        os.replace(tmp_path, str(path))
-    except Exception:
-        os.close(fd)
-        try:
-            os.unlink(tmp_path)
-        except OSError:
-            pass
-        raise
 
 
 def _load_data() -> dict:
@@ -339,6 +321,3 @@ def list_names() -> list:
     return list(data.get("lists", {}).keys())
 
 
-def get_list_entries(list_name: str) -> list:
-    """Get the entries for the specified list (same as load_watchlist)."""
-    return load_watchlist(list_name)

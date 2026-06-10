@@ -7,13 +7,16 @@ import logging
 import re
 import yaml
 import os
-import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
 import pandas as pd
 from filelock import FileLock
+
+from src.utils import _atomic_write
+
+from src.services.watchlist import _is_etf
 
 logger = logging.getLogger(__name__)
 
@@ -138,26 +141,6 @@ def _require_columns(df: pd.DataFrame, *logical_names: str) -> Optional[dict[str
             return None
         mapping[name] = actual
     return mapping
-
-
-# ── Atomic write ──────────────────────────────────────────
-
-def _atomic_write(path: str, content_bytes: bytes):
-    """Write to temp file then atomically replace — prevents partial writes."""
-    parent = os.path.dirname(path)
-    os.makedirs(parent, exist_ok=True)
-    fd, tmp_path = tempfile.mkstemp(dir=parent)
-    try:
-        os.write(fd, content_bytes)
-        os.close(fd)
-        os.replace(tmp_path, path)
-    except Exception:
-        os.close(fd)
-        try:
-            os.unlink(tmp_path)
-        except OSError:
-            pass
-        raise
 
 
 # ── 事件記錄管理 ──────────────────────────────────────────
@@ -443,14 +426,9 @@ def detect_company_type(data: dict) -> str:
     stock_id = data.get("stock_id", "")
     industry = data.get("industry", "")
 
-    # ETF 判斷
-    if "etf" in industry.lower() or industry == "":
-        try:
-            # 嘗試判斷：00 開頭的 4 碼代號多為 ETF
-            if stock_id.startswith("00") and len(stock_id) == 4:
-                return "etf"
-        except Exception:
-            pass
+    # ETF 判斷 — delegate to watchlist._is_etf() (3-tier detection)
+    if _is_etf(stock_id, stock_name, industry):
+        return "etf"
 
     # 集團型判斷：名稱包含「集團」「控股」「股份」或特定關鍵字
     group_keywords = ["集團", "控股", "股份"]
