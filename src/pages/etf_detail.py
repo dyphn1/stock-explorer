@@ -107,7 +107,7 @@ def _render_etf_detail(data: dict, client: FinMindClient):
     # ── 一句話定位 ──────────────────────────────────────────
     one_liner = _get_etf_one_liner(stock_name)
     st.markdown(f"""
-    <div style="font-size:1.3rem;font-weight:500;color:#2C3E50;text-align:center;padding:1.5rem 2rem;background:linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%);border-radius:12px;margin:1rem 0;line-height:1.8;border-left:5px solid #3498DB;">
+    <div style="font-size:1.3rem;font-weight:500;color:#2C3E50;text-align:center;padding:1.5rem 2rem;background:#EBF5FB;border-radius:12px;margin:1rem 0;line-height:1.8;border-left:5px solid #3498DB;">
         💡 {one_liner}
     </div>
     """, unsafe_allow_html=True)

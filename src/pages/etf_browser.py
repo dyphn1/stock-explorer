@@ -58,7 +58,7 @@ def _render_etf_browser(client: FinMindClient):
 
     # ── 白話解釋卡片 ──────────────────────────────────────
     st.markdown("""
-    <div style="background:linear-gradient(135deg,#EBF5FB,#EAF2F8);border-radius:14px;
+    <div style="background:#EBF5FB;border-radius:14px;
                 padding:1.4rem 1.6rem;border-left:5px solid #3498DB;margin-bottom:1.2rem;">
         <div style="font-weight:700;font-size:1.1rem;color:#2C3E50;margin-bottom:0.4rem;">
             💡 什麼是 ETF？

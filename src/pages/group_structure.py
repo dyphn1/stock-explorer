@@ -199,7 +199,7 @@ def _render_group_structure(data: dict):
     _section_title("集團總覽")
 
     st.markdown(f"""
-    <div style="background:linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%);border-radius:16px;padding:2rem;margin:1rem 0;">
+    <div style="background:#EBF5FB;border-radius:16px;padding:2rem;margin:1rem 0;">
         <div style="font-size:1.5rem;font-weight:700;color:#2C3E50;">{parent_name}</div>
         <div style="font-size:1rem;color:#5D6D7E;margin-top:0.5rem;">{group['parent_desc']}</div>
         <div style="font-size:0.9rem;color:#7F8C8D;margin-top:1rem;">

@@ -119,7 +119,7 @@ def _render_watchlist_page(client: FinMindClient):
     if total == 0:
         st.markdown(
             """\
-            <div style="background:linear-gradient(135deg,#EBF5FB,#EAF2F8);border-radius:14px;
+            <div style="background:#EBF5FB;border-radius:14px;
                         padding:2rem 1.6rem;border-left:5px solid #3498DB;text-align:center;margin-top:1rem;">
                 <div style="font-size:1.3rem;font-weight:700;color:#2C3E50;margin-bottom:0.8rem;">
                     📌 尚未加入任何關注標的

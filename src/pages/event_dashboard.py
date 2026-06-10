@@ -139,7 +139,7 @@ def _render_adaptive_banner(data: dict):
 
     if company_type != "default":
         st.markdown(f"""
-        <div style="background:linear-gradient(135deg,#EBF5FB 0%,#D4E6F1 100%);
+        <div style="background:#EBF5FB;
                     border-radius:10px;padding:1rem 1.5rem;margin:0.5rem 0;
                     border-left:4px solid #3498DB;">
             <div style="font-weight:600;color:#2C3E50;">
