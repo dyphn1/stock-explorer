@@ -161,11 +161,4 @@ def _render_operation_checkup(data: dict):
     if not summary_parts:
         summary_parts.append("📊 持續觀察中")
 
-    st.markdown(f"""
-    <div style="background:#EBF5FB;border-radius:16px;padding:2rem;margin:1rem 0;">
-        <div style="font-size:1.2rem;font-weight:700;color:#2C3E50;margin-bottom:1rem;">🩺 營運摘要</div>
-        <div style="font-size:1rem;color:#2C3E50;line-height:2;">
-            {"<br>".join(summary_parts)}
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    _info_card("營運摘要", "\n".join(summary_parts), "🩺")

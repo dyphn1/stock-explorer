@@ -170,26 +170,14 @@ def _render_financial_health(data: dict):
                 debt_ratio = total_liabilities / total_assets * 100 if total_assets > 0 else 0
                 if debt_ratio >= 70:
                     health = "⚠️ 負債比較高，要注意償債能力"
-                    health_color = "#E74C3C"
                 elif debt_ratio >= 50:
                     health = "📊 負債比適中，屬於正常範圍"
-                    health_color = "#3498DB"
                 elif debt_ratio >= 30:
                     health = "✅ 財務結構穩健，負債比偏低"
-                    health_color = "#27AE60"
                 else:
                     health = "✅ 幾乎不借錢，財務非常保守"
-                    health_color = "#27AE60"
 
-                st.markdown(f"""
-                <div style="background:{health_color}15;border-radius:12px;padding:1.5rem;border-left:4px solid {health_color};margin:1rem 0;">
-                    <div style="font-weight:600;color:#2C3E50;">🏥 財務體質評估</div>
-                    <div style="font-size:1rem;color:#2C3E50;margin-top:0.5rem;">{health}</div>
-                    <div style="font-size:0.85rem;color:#7F8C8D;margin-top:0.3rem;">
-                        負債比 {debt_ratio:.1f}%
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+                _info_card("財務體質評估", f"{health}\n\n負債比 {debt_ratio:.1f}%", "🏥")
             else:
                 st.info("資產負債表資料不完整")
         except Exception:

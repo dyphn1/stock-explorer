@@ -17,6 +17,7 @@ from src.services.watchlist import (
     rename_list,
     list_names,
 )
+from src.pages._router_base import _白话_card, _info_card
 
 def _render_watchlist_page(client: FinMindClient):
     """關注列表主頁"""
@@ -81,59 +82,24 @@ def _render_watchlist_page(client: FinMindClient):
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.markdown(
-            f"""\
-            <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;text-align:center;border-left:4px solid #3498DB;">
-                <div style="font-size:2rem;font-weight:700;color:#2C3E50;">{total}</div>
-                <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;">關注總數</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
+        _白话_card("關注總數", str(total), "所有關注標的")
     with col2:
-        st.markdown(
-            f"""\
-            <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;text-align:center;border-left:4px solid #E74C3C;">
-                <div style="font-size:2rem;font-weight:700;color:#2C3E50;">{stocks_count}</div>
-                <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;">個股</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
+        _白话_card("個股", str(stocks_count), "個股數量")
     with col3:
-        st.markdown(
-            f"""\
-            <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;text-align:center;border-left:4px solid #27AE60;">
-                <div style="font-size:2rem;font-weight:700;color:#2C3E50;">{etfs_count}</div>
-                <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;">ETF</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        _白话_card("ETF", str(etfs_count), "ETF 數量")
 
     st.markdown("---\n")
 
     # ── Empty State ────────────────────────────────────────────
     if total == 0:
-        st.markdown(
-            """\
-            <div style="background:#EBF5FB;border-radius:14px;
-                        padding:2rem 1.6rem;border-left:5px solid #3498DB;text-align:center;margin-top:1rem;">
-                <div style="font-size:1.3rem;font-weight:700;color:#2C3E50;margin-bottom:0.8rem;">
-                    📌 尚未加入任何關注標的
-                </div>
-                <div style="font-size:0.92rem;color:#2C3E50;line-height:1.7;">
-                    您可以透過以下方式將股票或 ETF 加入關注：<br><br>
-                    1️⃣ 前往 <b>🔍 分類瀏覽</b> 找到有興趣的股票<br>
-                    2️⃣ 前往 <b>📊 ETF 瀏覽</b> 探索各類 ETF<br>
-                    3️⃣ 在個股名片頁點擊「加入關注」按鈕<br><br>
-                    加入後即可在此查看最新價格與設定警示價格 🔔
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
+        _info_card(
+            "尚未加入任何關注標的",
+            "您可以透過以下方式將股票或 ETF 加入關注：\n\n"
+            "1️⃣ 前往 🔍 分類瀏覽 找到有興趣的股票\n"
+            "2️⃣ 前往 📊 ETF 瀏覽 探索各類 ETF\n"
+            "3️⃣ 在個股名片頁點擊「加入關注」按鈕\n\n"
+            "加入後即可在此查看最新價格與設定警示價格 🔔",
+            "📌",
         )
         # Still show list management buttons for the empty list
         # We'll show rename/delete buttons below
@@ -190,7 +156,6 @@ def _render_watchlist_page(client: FinMindClient):
                     alert_parts.append(f"🔺 高於 {alert_above:,.2f}")
                 if alert_below is not None:
                     alert_parts.append(f"🔻 低於 {alert_below:,.2f}")
-                alert_str = " ｜ ".join(alert_parts) if alert_parts else "未設定"
 
                 # Alert triggered indicator
                 if alert_triggered:
@@ -199,30 +164,17 @@ def _render_watchlist_page(client: FinMindClient):
                     alert_badge = ""
 
                 # Card-style row
-                st.markdown(
-                    f"""\
-                    <div style="background:#F8F9FA;border-radius:10px;padding:1rem 1.2rem;
-                                margin-bottom:0.5rem;border-left:4px solid #3498DB;">
-                        <div style="display:flex;align-items:center;justify-content:space-between;">
-                            <div style="flex:3;">
-                                {badge}
-                                <span style="font-weight:600;color:#2C3E50;font-size:1rem;">{name}</span>
-                                <span style="color:#7F8C8D;font-size:0.8rem;margin-left:0.4rem;">{stock_id}</span>
-                                {alert_badge}
-                            </div>
-                            <div style="flex:1;text-align:right;">
-                                <span style="font-size:1.1rem;font-weight:700;color:#2C3E50;">{price_str}</span>
-                            </div>
-                            <div style="flex:1;text-align:right;">
-                                {change_str}
-                            </div>
-                            <div style="flex:2;text-align:right;">
-                                <span style="font-size:0.8rem;color:#7F8C8D;">{alert_str}</span>
-                            </div>
-                        </div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
+                alert_str = " ｜ ".join(alert_parts) if alert_parts else "未設定"
+                alert_triggered_str = " ⚠️ 已觸發" if alert_triggered else ""
+                if change is not None:
+                    change_sign = "+" if change >= 0 else ""
+                    change_display = f"{change_sign}{change:,.2f}"
+                else:
+                    change_display = "—"
+                _info_card(
+                    f"{name} ({stock_id}){alert_triggered_str}",
+                    f"價格：{price_str}  漲跌：{change_display}\n警示：{alert_str}",
+                    "📈" if etf_type != "etf" else "🏷️",
                 )
 
                 # Action buttons row
@@ -320,15 +272,8 @@ def _render_watchlist_page(client: FinMindClient):
 
     # ── Footer hint ────────────────────────────────────────────
     st.markdown("---\n")
-    st.markdown(
-        """\
-        <div style="background:#FEF9E7;border-radius:10px;padding:0.8rem 1.2rem;
-                    border-left:4px solid #F1C40F;">
-            <div style="font-size:0.85rem;color:#7F8C8D;">
-                💡 <b>提示</b>：在個股名片頁可以設定警示價格，當股價觸及警示價格時，
-                此頁面會顯示 <span style="background:#E74C3C;color:white;padding:0.1rem 0.4rem;border-radius:3px;font-size:0.75rem;">⚠️ 已觸發</span> 標記。
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
+    _info_card(
+        "提示",
+        "在個股名片頁可以設定警示價格，當股價觸及警示價格時，此頁面會顯示 ⚠️ 已觸發 標記。",
+        "💡",
     )

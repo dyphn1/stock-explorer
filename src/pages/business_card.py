@@ -31,6 +31,7 @@ from src.services.watchlist import (
     create_list,
     list_names,
 )
+from src.pages._router_base import _白话_card, _info_card
 
 
 def _render_business_card(data: dict, client):
@@ -134,11 +135,7 @@ def _render_business_card(data: dict, client):
 
     # 一句話定位
     one_liner = get_one_liner(stock_id, stock_name, industry)
-    st.markdown(f"""
-    <div style="font-size:1.3rem;font-weight:500;color:#2C3E50;text-align:center;padding:1.5rem 2rem;background:#EBF5FB;border-radius:12px;margin:1rem 0;line-height:1.8;border-left:5px solid #3498DB;">
-        💡 {one_liner}
-    </div>
-    """, unsafe_allow_html=True)
+    _info_card("一句話定位", one_liner, "💡")
 
     # 💡 你知道嗎？ Company facts tip card
     facts = get_company_facts(stock_id)
@@ -150,12 +147,7 @@ def _render_business_card(data: dict, client):
         idx = st.session_state[fact_key] % len(facts)
         st.session_state[fact_key] = (idx + 1) % len(facts)
         current_fact = facts[idx]
-        st.markdown(f"""
-        <div style="background:#F0F7FF;border-left:4px solid #3498DB;border-radius:12px;padding:1.2rem 2rem;margin:1rem 0;text-align:center;">
-            <div style="font-size:0.85rem;color:#3498DB;font-weight:600;margin-bottom:0.4rem;">💡 你知道嗎？</div>
-            <div style="font-size:1.05rem;color:#2C3E50;line-height:1.7;">{current_fact}</div>
-        </div>
-        """, unsafe_allow_html=True)
+        _info_card("你知道嗎？", current_fact, "💡")
 
     # 關鍵數字三連卡
     st.markdown("### 📊 關鍵數字")
@@ -164,65 +156,28 @@ def _render_business_card(data: dict, client):
     with col1:
         if latest_per_pbr and latest_per_pbr.get("PER"):
             per = latest_per_pbr["PER"]
-            st.markdown(f"""
-            <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;text-align:center;border-left:4px solid #3498DB;">
-                <div style="font-size:1.8rem;font-weight:700;color:#2C3E50;">{per:.1f}</div>
-                <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;">本益比 (PER)</div>
-                <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;font-style:italic;">{get_per_analogy(per)}</div>
-            </div>
-            """, unsafe_allow_html=True)
+            _白话_card("本益比 (PER)", f"{per:.1f}", get_per_analogy(per))
         elif extra_metrics.get("gross_margin"):
             gm = extra_metrics["gross_margin"]
-            st.markdown(f"""
-            <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;text-align:center;border-left:4px solid #3498DB;">
-                <div style="font-size:1.8rem;font-weight:700;color:#2C3E50;">{gm:.1f}%</div>
-                <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;">毛利率</div>
-                <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;font-style:italic;">{get_gross_margin_analogy(gm)}</div>
-            </div>
-            """, unsafe_allow_html=True)
+            _白话_card("毛利率", f"{gm:.1f}%", get_gross_margin_analogy(gm))
 
     with col2:
         if len(monthly_revenue) > 0:
             rev = monthly_revenue.iloc[-1]["revenue"] / 1e8
             yoy = extra_metrics.get("revenue_yoy")
-            yoy_html = f'<div style="font-size:0.85rem;color:#27AE60;margin-top:0.3rem;font-style:italic;">{get_yoy_analogy(yoy)}</div>' if yoy is not None else ""
-            st.markdown(f"""
-            <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;text-align:center;border-left:4px solid #3498DB;">
-                <div style="font-size:1.8rem;font-weight:700;color:#2C3E50;">{rev:,.0f} 億</div>
-                <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;">最近月營收</div>
-                <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;font-style:italic;">{get_revenue_analogy(rev, industry)}</div>
-                {yoy_html}
-            </div>
-            """, unsafe_allow_html=True)
+            yoy_analogy = get_yoy_analogy(yoy) if yoy is not None else ""
+            _白话_card("最近月營收", f"{rev:,.0f} 億", get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""))
         elif extra_metrics.get("roe"):
             roe = extra_metrics["roe"]
-            st.markdown(f"""
-            <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;text-align:center;border-left:4px solid #3498DB;">
-                <div style="font-size:1.8rem;font-weight:700;color:#2C3E50;">{roe:.1f}%</div>
-                <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;">ROE</div>
-                <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;font-style:italic;">{get_roe_analogy(roe)}</div>
-            </div>
-            """, unsafe_allow_html=True)
+            _白话_card("ROE", f"{roe:.1f}%", get_roe_analogy(roe))
 
     with col3:
         if latest_per_pbr and latest_per_pbr.get("dividend_yield"):
             dy = latest_per_pbr["dividend_yield"]
-            st.markdown(f"""
-            <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;text-align:center;border-left:4px solid #3498DB;">
-                <div style="font-size:1.8rem;font-weight:700;color:#2C3E50;">{dy:.2f}%</div>
-                <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;">殖利率</div>
-                <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;font-style:italic;">{get_dividend_analogy(dy)}</div>
-            </div>
-            """, unsafe_allow_html=True)
+            _白话_card("殖利率", f"{dy:.2f}%", get_dividend_analogy(dy))
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
-            st.markdown(f"""
-            <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;text-align:center;border-left:4px solid #3498DB;">
-                <div style="font-size:1.8rem;font-weight:700;color:#2C3E50;">{pbr:.2f}</div>
-                <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;">淨值比 (PBR)</div>
-                <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;font-style:italic;">{get_pbr_analogy(pbr)}</div>
-            </div>
-            """, unsafe_allow_html=True)
+            _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr))
 
     st.markdown("---")
 
@@ -258,68 +213,25 @@ def _render_business_card(data: dict, client):
 
         if _next_ex_date:
             _days_left = (_next_ex_date - _today).days
-            st.markdown(
-                f"""<div style="background:#EBF5FB;border-left:4px solid #3498DB;border-radius:12px;padding:1rem 1.5rem;margin:0.8rem 0;text-align:center;">
-                    <div style="font-size:1.1rem;font-weight:600;color:#2C3E50;">
-                        ⏳ 距離除息日還剩 <span style="font-size:1.5rem;color:#3498DB;">{_days_left}</span> 天
-                    </div>
-                    <div style="font-size:0.85rem;color:#7F8C8D;margin-top:0.3rem;">
-                        預計除息日：{_next_ex_date.strftime('%Y/%m/%d')}（{_next_ex_year}）
-                    </div>
-                </div>""",
-                unsafe_allow_html=True,
+            _info_card(
+                "除息日倒數",
+                f"距離除息日還剩 {_days_left} 天（預計 {_next_ex_date.strftime('%Y/%m/%d')}）",
+                "⏳",
             )
 
         # Plain-language headline (tip card style)
-        st.markdown(
-            f"""<div style="
-                background: #F8F9FA;
-                border-left: 4px solid #3498DB;
-                padding: 12px 16px;
-                border-radius: 4px;
-                margin: 12px 0;
-                font-size: 1.05rem;
-                color: #2C3E50;
-            ">
-                💵 {div_summary['plain_summary']}
-            </div>""",
-            unsafe_allow_html=True,
-        )
+        _info_card("配息摘要", div_summary["plain_summary"], "💵")
 
         # Three mini-cards
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.markdown(
-                f"""<div style="text-align: center; padding: 8px;">
-                    <div style="font-size: 0.85rem; color: #7F8C8D;">最近一季</div>
-                    <div style="font-size: 1.4rem; font-weight: bold; color: #2C3E50;">
-                        {div_summary['latest_cash_div']:.2f} 元
-                    </div>
-                </div>""",
-                unsafe_allow_html=True,
-            )
+            _白话_card("最近一季", f"{div_summary['latest_cash_div']:.2f} 元", "每股現金股利")
         with col2:
-            annual_str = f"{div_summary['estimated_annual']:.2f}" if div_summary['estimated_annual'] else "—"
-            st.markdown(
-                f"""<div style="text-align: center; padding: 8px;">
-                    <div style="font-size: 0.85rem; color: #7F8C8D;">預估全年</div>
-                    <div style="font-size: 1.4rem; font-weight: bold; color: #2C3E50;">
-                        {annual_str} 元
-                    </div>
-                </div>""",
-                unsafe_allow_html=True,
-            )
+            annual_str = f"{div_summary['estimated_annual']:.2f} 元" if div_summary['estimated_annual'] else "—"
+            _白话_card("預估全年", annual_str, "預估全年配息")
         with col3:
-            yield_str = f"{div_summary['estimated_yield']:.2f}" if div_summary['estimated_yield'] else "—"
-            st.markdown(
-                f"""<div style="text-align: center; padding: 8px;">
-                    <div style="font-size: 0.85rem; color: #7F8C8D;">殖利率</div>
-                    <div style="font-size: 1.4rem; font-weight: bold; color: #2C3E50;">
-                        {yield_str}%
-                    </div>
-                </div>""",
-                unsafe_allow_html=True,
-            )
+            yield_str = f"{div_summary['estimated_yield']:.2f}%" if div_summary['estimated_yield'] else "—"
+            _白话_card("殖利率", yield_str, "年化股利／股價")
 
         # Expandable history table
         with st.expander("📋 展開查看歷史除權息紀錄", expanded=False):
@@ -375,20 +287,7 @@ def _render_business_card(data: dict, client):
                 st.markdown(_table_html, unsafe_allow_html=True)
     else:
         # Show a subtle note for stocks without dividends
-        st.markdown(
-            f"""<div style="
-                background: #F8F9FA;
-                border-left: 4px solid #BDC3C7;
-                padding: 10px 14px;
-                border-radius: 4px;
-                margin: 8px 0;
-                font-size: 0.9rem;
-                color: #7F8C8D;
-            ">
-                💡 {div_summary['plain_summary']}
-            </div>""",
-            unsafe_allow_html=True,
-        )
+        _info_card("配息摘要", div_summary["plain_summary"], "💡")
 
     st.markdown("---")
 
@@ -405,15 +304,7 @@ def _render_business_card(data: dict, client):
 
     with col2:
         for item in revenue_items:
-            st.markdown(f"""
-            <div style="background:white;border-radius:10px;padding:1rem 1.2rem;margin:0.5rem 0;border-left:4px solid #3498DB;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-weight:600;color:#2C3E50;">{item['name']}</span>
-                    <span style="font-size:1.1rem;font-weight:700;color:#3498DB;">{item['value']:.0f}%</span>
-                </div>
-                <div style="font-size:0.85rem;color:#5D6D7E;margin-top:0.3rem;">{item['description']}</div>
-            </div>
-            """, unsafe_allow_html=True)
+            _info_card(f"{item['name']} — {item['value']:.0f}%", item['description'], "📊")
 
     st.markdown("---")
 
@@ -440,23 +331,9 @@ def _render_business_card(data: dict, client):
 
             impact_class = {"high": "🔴 重大", "medium": "🟡 注意", "low": "🟢 參考"}[impact]
 
-            st.markdown(f"""
-            <div style="background:#FFF8F0;border-radius:12px;padding:1.5rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
-                <div style="font-weight:600;color:#2C3E50;">
-                    <span style="margin-right:0.5rem;">{impact_class}</span>
-                    📰 {title}
-                </div>
-                <div style="font-size:0.9rem;color:#5D6D7E;line-height:1.6;background:white;border-radius:8px;padding:0.8rem 1rem;margin-top:0.5rem;">{summary}</div>
-                <div style="font-size:0.8rem;color:#95A5A6;margin-top:0.5rem;">📡 {source} ｜ {date_str}</div>
-            </div>
-            """, unsafe_allow_html=True)
+            _info_card(f"{impact_class} {title}\n\n{summary}\n\n📡 {source} ｜ {date_str}", "", "📰")
     else:
         st.info("近期無重大新聞")
 
     # 免責聲明
-    st.markdown("""
-    <div style="background:#FEF9E7;border:1px solid #F9E79F;border-radius:8px;padding:1rem;font-size:0.85rem;color:#7D6608;margin-top:2rem;">
-        ⚠️ 本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。
-        不構成任何投資建議。投資有風險，請自行評估。
-    </div>
-    """, unsafe_allow_html=True)
+    _info_card("免責聲明", "本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。", "⚠️")
