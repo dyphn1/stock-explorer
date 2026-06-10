@@ -1,7 +1,7 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔧 開發輪次（第六輪 — P0 修復衝刺）
-## 本輪主題：🔧 開發 — ISSUE-D05 Financial Health P0 Redesign + Dividend Gauge（2026-06-12）
+## 當前階段：💡 討論輪次（第六輪 — 功能路線圖 + 團隊討論）
+## 本輪主題：💡 討論 — Feature Direction + Roadmap Round 6（2026-06-12）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
