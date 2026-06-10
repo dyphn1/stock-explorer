@@ -1,6 +1,6 @@
 # 🔧 Development Topic Workflow (DEV WORKFLOW)
 
-> When the current theme is "Development" (determined from `docs/state/handoff.md`), the PM follows this workflow.
+> When STATUS.md specifies the topic as "Development," the PM follows this workflow.
 
 ---
 
@@ -15,8 +15,8 @@
 
 ```mermaid
 flowchart TD
-    A([🔧 開發主題開始]) --> B[PM 讀取 docs/state/handoff.md]
-    B --> C[PM 讀取 docs/state/issues.md]
+    A([🔧 開發主題開始]) --> B[PM 讀取 STATUS.md]
+    B --> C[PM 讀取 docs/status/issues.md]
     C --> D{有未解決的 issues?}
     
     D -- 否 --> E[檢查 CURRENT_PROBLEMS.md]
@@ -56,9 +56,9 @@ flowchart TD
 ### Step 1: Read Status
 ```
 Read the following files:
-1. docs/state/handoff.md → Find the 🔧 Development section to restore context
-2. docs/state/issues.md → List all unresolved issues
-3. docs/state/current_problems.md → Understand known problems
+1. STATUS.md → Confirm the current topic is "Development"
+2. docs/status/issues.md → List all unresolved issues
+3. docs/status/current_problems.md → Understand known problems
 ```
 
 ### Step 2: Dispatch Work
@@ -72,8 +72,9 @@ Dispatch based on issue type:
 ### Step 3: Verification and Commit
 ```
 1. Confirm Developer executes L0/L1 verification passed
-2. Confirm docs/state/issues.md has been updated
-3. git commit
+2. Confirm ISSUES.md has been updated
+3. Confirm STATUS.md has been updated
+4. git commit
 ```
 
 ---
@@ -106,7 +107,7 @@ Dispatch based on issue type:
 
 ## Status Update
 
-PM must append to `docs/state/handoff.md` under the 🔧 Development section:
+PM must update in STATUS.md:
 
 ```markdown
 ## Verification Log
@@ -119,7 +120,7 @@ PM must append to `docs/state/handoff.md` under the 🔧 Development section:
 
 ## Step 4: Write Handoff File
 
-After completing the development cycle, PM **MUST** append to `docs/state/handoff.md` under the 🔧 Development section:
+After completing the development cycle, PM **MUST** write `docs/status/handoff_dev.md`:
 
 ```markdown
 # Handoff – Development
@@ -151,7 +152,6 @@ Reference the appropriate `handoff_*.md` for the next theme.
 - Include git commit hash in the Summary for Completed Items
 - If no items were completed, write "No items completed this cycle"
 - This file is the **primary state handoff** for the next cron run
-- Keep the file under 100 lines per section (compress if needed)
 
 ---
 

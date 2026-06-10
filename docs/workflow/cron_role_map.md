@@ -49,12 +49,12 @@ Challenger confirms: goals are aligned → Approved
 ## Each Role's Responsibilities per Cron
 
 ### 1. Cron (Initiator)
-- Reads `docs/state/handoff.md` to determine the theme for this cycle
+- Reads `STATUS.md` to determine the theme for this cycle
 - Wakes up the Main Agent (PM)
-- Appends the current theme to `docs/state/handoff.md`
+- Writes the current theme to `STATUS.md`
 
 ### 2. Main Agent / PM (Coordinator)
-- Reads `docs/state/handoff.md`, `docs/state/issues.md`, `docs/state/pending_review.md`
+- Reads all status files
 - Initiates team discussion (standup)
 - Synthesizes input from all roles
 - Decisions can only be confirmed after **at least 3 rounds of challenges**
@@ -98,19 +98,19 @@ Challenger confirms: goals are aligned → Approved
 
 | File | Purpose | When Updated |
 |------|---------|--------------|
-| `docs/state/handoff.md` | Single source of truth: all cycle records | Every cron run ends |
-| `docs/state/issues.md` | Known bugs and follow-up items | When new issues are found |
-| `docs/state/pending_review.md` | Items waiting for Daniel's decision | When human judgment is needed |
-| `docs/state/current_problems.md` | All known problems, including non-bugs | During review themes |
-| `docs/decisions/competitor_research.md` | Competitor research report | During review themes |
-| `docs/logs/challenge_log.md` | Challenger's challenge records | Whenever a challenge occurs |
+| `STATUS.md` | Overall project state, milestones, last cron results | Every cron run ends |
+| `docs/status/issues.md` | Known bugs and follow-up items | When new issues are found |
+| `docs/status/pending_review.md` | Items waiting for Daniel's decision | When human judgment is needed |
+| `docs/status/current_problems.md` | All known problems, including non-bugs | During review themes |
+| `docs/research/competitor_research.md` | Competitor research report | During review themes |
+| `docs/CHALLENGE_LOG.md` | Challenger's challenge records | Whenever a challenge occurs |
 
 ### Handoff Flow
 
 ```
 Cron initiates theme
     ↓
-PM reads docs/state/handoff.md + issues.md + pending_review.md
+PM reads all status files
     ↓
 PM initiates team discussion (delegate_task to Architect, Developer, Designer, QA)
     ↓
@@ -134,7 +134,7 @@ PM assigns work to Developer
     ↓
 Developer implements → verifies → commits
     ↓
-PM appends to docs/state/handoff.md + updates issues.md
+PM updates all status files (including CHALLENGE_LOG.md)
     ↓
 Done
 ```
