@@ -594,7 +594,8 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 ### [ISSUE-D-002-NEW] business_card.py Severely Truncated — P0 Regression
 - **Source:** Challenger Round 3 direct source code verification (2026-06-11)
 - **Priority:** P0 (CRITICAL — regression from B+ to D+)
-- **Status:** 📋 Todo
+- **Status:** ✅ Done
+- **Fix (2026-06-12):** Restored from 128 lines to 370 lines. All 7 rendering sections restored: one-liner, key metrics cards, dividend story, revenue pie chart, revenue trend, news, disclaimer. Multi-list watchlist UI preserved.
 - **Description:**
   - `business_card.py` is only 128 lines. The `_render_business_card()` function imports 15+ service functions (chart, revenue, analogy, dividend, news) but calls **NONE** of them
   - Page renders ONLY: stock name, price, watchlist buttons
@@ -854,4 +855,107 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 
 ---
 
-*Last updated: 2026-06-11 (competitor research round 4 — new angles: AI-native, TW startups, ELI5)*
+---
+
+## 💡 Discussion Round 5 — 2026-06-12 (Team Discussion + Challenger 3-Round Challenge)
+
+### Process Summary
+- **Architect** (nemotron-120b): Proposed 3 directions — D01 M5 verification (6-8h), DR-03+C16 combined (6-8h), C14 Health Score (10-14h). Excluded C02 (blocked by D02), C06 (wrong order), C07 (needs D01 first).
+- **Design Reviewer** (gemma-31b): Provided DR-03 deep dive with line-level rewrite plan for financial_health.py. Ranked all 9 pages by design urgency. Category Browser and Group Structure are worst (grade D).
+- **Developer** (owl-alpha): ROI ranking — DR-03 (3h) > C02 in-app (2h) > C01 (5h) > D01 (6.5h) > C07 (5.5h) > C14 (8.5h). Key finding: M5 is already wired and events.yaml has 8 real events. business_card.py already has dividend UI.
+- **Challenger** (gpt-oss-120b): **REJECTED** initial PM proposal. Required modifications: (1) D01 must be first (not third), (2) Merge DR-03+C01 financial_health.py into single integrated redesign, (3) Add C16 "Did You Know?" (cheapest "Story first" feature), (4) Add design checkpoint before C14, (5) C14 budget is 8.5h underestimate — realistically 14-20h
+
+### Challenger's 3-Round Summary
+| Round | Focus | Key Objection |
+|-------|-------|---------------|
+| 1 | Feature Direction | ZERO items advance "Story first" (#1 core value); team is in "safe planning" mode |
+| 2 | Priority | D01 should be first not third; DR-03+C01 financial_health.py are mutually exclusive; C14 at 8.5h is underestimated |
+| 3 | Goal Alignment | 5 overlooked risks (scoring validation, DR-03+C01 conflict, design system enforcement, 22-28h is 35-45% underestimated) |
+
+### Final Decision (Post-Challenger Confirmed)
+
+| Order | Item | Hours | Core Value |
+|-------|------|-------|------------|
+| 1 | **D01**: M5 Verification + Integration | 4-6h | #3 Adaptive |
+| 2 | **DR-03+C01**: Financial Health Redesign (integrated) | 4-5h | #2 PPT-style |
+| 3 | **C01**: Ex-dividend countdown + badge (business_card only) | 2-3h | Data completeness |
+| 4 | **C16**: "Did You Know?" Company Facts | 4-6h | #1 Story first |
+| 5 | **C14**: Health Score Badge (reduced scope, 4-6h) OR Full Radar (14-20h) | 4-20h | #2 PPT-style, #5 Benchmark |
+
+**Total: 18-40h** (depending on C14 scope decision)
+
+### C01 Status Correction
+- C01 status corrected: dividend UI was restored in business_card.py P0 fix (370 lines)
+- Remaining C01 work: countdown-to-ex-date, visual badge (2-3h)
+- Financial_health.py dividend wiring merged into DR-03 redesign
+
+### Design Pages Urgency Ranking (Design Reviewer)
+1. Category Browser (D) + Group Structure (D) — worst, need structural redesign
+2. My Watchlist (C-) — high-frequency page
+3. Operational Checkup (C) — #2 in tab order
+4. Peer Comparison (C) — comparison needs clear hierarchy
+5. Financial Health (C+) — DR-03 addresses this
+6. Business Card (C+) — P0 fix restored content
+7. ETF Detail (B+) — minor polish
+8. Event Dashboard (A-) — best, extract patterns
+
+### New Issues from Discussion Round
+
+#### [ISSUE-D04] M5 Event Detection Pipeline Integration
+- **Source:** Discussion Round 5 (Team + Challenger)
+- **Priority:** P0
+- **Status:** 📋 Todo
+- **Description:** M5 event detection engine (adaptive_engine.py, 555 lines) is built but `run_auto_detection()` is never called in the page rendering flow. Must: (1) verify detection accuracy with real FinMind data, (2) integrate call into `_router_base.get_stock_data()`, (3) wire events into event dashboard and page-level event banners.
+- **Estimate:** 4-6h
+- **Related files:** `src/services/adaptive_engine.py`, `src/pages/_router_base.py`, `src/pages/event_dashboard.py`
+
+#### [ISSUE-D05] DR-03 + C01 Financial Health Integrated Redesign
+- **Source:** Discussion Round 5 (Challenger Round 2 — merged DR-03 and C01 financial_health.py)
+- **Priority:** P0
+- **Status:** 📋 Todo
+- **Description:** DR-03 (text reduction) and C01 (dividend wiring) both target financial_health.py — must be a single integrated redesign. Specific text-cut targets: (1) Profit funnel _info_card (lines 70-74, ~220 chars → ~35 chars), (2) Eliminate redundant funnel section card (lines 40-75), (3) Cash flow 3-branch _info_card (lines 235-244, ~62 chars → ~16 chars), (4) Debt health HTML block (lines 188-196, ~140 chars → ~20 chars with gauge bar), (5) Balance sheet 3 cards (lines 164-171, ~103 chars → ~15 chars with stacked bar). Add dividend gauge as one visual replacement.
+- **Estimate:** 4-5h
+- **Related files:** `src/pages/financial_health.py`
+
+#### [ISSUE-D06] C14 Health Score Scope Decision
+- **Source:** Discussion Round 5 (Challenger Round 3)
+- **Priority:** P1
+- **Status:** 📋 Todo (awaiting Daniel's decision on scope)
+- **Description:** Challenger flagged 8.5h estimate as unrealistic for quality implementation. Options: (A) Health Score Badge (simple 0-100 with color coding, 4-6h) or (B) Full 5-axis Radar Chart with plain-language explanations per axis (14-20h). **Requires Daniel's decision.**
+- **Estimate:** 4-6h (Option A) or 14-20h (Option B)
+- **Related files:** `src/services/health_scorer.py` (new), `src/pages/business_card.py`
+
+#### [ISSUE-C16-NEW] "Did You Know?" Company Facts
+- **Source:** Discussion Round 5 (Challenger Round 1 — replaced C14 as story-first feature)
+- **Priority:** P2
+- **Status:** 📋 Todo
+- **Description:** Add contextual company facts to business_card.py. Create `src/data/company_facts.yaml` with {stock_id: [{fact, category}]} structure. Display as rotating tip card. Seed with 20-30 facts for top 10 stocks. "💡 你知道嗎？台積電生產全球 90% 的先進晶片，每一支 iPhone 15 Pro 裡面都有台積電的 3 奈米晶片。"
+- **Estimate:** 4-6h
+- **Related files:** `src/data/company_facts.yaml` (new), `src/pages/business_card.py`
+
+### Status Changes from Discussion Round
+
+| Issue | Previous Status | New Status | Reason |
+|-------|----------------|------------|--------|
+| C01 Ex-Dividend | 📋 Todo (falsely Done) | 📋 Todo (corrected) | business_card.py restored dividend UI; remaining: countdown (2-3h) |
+| DR-03 Financial Health | P1 → P0 | P0 (confirmed) | Integrated with C01 into single redesign |
+| C14 Health Score | P1 | P1 (scope decision needed) | Challenger: 8.5h → 14-20h; needs Daniel decision: badge vs radar |
+
+### Updated Issue Statistics
+
+| Status | Count |
+|--------|-------|
+| 📋 Todo | 32 |
+| ✅ Done | 7 |
+| ❌ Canceled | 2 |
+| 🔄 In progress | 0 |
+
+| Priority | Count |
+|----------|-------|
+| P0 | 6 |
+| P1 | 8 |
+| P2 | 16 |
+
+---
+
+*Last updated: 2026-06-12 (Discussion Round 5 — team discussion + Challenger 3-round challenge)*

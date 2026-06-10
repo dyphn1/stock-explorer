@@ -1,7 +1,7 @@
 # 股識 Stock Explorer - 開發狀態
 
-## 當前階段：🔍 檢討輪次（第四輪 — 全面審查 + Challenger 3 輪挑戰）
-## 本輪主題：🔍 檢討 — 第四輪團隊審查 + Challenger 3 輪挑戰（2026-06-12）
+## 當前階段：🔧 開發輪次（第五輪 — P0 回歸修復）
+## 本輪主題：🔧 開發 — business_card.py P0 回歸修復 + NEW-G08 崩潰修復（2026-06-12）
 
 ## 進度摘要
 | 里程碑 | 狀態 | 完成日期 |
@@ -464,6 +464,16 @@ config/
 - **關鍵警訊**: business_card.py P0 迴歸在 4 輪審查中仍未修復（分析癱瘓）
 - Git commits: 待 commit
 
+### 2026-06-12（🔧 開發 — business_card.py P0 回歸修復）
+- **D-002 修復**：business_card.py 從 128 行恢復到 370 行
+  - 恢復全部 7 個渲染區段：一句話定位、關鍵數字三連卡、配息故事、營收組成圓餅圖、營收趨勢、近期動態、免責聲明
+  - 保留新版多清單 Watchlist UI（彈出式清單選擇器）
+  - 所有 15+ 個 service imports 現在都有被呼叫
+- **NEW-G08 修復**：加入遺失的 `list_names` import（line 30）— 運行時崩潰修復
+- **NEW-G09 修復**：所有未使用 import 已清理（恢復後全部使用）
+- Import 驗證通過（0 錯誤）
+- Git commit: 待 commit
+
 ### Next Steps
 
 #### ✅ All P0/P1/P2 Fixes — COMPLETED (2026-06-09)
@@ -472,35 +482,35 @@ config/
 #### ✅ Design Review — COMPLETED (2026-06-10, updated 2026-06-11, 2026-06-12)
 #### ✅ Cost Estimation — COMPLETED (2026-06-10, updated 2026-06-12)
 #### ✅ Challenger Review — COMPLETED (2026-06-10, 2026-06-11, 2026-06-12)
+#### ✅ business_card.py P0 Regression — FIXED (2026-06-12)
+#### ✅ NEW-G08 / NEW-G09 — FIXED (2026-06-12)
 
-#### 🔴 P0 — IMMEDIATE (Next Dev Cycle, per Challenger's Verdict)
-1. **NEW-G08**: Fix missing `list_names` import in business_card.py (1 min — runtime crash bug)
-2. **NEW-G09**: Remove unused imports from business_card.py (5 min)
-3. **D-002**: Complete business_card.py — restore all imported content sections (8-12h, 4x leverage ratio)
-4. **DR-03**: Financial Health text reduction (1.5h)
+#### 🔴 P0 — IMMEDIATE (Next Dev Cycle)
+1. **DR-03**: Financial Health text reduction (1.5h) — worst-graded core page (C+), highest-ROI fix
 
 #### ⏳ Awaiting Daniel's Input
 1. **Portfolio P&L positioning** — C05 approved or rejected? (See pending_review.md #4)
-2. **Roadmap approval** — Revised roadmap with business_card.py as P0 blocker
+2. **Roadmap approval** — Revised roadmap with business_card.py as P0 blocker — now unblocked
 3. **Seasonal industry list** — Which industries trigger ROE seasonal warning?
+4. **UI verification needed** — business_card.py restored, needs Daniel manual Streamlit verification
 
-#### 🔮 Remaining Tech Debt (16 items, ~17h)
+#### 🔮 Remaining Tech Debt (14 items, ~17h)
 - Immediate batch (~1h): A01, NEW-G01, NEW-G02, NEW-G04, NEW-G05
 - Short-term (~8h): C01 (category browser N+1), C03 (ETF dividend cache), D03 (static data consolidation)
 - Medium-term (~8h): D01 (SQLite backend), D02 (rate limit global state), E02 (integration tests)
 - Post-MVP: TD-11 (type checking), TD-12 (storage abstraction), TD-15 (pagination)
 
-#### 📊 Issue Statistics (Post-Round 4)
+#### 📊 Issue Statistics (Post-Dev-Cycle 2026-06-12)
 | Status | Count |
 |--------|-------|
-| 📋 Todo | 29 |
-| ✅ Done | 8 |
+| 📋 Todo | 27 |
+| ✅ Done | 10 |
 | ❌ Canceled | 2 |
 | 🔄 Deferred | 2 |
 
 | Priority | Count |
 |----------|-------|
-| P0 | 5 |
+| P0 | 3 |
 | P1 | 9 |
 | P2 | 15 |
 
@@ -709,6 +719,73 @@ See `docs/status/pending_review.md` for details:
 See `docs/status/pending_review.md` for items requiring human input.
 
 *Last updated: 2026-06-11 (discussion round 4 — team discussion + challenger 3-round challenge)*
+
+---
+
+## 💡 Discussion Record — 2026-06-12 (Round 5 — Feature Direction + Roadmap)
+
+### Process Summary
+- **Architect** (nemotron-120b): Proposed 3 directions — D01 M5 verification (6-8h), DR-03+C16 combined (6-8h), C14 Health Score (10-14h). Key insight: M5 engine is code-complete but `run_auto_detection()` is never called in the rendering flow — it's dead code until wired in.
+- **Design Reviewer** (gemma-31b): Provided DR-03 deep dive with line-level rewrite plan for financial_health.py (5 text-heavy sections, specific char counts, specific visual replacements). Ranked all 9 pages by design urgency. Category Browser and Group Structure are worst (grade D).
+- **Developer** (owl-alpha): ROI ranking — DR-03 (3h) > C02 in-app (2h) > C01 (5h) > D01 (6.5h) > C07 (5.5h) > C14 (8.5h). Key findings: M5 is already wired and events.yaml has 8 real events. business_card.py already has dividend UI (restored in P0 fix).
+- **Challenger** (gpt-oss-120b): **REJECTED** initial PM proposal. 3 rounds of challenge.
+
+### Challenger Round 1 — Feature Direction
+- ZERO items advance "Story first" (#1 core value) — DR-03 replaces text with visuals but doesn't add narrative
+- Team is in "safe planning" mode — all 4 items are low-risk, well-understood, don't require creative storytelling
+- C16 "Did You Know?" (cheapest "Story first" feature at 4-6h) was excluded without justification
+- C19 (Learning Path) was demoted for "needs pages at B+" but pages won't reach B+ without it
+
+### Challenger Round 2 — Priority
+- D01 should be FIRST not third — it's the foundation for C14, C02, C07
+- DR-03 and C01's financial_health.py component are MUTUALLY EXCLUSIVE (one cuts text, one adds content)
+- C14 at 8.5h is underestimated — realistically 14-20h with explanations and validation
+- 22-28h total is 35-45% underestimated (realistic: 33-47h)
+
+### Challenger Round 3 — Goal Alignment
+- 5 overlooked risks: (1) C14 scoring has no validation plan, (2) D01 may break existing events, (3) DR-03+C01 conflict, (4) no design system enforcement for new features, (5) total estimate is too low
+- C14 should be reduced to a "Health Score Badge" (4-6h) given D+ design grade, or budget properly at 14-20h
+- Design checkpoint required before C14 starts
+
+### Challenger Verdict: **REJECT** — 5 required modifications
+
+### Final Decision (Post-Challenger Confirmed)
+
+| Order | Item | Hours | Core Value |
+|-------|------|-------|------------|
+| 1 | **D01**: M5 Verification + Integration | 4-6h | #3 Adaptive |
+| 2 | **DR-03+C01**: Financial Health Redesign (integrated) | 4-5h | #2 PPT-style |
+| 3 | **C01**: Ex-dividend countdown + badge (business_card only) | 2-3h | Data completeness |
+| 4 | **C16**: "Did You Know?" Company Facts | 4-6h | #1 Story first |
+| 5 | **C14**: Health Score — Badge (4-6h) OR Full Radar (14-20h) | 4-20h | #2 PPT-style, #5 Benchmark |
+
+**Total: 18-40h** (depending on C14 scope decision from Daniel)
+
+### Key Decisions
+1. **D01 is Sprint 1** — M5 verification must come before any feature that depends on event data
+2. **DR-03+C01 merged** — both target financial_health.py, must be single integrated redesign
+3. **C16 added** — cheapest "Story first" feature, makes companies memorable with real-world facts
+4. **C14 scope reduced** — Challenger recommends Badge (4-6h) over Radar (14-20h) given D+ design grade
+5. **Design checkpoint before C14** — hard gate, radar chart mockup must pass design system review
+6. **C01 status corrected** — dividend UI was restored in P0 fix; remaining work is countdown + badge (2-3h)
+
+### Design Pages Urgency Ranking (Design Reviewer)
+1. Category Browser (D) + Group Structure (D) — worst, need structural redesign
+2. My Watchlist (C-) — high-frequency page, persistent friction
+3. Operational Checkup (C) — #2 in tab order, shapes early perception
+4. Peer Comparison (C) — comparison needs clear visual hierarchy
+5. Financial Health (C+) — DR-03+C01 addresses this
+6. Business Card (C+) — P0 fix restored content
+7. ETF Detail (B+) — minor polish only
+8. Event Dashboard (A-) — best page, extract patterns for others
+
+### Pending Daniel's Decision
+See `docs/status/pending_review.md` for items requiring human input:
+- #7: C14 Health Score scope — Badge (4-6h) or Full Radar (14-20h)?
+- #8: Revised roadmap approval (5-sprint plan, 18-40h)
+- #9: Category Browser + Group Structure structural redesign — include now or defer?
+
+*Last updated: 2026-06-12 (discussion round 5 — team discussion + challenger 3-round challenge)*
 
 ---
 
