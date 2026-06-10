@@ -118,4 +118,41 @@ PM must update in STATUS.md:
 
 ---
 
-*Last updated: 2026-06-09*
+## Step 4: Write Handoff File
+
+After completing the development cycle, PM **MUST** write `docs/status/handoff_dev.md`:
+
+```markdown
+# Handoff – Development
+
+## Summary
+- **Topic**: Development (🔧)
+- **Date**: `YYYY-MM-DD`
+- **Participants**: Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
+
+## Completed Items
+| Issue ID | Description | Owner | Result |
+|----------|-------------|-------|--------|
+|          |             |       |        |
+
+## Pending Items
+| Issue ID | Description | Owner | Next Steps |
+|----------|-------------|-------|------------|
+|          |             |       |            |
+
+## Decisions Made
+- Brief bullet points of any architectural, design, or priority decisions.
+
+## Next Cycle Handoff
+Reference the appropriate `handoff_*.md` for the next theme.
+```
+
+**RULES:**
+- Fill in ALL tables — do not leave them empty
+- Include git commit hash in the Summary for Completed Items
+- If no items were completed, write "No items completed this cycle"
+- This file is the **primary state handoff** for the next cron run
+
+---
+
+*Last updated: 2026-06-10*

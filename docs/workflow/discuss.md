@@ -195,4 +195,41 @@ PM must update in STATUS.md:
 
 ---
 
-*Last updated: 2026-06-09*
+## Step 6: Write Handoff File
+
+After completing the discussion cycle, PM **MUST** write `docs/status/handoff_discuss.md`:
+
+```markdown
+# Handoff – Discussion
+
+## Summary
+- **Topic**: Discussion (💡)
+- **Date**: `YYYY-MM-DD`
+- **Participants**: Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
+
+## Idea Proposals
+| Idea ID | Description | Owner | Status |
+|---------|-------------|-------|--------|
+|         |             |       |        |
+
+## Decisions Made
+- Bullet points of agreed‑upon feature directions, priorities, and design considerations.
+
+## Action Items
+| Item ID | Description | Owner | Due Date |
+|---------|-------------|-------|----------|
+|         |             |       |          |
+
+## Next Cycle Handoff
+Reference the appropriate `handoff_*.md` for the next theme.
+```
+
+**RULES:**
+- Fill in ALL tables — do not leave them empty
+- Include git commit hash in the Summary for Completed Items
+- If no items were completed, write "No items completed this cycle"
+- This file is the **primary state handoff** for the next cron run
+
+---
+
+*Last updated: 2026-06-10*

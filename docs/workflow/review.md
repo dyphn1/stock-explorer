@@ -201,7 +201,7 @@ QA Engineer must research the following competitors during the review theme:
 
 ---
 
-## Status Updates
+## Status Update
 
 PM must update in STATUS.md:
 
@@ -217,4 +217,41 @@ PM must update in STATUS.md:
 
 ---
 
-*Last updated: 2026-06-09*
+## Step 6: Write Handoff File
+
+After completing the review cycle, PM **MUST** write `docs/status/handoff_review.md`:
+
+```markdown
+# Handoff – Review
+
+## Summary
+- **Topic**: Review (🔍)
+- **Date**: `YYYY-MM-DD`
+- **Participants**: Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
+
+## Competitor Research Findings
+| Platform | Feature Gap | Suggested Improvement |
+|----------|-------------|-----------------------|
+|          |             |                       |
+
+## Decisions Made
+- Bullet points summarizing architectural refinements, technical debt reductions, and UX improvements identified during the review.
+
+## Action Items
+| Item ID | Description | Owner | Due Date |
+|---------|-------------|-------|----------|
+|         |             |       |          |
+
+## Next Cycle Handoff
+Reference the appropriate `handoff_*.md` for the next theme.
+```
+
+**RULES:**
+- Fill in ALL tables — do not leave them empty
+- Include git commit hash in the Summary for Completed Items
+- If no items were completed, write "No items completed this cycle"
+- This file is the **primary state handoff** for the next cron run
+
+---
+
+*Last updated: 2026-06-10*

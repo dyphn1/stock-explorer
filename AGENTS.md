@@ -48,6 +48,21 @@ All state is stored in project files — NOT in the cron prompt. Each cron run:
 6. Results written back to state files
 7. Cron prompt stays stable — only the project state changes
 
+**Handoff File System:**
+Each cron cycle produces a **handoff file** (`docs/status/handoff_{dev,discuss,review}.md`) that serves as the primary state handoff for the next run. Reading order at cycle start:
+1. `STATUS.md` → determine current theme
+2. `docs/status/handoff_{current_theme}.md` → restore context from previous same-theme run
+3. `docs/status/issues.md` → understand current work items
+4. Theme-specific workflow/status files
+
+Writing order at cycle end:
+1. Update `docs/status/issues.md` (status changes only)
+2. Write `docs/status/handoff_{current_theme}.md` (detailed record)
+3. Update `STATUS.md` (theme indicator + verification log, lightweight)
+4. Git commit
+
+If STATUS.md conflicts with a handoff file, the handoff wins.
+
 **Team Discussion + Challenge Flow:**
 ```
 Cron initiates theme
