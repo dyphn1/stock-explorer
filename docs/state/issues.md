@@ -1137,3 +1137,71 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 ---
 
 *Last updated: 2026-06-12 (Round 5 Competitor Research — 8 new competitors, 5 new feature ideas, 2 critical threats identified)*
+
+---
+
+## 🔍 Review Round 7 — 2026-06-12 (Review Theme)
+
+### Process Summary
+- **Architect**: Verified all 19 previous tech debt items still open. Found 3 new items (NEW-G15 cache split, NEW-G16 ETF detection bug, NEW-G17 dead code). NEW-G16 promoted to P0.
+- **Design Reviewer**: Confirmed DR-01 fully resolved (no #F39C12 or gradients in src/). business_card.py confirmed at 462 lines. 13+ non-palette colors remain. Overall grade: C+.
+- **QA Research**: 3 new feature suggestions (C33 Glossary, C34 Story Timeline, C35 Market Mood). C02 remains most critical P0 gap.
+- **Challenger**: 3-round challenge completed. Review approved with modifications: NEW-G16 promoted to P0, add 40min quick wins to Sprint 1, C34 is highest-priority new feature.
+
+### New Issues from Review Round 7
+
+#### [ISSUE-NEW-G16] ETF Detection Logic Bug in detect_company_type()
+- **Source**: Architect tech debt review (Round 7, 2026-06-12)
+- **Priority**: P0 (promoted from P1 — correctness bug)
+- **Status**: 📋 Todo
+- **Description**: `detect_company_type()` at `src/services/adaptive_engine.py:447` has inverted logic: `if "etf" in industry.lower() or industry == "":` returns "etf" when industry is **empty string**. Any stock with missing/empty `industry_category` is classified as ETF, routing to wrong analysis framework.
+- **Fix**: Change `or industry == ""` to `and industry != ""` — only classify as ETF when industry explicitly contains "etf".
+- **Effort**: 5 minutes
+- **Related files**: `src/services/adaptive_engine.py:447`
+
+#### [ISSUE-C33] Beginner Glossary / Term Tooltip System
+- **Source**: Competitor research (Round 7 — Investopedia 10K+ term glossary)
+- **Priority**: P2
+- **Status**: 📋 Todo
+- **Description**: Design system requires "All professional terms must have plain-language translations" but there's no systematic glossary. Beginners encounter terms like "ROE," "P/B ratio," "institutional investors" with no inline help.
+- **Implementation**: Create `src/data/glossary.yaml` with term → plain-language definition. Add hover tooltips or click-to-expand definitions on all financial terms.
+- **Effort**: 8-12h
+- **Related files**: `src/data/glossary.yaml` (new), all page modules
+
+#### [ISSUE-C34] Company Story Timeline (Narrative Thread)
+- **Source**: Challenger review (Round 1) + competitor gap analysis (Round 7)
+- **Priority**: P2
+- **Status**: 📋 Todo
+- **Description**: The event dashboard is a disconnected list. What's missing is a narrative timeline — "Here's what happened to TSMC in the last 3 years, told as a story." The team has all the data (events, revenue, price) but no narrative thread. This is the #1 thing competitors DON'T have.
+- **Implementation**: Add a "Story" tab to each company page that weaves events, revenue milestones, and price movements into a chronological narrative with plain-language explanations.
+- **Effort**: 16-24h
+- **Related files**: New `src/pages/company_story.py`, `src/services/narrative_engine.py`
+- **Competitive Gap**: 🔴 No competitor has narrative timeline — unique differentiator
+
+#### [ISSUE-C35] Market Mood Index
+- **Source**: Competitor research (Round 7 — WantGoo market temperature, CMoney sentiment, Finimize "Market Mood")
+- **Priority**: P1 (conditional on data validation)
+- **Status**: 📋 Todo
+- **Description**: Beginners want to know "Is the market hot or cold right now?" A simple market mood index on the homepage using institutional buy/sell surplus + trading volume + advance/decline ratio. Must be educational, not trading-oriented.
+- **Data Feasibility**: FinMind has `TaiwanStockInstitutionalInvestorsBuySell` — validated
+- **Effort**: 10-12h
+- **Related files**: New `src/services/market_mood.py`, homepage
+
+### Updated Issue Statistics
+
+| Status | Count |
+|--------|-------|
+| 📋 Todo | 31 |
+| 🔄 In progress | 0 |
+| ✅ Done | 12 |
+| ❌ Canceled | 2 |
+
+| Priority | Count |
+|----------|-------|
+| P0 | 4 |
+| P1 | 10 |
+| P2 | 21 |
+
+---
+
+*Last updated: 2026-06-12 (Review Round 7 — tech debt verification, design compliance, competitor research, 3-round challenger)*

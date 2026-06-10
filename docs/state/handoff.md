@@ -117,36 +117,57 @@ Next dev cycle should tackle: Sprint 1 (DR-04 → DR-05 → C07), then Sprint 2 
 
 ## Summary
 - **Topic**: Review (🔍)
-- **Date**: 2026-06-10
-- **Participants**: Product Manager, Architect, Design Reviewer, QA Engineer, Developer, Challenger
+- **Date**: 2026-06-12 (Round 7)
+- **Participants**: Product Manager, Architect, Design Reviewer, QA Engineer, Challenger
 
 ## Competitor Research Findings
 | Platform | Feature Gap | Suggested Improvement |
 |----------|-------------|-----------------------|
-| Yahoo Finance | Watchlist + notifications | C02 (notifications) |
-| TradingView | Advanced charts | Improve chart interactivity |
-| StatementDog | Plain-language explanations | Already matched |
-| CMoney | AI stock picking | Differentiation — stay "historian" |
-| WantGoo | PPT export | C06 (auto-generate PPT) |
-| Simply Wall St | Visual stock education | Improve visual storytelling |
-| Finviz | Screeners + heatmap | New feature opportunity |
+| All competitors | Notifications (Line/Email/Push) | C02 — P0 gap, M5 engine wasted without it |
+| Simply Wall St | Health score (snowflake) | C14 — explainable 5-axis radar |
+| WantGoo | PPT export | C06 — leverages our PPT-style CSS |
+| Investopedia | Glossary/tooltips | C33 — systematic term explanations |
+| None | Company story timeline | C34 — unique "historian" differentiator |
+| WantGoo/CMoney | Market temperature | C35 — educational market mood |
 
-## Decisions Made
-- **DR-03 (Financial Health) promoted to P0** — worst-graded core page
-- **TD-B01 (Rate Limit Visibility) promoted to P0** — silently swallowing errors
-- **C06 (PPT Generation) moved to Phase 2/3** — fix pages first
-- **C03 (Multi-Watchlist) confirmed Done** — reconciled status
-- **Next Sprint priority**: D01 (4h) + TD-E01 (3h) + DR-03 (1.5h)
+## New Feature Suggestions (Round 7)
+| ID | Feature | Priority | Effort | Alignment |
+|----|---------|----------|--------|-----------|
+| C33 | Beginner Glossary/Tooltips | P2 | 8-12h | "Ten-second test" |
+| C34 | Company Story Timeline | P2 | 16-24h | "Story first" + unique differentiator |
+| C35 | Market Mood Index | P1 conditional | 10-12h | Beginner-friendly market overview |
+
+## Technical Debt Status
+- **19 previous items**: ALL still open (zero resolved in 7 rounds)
+- **3 new items**: NEW-G15 (cache split), NEW-G16 (ETF detection bug — P0), NEW-G17 (dead code)
+- **NEW-G16 promoted to P0**: `detect_company_type()` inverts empty-industry logic — stocks with missing industry classified as ETF
+- **Total debt**: ~19.5 hours across 18 items
+
+## Design Compliance Status
+- **DR-01 fully resolved**: No `#F39C12` or `linear-gradient` in src/ ✅
+- **business_card.py confirmed**: 462 lines, all sections render ✅
+- **Overall grade: C+** (upgraded from C)
+- **Remaining**: 13+ non-palette colors, 12 component issues, 8 PPT violations
+
+## Decisions Made (Round 7)
+1. **NEW-G16 (ETF bug) promoted to P0** — fix in Sprint 1 before C07
+2. **Add 40min tech debt quick wins to Sprint 1** — A01, G01, G02, G10, G11, G12
+3. **C34 (Story Timeline) is highest-priority new feature** — unique differentiator
+4. **C35 (Market Mood) must be educational** — not trading-oriented
+5. **C02 scope clarified** — D02 (background worker) first, then email phase
 
 ## Action Items
 | Item ID | Description | Owner | Due Date |
 |---------|-------------|-------|----------|
-| D01 | M5 Event Detection Verification | QA Engineer | Next dev cycle |
-| D02 | Background Worker Architecture | Architect | Next dev cycle |
-| TD-E01 | Event detection unit tests | Developer | Next dev cycle |
-| DR-03 | Financial Health text reduction | Developer | Next dev cycle |
-| DR-01 | Color system violations (6 files) | Developer | After DR-03 |
+| NEW-G16 | Fix ETF detection bug in `detect_company_type()` | Developer | Sprint 1 (first) |
+| A01+G01+G02+G10+G11+G12 | Tech debt quick wins (40min total) | Developer | Sprint 1 |
+| DR-04 | Component consistency migration | Developer | Sprint 1 |
+| DR-05 | Responsive column layouts | Developer | Sprint 1 |
+| C07 | Custom Event Thresholds | Dev + Architect | Sprint 1 |
+| D02 | Background Worker Architecture | Architect | Sprint 2 |
+| C31 | Daily Financial Challenge | Developer | Sprint 2 |
 
 ## Next Cycle Handoff
 Next theme: 🔧 Development (pm-dev)
 Read this file + issues.md + tech_debt.md to restore context.
+Next dev cycle: Sprint 1 (NEW-G16 fix → quick wins → DR-04 → DR-05 → C07), then Sprint 2 (D02 → C31)
