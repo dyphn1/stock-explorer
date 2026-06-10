@@ -383,4 +383,67 @@ After reviewing the architecture, data flow, and UI implementation across three 
 | Round 5 (2026-06-12) | 17 new | 71 | 2 (D-002-NEW, D-029) |
 | **Total** | **71** | **71** | **2** |
 
-**Overall design grade: C-** (upgraded from D+ — business_card.py restored from F to B, 1 page at A, 1 at B, 5 at C, 3 at D)
+|| Round 5 (2026-06-12) | 17 new | 71 | 2 (D-002-NEW, D-029) |
+|| **Round 6 (2026-06-12)** | **10 new** | **81** | **1 (D-059)** |
+|| **Total** | **81** | **81** | **3** |
+
+**Overall design grade: C** (upgraded from C- — D-059 `_info_card()` border fixed, business_card.py confirmed at B, chart.py cleaner than expected)
+
+---
+
+## Layer 5: Design System Compliance (Round 6 — 2026-06-12)
+
+> Recorded after Round 6 Design Comparison Review. 10 new issues found (D-063 through D-072). 1 previously identified issue confirmed fixed (D-059). Overall grade improved to C.
+
+### Color System Violations — NEW (Round 6)
+
+| # | File | Line | Offending Color | Should Be | Context |
+|---|------|------|-----------------|-----------|---------|
+| D-063 | `business_card.py` | 137 | `linear-gradient(135deg,#EBF5FB,#D4E6F1)` | Flat color — no gradients | One-liner banner |
+| D-064 | `business_card.py` | 153 | `#F0F7FF` | Not in palette | Company facts card background |
+| D-065 | `business_card.py` | 307 | `#BDC3C7` | Not in palette | "No dividend" border |
+| D-066 | `business_card.py` | 340, 375 | `#5D6D7E` | `#7F8C8D` | Revenue item + news summary text |
+| D-067 | `business_card.py` | 376 | `#95A5A6` | Not in palette | News source/date text |
+| D-068 | `business_card.py` | 384 | `#F9E79F`/`#7D6608` | Not in palette | Disclaimer section |
+| D-069 | `chart.py` | 30 | `#555555` | `#7F8C8D` | Axis label text |
+| D-070 | `chart.py` | 31 | `#333333` | `#2C3E50` | Chart titles |
+| D-071 | `chart.py` | 96 | `px.colors.qualitative.Set3` | Explicit palette colors | Pie chart arbitrary colors |
+
+### Component Consistency — NEW (Round 6)
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| D-005 | `_router_base.py` | 129-130 | `_section_title()` auto-prepends 📊 — emoji prefix conflict |
+| D-072 | `_router_base.py` | 147 | `#5D6D7E` in `_info_card()` content — not in palette |
+
+### Fixes Since Round 5 ✅
+
+| # | File | Line | Fix Applied |
+|---|------|------|-------------|
+| D-059 | `_router_base.py` | 145 | `_info_card()` border changed from `#F39C12` to `#3498DB` — **FIXED** |
+
+### Page Grades (Round 6)
+
+| Page | Grade | Change | Notes |
+|------|-------|--------|-------|
+| business_card.py | B | ← No change | 388 lines, all services called, 6 minor color violations |
+| chart.py | B+ | ← No change | Major colors correct, 3 minor violations |
+| _router_base.py | B+ | ← Upgraded from C+ | D-059 border fix confirmed |
+| event_dashboard.py | A- | ← No change | Best-graded page |
+| financial_health.py | C+ | ← No change | DR-03 fix integrated |
+| category_browser.py | D | ← No change | Structural issues remain |
+| group_structure.py | D | ← No change | Structural issues remain |
+
+### Top 5 Recommended Fixes (Round 6)
+
+| Priority | Issue | Effort | Impact |
+|----------|-------|--------|--------|
+| 1 | D-005: Fix `_section_title()` emoji conflict | 15 min | Affects all pages |
+| 2 | D-069+D-070: Fix chart.py theme colors | 15 min | Affects all charts globally |
+| 3 | D-071: Replace Set3 palette in pie charts | 30 min | Affects all pie charts |
+| 4 | D-063: Remove gradient from business_card.py | 10 min | Single element |
+| 5 | D-072: Fix _info_card() content color | 5 min | Affects all info cards |
+
+---
+
+*Last updated: 2026-06-12 by PM after Round 6 design review.*
