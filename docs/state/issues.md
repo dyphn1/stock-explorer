@@ -352,18 +352,20 @@
 #### [ISSUE-DR-04] Component Inconsistency (Inline HTML vs Shared Components)
 - **Source:** Design comparison review (2026-06-10)
 - **Priority:** P2
-- **Status:** 📋 Todo
+- **Status:** ✅ Done
 - **Description:** 4 pages use inline HTML cards instead of shared `_白话_card()` / `_info_card()`: `business_card.py`, `financial_health.py`, `watchlist_page.py`, `operation_checkup.py`.
+- **Fix (2026-06-12):** All 4 pages migrated. 18 inline HTML cards replaced with shared components. Commit `a8b4903`.
 - **Effort:** 2 hours
 - **Related files:** 4 page files
 
 #### [ISSUE-DR-05] Responsive Column Layouts Still Break on Narrow Screens
 - **Source:** Design comparison review (2026-06-10)
 - **Priority:** P2
-- **Status:** 📋 Todo
-- **Description:** 6-column layouts in `etf_browser.py` and `category_browser.py` overflow on narrow screens. P2-2 fixed the navbar but column layouts remain broken.
+- **Status:** ✅ Done
+- **Description:** 6-column layouts in `etf_browser.py` and `category_browser.py` overflow on narrow screens.
+- **Fix (2026-06-12):** Column weight ratios adjusted in etf_browser.py (2 places) and category_browser.py (2 places). CSS media query added in main.py for ≤900px. Commit `f65adcf`.
 - **Effort:** 1.5 hours
-- **Related files:** `src/pages/etf_browser.py`, `src/pages/category_browser.py`
+- **Related files:** `src/pages/etf_browser.py`, `src/pages/category_browser.py`, `src/main.py`
 
 ### Cost Estimation Summary (from Developer)
 

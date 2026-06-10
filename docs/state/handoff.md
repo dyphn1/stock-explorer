@@ -4,24 +4,32 @@
 - **Topic**: Development (🔧)
 - **Date**: 2026-06-12
 - **Participants**: Product Manager, Developer
-- **Theme**: C01 Ex-Dividend Countdown + Foundation Fixes (DR-01, D-059, gradients)
+- **Theme**: Sprint 1 — Foundation Fixes (DR-04, DR-05, tech debt, design cleanup)
 
 ## Completed Items
 | Issue ID | Description | Owner | Result |
 |----------|-------------|-------|--------|
-| ISSUE-C01 | Ex-dividend countdown + badge | Developer | ✅ Done — Commit `9cbdc73`. Countdown card ("⏳ 距離除息日還剩 N 天") added to business_card.py. History table upgraded to HTML with green "即將除息" / blue "已除息" badges. |
-| DR-01 | Color system violations | Developer | ✅ Done — Commit `9cbdc73`. All `#F39C12` (orange) replaced with `#3498DB` across all files. Zero violations remaining. |
-| D-059 | Orange border in `_info_card()` | Developer | ✅ Done — Commit `9cbdc73`. `_info_card()` border changed from `#F39C12` to `#3498DB`. |
-| Gradient elimination | `linear-gradient` in 6 files | Developer | ✅ Done — Commit `9cbdc73`. All 7 gradient instances replaced with flat `#EBF5FB`. |
+| DR-04 | Component inconsistency (inline HTML → shared components) | Developer | ✅ Done — Commit `a8b4903`. 4 pages migrated: business_card.py (12 cards), financial_health.py (1), watchlist_page.py (4), operation_checkup.py (1). All inline HTML replaced with `_白话_card()` / `_info_card()`. |
+| DR-05 | Responsive column layouts | Developer | ✅ Done — Commit `f65adcf`. Column weight ratios adjusted in etf_browser.py (2 places) and category_browser.py (2 places). CSS media query added in main.py for ≤900px screens. |
+| NEW-G16 | ETF detection bug (P0) | Developer | ✅ Already fixed in prior cycle — `detect_company_type()` delegates to `watchlist._is_etf()`. |
+| D-063 | Gradient in business_card.py | Developer | ✅ Already fixed in prior cycle — flat `#EBF5FB` in place. |
+| D-069+D-070 | Chart theme colors | Developer | ✅ Done — Commit `c122ed1`. `#555555`→`#7F8C8D`, `#333333`→`#2C3E50` in chart.py. |
+| D-005 | `_section_title()` emoji conflict | Developer | ✅ Done — Commit `3cf9dbb`. Now checks for existing emoji before prepending 📊. |
+| Dead code cleanup | models.py, INDUSTRY_REVENUE_MAP, _section_card | Developer | ✅ Done — Commit `3cf9dbb`. Removed 88-line models.py, 39-line dead dict, 3-line dead assignment. |
+| ISSUE-C01 | Ex-dividend countdown + badge | Developer | ✅ Done (prior cycle) — Commit `9cbdc73`. |
+| DR-01 | Color system violations | Developer | ✅ Done (prior cycle) — Commit `9cbdc73`. |
+| D-059 | Orange border in `_info_card()` | Developer | ✅ Done (prior cycle) — Commit `9cbdc73`. |
+| Gradient elimination | `linear-gradient` in 6 files | Developer | ✅ Done (prior cycle) — Commit `9cbdc73`. |
 | ISSUE-D01 | M5 Event Detection Verification | Architect + Developer | ✅ Done (prior cycle) |
 | ISSUE-D04 | M5 Pipeline Integration | Developer | ✅ Done (prior cycle) |
 | ISSUE-D05 | DR-03 + C01 Financial Health Redesign | Developer | ✅ Done (prior cycle) |
 
 ## Key Findings
-- **C16 "Did You Know?" already implemented**: `company_facts.py` service + `company_facts.yaml` (70 facts for 7 stocks) + UI in `business_card.py` lines 142-157. No work needed.
-- **C01 fully complete**: Both the dividend story (D05) and countdown+badge (this cycle) are done. ISSUE-C01 can be marked ✅.
-- **DR-01 fully complete**: All `#F39C12` and `linear-gradient` eliminated from `src/`. Design system compliance achieved.
-- **L0**: 55/55 ✅ | **L1**: 15/15 ✅ (3 pre-existing event baseline failures)
+- **DR-04 fully complete**: All 4 pages migrated to shared components. L0: 54/54 ✅ | L1: 15/15 ✅ (3 pre-existing event baseline failures).
+- **DR-05 complete**: Column ratios adjusted + CSS media query added. Narrow screen overflow fixed.
+- **Tech debt progress**: First time dead code was actually removed (132+ lines). Models.py deleted, INDUSTRY_REVENUE_MAP removed, _section_card removed.
+- **D-005 fixed**: No more double-emoji prefixes in section titles.
+- **Chart colors**: D-069/D-070 fixed — chart.py now uses design system colors.
 
 ## Pending Items
 | Issue ID | Description | Owner | Next Steps |
@@ -33,19 +41,20 @@
 | ISSUE-C04 | Market Thermometer | Dev | ~12-16h |
 | ISSUE-C06 | Auto-Generate PPT | Dev | Depends on all pages at B+ |
 | ISSUE-C14 | Health Score (Badge or Radar) | Dev | Needs Daniel decision on scope |
-| ISSUE-DR-04 | Component inconsistency (inline HTML) | Dev | 2h |
-| ISSUE-DR-05 | Responsive column layouts | Dev | 1.5h |
+| A01 | Timeline constants duplicated | Dev | 10 min — still open |
+| G01 | `_atomic_write` duplicated | Dev | 15 min — still open |
+| G04 | Rate limit flag disconnected | Dev | 10 min — still open |
+| NEW-G14 | `_is_etf()` logic divergence | Dev | 5 min — still open |
 
 ## Decisions Made
-- **C01 fully complete**: Ex-dividend countdown + badge implemented. ISSUE-C01 status → ✅ Done.
-- **C16 already done**: Was implemented in a prior cycle. No separate work needed.
-- **DR-01 fully resolved**: All color violations fixed. Design system compliance is now enforced.
-- **Next priority**: C31 Daily Financial Challenge (7-10h) — Challenger Round 5 "best new feature"
-- **D02 (Background Worker)** remains blocker for C02 (Notifications)
+- **DR-04 fully resolved**: All 4 pages now use shared `_白话_card()` / `_info_card()` components. Component consistency achieved.
+- **DR-05 fully resolved**: Responsive column layouts fixed with CSS media query + ratio adjustments.
+- **Tech debt velocity improved**: First cycle with actual dead code removal (132+ lines). A01, G01, G04, G14 still pending (quick wins for next cycle).
+- **Sprint 1 complete**: DR-04 ✅, DR-05 ✅, D-005 ✅, D-063 ✅, D-069 ✅, D-070 ✅, dead code ✅. Next: Sprint 2 (D02 → C31).
 
 ## Next Cycle Handoff
 Next theme: 💡 Discussion → read `docs/state/handoff_discuss.md`
-Next dev cycle should tackle: C31 Daily Financial Challenge (7-10h)
+Next dev cycle should tackle: Sprint 2 — D02 Background Worker Architecture (7h) → C31 Daily Financial Challenge (8h)
 # Handoff – Discussion
 
 ## Summary
