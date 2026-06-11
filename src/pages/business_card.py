@@ -6,7 +6,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
-from src.services.chart import create_revenue_trend_chart, create_revenue_pie_chart
+from src.services.chart import create_revenue_trend_chart, create_revenue_pie_chart, create_valuation_band_chart
 from src.services.revenue_analyzer import analyze_revenue_breakdown
 from src.services.analogy_engine import (
     get_one_liner,
@@ -350,6 +350,73 @@ def _render_business_card(data: dict, client):
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.info("暫無營收資料")
+
+    st.markdown("---")
+
+    # 估值區間圖（歷史 P/E 範圍）
+    st.markdown("### 📊 估值區間")
+    st.markdown("*目前本益比在歷史上的位置*")
+
+    daily_price = data.get("daily_price")
+    if daily_price is not None and len(daily_price) > 0 and len(financial) > 0 and latest_per_pbr and latest_per_pbr.get("PER"):
+        fig = create_valuation_band_chart(
+            stock_id=stock_id,
+            stock_name=stock_name,
+            daily_price_df=daily_price,
+            financial_df=financial,
+            latest_per_pbr=latest_per_pbr,
+        )
+        st.plotly_chart(fig, use_container_width=True)
+
+        # 白話解讀
+        try:
+            # 重新計算歷史 PER 百分位以判斷估值高低
+            price_df = daily_price.copy()
+            price_df["date"] = pd.to_datetime(price_df["date"])
+            price_df = price_df.sort_values("date")
+            cutoff_2y = pd.Timestamp.now() - pd.Timedelta(days=730)
+            price_df = price_df[price_df["date"] >= cutoff_2y]
+
+            fin = financial.copy()
+            fin["date"] = pd.to_datetime(fin["date"])
+            eps_keywords = ["eps", "每股盈餘", "earnings per share"]
+            eps_mask = fin["type"].str.lower().str.contains(
+                "|".join(eps_keywords), case=False, na=False
+            )
+            eps_df = fin[eps_mask].copy()
+            if len(eps_mask) > 0:
+                eps_df = eps_df.groupby("date", as_index=False)["value"].max()
+                eps_df = eps_df.sort_values("date")
+
+                per_values = []
+                for _, row in price_df.iterrows():
+                    available = eps_df[eps_df["date"] <= row["date"]]
+                    if len(available) < 1:
+                        continue
+                    ttm_eps = available.tail(4)["value"].sum()
+                    if ttm_eps <= 0:
+                        continue
+                    per_values.append(row["close"] / ttm_eps)
+
+                if len(per_values) > 0:
+                    import numpy as np
+                    per_arr = np.array(per_values)
+                    p25 = float(np.percentile(per_arr, 25))
+                    p75 = float(np.percentile(per_arr, 75))
+                    current_per = float(latest_per_pbr["PER"])
+
+                    if current_per < p25:
+                        valuation_text = "📉 目前估值偏低，比過去 75% 的時候都便宜"
+                    elif current_per > p75:
+                        valuation_text = "📈 目前估值偏高，比過去 75% 的時候都貴"
+                    else:
+                        valuation_text = "📊 目前估值在中間範圍"
+
+                    _info_card("估值解讀", valuation_text, "💡")
+        except Exception:
+            pass
+    else:
+        st.info("暫無足夠資料計算估值區間")
 
     st.markdown("---")
 

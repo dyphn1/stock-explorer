@@ -488,3 +488,176 @@ def create_price_area_chart(df: pd.DataFrame, title: str = "收盤價走勢") ->
     fig.update_yaxes(showgrid=True, gridcolor=theme["grid"])
 
     return fig
+
+
+def create_valuation_band_chart(
+    stock_id: str,
+    stock_name: str,
+    daily_price_df: pd.DataFrame,
+    financial_df: pd.DataFrame,
+    latest_per_pbr: dict,
+) -> go.Figure:
+    """
+    估值區間圖（歷史 P/E 範圍）
+    顯示當前 PER 在歷史百分位中的位置，含 25th-75th 百分位帶
+    """
+    theme = _get_chart_colors()
+
+    # ── 基本資料驗證 ─────────────────────────────────────────
+    if daily_price_df is None or len(daily_price_df) == 0:
+        fig = go.Figure()
+        fig.add_annotation(text="暫無股價資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
+        return fig
+
+    if financial_df is None or len(financial_df) == 0:
+        fig = go.Figure()
+        fig.add_annotation(text="暫無財務資料，無法計算本益比", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
+        return fig
+
+    if not latest_per_pbr or not latest_per_pbr.get("PER"):
+        fig = go.Figure()
+        fig.add_annotation(text="目前無法取得本益比資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
+        return fig
+
+    try:
+        # ── Step 1: 整理每日股價 ──────────────────────────────
+        price_df = daily_price_df.copy()
+        price_df["date"] = pd.to_datetime(price_df["date"])
+        price_df = price_df.sort_values("date").reset_index(drop=True)
+
+        # 只取最近 2 年
+        cutoff_2y = pd.Timestamp.now() - pd.Timedelta(days=730)
+        price_df = price_df[price_df["date"] >= cutoff_2y]
+
+        if len(price_df) == 0:
+            fig = go.Figure()
+            fig.add_annotation(text="近兩年無股價資料", x=0.5, y=0.5, showarrow=False)
+            _apply_theme_layout(fig)
+            return fig
+
+        # ── Step 2: 從財務資料提取季度 EPS ──────────────────
+        fin = financial_df.copy()
+        fin["date"] = pd.to_datetime(fin["date"])
+
+        # 找出 EPS 列（type 欄位包含 eps 或 每股盈餘）
+        eps_keywords = ["eps", "每股盈餘", "earnings per share"]
+        eps_mask = fin["type"].str.lower().str.contains(
+            "|".join(eps_keywords), case=False, na=False
+        )
+        eps_df = fin[eps_mask].copy()
+
+        if len(eps_df) == 0:
+            fig = go.Figure()
+            fig.add_annotation(text="無法從財務資料中提取 EPS", x=0.5, y=0.5, showarrow=False)
+            _apply_theme_layout(fig)
+            return fig
+
+        # 每個日期取一列（同一日期可能有多列，取 value 最大的）
+        eps_df = eps_df.groupby("date", as_index=False)["value"].max()
+        eps_df = eps_df.sort_values("date").reset_index(drop=True)
+
+        # ── Step 3: 計算 TTM EPS（近四季加總） ─────────────
+        # 對每個股價日期，找到當時可用的最近 4 季 EPS 加總
+        quarterly_dates = eps_df["date"].values
+        quarterly_eps = eps_df["value"].values
+
+        per_dates = []
+        per_values = []
+
+        for _, row in price_df.iterrows():
+            current_date = row["date"]
+            current_price = row["close"]
+
+            # 找到當前日期前（含）的所有季度 EPS
+            available = eps_df[eps_df["date"] <= current_date]
+
+            if len(available) < 1:
+                continue
+
+            # 取最近最多 4 季
+            ttm_eps = available.tail(4)["value"].sum()
+
+            if ttm_eps <= 0:
+                continue
+
+            per = current_price / ttm_eps
+            per_dates.append(current_date)
+            per_values.append(per)
+
+        if len(per_values) == 0:
+            fig = go.Figure()
+            fig.add_annotation(text="EPS 為負或零，無法計算本益比", x=0.5, y=0.5, showarrow=False)
+            _apply_theme_layout(fig)
+            return fig
+
+        per_series = pd.Series(per_values, index=per_dates)
+
+        # ── Step 4: 計算百分位帶 ─────────────────────────────
+        p25 = float(per_series.quantile(0.25))
+        p75 = float(per_series.quantile(0.75))
+        current_per = float(latest_per_pbr["PER"])
+
+        # ── Step 5: 繪圖 ─────────────────────────────────────
+        fig = go.Figure()
+
+        # 百分位帶（25th-75th）
+        fig.add_trace(go.Scatter(
+            x=per_series.index.tolist() + per_series.index.tolist()[::-1],
+            y=[p75] * len(per_series) + [p25] * len(per_series),
+            fill="toself",
+            fillcolor="rgba(52, 152, 219, 0.12)",
+            line=dict(color="rgba(0,0,0,0)"),
+            name="25th-75th 百分位",
+            hoverinfo="skip",
+        ))
+
+        # 歷史 PER 折線
+        fig.add_trace(go.Scatter(
+            x=per_series.index,
+            y=per_series.values,
+            mode="lines",
+            name="歷史 PER",
+            line=dict(color="#3498DB", width=2),
+            hovertemplate="日期: %{x|%Y/%m/%d}<br>PER: %{y:.1f}<extra></extra>",
+        ))
+
+        # 當前 PER 水平線
+        fig.add_hline(
+            y=current_per,
+            line_dash="dash",
+            line_color="#E74C3C",
+            line_width=2,
+            annotation_text=f"目前 PER: {current_per:.1f}",
+            annotation_position="top right",
+            annotation_font=dict(color="#E74C3C", size=13),
+        )
+
+        # 25th / 75th 百分位標註線
+        fig.add_hline(y=p25, line_dash="dot", line_color=theme["divider"], line_width=1)
+        fig.add_hline(y=p75, line_dash="dot", line_color=theme["divider"], line_width=1)
+
+        fig.update_layout(
+            title=dict(
+                text=f"{stock_name} 估值區間（歷史 P/E 範圍）",
+                font=dict(size=18, color=theme["title"]),
+                x=0.5,
+            ),
+            xaxis_title="日期",
+            yaxis_title="本益比 (PER)",
+            height=420,
+            margin=dict(t=60, b=40, l=60, r=20),
+            showlegend=True,
+            legend=dict(orientation="h", yanchor="bottom", y=-0.15),
+        )
+        _apply_theme_layout(fig)
+
+        return fig
+
+    except Exception:
+        fig = go.Figure()
+        fig.add_annotation(text="估值區間圖計算失敗", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
+        return fig
