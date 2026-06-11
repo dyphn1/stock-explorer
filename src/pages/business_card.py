@@ -35,7 +35,7 @@ from src.services.watchlist import (
     create_list,
     list_names,
 )
-from src.pages._router_base import _白话_card, _info_card
+from src.pages._router_base import _白话_card, _info_card, _summary_card
 
 
 def _render_business_card(data: dict, client):
@@ -149,7 +149,7 @@ def _render_business_card(data: dict, client):
     )
     if takeaways:
         takeaways_text = "\n\n".join(f"• {t}" for t in takeaways)
-        _info_card("重點摘要", takeaways_text, "📋")
+        _summary_card("重點摘要", takeaways_text, "📋")
 
     # 一句話定位
     one_liner = get_one_liner(stock_id, stock_name, industry)
@@ -209,8 +209,9 @@ def _render_business_card(data: dict, client):
         for d in deltas:
             emoji = "📈" if d["direction"] == "up" else "📉"
             sign = "+" if d["change_pct"] >= 0 else ""
+            color = "#27AE60" if d["direction"] == "up" else "#E74C3C"
             delta_lines.append(
-                f"{emoji} **{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）\n"
+                f"{emoji} <span style=\"color:{color}\">**{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）</span><br>\\n"
                 f"　→ {d['explanation']}"
             )
         delta_text = "\n\n".join(delta_lines)
