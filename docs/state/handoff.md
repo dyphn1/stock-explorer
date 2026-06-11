@@ -101,9 +101,38 @@
 - docs/status/current_problems.md (15 design issues)
 - docs/status/issues.md (C42-C47 added)
 
-## Next Cycle Handoff
-Next theme: 🔧 Development → Sprint 2 (C37 + C39 + C45 + C43)
-Next dev cycle: Sprint 2
+## Round 10 Discussion Results (2026-06-16)
+**Theme**: Evaluate 4 remaining Round 9 feature proposals (C42, C44, C46, C47)
 
-For full Round 9 review context, see `docs/state/handoff_review.md`
+**Approved Features**:
+| ID | Feature | Sprint | Effort | Core Value |
+|----|---------|--------|--------|------------|
+| C44 | Risk Analysis (MVP) | Sprint 3 | 12-14h | #1 Story + Historian |
+| C42 | Stock Screener / Discovery | Sprint 4 | 19-24h | #4 Knowledge + Discovery |
+| C34 | Company Story Timeline | Sprint 5 | 16-24h | #1 Story (vision P1) |
+| C46 | Moat Analysis | Sprint 5 | 20-28h | #1 Story + #5 Benchmark |
+| C47 P1 | Education Academy (5 lessons) | Sprint 5 | 12h | #4 Knowledge |
+
+**Key Decisions**:
+- Direction A (C42 + C44) confirmed with 7 revisions
+- R1 (financial_metrics extraction) upgraded to P0 — must do before C44
+- C44 must use progressive disclosure (collapsible) on business card page
+- C34 explicitly scheduled for Sprint 5 (true P1 vision feature)
+- C47 split into two phases (5 lessons → full academy)
+- Sprint 3 contingency: if C44-MVP >14h, reduce to 2 risk dimensions
+
+**Challenger verdict**: REVISE → ✅ Confirmed after revisions
+
+**Full discussion docs**:
+- Architect: `docs/design/architect_discussion_r10.md`
+- Designer: `docs/design/designer_discussion_r10.md`
+- Developer: `docs/design/developer_discussion_r10.md`
+- Challenger: `docs/design/challenger_discussion_r10.md`
+- Handoff: `docs/state/handoff_discuss.md`
+
+## Next Cycle Handoff
+Next theme: 🔧 Development → Sprint 3 (R1 + C44-MVP + C41 + C38 + R5)
+Next dev cycle: Sprint 3
+
+For full Round 10 discussion context, see `docs/state/handoff_discuss.md`
 For pending Daniel decisions, see `docs/state/pending_review.md`

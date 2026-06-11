@@ -1,64 +1,65 @@
 # Handoff – Discussion
 
 ## Summary
-- **Topic**: Discussion (💡) — Round 8
-- **Date**: 2026-06-13
+- **Topic**: Discussion (💡) — Round 10
+- **Date**: 2026-06-16
 - **Participants**: PM, Architect, Developer, Designer, Challenger
-- **Theme**: Round 8 Feature Proposals (C36-C41) from Competitor Research
+- **Theme**: Round 9 Feature Proposals (C42, C44, C46, C47) from Competitor Research
 
 ## Idea Proposals
 | ID | Feature | Owner | Status |
 |----|---------|-------|--------|
-| C37 | Key Takeaways Summary Card | Dev | ✅ Approved — Sprint 2 |
-| C39 | What Changed Recently Delta Card | Dev | ✅ Approved — Sprint 3 |
-| C41 | Read Next Recommendations | Dev | ✅ Approved — Sprint 3 |
-| C38 | Compare Stories Side-by-Side (Phase 1) | Dev+Arch | ✅ Approved — Sprint 3 |
-| C36 | Visual Revenue Tree (top 10 stocks) | Dev | ✅ Approved — Sprint 4 |
-| C40 | Beginner/Expert Mode Toggle | — | ❌ CUT — replaced with "beginner by default" design principle |
+| C42 | Stock Screener / Discovery Engine | Dev | ✅ Approved — Sprint 4 |
+| C44 | "What Could Go Wrong" Risk Analysis | Dev | ✅ Approved — Sprint 3 (MVP) |
+| C46 | Moat Analysis | Dev | ✅ Approved — Sprint 5 |
+| C47 | Education Academy Phase 1 | Dev | ✅ Approved — Sprint 5 (5 lessons) |
+| C34 | Company Story Timeline | Dev | ✅ Scheduled — Sprint 5 (with C46) |
 
 ## Decisions Made
-1. **C37 (Key Takeaways) is the #1 priority** — directly addresses the ten-second test. Uses curated templates for top 20 stocks as PRIMARY approach, rule-based as fallback. 6.5h.
-2. **C40 (Mode Toggle) is CUT** — replaced with "beginner mode by default" design principle. Saves 10-15h, avoids Zone A violation, eliminates maintenance burden.
-3. **C38 (Compare Stories) moved to Sprint 3** — Phase 1 structured comparison only (no LLM dependency). Most historian-aligned feature; can't risk Sprint 5 deferral. 8-10h.
-4. **C39 (What Changed) deferred to Sprint 3** — reduces Sprint 2 overload. 5.5h.
-5. **C36 (Revenue Tree) ships with top 10 stocks only** — reduces data curation from 4-5h to 2-3h. ~8-9h total.
-6. **C41 (Read Next) confirmed for Sprint 3** — reuses existing group_structure and peer_comparison data. 6.5h.
-7. **Total new feature scope: ~40h base (with C40 cut, ~30h net new)** — still requires careful sprint capacity management.
-8. **Core values gap identified**: #3 (Adaptive) and #5 (Benchmark) are underrepresented. C39 covers adaptation; C38 covers benchmarking. No additional features needed but awareness is important.
-9. **Business card page overload risk**: C37 (Sprint 2) → C39+C41 (Sprint 3) → C36 (Sprint 4). One new card per sprint to preserve ten-second test.
-10. **Ten-second test verification time**: 2-3h per feature must be added to sprint estimates (not yet included).
+1. **Direction A (C42 + C44) confirmed with revisions** — C42 is the P1 enabler feature (gets users to companies), C44 is the unique historian differentiator (risk analysis with historical evidence).
+2. **C42 is P1 enabler, not P1 vision** — C34 (Company Story Timeline) remains the true P1 vision feature. C42 is an enabler that transforms the product from lookup to discovery.
+3. **Sprint plan confirmed**: Sprint 3 = C41 + C38 + C44-MVP + R5 + R1; Sprint 4 = C36 + C42; Sprint 5 = C34 + C46 OR C47 Phase 1.
+4. **R1 upgraded to P0** — financial_metrics extraction (2.5-4h) must be done before/alongside C44 in Sprint 3. Without it, C44 adds a 5th copy of duplicated financial logic.
+5. **C44 must use progressive disclosure** — collapsible `st.expander()` on the business card page, not a full card section. The page already has 13 sections; adding a 14th without collapse violates the ten-second test.
+6. **C44 tone risk elevated to HIGH** — must use "過去發生" / "歷史證據" / "觀察指標" language, never "可能發生" / "預測" / "建議". Tone review checkpoint required before shipping.
+7. **C34 explicitly scheduled for Sprint 5** — C34 is the purest expression of "historian" positioning (Round 7 identified it as "#1 thing competitors DON'T have"). C38 (Sprint 3) creates prerequisite data structures.
+8. **C47 split into two phases** — Phase 1 (Sprint 5, ~12h) = 5 pilot lessons. Phase 2 (post-plan) = remaining lessons + progress tracking.
+9. **Sprint 3 contingency defined** — if C44-MVP exceeds 14h, reduce to 2 risk dimensions. C41 is next candidate for reduction.
+10. **R3 must be verified before Sprint 4** — C42 depends on batch API pattern. If R3 wasn't done in Sprint 2, do it first in Sprint 4.
 
 ## Challenger's 3-Round Summary
 | Round | Focus | Resolution |
 |-------|-------|------------|
-| 1 | Feature Direction | C40 cut, C37 curated-first approach, C38 most historian-aligned |
-| 2 | Priority | C38 moved to Sprint 3, C39 deferred to Sprint 3, C36 top 10 only |
-| 3 | Goal Alignment | Core values #3/#5 underrepresented; business card page overload risk; no verification time in estimates |
+| 1 | Feature Direction | PARTIALLY RESOLVED — C42 is P1 enabler (not P1 vision). C34 is the true P1 vision feature. Revision: explicitly acknowledge C34 as vision P1. |
+| 2 | Priority | REQUIRES REVISION — Architect/developer sprint plan contradiction resolved (C44 in Sprint 3, C42 in Sprint 4 per handoff). R1 upgraded to P0. |
+| 3 | Goal Alignment | REQUIRES REVISION — C44 must use progressive disclosure. C44 tone risk elevated to HIGH. C34 scheduled for Sprint 5. |
 
 ## Final PM Decision (Challenger ✅ Confirmed after revisions)
 
-| Sprint | Features | Base Hours | With 50% Buffer | Core Value |
-|--------|----------|------------|-----------------|------------|
-| 0 | Design + Quick wins | 2.7h | 4h | #2 PPT |
-| 1 | C28 Spike + LLM | 5h | 7.5h | #1 Story |
-| 2 | D02 + C31 + C37 | 24.5h | 37h | #1 Story, #3 Adaptive |
-| 3 | C28 Full + C38 P1 + C39 + C41 | 43h | 64.5h | #1 Story, #4 Knowledge |
-| 4 | C14 + C36 | 15.5h | 23h | #5 Benchmark, #1 Story |
-| 5 | C29 + Buffer | 10h | 15h | #4 Knowledge |
-| **Total** | | **~101h** | **~151h** | |
+| Sprint | Features | Base Hours | With Buffer | Core Value |
+|--------|----------|------------|-------------|------------|
+| 3 | R1 + C44-MVP + C41 + C38 + R5 | 33-41h | 50h | #1 Story, #3 Adaptive |
+| 4 | C36 + C42 | 27-34h | 41h | #4 Knowledge, #1 Story |
+| 5 | C34 + C46 or C47 P1 | 32-42h | 48h | #1 Story, #4 Knowledge |
 
-**Note**: Sprint 3 is heavily loaded (43h base). C28 is primary; C38/C39/C41 are smaller additions. If capacity is exceeded, C39 or C41 can shift to Sprint 4.
+**Note**: Sprint 3 includes R1 (financial_metrics extraction) as P0. C44 scoped to MVP (3 risk dimensions, top 20 stocks). Sprint 5 priority between C34 and C46/C47 Phase 1 pending Daniel's input.
 
-## New Tech Debt (carried from previous)
-- NEW-G18: events.yaml schema extension (2-3h) — before C28 Sprint 3
-- NEW-G19: User prefs abstraction (2-3h) — before Sprint 3
-- NEW-G20: analogy_engine coverage gap (4-6h) — before C29 Sprint 5
+## New Tech Debt
+- R1 (financial_metrics extraction) — P0, must do before/alongside C44 in Sprint 3
+- R3 (batch API verification) — must verify before C42 in Sprint 4
+- Business card page architecture doc needed — define "above the fold" boundary
 
 ## Pending Daniel's Decision
-- #8: Roadmap approval — 5-sprint plan, ~109h (existing) + ~40h (new) = ~151h buffered
-- #10: C31 content strategy — manual vs template vs LLM
-- #14: Sprint 3 capacity concern — 43h base is very high. Options: extend to Sprint 6, or defer C39/C41 to Sprint 4.
+1. **C34 vs C46 priority for Sprint 5** — C34 is the historian vision feature; C46 is unique differentiator. Which is more important?
+2. **C47 Phase 1 scope** — 5 pilot lessons (12h) or 10 lessons (20h)? Recommendation: 5 lessons to validate quality.
+3. **Business card page "above the fold" definition** — C37 + C43 are the ten-second answer; everything else below fold or in tabs. Approve?
 
 ## Next Cycle Handoff
-Next: 🔧 Development → Sprint 1 (C28 Spike + LLM Architecture)
-Read `docs/state/handoff.md` for Sprint 1 entry point.
+Next: 🔧 Development → Sprint 3 (R1 + C44-MVP + C41 + C38 + R5)
+Read `docs/state/handoff.md` for Sprint 3 entry point.
+
+## Full Discussion Docs
+- Architect: `docs/design/architect_discussion_r10.md`
+- Designer: `docs/design/designer_discussion_r10.md`
+- Developer: `docs/design/developer_discussion_r10.md`
+- Challenger: `docs/design/challenger_discussion_r10.md`
