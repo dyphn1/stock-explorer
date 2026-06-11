@@ -727,3 +727,584 @@
 ---
 
 *This is the ninth competitor research round. Six new feature suggestions identified (C42-C47). The most impactful new gap is C43 (Company Snowflake Health Visualization) — it directly addresses the "ten-second test" design principle and multiple international competitors prove demand. The most strategically important gap is C42 (Stock Screener) — it transforms Stock Explorer from a lookup tool to a discovery platform, which is critical for beginner engagement.*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 11
+
+> **Date**: 2026-06-15
+> **Author**: QA Engineer (Round 11)
+> **Purpose**: Research 7+ new competitors not covered in Rounds 1-9, focusing on global charting/social platforms, AI-powered analysis, structured finance education, and Asian market platforms
+> **Previous Rounds**: Round 1-7: StatementDog, GoodInfo, CMoney, WantGoo, Public.com, Seeking Alpha, Koyfin, Finary, Sharesies, Stocksera, The Motley Fool, NerdWallet, JZ Invest, 鉅亨網, TEJ, Yahoo奇摩股市, Simply Wall St, Stockopedia, Investopedia, Morningstar. Round 8-9: See main report above.
+
+---
+
+## New Competitors Analyzed (Not in Rounds 1-9)
+
+| Competitor | Type | Region | Relevance to Stock Explorer |
+|---|---|---|---|
+| **TradingView** | Charting + Social + Analysis | Global | 🔴 High — social features + community analysis overlap with education mission |
+| **TipRanks** | Analyst Tracking + Smart Score | US/Global | 🟡 Medium — Smart Score validates health score concept; analyst tracking is unique |
+| **Finimize** | Daily Financial News + Education | UK/Global | 🟡 Medium — structured courses + AI Q&A; concept-first approach |
+| **Zerodha Varsity** | Structured Finance Education | India | 🔴 High — gold standard for structured stock education; module-based learning |
+| **StockEdge** | Visual Stock Analysis + Screening | India | 🔴 High — visual-first approach + screening; similar PPT-style philosophy |
+| **Tickeron** | AI-Powered Analysis + Patterns | US/Global | 🟡 Medium — AI pattern recognition + portfolio scoring |
+| **Khan Academy Finance** | Free Financial Education | US/Global | 🟡 Medium — progressive learning model; video-first approach |
+| **Stake** | Commission-Free Trading + Education | AU/Asia | 🟡 Medium — beginner onboarding + company stories; Asian expansion |
+| **Moomoo (富途牛牛)** | Social Investing + AI Education | Asia/Global | 🔴 High — AI education features + social learning feed; Asian market focus |
+
+---
+
+## Detailed Competitor Profiles
+
+### 1. TradingView (tradingview.com)
+
+**Positioning**: "The world's active community of traders and investors" — charting + social + analysis
+**Target Users**: Active traders, technical analysis enthusiasts, retail investors globally (30M+ users)
+
+**Key Features**:
+- **Advanced Charting**: 100+ indicators, 18 chart types, multi-timeframe analysis, Pine Script for custom indicators
+- **Social Network**: Users publish "ideas" (analysis posts) attached to charts; followers, likes, comments — essentially a financial social network
+- **Stock Screener**: Multi-condition screening with 100+ fundamental and technical metrics
+- **Community Analysis**: Users share chart annotations, price predictions, and fundamental analysis as visual "idea" posts
+- **Watchlist with Hover Previews**: Hover over any stock in watchlist → mini chart tooltip appears instantly
+- **Alerts**: Price, indicator, and strategy alerts via web, email, and mobile push
+- **Paper Trading**: Virtual trading with real market data
+- **Global Coverage**: 50+ exchanges including TWSE (Taiwan Stock Exchange)
+
+**UX/Design Approach**:
+- **Icon bar + panel system**: Left icon bar opens context-specific panels (watchlist, alerts, ideas, screener)
+- **Chart-first**: The chart is the primary UI element; everything else is secondary
+- **Dark mode default**: Professional trading aesthetic
+- **Social layer**: Every chart can have community annotations; analysis is collaborative
+- **Hover-rich interactions**: Hover over watchlist items, indicators, data points for instant previews
+
+**Unique Capabilities**:
+- **Social analysis**: Users learn by reading others' chart analysis — a form of peer education
+- **Pine Script community**: Thousands of user-created indicators and strategies shared freely
+- **"Ideas" feed**: A Twitter-like feed of chart analysis from the community
+- **Multi-chart layouts**: Up to 8 charts on one screen for comparison
+
+**Comparison with Stock Explorer**:
+
+| Feature | TradingView | Stock Explorer |
+|---|---|---|
+| Charting | ✅ Industry-leading | ⚠️ Basic Plotly |
+| Social/Community | ✅ Full social network | ❌ Not built |
+| Education | ⚠️ Community-driven | ✅ Structured |
+| Screener | ✅ Advanced | ❌ Not built |
+| Plain-language | ❌ | ✅ Core feature |
+| PPT-style | ❌ | ✅ Unique |
+| TW Market | ✅ Full coverage | ✅ Deep coverage |
+| Alerts | ✅ Multi-channel | ❌ Not built |
+| Paper Trading | ✅ | ❌ (positioning) |
+| Mobile App | ✅ Native | ❌ Streamlit only |
+
+**Key Insight for Stock Explorer**: TradingView's social learning model (users learn by reading others' analysis) is a powerful education mechanism that Stock Explorer completely lacks. The "Ideas" feed is essentially a community-generated stock analysis platform. While Stock Explorer's structured approach is higher quality, the social learning aspect drives engagement and retention. The hover-preview watchlist pattern is a UX innovation Stock Explorer should adopt.
+
+---
+
+### 2. TipRanks (tipranks.com)
+
+**Positioning**: "Transparency in analyst recommendations — track who's right and who's wrong"
+**Target Users**: US-focused retail investors who want to follow expert recommendations; covers TSMC (TSM)
+
+**Key Features**:
+- **Analyst Accuracy Tracking**: Tracks every analyst's recommendation history — "This analyst recommended TSMC 12 times and was right 83% of the time"
+- **Smart Score (0-10)**: AI-generated composite score based on 8 factors: analyst consensus, analyst accuracy, insider trading, news sentiment, hedge fund activity, blogger sentiment, fundamentals, and technicals
+- **Insider Trading Tracker**: Shows what company insiders (CEOs, CFOs, directors) are buying/selling with historical accuracy tracking
+- **"Trending Stocks" Heatmap**: Real-time aggregation of which stocks analysts are upgrading/downgrading today
+- **Blogger/Influencer Rankings**: Ranks financial bloggers by historical pick accuracy
+- **"Price Target" Distribution**: Shows the distribution of analyst price targets (not just the average)
+
+**UX/Design Approach**:
+- **Score-centric**: Smart Score is the most prominent element on every stock page
+- **Data-dense but scannable**: Tables and charts with color-coded indicators
+- **"Who's right" framing**: Every recommendation is tied to a track record
+- **US-focused**: Limited TW stock coverage (only TSM ADR)
+
+**Unique Capabilities**:
+- **Analyst accuracy tracking**: No other platform tracks analyst performance this granularly
+- **Insider trading with accuracy**: Shows not just what insiders bought, but whether they were right historically
+- **Smart Score**: Single composite score that aggregates 8 different signal types
+
+**Comparison with Stock Explorer**:
+
+| Feature | TipRanks | Stock Explorer |
+|---|---|---|
+| Smart Score | ✅ 0-10 composite | ❌ Not built |
+| Analyst Tracking | ✅ Accuracy history | ❌ Not built |
+| Insider Trading | ✅ With accuracy | ❌ Not built |
+| Plain-language | ❌ | ✅ Core feature |
+| Education | ⚠️ Implicit | ✅ Structured |
+| TW Market | ⚠️ TSM only | ✅ Deep coverage |
+| Social | ❌ | ❌ Not built |
+
+**Key Insight for Stock Explorer**: TipRanks' Smart Score validates the demand for a single composite health score (ISSUE-C43). However, TipRanks' approach is black-box ("here's a score") while Stock Explorer's should be explainable ("here's a score and here's why in plain language"). The "analyst accuracy tracking" concept is educationally valuable — teaching beginners that experts disagree and past accuracy matters is important financial literacy, even if Stock Explorer doesn't recommend following experts.
+
+---
+
+### 3. Finimize (finimize.com)
+
+**Positioning**: "Financial news and insights, simplified — in 3 minutes"
+**Target Users**: Busy professionals and beginners who want to stay informed without reading Wall Street Journal; 1M+ subscribers
+
+**Key Features**:
+- **Daily Newsletter**: 3-minute daily financial news digest in plain language
+- **Finimize Academy** (2025): Structured 4-week financial literacy course with daily 3-minute lessons, quizzes, and completion certificate
+- **"Ask Finimize" AI Q&A**: Natural language Q&A about any financial topic — "Why is TSMC's gross margin so high?" → plain-language answer
+- **Personalized Daily Briefing**: AI learns user interests (e.g., "TW stocks," "dividend investing") and tailors content
+- **Finimize Community** (2025): Moderated community with "Beginner-Friendly" sections and no-judgment rules
+- **"Market Mood" Indicator**: Daily sentiment indicator (😰 Fear → 😊 Neutral → 🤩 Greed) aggregating news, social media, and market data
+- **Mobile App**: Push notifications for daily briefings and market events
+
+**UX/Design Approach**:
+- **Bite-sized**: Every piece of content is 3 minutes or less
+- **Plain-language first**: No jargon without explanation
+- **Daily engagement loop**: Users return every day for the briefing
+- **Progressive depth**: Start with 3-minute summary → click for deeper analysis
+- **Clean, modern design**: Minimalist with generous whitespace
+
+**Unique Capabilities**:
+- **Completion certificates**: Finimize Academy gives certificates that beginners can share — credentialing mechanism
+- **Personalized briefing**: AI-driven content personalization based on user interests
+- **"Market Mood" indicator**: Simple, visual sentiment indicator that beginners understand instantly
+- **Community with rules**: "Beginner-friendly" moderation creates safe learning environment
+
+**Comparison with Stock Explorer**:
+
+| Feature | Finimize | Stock Explorer |
+|---|---|---|
+| Daily Engagement | ✅ Newsletter + briefing | ❌ Not built |
+| Structured Courses | ✅ Finimize Academy | ⚠️ Did You Know facts |
+| AI Q&A | ✅ Ask Finimize | ❌ Not built |
+| Market Mood | ✅ Sentiment indicator | ❌ Not built |
+| Community | ✅ Moderated | ❌ Not built |
+| Certificates | ✅ Completion certs | ❌ Not built |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| Company Analysis | ⚠️ News-focused | ✅ Deep analysis |
+| TW Market | ⚠️ Limited | ✅ Deep coverage |
+
+**Key Insight for Stock Explorer**: Finimize's "Market Mood" indicator is a simplified version of ISSUE-C35 (Market Mood Index) — validates the concept. Their structured course with completion certificates (Finimize Academy) is a credentialing mechanism that Stock Explorer's planned C47 (Education Academy) should adopt. The daily engagement loop (newsletter → app → community) is a retention model that Stock Explorer completely lacks.
+
+---
+
+### 4. Zerodha Varsity (zerodha.com/varsity)
+
+**Positioning**: "The most comprehensive free stock market education in India" — structured, module-based finance education
+**Target Users**: Indian retail investors from absolute beginner to intermediate; 5M+ learners
+
+**Key Features**:
+- **Module-Based Learning**: 14 structured modules covering: Stock Markets Basics, Fundamental Analysis, Technical Analysis, Options Trading, Commodities, Currencies, and more
+- **Progressive Difficulty**: Modules are numbered 1-14 and designed to be completed in order; each module builds on the previous
+- **Plain-Language Explanations**: Every concept explained with real Indian stock examples and everyday analogies
+- **Visual Illustrations**: Custom illustrations and diagrams for every concept — similar philosophy to Stock Explorer's PPT-style
+- **Quizzes**: End-of-module quizzes to test understanding
+- **Completely Free**: No paywall, no premium tier — all content is free
+- **Community Forum**: Active discussion forum for each module
+- **Mobile-Responsive**: Works well on mobile devices
+
+**UX/Design Approach**:
+- **Textbook-like structure**: Each module is a chapter with sections, sub-sections, and illustrations
+- **One concept per page**: Similar to Stock Explorer's PPT-style — one key idea per screen
+- **Progressive disclosure**: Start with the basics, advance only when ready
+- **No distractions**: Clean reading experience with minimal UI chrome
+- **Indian stock examples**: All examples use Indian companies (Reliance, TCS, Infosys) — culturally relevant
+
+**Unique Capabilities**:
+- **Most comprehensive free education**: 14 modules covering everything from "What is a stock?" to "Options Greeks"
+- **Cultural localization**: All examples are Indian stocks with Indian market context — this is exactly what Stock Explorer does for TW stocks
+- **Module completion tracking**: Users can track which modules they've completed
+- **Community per module**: Discussion forum attached to each module for Q&A
+
+**Comparison with Stock Explorer**:
+
+| Feature | Zerodha Varsity | Stock Explorer |
+|---|---|---|
+| Structured Modules | ✅ 14 modules | ⚠️ Did You Know facts |
+| Progressive Path | ✅ Numbered 1-14 | ❌ Not built |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| Visual Illustrations | ✅ Custom diagrams | ✅ PPT-style |
+| Quizzes | ✅ End-of-module | ❌ Not built |
+| Free | ✅ Completely free | ✅ Free |
+| Community | ✅ Per-module forum | ❌ Not built |
+| TW Examples | ❌ Indian focus | ✅ TW focus |
+| Company Analysis | ⚠️ Concept-focused | ✅ Company-focused |
+
+**Key Insight for Stock Explorer**: Zerodha Varsity is the closest philosophical match to Stock Explorer in the global market. Both platforms share: plain-language explanations, visual-first design, culturally localized examples, and education-first positioning. The key difference is that Varsity teaches concepts (not companies) while Stock Explorer teaches companies (not concepts). Varsity's module-based structure with progressive difficulty (1→14) is a model for Stock Explorer's planned C47 (Education Academy). The quiz system is a gap — Stock Explorer has no assessment mechanism.
+
+---
+
+### 5. StockEdge (stockedge.com)
+
+**Positioning**: "Visual stock analysis and screening for Indian investors" — data-driven visual discovery
+**Target Users**: Indian retail investors who want to discover and analyze stocks through visuals, not spreadsheets
+
+**Key Features**:
+- **Visual Stock Screening**: Unique "Edge" scoring system with visual heatmaps — stocks scored on multiple dimensions with color-coded grids
+- **"Edge Reports"**: Auto-generated visual analysis reports for each stock with charts, scores, and plain-language summaries
+- **Sector Analysis**: Visual sector breakdowns showing which sectors are hot/cold with plain-language explanations
+- **Scan-Based Discovery**: Users create custom scans (e.g., "ROE > 20% AND debt < 50%") and get visual results
+- **Daily Market Analysis**: Automated daily market analysis with visual summaries — "What happened in the market today" in 30 seconds
+- **Mobile-First**: Native mobile app is the primary platform (not a web app)
+- **Watchlist with Visual Alerts**: Watchlist shows color-coded alerts for stocks hitting scan criteria
+
+**UX/Design Approach**:
+- **Visual-first**: Every metric is a chart, heatmap, or color-coded grid — minimal text
+- **Mobile-native**: Designed for phone screens first, not desktop
+- **Scan-driven discovery**: Users discover stocks through visual scans, not through search
+- **Color-coded everything**: Green/yellow/red for good/neutral/bad across all metrics
+- **Swipe-based navigation**: Mobile app uses swipe gestures for navigation
+
+**Unique Capabilities**:
+- **Edge Scoring**: Proprietary visual scoring system that gives instant stock assessment
+- **Visual heatmaps**: Sector and stock heatmaps that show patterns at a glance
+- **Auto-generated reports**: Every stock gets a visual "Edge Report" — similar to Stock Explorer's business card page but more visual
+- **Scan-based discovery**: Users discover stocks through visual screening, not by knowing what to search for
+
+**Comparison with Stock Explorer**:
+
+| Feature | StockEdge | Stock Explorer |
+|---|---|---|
+| Visual Screening | ✅ Heatmap-based | ❌ Not built |
+| Edge Scoring | ✅ Proprietary | ❌ Not built |
+| Auto Reports | ✅ Visual reports | ✅ Business card |
+| Sector Analysis | ✅ Visual heatmaps | ❌ Not built |
+| Mobile-First | ✅ Native app | ❌ Streamlit only |
+| Plain-language | ⚠️ Some | ✅ Core feature |
+| TW Market | ❌ India focus | ✅ TW focus |
+| Scan Discovery | ✅ Visual scans | ❌ Not built |
+
+**Key Insight for Stock Explorer**: StockEdge's visual screening and heatmap approach is a more visual version of ISSUE-C42 (Stock Screener). The "auto-generated visual report" concept is similar to Stock Explorer's business card page — validates the approach. StockEdge's mobile-first design is a gap for Stock Explorer (Streamlit is desktop-only). The sector heatmap is a feature Stock Explorer doesn't have — a visual "which sectors are hot" overview would complement the company-focused analysis.
+
+---
+
+### 6. Tickeron (tickeron.com)
+
+**Positioning**: "AI-powered stock analysis and pattern recognition" — AI-first investment research
+**Target Users**: US-focused retail investors who want AI-generated stock insights and pattern recognition
+
+**Key Features**:
+- **AI Pattern Recognition**: AI identifies chart patterns (head & shoulders, double bottom, etc.) and generates buy/sell signals
+- **"AI Grade"**: Every stock gets an AI-generated grade (Strong Buy → Strong Sell) based on pattern recognition, fundamentals, and sentiment
+- **Portfolio AI Score**: AI scores the user's entire portfolio for risk, diversification, and expected returns
+- **"Trendy" Stocks**: AI identifies stocks that are trending based on social media, news, and price momentum
+- **AI-Generated Forecasts**: AI generates 1-month and 12-month price forecasts with confidence intervals
+- **Real-Time Alerts**: AI-generated alerts for pattern breakouts, trend changes, and unusual activity
+- **"Copy AI" Portfolios**: Users can copy AI-generated portfolios based on risk profile
+
+**UX/Design Approach**:
+- **AI-first**: Every feature is powered by AI — the AI is the product
+- **Grade-centric**: AI Grade is the most prominent element
+- **Pattern-focused**: Chart patterns are the primary analysis method
+- **US-focused**: Limited international coverage
+
+**Unique Capabilities**:
+- **AI pattern recognition**: Automatically identifies 100+ chart patterns
+- **Portfolio-level AI**: Scores entire portfolios, not just individual stocks
+- **AI forecasts**: Price forecasts with confidence intervals (teaches beginners about uncertainty)
+- **"Copy AI"**: AI-generated portfolios that users can follow
+
+**Comparison with Stock Explorer**:
+
+| Feature | Tickeron | Stock Explorer |
+|---|---|---|
+| AI Pattern Recognition | ✅ 100+ patterns | ❌ Not built |
+| AI Grade | ✅ Strong Buy → Sell | ❌ Not built |
+| Portfolio AI | ✅ Portfolio scoring | ❌ Not built |
+| AI Forecasts | ✅ With confidence | ❌ Not built |
+| Plain-language | ❌ | ✅ Core feature |
+| Education | ❌ Stock-picking tool | ✅ Education-first |
+| TW Market | ⚠️ Limited | ✅ Deep coverage |
+| Alerts | ✅ AI-generated | ❌ Not built |
+
+**Key Insight for Stock Explorer**: Tickeron is the antithesis of Stock Explorer's "historian" positioning — it's a stock-picking tool that uses AI to generate buy/sell signals. However, the "AI Grade" concept validates the demand for simplified stock assessment (similar to C43 Snowflake Health). The "confidence interval" on forecasts is educationally valuable — teaching beginners that predictions are uncertain. Tickeron's portfolio-level analysis is a gap — Stock Explorer has no portfolio features.
+
+---
+
+### 7. Khan Academy Finance (khanacademy.org)
+
+**Positioning**: "Free, world-class education for anyone, anywhere" — the gold standard for free structured learning
+**Target Users**: Students, beginners, self-learners globally; 120M+ registered users
+
+**Key Features**:
+- **Structured Video Lessons**: 5-10 minute video lessons on every finance topic: stocks, bonds, mutual funds, inflation, interest rates, etc.
+- **Progressive Curriculum**: Lessons organized into courses → units → lessons; clear learning path from beginner to advanced
+- **Interactive Exercises**: Practice problems after each lesson with instant feedback and hints
+- **Mastery System**: "Mastery points" and progress tracking — users must demonstrate understanding before advancing
+- **Completely Free**: No ads, no paywall, no premium — funded by donations
+- **Multi-Language**: Content available in 50+ languages (finance section primarily English)
+- **Badges & Gamification**: Achievement badges for completing courses and mastering concepts
+- **Teacher Tools**: Progress dashboards for classroom use
+
+**UX/Design Approach**:
+- **Video-first**: Every concept is taught through a 5-10 minute video with visual illustrations
+- **One concept per lesson**: Similar to Stock Explorer's PPT-style — one key idea per screen
+- **Progressive difficulty**: Must complete Unit 1 before Unit 2; mastery-based progression
+- **Clean, distraction-free**: Minimal UI, focus on content
+- **Instant feedback**: Exercises provide immediate correct/incorrect feedback with explanations
+
+**Unique Capabilities**:
+- **Mastery-based learning**: Users must demonstrate understanding before advancing — ensures retention
+- **Progress tracking**: Detailed progress dashboard showing completed lessons, mastery level, and next steps
+- **Achievement system**: Badges and points for completing courses — gamification drives engagement
+- **Global scale**: 120M+ users, 50+ languages, completely free
+
+**Comparison with Stock Explorer**:
+
+| Feature | Khan Academy | Stock Explorer |
+|---|---|---|
+| Video Lessons | ✅ 5-10 min each | ❌ Not built |
+| Structured Curriculum | ✅ Courses → Units → Lessons | ⚠️ Did You Know facts |
+| Mastery System | ✅ Must demonstrate understanding | ❌ Not built |
+| Interactive Exercises | ✅ With instant feedback | ❌ Not built |
+| Progress Tracking | ✅ Detailed dashboard | ❌ Not built |
+| Badges/Gamification | ✅ Achievement system | ❌ Not built |
+| Free | ✅ Completely free | ✅ Free |
+| Company Analysis | ❌ Concept-focused | ✅ Company-focused |
+| TW Examples | ❌ US focus | ✅ TW focus |
+
+**Key Insight for Stock Explorer**: Khan Academy's mastery-based learning model is the gold standard for structured education. The "must demonstrate understanding before advancing" approach is something Stock Explorer's planned C47 (Education Academy) should adopt. The video-first format is a different modality than Stock Explorer's text+visual approach — video explanations of financial concepts could complement the existing text-based analysis. The progress tracking and achievement system (badges, mastery points) is a retention mechanism that Stock Explorer completely lacks.
+
+---
+
+### 8. Stake (stake.com) — Bonus Competitor
+
+**Positioning**: "Commission-free trading for beginners" — trading platform with heavy education focus
+**Target Users**: Australian and Asian beginner investors; expanding to TW and HK markets
+
+**Key Features**:
+- **"Stake Learn" Education Section**: Structured lessons on investing basics, stock analysis, and market fundamentals
+- **Company Stories**: Short, visual "story cards" for popular stocks — "What does this company do?" in 30 seconds
+- **Beginner Onboarding**: 7-step guided tutorial before first trade — similar to 玉山證券's "Beginner Village"
+- **Visual Portfolio**: Clean, visual portfolio overview with plain-language performance summaries
+- **Fractional Shares**: Buy partial shares — lowers barrier to entry for beginners
+- **Social Features**: See what other Stake users are buying (anonymized)
+- **Market News**: Curated news feed with plain-language summaries
+
+**UX/Design Approach**:
+- **Mobile-first**: Native app is the primary platform
+- **Swipe-based**: Card-stack UX for browsing stocks and lessons
+- **Visual-first**: Every concept is a visual card, not a text page
+- **Beginner-friendly**: No jargon without explanation; tooltips on every financial term
+
+**Unique Capabilities**:
+- **"Company Story" cards**: 30-second visual summaries of what a company does — similar to Stock Explorer's one-liner concept
+- **Fractional shares**: Lowers barrier to entry — beginners can invest $10 in TSMC
+- **Social discovery**: See what others are buying — social proof for beginners
+
+**Comparison with Stock Explorer**:
+
+| Feature | Stake | Stock Explorer |
+|---|---|---|
+| Company Stories | ✅ 30-second cards | ✅ One-liner |
+| Education | ✅ Stake Learn | ✅ Core positioning |
+| Visual-First | ✅ Card-stack | ✅ PPT-style |
+| Mobile-First | ✅ Native app | ❌ Streamlit only |
+| Social | ✅ Anonymized | ❌ Not built |
+| Plain-language | ✅ Tooltips | ✅ Core feature |
+| TW Market | ⚠️ Expanding | ✅ Deep coverage |
+
+**Key Insight for Stock Explorer**: Stake's "Company Story" cards are a more condensed version of Stock Explorer's business card page — validates the approach. Stake's mobile-first, swipe-based UX is a paradigm that Stock Explorer doesn't address. The "Stake Learn" education section is a broker-integrated education model — education serves the trading funnel, similar to 玉山證券.
+
+---
+
+### 9. Moomoo / Futubull (富途牛牛) — Bonus Competitor
+
+**Positioning**: "AI-powered social investing platform" — comprehensive Asian fintech platform
+**Target Users**: Asian retail investors across HK, SG, TW, JP, AU, US; 20M+ users
+
+**Key Features**:
+- **"Moomoo AI Analyst"** (2025): AI generates 3-bullet analysis for any stock: "What's happening," "Key risks," "What to watch"
+- **"AI Course Generator"** (2026): Users type any financial topic → AI generates a 5-minute interactive lesson with examples and quizzes
+- **"Social Learning Feed"**: TikTok-style feed where users share stock analysis, tips, and lessons; "Beginner" filter available
+- **"Paper Trading with AI Feedback"**: Virtual portfolio with AI-generated feedback on trading decisions
+- **"Market Heatmap with Education"**: Interactive sector heatmap with plain-language explanations of why each sector is moving
+- **"Moomoo Academy"**: Structured courses on investing fundamentals with completion certificates
+- **Community Features**: Stock-specific discussion boards, live streams, and expert Q&A sessions
+
+**UX/Design Approach**:
+- **Social-first**: The social feed is the homepage — content discovery through community
+- **AI-powered**: AI generates analysis, courses, and feedback
+- **Mobile-first**: Native app with full feature parity
+- **Visual**: Heatmaps, charts, and visual summaries everywhere
+- **Asian market focus**: Deep coverage of TW, HK, SG, JP markets
+
+**Unique Capabilities**:
+- **AI Course Generator**: On-demand, personalized lessons — users ask what they want to learn
+- **Social Learning Feed**: TikTok-style content discovery — appeals to younger users
+- **Paper Trading + AI Feedback**: Practice with AI coaching — combines practice with education
+- **Market Heatmap with Education**: Visual sector analysis with plain-language explanations
+
+**Comparison with Stock Explorer**:
+
+| Feature | Moomoo | Stock Explorer |
+|---|---|---|
+| AI Analysis | ✅ 3-bullet summaries | ❌ Not built |
+| AI Course Generator | ✅ On-demand lessons | ❌ Not built |
+| Social Feed | ✅ TikTok-style | ❌ Not built |
+| Paper Trading | ✅ With AI feedback | ❌ (positioning) |
+| Market Heatmap | ✅ With education | ❌ Not built |
+| Academy | ✅ Structured courses | ⚠️ Did You Know facts |
+| Mobile App | ✅ Native | ❌ Streamlit only |
+| TW Market | ✅ Deep coverage | ✅ Deep coverage |
+| Plain-language | ⚠️ Some | ✅ Core feature |
+
+**Key Insight for Stock Explorer**: Moomoo is the most comprehensive Asian competitor — it combines AI analysis, social learning, structured education, and market visualization in one platform. The "AI Course Generator" is a more advanced version of Stock Explorer's planned C47 (Education Academy). The "Social Learning Feed" (TikTok-style) is a UX paradigm that appeals to younger users. Moomoo's TW market coverage means it's directly targeting the same users as Stock Explorer.
+
+---
+
+## Updated Competitor Overview Table (Round 11 Additions)
+
+| Dimension | TradingView | TipRanks | Finimize | Zerodha Varsity | StockEdge | Tickeron | Khan Academy | Stake | Moomoo | **Stock Explorer** |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **Positioning** | Charting + Social | Analyst Tracking | News + Education | Structured Education | Visual Screening | AI Analysis | Free Education | Beginner Trading | Social Investing | Beginner Education ("Historian") |
+| **Social/Community** | ✅ Full network | ❌ | ✅ Moderated | ✅ Forum | ❌ | ❌ | ❌ | ✅ Anonymized | ✅ TikTok feed | ❌ MISSING |
+| **Structured Education** | ⚠️ Community | ❌ | ✅ Academy | ✅ 14 modules | ❌ | ❌ | ✅ Mastery system | ✅ Stake Learn | ✅ Academy | ⚠️ Did You Know |
+| **AI Features** | ❌ | ✅ Smart Score | ✅ AI Q&A | ❌ | ❌ | ✅ Full AI | ❌ | ❌ | ✅ AI Analyst | ❌ MISSING |
+| **Visual Analysis** | ✅ Charts | ⚠️ Scores | ⚠️ Minimal | ✅ Illustrations | ✅ Heatmaps | ✅ Patterns | ✅ Video | ✅ Cards | ✅ Heatmap | ✅ PPT-style |
+| **Screening** | ✅ Advanced | ❌ | ❌ | ❌ | ✅ Visual scans | ❌ | ❌ | ❌ | ❌ | ❌ MISSING |
+| **Progress Tracking** | ❌ | ❌ | ✅ Certificates | ✅ Module tracking | ❌ | ❌ | ✅ Mastery system | ❌ | ✅ Certificates | ❌ MISSING |
+| **Mobile App** | ✅ Native | ✅ Native | ✅ Native | ⚠️ Responsive | ✅ Native | ✅ Native | ✅ Native | ✅ Native | ✅ Native | ❌ Streamlit only |
+| **Daily Engagement** | ✅ Ideas feed | ❌ | ✅ Newsletter | ❌ | ✅ Daily analysis | ✅ Alerts | ✅ Streaks | ❌ | ✅ Social feed | ❌ MISSING |
+| **TW Market** | ✅ Full | ⚠️ TSM only | ⚠️ Limited | ❌ India | ❌ India | ⚠️ Limited | ❌ US | ⚠️ Expanding | ✅ Deep | ✅ Deep |
+| **Free** | ⚠️ Freemium | ⚠️ Freemium | ⚠️ Freemium | ✅ Completely | ⚠️ Freemium | ⚠️ Freemium | ✅ Completely | ✅ Free | ⚠️ Freemium | ✅ Free |
+
+---
+
+## New Feature Ideas from Round 11
+
+### [ISSUE-C48] "Company Story Card" — 30-Second Visual Summary
+- **Source**: Competitor research round 11 (Stake "Company Story" cards, StockEdge "Edge Reports", Finimize "Quick Summary")
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #1 "Story first, data second" + "Ten-second test"
+- **Description**: Stake's "Company Story" cards give a 30-second visual summary of what a company does. StockEdge's "Edge Reports" auto-generate visual analysis reports. Stock Explorer's business card page has all the data but no synthesized 30-second summary. A "Company Story Card" at the very top of each company page would show: (1) one-liner description, (2) 3 key metrics with plain-language explanations, (3) one "did you know?" fact, (4) a "Learn More" button that scrolls to the full analysis. This is the "ten-second test" made real — a beginner can understand the company in 10 seconds, then choose to dive deeper.
+- **Implementation**: Add a hero card at the top of the business card page with the one-liner, top 3 metrics (auto-selected based on what's most notable), and a rotating "Did You Know?" fact. Use existing analogy engine for plain-language explanations.
+- **Competitive Gap**: 🟡 No TW competitor has auto-generated 30-second company summaries; Stake/StockEdge prove demand internationally
+
+---
+
+### [ISSUE-C49] "Daily Market Pulse" — Automated Market Summary
+- **Source**: Competitor research round 11 (Finimize "Daily Briefing", StockEdge "Daily Market Analysis", Moomoo "Market Heatmap with Education")
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #3 "Adaptive and self-evolving" + beginner-friendly market overview
+- **Description**: Finimize's daily briefing and StockEdge's daily market analysis both give beginners a 30-second summary of "what happened in the market today." Stock Explorer has no market-level view — it's entirely company-focused. A "Daily Market Pulse" on the homepage would show: (1) TWSE index change with plain-language explanation, (2) top 3 movers (up/down) with reasons, (3) sector heatmap (which sectors were hot/cold), (4) one "today's lesson" connecting market action to a financial concept. This creates a daily engagement loop — users return every day to see the market pulse.
+- **Implementation**: Add a "📈 今日市場" section to the homepage with auto-generated daily summary. Data sources: FinMind market data, TWSE index, sector performance. Plain-language explanations generated from templates.
+- **Competitive Gap**: 🟡 No TW competitor combines daily market summary with educational context; Finimize/StockEdge prove demand internationally
+
+---
+
+### [ISSUE-C50] "Learning Progress Tracker" — Concept Mastery System
+- **Source**: Competitor research round 11 (Khan Academy mastery system, Zerodha Varsity module tracking, Finimize certificates)
+- **Priority**: P2
+- **Effort**: 12-16h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test"
+- **Description**: Khan Academy's mastery system requires users to demonstrate understanding before advancing. Zerodha Varsity tracks module completion. Finimize gives completion certificates. Stock Explorer has no progress tracking — users explore companies but there's no sense of "I've learned X concepts" or "I'm Y% through the learning path." A "Learning Progress Tracker" would show: (1) which financial concepts the user has encountered, (2) quiz scores for each concept, (3) a "learning path" showing recommended next steps, (4) achievement badges for milestones (e.g., "Completed 10 company analyses," "Mastered P/E ratio").
+- **Implementation**: Add a "📊 學習進度" page showing concept mastery (tracked via quiz performance), companies explored, and achievements. Integrate with C47 (Education Academy) when built. Start simple: track which company pages the user has viewed and which quiz questions they've answered correctly.
+- **Competitive Gap**: 🔴 No TW competitor has learning progress tracking; Khan Academy/Zerodha prove demand; transforms Stock Explorer from tool to learning platform
+
+---
+
+### [ISSUE-C51] "Sector Heatmap" — Visual Market Overview
+- **Source**: Competitor research round 11 (StockEdge sector heatmaps, Moomoo "Market Heatmap with Education")
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #5 "Benchmark-oriented analysis" + beginner-friendly market overview
+- **Description**: StockEdge and Moomoo both have sector heatmaps that show which sectors are hot/cold at a glance. Stock Explorer has no sector-level view — users can only see individual companies. A "Sector Heatmap" would show: (1) all TW sectors as a color-coded grid (green = up, red = down), (2) click on a sector → see top companies in that sector, (3) plain-language explanation of why the sector is moving ("Semiconductor sector up 3% — driven by AI chip demand"). This helps beginners understand that companies don't exist in a vacuum — they're part of sectors that move together.
+- **Implementation**: Add a "🔥 產業熱度" page with a Plotly treemap or heatmap of TW sectors. Data source: FinMind sector performance data. Click-through to sector detail page with top companies.
+- **Competitive Gap**: 🟡 No TW competitor has sector heatmap with plain-language explanations; StockEdge/Moomoo prove demand internationally
+
+---
+
+### [ISSUE-C52] "Quiz Mode" — Interactive Knowledge Assessment
+- **Source**: Competitor research round 11 (Khan Academy interactive exercises, Zerodha Varsity module quizzes, Finimize Academy quizzes)
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test"
+- **Description**: Khan Academy's interactive exercises with instant feedback are a core part of the learning experience. Zerodha Varsity has end-of-module quizzes. Finimize Academy has quizzes with completion certificates. Stock Explorer has no assessment mechanism — users read but never test their understanding. A "Quiz Mode" would: (1) present 5-10 questions after each company analysis page, (2) use real data from the company just viewed, (3) provide instant feedback with plain-language explanations, (4) track scores for the Learning Progress Tracker (C50). Example: "TSMC's gross margin is 55%. What does this mean? A) It keeps 55 cents of every dollar B) It spends 55% on R&D C) It pays 55% in dividends" → "Correct! Gross margin means how much of each dollar the company keeps after making the product."
+- **Implementation**: Add a "🧪 小測驗" button to each company page that launches a 5-question quiz. Questions generated from templates with real data. Scores tracked in session state (persistent storage in C50).
+- **Competitive Gap**: 🔴 No TW competitor has interactive quizzes with real stock data; Khan Academy/Zerodha prove demand; transforms passive reading into active learning
+
+---
+
+### [ISSUE-C53] "Social Sharing" — Shareable Analysis Cards
+- **Source**: Competitor research round 11 (TradingView "Ideas" sharing, Plotch.ai story card sharing, Stake social features)
+- **Priority**: P2
+- **Effort**: 6-10h
+- **Alignment**: Core value #1 "Story first, data second" + viral distribution
+- **Description**: TradingView users share chart "Ideas" to Twitter/social media. Plotch.ai users share story cards. Stock Explorer has zero social sharing — there's no way to share a company analysis with friends. A "Social Sharing" feature would: (1) generate a shareable image card summarizing a company analysis (one-liner + 3 key metrics + "Did You Know?" fact), (2) provide "Share to LINE / Facebook / Copy Link" buttons, (3) the shared card links back to Stock Explorer for the full analysis. This is a viral distribution mechanism — every shared card is a new user acquisition event.
+- **Implementation**: Use Python's Pillow library to generate shareable image cards from company data. Add share buttons to each company page. Generate a unique URL for each company page (already exists in Streamlit).
+- **Competitive Gap**: 🟡 No TW competitor has shareable analysis cards; TradingView/Plotch.ai prove demand; zero-cost user acquisition
+
+---
+
+### [ISSUE-C54] "Video Explanation" — Audio/Visual Learning Modality
+- **Source**: Competitor research round 11 (Khan Academy video-first approach, Sensical audio-first format)
+- **Priority**: P2 (lower priority — high effort)
+- **Effort**: 20-30h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + accessibility
+- **Description**: Khan Academy's video-first approach is the gold standard for structured education. Sensical's audio-first format enables learning during commute. Stock Explorer is entirely text+visual — no audio or video content. Adding video explanations (even short 30-second clips) for key concepts would: (1) provide an alternative learning modality for auditory learners, (2) enable "listen while commuting" use case, (3) make complex concepts more accessible through visual animation. This is a long-term investment in content quality.
+- **Implementation**: Start with text-to-speech audio explanations for the one-liner and key metrics on each company page. Add a "🔊 聽聽看" button that reads the company summary aloud. Longer-term: create short animated videos for common financial concepts (What is P/E? What is ROE?).
+- **Competitive Gap**: 🟡 No TW competitor has audio/video explanations of TW stocks; Khan Academy/Sensical prove demand; different learning modality
+
+---
+
+## Key Insights from Round 11
+
+### 1. **Social Learning is the Dominant Engagement Model**
+TradingView (30M+ users), Moomoo (20M+ users), and Finimize (1M+ subscribers) all use social/community features as their primary engagement mechanism. Stock Explorer is entirely solo-learning — no community, no social sharing, no peer interaction. This is the #1 UX gap. Even lightweight social features (sharing, community discussion) would dramatically improve engagement and retention.
+
+### 2. **Structured Education is Becoming Table Stakes**
+Zerodha Varsity (14 modules), Khan Academy (mastery system), Finimize Academy (4-week course), and Moomoo Academy all offer structured learning paths. Stock Explorer's "Did You Know?" facts are a good start but not a structured curriculum. C47 (Education Academy) and C50 (Learning Progress Tracker) should be elevated to P1 — structured education is no longer a nice-to-have.
+
+### 3. **Daily Engagement Loops Drive Retention**
+Finimize (daily newsletter), TradingView (daily Ideas feed), StockEdge (daily market analysis), and Moomoo (social feed) all create daily reasons to return. Stock Explorer has no daily engagement mechanism — users only return when they want to look up a specific stock. C49 (Daily Market Pulse) would create a daily retention loop.
+
+### 4. **Visual-First is the Standard**
+StockEdge (heatmaps), TradingView (chart-first), Stake (card-stack), and Khan Academy (video-first) all prioritize visual learning over text. Stock Explorer's PPT-style is aligned with this trend but could be more visual — fewer words, more diagrams and visual metaphors.
+
+### 5. **Assessment is the Missing Piece**
+Khan Academy (mastery system), Zerodha Varsity (quizzes), and Finimize (course quizzes) all test user understanding. Stock Explorer has no assessment mechanism — users read but never demonstrate understanding. C52 (Quiz Mode) would transform passive reading into active learning.
+
+### 6. **Mobile-First is the Norm**
+Every competitor analyzed in Round 11 has a native mobile app. Stock Explorer's Streamlit-based web app is desktop-only. While a full mobile app is out of scope, the team should consider: (1) mobile-responsive design improvements, (2) a messaging bot interface (LINE/Telegram), (3) shareable content for mobile distribution.
+
+### 7. **AI is Becoming Table Stakes**
+TipRanks (Smart Score), Tickeron (AI Grade), Moomoo (AI Analyst), and Finimize (AI Q&A) all use AI as a core feature. Stock Explorer has no AI features planned beyond the analogy engine. While Stock Explorer's "historian" positioning deliberately avoids AI stock-picking, AI-powered explanations (C54 video/audio) and AI Q&A could complement the structured analysis.
+
+---
+
+## Feature Gap Summary (Round 11)
+
+| ID | Title | Priority | Effort | Source Competitor | Alignment |
+|---|---|---|---|---|---|
+| C48 | Company Story Card (30-sec summary) | P2 | 8-12h | Stake, StockEdge, Finimize | Story first + Ten-second test |
+| C49 | Daily Market Pulse | P2 | 10-14h | Finimize, StockEdge, Moomoo | Adaptive + Beginner-friendly |
+| C50 | Learning Progress Tracker | P2 | 12-16h | Khan Academy, Zerodha, Finimize | Point-to-point + Ten-second test |
+| C51 | Sector Heatmap | P2 | 8-12h | StockEdge, Moomoo | Benchmark-oriented + Beginner-friendly |
+| C52 | Quiz Mode | P2 | 10-14h | Khan Academy, Zerodha, Finimize | Point-to-point + Active learning |
+| C53 | Social Sharing | P2 | 6-10h | TradingView, Plotch.ai, Stake | Story first + Viral distribution |
+| C54 | Video/Audio Explanation | P2 | 20-30h | Khan Academy, Sensical | Point-to-point + Accessibility |
+
+---
+
+## Recommendations
+
+### Immediate (Next Sprint)
+1. **C48 Company Story Card** — Low effort (8-12h), directly addresses "ten-second test," multiple competitors prove demand
+2. **C53 Social Sharing** — Low effort (6-10h), zero-cost user acquisition, every shared card is a new user
+
+### Short-Term (Sprint 2-3)
+3. **C49 Daily Market Pulse** — Creates daily engagement loop, no TW competitor has it
+4. **C51 Sector Heatmap** — Visual market overview, StockEdge/Moomoo prove demand
+5. **C52 Quiz Mode** — Transforms passive reading into active learning, Khan Academy proves demand
+
+### Medium-Term (Post-Sprint 3)
+6. **C50 Learning Progress Tracker** — Transforms tool into learning platform, enables C47 Education Academy
+7. **C54 Video/Audio Explanation** — Long-term investment in content quality and accessibility
+
+---
+
+*This is the eleventh competitor research round. Seven new feature suggestions identified (C48-C54). The most impactful new gap is C50 (Learning Progress Tracker) — it transforms Stock Explorer from a lookup tool into a learning platform, which is critical for the "education-first" positioning. The most strategically important gap is C53 (Social Sharing) — zero-cost user acquisition through shareable analysis cards. The most urgent gap is C48 (Company Story Card) — it directly addresses the "ten-second test" design principle and has the highest ROI (8-12h effort for core value alignment).*

@@ -555,3 +555,283 @@ The following design issues should be added to `docs/status/current_problems.md`
 ---
 
 *Design Review completed. Recommendations aligned with PPT-style design system, ten-second test principle, and "beginner education" mission. Next review: After Sprint 2 feature implementation (C37 + C43).*
+
+---
+
+## 2026-06-17 Design Review — Review Round 11
+
+> **Author**: Design Reviewer
+> **Date**: 2026-06-17
+> **Context**: Round 11 review — assessing Sprint 2 feature implementation (C37, C39, C43, C45) and checking for new design issues.
+> **Current Design Grade**: A- (upgraded from B+ in Round 9)
+
+---
+
+## Table of Contents
+
+1. [Sprint 2 Feature Assessment](#sprint-2-feature-assessment)
+2. [New Design Issues](#new-design-issues)
+3. [Resolved Issues](#resolved-issues)
+4. [Grade Justification](#grade-justification)
+5. [Recommendations for Sprint 3](#recommendations-for-sprint-3)
+
+---
+
+## Sprint 2 Feature Assessment
+
+### C37: Key Takeaways Summary Card ✅ IMPLEMENTED
+
+**What was specified (Round 9)**:
+- First element on business card page, below header
+- Orange/amber "hero card" style (`#F39C12` border, `#FFF8F0` background)
+- 📋 icon, ① ② ③ numbering, ≤ 40 chars per bullet, ≤ 200 total chars
+- Ten-second test: user can restate company story from 3 bullets
+
+**What was implemented**:
+- Placed as first content element after header divider (line 140-152 of `business_card.py`) ✅ Correct placement
+- Uses `_info_card("重點摘要", takeaways_text, "📋")` — the shared component ✅
+- Curated templates for top 20 stocks in `_KEY_TAKEAWAYS` dict ✅ High-quality content
+- Auto-generated fallback for non-top-20 stocks using `generate_key_takeaways()` ✅
+- Hard cap at 5 bullets (takeaways[:5]) — design spec said 3, implementation allows up to 5
+
+**Design deviations**:
+1. **Missing orange/amber hero card style**: The spec called for a distinctive orange/amber border (`#F39C12`) with warm background (`#FFF8F0`) — the ONLY card using orange on the page. Instead, C37 uses the standard `_info_card()` which has a **blue** border (`#3498DB`). This is a significant deviation from the design direction. The whole point was for C37 to visually stand out as the "hero card." Using the same blue border as every other card defeats this purpose. → **New issue: D-016**
+
+2. **No timestamp**: The spec called for a small "🕐 更新於 YYYY-MM-DD" timestamp. Not implemented. Minor issue.
+
+3. **Bullet count**: Spec said max 3, implementation caps at 5. The auto-generator can produce up to 5 bullets (one per metric). This risks pushing content down. → **New issue: D-017**
+
+**Verdict**: Functionally complete and well-executed. The curated top-20 templates are excellent. The fallback auto-generation is solid. The main gap is the missing distinctive visual treatment.
+
+---
+
+### C39: What Changed Delta Card ✅ IMPLEMENTED
+
+**What was specified (Round 9)**:
+- Below C37, max 2 deltas, > 10% threshold
+- Standard info card (blue border) with 🔄 icon
+- Green ↑ for positive, Red ↓ for negative
+- Each delta: metric name + direction arrow + percentage + plain-language explanation
+
+**What was implemented**:
+- Placed after "關鍵數字三連卡" section (line 200-217) — **NOT directly below C37** ⚠️
+- Uses `_info_card("最近有什麼變化", delta_text, "🔄")` ✅ Correct icon
+- Shows 📈/📉 emojis with direction ✅
+- Includes metric name, current/previous values, percentage, and plain-language explanation ✅
+- > 10% threshold enforced ✅
+- **No hard cap at 2 deltas** — all deltas > 10% are shown ⚠️
+
+**Design deviations**:
+1. **Placement too low**: C39 appears AFTER the "關鍵數字三連卡" (key metrics cards), not directly below C37 as specified. The design intent was: summary → what changed → detailed data. Current order is: summary → detailed data → what changed. This reduces the "what's new" prominence. → **New issue: D-018**
+
+2. **No delta count cap**: Spec said max 2 deltas. Implementation shows ALL deltas exceeding 10% threshold. With revenue, price, and YoY all potentially > 10%, this could show 3 deltas. → **New issue: D-019**
+
+3. **Color coding missing**: Spec called for green (`#27AE60`) text for positive and red (`#E74C3C`) text for negative deltas. Implementation uses default card text color for all deltas regardless of direction. The 📈/📉 emojis provide some visual cue, but the text itself isn't color-coded. → **New issue: D-020**
+
+**Verdict**: Core logic is solid. The `explain_delta()` function produces excellent plain-language explanations. Main issues are placement, missing cap, and lack of directional color coding.
+
+---
+
+### C43: Snowflake Health Visualization ✅ IMPLEMENTED
+
+**What was specified (Round 9)**:
+- Radar chart with 5 dimensions: 獲利能力、成長性、財務健康、股利、估值
+- Scored 0-5 (normalized), color-coded: Green ≥ 4, Yellow 2-4, Red < 2
+- Plain-language explanations on hover/click
+- Ten-second test: the snowflake IS the ten-second test
+
+**What was implemented**:
+- Radar chart using `go.Scatterpolar` with 5 dimensions ✅
+- Dimensions: 獲利能力、成長性、財務健康、股利品質、估值合理性 ✅ (5 dimensions, names match intent)
+- Scored 0-100 (not 0-5 as spec'd, but equivalent scale) ✅
+- Color coding: Green ≥ 70, Yellow 40-70, Red < 40 (using emoji indicators 🟢🟡🔴) ✅
+- Reference lines at 40 (及格線) and 70 (良好線) ✅ Excellent addition
+- Dimension score cards below chart in 5 columns ✅
+- Plain-language health summary via `get_health_summary()` ✅
+- Hover tooltips showing dimension name + score ✅
+- Detailed scoring functions for each dimension (_score_roe, _score_gross_margin, etc.) ✅
+
+**Design deviations**:
+1. **Score scale mismatch**: Spec said 0-5, implementation uses 0-100. This is actually a minor improvement (finer granularity), but the spec should be updated to match.
+
+2. **No plain-language per-dimension explanation on hover**: The spec asked for one-line explanations like "🟢 獲利能力強：ROE 25%，每100元股東資金賺25元" on hover/click. Current hover only shows "獲利能力: 85分". The dimension cards below show scores but not the underlying metric values or plain-language explanations. → **New issue: D-021**
+
+3. **Chart placed after key metrics**: The snowflake appears after "關鍵數字三連卡" and C39, not near the top of the page. Per Round 9, it should be "below C37 (Key Takeaways) or as a replacement for the 關鍵數字三連卡 section." → **New issue: D-022**
+
+**Verdict**: This is the strongest Sprint 2 implementation. The scoring system is sophisticated, the chart is well-designed with reference lines, and the health summary is genuinely useful. The main gap is missing per-dimension plain-language explanations.
+
+---
+
+### C45: Valuation Band Chart ✅ IMPLEMENTED
+
+**What was specified (Round 9)**:
+- Horizontal bar chart showing current P/E vs 5-year range (min/max)
+- Vertical line marking current position
+- Plain-language interpretation
+
+**What was implemented**:
+- Line chart showing historical PER over 2 years with 25th-75th percentile band ✅
+- Current PER marked with red dashed horizontal line ✅
+- Plain-language interpretation via `_info_card("估值解讀", ...)` showing whether valuation is low/mid/high ✅
+- TTM EPS calculation from quarterly financial data ✅
+- Robust error handling with multiple fallback states ✅
+
+**Design deviations**:
+1. **Chart type differs from spec**: Spec said "horizontal bar chart showing current P/E vs 5-year range (min/max)" — a simpler bar/thermometer-style chart. Implementation uses a full time-series line chart with percentile band. This is actually **more informative** than the spec, but it's a different visual metaphor. The implementation is superior to the spec.
+
+2. **Data window**: Spec said 5-year range, implementation uses 2-year range (730 days). This is likely due to data availability constraints. → **New issue: D-023**
+
+3. **Placement**: The valuation chart is at the bottom of the page (after revenue trend, before news), in a separate "估值區間" section. This is reasonable placement but could be closer to the PER metric in "關鍵數字" section for better context. Minor issue.
+
+**Verdict**: Excellent implementation that exceeds the spec. The percentile band approach is more sophisticated than a simple min/max bar. The plain-language interpretation is a nice touch.
+
+---
+
+## New Design Issues
+
+### D-016: C37 Missing Orange/Amber Hero Card Style
+- **Severity**: P1
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 11
+- **Description**: C37 (Key Takeaways) uses the standard `_info_card()` with blue border (`#3498DB`) instead of the specified orange/amber hero card style (`#F39C12` border, `#FFF8F0` background). The design intent was for C37 to be the ONLY card using orange — the "hero card" of the page. Using the same blue border as every other card defeats this purpose.
+- **Affected Files**: `business_card.py` (line 152), `_router_base.py`
+- **Proposed Fix**: Create a new `_summary_card()` component in `_router_base.py` with orange/amber styling (`border-left:4px solid #F39C12`, `background:#FFF8F0`), and use it for C37.
+- **Effort**: 30 min
+
+### D-017: C37 Bullet Count Exceeds Spec
+- **Severity**: P2
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 11
+- **Description**: Design spec said max 3 bullets for C37. Implementation caps at 5. For stocks with many available metrics, this can produce 5 bullets, pushing content down and violating the "≤ 200 characters" text limit.
+- **Affected Files**: `analogy_engine.py` (line 422: `return takeaways[:5]`)
+- **Proposed Fix**: Change cap to 3 (`return takeaways[:3]`) to match spec and enforce brevity.
+- **Effort**: 5 min
+
+### D-018: C39 Placement Too Low on Page
+- **Severity**: P1
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 11
+- **Description**: C39 (What Changed) appears AFTER the "關鍵數字三連卡" section, not directly below C37 as specified. The intended flow was: summary → what changed → detailed data. Current order is: summary → detailed data → what changed.
+- **Affected Files**: `business_card.py` (lines 170-217)
+- **Proposed Fix**: Move C39 block (lines 200-217) to immediately after C37 block (lines 140-152), before the "關鍵數字三連卡" section.
+- **Effort**: 15 min
+
+### D-019: C39 Missing Delta Count Cap
+- **Severity**: P2
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 11
+- **Description**: Spec said max 2 deltas. Implementation shows ALL deltas exceeding 10% threshold. Revenue, price, and YoY could all exceed 10%, showing 3 deltas.
+- **Affected Files**: `analogy_engine.py` (`compute_recent_deltas` function)
+- **Proposed Fix**: Add `return deltas[:2]` at the end of `compute_recent_deltas()` to enforce the 2-delta cap.
+- **Effort**: 5 min
+
+### D-020: C39 Missing Directional Color Coding
+- **Severity**: P2
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 11
+- **Description**: Spec called for green (`#27AE60`) text for positive deltas and red (`#E74C3C`) text for negative deltas. Implementation uses default card text color for all deltas. The 📈/📉 emojis provide some visual cue, but the text itself isn't color-coded.
+- **Affected Files**: `business_card.py` (lines 208-216)
+- **Proposed Fix**: Apply inline color styling to delta text based on direction. Use `<span style="color:#27AE60">` for positive and `<span style="color:#E74C3C">` for negative.
+- **Effort**: 30 min
+
+### D-021: C43 Missing Per-Dimension Plain-Language Explanations
+- **Severity**: P1
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 11
+- **Description**: Spec asked for one-line plain-language explanations on hover/click for each dimension (e.g., "🟢 獲利能力強：ROE 25%，每100元股東資金賺25元"). Current hover only shows "獲利能力: 85分". The dimension cards below show scores but not the underlying metric values or explanations.
+- **Affected Files**: `chart.py` (create_health_snowflake), `business_card.py` (lines 232-249)
+- **Proposed Fix**: Pass the underlying metric values (ROE, gross margin, etc.) into the hover template for each dimension. Add a plain-language explanation below each dimension card.
+- **Effort**: 1-2h
+
+### D-022: C43 Placement Not Near Top of Page
+- **Severity**: P2
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 11
+- **Description**: The snowflake chart appears after "關鍵數字三連卡" and C39, not near the top of the page. Per Round 9, it should be "below C37 (Key Takeaways) or as a replacement for the 關鍵數字三連卡 section."
+- **Affected Files**: `business_card.py` (lines 219-253)
+- **Proposed Fix**: Move C43 block to immediately after C37, before C39 and key metrics. This makes the snowflake the second thing users see (after the summary), which aligns with the "ten-second test" principle.
+- **Effort**: 15 min
+
+### D-023: C45 Uses 2-Year Window Instead of 5-Year
+- **Severity**: P2
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 11
+- **Description**: Spec said "current P/E vs 5-year range." Implementation uses 2-year window (730 days). This may be due to data availability, but it reduces the chart's usefulness for long-term valuation context.
+- **Affected Files**: `chart.py` (line 626: `cutoff_2y = pd.Timestamp.now() - pd.Timedelta(days=730)`)
+- **Proposed Fix**: Extend to 5 years (1825 days) if data is available. Add a fallback: if < 2 years of data available, show what's available with a note.
+- **Effort**: 30 min
+
+---
+
+## Resolved Issues
+
+| ID | Title | Severity | Resolution |
+|----|-------|----------|------------|
+| D-001 | No Visual Health Score | P0 | **RESOLVED** — C43 (Snowflake Health Visualization) fully implemented with 5-dimension radar chart, color-coded scores, reference lines, and plain-language health summary. |
+| D-002 | No Synthesis Layer | P0 | **RESOLVED** — C37 (Key Takeaways) implemented with curated templates for top 20 stocks and auto-generated fallback for others. |
+| D-014 | No Valuation Context | P2 | **RESOLVED** — C45 (Valuation Band Chart) implemented with historical PER percentile band, current PER marker, and plain-language interpretation. |
+
+---
+
+## Grade Justification
+
+**Previous Grade**: B+ (Round 9)
+**New Grade**: A-
+
+**Reasoning for upgrade**:
+
+The Sprint 2 implementation delivers three of the four highest-priority design gaps identified in Round 9:
+1. **D-001 (P0) resolved**: Visual health score (C43) is now the strongest feature of the product
+2. **D-002 (P0) resolved**: Synthesis layer (C37) provides the "ten-second test" summary
+3. **D-014 (P2) resolved**: Valuation context (C45) exceeds the spec with percentile bands
+
+The implementation quality is generally high:
+- Curated content for top 20 stocks shows attention to quality
+- Sophisticated scoring algorithms for health dimensions
+- Robust error handling throughout
+- Good use of shared components (`_info_card`)
+
+**Reasons grade is A- not A**:
+- C37 missing the distinctive orange/amber hero card style (D-016) — this was a key design differentiator
+- C39 placement and color coding issues (D-018, D-020) reduce effectiveness
+- C43 missing per-dimension plain-language explanations (D-021)
+- Page layout order doesn't follow the "summary → what changed → detailed data" flow
+- Several P2 issues (D-017, D-019, D-022, D-023) indicate spec compliance gaps
+
+---
+
+## Recommendations for Sprint 3
+
+### Priority 1 (Quick Wins — < 2h total)
+1. **Fix D-016**: Create `_summary_card()` with orange/amber styling for C37
+2. **Fix D-017**: Change C37 cap from 5 to 3 bullets
+3. **Fix D-018**: Move C39 directly below C37
+4. **Fix D-019**: Add `deltas[:2]` cap in C39
+5. **Fix D-022**: Move C43 directly below C37 (after C39)
+
+### Priority 2 (Important — 2-4h total)
+6. **Fix D-020**: Add directional color coding to C39 deltas
+7. **Fix D-021**: Add per-dimension plain-language explanations to C43
+8. **Fix D-023**: Extend C45 to 5-year window with graceful fallback
+
+### Priority 3 (New Features — Sprint 3 backlog)
+9. **C41**: Read Next Recommendations (approved for Sprint 3)
+10. **C38**: Compare Stories Side-by-Side (deferred to Phase 1)
+11. **D-004**: Note — design system now exists at `docs/domain/design_system.md` but should be copied/linked to the expected `docs/design/design_system.md` path
+
+### Page Layout Target for Sprint 3
+The ideal Business Card page order should be:
+1. Header (company name + price)
+2. **C37** — Key Takeaways (orange hero card)
+3. **C43** — Snowflake Health (visual anchor)
+4. **C39** — What Changed (delta card, max 2)
+5. 一句話定位 (one-liner)
+6. 你知道嗎？ (Did You Know)
+7. 關鍵數字三連卡 (key metrics)
+8. 配息故事 (dividend story)
+9. 營收組成 (revenue pie)
+10. 營收趨勢 (revenue trend)
+11. 估值區間 (valuation band)
+12. 近期動態 (news)
+13. C41 — Read Next (recommendations)
+14. 免責聲明 (disclaimer)

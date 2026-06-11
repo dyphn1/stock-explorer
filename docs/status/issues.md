@@ -6,3 +6,10 @@ C44: "What Could Go Wrong" Risk Analysis Section | P2 | 10-14h | Story first + H
 C45: Valuation Band Chart (Historical P/E Range) | P2 | 8-10h | Story first + Benchmark-oriented analysis
 C46: Moat Analysis — Competitive Advantage Assessment | P2 | 12-16h | Story first + Benchmark-oriented analysis + Historian positioning
 C47: Financial Education Academy / Structured Learning Path | P2 | 20-30h | Point-to-point knowledge construction + Ten-second test + Story first
+C48: "Company Story Card" — 30-Second Visual Summary | P2 | 8-12h | Story first + Ten-second test | source: competitor research round 11
+C49: "Daily Market Pulse" — Automated Market Summary | P2 | 10-14h | Adaptive + Beginner-friendly | source: competitor research round 11
+C50: "Learning Progress Tracker" — Concept Mastery System | P2 | 12-16h | Point-to-point knowledge construction + Ten-second test | source: competitor research round 11
+C51: "Sector Heatmap" — Visual Market Overview | P2 | 8-12h | Benchmark-oriented analysis + Beginner-friendly | source: competitor research round 11
+C52: "Quiz Mode" — Interactive Knowledge Assessment | P2 | 10-14h | Point-to-point knowledge construction + Ten-second test | source: competitor research round 11
+C53: "Social Sharing" — Shareable Analysis Cards | P2 | 6-10h | Story first + Viral distribution | source: competitor research round 11
+C54: "Video Explanation" — Audio/Visual Learning Modality | P2 | 20-30h | Point-to-point knowledge construction + Accessibility | source: competitor research round 11

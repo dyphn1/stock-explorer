@@ -219,3 +219,172 @@ The approved features (C37, C39, C41, C36, C38) are all **feasible** with the cu
 *Created: 2026-06-14*
 *Maintainer: System Architect*
 *Next review: After Sprint 2 feature implementation*
+
+---
+
+## 2026-06-17 Technical Analysis — Review Round 11
+
+### Context
+
+Sprint 2 completed with 4 features shipped: C37 (Key Takeaways), C39 (What Changed Delta), C45 (Valuation Band), C43 (Snowflake Health). Sprint 3 is now in progress (C44, C41, C38, R1, R5). This analysis covers **only NEW architecture debt** introduced during Sprint 2. For debt items D1–D15, see the Round 9 analysis above.
+
+### Codebase Growth Summary
+
+| Metric | Round 9 | Round 11 | Change |
+|--------|---------|----------|--------|
+| Total .py files (excl. `__pycache__`) | 31 | 31 | 0 |
+| Total application LOC | ~5,200 | ~7,699 | +2,499 |
+| `analogy_engine.py` | ~192 lines | 857 lines | +665 |
+| `chart.py` | ~490 lines | 757 lines | +267 |
+| `business_card.py` | ~337 lines | 479 lines | +142 |
+
+Growth is concentrated in two service files (+932 lines) and one page file (+142 lines). No new service modules were created.
+
+### New Architecture Debt (D16+)
+
+#### D16: `analogy_engine.py` has become a 857-line god module
+
+- **Severity**: 🟟 High
+- **Description**: `analogy_engine.py` grew from ~192 lines (pure analogy functions) to 857 lines. It now contains 6 distinct responsibilities:
+  1. Analogy/revenue explanations (original purpose, lines 1–193)
+  2. Curated key takeaways data `_KEY_TAKEAWAYS` (120 lines of hardcoded dict)
+  3. `generate_key_takeaways()` — rule-based synthesis (100 lines)
+  4. `compute_recent_deltas()` + `explain_delta()` — delta detection (180 lines)
+  5. Health scoring: 6 `_score_*` functions + `compute_health_scores()` + `get_health_summary()` (270 lines)
+  6. EPS extraction logic duplicated from `chart.py` (lines 743–761)
+- **Impact**: The module is doing the work of 3–4 separate services. The health scoring functions (`_score_roe`, `_score_gross_margin`, etc.) are pure functions that could be independently tested but are buried in a module dominated by string templates.
+- **Recommended Action**: Split into focused modules:
+  - `src/services/analogy_engine.py` — keep only analogy functions (lines 1–193)
+  - `src/services/key_takeaways.py` — `generate_key_takeaways()` + `_KEY_TAKEAWAYS` data
+  - `src/services/delta_engine.py` — `compute_recent_deltas()` + `explain_delta()`
+  - `src/services/health_scoring.py` — all `_score_*` + `compute_health_scores()` + `get_health_summary()`
+- **Effort**: 2–3h (extract + update imports). **Note**: This is a stepping stone to R1 (financial_metrics extraction). Don't split until R1 is done — do them together.
+
+#### D17: EPS extraction logic triplicated across 3 files
+
+- **Severity**: 🟡 Medium
+- **Description**: The identical pattern of extracting EPS from financial statements using keyword matching appears in 3 files:
+  - `chart.py:640-682` — `create_valuation_band_chart()` TTM EPS calculation
+  - `analogy_engine.py:747-759` — `compute_health_scores()` EPS growth calculation
+  - `business_card.py:420-437` — inline PER percentile calculation in `_render_business_card()`
+  
+  All three use the same `eps_keywords = ["eps", "每股盈餘", "earnings per share"]` pattern, the same `str.contains()` filtering, the same `groupby("date").max()` dedup, and the same `tail(4).sum()` TTM calculation.
+- **Impact**: If the EPS extraction logic needs to change (e.g., different keywords, different TTM window), it must be updated in 3 places. The `business_card.py` version is inline (not even a function).
+- **Recommended Action**: Extract a shared `extract_ttm_eps(financial_df, as_of_date=None) -> float` function in a new `src/services/financial_metrics.py` (same as R1). All 3 consumers call this function.
+- **Effort**: 1–2h as part of R1.
+
+#### D18: `_KEY_TAKEAWAYS` hardcoded dict (120 lines) violates D6
+
+- **Severity**: 🟡 Medium
+- **Description**: C37 added a 120-line hardcoded `_KEY_TAKEAWAYS` dict (20 stocks, 4–5 bullets each) directly in `analogy_engine.py`. This is the same anti-pattern as D6 (hardcoded data in Python). The handoff explicitly notes "C37 uses curated takeaways for top 20 stocks as PRIMARY approach" — this data will grow.
+- **Impact**: Curated takeaways are mixed with analogy logic. Adding a new stock requires editing a Python file, not a YAML file. Non-developers cannot contribute.
+- **Recommended Action**: Move to `src/data/key_takeaways.yaml` as part of R5 (YAML migration). The loading function stays in the service module.
+- **Effort**: 1h as part of R5.
+
+#### D19: `business_card.py` inline HTML table generation (30+ lines)
+
+- **Severity**: 🟡 Medium
+- **Description**: `business_card.py` lines 340–360 contain inline HTML table generation for the dividend history table with badge columns. This is raw HTML string concatenation in a page file, bypassing the `_info_card()` / `_白话_card()` pattern. The health score dimension cards (lines 242–248) also use inline HTML with hardcoded styles.
+- **Impact**: Inconsistent with the component-based approach. The dividend table HTML is 20+ lines of string formatting that's hard to maintain.
+- **Recommended Action**: Create a `render_badge_table(df, badge_col, badge_styles)` helper in `ui_components.py` (R2/R9). Move health dimension cards to a reusable `render_score_cards(scores, columns=5)` component.
+- **Effort**: 1–2h as part of R9.
+
+#### D20: `business_card.py` valuation interpretation duplicates `chart.py` logic
+
+- **Severity**: 🟡 Medium
+- **Description**: `business_card.py` lines 410–455 re-implement the PER percentile calculation that already exists in `chart.py:create_valuation_band_chart()`. The page calls `create_valuation_band_chart()` for the chart, then re-computes p25/p75 and the "偏高/偏低/中間" interpretation inline. This is wasted computation (the chart function already calculated these values but didn't return them).
+- **Impact**: Double computation on every page render. If the valuation interpretation logic changes, it must be updated in both places.
+- **Recommended Action**: Refactor `create_valuation_band_chart()` to return a `(fig, interpretation_dict)` tuple, where `interpretation_dict` contains `{p25, p75, current_per, text}`. The page uses the returned dict instead of re-computing.
+- **Effort**: 0.5–1h.
+
+#### D21: No new service modules — feature code concentrated in existing files
+
+- **Severity**: 🟡 Medium
+- **Description**: All Sprint 2 features were added to existing files (`analogy_engine.py`, `chart.py`, `business_card.py`) rather than creating new service modules. The Round 9 analysis recommended creating `summary_engine.py` (C37) and `delta_engine.py` (C39) as separate modules. Instead, everything went into `analogy_engine.py`.
+- **Impact**: Contributes to D16 (god module). Makes it harder to locate feature logic. The `analogy_engine.py` import in `business_card.py` now pulls in 857 lines when only ~200 lines of analogies are needed.
+- **Recommended Action**: Address as part of D16 refactoring. No immediate action needed if D16 is planned for Sprint 3.
+- **Effort**: Included in D16.
+
+### Performance Impact of Sprint 2
+
+No new performance bottlenecks were introduced. The Sprint 2 features are computationally lightweight:
+
+- **C37 (Key Takeaways)**: Dict lookup + string formatting. Negligible.
+- **C39 (Deltas)**: Simple arithmetic on already-loaded data. Negligible.
+- **C43 (Health Snowflake)**: Scoring functions are pure arithmetic on `extra_metrics` dict values. Negligible. The radar chart adds one Plotly figure render.
+- **C45 (Valuation Band)**: The TTM EPS calculation iterates over all price rows × available EPS rows. For 2 years of daily data (~500 rows) × ~8 quarterly EPS values, this is ~4,000 iterations — acceptable but could be slow for longer time ranges. The `business_card.py` inline PER calculation (D20) duplicates this work.
+
+**Net performance impact**: Neutral to slightly negative (D20 double computation). No new N+1 API patterns.
+
+### Feasibility Assessment for Sprint 3+ Features
+
+#### C44: Risk Analysis MVP (Sprint 3, ~6h)
+
+- **Feasibility**: ✅ **High**. The health scoring functions in `analogy_engine.py` (D16) already compute per-dimension scores. Risk analysis can reuse the same 5-dimension framework but invert the narrative ("what's weak" vs "what's strong").
+- **Dependencies**: `compute_health_scores()` (exists), `adaptive_engine.py` (exists for event-based risks).
+- **Architecture Fit**: New `risk_engine.py` service module + section in `business_card.py`. Clean extension.
+- **Risk**: Risk analysis and health scoring may confuse users if they tell different stories. Ensure consistent data sources.
+- **Recommendation**: Proceed. Consider combining with C43 into a single "company assessment" service that produces both health and risk outputs from the same scores.
+
+#### C41: Read Next Recommendations (Sprint 3, ~6.5h)
+
+- **Feasibility**: ✅ **High**. No new data sources needed beyond what's in `group_structure.py` and `peer_comparison.py`.
+- **Architecture Fit**: New `recommendation_engine.py` service + YAML data file + bottom section of `business_card.py`.
+- **Risk**: D6 (hardcoded data) — relationship data must go in `src/data/relationships.yaml`, not in a Python module.
+- **Recommendation**: Proceed as planned. Use YAML for relationship data.
+
+#### C38: Compare Stories Phase 1 (Sprint 3, deferred, 8–10h)
+
+- **Feasibility**: 🟡 **Medium**. The current `peer_comparison.py` already loads two companies' data via `_get_benchmark_data()`. C38 adds narrative comparison on top.
+- **Architecture Fit**: New `narrative_comparator.py` service + tab in `peer_comparison.py`.
+- **Risk**: D1/D17 (duplicate financial metrics/EPS extraction) — the narrative comparison will need financial metrics. Use the shared `financial_metrics.py` once R1 is done.
+- **Recommendation**: Defer to Sprint 3. Ensure `narrative_comparator.py` has a clean interface for future LLM integration (Phase 2).
+
+#### C42: Stock Screener / Discovery Engine (Sprint 4, ~8h)
+
+- **Feasibility**: 🟡 **Medium**. Requires filtering the full stock universe (~1,800 stocks) by criteria. The `category_browser.py` already does sequential filtering (D7/P1).
+- **Architecture Fit**: New `screener_engine.py` service + new page `screener_page.py`.
+- **Risk**: Performance — screening 1,800 stocks sequentially will be slow. Need batch API calls (R3) or pre-computed screening data.
+- **Recommendation**: Defer to Sprint 4. Consider pre-computing screening metrics for the 200 most-traded stocks to avoid performance issues.
+
+#### C46: Export / Share Card (Sprint 4, ~4h)
+
+- **Feasibility**: ✅ **High**. Pure presentation layer. Export the business card as image/PDF.
+- **Dependencies**: None beyond existing page rendering.
+- **Architecture Fit**: New `export_service.py` utility + button in `business_card.py`.
+- **Risk**: Streamlit's limited export capabilities. May need `plotly.io.write_image()` for charts + HTML-to-image for cards.
+- **Recommendation**: Low risk. Proceed in Sprint 4.
+
+#### C47: Financial Education Academy (Sprint 4, ~10h)
+
+- **Feasibility**: 🟡 **Medium**. Content curation is the bottleneck, not architecture.
+- **Dependencies**: `company_facts.yaml` (exists), analogy functions (exists).
+- **Architecture Fit**: New `academy_engine.py` service + `src/data/academy_lessons.yaml` + new page.
+- **Risk**: D6 (hardcoded data) — lesson content must go in YAML, not Python.
+- **Recommendation**: Defer to Sprint 4. Use YAML for all lesson content.
+
+### Summary
+
+Sprint 2 shipped 4 features with **no new service modules** and **no new performance bottlenecks**. The primary new debt is:
+
+1. **`analogy_engine.py` god module** (D16) — 857 lines, 6 responsibilities. Highest priority to split.
+2. **EPS extraction triplication** (D17) — same logic in 3 files. Fix as part of R1.
+3. **Curated takeaways hardcoded** (D18) — 120-line dict in Python. Fix as part of R5.
+4. **Inline HTML in business_card.py** (D19) — dividend table and score cards. Fix as part of R9.
+5. **Valuation double-computation** (D20) — `chart.py` and `business_card.py` both compute PER percentiles. Quick fix.
+
+**All Sprint 3+ features are feasible** with the current architecture. The main blockers are:
+- R1 (financial_metrics extraction) needed for C38
+- R3 (batch API calls) needed for C42 performance
+- R5 (YAML migration) needed for C41, C47 data maintainability
+
+**Recommended immediate actions** (Sprint 3):
+1. **R1**: Extract `financial_metrics.py` (addresses D1, D2, D17) — 2–3h
+2. **D20**: Refactor `create_valuation_band_chart()` to return interpretation — 0.5h
+3. **D16**: Split `analogy_engine.py` into focused modules — 2–3h (can batch with R1)
+
+---
+
+*Created: 2026-06-17*
+*Maintainer: System Architect*
+*Next review: After Sprint 3 feature implementation*
