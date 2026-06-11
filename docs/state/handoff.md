@@ -1,19 +1,29 @@
 # Handoff – Development
 
 ## Summary
-- **Topic**: Discussion (💡) — Round 8
-- **Date**: 2026-06-13
-- **Sprint Status**: Sprint 0 complete → Sprint 1 next
+- **Topic**: Development (🔧) — Sprint 2
+- **Date**: 2026-06-15
+- **Sprint Status**: Sprint 2 complete → Sprint 3 next
 
-## Completed Items (Sprint 0)
+## Completed Items (Sprint 2)
 | Item | Result |
 |------|--------|
-| D-073: Fix #5D6D7E → #7F8C8D in _info_card() | ✅ Fixed |
-| D-071: Replace Set3 palette in pie charts | ✅ Fixed |
-| D-084: Replace st.bar_chart with Plotly | ✅ Fixed |
-| G04: Fix disconnected rate limit flags | ✅ Fixed |
-| G06: Fix bare FinMindClient() | ✅ Fixed |
-| G17: Verify KNOWN_COMPANY_REVENUE usage | ✅ Confirmed in-use |
+| C37: Key Takeaways Summary Card | ✅ Implemented (8651430) |
+| C39: What Changed Delta Card | ✅ Implemented (8651430) |
+| C45: Valuation Band Chart | ✅ Implemented (8d585c7) |
+| C43: Snowflake Health Visualization | ✅ Implemented (b1624af) |
+
+## Verification
+- L0: 54/54 ✅
+- L1: 15/15 + 3 pre-existing failures (unrelated) ✅
+
+## Pending Quick Wins (Sprint 3)
+| Item | Effort |
+|------|--------|
+| C41: Read Next Recommendations | 6-8h |
+| C38: Compare Stories Phase 1 | 10-12h |
+| C44: Risk Analysis | 15-22h |
+| R5: Migrate hardcoded data to YAML | 4-6h |
 
 ## Key Metrics
 - Tech debt: 14 active + 1 deferred (~14 hours)
