@@ -238,3 +238,492 @@
 ---
 
 *This is the eighth competitor research round. Six new feature suggestions identified. The most impactful new gap is C37 (Key Takeaways) — it directly addresses the "ten-second test" design principle and has the highest ROI (6-8h effort for core value alignment).*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 9
+
+> **Date**: 2026-06-14
+> **Author**: QA Engineer (Round 9)
+> **Purpose**: Research new competitors not covered in Rounds 1-8, focusing on Taiwanese platforms and international analysis/education tools
+
+---
+
+## New Competitors Analyzed (Not in Rounds 1-8)
+
+| Competitor | Type | Region | Relevance to Stock Explorer |
+|---|---|---|---|
+| **財報狗 (StatementDog/Cat Dog Finance)** | Financial analysis + screening | TW | 🔴 High — most popular TW fundamental analysis tool; screening overlaps with our discovery |
+| **JZ Invest (JZ投資)** | All-in-one investment platform | TW | 🟡 Medium — community + data + screening in one platform |
+| **鉅亨網 (CnYES)** | Financial portal + news + data | TW | 🟡 Medium — comprehensive TW market data + international |
+| **TEJ (Taiwan Economic Journal)** | Professional financial database | TW | 🟢 Low — enterprise-grade; different target user but interesting features |
+| **Yahoo奇摩股市 (Yahoo Finance Taiwan)** | Free financial portal | TW | 🟡 Medium — most visited TW stock site; sets baseline expectations |
+| **Simply Wall St** | Visual stock analysis + snowflake | AU/Global | 🔴 High — visual-first approach aligns with our PPT-style positioning |
+| **Stockopedia** | Stock analysis + ranking + education | UK/Global | 🟡 Medium — "StockRank" system + educational content |
+| **Investopedia** | Financial education + tools | US/Global | 🟡 Medium — the gold standard for financial education; glossary + simulator |
+| **Morningstar** | Investment research + rating | US/Global | 🟡 Medium — "Morningstar Rating" (star system) + fair value analysis |
+
+---
+
+## Detailed Competitor Profiles
+
+### 1. 財報狗 (StatementDog / Cat Dog Finance)
+
+**URL**: https://statementdog.com
+**Positioning**: "讓投資變簡單" (Make investing simple) — fundamental analysis made accessible
+**Target Users**: TW retail investors who want to do fundamental analysis without being accountants
+
+**Key Features**:
+- **Stock Screener (選股工具)**: Multi-condition screening on 100+ financial metrics (P/E, ROE, dividend yield, revenue growth, etc.) — users can filter stocks by custom criteria
+- **Financial Statement Visualization**: Clean charts for revenue, EPS, margins over 10+ years
+- **Dividend Analysis**: Complete dividend history with payout ratio analysis
+- **Valuation Tools**: DCF calculator, P/E/PB band charts showing historical valuation ranges
+- **Portfolio Tracking**: Users can create watchlists and track holdings
+- **Mobile App**: Native iOS/Android apps with full feature parity
+
+**UX/Design Approach**:
+- Clean, modern web interface with card-based layout
+- Heavy use of charts and minimal text
+- Color-coded indicators (green/red for positive/negative trends)
+- Mobile-first responsive design
+
+**Unique Capabilities**:
+- **Stock Screener** is the #1 feature — allows beginners to discover stocks meeting specific criteria without knowing financial analysis deeply
+- **P/E Band Chart**: Shows current P/E vs historical range — helps beginners understand "expensive vs cheap" visually
+- **Dividend Score**: Proprietary scoring system for dividend sustainability
+
+**Comparison with Stock Explorer**:
+| Feature | 財報狗 | Stock Explorer |
+|---|---|---|
+| Stock Screener | ✅ Advanced multi-condition | ❌ Not built |
+| P/E Band Chart | ✅ Historical valuation | ❌ Not built |
+| Dividend Score | ✅ Proprietary | ⚠️ Basic countdown |
+| Plain-language | ⚠️ Partial (some tooltips) | ✅ Core feature |
+| PPT-style | ❌ | ✅ Unique |
+| Education | ⚠️ Blog posts | ✅ Core positioning |
+| Mobile App | ✅ Native | ❌ Streamlit only |
+
+---
+
+### 2. JZ Invest (JZ投資)
+
+**URL**: https://jzinvest.com
+**Positioning**: All-in-one investment community + data platform
+**Target Users**: Active TW retail investors who want community discussion + data in one place
+
+**Key Features**:
+- **Community Forum**: Stock-specific discussion boards with real-time chat
+- **Screening Tools**: Similar to 財報狗 but with community-driven screening presets
+- **Portfolio Sharing**: Users can share their portfolios publicly for discussion
+- **News Aggregation**: Curated financial news with community commentary
+- **Technical + Fundamental**: Both charting tools and financial data
+
+**UX/Design Approach**:
+- Forum-style layout (similar to PTT/RED)
+- Data panels alongside community discussion
+- Real-time updates for price and volume
+
+**Unique Capabilities**:
+- **Community-driven screening**: Users share their screening strategies as presets
+- **Portfolio transparency**: See what other investors hold and their reasoning
+
+**Comparison with Stock Explorer**:
+| Feature | JZ Invest | Stock Explorer |
+|---|---|---|
+| Community | ✅ Forum + chat | ❌ Not built |
+| Screening | ✅ Community presets | ❌ Not built |
+| Portfolio Sharing | ✅ Public portfolios | ❌ Not built |
+| Plain-language | ❌ | ✅ Core feature |
+| Education | ❌ | ✅ Core positioning |
+
+---
+
+### 3. 鉅亨網 (CnYES)
+
+**URL**: https://www.cnyes.com
+**Positioning**: Comprehensive financial portal — news, data, analysis, international markets
+**Target Users**: TW investors who want everything in one portal (news + data + international)
+
+**Key Features**:
+- **Real-time Market Data**: TW stocks, international indices, forex, commodities
+- **News Center**: Aggregated financial news with editorial content
+- **Fund Analysis**: Mutual fund ratings and performance tracking
+- **International Markets**: US stocks, Asian markets, global economic indicators
+- **Expert Columns**: Professional analysts' opinions and market outlook
+- **Screening**: Basic stock screening for TW market
+
+**UX/Design Approach**:
+- Traditional financial portal layout (dense information)
+- Tab-based navigation for different asset classes
+- Heavy advertising (free model)
+
+**Unique Capabilities**:
+- **International coverage**: One of few TW platforms with comprehensive global market data
+- **Fund analysis**: Strong mutual fund section (Stock Explorer has ETF section but not mutual funds)
+- **Real-time news**: Integrated news feed with market data
+
+**Comparison with Stock Explorer**:
+| Feature | 鉅亨網 | Stock Explorer |
+|---|---|---|
+| International | ✅ Global markets | ⚠️ TW only |
+| News | ✅ Real-time feed | ❌ Not built |
+| Fund Analysis | ✅ Mutual funds | ⚠️ ETF only |
+| Plain-language | ❌ | ✅ Core feature |
+| Education | ⚠️ Expert columns | ✅ Core positioning |
+
+---
+
+### 4. TEJ (Taiwan Economic Journal)
+
+**URL**: https://www.eol.com.tw (TEJ database)
+**Positioning**: Professional-grade financial database for institutions and serious investors
+**Target Users**: Institutional investors, fund managers, academic researchers, serious retail investors
+
+**Key Features**:
+- **Comprehensive Database**: 20+ years of TW financial data, including many data points not available elsewhere
+- **ESG Data**: ESG ratings and sustainability metrics for TW companies
+- **Credit Risk Analysis**: Bond ratings, default probability models
+- **Industry Analysis**: Detailed industry reports with market share data
+- **API Access**: Programmatic data access for quantitative analysis
+- **Custom Reports**: Users can generate custom analytical reports
+
+**UX/Design Approach**:
+- Enterprise software interface (functional, not beautiful)
+- Query-based data extraction
+- Export to Excel/CSV for further analysis
+
+**Unique Capabilities**:
+- **ESG data**: Comprehensive ESG metrics for TW companies — not available on any free platform
+- **Credit risk**: Bond and credit analysis tools
+- **Data depth**: Goes far beyond what FinMind provides (insider trading details, shareholder structure changes)
+
+**Comparison with Stock Explorer**:
+| Feature | TEJ | Stock Explorer |
+|---|---|---|
+| ESG Data | ✅ Comprehensive | ❌ Not built |
+| Credit Risk | ✅ Bond analysis | ❌ Not built |
+| Data Depth | ✅ Institutional-grade | ⚠️ FinMind (retail-grade) |
+| Plain-language | ❌ | ✅ Core feature |
+| Education | ❌ | ✅ Core positioning |
+| Price | 💰💰💰 Enterprise | Free |
+
+---
+
+### 5. Yahoo奇摩股市 (Yahoo Finance Taiwan)
+
+**URL**: https://tw.stock.yahoo.com
+**Positioning**: Free, accessible stock information for everyone
+**Target Users**: Casual investors, beginners, general public checking stock prices
+
+**Key Features**:
+- **Real-time Quotes**: Free real-time price data for TW stocks
+- **Basic Charts**: Simple price/volume charts with basic technical indicators
+- **News**: Aggregated financial news
+- **Portfolio Tracking**: Basic watchlist and portfolio feature
+- **Community**: Comment sections on individual stock pages
+- **Mobile App**: Highly popular mobile app with push notifications
+
+**UX/Design Approach**:
+- Simple, familiar portal design
+- Ad-supported (heavy advertising)
+- Mobile app is the primary use case
+- Minimal learning curve
+
+**Unique Capabilities**:
+- **Push notifications**: Price alerts, news alerts via mobile app
+- **Most visited**: Sets the baseline UX expectation for TW stock tools
+- **Zero barrier**: No registration required for basic features
+
+**Comparison with Stock Explorer**:
+| Feature | Yahoo奇摩股市 | Stock Explorer |
+|---|---|---|
+| Push Notifications | ✅ Mobile app | ❌ Not built |
+| Real-time Data | ✅ Free real-time | ⚠️ FinMind (delayed) |
+| Community | ✅ Comments | ❌ Not built |
+| Plain-language | ❌ | ✅ Core feature |
+| Education | ❌ | ✅ Core positioning |
+| Mobile App | ✅ Native | ❌ Streamlit only |
+
+---
+
+### 6. Simply Wall St
+
+**URL**: https://simplywall.st
+**Positioning**: "Make complex investing simple" — visual-first stock analysis
+**Target Users**: Retail investors globally who want to understand stocks through visuals, not spreadsheets
+
+**Key Features**:
+- **Snowflake Analysis**: Proprietary visual "snowflake" diagram showing 5 dimensions of a company (value, future, past performance, financial health, dividends) with color-coded scores
+- **Visual Story**: Each stock has a visual "story" page with infographic-style layout
+- **Future Growth Estimates**: Analyst estimates presented visually with confidence intervals
+- **Risk Analysis**: Visual risk breakdown showing what could go wrong
+- **Portfolio Visualization**: Visual portfolio analysis showing diversification, risk concentration
+- **Snowflake Score**: Composite score from 0-5 based on 5 dimensions
+
+**UX/Design Approach**:
+- **Visual-first**: Every metric is presented as a chart, diagram, or infographic
+- **Infographic style**: Similar to our PPT-style approach — one key visual per concept
+- **Color coding**: Green/yellow/red for good/neutral/bad
+- **Minimal text**: Short descriptions, no walls of text
+- **Progressive disclosure**: Summary first, details on click
+
+**Unique Capabilities**:
+- **Snowflake diagram**: Unique visual framework that gives a 30-second company overview — directly comparable to our "ten-second test"
+- **Visual risk analysis**: Shows risks as visual breakdowns, not just numbers
+- **Infographic reports**: Each stock page reads like an infographic, not a financial report
+
+**Comparison with Stock Explorer**:
+| Feature | Simply Wall St | Stock Explorer |
+|---|---|---|
+| Snowflake Analysis | ✅ Proprietary visual | ❌ Not built |
+| Visual Story | ✅ Infographic style | ⚠️ PPT-style (similar) |
+| Risk Visualization | ✅ Visual breakdown | ❌ Not built |
+| Plain-language | ⚠️ Short descriptions | ✅ Core feature |
+| Education | ⚠️ Visual learning | ✅ Core positioning |
+| TW Market | ❌ US/AU focus | ✅ TW focus |
+
+---
+
+### 7. Stockopedia
+
+**URL**: https://www.stockopedia.com
+**Positioning**: "Stock analysis and screening for smart investors" — data-driven stock education
+**Target Users**: UK/EU retail investors who want to combine screening with education
+
+**Key Features**:
+- **StockRank**: Proprietary composite score (0-100) combining value, quality, and momentum
+- **StockReport**: Detailed analysis report for each stock with scores and commentary
+- **Screening**: Advanced multi-factor screening with StockRank integration
+- **Education Center**: "Stockopedia Academy" with structured courses on investing concepts
+- **Financial Data**: 20+ years of financial data with visualizations
+- **Community**: User-contributed analysis and discussions
+
+**UX/Design Approach**:
+- Clean, modern interface with score-centric design
+- StockRank is the central organizing concept
+- Educational content integrated into stock pages
+- Progressive complexity (simple scores → detailed analysis)
+
+**Unique Capabilities**:
+- **StockRank system**: Single composite score that combines multiple factors — makes stock evaluation accessible to beginners
+- **Stockopedia Academy**: Structured learning paths from beginner to advanced
+- **Quality + Value + Momentum**: Three-factor framework that educates users about different investment approaches
+
+**Comparison with Stock Explorer**:
+| Feature | Stockopedia | Stock Explorer |
+|---|---|---|
+| StockRank Score | ✅ Composite 0-100 | ❌ Not built |
+| StockReport | ✅ Detailed reports | ⚠️ Business card page |
+| Education Academy | ✅ Structured courses | ⚠️ Did You Know facts |
+| Screening | ✅ Advanced | ❌ Not built |
+| Plain-language | ⚠️ Some | ✅ Core feature |
+| TW Market | ❌ UK/EU focus | ✅ TW focus |
+
+---
+
+### 8. Investopedia
+
+**URL**: https://www.investopedia.com
+**Positioning**: "The world's leading financial education platform" — learn before you invest
+**Target Users**: Beginners to intermediate investors globally who want to learn financial concepts
+
+**Key Features**:
+- **Financial Dictionary**: 10,000+ terms with detailed plain-language definitions
+- **Investopedia Academy**: Paid courses on investing, trading, and personal finance
+- **Stock Simulator**: Virtual trading platform with $100,000 in fake money
+- **Analysis & News**: Market analysis, stock commentary, and educational articles
+- **Reviews**: Broker reviews, tool reviews, and comparison guides
+- **Calculators**: 50+ financial calculators (compound interest, retirement, etc.)
+
+**UX/Design Approach**:
+- Encyclopedia-style organization (search → learn)
+- Article-based content with embedded definitions
+- Simulator has its own interface separate from education
+- Ad-supported free model with premium courses
+
+**Unique Capabilities**:
+- **Financial Dictionary**: The gold standard — every term has a detailed, beginner-friendly definition with examples
+- **Stock Simulator**: Allows beginners to practice without risk — unique among competitors
+- **Academy**: Structured courses from absolute beginner to advanced topics
+- **Concept-first approach**: Teaches concepts before showing data — aligns with our "education-first" positioning
+
+**Comparison with Stock Explorer**:
+| Feature | Investopedia | Stock Explorer |
+|---|---|---|
+| Financial Dictionary | ✅ 10K+ terms | ❌ Not built |
+| Stock Simulator | ✅ Virtual trading | ❌ Not built |
+| Academy | ✅ Structured courses | ⚠️ Did You Know facts |
+| Analysis | ✅ Expert analysis | ✅ Plain-language analysis |
+| TW Market | ❌ US focus | ✅ TW focus |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+
+---
+
+### 9. Morningstar
+
+**URL**: https://www.morningstar.com
+**Positioning**: "Independent investment research you can trust" — professional-grade analysis for everyone
+**Target Users**: Serious retail investors, financial advisors, institutional investors
+
+**Key Features**:
+- **Morningstar Rating (Star Rating)**: 1-5 star rating system based on risk-adjusted returns
+- **Fair Value Estimate**: Proprietary intrinsic value calculation with uncertainty rating
+- **Moat Rating**: Economic moat assessment (wide, narrow, none) — how durable is the competitive advantage
+- **Sustainability Rating**: ESG risk rating for companies
+- **Portfolio Analysis**: X-ray tool showing portfolio overlap, sector allocation, style box
+- **Fund Analysis**: Comprehensive mutual fund and ETF analysis (their heritage)
+
+**UX/Design Approach**:
+- Professional, data-dense interface
+- Star rating is the most prominent element on every stock page
+- Fair value vs current price is the key visual
+- Premium content behind paywall
+
+**Unique Capabilities**:
+- **Moat Rating**: Unique framework for assessing competitive advantage durability — "Does this company have a castle with a moat?"
+- **Fair Value with Uncertainty**: Not just a number, but a range — teaches beginners that valuation is uncertain
+- **Star Rating**: Simple, memorable rating system that beginners can understand instantly
+- **Sustainability/ESG**: Integrated ESG analysis alongside financial analysis
+
+**Comparison with Stock Explorer**:
+| Feature | Morningstar | Stock Explorer |
+|---|---|---|
+| Star Rating | ✅ 1-5 stars | ❌ Not built |
+| Fair Value | ✅ With uncertainty | ❌ Not built |
+| Moat Rating | ✅ Competitive advantage | ❌ Not built |
+| ESG Rating | ✅ Sustainability | ❌ Not built |
+| Plain-language | ⚠️ Professional tone | ✅ Core feature |
+| TW Market | ⚠️ Limited | ✅ TW focus |
+
+---
+
+## Updated Competitor Overview Table (Round 9 Additions)
+
+| Dimension | 財報狗 | JZ Invest | 鉅亨網 | Simply Wall St | Stockopedia | Investopedia | Morningstar | **Stock Explorer** |
+|---|---|---|---|---|---|---|---|---|
+| **Positioning** | Simple Investing | Community + Data | Financial Portal | Visual Analysis | Smart Education | Financial Ed | Independent Research | Beginner Education ("Historian") |
+| **Screening** | ✅ Advanced | ✅ Community | ✅ Basic | ❌ | ✅ Advanced | ❌ | ❌ | ❌ MISSING |
+| **Visual Analysis** | ⚠️ Charts | ❌ | ❌ | ✅ Snowflake | ⚠️ StockRank | ❌ | ⚠️ Star Rating | ✅ PPT-style |
+| **Education** | ⚠️ Blog | ❌ | ⚠️ Columns | ⚠️ Visual | ✅ Academy | ✅ Academy + Dictionary | ⚠️ Articles | ✅ Core |
+| **Rating System** | ⚠️ Dividend Score | ❌ | ❌ | ✅ Snowflake 0-5 | ✅ StockRank 0-100 | ❌ | ✅ Stars 1-5 | ❌ MISSING |
+| **Risk Analysis** | ❌ | ❌ | ❌ | ✅ Visual | ⚠️ StockRank | ❌ | ✅ Uncertainty | ❌ MISSING |
+| **Community** | ❌ | ✅ Forum | ❌ | ❌ | ⚠️ Comments | ❌ | ❌ | ❌ MISSING |
+| **International** | ❌ TW only | ❌ TW only | ✅ Global | ✅ Global | ✅ Global | ✅ Global | ✅ Global | ❌ TW only |
+| **Mobile App** | ✅ Native | ✅ Native | ✅ Native | ✅ Native | ❌ | ✅ Native | ✅ Native | ❌ Streamlit only |
+| **Notifications** | ✅ App Push | ✅ App Push | ✅ App Push | ✅ Email | ✅ Email | ❌ | ✅ Email | ❌ MISSING |
+| **TW Market** | ✅ Deep | ✅ Deep | ✅ Deep | ❌ | ❌ | ❌ | ⚠️ Limited | ✅ Deep |
+
+---
+
+## New Feature Ideas from Round 9
+
+### [ISSUE-C42] Stock Screener / Discovery Engine
+- **Source**: Competitor research round 9 (財報狗 advanced screener, Stockopedia StockRank screening, JZ Invest community presets)
+- **Priority**: P1
+- **Effort**: 16-24h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + beginner-friendly discovery
+- **Description**: Stock Explorer currently requires users to know which stock to search for. Beginners often don't know where to start. 財報狗's stock screener is its #1 feature — users can filter by criteria like "ROE > 15%", "dividend yield > 4%", "revenue growing 3 years" and discover stocks they didn't know about. Stock Explorer's "historian" positioning is perfect for this: instead of screening for "good stocks to buy", we screen for "interesting companies to learn about" — e.g., "companies with revenue growing > 20% for 3 years" or "companies with dividend yield > 5% and payout ratio < 70%". This transforms Stock Explorer from a lookup tool into a discovery tool.
+- **Implementation**: Add a "🔍 選股探索" page with beginner-friendly screening presets (e.g., "穩定收息", "成長潛力", "便宜估值") and custom screening on key metrics (ROE, P/E, dividend yield, revenue growth). Use FinMind data. Results link to existing business card pages.
+- **Competitive Gap**: 🔴 財報狗's #1 feature; no TW competitor combines screening with plain-language education
+
+---
+
+### [ISSUE-C43] Company "Snowflake" Health Visualization
+- **Source**: Competitor research round 9 (Simply Wall St snowflake diagram, Morningstar star rating, Stockopedia StockRank)
+- **Priority**: P1
+- **Effort**: 12-16h
+- **Alignment**: Core value #1 "Story first, data second" + "Ten-second test" + Core value #5 "Benchmark-oriented analysis"
+- **Description**: Simply Wall St's snowflake diagram and Morningstar's star rating both give beginners an instant, visual answer to "How healthy is this company?" Stock Explorer currently shows 15+ metrics scattered across sections with no synthesized visual summary. A "Company Snowflake" would show 5 dimensions (Profitability, Growth, Financial Health, Dividend, Valuation) as a radar chart or snowflake diagram with color-coded scores. This directly addresses the "ten-second test" — a beginner can glance at the snowflake and immediately understand the company's overall health. Unlike Simply Wall St (which uses proprietary algorithms), Stock Explorer's snowflake would use plain-language explanations for each dimension: "🟢 獲利能力強：ROE 25%，每100元股東資金賺25元".
+- **Implementation**: Add a radar chart (using Plotly) to the top of the business card page showing 5 dimensions scored 0-5. Each dimension has a plain-language explanation on hover/click. Scores calculated from FinMind data with industry benchmarking (aligns with #5 benchmark-oriented analysis).
+- **Competitive Gap**: 🔴 No TW competitor has visual health score; Simply Wall St proves demand internationally; our plain-language twist is unique
+
+---
+
+### [ISSUE-C44] "What Could Go Wrong" Risk Analysis Section
+- **Source**: Competitor research round 9 (Simply Wall St visual risk analysis, Morningstar uncertainty rating, TEJ credit risk)
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #1 "Story first, data second" + "Historian" positioning (explain, don't predict)
+- **Description**: Simply Wall St has a visual "Risk Analysis" section showing what could go wrong with a company. Morningstar has an "Uncertainty Rating" that tells beginners valuation is not a single number but a range. Stock Explorer's "historian" positioning is perfect for risk analysis — not predicting the future, but explaining historical risks that have materialized. For example: "TSMC's main risk: 90% of revenue comes from 3 customers (Apple, NVIDIA, AMD). If any of them switch to a competitor, revenue could drop 30%." This is factual, educational, and doesn't require predicting the future. Currently, Stock Explorer has NO risk analysis section.
+- **Implementation**: Add a "⚠️ 風險分析" section to the business card page with 3-5 key risks presented in plain language. Each risk includes: (1) what the risk is, (2) historical evidence (has it happened before?), (3) current indicators to watch. Data sources: customer concentration from annual reports, industry risks from TEJ-style analysis, financial risks from debt ratios.
+- **Competitive Gap**: 🟡 Simply Wall St has risk analysis but not with historical evidence; no TW competitor has plain-language risk analysis
+
+---
+
+### [ISSUE-C45] Valuation Band Chart (P/E or P/B Historical Range)
+- **Source**: Competitor research round 9 (財報狗 P/E band chart, Morningstar fair value with uncertainty)
+- **Priority**: P2
+- **Effort**: 8-10h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #5 "Benchmark-oriented analysis"
+- **Description**: 財報狗's P/E band chart is one of its most popular features — it shows the current P/E ratio vs the historical range (e.g., "TSMC's P/E is currently 18x, historically it trades between 12x and 25x"). This helps beginners understand whether a stock is "expensive" or "cheap" relative to its own history. Stock Explorer currently shows valuation metrics as single numbers with no historical context. A valuation band chart would show: (1) current P/E, (2) 5-year P/E range, (3) where current P/E falls in the range (percentile), (4) plain-language explanation: "目前本益比18倍，處於歷史區間的中間位置，不算貴也不算便宜".
+- **Implementation**: Add a "📊 估值區間" card to the business card page with a horizontal bar chart showing current P/E vs 5-year range. Include plain-language interpretation. Data source: FinMind price and EPS data.
+- **Competitive Gap**: 🟡 財報狗 has P/E band but no plain-language interpretation; no TW competitor combines valuation bands with educational context
+
+---
+
+### [ISSUE-C46] "Moat" Analysis — Competitive Advantage Assessment
+- **Source**: Competitor research round 9 (Morningstar moat rating, TEJ industry analysis)
+- **Priority**: P2
+- **Effort**: 12-16h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #5 "Benchmark-oriented analysis" + "Historian" positioning
+- **Description**: Morningstar's "Moat Rating" (wide, narrow, none) is one of its most recognized features — it answers "Does this company have a durable competitive advantage?" Stock Explorer's "historian" positioning is perfect for moat analysis: instead of predicting whether the moat will last, we explain what the moat IS and how it has protected the company historically. For example: "TSMC's moat: 技術領先 — 全球唯一能量產5nm晶片的工廠，競爭對手三星和英特爾落後2年以上。過去10年，這個護城河讓台積電的毛利率維持在50%以上." This is factual, educational, and aligns with "explain what has happened" rather than "predict what will happen".
+- **Implementation**: Add a "🏰 護城河分析" section to the business card page with: (1) moat type (technology, brand, cost, network, switching costs), (2) moat strength (wide/narrow/none), (3) historical evidence, (4) plain-language explanation. Manual curation for top 20 stocks, template-based for others.
+- **Competitive Gap**: 🔴 Morningstar has moat rating but only for US stocks; no TW competitor has moat analysis; perfect "historian" differentiator
+
+---
+
+### [ISSUE-C47] Financial Education Academy / Structured Learning Path
+- **Source**: Competitor research round 9 (Investopedia Academy, Stockopedia Academy, Investopedia financial dictionary)
+- **Priority**: P2
+- **Effort**: 20-30h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + Core value #1 "Story first"
+- **Description**: Investopedia Academy and Stockopedia Academy both offer structured learning paths — from "What is a stock?" to "How to read financial statements" to "Valuation techniques". Stock Explorer currently has "Did You Know?" facts (70 facts for 7 stocks) but no structured learning path. A "Learning Academy" would provide: (1) structured lessons organized by topic (not by stock), (2) each lesson uses real TW stock examples, (3) progressive difficulty (beginner → intermediate → advanced), (4) quizzes to test understanding. This transforms Stock Explorer from a stock lookup tool into a comprehensive investing education platform.
+- **Implementation**: Add a "📚 學習學院" section with 10-15 structured lessons. Each lesson: title, 3-5 minute read, real TW stock example, key takeaway, quiz question. Topics: "What is revenue?", "What is profit?", "What is ROE?", "What is P/E?", "How to read a balance sheet", "What is a dividend?", etc. Reuse existing analogy engine for explanations.
+- **Competitive Gap**: 🔴 No TW competitor has structured learning paths with TW stock examples; Investopedia/Stockopedia prove demand internationally
+
+---
+
+## Updated Analysis
+
+### Key Insights from Round 9
+
+1. **Visual health scores are becoming standard** — Simply Wall St (snowflake), Morningstar (stars), and Stockopedia (StockRank) all have proprietary scoring systems that give beginners an instant answer. Stock Explorer needs a visual health score (C43) to remain competitive. Our differentiator: plain-language explanations for each dimension.
+
+2. **Discovery is a critical gap** — 財報狗's #1 feature is its stock screener. Stock Explorer requires users to know which stock to look up, which is a barrier for beginners. A discovery/screening engine (C42) would transform the product from a lookup tool to an exploration tool.
+
+3. **Risk analysis is an untapped differentiator** — Simply Wall St has risk analysis but not with historical evidence. Morningstar has uncertainty ratings but not in plain language. Stock Explorer's "historian" positioning is perfect for risk analysis that explains historical risks without predicting the future (C44).
+
+4. **Valuation context is expected** — 財報狗's P/E band chart shows that beginners expect historical valuation context. Showing P/E as a single number without context is like showing a student's test score without saying whether it's good or bad (C45).
+
+5. **Moat analysis is a unique opportunity** — Morningstar's moat rating is iconic but only covers US stocks. No TW competitor has moat analysis. This is a perfect "historian" feature — explaining what the competitive advantage IS and how it has protected the company historically, without predicting the future (C46).
+
+6. **Structured education is the endgame** — Investopedia Academy and Stockopedia Academy show that structured learning paths are the natural evolution of financial education platforms. Stock Explorer's "Did You Know?" facts are a good start, but a structured academy (C47) would be the ultimate expression of the "education-first" positioning.
+
+### Feature Gap Summary
+
+| ID | Title | Priority | Effort | Source Competitor | Alignment |
+|---|---|---|---|---|---|
+| C42 | Stock Screener / Discovery Engine | P1 | 16-24h | 財報狗, Stockopedia | Point-to-point + Discovery |
+| C43 | Company Snowflake Health Visualization | P1 | 12-16h | Simply Wall St, Morningstar | Story first + Ten-second test |
+| C44 | "What Could Go Wrong" Risk Analysis | P2 | 10-14h | Simply Wall St, Morningstar | Story first + Historian |
+| C45 | Valuation Band Chart (Historical P/E) | P2 | 8-10h | 財報狗, Morningstar | Story first + Benchmark |
+| C46 | Moat Analysis (Competitive Advantage) | P2 | 12-16h | Morningstar | Story first + Benchmark + Historian |
+| C47 | Financial Education Academy | P2 | 20-30h | Investopedia, Stockopedia | Point-to-point + Story first |
+
+### Recommendations
+
+#### Immediate (Next Sprint)
+1. **C43 Company Snowflake** — P1 gap, directly addresses "ten-second test", multiple competitors prove demand
+2. **C42 Stock Screener** — P1 gap, 財報狗's #1 feature, transforms product from lookup to discovery
+
+#### Short-Term (Sprint 2-3)
+3. **C45 Valuation Band Chart** — Low effort (8-10h), high impact, 財報狗 proves demand
+4. **C44 Risk Analysis** — Unique "historian" differentiator, no TW competitor has it
+
+#### Medium-Term (Post-Sprint 3)
+5. **C46 Moat Analysis** — Unique differentiator for TW market, manual curation for top 20 stocks
+6. **C47 Education Academy** — Long-term differentiator, transforms product from tool to platform
+
+---
+
+*This is the ninth competitor research round. Six new feature suggestions identified (C42-C47). The most impactful new gap is C43 (Company Snowflake Health Visualization) — it directly addresses the "ten-second test" design principle and multiple international competitors prove demand. The most strategically important gap is C42 (Stock Screener) — it transforms Stock Explorer from a lookup tool to a discovery platform, which is critical for beginner engagement.*

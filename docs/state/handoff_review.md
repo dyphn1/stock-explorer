@@ -1,88 +1,133 @@
 # Handoff – Review
 
 ## Summary
-- **Topic**: Review (🔍)
-- **Date**: 2026-06-13
+- **Topic**: Review (🔍) — Round 9
+- **Date**: 2026-06-14
 - **Participants**: Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
-- **Round**: 8th review cycle
+- **Sprint Status**: Sprint 1 → Sprint 2 pending
 
 ## Competitor Research Findings
 
-| Platform | Feature Gap | Suggested Improvement |
-|----------|-------------|----------------------|
-| Public.com | Story cards + revenue tree | C36 Visual Revenue Tree (P2, 10-14h) |
-| Seeking Alpha | Key Takeaways summaries | C37 Key Takeaways Card (P2, 6-8h) |
-| Stocksera | "Story" tab + narrative | C34 Company Story Timeline (already tracked) |
-| Koyfin | Plain-language metric descriptions | C39 What Changed Recently (P2, 8-10h) |
-| Sharesies | Beginner education + complexity levels | C40 Beginner/Expert Mode (P2, 10-14h) |
-| NerdWallet | "How it works" explainers | C33 Glossary (already tracked) |
-| The Motley Fool | Bull vs Bear debates | C38 Compare Stories (P2, 12-16h) |
-| Finary | "Learn" section + "What's New" | C41 Read Next Recommendations (P2, 6-8h) |
+### New Competitors Analyzed (Round 9)
+| Competitor | Type | Region | Key Finding |
+|---|---|---|---|
+| 財報狗 (StatementDog) | Fundamental analysis | TW | #1 feature is stock screener; P/E band chart is most popular |
+| JZ Invest | Community + data | TW | Forum + portfolio sharing |
+| 鉅亨網 (CnYES) | Financial portal | TW/Intl | Comprehensive international coverage |
+| TEJ | Professional database | TW | ESG data, credit risk analysis |
+| Yahoo奇摩股市 | Baseline portal | TW | Most visited TW stock site; sets UX expectations |
+| Simply Wall St | Visual-first analysis | US/AU | Snowflake diagram — 5-dim health visualization |
+| Stockopedia | Stock scoring | UK | StockRank + structured education academy |
+| Investopedia | Financial education | US | 10K+ term dictionary + stock simulator |
+| Morningstar | Rating standard | US | Star rating + moat analysis + fair value with uncertainty |
 
-## Technical Debt Summary
+### New Feature Gaps Identified (C42-C47)
+| ID | Feature | Priority | Effort | Source |
+|---|---|---|---|---|
+| C42 | Stock Screener / Discovery Engine | P1 | 22-34h | 財報狗, Stockopedia |
+| C43 | Company Snowflake Health Visualization | P1 | 17-24h | Simply Wall St, Morningstar |
+| C44 | "What Could Go Wrong" Risk Analysis | P2 | 15-22h | Simply Wall St, Morningstar |
+| C45 | Valuation Band Chart (Historical P/E) | P2 | 12-19h | 財報狗, Morningstar |
+| C46 | Moat Analysis (Competitive Advantage) | P2 | 17-26h | Morningstar |
+| C47 | Financial Education Academy | P2 | 32-46h | Investopedia, Stockopedia |
 
-| Metric | Value |
-|--------|-------|
-| Total items | 14 active + 1 deferred |
-| Fixed this round | 6 (G01, G02, G10, G11, G12, G14) |
-| New items | 3 (G15, G16/G06 dup, G17) |
-| Total effort remaining | ~14 hours |
-| Quick wins (40 min) | G04, G06, G15, G17 |
+### Feature Gap Summary (All Rounds)
+- **Total feature suggestions**: 47 (C01-C47)
+- **Approved for implementation**: C37, C39, C41, C36, C38 (from Round 8)
+- **New from Round 9**: C42, C43, C44, C45, C46, C47
+- **Highest priority new**: C42 (Discovery), C43 (Health Score)
+- **Quick win**: C45 (Valuation Band, 12-19h, uses existing data)
 
-### Key Fixes Since Round 6
-1. `_atomic_write` consolidated into `src/utils/__init__.py`
-2. `models.py` removed (86 lines dead code)
-3. `get_list_entries()` removed
-4. `INDUSTRY_REVENUE_MAP` removed (39 lines)
-5. `_section_card` removed from operation_checkup.py
-6. `detect_company_type()` now delegates to `watchlist._is_etf()` — ETF bug fixed
+## Architecture Debt Identified
+| ID | Item | Severity | Effort | Priority |
+|---|---|---|---|---|
+| R1 | Extract shared financial_metrics.py | 🔴 High | 2.5-4h | P0 — Before Sprint 2 |
+| R2 | Move UI helpers to ui_components.py | 🟡 Med | 1-1.5h | P1 — Sprint 2 |
+| R3 | Batch API calls (category + ETF browser) | 🔴 High | 3-5h | P0 — Before Sprint 2 |
+| R4 | Session caching (watchlist + events) | 🟡 Med | 1.5-2.5h | P1 — Sprint 2 |
+| R5 | Migrate hardcoded data to YAML | 🟡 Med | 4-6h | P2 — Sprint 3 |
 
-## Design Compliance Summary
+### Performance Bottlenecks
+| Item | Impact | Fix |
+|---|---|---|
+| Sequential API calls in category_browser (200 stocks) | 30-60s page load | R3: ThreadPoolExecutor batch |
+| Sequential API calls in etf_browser (~100 ETFs) | Slow page load | R3: ThreadPoolExecutor batch |
+| YAML parsing on every watchlist operation | Redundant I/O | R4: session_state cache |
+| YAML parsing on every events query | Redundant I/O | R4: session_state cache |
 
-| Metric | Value |
-|--------|-------|
-| Overall grade | C+ (unchanged) |
-| Total issues | 92 (cumulative) |
-| New issues | 11 (D-073 through D-084) |
-| Fixed issues | 0 this round |
-| Best page | event_dashboard.py (A-) |
-| Worst pages | group_structure.py, category_browser.py (D) |
+## Design Improvements Identified
+| ID | Issue | Severity | Proposed Fix |
+|---|---|---|---|
+| D-001 | No visual health score | P0 | C43 Snowflake |
+| D-002 | No synthesis layer | P0 | C37 Key Takeaways |
+| D-003 | Inconsistent card styling | P1 | Standardize on shared components |
+| D-004 | No design system docs | P1 | Create design_system.md |
+| D-005 | Business card page overload | P1 | Progressive disclosure |
+| D-006 | Mobile responsiveness gaps | P1 | Mobile-first CSS |
+| D-007 | No discovery mechanism | P1 | C42 Screener |
+| D-008-D-015 | Various P2 issues | P2 | See current_problems.md |
 
-### Key Design Findings
-- Old palette violations (F39C12, 2E86C1, etc.) all cleaned ✅
-- 0 linear-gradient instances remain ✅
-- New issue: `#5D6D7E` used in 8 places (should be `#7F8C8D`)
-- New issue: `#F8F9FA` background not in design system palette
-- New issue: `st.bar_chart` in group_structure.py violates chart architecture
-- `_section_title()` emoji conflict (D-005) still open
-- Set3 palette in pie charts (D-071) still open
+### Design Grade: B+ (improved from B in Round 8)
 
 ## Decisions Made
-1. **C32 (Market Mood) REMOVED** — contradicts "historian" positioning (from Discussion Round 7)
-2. **C31 REFRAMED** — from "Daily Financial Challenge" to "Daily Company Story" (narrative, not quiz)
-3. **C29 DEFERRED** to Sprint 5 — only after design grade reaches B
-4. **C28 SPIKE-FIRST** — 3h validation before committing full 20h
-5. **Sprint 0 ADDED** — design quality prerequisite (C+ → B) before feature work
-6. **NEW-G16 (ETF bug) was already fixed** — detect_company_type() now uses watchlist._is_etf()
+
+### Sprint Allocation (Post-Challenger Revision)
+| Sprint | Items | Hours (midpoint) | Capacity |
+|---|---|---|---|
+| Pre-Sprint 2 | R1 + R3 + R2 + R4 + R5 (debt) | 16h | ~30h |
+| Sprint 2 | C37 + C39 + C45 + C43 | 49.5h | ~60h |
+| Sprint 3 | C41 + C38 + C44 | 36.5h | ~60h |
+| Sprint 4 | C36 + C42 | 37h | ~60h |
+| Sprint 5 | C47 Phase 1 (5 lessons) + C46 + buffer | 52h | ~60h |
+
+### Grand Total Effort (Post-Challenger Revision)
+- Architecture Debt (R1-R5): 12-19h (midpoint 15.5h)
+- Approved Features (C37-C38): 36-45h (midpoint 40.5h)
+- New Features (C42-C46 + C47 Phase 1): 99-137h (midpoint 118h)
+- **Grand Total: 147-201h (midpoint ~191h, ~8-10 weeks)**
+- C47 Phase 2 (remaining lessons): ~20h, post-plan
+
+### Key Insights
+1. **Visual health scores are table stakes** — Every major competitor has one. C43 is required.
+2. **Discovery is critical** — 財報狗's #1 feature is screening. C42 transforms the product.
+3. **Synthesis > Data** — C37 Key Takeaways is the highest-ROI feature.
+4. **Education is the endgame** — C47 Academy is the long-term differentiator.
+5. **Our unique advantage is plain-language + TW focus** — No competitor combines both.
 
 ## Action Items
+| Item ID | Description | Owner | Due Date |
+|---------|-------------|-------|----------|
+| R1 | Extract financial_metrics.py | Developer | Pre-Sprint 2 |
+| R3 | Batch API calls | Developer | Pre-Sprint 2 |
+| C37 | Key Takeaways Summary Card | Developer | Sprint 2 |
+| C39 | What Changed Delta Card | Developer | Sprint 2 |
+| C45 | Valuation Band Chart | Developer | Sprint 2 |
+| C43 | Snowflake Health Visualization | Developer | Sprint 2 |
+| C41 | Read Next Recommendations | Developer | Sprint 3 |
+| C38 | Compare Stories Phase 1 | Developer | Sprint 3 |
+| C44 | Risk Analysis | Developer | Sprint 3 |
+| C36 | Visual Revenue Tree | Developer | Sprint 4 |
+| C42 | Stock Screener | Developer | Sprint 4 |
+| C46 | Moat Analysis | Developer | Sprint 4 |
+| C47 | Education Academy | Developer | Sprint 5 |
+| D-004 | Create design_system.md | Designer | Sprint 2 |
+| D-003 | Standardize card components | Developer | Sprint 2 |
 
-| Item ID | Description | Owner | Effort | Priority |
-|---------|-------------|-------|--------|----------|
-| G04 | Fix disconnected rate limit flags | Developer | 10 min | Quick win |
-| G06 | Fix bare FinMindClient() in peer_comparison | Developer | 20 min | Quick win |
-| G15 | Replace st.bar_chart with Plotly | Developer | 30 min | Quick win |
-| G17 | Verify KNOWN_COMPANY_REVENUE usage | Developer | 5 min | Quick win |
-| D-073 | Fix #5D6D7E → #7F8C8D in _info_card() | Developer | 5 min | Global impact |
-| D-071 | Replace Set3 palette in pie charts | Developer | 30 min | Global impact |
-| C02 | Notification/Push System | Developer | 14-18h | P0 |
-| C06 | Auto-Generate Stock Analysis PPT | Developer | 18-24h | P1 |
-| C07 | Customizable Event Thresholds | Developer | 10-14h | P1 |
-| C34 | Company Story Timeline | Developer | 16-24h | P2 |
+## Pending Daniel Decision
+- **C47 Education Academy scope**: 32-46h is a mini-project. Recommend splitting into Phase 1 (10 lessons, 20h) + Phase 2 (remaining, 19h). Daniel to confirm scope.
+- **C42 Stock Screener complexity**: 22-34h depends on R3 batch API. If R3 is delayed, C42 slips to Sprint 5. Daniel to confirm priority vs C46.
 
 ## Next Cycle Handoff
-Next theme: 🔧 Development → read `docs/state/handoff.md` (this file)
-Next dev cycle: Sprint 0 (Design Quality C+ → B) → Sprint 1 (C28 Spike + Quick wins)
+Next theme: 🔧 Development → Sprint 2 (C37 + C39 + C45 + C43)
+Next dev cycle: Sprint 2
 
-For full discussion context, see `docs/logs/challenge_log.md`
-For pending Daniel decisions, see `docs/state/pending_review.md`
+For full Round 9 context:
+- Competitor research: docs/research/competitor_research.md (Round 9 section)
+- Architecture analysis: docs/design/architecture.md
+- Design review: docs/design/design_review.md
+- Developer estimates: docs/design/developer_estimates.md
+- Current problems: docs/status/current_problems.md
+- Challenge log: docs/workflow/challenge_log.md
+
+---
+*Last updated: 2026-06-14*

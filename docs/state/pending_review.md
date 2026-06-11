@@ -1,61 +1,45 @@
-# Stock Explorer Pending Daniel Review
+# Pending Review — Daniel Decisions
 
-> Items here require human judgment and cannot be auto-resolved by agents.
+> **Last Updated**: 2026-06-14
+> **Source**: Review Round 9 — Challenger required revisions
 
-## 🎨 Design Decisions (Resolved)
-- #1 Navbar: ✅ `st.radio(horizontal=True)` — implemented 2026-06-09
-- #2 Seasonal Industry List: Deferred — needs Daniel input on industry list
-- #3 ETF Classification Severity: Kept P1 — fix after P0 band
+## Open Questions for Daniel
 
-## 🔴 Positioning Decision (Resolved)
-- #4 Portfolio P&L: ❌ CANCELLED — positioning violation ("historian, not stock picker")
+### 1. C47 Education Academy Scope
+- **Context**: C47 is 32-46h total. Challenger recommends splitting into phases.
+- **Option A**: Phase 1 = 5 pilot lessons (12h), Phase 2 = remaining lessons post-plan
+- **Option B**: Phase 1 = 10 lessons (20h), Phase 2 = remaining lessons post-plan
+- **Recommendation**: Option A (5 lessons) — validate quality before scaling
+- **Status**: ⏳ Pending Daniel
 
-## 📋 Roadmap Approval
-- #5 Revised Roadmap (Round 4): Superseded by Round 7 plan below
-- #6 business_card.py P0 Regression: ✅ Fixed — restored to 462 lines
+### 2. C42 Stock Screener vs C46 Moat Analysis Priority
+- **Context**: If Sprint 4 slips, which gets cut — screener or moat?
+- **C42 (Screener)**: P1, transforms product from lookup to discovery, 22-34h
+- **C46 (Moat)**: P2, manual curation bottleneck, weakest historian fit, 17-26h
+- **Recommendation**: Cut C46 if needed; C42 is strategically more important
+- **Status**: ⏳ Pending Daniel
 
-## 🔴 Awaiting Daniel's Decision
+### 3. C34 Company Story Timeline Scheduling
+- **Context**: C34 was identified in Round 7 as "#1 thing competitors DON'T have" — unique differentiator
+- **Dependency**: C38 (Compare Stories) data structures are a prerequisite
+- **C38 is in Sprint 3**, so C34 would naturally follow in Sprint 4-5
+- **Recommendation**: Schedule C34 for Sprint 5 (after C38 completes in Sprint 3)
+- **Status**: ⏳ Pending Daniel
 
-### 7. C14 Health Score: Scope Decision
-- **Option A: Health Score Badge** (5h) — Simple 0-100 score with color coding on business_card.py
-- **Option B: Full 5-Axis Radar** (18h) — Profitability/Growth/Financial Health/Dividend/Stability
-- **Challenger recommendation**: Option A given C+ design grade
-- **Status**: Badge approved for Sprint 4. Radar deferred to post-MVP.
+### 4. Business Card Page Information Architecture
+- **Context**: Challenger flagged that the business card page will have 12+ sections, violating "one key point per page"
+- **Proposal**: C37 + C43 are "above the fold" ten-second answer; everything else below fold or in tabs
+- **Status**: ⏳ Pending Daniel — approve the "above the fold" definition?
 
-### 8. Revised Roadmap Approval (Round 7)
-- **Plan**: 5-sprint roadmap, ~73h base → ~109h with 50% buffer
-- **Sprint 0**: Design Quality + Quick wins (2.7h)
-- **Sprint 1**: C28 Spike + LLM Architecture (5h)
-- **Sprint 2**: D02 Notifications + C31 Daily Company Story (15h)
-- **Sprint 3**: C28 Company Story Timeline (20h)
-- **Sprint 4**: C07 Custom Thresholds + C14 Health Badge (17h)
-- **Sprint 5**: C29 Explain Any Metric (10h)
-- **Decision needed**: Approve this roadmap?
+## Resolved This Cycle
 
-### 9. Category Browser + Group Structure Redesign
-- Both pages at grade D (lowest). Need structural redesign, not just polish.
-- **Recommendation**: Defer to post-MVP, after design system is better enforced.
-- **Decision needed**: Include now or defer?
-
-### 10. C31 Content Strategy
-- C31 reframed from "Daily Financial Challenge" to "Daily Company Story" (narrative-driven).
-- **Options**: A) Manual curation B) Template + FinMind data C) LLM-generated
-- **Decision needed**: Which approach, or hybrid?
-
-### 11. NEW-G18: events.yaml Schema Extension
-- C28 needs richer event data (related_metrics, price_at_event, narrative_category).
-- **Effort**: 2-3h. Must be done before C28 Sprint 3.
-- **Decision needed**: Approve schema extension?
-
-### 12. NEW-G19: User Preference/State Storage Abstraction
-- C31, C07, D02 all need per-user persistent state. Currently scattered across YAML files.
-- **Effort**: 2-3h. Should be done before Sprint 3.
-- **Decision needed**: Approve abstraction layer?
-
-### 13. NEW-G20: analogy_engine.py Coverage Gap
-- 8 metrics covered, 30+ needed for C29.
-- **Effort**: 4-6h. Must be done before C29 Sprint 5.
-- **Decision needed**: Approve coverage expansion?
+| Item | Decision |
+|------|----------|
+| R5 priority | Moved from P2 Sprint 3 → P0 Pre-Sprint 2 (alongside R1) |
+| C46 placement | Moved from Sprint 4 → Sprint 5 (Sprint 4 was over capacity) |
+| C47 scope | Split into Phase 1 (Sprint 5) + Phase 2 (post-plan) |
+| C43 framing | "Health explanation" not "health rating" — transparent scoring |
+| C42 framing | "探索" (explore) language, not investment language |
 
 ---
-*Updated: 2026-06-13 by PM after discussion round 7 + challenger 3-round challenge*
+*This file is maintained by the PM. Items move to resolved when Daniel confirms.*

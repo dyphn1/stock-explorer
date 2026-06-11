@@ -53,9 +53,47 @@
 - Challenger: `docs/design/challenger_discussion_r8.md`
 - Handoff: `docs/state/handoff_discuss.md`
 
-## Next Cycle Handoff
-Next theme: 🔧 Development → Sprint 1 (C28 Spike + LLM Architecture)
-Next dev cycle: Sprint 1
+## 🔍 Review Results (Round 9 — 2026-06-14)
 
-For full Sprint 0 context, see `docs/state/handoff_dev.md`
+### Competitor Research
+- 9 new competitors analyzed (財報狗, JZ Invest, 鉅亨網, TEJ, Yahoo奇摩股市, Simply Wall St, Stockopedia, Investopedia, Morningstar)
+- 6 new feature gaps identified: C42-C47
+- Key insight: Visual health scores are table stakes; discovery/screening is critical
+
+### Architecture Debt
+- 5 debt items (R1-R5), 12-19h total
+- R1 (extract financial_metrics.py) and R3 (batch API) are P0 — must do before Sprint 2
+- 7 performance bottlenecks identified
+
+### Design Review
+- 15 design issues tracked (2 P0, 5 P1, 8 P2)
+- Design grade: B+ (improved from B)
+- P0 issues: No visual health score (C43), No synthesis layer (C37)
+
+### Sprint Plan (Revised)
+- Pre-Sprint 2: R1 + R3 + R2 + R4 (11h debt work)
+- Sprint 2: C37 + C39 + C45 + C43 (49.5h)
+- Sprint 3: C41 + C38 + C44 + R5 (41.5h)
+- Sprint 4: C36 + C42 + C46 (58.5h)
+- Sprint 5: C47 + buffer (60h)
+- Grand total: 163-235h (~8-10 weeks)
+
+### Pending Daniel Decisions
+- C47 Education Academy scope: Split into phases or full build?
+- C42 Stock Screener priority vs C46 if R3 delayed
+
+### Key Files
+- docs/state/handoff_review.md (full review handoff)
+- docs/research/competitor_research.md (Round 9 section)
+- docs/design/architecture.md (architect analysis)
+- docs/design/design_review.md (design review)
+- docs/design/developer_estimates.md (cost estimates)
+- docs/status/current_problems.md (15 design issues)
+- docs/status/issues.md (C42-C47 added)
+
+## Next Cycle Handoff
+Next theme: 🔧 Development → Sprint 2 (C37 + C39 + C45 + C43)
+Next dev cycle: Sprint 2
+
+For full Round 9 review context, see `docs/state/handoff_review.md`
 For pending Daniel decisions, see `docs/state/pending_review.md`
