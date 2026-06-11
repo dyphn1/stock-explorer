@@ -2,15 +2,18 @@
 ## Summary
 - **Topic**: Development (🔧) — Sprint 3
 - **Date**: 2026-06-18
-- **Sprint Status**: Sprint 3 in progress → C44 remaining
+- **Sprint Status**: Sprint 3 in progress → C38 + D16 remaining
 
-## Completed Items (Sprint 2)
+## Completed Items (Sprint 2-3)
 | Item | Result |
 |------|--------|
 | C37: Key Takeaways Summary Card | ✅ Implemented (8651430) |
 | C39: What Changed Delta Card | ✅ Implemented (8651430) |
 | C45: Valuation Band Chart | ✅ Implemented (8d585c7) |
 | C43: Snowflake Health Visualization | ✅ Implemented (b1624af) |
+| R1: Extract financial_metrics.py | ✅ Implemented (f751110) |
+| C41: Read Next Recommendations | ✅ Implemented (1f98d73) |
+| C44: Risk Analysis MVP | ✅ Implemented (567239b) |
 
 ## Key Metrics
 - Design grade: A- (Round 11)
@@ -79,15 +82,27 @@
 - L0: 55/55 ✅
 - L1: 8/8 new + 10 pre-existing news failures (unchanged, not regressions) ✅
 
+## 🔧 Development Results (Sprint 3 — 2026-06-19, Cycle 2)
+
+### Completed This Cycle
+| Item | Commit | Result |
+|------|--------|--------|
+| C44: Risk Analysis MVP | 567239b | ✅ New risk_analyzer.py service (3 dimensions: customer concentration, financial health, event-based) + business_card.py integration with st.expander progressive disclosure |
+| docs/design/risk_analysis_design.md | 567239b | ✅ Architect design doc: 624 lines, historian tone guardrails, threshold specs |
+
+### Verification
+- L0: 56/56 ✅ (new file: risk_analyzer.py, +1 from baseline)
+- L1: 8 passed + 10 pre-existing event_dashboard failures (unchanged, not regressions) ✅
+- Architecture: risk_analyzer.py has NO streamlit import, NO API calls — clean service layer ✅
+
 ### Remaining Sprint 3 Items
 | Item | Effort | Status |
 |------|--------|--------|
-| C44: Risk Analysis MVP | 12-14h | ⏳ Next |
-| C38: Compare Stories Phase 1 | 10-12h | ⏳ After C44 |
-| D16: Split analogy_engine.py | 2-3h | ⏳ After C44 |
+| C38: Compare Stories Phase 1 | 10-12h | ⏳ Next |
+| D16: Split analogy_engine.py | 2-3h | ⏳ After C38 |
 
 ## Next Cycle Handoff
-Next theme: 🔧 Development → Sprint 4 (D24 + R3 + C44 + C51 + C48 + C53-1)
+Next theme: 🔧 Development → Sprint 3 continued (C38 Compare Stories Phase 1)
 
 For full Round 13 review context: docs/state/handoff_review.md
 For pending Daniel decisions: docs/state/pending_review.md
