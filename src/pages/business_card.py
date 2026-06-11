@@ -251,7 +251,7 @@ def _render_business_card(data: dict, client):
             rev = monthly_revenue.iloc[-1]["revenue"] / 1e8
             yoy = extra_metrics.get("revenue_yoy")
             yoy_analogy = get_yoy_analogy(yoy) if yoy is not None else ""
-            _白话_card("最近月營收", f"{rev:,.0f} 億", get_revenue_analyzer(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""))
+            _白话_card("最近月營收", f"{rev:,.0f} 億", get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""))
         elif extra_metrics.get("roe"):
             roe = extra_metrics["roe"]
             _白话_card("ROE", f"{roe:.1f}%", get_roe_analyzer(roe))
@@ -259,7 +259,7 @@ def _render_business_card(data: dict, client):
     with col3:
         if latest_per_pbr and latest_per_pbr.get("dividend_yield"):
             dy = latest_per_pbr["dividend_yield"]
-            _白话_card("殖利率", f"{dy:.2f}%", get_dividend_analyzer(dy))
+            _白话_card("殖利率", f"{dy:.2f}%", get_dividend_analogy(dy))
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
             _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analyzer(pbr))

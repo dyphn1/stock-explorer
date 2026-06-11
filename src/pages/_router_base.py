@@ -7,6 +7,7 @@ import streamlit as st
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta
 from src.data.finmind_client import FinMindClient, FinMindRateLimitError
+from src.services.financial_metrics import calc_extra_metrics, find_financial_value
 
 
 def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
@@ -54,7 +55,7 @@ def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
             name, result = future.result()
             data[name] = result
 
-    data["extra_metrics"] = _calc_extra_metrics(
+    data["extra_metrics"] = calc_extra_metrics(
         data["financial"], data["balance_sheet"], data["monthly_revenue"]
     )
 
@@ -63,71 +64,6 @@ def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
         st.session_state["_rate_limited"] = False  # reset after showing
 
     return data
-
-
-def _calc_extra_metrics(financial_df, balance_sheet_df, monthly_revenue_df) -> dict:
-    """計算額外的財務指標"""
-    metrics = {}
-
-    if financial_df is not None and len(financial_df) > 0:
-        try:
-            latest_date = financial_df["date"].max()
-            latest = financial_df[financial_df["date"] == latest_date]
-
-            revenue = _find_financial_value(latest, ["營業收入", "收入", "Revenue", "revenue"])
-            gross_profit = _find_financial_value(latest, ["營業毛利", "毛利", "Gross Profit", "gross_profit"])
-            operating_income = _find_financial_value(latest, ["營業利益", "營業利潤", "Operating Income", "operating_income"])
-            net_income = _find_financial_value(latest, ["淨利", "本期淨利", "Net Income", "net_income"])
-
-            if revenue and revenue > 0:
-                if gross_profit:
-                    metrics["gross_margin"] = round(gross_profit / revenue * 100, 1)
-                if operating_income:
-                    metrics["operating_margin"] = round(operating_income / revenue * 100, 1)
-                if net_income:
-                    metrics["net_margin"] = round(net_income / revenue * 100, 1)
-        except Exception:
-            pass
-
-    if balance_sheet_df is not None and len(balance_sheet_df) > 0:
-        try:
-            latest_date = balance_sheet_df["date"].max()
-            latest = balance_sheet_df[balance_sheet_df["date"] == latest_date]
-
-            total_assets = _find_financial_value(latest, ["資產總計", "總資產", "Total Assets", "total_assets"])
-            total_liabilities = _find_financial_value(latest, ["負債總計", "總負債", "Total Liabilities", "total_liabilities"])
-            total_equity = _find_financial_value(latest, ["權益總計", "股東權益", "Total Equity", "total_equity"])
-
-            if total_assets and total_assets > 0:
-                if total_liabilities:
-                    metrics["debt_ratio"] = round(total_liabilities / total_assets * 100, 1)
-                if total_equity:
-                    metrics["equity_ratio"] = round(total_equity / total_assets * 100, 1)
-        except Exception:
-            pass
-
-    if monthly_revenue_df is not None and len(monthly_revenue_df) > 12:
-        try:
-            latest_rev = monthly_revenue_df.iloc[-1]["revenue"]
-            last_year_rev = monthly_revenue_df.iloc[-13]["revenue"]
-            if last_year_rev > 0:
-                metrics["revenue_yoy"] = round((latest_rev - last_year_rev) / last_year_rev * 100, 1)
-        except Exception:
-            pass
-
-    return metrics
-
-
-def _find_financial_value(df, keywords: list) -> float:
-    """從財務資料中根據關鍵字找值"""
-    for _, row in df.iterrows():
-        type_val = str(row.get("type", ""))
-        for kw in keywords:
-            if kw.lower() in type_val.lower():
-                val = row.get("value")
-                if pd.notna(val) and val != 0:
-                    return float(val)
-    return 0.0
 
 
 def _section_title(title: str):

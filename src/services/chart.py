@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 import pandas as pd
+from src.services.financial_metrics import extract_quarterly_eps
 
 
 # ── Theme-aware color scheme ─────────────────────────────
@@ -647,25 +648,13 @@ def create_valuation_band_chart(
                 note = ""
 
         # ── Step 2: 從財務資料提取季度 EPS ──────────────────
-        fin = financial_df.copy()
-        fin["date"] = pd.to_datetime(fin["date"])
+        eps_df = extract_quarterly_eps(financial_df)
 
-        # 找出 EPS 列（type 欄位包含 eps 或 每股盈餘）
-        eps_keywords = ["eps", "每股盈餘", "earnings per share"]
-        eps_mask = fin["type"].str.lower().str.contains(
-            "|".join(eps_keywords), case=False, na=False
-        )
-        eps_df = fin[eps_mask].copy()
-
-        if len(eps_df) == 0:
+        if eps_df is None:
             fig = go.Figure()
             fig.add_annotation(text="無法從財務資料中提取 EPS", x=0.5, y=0.5, showarrow=False)
             _apply_theme_layout(fig)
             return fig, {}
-
-        # 每個日期取一列（同一日期可能有多列，取 value 最大的）
-        eps_df = eps_df.groupby("date", as_index=False)["value"].max()
-        eps_df = eps_df.sort_values("date").reset_index(drop=True)
 
         # ── Step 3: 計算 TTM EPS（近四季加總） ─────────────
         # 對每個股價日期，找到當時可用的最近 4 季 EPS 加總

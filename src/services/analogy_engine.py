@@ -6,6 +6,7 @@
 import random
 import pandas as pd
 from typing import Optional
+from src.services.financial_metrics import extract_quarterly_eps
 
 
 def get_revenue_analogy(revenue_billion: float, industry: str) -> str:
@@ -742,16 +743,8 @@ def compute_health_scores(
     eps_growth_score = 50.0
     if financial_df is not None and len(financial_df) >= 2:
         try:
-            fin = financial_df.copy()
-            fin["date"] = pd.to_datetime(fin["date"])
-            eps_keywords = ["eps", "每股盈餘", "earnings per share"]
-            eps_mask = fin["type"].str.lower().str.contains(
-                "|".join(eps_keywords), case=False, na=False
-            )
-            eps_df = fin[eps_mask].copy()
-            if len(eps_df) >= 2:
-                eps_df = eps_df.groupby("date", as_index=False)["value"].max()
-                eps_df = eps_df.sort_values("date")
+            eps_df = extract_quarterly_eps(financial_df)
+            if eps_df is not None and len(eps_df) >= 2:
                 latest_eps = eps_df.iloc[-1]["value"]
                 prev_eps = eps_df.iloc[-2]["value"]
                 if prev_eps > 0:
