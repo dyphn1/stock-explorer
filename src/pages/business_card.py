@@ -22,6 +22,7 @@ from src.services.analogy_engine import (
     compute_health_scores,
     get_health_summary,
 )
+from src.services.risk_analyzer import assess_risk
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.news_summarizer import summarize_news, get_news_impact_level
 from src.services.company_facts import get_company_facts
@@ -47,6 +48,37 @@ def get_health_dimension_explanation(dim_name: str, score: float) -> str:
         return "表現穩定，有改善空間"
     else:
         return "需要留意，可能拖累整體表現"
+
+
+_RISK_BADGES = {
+    "high":   "🔴 高風險",
+    "medium": "🟡 中風險",
+    "low":    "🟢 低風險",
+}
+
+_RISK_COLORS = {
+    "high":   "#E74C3C",
+    "medium": "#F39C12",
+    "low":    "#27AE60",
+}
+
+
+def _render_risk_dimension(dim: dict, stock_name: str):
+    """Render a single risk dimension as an expandable info card."""
+    badge = _RISK_BADGES.get(dim["risk_level"], "⚪ 未知")
+    color = _RISK_COLORS.get(dim["risk_level"], "#7F8C8D")
+
+    st.markdown(
+        f"""<div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;
+        border-left:4px solid {color};margin:0.5rem 0 1rem 0;">
+            <div style="font-weight:600;color:#2C3E50;">
+                {badge} {dim["title"]}
+            </div>
+            <div style="font-size:0.9rem;color:#2C3E50;margin-top:0.4rem;
+            line-height:1.7;">{dim["plain_language_description"]}</div>
+        </div>""",
+        unsafe_allow_html=True,
+    )
 
 
 def _render_business_card(data: dict, client):
@@ -220,6 +252,26 @@ def _render_business_card(data: dict, client):
         # 白話健康摘要
         health_summary = get_health_summary(health_scores)
         _info_card("健康摘要", health_summary, "🏥")
+
+    # ⚠️ 風險分析 (C44: Risk Analysis)
+    risk = assess_risk(data)
+    has_risk_dims = any(
+        risk.get(dim) is not None
+        for dim in ("customer_concentration", "financial_health", "event_based")
+    )
+    if has_risk_dims:
+        with st.expander("⚠️ 風險分析 — 什麼可能出問題？", expanded=False):
+            if risk.get("summary_text"):
+                st.markdown(
+                    f"""<div style="color:#7F8C8D;font-size:0.9rem;margin-bottom:0.8rem;">
+                    {risk["summary_text"]}</div>""",
+                    unsafe_allow_html=True,
+                )
+            for dim_key in ("customer_concentration", "financial_health", "event_based"):
+                dim = risk.get(dim_key)
+                if dim is None:
+                    continue
+                _render_risk_dimension(dim, stock_name)
 
     # 一句話定位
     one_liner = get_one_liner(stock_id, stock_name, industry)
