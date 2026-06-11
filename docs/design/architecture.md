@@ -388,3 +388,221 @@ Sprint 2 shipped 4 features with **no new service modules** and **no new perform
 *Created: 2026-06-17*
 *Maintainer: System Architect*
 *Next review: After Sprint 3 feature implementation*
+
+---
+
+## 2026-06-18 Technical Analysis — Review Round 12
+
+### Context
+
+Sprint 3 is in progress. R1 (financial_metrics.py extraction) and design fixes D-018, D-020, D-021, D-023 are complete. Remaining Sprint 3: C44 (Risk Analysis MVP), C41 (Read Next), C38 (Compare Stories P1), D16 (split analogy_engine.py). This analysis covers **architecture debt resolution status** and **new debt identification**. For feasibility assessment of remaining features, see `docs/design/architect_discussion_r12.md`.
+
+### Codebase Growth Summary
+
+| Metric | Round 9 | Round 11 | Round 12 |
+|--------|---------|----------|----------|
+| Total .py files (excl. `__pycache__`) | 31 | 31 | 31 |
+| Total application LOC | ~5,200 | ~7,699 | ~7,818 |
+| `analogy_engine.py` | ~192 | 857 | 850 (D16 pending) |
+| `financial_metrics.py` | — | — | **188 (new)** |
+| `chart.py` | ~490 | 757 | 779 |
+| `business_card.py` | ~337 | 479 | 447 |
+| `_router_base.py` | ~170 | ~170 | **177** |
+| L0 (Import) | 54/54 | 54/54 | **55/55 ✅** |
+| L1 (Render) | 15/18 | 15/15 | **18/18 ✅** |
+
+**Key change since Round 11**: R1 (financial_metrics.py extraction) is complete. This resolves D1, D2, and D17. `business_card.py` shrank from 479→447 lines because inline EPS extraction and PER percentile recomputation were replaced by the `financial_metrics.py` shared functions and the `create_valuation_band_chart()` interpretation return.
+
+### Architecture Debt Resolution Status
+
+#### ✅ RESOLVED (4 items)
+
+**D1: Duplicate financial metric calculation** — RESOLVED by R1
+- `financial_metrics.py` (188 lines) now contains `calc_extra_metrics()`, `find_financial_value()`, and all shared financial calculations.
+- `_router_base.py` imports `calc_extra_metrics, find_financial_value` from `financial_metrics.py` (line 10).
+- `peer_comparison.py`, `roe_calculator.py`, `financial_health.py` all import `find_financial_value` from `financial_metrics.py`.
+- The old `_calc_extra_metrics()` in `_router_base.py` has been fully removed. Only `calc_extra_metrics()` in `financial_metrics.py` remains.
+- **Impact**: ~80 lines of duplication eliminated. All financial calculations now go through one code path.
+
+**D2: `_find_financial_value` semantic duplication** — RESOLVED by R1
+- `find_financial_value()` now lives in `financial_metrics.py` (line 9).
+- All 4 consumers import from the single source: `_router_base.py`, `peer_comparison.py`, `roe_calculator.py`, `financial_health.py`.
+- No duplicate definitions remain in the codebase.
+
+**D17: EPS extraction logic triplicated across 3 files** — RESOLVED by R1
+- `extract_quarterly_eps()` and `extract_ttm_eps()` now live in `financial_metrics.py` (lines 21-84).
+- `chart.py` imports `extract_quarterly_eps` from `financial_metrics.py` (line 10) — uses it in `create_valuation_band_chart()` (line 651).
+- `analogy_engine.py` imports `extract_quarterly_eps` from `financial_metrics.py` (line 9) — uses it in `compute_health_scores()` (line 746).
+- `business_card.py` no longer has any inline EPS extraction code. The `eps_keywords` pattern, `str.contains()` filtering, `groupby("date").max()` dedup, and `tail(4).sum()` TTM calculation are all gone from the page file.
+- **Impact**: EPS extraction is now a single function. Changes to keywords, TTM window, or dedup logic only need to happen in one place.
+
+**D20: `business_card.py` valuation interpretation duplicates `chart.py` logic** — RESOLVED by D-020 fix
+- `create_valuation_band_chart()` now returns `(fig, interpretation_dict)` tuple (chart.py line 773).
+- `interpretation_dict` contains `{p25, p75, current_per, valuation_text}`.
+- `business_card.py` uses the returned `interp` dict (line 412: `fig, interp = create_valuation_band_chart(...)`) and renders it via `_info_card("估值解讀", interp["valuation_text"], "💡")` (line 423).
+- The old inline PER percentile recomputation (p25/p75 calculation + "偏高/偏低/中間" interpretation) in `business_card.py` has been fully removed.
+- **Impact**: Eliminates double computation on every page render. Valuation interpretation is computed once in `chart.py` and consumed by `business_card.py`.
+
+#### ⏳ PARTIALLY ADDRESSED (1 item)
+
+**D19: `business_card.py` inline HTML table generation** — PARTIALLY ADDRESSED
+- The dividend history table inline HTML (lines 340-360 in Round 11) was cleaned up during the D-020/D-021 fixes.
+- However, the health score dimension cards still use inline HTML with hardcoded styles.
+- The `_info_card()` / `_白话_card()` pattern from `_router_base.py` is now used for valuation interpretation (D-020 fix), showing the component-based approach is spreading.
+- **Remaining work**: Create `render_score_cards()` and `render_badge_table()` helpers in `ui_components.py` (R9, Sprint 3-4).
+
+#### 🔴 STILL OPEN (16 items)
+
+**D16: `analogy_engine.py` god module** — OPEN, 850 lines
+- Still contains 6 distinct responsibilities (analogies, key takeaways data, delta engine, health scoring, EPS extraction now delegated, one-liners).
+- R1 is complete, which was the blocker for D16. D16 can now proceed.
+- `analogy_engine.py` is imported by 4 files: `business_card.py` (11 functions), `financial_health.py` (6 functions), `peer_comparison.py` (3 functions), `operation_checkup.py` (4 functions).
+- **Recommendation**: Proceed with D16 immediately. The 2-3h estimate is realistic now that R1 is done.
+
+**D18: `_KEY_TAKEAWAYS` hardcoded dict** — OPEN
+- Still 120+ lines of hardcoded dict in `analogy_engine.py` (lines 200-321).
+- Should be migrated to `src/data/key_takeaways.yaml` as part of R5 (YAML migration).
+
+**D3: Inline HTML duplication across pages** — OPEN
+- `business_card.py`, `group_structure.py`, `etf_detail.py`, `etf_browser.py`, `watchlist_page.py` still contain large inline HTML strings.
+- D-020 fix showed progress: `business_card.py` now uses `_info_card()` for valuation interpretation.
+
+**D4: Service layer `__init__.py` wildcard imports** — OPEN
+- `src/services/__init__.py` still uses `from X import *` for 4 modules (including the new `financial_metrics.py`).
+
+**D5: No LLM integration layer** — OPEN
+- No abstraction exists. Template engines are still the only implementation.
+
+**D6: Hardcoded data in Python modules** — OPEN
+- `revenue_analyzer.py`, `group_structure.py`, `analogy_engine.py`, `peer_comparison.py` still have hardcoded data.
+- New `financial_metrics.py` does NOT have hardcoded data (clean extraction).
+
+**D7: `category_browser.py` N+1 API calls** — OPEN
+- Still sequential, not parallel.
+
+**D8: `etf_browser.py` sequential price fetching** — OPEN
+- Still sequential.
+
+**D9: Watchlist reads YAML on every operation** — OPEN
+- No in-memory caching.
+
+**D10: `events.yaml` read on every event query** — OPEN
+- No caching.
+
+**D11: No error boundary standardization** — OPEN
+- Inconsistent error handling across services.
+
+**D12: `_router_base.py` mixes routing and UI** — OPEN
+- `_section_title()`, `_白话_card()`, `_info_card()`, `_summary_card()` still in `_router_base.py` (lines 69-114).
+- These are used by 6+ page files.
+
+**D13: No test infrastructure** — OPEN
+- Zero test files exist.
+
+**D14: Sidebar architecture not extracted** — OPEN
+- `main.py` still contains ~85 lines of sidebar rendering code.
+
+**D15: FinMind client is not async-compatible** — OPEN
+- Synchronous API calls. ThreadPoolExecutor mitigates but standalone pages don't benefit.
+
+**D21: No new service modules — feature code concentrated** — OPEN
+- Contributed by D16. Will be resolved when D16 is done.
+
+### New Architecture Debt (D22+)
+
+#### D22: `financial_metrics.py` is a leaf service with no consumers in service layer
+
+- **Severity**: 🟢 Low
+- **Description**: `financial_metrics.py` is imported by page files (`_router_base.py`, `business_card.py`) and service files (`chart.py`, `analogy_engine.py`), but no other service imports it. This means the service-layer boundary is blurred — pages import directly from `financial_metrics.py` rather than going through a service facade.
+- **Impact**: Low. The 4-layer architecture is slightly bent but not broken. `financial_metrics.py` is a pure utility module (pure functions, no state), so the layer violation is minimal.
+- **Recommended Action**: No immediate action. If more shared utility modules are extracted, consider a `src/services/shared/` sub-directory for pure utility functions.
+
+#### D23: Tone guidelines for market-level features (from Round 11 discussion)
+
+- **Severity**: 🟡 Medium
+- **Description**: C51 (Sector Heatmap) and C49 (Market Pulse) will display market-level data. The current tone guidelines (from `company_facts.yaml` and analogy functions) are designed for single-stock explanations. Market-level features need "過去發生" language — factual, not predictive.
+- **Impact**: Without tone guidelines, market features may accidentally sound like investment advice.
+- **Recommended Action**: Add tone guidelines to `docs/design/tone_guidelines.md` before C51 implementation. This is a content task, not a code task.
+
+#### D24: `business_card.py` approaching architectural limit (carried from Round 11 discussion)
+
+- **Severity**: 🟡 Medium
+- **Description**: `business_card.py` is 447 lines after R1/D-020 cleanup (down from 479). Adding C44 risk section (~40 lines), C41 read-next (~30 lines), and C48 story card (~70 lines) will push it to ~590+ lines.
+- **Impact**: The page file becomes hard to navigate. Multiple features competing for space.
+- **Recommended Action**: Extract to `src/pages/business_card/` sub-directory before C48 implementation. See D27 in `architect_discussion_r12.md` for the proposed structure.
+
+#### D25: Market-level data flow is architecturally distinct from single-stock flow
+
+- **Severity**: 🟡 Medium
+- **Description**: The current architecture is built around a single `stock_id → data dict` pattern. C51 (Sector Heatmap) and C49 (Market Pulse) require market-wide → aggregate → visualize flow.
+- **Impact**: Without a clear abstraction, market-level features will ad-hoc the data flow.
+- **Recommended Action**: Create `src/services/market_data.py` as part of C51 implementation.
+
+#### D26: `story_composer.py` will import from multiple unstable services
+
+- **Severity**: 🟡 Medium
+- **Description**: C48's `story_composer.py` will import from `analogy_engine.py` (being split via D16), `company_facts.py`, `chart.py`, and `financial_metrics.py`.
+- **Impact**: C48 development may be blocked or coupled to unstable interfaces if D16 slips.
+- **Recommended Action**: Complete D16 before starting C48.
+
+#### D27: `business_card.py` architectural limit (duplicate of D24, consolidated)
+
+- **Severity**: 🟡 Medium
+- **Description**: Same as D24. Consolidated here for the debt register.
+- **Effort**: 2-3h (extract + update imports).
+
+### Performance Impact of R1 + Design Fixes
+
+No new performance bottlenecks were introduced. The R1 extraction and design fixes are computationally neutral:
+
+- **R1 (financial_metrics.py)**: Function extraction has zero runtime overhead. Same calculations, same data, just organized in one module.
+- **D-020 (interpretation return)**: Eliminates double computation of PER percentiles on every `business_card.py` render. Net positive.
+- **D-018 (C39 placement)**: Pure layout change. No performance impact.
+- **D-021 (dimension explanations)**: Adds one `st.markdown()` call per dimension. Negligible.
+- **D-023 (5-year window)**: Extends the price data window from 2 to 5 years. This increases the PER calculation loop from ~500 rows to ~1,250 rows (2.5x more iterations). For 5-year daily data × ~20 EPS values, this is ~25,000 iterations vs. ~10,000 previously. Still acceptable (<100ms) but worth monitoring.
+
+**Net performance impact**: Slightly positive (D-020 eliminates double computation) with one area to monitor (D-023 5-year window).
+
+### Feasibility Assessment for Remaining Sprint 3 Features
+
+#### C44: Risk Analysis MVP (Est. 12-14h)
+
+- **Feasibility**: ✅ **High**. The health scoring functions in `analogy_engine.py` already compute per-dimension scores. Risk analysis inverts the narrative.
+- **Dependencies**: `compute_health_scores()` (exists), `adaptive_engine.py` (event-based risks), `financial_metrics.py` (R1 — done ✅).
+- **Architecture Debt Interaction**: D16 (god module) — `compute_health_scores()` lives in `analogy_engine.py` (850 lines). C44 will import from this module. D16 split should happen before or alongside C44.
+- **Verdict**: **Proceed as planned.** Low risk, high value. Ensure consistent data sources between health and risk outputs.
+
+#### C41: Read Next Recommendations (Est. 6-8h)
+
+- **Feasibility**: ✅ **High**. No new data sources needed beyond what exists.
+- **Architecture Debt Interaction**: D6 (hardcoded data) — relationship data MUST go in `src/data/relationships.yaml`, not in Python.
+- **Verdict**: **Proceed as planned.** Lowest risk remaining Sprint 3 feature.
+
+#### C38: Compare Stories Phase 1 (Est. 10-12h)
+
+- **Feasibility**: 🟡 **Medium**. R1 (done ✅) unblocks the shared financial metrics dependency.
+- **Architecture Debt Interaction**: D16 — `analogy_engine.py` provides analogy functions for narrative text.
+- **Verdict**: **Proceed with phased approach.** Phase 1 is independently valuable.
+
+#### D16: Split analogy_engine.py (Est. 2-3h)
+
+- **Feasibility**: ✅ **High**. R1 (done ✅) was the blocker. Now unblocked.
+- **Verdict**: **Proceed immediately.** Unblocks C44, C38, and C48.
+
+### Summary
+
+**Resolved this round**: D1, D2, D17, D20 (4 items)
+**New debt identified**: D22, D23, D24, D25, D26, D27 (6 items, 1 low + 5 medium)
+**Still open**: D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D18, D19, D21 (17 items)
+
+**Total debt items**: 27 (4 resolved + 6 new + 17 open = 27 tracked, with 4 marked resolved)
+
+**Key architectural recommendation**: **D16 is the critical next step.** R1 is done, which was the blocker. D16 (2-3h) unblocks C44, C38, and C48. The sequencing should be: D16 → C44 → C41 → C38 for Sprint 3 remaining, then R3 → C51 → C48 → C53-1 for Sprint 4.
+
+**The architecture is healthy**: The 4-layer model holds. R1 was the highest-impact debt item and is now resolved. The codebase grew from ~7,699 to ~7,818 lines (+119) but `business_card.py` actually shrank (479→447) due to eliminated duplication. L0: 55/55, L1: 18/18 — all green.
+
+---
+
+*Created: 2026-06-18*
+*Maintainer: System Architect*
+*Next review: After Sprint 3 completion / Sprint 4 kickoff*

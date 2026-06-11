@@ -115,6 +115,45 @@ For Round 11 discussion: docs/state/handoff_discuss.md
 - #5 Assessment (C52 Quiz Mode)
 - #2 Structured education (C50 deferred, C52 partial)
 
+## 💡 Discussion Results (Round 13 — 2026-06-18)
+
+### Round 12 New Features Evaluated (C55-C62, from Round 12 Competitor Research)
+
+**Sprint 5 Approved:**
+| ID | Feature | Effort | Depends On |
+|----|---------|--------|------------|
+| C58 | Beginner Onboarding Flow | 14-22h | — (P1, prerequisite) |
+| C62 | Pre-Investment Checklist | 8-14h | — |
+| C56 | Explain This Metric | 12-18h | D24 (Sprint 4) |
+| C60 | Concept Mastery Badges | 8-14h | — (session-only MVP) |
+
+**Sprint 6 Approved:**
+| ID | Feature | Effort | Depends On |
+|----|---------|--------|------------|
+| C57 | Compare Concepts | 10-14h | — |
+| C55 | Investment Diary | 10-16h | — |
+| C61 | Sector Rotation Visualizer | 10-16h | C51 (Sprint 4) |
+
+**Sprint 7+ Approved:**
+| ID | Feature | Effort | Depends On |
+|----|---------|--------|------------|
+| C59 | AI Q&A Chatbot | 18-28h | All education features stable |
+
+**Key Decisions:**
+1. **"Foundation + Education Core" direction** — Reframed from "Education-First" to accurately reflect that C58/C60/C59 are UX/engagement/interface features supporting the education core (C56+C57+C62)
+2. **C58 moved to Sprint 5** — All roles agree onboarding is prerequisite for C56/C62 effectiveness
+3. **C60 moved to Sprint 5** — Lowest-effort feature, session-only MVP acceptable
+4. **Content creation starts Sprint 4** — C56/C57/C62 require ~15h content writing; begin as parallel workstream
+5. **C59 deferred to Sprint 7+** — Highest risk, benefits from stable education foundation
+6. **New data files** — `metric_explanations.yaml`, `concept_pairs.yaml`, `badges.yaml`, `checklist_items.yaml`
+7. **New card types** — `_diary_card()` (green), `_checklist_card()` (amber), `_badge_card()` (blue)
+8. **New architecture debt** — D25 (session state scalability), D26 (content creation bottleneck)
+
+**Challenger's 3-Round Summary:**
+- Round 1 (Feature Direction): ✅ RESOLVED — Direction reframed; 4/8 features are purely educational
+- Round 2 (Priority): ✅ RESOLVED — C58 moved to Sprint 5; C60 moved to Sprint 5
+- Round 3 (Goal Alignment): ✅ RESOLVED — M2 partially addressed; business_card.py risk mitigated; content creation starts Sprint 4
+
 ## 💡 Discussion Results (Round 12 — 2026-06-18)
 
 ### Sprint 3 Remaining + Sprint 4 Preparation Discussion

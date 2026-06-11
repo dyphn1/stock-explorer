@@ -1,79 +1,82 @@
 # Handoff – Discussion
 
 ## Summary
-- **Topic**: Discussion (💡) — Round 11
+- **Topic**: Discussion (💡) — Round 12
 - **Date**: 2026-06-18
 - **Participants**: PM, Architect, Designer, Developer, Challenger
-- **Theme**: Round 11 Feature Proposals (C48-C54) from Competitor Research
+- **Theme**: Round 12 Feature Proposals (C55-C62) from Competitor Research
 
 ## Idea Proposals
 | ID | Feature | Owner | Status |
 |----|---------|-------|--------|
-| C48 | Company Story Card (replaces C37) | Dev | ✅ Approved — Sprint 4 |
-| C49 | Daily Market Pulse | Dev | ✅ Approved — Sprint 5 |
-| C50 | Learning Progress Tracker | Dev | ⏳ Deferred — Sprint 5+ (needs D22 persistence layer) |
-| C51 | Sector Heatmap | Dev | ✅ Approved — Sprint 4 |
-| C52 | Quiz Mode (20-question MVP) | Dev | ✅ Approved — Sprint 5 |
-| C53 | Social Sharing (2-phase) | Dev | ✅ Approved — Sprint 4 (URL) + Sprint 5 (Image) |
-| C54 | Video/Audio Explanation | Dev | ⏳ Deferred — Sprint 5+ (needs R7 LLM + TTS) |
+| C55 | Investment Diary (Personal Reflection Journal) | Dev | ✅ Approved — Sprint 6 |
+| C56 | Explain This Metric (Interactive Concept Explainer) | Dev | ✅ Approved — Sprint 5 (P1) |
+| C57 | Compare Concepts (Financial Concept Comparison) | Dev | ✅ Approved — Sprint 6 |
+| C58 | Beginner Onboarding Flow (Guided First Experience) | Dev | ✅ Approved — Sprint 5 (P1) |
+| C59 | AI Q&A Chatbot (Natural Language Stock Questions) | Dev | ✅ Approved — Sprint 7+ |
+| C60 | Concept Mastery Badges (Gamified Learning) | Dev | ✅ Approved — Sprint 5 |
+| C61 | Sector Rotation Visualizer (Market Momentum Map) | Dev | ✅ Approved — Sprint 6 |
+| C62 | Pre-Investment Checklist (Educational Scaffolding) | Dev | ✅ Approved — Sprint 5 |
 
 ## Decisions Made
-1. **C48 replaces C37** (not alongside) — avoids page overload, fixes D-016 hero card style simultaneously
-2. **C51 is Sprint 4's highest priority** — introduces `market_data.py` shared infrastructure for market-level data
-3. **C49 follows C51 in Sprint 5** — reuses `market_data.py`, adds scheduling complexity
-4. **C52 scoped to 20-question MVP** — reduces content creation from 10-15h to 5h
-5. **C53 in two phases** — URL sharing (2-3h) in Sprint 4, image generation (5-9h) in Sprint 5
-6. **C50 and C54 deferred** — remain in backlog with infrastructure blockers documented (D22, R7)
-7. **New tone guidelines for market-level features** — "過去發生" language, factual not predictive
-8. **R3 and D16 are hard prerequisites for Sprint 4** — if they slip, defer C51 and keep C48 + C53-1
+1. **"Foundation + Education Core" direction adopted** — Reframed from "Education-First" to accurately reflect that C58 (onboarding) is UX, C60 (badges) is engagement, C59 (chatbot) is interface — all supporting the education core (C56 + C57 + C62).
+2. **C58 moved to Sprint 5** — All three roles agree onboarding is a prerequisite for C56/C62 effectiveness. Users who bounce before onboarding won't benefit from metric explanations.
+3. **C60 moved to Sprint 5** — Lowest-effort feature (8-14h), can be session-only MVP. Deferring to Sprint 7+ was unnecessarily conservative.
+4. **Content creation starts Sprint 4** — C56 (10 metric explanations), C57 (10 concept pairs), C62 (7 checklist items) require significant content work. Begin in Sprint 4 as parallel workstream.
+5. **C59 deferred to Sprint 7+** — Highest risk (18-28h), benefits from all education features being stable first.
+6. **C61 depends on C51** — Sector Rotation Visualizer extends C51's market_data.py. Natural Sprint 6 placement after C51 completes in Sprint 4.
+7. **business_card.py bloat mitigated** — D-025 (Sprint 3) + D24 (Sprint 4) are non-negotiable before C56/C62 touch the file.
 
 ## New Architecture Decisions
-- `market_data.py` — new service for market-level data aggregation (shared by C49, C51)
-- `story_composer.py` — new service for composing company stories (C48)
-- `export_service.py` — new utility for HTML-to-image rendering (shared by C48, C53)
-- `sector_mapping.yaml` — new YAML data file for sector classifications
-- `quiz_questions.yaml` — new YAML data file for quiz question bank
+- `metric_explanations.yaml` — New YAML data file for metric explanations (C56)
+- `concept_pairs.yaml` — New YAML data file for concept comparisons (C57)
+- `badges.yaml` — New YAML data file for badge definitions (C60)
+- `checklist_items.yaml` — New YAML data file for checklist content (C62)
+- New card types: `_diary_card()` (green), `_checklist_card()` (amber), `_badge_card()` (blue)
+- New page layouts: Investment Diary, Compare Concepts, AI Chatbot, Concept Mastery Badges
 
 ## New Architecture Debt
-- D23: Tone guidelines needed for market-level features (C49, C51) — P2
-- D24: business_card.py will grow further with C48 — consider extracting to sub-directory — P2
+- D25: Session state scalability — 4 new features (C55, C60, C62, C58) add session state keys. Monitor and refactor to session state manager if needed. — P2
+- D26: Content creation bottleneck — C56/C57/C62 require ~15h of content writing. Must start in Sprint 4 to avoid blocking Sprint 5-6. — P2
 
 ## Sprint Plan
 | Sprint | Features | Est. Hours | Core Value |
 |--------|----------|------------|------------|
-| 3 (in progress) | C44 + C41 + C38 + R1 + D16 | 33-50h | #1 Story, #3 Adaptive |
-| 4 | C51 + C48 + C53(Phase 1) | 24-33h | #4 Visual-first, #1 Story |
-| 5 | C49 + C52 + C53(Phase 2) | 33-47h | #3 Daily engagement, #5 Assessment |
-| 5+ | C50 + C54 | 46-69h | #2 Structured education |
+| 3 (in progress) | C41 + C44 + C38 + D16 + D-025 | 33-50h | #1 Story, #3 Adaptive |
+| 4 | R3 + D24 + C51 + C48 + C53-1 | 24-33h | #4 Visual-first, #1 Story |
+| 5 | C58 + C62 + C56 + C60 | 42-68h | #4 Point-to-point, Ten-second test |
+| 6 | C57 + C55 + C61 | 30-46h | #1 Story, #5 Benchmark |
+| 7+ | C59 | 18-28h | #1 Story, #4 Point-to-point |
 
 ## Challenger's 3-Round Summary
 | Round | Focus | Resolution |
 |-------|-------|------------|
-| 1 | Feature Direction | ✅ RESOLVED — C48 replaces C37; market_data.py is right direction; C52 scoped to 20 questions |
-| 2 | Priority | ✅ RESOLVED — C51 first (new infrastructure), C48 second (replaces existing), C49 after C51 |
-| 3 | Goal Alignment | ✅ RESOLVED — Market features align with historian positioning IF tone guidelines enforced; Sprint 4 load manageable; C50/C54 stay in backlog |
+| 1 | Feature Direction | ✅ RESOLVED — "Education-First" reframed as "Foundation + Education Core"; only 4/8 features are purely educational |
+| 2 | Priority | ✅ RESOLVED with revision — C58 moved to Sprint 5 (before/alongside C56); C60 moved to Sprint 5 |
+| 3 | Goal Alignment | ✅ RESOLVED with conditions — M2 milestone partially addressed by C56/C58; business_card.py risk mitigated by D-025/D24; content creation starts Sprint 4 |
 
-## Final PM Decision (Challenger ✅ Confirmed)
-**Direction A ("Quick Wins + Visual Impact") adopted with modifications:**
-- C48 replaces C37 (fixes D-016)
-- C51 first in Sprint 4 (introduces market_data.py)
-- C49 in Sprint 5 (reuses market_data.py)
-- C52 scoped to 20-question MVP
-- C53 in two phases (URL → image)
-- C50 and C54 deferred with blockers documented
+## Final PM Decision (Challenger ✅ Confirmed with Conditions)
+**"Foundation + Education Core" direction adopted with revisions:**
+- Sprint 5: C58 (Onboarding) + C62 (Checklist) + C56 (Explain Metric) + C60 (Badges)
+- Sprint 6: C57 (Compare Concepts) + C55 (Diary) + C61 (Sector Rotation)
+- Sprint 7+: C59 (AI Chatbot)
+- Content creation for C56/C57/C62 starts in Sprint 4 as parallel workstream
+- C58 uses modal-based tour (not CSS overlays) to work around Streamlit limitations
+- C56 starts with 5 metrics, expands to 10 based on user feedback
+- C60 is session-only MVP with clear user communication about ephemerality
+- C59 uses pattern matching (not LLM) with strict historian guardrail
 
-## Pending Daniel's Decision
-(No new items — existing items remain)
+**Pending Daniel's Decision** (unchanged from previous):
 1. C34 vs C46 priority for Sprint 5
-2. C47 Phase 1 scope (5 vs 10 lessons)
+2. C47 Phase 1 scope: 5 vs 10 lessons
 3. Business Card Page IA: "above the fold" definition
 
 ## Next Cycle Handoff
-Next: 🔧 Development → Sprint 3 (C44 + C41 + C38 + R1 + D16)
+Next: 🔧 Development → Sprint 3 continued (C41 + C44 + C38 + D16 + D-025)
 Read `docs/state/handoff.md` for Sprint 3 entry point.
 
 ## Full Discussion Docs
-- Architect: `docs/design/architect_discussion_r11.md`
-- Designer: `docs/design/designer_discussion_r11.md`
-- Developer: `docs/design/developer_discussion_r11.md`
-- Challenger: `docs/design/challenger_discussion_r11.md`
+- Architect: `docs/design/architect_discussion_r12.md`
+- Designer: `docs/design/designer_discussion_r12.md`
+- Developer: `docs/design/developer_discussion_r12.md`
+- Challenger: `docs/design/challenger_discussion_r12.md`

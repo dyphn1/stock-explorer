@@ -1,7 +1,7 @@
 # Stock Explorer — Current Problems
 
-> **Last Updated**: 2026-06-17
-> **Source**: Design Review Round 11 (2026-06-17)
+> **Last Updated**: 2026-06-18
+> **Source**: Design Review Round 12 (2026-06-18)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
@@ -70,32 +70,25 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Related Features**: C42
 - **Competitor Benchmark**: 財報狗 (advanced screener), Stockopedia (StockRank screening)
 
-### D-016: C37 Missing Orange/Amber Hero Card Style
+### D-021: C43 Missing Per-Dimension Plain-Language Explanations (PARTIALLY FIXED)
 - **Severity**: P1
 - **Added**: 2026-06-17
 - **Source**: Design Review Round 11
-- **Description**: C37 (Key Takeaways) uses the standard `_info_card()` with blue border (`#3498DB`) instead of the specified orange/amber hero card style (`#F39C12` border, `#FFF8F0` background). The design intent was for C37 to be the ONLY card using orange — the "hero card" of the page. Using the same blue border as every other card defeats this purpose.
-- **Affected Files**: `business_card.py` (line 152), `_router_base.py`
-- **Proposed Fix**: Create a new `_summary_card()` component in `_router_base.py` with orange/amber styling (`border-left:4px solid #F39C12`, `background:#FFF8F0`), and use it for C37.
-- **Effort**: 30 min
-
-### D-018: C39 Placement Too Low on Page
-- **Severity**: P1
-- **Added**: 2026-06-17
-- **Source**: Design Review Round 11
-- **Description**: C39 (What Changed) appears AFTER the "關鍵數字三連卡" section, not directly below C37 as specified. The intended flow was: summary → what changed → detailed data. Current order is: summary → detailed data → what changed. This reduces the "what's new" prominence.
-- **Affected Files**: `business_card.py` (lines 170-217)
-- **Proposed Fix**: Move C39 block (lines 200-217) to immediately after C37 block (lines 140-152), before the "關鍵數字三連卡" section.
-- **Effort**: 15 min
-
-### D-021: C43 Missing Per-Dimension Plain-Language Explanations
-- **Severity**: P1
-- **Added**: 2026-06-17
-- **Source**: Design Review Round 11
-- **Description**: Spec asked for one-line plain-language explanations on hover/click for each dimension (e.g., "🟢 獲利能力強：ROE 25%，每100元股東資金賺25元"). Current hover only shows "獲利能力: 85分". The dimension cards below show scores but not the underlying metric values or explanations.
-- **Affected Files**: `chart.py` (create_health_snowflake), `business_card.py` (lines 232-249)
-- **Proposed Fix**: Pass the underlying metric values (ROE, gross margin, etc.) into the hover template for each dimension. Add a plain-language explanation below each dimension card.
+- **Description**: Spec asked for one-line plain-language explanations on hover/click for each dimension (e.g., "🟢 獲利能力強：ROE 25%，每100元股東資金賺25元"). Round 12 partially fixed this: dimension cards now show generic score-based explanations, but the underlying metric values (ROE %, gross margin %, etc.) are still missing from both hover and cards. Hover template only shows "獲利能力: 85分".
+- **Affected Files**: `chart.py` (create_health_snowflake hover template), `business_card.py` (dimension cards)
+- **Proposed Fix**: Pass the underlying metric values (ROE, gross margin, etc.) into the hover template for each dimension. Add metric-specific plain-language explanations below each dimension card (e.g., "ROE 25%，每100元股東資金賺25元").
 - **Effort**: 1-2h
+- **Status**: Partially fixed in Round 12 — generic explanations added, metric values still missing
+
+### D-024: _info_card Uses Wrong Background Color
+- **Severity**: P1
+- **Added**: 2026-06-18
+- **Source**: Design Review Round 12
+- **Description**: `_info_card()` in `_router_base.py` (line 110) uses `background:#FFF8F0` (warm orange tint) instead of the design system's specified `background:#F8F9FA` (neutral light gray). This makes ALL info cards visually similar to the `_summary_card` (C37 hero card), reducing the hero card's visual distinctiveness. Since info cards are the most common card type on the page, this creates an overall warm-tinted appearance that undermines the intentional use of orange as a "hero" accent color.
+- **Affected Files**: `_router_base.py` (line 110)
+- **Design System Reference**: `docs/domain/design_system.md` line 74: "Card background: Light gray #F8F9FA", line 102: info card example uses `#F8F9FA`
+- **Proposed Fix**: Change `background:#FFF8F0` to `background:#F8F9FA` in `_info_card()`. This will restore the neutral background for info cards and make the orange hero card stand out.
+- **Effort**: 5 min
 
 ---
 
@@ -167,50 +160,14 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Related Features**: C47
 - **Competitor Benchmark**: Investopedia (Academy), Stockopedia (Academy)
 
-### D-017: C37 Bullet Count Exceeds Spec
+### D-025: C39 Missing Empty State Message
 - **Severity**: P2
-- **Added**: 2026-06-17
-- **Source**: Design Review Round 11
-- **Description**: Design spec said max 3 bullets for C37. Implementation caps at 5. For stocks with many available metrics, this can produce 5 bullets, pushing content down and violating the "≤ 200 characters" text limit.
-- **Affected Files**: `analogy_engine.py` (line 422: `return takeaways[:5]`)
-- **Proposed Fix**: Change cap to 3 (`return takeaways[:3]`) to match spec and enforce brevity.
-- **Effort**: 5 min
-
-### D-019: C39 Missing Delta Count Cap
-- **Severity**: P2
-- **Added**: 2026-06-17
-- **Source**: Design Review Round 11
-- **Description**: Spec said max 2 deltas. Implementation shows ALL deltas exceeding 10% threshold. Revenue, price, and YoY could all exceed 10%, showing 3 deltas.
-- **Affected Files**: `analogy_engine.py` (`compute_recent_deltas` function)
-- **Proposed Fix**: Add `return deltas[:2]` at the end of `compute_recent_deltas()` to enforce the 2-delta cap.
-- **Effort**: 5 min
-
-### D-020: C39 Missing Directional Color Coding
-- **Severity**: P2
-- **Added**: 2026-06-17
-- **Source**: Design Review Round 11
-- **Description**: Spec called for green (`#27AE60`) text for positive deltas and red (`#E74C3C`) text for negative deltas. Implementation uses default card text color for all deltas. The 📈/📉 emojis provide some visual cue, but the text itself isn't color-coded.
-- **Affected Files**: `business_card.py` (lines 208-216)
-- **Proposed Fix**: Apply inline color styling to delta text based on direction. Use `<span style="color:#27AE60">` for positive and `<span style="color:#E74C3C">` for negative.
-- **Effort**: 30 min
-
-### D-022: C43 Placement Not Near Top of Page
-- **Severity**: P2
-- **Added**: 2026-06-17
-- **Source**: Design Review Round 11
-- **Description**: The snowflake chart appears after "關鍵數字三連卡" and C39, not near the top of the page. Per Round 9, it should be "below C37 (Key Takeaways) or as a replacement for the 關鍵數字三連卡 section."
-- **Affected Files**: `business_card.py` (lines 219-253)
-- **Proposed Fix**: Move C43 block to immediately after C37, before C39 and key metrics. This makes the snowflake the second thing users see (after the summary), which aligns with the "ten-second test" principle.
+- **Added**: 2026-06-18
+- **Source**: Design Review Round 12
+- **Description**: When no deltas exceed the 10% threshold, the C39 section is completely hidden (`if deltas:` check at line 171). Users see no indication that the "what changed" analysis was performed. A brief "近期無顯著變化" message would be more informative than silence, maintaining user trust that the feature exists and was evaluated.
+- **Affected Files**: `business_card.py` (lines 171-182)
+- **Proposed Fix**: Add an `else` branch to show `_info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")` when no deltas exceed threshold.
 - **Effort**: 15 min
-
-### D-023: C45 Uses 2-Year Window Instead of 5-Year
-- **Severity**: P2
-- **Added**: 2026-06-17
-- **Source**: Design Review Round 11
-- **Description**: Spec said "current P/E vs 5-year range." Implementation uses 2-year window (730 days). This may be due to data availability, but it reduces the chart's usefulness for long-term valuation context.
-- **Affected Files**: `chart.py` (line 626: `cutoff_2y = pd.Timestamp.now() - pd.Timedelta(days=730)`)
-- **Proposed Fix**: Extend to 5 years (1825 days) if data is available. Add a fallback: if < 2 years of data available, show what's available with a note.
-- **Effort**: 30 min
 
 ---
 
@@ -221,17 +178,24 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 | D-001 | No Visual Health Score | P0 | 2026-06-17 | C43 (Snowflake Health Visualization) fully implemented with 5-dimension radar chart, color-coded scores, reference lines, and plain-language health summary. |
 | D-002 | No Synthesis Layer | P0 | 2026-06-17 | C37 (Key Takeaways) implemented with curated templates for top 20 stocks and auto-generated fallback for others. |
 | D-014 | No Valuation Context | P2 | 2026-06-17 | C45 (Valuation Band Chart) implemented with historical PER percentile band, current PER marker, and plain-language interpretation. |
+| D-016 | C37 Missing Orange/Amber Hero Card Style | P1 | 2026-06-18 | `_summary_card()` created with `#F39C12` border and `#FFF8F0` background. C37 now uses this component, making it the distinctive "hero card" of the page. |
+| D-017 | C37 Bullet Count Exceeds Spec | P2 | 2026-06-18 | Cap changed from `[:5]` to `[:3]` in `analogy_engine.py` line 423. |
+| D-018 | C39 Placement Too Low on Page | P1 | 2026-06-18 | C39 moved from after 關鍵數字三連卡 to directly after C37 (line 164). Page flow now: summary → what changed → health → details. |
+| D-019 | C39 Missing Delta Count Cap | P2 | 2026-06-18 | `return deltas[:2]` added at `analogy_engine.py` line 508. |
+| D-020 | C39 Missing Directional Color Coding | P2 | 2026-06-18 | Green (`#27AE60`) / red (`#E74C3C`) color spans added to delta text in `business_card.py` lines 176-179. |
+| D-022 | C43 Placement Not Near Top of Page | P2 | 2026-06-18 | C43 now appears as 3rd content section (line 184), after C37 and C39. |
+| D-023 | C45 Uses 2-Year Window Instead of 5-Year | P2 | 2026-06-18 | Extended to 5-year window (1825 days) with graceful fallback for insufficient data. |
 
 ---
 
 ## Statistics
 
-- **Total Issues**: 20
+- **Total Issues**: 19
 - **P0 (Blocking)**: 0
-- **P1 (Important)**: 7 (D-003, D-004, D-005, D-006, D-007, D-016, D-018, D-021)
-- **P2 (Optimization)**: 10 (D-008, D-009, D-010, D-011, D-012, D-013, D-015, D-017, D-019, D-020, D-022, D-023)
-- **Resolved**: 3 (D-001, D-002, D-014)
+- **P1 (Important)**: 7 (D-003, D-004, D-005, D-006, D-007, D-021, D-024)
+- **P2 (Optimization)**: 9 (D-008, D-009, D-010, D-011, D-012, D-013, D-015, D-025)
+- **Resolved**: 10 (D-001, D-002, D-014, D-016, D-017, D-018, D-019, D-020, D-022, D-023)
 
 ---
 
-*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 3 feature implementation.*
+*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 4 feature implementation.*

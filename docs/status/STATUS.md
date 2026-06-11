@@ -1,35 +1,43 @@
 # Stock Explorer Status
 
-## Current Theme: Review (Round 9 Complete)
+## Current Theme: Review (Round 12 Complete)
 - **Status**: Complete → Development next
-- **Last Updated**: 2026-06-14
-- **Cycle Type**: Sprint 2 pending
+- **Last Updated**: 2026-06-18
+- **Cycle Type**: Sprint 3 in progress
 
-## 🔍 Review Log — 2026-06-14 (Round 9)
-- **Competitor Research**: QA Engineer completed 9 new competitor analyses (財報狗, JZ Invest, 鉅亨網, TEJ, Yahoo奇摩股市, Simply Wall St, Stockopedia, Investopedia, Morningstar)
-- **Feature Gaps**: 6 new feature suggestions (C42-C47)
-- **Design Improvements**: 15 issues tracked (2 P0, 5 P1, 8 P2); Design grade B+
-- **Technical Debt**: 5 items (R1-R5), 12-19h total
-- **Challenger Challenges**: 3-round challenge conducted — REVISE → Accepted after 5 revisions (R5 moved to P0, C46 moved to Sprint 5, C47 split into phases, business card page IA defined, user journey map planned)
-- **Pending Daniel Decision**: 4 items — C47 scope, C42 vs C46 priority, C34 scheduling, business card page IA
-- **Revised Sprint Plan**: 5 sprints, 191h midpoint (147-201h range)
-- **Next Theme**: 🔧 Development → Sprint 2 (C37 + C39 + C45 + C43)
+## 🔍 Review Log — 2026-06-18 (Round 12)
+- **Competitor Research**: QA Engineer completed 9 new competitor analyses (eToro, Webull, Robinhood, 富邦e富, 元大證券, 永豐金證券, 玉山證券, Magnify.money, Tastytrade)
+- **Feature Gaps**: 8 new feature suggestions (C55-C62)
+- **Design Improvements**: 8 resolved issues, 2 new issues found; Design grade A
+- **Technical Debt**: 4 resolved items (D1, D2, D17, D20), 6 new items identified (D22-D27), 17 still open
+- **Challenger Challenges**: 3-round challenge conducted — Target alignment confirmed ✅
+- **Pending Daniel Decision**: Items written to PENDING_REVIEW.md
+- **Revised Sprint Plan**: Sprint 3: D16 → C44 → C41 → C38 → D-025; Sprint 4: R3 → D24 → C51 → C48 → C53-1
+- **Next Theme**: 🔧 Development → Sprint 3 continued (D16 + C44 + C41 + C38 + D-025)
 
 ## Verification Log
-|| Date | Gate 1 (Import) | Gate 2 (Render) | Gate 3 (Smoke) | Notes |
-|------|-----------------|-----------------|-----------------|----------------|-------|
-|| 2026-06-11 09:11 | ✅ 54/54 (L0) | ⚠️ 15/18 (L1) | — | Fix D-074: Fixed #F8F9FA in _白话_card() (pre-existing L1 failures unchanged) |
-|| 2026-06-11 09:12 | ✅ 54/54 (L0) | ⚠️ 15/18 (L1) | — | Fix D-005: Fixed _section_title() emoji conflict (pre-existing L1 failures unchanged) |
-|| 2026-06-11 09:13 | ✅ 54/54 (L0) | ⚠️ 15/18 (L1) | — | Fix G05: Fixed ETF category classification (pre-existing L1 failures unchanged) |
+||| Date | Gate 1 (Import) | Gate 2 (Render) | Gate 3 (Smoke) | Notes |
+||------|-----------------|-----------------|-----------------|-----------------|-------|
+||| 2026-06-18 06:47 | ✅ 55/55 (L0) | ✅ 18/18 (L1) | — | All verification gates passed — L0 and L1 green for first time |
+||| 2026-06-11 09:11 | ✅ 54/54 (L0) | ⚠️ 15/18 (L1) | — | Fix D-074: Fixed #F8F9FA in _白话_card() (pre-existing L1 failures unchanged) |
+||| 2026-06-11 09:12 | ✅ 54/54 (L0) | ⚠️ 15/18 (L1) | — | Fix D-005: Fixed _section_title() emoji conflict (pre-existing L1 failures unchanged) |
+||| 2026-06-11 09:13 | ✅ 54/54 (L0) | ⚠️ 15/18 (L1) | — | Fix G05: Fixed ETF category classification (pre-existing L1 failures unchanged) |
 
 ## Theme Description
 This cycle focuses on reviewing product gaps, optimizing existing features, conducting competitor research, and generating new feature suggestions.
 
-## 💡 Discussion Record - 2026-06-13
-- **Topic**: Evaluate 6 new feature proposals from Round 8 competitor research (C36-C41)
-- **Architect suggestion**: Prioritize C37 (Key Takeaways Summary Card), C39 (What Changed Recently Delta Card), and C41 (Read Next Recommendations) as high feasibility features that depend only on existing services/data layers with low technical risk
-- **Designer suggestion**: C37 as CRITICAL priority (directly solves beginner overwhelm, perfect ten-second test alignment); C36, C39, C41 as HIGH priority; defer C38 and replace C40 with "beginner mode by default" design philosophy
-- **Developer estimate**: C36: 10.5h, C37: 6.5h, C38: 11h, C39: 5.5h, C40: 10h, C41: 6.5h (refined estimates include implementation, basic error handling, manual testing)
-- **Challenger challenges**: 3-round challenge conducted - Round 1 (Feature Direction): Questioned historian alignment and better directions; Round 2 (Priority): Challenged sprint allocation and existing commitments; Round 3 (Goal Alignment): Identified underrepresented core values (#3 Adaptive, #5 Benchmark) and role contradictions; recommended revising scope by cutting C40, moving C38 earlier, deferring C39, reducing C36 scope, and adjusting roadmap
-- **Final decision**: Revised implementation plan: Sprint 2: C37 (Key Takeaways); Sprint 3: C36 (Visual Revenue Tree - top 10 stocks) + C41 (Read Next Recommendations); Sprint 4: C39 (What Changed Recently Delta Card); C38 (Compare Stories) and C40 (Beginner/Expert Mode Toggle) deferred/replaced with design principles
-- **Pending Daniel's decision**: None - all decisions resolved within team discussion cycle
+## 💡 Discussion Record - 2026-06-18
+- **Topic**: Evaluate 8 new feature proposals from Round 12 competitor research (C55-C62) and resolve architecture/design debt
+- **QA Findings**: 9 new competitors analyzed, 8 new feature gaps identified (C55-C62). Most impactful: C56 (Explain This Metric) — P1, 12-16h. Most strategically important: C58 (Beginner Onboarding Flow) — P1, 14-20h.
+- **Architect Findings**: R1 (financial_metrics.py extraction) complete — resolves D1, D2, D17. D16 (analogy_engine.py split) is critical path item unblocking C44, C38, C48. L0: 55/55, L1: 18/18 — all green.
+- **Designer Findings**: 8 Sprint 3 design issues resolved (D-016 through D-023), 2 new issues (D-024 P1, D-025 P2). Design grade upgraded to A. C44/C41 HIGH feasibility, C38 MEDIUM feasibility.
+- **Challenger Challenges**: 3-round challenge on feature gap authenticity, priorities, and goal alignment. Confirmation: ✅ 目標一致 with condition that D16 is addressed and historian positioning guardrails are maintained.
+- **Final Decision**: Sprint 3 sequence: D16 (analogy_engine split) → C44 (Risk Analysis) → C41 (Read Next) → C38 (Compare Stories) → D-025 (expandable card). D16 must be completed first as it unblocks multiple features.
+
+## Pending Daniel Decision
+1. **C34 vs C46 priority for Sprint 5** — C34 (Story Timeline) is vision P1, C46 (Moat) is P2
+2. **C47 Education Academy Phase 1 scope** — 5 lessons (12h) vs 10 lessons (20h)
+3. **Business Card Page IA** — Approve "above the fold" definition (C37 + C43 only)
+
+-- 
+*This STATUS.md was updated automatically during the Review Round 12 cron cycle.*

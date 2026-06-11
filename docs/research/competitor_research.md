@@ -1308,3 +1308,598 @@ TipRanks (Smart Score), Tickeron (AI Grade), Moomoo (AI Analyst), and Finimize (
 ---
 
 *This is the eleventh competitor research round. Seven new feature suggestions identified (C48-C54). The most impactful new gap is C50 (Learning Progress Tracker) — it transforms Stock Explorer from a lookup tool into a learning platform, which is critical for the "education-first" positioning. The most strategically important gap is C53 (Social Sharing) — zero-cost user acquisition through shareable analysis cards. The most urgent gap is C48 (Company Story Card) — it directly addresses the "ten-second test" design principle and has the highest ROI (8-12h effort for core value alignment).*
+
+
+
+# Stock Explorer Competitor Research Report — Round 12
+
+> **Date**: 2026-06-18
+> **Author**: QA Engineer (Round 12)
+> **Purpose**: Research 9 new competitors not covered in Rounds 1-11, focusing on international social/copy investing platforms, US broker education features, Taiwanese broker apps, and emerging AI-powered financial education tools
+> **Previous Rounds**: Round 1-7: Yahoo Finance, TradingView, Finviz, StatementDog, GoodInfo, CMoney, WantGoo, Public.com, Seeking Alpha, Koyfin, Finary, Sharesies, Stocksera, The Motley Fool, NerdWallet. Round 8-11: See main report above.
+
+---
+
+## New Competitors Analyzed (Not in Rounds 1-11)
+
+| Competitor | Type | Region | Relevance to Stock Explorer |
+|---|---|---|---|
+| **eToro** | Social/Copy Investing + Education | Global/Israel | 🔴 High — "CopyTrader" social learning + Academy; education-through-observation model |
+| **Webull** | Commission-Free Trading + Education | US/Asia | 🟡 Medium — paper trading + education center; gamified learning |
+| **Robinhood** | Commission-Free Trading + Learn Section | US | 🟡 Medium — "Robinhood Learn" + options education; bite-sized lessons |
+| **富邦e富 (Fubon eRich)** | TW Broker App + AI | TW | 🔴 High — AI-powered "Investment Compass" + social features; direct TW competitor |
+| **元大證券 (Yuanta Securities)** | TW Broker App + AI | TW | 🔴 High — "AI Stock Selection" + "Smart Direct" routing; direct TW competitor |
+| **永豐金證券 (Bank SinoPac)** | TW Broker App + Education | TW | 🟡 Medium — "Stock Learning Lab" + visualized financial analysis |
+| **玉山證券 (E.SUN Securities)** | TW Broker + Beginner Village | TW | 🟡 Medium — "Beginner Village" + structured onboarding; mentioned in Round 11 but never profiled |
+| **Magnify.money** | AI-Powered Financial Education | US/Global | 🔴 High — AI-generated visual explanations + interactive learning; emerging competitor |
+| **Tastytrade** | Education-First Options Platform | US | 🟡 Medium — "Learn → Paper Trade → Live Trade" pipeline; education-first philosophy |
+
+---
+
+## Detailed Competitor Profiles
+
+### 1. eToro (etoro.com)
+
+**Positioning**: "The world's leading social investment platform" — learn by copying experienced investors
+**Target Users**: Beginner to intermediate investors globally; 30M+ registered users
+
+**Key Features**:
+- **CopyTrader™**: Users can automatically copy the trades of successful investors in real-time — "See what they're doing, do what they're doing"
+- **Social Feed**: Every user has a financial social feed showing trades, commentary, and portfolio changes from people they follow
+- **eToro Academy**: Structured courses on investing fundamentals, technical analysis, and specific asset classes — includes quizzes and progress tracking
+- **Virtual Portfolio**: $100,000 virtual portfolio for practice trading with real market data
+- **Investor Profiles**: Detailed profiles of "Popular Investors" showing their performance history, risk score, portfolio composition, and trade rationale
+- **"Why They Invested" Rationale**: When a Popular Investor makes a trade, they can share their reasoning — educational context for every trade
+- **Risk Score System**: Every investor and asset gets a risk score (1-10) — helps beginners understand risk visually
+- **Social Sentiment**: "X% of eToro users are buying TSMC" — crowd sentiment as a data point
+
+**UX/Design Approach**:
+- **Social-first**: The feed is the homepage — content discovery through community
+- **Card-based**: Every investment, every investor, every piece of content is a card
+- **Transparency-focused**: Every trade, every performance metric is visible
+- **Copy-centric**: The "Copy" button is the most prominent action on every investor profile
+
+**Unique Capabilities**:
+- **CopyTrader**: Unique mechanism for learning by observation — beginners learn by watching experts
+- **Social learning**: Users learn investing by reading the rationale behind real trades
+- **Risk score**: Simple 1-10 risk rating for every investor and asset
+
+**Comparison with Stock Explorer**:
+
+| Feature | eToro | Stock Explorer |
+|---|---|---|
+| Social Learning | ✅ CopyTrader + Feed | ❌ Not built |
+| Education | ✅ eToro Academy | ✅ Core positioning |
+| Practice Trading | ✅ Virtual Portfolio | ❌ (positioning) |
+| Risk Score | ✅ 1-10 rating | ❌ Not built |
+| Plain-language | ⚠️ Some | ✅ Core feature |
+| TW Market | ⚠️ Limited | ✅ Deep coverage |
+| Trade Rationale | ✅ "Why they invested" | ❌ Not applicable |
+| Community | ✅ Full social network | ❌ Not built |
+
+**Key Insight for Stock Explorer**: eToro's "CopyTrader" is the ultimate social learning mechanism — beginners learn by observing and copying. While Stock Explorer deliberately avoids trading features, the "trade rationale" concept is analogous to our "analogy engine" — explaining WHY something happened, not just WHAT happened. eToro's risk score (1-10) is a simpler version of our planned C43 (Snowflake Health). The "social sentiment" feature (% of users buying/selling) is a crowd psychology data point that could complement our "historian" positioning — "Here's what happened, and here's what other people think about it."
+
+---
+
+### 2. Webull (webull.com)
+
+**Positioning**: "Commission-free trading with powerful tools" — trading platform with heavy education investment
+**Target Users**: US and Asian retail investors; 20M+ users globally
+
+**Key Features**:
+- **Webull Learn** (2025-2026): Structured education center with courses on stocks, options, ETFs, crypto — each course is 5-10 minutes with quizzes
+- **Paper Trading**: Full-featured paper trading with $1M virtual portfolio — real market data, real-time execution
+- **"Webull Classroom"**: Live and recorded webinars on investing topics — daily market analysis, strategy sessions
+- **Community Feed**: Stock-specific discussion boards with upvoted comments — similar to Reddit's r/wallstreetbets but moderated
+- **Technical Analysis Tools**: 60+ technical indicators, multi-chart layouts, drawing tools
+- **AI-Powered Alerts** (2026): AI monitors user's watchlist and generates alerts for unusual patterns, news, and price movements
+- **Fractional Shares**: Buy partial shares of any stock — lowers barrier to entry
+- **Extended Hours Trading**: Trade pre-market and after-hours
+
+**UX/Design Approach**:
+- **Dark mode default**: Professional trading aesthetic
+- **Panel-based**: Similar to TradingView — left icon bar with context-specific panels
+- **Education integrated**: Learn tab is a core navigation item, not an afterthought
+- **Mobile-first**: Native app is the primary platform
+
+**Unique Capabilities**:
+- **Paper trading with real data**: Practice without risk — similar to Investopedia Simulator
+- **AI-powered alerts**: Pattern recognition for watchlist stocks
+- **Community + education combo**: Discussion boards alongside structured courses
+
+**Comparison with Stock Explorer**:
+
+| Feature | Webull | Stock Explorer |
+|---|---|---|
+| Education Center | ✅ Webull Learn | ⚠️ Did You Know facts |
+| Paper Trading | ✅ $1M virtual | ❌ (positioning) |
+| Community | ✅ Discussion boards | ❌ Not built |
+| AI Alerts | ✅ Pattern-based | ❌ Not built |
+| Plain-language | ⚠️ Some | ✅ Core feature |
+| TW Market | ⚠️ Limited | ✅ Deep coverage |
+| Quizzes | ✅ Course quizzes | ❌ Not built |
+| Mobile App | ✅ Native | ❌ Streamlit only |
+
+**Key Insight for Stock Explorer**: Webull's "Learn" section is a more structured version of our planned C47 (Education Academy). The integration of community + education (discussion boards alongside courses) is a model for how Stock Explorer could combine structured learning with social features. The AI-powered alerts for watchlist stocks validate the concept of intelligent notifications (C02).
+
+---
+
+### 3. Robinhood (robinhood.com)
+
+**Positioning**: "Investing for everyone" — commission-free trading with education as a core pillar
+**Target Users**: Young, first-time investors in US; 23M+ users
+
+**Key Features**:
+- **Robinhood Learn** (2025-2026): Comprehensive, structured education library with 100+ articles and videos organized by topic: "What is a stock?", "What is an ETF?", "What is options trading?", "How to read financial statements"
+- **"Learn → Earn" Program**: Users earn small amounts of stock (e.g., $1-$5) for completing educational modules — gamified learning with financial incentive
+- **Options Education**: Industry-leading options education with interactive tutorials, probability calculators, and risk visualization
+- **Recurring Investments Education**: Teaches dollar-cost averaging through interactive tools and visual explanations
+- **"Robinhood Snacks"**: Daily 3-minute podcast and newsletter — "What happened in the market today" in plain language
+- **"First Stock" Onboarding**: Guided first investment experience — step-by-step tutorial for buying your first stock
+- **"Round-Ups" Education**: Teaches micro-investing concepts through automated round-ups
+- **Market Data Explanations**: Every metric on a stock page has a tooltip explaining what it means — similar to our glossary concept (C33)
+
+**UX/Design Approach**:
+- **Minimalist**: Clean, simple interface — no clutter
+- **Gamified**: Confetti animations for first trade, progress bars for learning
+- **Bite-sized**: Every piece of content is 3 minutes or less
+- **Mobile-first**: Native app is the primary platform
+
+**Unique Capabilities**:
+- **"Learn → Earn"**: Financial incentive for education — users earn stock for learning
+- **Options education**: Best-in-class interactive options tutorials
+- **"Snacks" daily briefing**: 3-minute daily market summary — similar to Finimize
+- **Metric tooltips**: Every financial metric has a plain-language explanation
+
+**Comparison with Stock Explorer**:
+
+| Feature | Robinhood | Stock Explorer |
+|---|---|---|
+| Structured Education | ✅ 100+ articles/videos | ⚠️ Did You Know facts |
+| Learn → Earn | ✅ Stock rewards | ❌ Not built |
+| Daily Briefing | ✅ Robinhood Snacks | ❌ Not built |
+| Metric Tooltips | ✅ Plain-language | ❌ Not built (C33 pending) |
+| Options Education | ✅ Interactive | ❌ Not built |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ❌ US only | ✅ Deep coverage |
+| Gamification | ✅ Confetti, progress | ❌ Not built |
+
+**Key Insight for Stock Explorer**: Robinhood's "Learn → Earn" program is a gamification mechanism that Stock Explorer could adapt — instead of earning stock, users earn "knowledge badges" or "concept mastery" points. The metric tooltips are exactly what our C33 (Glossary) proposes — validates the concept. The "Snacks" daily briefing is a lighter version of our C49 (Daily Market Pulse). Robinhood's options education is a content area Stock Explorer doesn't cover but could — explaining what options are (not how to trade them) aligns with the "historian" positioning.
+
+---
+
+### 4. 富邦e富 (Fubon eRich / 富邦e富投資平台)
+
+**Positioning**: "Your intelligent investment companion" — TW broker with AI-powered features
+**Target Users**: TW retail investors; one of the largest broker apps in Taiwan
+
+**Key Features**:
+- **AI Investment Compass (AI投資羅盤)**: AI analyzes user's risk profile and recommends asset allocation — not stock picking, but portfolio-level guidance
+- **"Smart Notification" System**: AI-generated alerts for portfolio changes, market events, and ex-dividend dates — personalized to user's holdings
+- **Social Features ("Follow the Leader")**: Users can follow experienced investors and see their portfolio changes (anonymized) — similar to eToro's CopyTrader but lighter
+- **"eRich Academy"**: Structured courses on investing fundamentals, technical analysis, and market trends — in Mandarin with TW stock examples
+- **Visualized Portfolio**: Clean, visual portfolio overview with plain-language performance summaries — "Your portfolio is up 5% this month, mainly driven by TSMC"
+- **"One-Click Report"**: Generate a one-page investment report summarizing portfolio performance, risk analysis, and recommendations — similar to WantGoo's PPT export concept
+- **AI-Powered News Summarization**: AI summarizes financial news relevant to user's holdings — "Here's what you need to know about your stocks today"
+- **Multi-Asset View**: Stocks, ETFs, bonds, and funds in one unified view
+
+**UX/Design Approach**:
+- **App-first**: Native mobile app is the primary platform
+- **AI-powered**: AI is integrated into every feature — notifications, recommendations, news
+- **Social layer**: Light social features (following, anonymized portfolios)
+- **Clean, modern**: Card-based layout with generous whitespace
+
+**Unique Capabilities**:
+- **AI Investment Compass**: AI-driven asset allocation (not stock picking) — unique among TW brokers
+- **Social following**: See what experienced investors are doing — social learning without full copy trading
+- **One-click report**: Automated portfolio report generation — similar to our C06 (PPT Export) concept
+- **AI news summarization**: Personalized news digest based on holdings
+
+**Comparison with Stock Explorer**:
+
+| Feature | 富邦e富 | Stock Explorer |
+|---|---|---|
+| AI Recommendations | ✅ Investment Compass | ❌ Not built |
+| Social Following | ✅ Anonymized | ❌ Not built |
+| Education | ✅ eRich Academy | ✅ Core positioning |
+| AI Notifications | ✅ Personalized | ❌ Not built |
+| One-Click Report | ✅ Portfolio report | ❌ Not built |
+| Plain-language | ⚠️ Some | ✅ Core feature |
+| TW Market | ✅ Deep | ✅ Deep |
+| Mobile App | ✅ Native | ❌ Streamlit only |
+| AI News Summary | ✅ Personalized | ❌ Not built |
+
+**Key Insight for Stock Explorer**: 富邦e富 is the most direct TW competitor with AI features. The "AI Investment Compass" is a portfolio-level recommendation system that doesn't pick stocks — this is philosophically aligned with Stock Explorer's "historian" positioning (explain, don't predict). The "one-click report" is exactly our C06 (PPT Export) concept — validates demand in the TW market. The social following feature is a lighter version of eToro's CopyTrader — social learning without the trading component. The AI news summarization is a feature that could complement our event dashboard.
+
+---
+
+### 5. 元大證券 (Yuanta Securities / 元大投資先生)
+
+**Positioning**: "Your professional investment partner" — TW broker with AI-powered stock selection
+**Target Users**: Active TW retail investors; one of the largest securities firms in Taiwan
+
+**Key Features**:
+- **AI Stock Selection (AI選股)**: AI-powered stock screening with natural language queries — "Show me companies with revenue growing > 10% and P/E < 15" → returns matching stocks with explanations
+- **"Smart Direct" Routing**: AI-optimized order routing for best execution — not relevant to Stock Explorer but shows AI investment
+- **"Investment Chatbot"**: AI chatbot that answers questions about stocks, markets, and investing — "What is TSMC's revenue growth?" → plain-language answer with data
+- **"Market Pulse"**: Daily market summary with sector heatmap and top movers — similar to our C49 (Daily Market Pulse) concept
+- **"Stock Comparison"**: Side-by-side stock comparison with visual metrics — similar to our peer comparison but with more visual presentation
+- **"Investment Diary"**: Users can record their investment rationale and track their thinking over time — a journaling feature for reflection
+- **"Knowledge Base"**: Structured articles on investing concepts with TW stock examples — similar to our C47 (Education Academy) concept
+- **"Risk Assessment"**: Interactive risk profile questionnaire that visualizes user's risk tolerance — "You are a moderate investor: here's what that means"
+
+**UX/Design Approach**:
+- **Professional**: Clean, data-rich interface — more professional than consumer apps
+- **AI-integrated**: AI is a core feature, not an add-on
+- **Multi-platform**: Web + mobile app + desktop terminal
+- **Chinese-first**: All content in Mandarin with TW market focus
+
+**Unique Capabilities**:
+- **AI chatbot**: Natural language Q&A about stocks and investing — similar to Finimize's "Ask Finimize"
+- **Investment Diary**: Journaling feature for investment reflection — unique among TW brokers
+- **Natural language screening**: Query stocks in plain language — "profitable tech companies" → results
+- **Risk visualization**: Interactive risk profile with visual representation
+
+**Comparison with Stock Explorer**:
+
+| Feature | 元大證券 | Stock Explorer |
+|---|---|---|
+| AI Chatbot | ✅ Natural language Q&A | ❌ Not built |
+| AI Screening | ✅ Natural language | ❌ Not built |
+| Investment Diary | ✅ Journaling | ❌ Not built |
+| Market Pulse | ✅ Daily summary | ❌ Not built |
+| Knowledge Base | ✅ Structured articles | ⚠️ Did You Know facts |
+| Risk Assessment | ✅ Interactive profile | ❌ Not built |
+| Plain-language | ⚠️ Some | ✅ Core feature |
+| TW Market | ✅ Deep | ✅ Deep |
+| Mobile App | ✅ Native | ❌ Streamlit only |
+
+**Key Insight for Stock Explorer**: 元大證券's "Investment Diary" is a unique feature — a journaling tool where users record their investment thinking. This is philosophically aligned with Stock Explorer's "historian" positioning — instead of predicting the future, users reflect on the past. The AI chatbot (natural language Q&A about stocks) is a more advanced version of our analogy engine — users ask questions in plain language and get plain-language answers. The natural language stock screening is a more user-friendly version of our C42 (Stock Screener) — instead of filling in form fields, users type "profitable tech companies" and get results.
+
+---
+
+### 6. 永豐金證券 (Bank SinoPac / 永豐金證券)
+
+**Positioning**: "Your wealth management partner" — TW broker with focus on financial education
+**Target Users**: TW retail investors; mid-tier securities firm with strong education focus
+
+**Key Features**:
+- **"Stock Learning Lab" (股票學習實驗室)**: Structured courses on fundamental analysis, technical analysis, and market trends — with TW stock examples
+- **"Financial Statement Visualizer"**: Interactive tool that visualizes financial statements — tap on "revenue" → see it on the income statement with plain-language explanation
+- **"Investment Simulator"**: Paper trading with TW stocks — practice buying/selling with virtual money
+- **"Market Sentiment Index"**: Proprietary sentiment index for TW market — combines institutional trading, news sentiment, and retail activity into a single gauge
+- **"Smart Alerts"**: AI-generated alerts for portfolio events, market movements, and news — personalized to user's watchlist
+- **"Sector Rotation Visualizer"**: Visual tool showing which sectors are gaining/losing momentum — similar to our C51 (Sector Heatmap) concept
+- **"Investment Checklist"**: Before buying a stock, users complete a checklist of key metrics — "Have you checked P/E? ROE? Dividend yield?" — educational scaffolding
+
+**UX/Design Approach**:
+- **Education-first**: Learning is a core navigation item, not a sidebar
+- **Visual**: Heavy use of charts, diagrams, and visual explanations
+- **Guided**: Step-by-step tutorials for every feature
+- **Chinese-first**: All content in Mandarin with TW market focus
+
+**Unique Capabilities**:
+- **Financial Statement Visualizer**: Interactive financial statement exploration with plain-language explanations — unique among TW brokers
+- **Investment Checklist**: Pre-trade educational scaffolding — teaches beginners what to look for before buying
+- **Market Sentiment Index**: Proprietary sentiment gauge — similar to our C35 (Market Mood Index)
+- **Sector Rotation Visualizer**: Visual sector momentum tool — similar to our C51 (Sector Heatmap)
+
+**Comparison with Stock Explorer**:
+
+| Feature | 永豐金證券 | Stock Explorer |
+|---|---|---|
+| Stock Learning Lab | ✅ Structured courses | ⚠️ Did You Know facts |
+| Financial Visualizer | ✅ Interactive | ❌ Not built |
+| Investment Simulator | ✅ Paper trading | ❌ (positioning) |
+| Sentiment Index | ✅ Proprietary gauge | ❌ Not built |
+| Smart Alerts | ✅ AI-generated | ❌ Not built |
+| Sector Visualizer | ✅ Rotation tool | ❌ Not built |
+| Investment Checklist | ✅ Pre-trade education | ❌ Not built |
+| Plain-language | ⚠️ Some | ✅ Core feature |
+| TW Market | ✅ Deep | ✅ Deep |
+
+**Key Insight for Stock Explorer**: 永豐金證券's "Financial Statement Visualizer" is a unique interactive tool — tap on a financial statement line item and see a plain-language explanation. This is a more interactive version of our C33 (Glossary) concept. The "Investment Checklist" is a pre-trade educational tool that teaches beginners what to look for — this aligns with our "historian" positioning by teaching users HOW to analyze, not WHAT to buy. The "Market Sentiment Index" validates our C35 (Market Mood Index) concept.
+
+---
+
+### 7. 玉山證券 (E.SUN Securities)
+
+**Positioning**: "Your trusted wealth management partner" — TW broker with strong beginner focus
+**Target Users**: TW retail investors, especially beginners; known for customer service
+
+**Key Features**:
+- **"Beginner Village" (新手村)**: A dedicated onboarding experience for new investors — 7-step guided tutorial covering: what is a stock, how to read a chart, what is P/E, what is a dividend, how to place an order, how to manage risk, how to build a portfolio
+- **"Investment Encyclopedia"**: Comprehensive glossary of financial terms with plain-language definitions and TW stock examples — similar to Investopedia's dictionary but localized for TW
+- **"Smart Portfolio"**: AI-powered portfolio analysis showing diversification, risk level, and performance attribution — "Your portfolio is 60% tech stocks, which is higher than recommended"
+- **"E.SUN Academy"**: Structured courses on investing fundamentals — video-based with quizzes and completion certificates
+- **"Market Overview"**: Daily market summary with sector performance and top movers — similar to our C49 (Daily Market Pulse)
+- **"Risk Meter"**: Visual risk indicator for every stock and portfolio — "This stock has a risk level of 7/10 due to high volatility"
+- **"Investment Goals Planner"**: Interactive tool for setting investment goals and tracking progress — "You want to save NT$1M in 5 years, here's how"
+
+**UX/Design Approach**:
+- **Beginner-friendly**: Every feature is designed for first-time investors
+- **Guided**: Step-by-step tutorials for every action
+- **Clean**: Minimalist design with generous whitespace
+- **Mobile-first**: Native app is the primary platform
+
+**Unique Capabilities**:
+- **Beginner Village**: 7-step onboarding — the most structured beginner experience among TW brokers
+- **Investment Encyclopedia**: TW-localized financial glossary — similar to our C33 (Glossary)
+- **Risk Meter**: Visual risk indicator — simpler than our C44 (Risk Analysis) but more accessible
+- **Goals Planner**: Investment goal setting and tracking — unique among TW brokers
+
+**Comparison with Stock Explorer**:
+
+| Feature | 玉山證券 | Stock Explorer |
+|---|---|---|
+| Beginner Village | ✅ 7-step onboarding | ❌ Not built |
+| Investment Encyclopedia | ✅ TW glossary | ❌ Not built (C33 pending) |
+| Smart Portfolio | ✅ AI analysis | ❌ Not built |
+| E.SUN Academy | ✅ Video courses | ⚠️ Did You Know facts |
+| Market Overview | ✅ Daily summary | ❌ Not built |
+| Risk Meter | ✅ Visual indicator | ❌ Not built |
+| Goals Planner | ✅ Goal tracking | ❌ Not built |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ✅ Deep | ✅ Deep |
+
+**Key Insight for Stock Explorer**: 玉山證券's "Beginner Village" is the most structured onboarding experience among TW brokers — 7 steps that teach beginners the basics before they start investing. This is a model for how Stock Explorer could structure its own onboarding. The "Investment Encyclopedia" is exactly our C33 (Glossary) concept — validates demand in the TW market. The "Risk Meter" is a simpler version of our C44 (Risk Analysis) — a visual 1-10 risk indicator that beginners can understand instantly.
+
+---
+
+### 8. Magnify.money
+
+**Positioning**: "AI-powered financial education that actually makes sense" — visual-first AI financial learning
+**Target Users**: US and global retail investors who want to understand financial concepts through AI-generated visual explanations
+
+**Key Features**:
+- **AI Visual Explanations**: Users ask any financial question → AI generates a visual explanation with charts, diagrams, and plain-language text — "What is P/E ratio?" → AI generates an interactive chart showing P/E with real examples
+- **"Explain This Company"**: Enter any stock ticker → AI generates a visual company profile with key metrics, business model explanation, and risk factors — all in plain language with custom visuals
+- **"Compare Concepts"**: Side-by-side comparison of financial concepts — "P/E vs P/B" → visual comparison showing when to use each
+- **"Interactive Calculators"**: Visual, interactive calculators for every financial concept — compound interest, DCF, valuation, etc. — users adjust sliders and see results in real-time
+- **"Learning Paths"**: Structured learning paths from beginner to advanced — "Start with 'What is a stock?' → 'How to read financial statements' → 'Valuation techniques'"
+- **"AI Quiz Generator"**: AI generates personalized quizzes based on what the user has been learning — adaptive difficulty
+- **"Visual Glossary"**: Every financial term has a visual explanation — not just text, but a custom diagram or chart
+
+**UX/Design Approach**:
+- **AI-first**: AI generates all content — no static articles
+- **Visual-first**: Every concept is explained with a custom visual
+- **Interactive**: Users don't just read — they interact with sliders, charts, and calculators
+- **Progressive**: Start simple, add complexity as user advances
+
+**Unique Capabilities**:
+- **AI-generated visual explanations**: Unique — AI creates custom charts and diagrams for every question
+- **Interactive calculators**: Visual, real-time calculators for every financial concept
+- **AI quiz generator**: Personalized quizzes based on learning history
+- **Visual glossary**: Every term has a custom visual explanation
+
+**Comparison with Stock Explorer**:
+
+| Feature | Magnify.money | Stock Explorer |
+|---|---|---|
+| AI Visual Explanations | ✅ Custom visuals | ❌ Not built |
+| Explain This Company | ✅ AI-generated | ✅ Business card page |
+| Compare Concepts | ✅ Side-by-side | ❌ Not built |
+| Interactive Calculators | ✅ Visual, real-time | ❌ Not built |
+| Learning Paths | ✅ Structured | ⚠️ Did You Know facts |
+| AI Quiz Generator | ✅ Adaptive | ❌ Not built |
+| Visual Glossary | ✅ Custom diagrams | ❌ Not built (C33 pending) |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ❌ US focus | ✅ Deep coverage |
+
+**Key Insight for Stock Explorer**: Magnify.money is the most aligned competitor with Stock Explorer's "education-first" positioning — both platforms prioritize visual, plain-language explanations of financial concepts. The "AI Visual Explanations" feature is a more advanced version of our analogy engine — instead of pre-written analogies, AI generates custom visuals on the fly. The "Interactive Calculators" are a feature Stock Explorer doesn't have — visual, real-time tools for exploring financial concepts. The "Compare Concepts" feature is a unique educational tool — side-by-side comparison of financial concepts (P/E vs P/B) that helps beginners understand when to use each metric.
+
+---
+
+### 9. Tastytrade (tastytrade.com)
+
+**Positioning**: "Learn to trade, not follow" — education-first options and futures platform
+**Target Users**: US options traders who want to understand what they're doing, not just follow signals
+
+**Key Features**:
+- **"Learn → Paper Trade → Live Trade" Pipeline**: Structured progression from education to practice to live trading — each stage has its own interface and tools
+- **"Tastytrade Education Library"**: 100+ hours of free video content on options, futures, and portfolio management — taught by experienced traders with plain-language explanations
+- **"Probability Analysis"**: Every trade shows the probability of profit — "This trade has a 65% chance of profit" — teaches probabilistic thinking
+- **"Risk Visualization"**: Every position shows a visual risk profile — "Here's your max gain, max loss, and breakeven point" — visual P&L diagrams
+- **"Market Analysis"**: Daily market analysis with plain-language explanations of what's happening and why — "The VIX is up 10%, which means options are more expensive"
+- **"Portfolio Risk Management"**: Visual portfolio-level risk analysis — "Your portfolio is net long delta, which means you profit if the market goes up"
+- **"Trade Journal"**: Built-in journaling for every trade — record rationale, outcome, and lessons learned
+- **"Community"**: Active community with live streams, chat rooms, and discussion boards — education-focused, not signal-focused
+
+**UX/Design Approach**:
+- **Education-first**: Education is the primary product, trading is secondary
+- **Visual**: Every concept is taught with visual diagrams and charts
+- **Probabilistic**: Teaches probability-based thinking, not prediction-based
+- **Community-driven**: Live streams and chat rooms for real-time learning
+
+**Unique Capabilities**:
+- **Learn → Paper Trade → Live Trade pipeline**: Structured progression from education to practice
+- **Probability analysis**: Every trade shows probability of profit — teaches probabilistic thinking
+- **Risk visualization**: Visual P&L diagrams for every position
+- **Trade journal**: Built-in reflection tool for every trade
+
+**Comparison with Stock Explorer**:
+
+| Feature | Tastytrade | Stock Explorer |
+|---|---|---|
+| Education Pipeline | ✅ Learn → Practice → Live | ❌ Not applicable |
+| Probability Analysis | ✅ Every trade | ❌ Not applicable |
+| Risk Visualization | ✅ Visual P&L | ❌ Not built |
+| Trade Journal | ✅ Built-in | ❌ Not built |
+| Market Analysis | ✅ Daily with education | ❌ Not built |
+| Community | ✅ Live streams | ❌ Not built |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ❌ US focus | ✅ Deep coverage |
+| Probabilistic Thinking | ✅ Core philosophy | ⚠️ Historian positioning |
+
+**Key Insight for Stock Explorer**: Tastytrade's "probability analysis" and "risk visualization" are unique features that teach probabilistic thinking — "This has a 65% chance of profit" rather than "This will make money." This is philosophically aligned with Stock Explorer's "historian" positioning — instead of predicting the future, explain the probabilities. The "trade journal" is similar to 元大證券's "Investment Diary" — a reflection tool that encourages learning from past decisions. The "Learn → Paper Trade → Live Trade" pipeline is a structured progression model that Stock Explorer could adapt for its own education features.
+
+---
+
+## Updated Competitor Overview Table (Round 12 Additions)
+
+| Dimension | eToro | Webull | Robinhood | 富邦e富 | 元大證券 | 永豐金證券 | 玉山證券 | Magnify.money | Tastytrade | **Stock Explorer** |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **Positioning** | Social Investing | Commission-Free | Investing for All | AI Companion | AI Selection | Education Focus | Beginner Village | AI Visual Ed | Education Pipeline | Beginner Education ("Historian") |
+| **Social Learning** | ✅ CopyTrader | ✅ Community | ❌ | ✅ Following | ❌ | ❌ | ❌ | ❌ | ✅ Community | ❌ MISSING |
+| **Education** | ✅ Academy | ✅ Learn | ✅ Learn+Earn | ✅ eRich Academy | ✅ Knowledge Base | ✅ Learning Lab | ✅ E.SUN Academy | ✅ AI Visual | ✅ 100+ hrs | ✅ Core |
+| **AI Features** | ⚠️ Risk Score | ✅ Alerts | ❌ | ✅ Compass | ✅ Chatbot+Screen | ✅ Alerts | ✅ Smart Portfolio | ✅ Full AI | ❌ | ❌ MISSING |
+| **Visual Analysis** | ⚠️ Cards | ⚠️ Charts | ⚠️ Minimal | ✅ Portfolio | ✅ Comparison | ✅ Visualizer | ✅ Risk Meter | ✅ Custom Visuals | ✅ P&L Diagrams | ✅ PPT-style |
+| **Notifications** | ✅ Push | ✅ Push | ✅ Push | ✅ AI Smart | ✅ Alerts | ✅ Smart | ✅ Push | ❌ | ✅ Email | ❌ MISSING |
+| **Glossary/Tooltips** | ⚠️ Some | ⚠️ Some | ✅ Metric Tooltips | ❌ | ❌ | ✅ Visualizer | ✅ Encyclopedia | ✅ Visual Glossary | ❌ | ❌ MISSING (C33) |
+| **Risk Visualization** | ✅ 1-10 Score | ⚠️ Basic | ⚠️ Options | ✅ AI Analysis | ✅ Assessment | ✅ Checklist | ✅ Risk Meter | ✅ Interactive | ✅ P&L Visual | ❌ MISSING (C44) |
+| **Daily Engagement** | ✅ Feed | ✅ Classroom | ✅ Snacks | ✅ AI News | ✅ Market Pulse | ✅ Sentiment | ✅ Market Overview | ❌ | ✅ Analysis | ❌ MISSING |
+| **Mobile App** | ✅ Native | ✅ Native | ✅ Native | ✅ Native | ✅ Native | ✅ Native | ✅ Native | ⚠️ Web | ✅ Native | ❌ Streamlit only |
+| **TW Market** | ⚠️ Limited | ⚠️ Limited | ❌ US | ✅ Deep | ✅ Deep | ✅ Deep | ✅ Deep | ❌ US | ❌ US | ✅ Deep |
+| **Free** | ⚠️ Freemium | ✅ Free | ✅ Free | ✅ Free | ✅ Free | ✅ Free | ✅ Free | ⚠️ Freemium | ✅ Free | ✅ Free |
+
+---
+
+## New Feature Ideas from Round 12
+
+### [ISSUE-C55] "Investment Diary" — Personal Reflection Journal
+- **Source**: Competitor research round 12 (元大證券 "Investment Diary", Tastytrade "Trade Journal")
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #4 "Point-to-point knowledge construction" + "Historian" positioning
+- **Description**: 元大證券's "Investment Diary" and Tastytrade's "Trade Journal" both allow users to record their thinking about stocks — why they're interested, what they expect, what they learned. Stock Explorer has no reflection mechanism — users read about companies but never record their own thoughts. An "Investment Diary" would: (1) let users add personal notes to any company page, (2) track their notes over time, (3) connect notes to actual outcomes ("You noted TSMC's high capital expenditure 3 months ago — here's what happened since"), (4) serve as a personal learning archive. This is the ultimate "historian" feature — users become historians of their own investment journey.
+- **Implementation**: Add a "📝 投資筆記" section to each company page with a text input. Store notes in session state (or local file). Add a "My Diary" page showing all notes chronologically with links back to company pages. Optionally connect notes to events ("You wrote this before the earnings report — here's what happened").
+- **Competitive Gap**: 🔴 No TW competitor has personal reflection journaling; 元大證券/Tastytrade prove demand; unique "historian of self" differentiator
+
+---
+
+### [ISSUE-C56] "Explain This Metric" — Interactive Financial Concept Explainer
+- **Source**: Competitor research round 12 (Magnify.money "AI Visual Explanations", 永豐金證券 "Financial Statement Visualizer", Robinhood "Metric Tooltips")
+- **Priority**: P1
+- **Effort**: 12-16h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + Core value #1 "Story first"
+- **Description**: Magnify.money generates AI visual explanations for any financial concept. 永豐金證券's Financial Statement Visualizer lets users tap on any line item for a plain-language explanation. Robinhood has metric tooltips on every stock page. Stock Explorer currently shows metrics with analogies but no interactive "explain this" feature. An "Explain This Metric" feature would: (1) add an "❓" button next to every metric on the business card page, (2) clicking it opens a visual explanation with a chart, analogy, and real-world example, (3) explanations are generated from templates (not AI) with TW stock data, (4) each explanation includes "Why this matters" and "What to watch for." This is a more interactive version of C33 (Glossary) — instead of a static glossary, users get contextual explanations for every metric they encounter.
+- **Implementation**: Create `src/data/metric_explanations.yaml` with metric → explanation + analogy + example + "why it matters." Add an "❓" button next to every metric that opens an expander with the explanation. Use Plotly for mini-charts showing the metric's historical trend. Prioritize the 10 most common metrics (ROE, P/E, P/B, gross margin, revenue growth, dividend yield, debt ratio, EPS, free cash flow, institutional ownership).
+- **Competitive Gap**: 🔴 No TW competitor has interactive metric explanations with visual aids; Magnify.money/Robinhood/永豐 prove demand; directly addresses "ten-second test"
+
+---
+
+### [ISSUE-C57] "Compare Concepts" — Financial Concept Comparison Tool
+- **Source**: Competitor research round 12 (Magnify.money "Compare Concepts")
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + Core value #5 "Benchmark-oriented analysis"
+- **Description**: Magnify.money has a "Compare Concepts" feature that shows side-by-side comparisons of financial concepts — "P/E vs P/B: when to use each." Stock Explorer has peer comparison (company vs company) but no concept comparison (metric vs metric). A "Compare Concepts" tool would: (1) let users select two financial concepts (e.g., ROE vs ROA, P/E vs P/B, dividend yield vs payout ratio), (2) show a side-by-side comparison with definitions, formulas, when to use each, and real TW stock examples, (3) include a "Which is better for this company?" analysis that explains which metric is more relevant for the current stock. This helps beginners understand that financial metrics are tools, not answers — you choose the right tool for the job.
+- **Implementation**: Add a "📊 概念比較" page accessible from the navbar. Users select two concepts from a dropdown. The page shows: definitions, formulas, pros/cons, when to use each, and a real TW stock example comparing both metrics. Content is pre-written for the 10 most common concept pairs.
+- **Competitive Gap**: 🟡 No TW competitor has concept comparison; Magnify.money proves demand; unique educational differentiator
+
+---
+
+### [ISSUE-C58] "Beginner Onboarding Flow" — Guided First Experience
+- **Source**: Competitor research round 12 (玉山證券 "Beginner Village" 7-step onboarding, Robinhood "First Stock" guided experience, eToro "Virtual Portfolio" practice)
+- **Priority**: P1
+- **Effort**: 14-20h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + beginner-friendly
+- **Description**: 玉山證券's "Beginner Village" is a 7-step guided onboarding that teaches beginners the basics before they start. Robinhood's "First Stock" is a step-by-step tutorial for buying your first stock. Stock Explorer has no onboarding — users land on the homepage and must figure out what to do. A "Beginner Onboarding Flow" would: (1) detect first-time user (session state), (2) show a 5-step guided tour: "Welcome to Stock Explorer → Search for a company → Read the business card → Explore the event dashboard → Try the watchlist," (3) each step highlights the relevant UI element with a tooltip, (4) at the end, suggest 3 beginner-friendly companies to explore (e.g., TSMC, 鴻海, 富邦媒), (5) offer a "Beginner Guide" PDF download. This directly addresses the #1 UX complaint: "I don't know where to start."
+- **Implementation**: Add a session state flag `onboarding_complete`. If False, show a modal with the 5-step tour. Use Streamlit's `st.tooltip` or custom CSS overlays for step highlighting. Store completion in session state. Add a "Help" button in the navbar to replay the tour.
+- **Competitive Gap**: 🔴 No TW competitor has structured onboarding for stock analysis tools; 玉山證券/Robinhood prove demand; critical for beginner retention
+
+---
+
+### [ISSUE-C59] "AI Q&A Chatbot" — Natural Language Stock Questions
+- **Source**: Competitor research round 12 (元大證券 "Investment Chatbot", Finimize "Ask Finimize", Magnify.money "AI Visual Explanations")
+- **Priority**: P2
+- **Effort**: 16-24h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #4 "Point-to-point knowledge construction"
+- **Description**: 元大證券 has an AI chatbot that answers natural language questions about stocks — "What is TSMC's revenue growth?" → plain-language answer with data. Finimize's "Ask Finimize" answers any financial question. Stock Explorer has no Q&A mechanism — users must navigate to find information. An "AI Q&A Chatbot" would: (1) provide a chat interface where users ask questions about any stock, (2) answer with plain-language explanations using existing analogy engine + FinMind data, (3) support questions like "What happened to TSMC last quarter?", "How does TSMC make money?", "What are the risks?", (4) suggest follow-up questions to guide learning. This is the most natural way for beginners to explore — they ask questions in their own words.
+- **Implementation**: Add a "💬 問問股識" page with a chat interface. Use pattern matching (not LLM) to map questions to pre-built responses: "revenue" → show revenue chart + plain-language summary, "risk" → show C44 risk analysis, "dividend" → show dividend data. Integrate with existing analogy engine for plain-language responses. Suggest 3 follow-up questions after each answer.
+- **Competitive Gap**: 🟡 元大證券 has AI chatbot but only for their own platform; no TW competitor has Q&A for stock analysis; natural language interface for beginners
+
+---
+
+### [ISSUE-C60] "Concept Mastery Badges" — Gamified Learning Achievement System
+- **Source**: Competitor research round 12 (Robinhood "Learn → Earn" stock rewards, Khan Academy badges, Finimize completion certificates)
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + engagement
+- **Description**: Robinhood rewards users with stock for completing educational modules. Khan Academy has achievement badges. Finimize gives completion certificates. Stock Explorer has no gamification — users explore companies but get no recognition for learning. "Concept Mastery Badges" would: (1) award badges for learning milestones — "Read 5 company analyses" → 📚 Reader badge, "Completed 10 quizzes" → 🧪 Quiz Master badge, "Explored 3 sectors" → 🌐 Sector Explorer badge, (2) badges are displayed on a "Learning Profile" page, (3) each badge links to the companies/concepts that earned it, (4) badges are shareable (connects to C53 Social Sharing). This creates a positive feedback loop — learning → badges → sharing → more learning.
+- **Implementation**: Add a `badges.yaml` definition file with badge criteria. Track user actions in session state (companies viewed, quizzes completed, features used). Award badges when criteria are met. Display badges on a "🏆 學習成就" page. Integrate with C52 (Quiz Mode) and C50 (Learning Progress Tracker) when built.
+- **Competitive Gap**: 🟡 No TW competitor has gamified learning badges; Robinhood/Khan Academy prove demand; drives engagement and retention
+
+---
+
+### [ISSUE-C61] "Sector Rotation Visualizer" — Market Momentum Map
+- **Source**: Competitor research round 12 (永豐金證券 "Sector Rotation Visualizer", StockEdge sector heatmaps, Moomoo "Market Heatmap with Education")
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #5 "Benchmark-oriented analysis" + Core value #3 "Adaptive and self-evolving"
+- **Description**: 永豐金證券's "Sector Rotation Visualizer" shows which sectors are gaining/losing momentum over time — not just "which sectors are up today" but "which sectors are rotating from bearish to bullish." Stock Explorer's planned C51 (Sector Heatmap) shows a static snapshot. A "Sector Rotation Visualizer" would add the time dimension: (1) show sector momentum over 1 week, 1 month, and 3 months, (2) highlight sectors that are "rotating" (changing direction), (3) plain-language explanation: "Semiconductor sector has been bearish for 3 months but started turning bullish last week — driven by AI chip demand recovery," (4) connect to individual companies: "If you're interested in semiconductors, here are the top 3 companies in this sector." This is a more dynamic version of C51 that aligns with the "historian" positioning — explaining what's happening, not predicting what will happen.
+- **Implementation**: Extend C51 (Sector Heatmap) with a time-series view. Use FinMind sector performance data. Add a time selector (1W/1M/3M) and highlight sectors with significant momentum changes. Plain-language explanations generated from templates.
+- **Competitive Gap**: 🟡 永豐金證券 has sector rotation but without plain-language explanations; no TW competitor combines sector rotation with educational context
+
+---
+
+### [ISSUE-C62] "Pre-Investment Checklist" — Educational Scaffolding Tool
+- **Source**: Competitor research round 12 (永豐金證券 "Investment Checklist", Tastytrade "Learn → Paper Trade → Live Trade" pipeline)
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #4 "Point-to-point knowledge construction" + "Historian" positioning
+- **Description**: 永豐金證券's "Investment Checklist" is a pre-trade educational tool — before buying a stock, users complete a checklist of key metrics to check. Tastytrade's pipeline teaches users before they trade. Stock Explorer has no educational scaffolding — users read about companies but don't know what to look for. A "Pre-Investment Checklist" would: (1) appear at the bottom of each company page as a "📋 投資前檢查清單," (2) list 5-7 key items to check: "Do you understand what this company does? → Have you checked the P/E ratio? → Have you looked at the debt level? → Do you know the main risks? → Have you compared it to its peers? → Do you understand the sector dynamics? → Have you checked recent events?," (3) each item is clickable → scrolls to the relevant section on the page, (4) checking off items is optional and tracked in session state, (5) the checklist is educational, not prescriptive — it teaches users what to look for, not what to do. This is the "historian" positioning in action: "Here's what you should understand before making a decision."
+- **Implementation**: Add a collapsible "📋 投資前檢查清單" section at the bottom of the business card page. Each item is a checkbox with a label. Clicking an item scrolls to the relevant section (using anchor links). Progress tracked in session state. No data is stored — this is a learning tool, not a recommendation.
+- **Competitive Gap**: 🔴 No TW competitor has educational scaffolding checklists; 永豐金證券 proves demand; perfect "historian" differentiator
+
+---
+
+## Key Insights from Round 12
+
+### 1. **Social Learning is the Dominant Engagement Model (Confirmed)**
+eToro (CopyTrader), 富邦e富 (social following), Webull (community), and Tastytrade (live streams) all use social learning as a core engagement mechanism. Stock Explorer remains entirely solo-learning. While full social features may be out of scope, lightweight social elements (sharing, following, community discussion) would dramatically improve engagement.
+
+### 2. **AI is Becoming Table Stakes in TW Market**
+富邦e富 (AI Investment Compass), 元大證券 (AI Chatbot + Natural Language Screening), and 永豐金證券 (AI Alerts) all have AI features. The TW broker market is rapidly adopting AI. Stock Explorer's "historian" positioning deliberately avoids AI stock-picking, but AI-powered explanations (C56, C59) and AI Q&A could complement the structured analysis without compromising the positioning.
+
+### 3. **Interactive Education is the New Standard**
+Magnify.money (AI Visual Explanations), 永豐金證券 (Financial Statement Visualizer), and Robinhood (Metric Tooltips) all provide interactive, visual explanations of financial concepts. Static text is no longer sufficient — users expect to click, explore, and interact with educational content. Stock Explorer's analogy engine is a good foundation but needs interactive delivery (C56).
+
+### 4. **Onboarding is Critical for Beginner Retention**
+玉山證券 (Beginner Village), Robinhood (First Stock), and eToro (Virtual Portfolio) all have structured onboarding experiences. Stock Explorer has no onboarding — users must figure out the product themselves. This is the #1 UX gap for beginner users (C58).
+
+### 5. **Gamification Drives Engagement**
+Robinhood (Learn → Earn with stock rewards), Khan Academy (badges), and Finimize (certificates) all use gamification to drive learning engagement. Stock Explorer has no gamification — users learn but get no recognition. Concept Mastery Badges (C60) would create a positive feedback loop.
+
+### 6. **TW Broker Apps are Direct Competitors with Education Features**
+富邦e富, 元大證券, 永豐金證券, and 玉山證券 all have education features integrated into their broker apps. These are direct TW competitors targeting the same users. Stock Explorer's advantage is depth of analysis and "historian" positioning, but the broker apps have advantages in: mobile apps, notifications, AI features, and integrated trading. Stock Explorer must differentiate through educational depth and unique "historian" features.
+
+### 7. **Reflection Tools are a White Space**
+元大證券 (Investment Diary) and Tastytrade (Trade Journal) both have journaling/reflection tools. No TW competitor has a personal reflection journal for stock analysis. This is a unique "historian" feature — users become historians of their own investment journey (C55).
+
+---
+
+## Feature Gap Summary (Round 12)
+
+| ID | Title | Priority | Effort | Source Competitor | Alignment |
+|---|---|---|---|---|---|
+| C55 | Investment Diary (Personal Reflection Journal) | P2 | 10-14h | 元大證券, Tastytrade | Story first + Historian |
+| C56 | Explain This Metric (Interactive Concept Explainer) | P1 | 12-16h | Magnify.money, 永豐金證券, Robinhood | Point-to-point + Ten-second test |
+| C57 | Compare Concepts (Financial Concept Comparison) | P2 | 10-14h | Magnify.money | Point-to-point + Benchmark |
+| C58 | Beginner Onboarding Flow (Guided First Experience) | P1 | 14-20h | 玉山證券, Robinhood, eToro | Point-to-point + Ten-second test |
+| C59 | AI Q&A Chatbot (Natural Language Stock Questions) | P2 | 16-24h | 元大證券, Finimize, Magnify.money | Story first + Point-to-point |
+| C60 | Concept Mastery Badges (Gamified Learning) | P2 | 8-12h | Robinhood, Khan Academy, Finimize | Point-to-point + Engagement |
+| C61 | Sector Rotation Visualizer (Market Momentum Map) | P2 | 10-14h | 永豐金證券, StockEdge, Moomoo | Benchmark + Adaptive |
+| C62 | Pre-Investment Checklist (Educational Scaffolding) | P2 | 8-12h | 永豐金證券, Tastytrade | Story first + Historian |
+
+---
+
+## Recommendations
+
+### Immediate (Next Sprint)
+1. **C56 Explain This Metric** — P1 gap, directly addresses "ten-second test," multiple competitors prove demand (Magnify.money, Robinhood, 永豐金證券). Highest ROI: 12-16h for interactive metric explanations that transform every data point into a learning opportunity.
+2. **C58 Beginner Onboarding Flow** — P1 gap, critical for beginner retention, 玉山證券/Robinhood prove demand. Without onboarding, beginners bounce before discovering Stock Explorer's value.
+
+### Short-Term (Sprint 2-3)
+3. **C62 Pre-Investment Checklist** — Low effort (8-12h), perfect "historian" differentiator, 永豐金證券 proves demand. Teaches users what to look for, not what to buy.
+4. **C55 Investment Diary** — Unique "historian of self" feature, 元大證券/Tastytrade prove demand. Transforms Stock Explorer from a lookup tool into a personal learning platform.
+5. **C60 Concept Mastery Badges** — Gamification drives engagement, Robinhood/Khan Academy prove demand. Creates positive feedback loop for learning.
+
+### Medium-Term (Post-Sprint 3)
+6. **C59 AI Q&A Chatbot** — Natural language interface for beginners, 元大證券/Finimize prove demand. Most ambitious feature (16-24h) but highest long-term value.
+7. **C57 Compare Concepts** — Unique educational tool, Magnify.money proves demand. Helps beginners understand financial metrics as tools, not answers.
+8. **C61 Sector Rotation Visualizer** — Extends C51 with time dimension, 永豐金證券 proves demand. More dynamic market overview for "historian" positioning.
+
+---
+
+*This is the twelfth competitor research round. Eight new feature suggestions identified (C55-C62). The most impactful new gap is C56 (Explain This Metric) — it directly addresses the "ten-second test" design principle, multiple international and TW competitors prove demand, and it transforms every data point into a learning opportunity. The most strategically important gap is C58 (Beginner Onboarding Flow) — without onboarding, beginners bounce before discovering Stock Explorer's value, making all other features irrelevant. The most unique gap is C55 (Investment Diary) — no TW competitor has personal reflection journaling, making it a perfect "historian of self" differentiator.*

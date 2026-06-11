@@ -12,7 +12,8 @@ from src.services.analogy_engine import (
     get_roe_analogy,
     get_per_analogy,
 )
-from src.pages._router_base import _section_title, _info_card, _find_financial_value
+from src.pages._router_base import _section_title, _info_card
+from src.services.financial_metrics import find_financial_value
 
 
 # 產業標竿對應表（產業 → 標竿公司）
@@ -216,9 +217,9 @@ def _get_benchmark_data(client, benchmark_id: str) -> dict:
             try:
                 latest_date = bench_financial["date"].max()
                 latest = bench_financial[bench_financial["date"] == latest_date]
-                revenue = _find_financial_value(latest, ["營業收入", "收入", "Revenue", "revenue"])
-                gross_profit = _find_financial_value(latest, ["營業毛利", "毛利", "Gross Profit", "gross_profit"])
-                net_income = _find_financial_value(latest, ["淨利", "本期淨利", "Net Income", "net_income"])
+                revenue = find_financial_value(latest, ["營業收入", "收入", "Revenue", "revenue"])
+                gross_profit = find_financial_value(latest, ["營業毛利", "毛利", "Gross Profit", "gross_profit"])
+                net_income = find_financial_value(latest, ["淨利", "本期淨利", "Net Income", "net_income"])
                 if revenue and revenue > 0:
                     if gross_profit:
                         bench_metrics["gross_margin"] = round(gross_profit / revenue * 100, 1)
@@ -231,12 +232,12 @@ def _get_benchmark_data(client, benchmark_id: str) -> dict:
             try:
                 latest_date = bench_balance["date"].max()
                 latest = bench_balance[bench_balance["date"] == latest_date]
-                total_assets = _find_financial_value(latest, ["資產總計", "總資產", "Total Assets", "total_assets"])
-                total_equity = _find_financial_value(latest, ["權益總計", "股東權益", "Total Equity", "total_equity"])
+                total_assets = find_financial_value(latest, ["資產總計", "總資產", "Total Assets", "total_assets"])
+                total_equity = find_financial_value(latest, ["權益總計", "股東權益", "Total Equity", "total_equity"])
                 net_income = 0
                 if bench_financial is not None and len(bench_financial) > 0:
                     fi_latest = bench_financial[bench_financial["date"] == bench_financial["date"].max()]
-                    net_income = _find_financial_value(fi_latest, ["淨利", "本期淨利", "Net Income", "net_income"])
+                    net_income = find_financial_value(fi_latest, ["淨利", "本期淨利", "Net Income", "net_income"])
                 if net_income and total_equity and total_equity > 0:
                     bench_metrics["roe"] = round(net_income * 4 / total_equity * 100, 1)
             except Exception:

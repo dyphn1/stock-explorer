@@ -835,3 +835,286 @@ The ideal Business Card page order should be:
 12. 近期動態 (news)
 13. C41 — Read Next (recommendations)
 14. 免責聲明 (disclaimer)
+
+---
+
+## 2026-06-18 Design Review — Review Round 12
+
+> **Author**: Design Reviewer
+> **Date**: 2026-06-18
+> **Context**: Round 12 review — verifying Sprint 3 design fixes (D-016 through D-023), checking for new design issues, and evaluating design feasibility for upcoming features (C44, C41, C38).
+> **Current Design Grade**: A (upgraded from A- in Round 11)
+
+---
+
+## Table of Contents
+
+1. [Sprint 3 Fix Verification](#sprint-3-fix-verification)
+2. [New Design Issues](#new-design-issues)
+3. [Resolved Issues](#resolved-issues)
+4. [Grade Justification](#grade-justification)
+5. [Design Feasibility: Upcoming Features](#design-feasibility-upcoming-features)
+6. [Recommendations for Sprint 4](#recommendations-for-sprint-4)
+
+---
+
+## Sprint 3 Fix Verification
+
+### D-016: C37 Missing Orange/Amber Hero Card Style ✅ RESOLVED
+
+**What was checked**: `_router_base.py` line 98-104 and `business_card.py` line 162.
+
+**Findings**:
+- `_summary_card()` function exists in `_router_base.py` with correct orange/amber styling: `border-left:4px solid #F39C12`, `background:#FFF8F0` ✅
+- `business_card.py` line 162 now calls `_summary_card("重點摘要", takeaways_text, "📋")` instead of `_info_card()` ✅
+- C37 is now visually distinct from all other cards on the page ✅
+
+**Verdict**: Fully resolved. The hero card now stands out as intended.
+
+---
+
+### D-017: C37 Bullet Count Exceeds Spec ✅ RESOLVED
+
+**What was checked**: `analogy_engine.py` line 423.
+
+**Findings**:
+- Changed from `return takeaways[:5]` to `return takeaways[:3]` ✅
+- Enforces the 3-bullet maximum per design spec ✅
+- Note: The docstring at line 333 still says "3-5 條" but the code correctly caps at 3. Minor documentation inconsistency.
+
+**Verdict**: Fully resolved.
+
+---
+
+### D-018: C39 Placement Too Low on Page ✅ RESOLVED
+
+**What was checked**: `business_card.py` lines 150-183 (section ordering).
+
+**Findings**:
+- Previous order: C37 → 關鍵數字三連卡 → C39 → C43
+- Current order: C37 (line 150) → C39 (line 164) → C43 (line 184) → 關鍵數字三連卡 (line 237) ✅
+- C39 now directly follows C37, before detailed metrics ✅
+- This matches the intended flow: summary → what changed → detailed data ✅
+
+**Verdict**: Fully resolved. Page flow now follows the design spec.
+
+---
+
+### D-019: C39 Missing Delta Count Cap ✅ RESOLVED
+
+**What was checked**: `analogy_engine.py` line 508.
+
+**Findings**:
+- `return deltas[:2]` now enforces the 2-delta maximum ✅
+- Previously all deltas exceeding 10% threshold were shown (could be 3+) ✅
+
+**Verdict**: Fully resolved.
+
+---
+
+### D-020: C39 Missing Directional Color Coding ✅ RESOLVED
+
+**What was checked**: `business_card.py` lines 174-180.
+
+**Findings**:
+- Line 176: `color = "#27AE60" if d["direction"] == "up" else "#E74C3C"` ✅
+- Line 178: `<span style=\"color:{color}\">` applied to delta text ✅
+- Positive deltas render in green, negative in red ✅
+- Combined with 📈/📉 emojis for dual-channel visual encoding ✅
+
+**Verdict**: Fully resolved. Exceeds the spec with dual-channel encoding (color + emoji).
+
+---
+
+### D-021: C43 Missing Per-Dimension Plain-Language Explanations ⚠️ PARTIALLY FIXED
+
+**What was checked**: `business_card.py` lines 41-48 (get_health_dimension_explanation), lines 196-215 (dimension cards), `chart.py` lines 535-536 (hover template).
+
+**Findings**:
+- ✅ `get_health_dimension_explanation()` function added with 3-tier generic explanations (score ≥ 70: "表現優異", ≥ 40: "表現穩定", < 40: "需要留意")
+- ✅ Dimension cards below the snowflake now show these explanations (line 211)
+- ❌ Hover template on the snowflake chart (chart.py line 535) still only shows `"{dimension}: {score}分"` — does NOT include underlying metric values
+- ❌ Dimension cards show generic text but NOT the actual metric values (e.g., "ROE 25%", "毛利率 45%")
+- ❌ Spec asked for explanations like "🟢 獲利能力強：ROE 25%，每100元股東資金賺25元" — the underlying metric values and analogies are missing
+
+**Verdict**: Partially fixed. The dimension cards now have explanations, but they're generic score-based text, not the metric-specific explanations with actual values that the spec called for. The hover also lacks metric values.
+
+**Remaining effort**: 1-2h to pass underlying metric values into the hover template and dimension card explanations.
+
+---
+
+### D-022: C43 Placement Not Near Top of Page ✅ RESOLVED
+
+**What was checked**: `business_card.py` section ordering (lines 150-237).
+
+**Findings**:
+- C43 (line 184) now appears as the 3rd content section, after C37 and C39 ✅
+- This is a significant improvement from its previous position after key metrics and C39
+- The snowflake is now visible without scrolling for most screen sizes ✅
+
+**Verdict**: Fully resolved.
+
+---
+
+### D-023: C45 Uses 2-Year Window Instead of 5-Year ✅ RESOLVED
+
+**What was checked**: `chart.py` lines 627-648.
+
+**Findings**:
+- Line 628: `cutoff_5y = pd.Timestamp.now() - pd.Timedelta(days=1825)` — now uses 5-year window ✅
+- Graceful fallback: if < 5 years of data, shows all available data with note "（資料不足 5 年，顯示全部可用資料）" ✅
+- Title dynamically includes the note when data is insufficient ✅
+
+**Verdict**: Fully resolved. Implementation exceeds spec with graceful degradation.
+
+---
+
+## New Design Issues
+
+### D-024: _info_card Uses Wrong Background Color
+
+- **Severity**: P1
+- **Added**: 2026-06-18
+- **Source**: Design Review Round 12
+- **Description**: `_info_card()` in `_router_base.py` (line 110) uses `background:#FFF8F0` (warm orange tint) instead of the design system's specified `background:#F8F9FA` (neutral light gray). This makes ALL info cards visually similar to the `_summary_card` (C37 hero card), reducing the hero card's visual distinctiveness. Since info cards are the most common card type on the page, this creates an overall warm-tinted appearance that undermines the intentional use of orange as a "hero" accent color.
+- **Affected Files**: `_router_base.py` (line 110)
+- **Design System Reference**: `docs/domain/design_system.md` line 74: "Card background: Light gray #F8F9FA", line 102: info card example uses `#F8F9FA`
+- **Proposed Fix**: Change `background:#FFF8F0` to `background:#F8F9FA` in `_info_card()`. This will restore the neutral background for info cards and make the orange hero card stand out.
+- **Effort**: 5 min
+
+### D-025: C39 Missing Empty State Message
+
+- **Severity**: P2
+- **Added**: 2026-06-18
+- **Source**: Design Review Round 12
+- **Description**: When no deltas exceed the 10% threshold, the C39 section is completely hidden (`if deltas:` check at line 171). Users see no indication that the "what changed" analysis was performed. A brief "近期無顯著變化" message would be more informative than silence, maintaining user trust that the feature exists and was evaluated.
+- **Affected Files**: `business_card.py` (lines 171-182)
+- **Proposed Fix**: Add an `else` branch to show `_info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")` when no deltas exceed threshold.
+- **Effort**: 15 min
+
+---
+
+## Resolved Issues
+
+| ID | Title | Severity | Resolution |
+|----|-------|----------|------------|
+| D-001 | No Visual Health Score | P0 | **RESOLVED** — C43 (Snowflake Health Visualization) fully implemented with 5-dimension radar chart, color-coded scores, reference lines, and plain-language health summary. |
+| D-002 | No Synthesis Layer | P0 | **RESOLVED** — C37 (Key Takeaways) implemented with curated templates for top 20 stocks and auto-generated fallback for others. |
+| D-014 | No Valuation Context | P2 | **RESOLVED** — C45 (Valuation Band Chart) implemented with historical PER percentile band, current PER marker, and plain-language interpretation. |
+| D-016 | C37 Missing Orange/Amber Hero Card Style | P1 | **RESOLVED** — `_summary_card()` created with `#F39C12` border and `#FFF8F0` background. C37 now uses this component, making it the distinctive "hero card" of the page. |
+| D-017 | C37 Bullet Count Exceeds Spec | P2 | **RESOLVED** — Cap changed from `[:5]` to `[:3]` in `analogy_engine.py` line 423. |
+| D-018 | C39 Placement Too Low on Page | P1 | **RESOLVED** — C39 moved from after 關鍵數字三連卡 to directly after C37 (line 164). Page flow now: summary → what changed → health → details. |
+| D-019 | C39 Missing Delta Count Cap | P2 | **RESOLVED** — `return deltas[:2]` added at `analogy_engine.py` line 508. |
+| D-020 | C39 Missing Directional Color Coding | P2 | **RESOLVED** — Green (`#27AE60`) / red (`#E74C3C`) color spans added to delta text in `business_card.py` lines 176-179. |
+| D-022 | C43 Placement Not Near Top of Page | P2 | **RESOLVED** — C43 now appears as 3rd content section (line 184), after C37 and C39. |
+| D-023 | C45 Uses 2-Year Window Instead of 5-Year | P2 | **RESOLVED** — Extended to 5-year window (1825 days) with graceful fallback for insufficient data. |
+
+---
+
+## Grade Justification
+
+**Previous Grade**: A- (Round 11)
+**New Grade**: A
+
+**Reasoning for upgrade**:
+
+Sprint 3 delivered comprehensive fixes addressing 7 of 9 remaining design issues from Round 11:
+
+1. **All P1 issues from Round 11 are now resolved**: D-016 (hero card), D-018 (placement), and D-021 (partially) — the two fully resolved P1 issues were the most impactful.
+2. **Page layout flow is now correct**: The business card page follows the intended "summary → what changed → health → details" flow, which directly supports the ten-second test.
+3. **Visual hierarchy is significantly improved**: The orange hero card (C37) now stands out, the snowflake (C39) is prominently placed, and delta color coding provides clear directional signals.
+4. **Spec compliance is near-complete**: All Sprint 3 targeted issues have been addressed with high-quality implementations that often exceed the spec (e.g., dual-channel color+emoji encoding for deltas, graceful fallback for 5-year window).
+
+**Reasons grade is A not A+**:
+- D-021 (dimension explanations) is only partially fixed — hover and cards lack underlying metric values
+- D-024 (info card background color) is a new P1 issue that reduces hero card distinctiveness
+- D-025 (C39 empty state) is a minor but noticeable UX gap
+- Several P2 issues from Round 9 remain (D-003, D-008-D-013, D-015)
+- C41 (Read Next), C44 (Risk Analysis), C38 (Compare Stories) not yet implemented
+
+---
+
+## Design Feasibility: Upcoming Features
+
+### C44: Risk Analysis ("What Could Go Wrong")
+
+**Feasibility**: HIGH ✅
+
+**Design Analysis**:
+- **Card type**: Warning card (red border `#E74C3C`, light red background `#FDEDEC`) with `⚠️` icon — this is a NEW card type that should be added to `_router_base.py` as `_warning_card()`
+- **Placement**: New section on Business Card page, after C43 (snowflake) and before 關鍵數字三連卡. This positions risks after the health summary, creating a natural "health → risks → details" flow.
+- **Content**: 3-5 key risks with (1) what the risk is, (2) historical evidence, (3) current indicators to watch
+- **Design risk**: Adding another section increases page length. The Business Card page already has 13 sections. Consider making C44 an expandable section or integrating it into the snowflake chart (e.g., red-flagged dimensions).
+- **Recommendation**: Implement as an expandable section (`st.expander`) to avoid page overload. Use the existing analogy engine for historical evidence.
+
+**Effort estimate**: 4-6h (new card type + risk analysis engine + UI integration)
+
+---
+
+### C41: Read Next Recommendations
+
+**Feasibility**: HIGH ✅
+
+**Design Analysis**:
+- **Card type**: Tip card (orange border, same style as C37 hero card) with `📖` icon — should be added to `_router_base.py` as `_tip_card()` or reuse `_summary_card()`
+- **Placement**: BOTTOM of the Business Card page, after all charts and metrics, before the disclaimer. This is the "next slide" prompt.
+- **Content**: 2-3 recommendations maximum. Each: company name + ticker + one-line relationship description
+- **Design risk**: Reusing the same orange as C37 creates visual consistency between "summary" and "next steps" — this is intentional and good. But the page already has 13 sections; adding another may push the disclaimer far down.
+- **Recommendation**: Place C41 as the LAST section before the disclaimer. Use the same `_summary_card()` component for visual consistency. Cap at 2 recommendations to minimize page length.
+
+**Effort estimate**: 3-4h (recommendation engine + UI integration)
+
+---
+
+### C38: Compare Stories Side-by-Side
+
+**Feasibility**: MEDIUM ⚠️
+
+**Design Analysis**:
+- **Placement**: New tab ("故事比較") on the Peer Comparison page, AFTER the existing metric comparison tab
+- **Layout**: Two-column (50/50). Left: Company A (blue `#3498DB`). Right: Company B (green `#27AE60`)
+- **Content per column**: One-liner + revenue milestones + key events + business model summary. ≤ 100 characters per column.
+- **Sub-toggle**: Show ONE dimension at a time: "商業模式" / "關鍵事件" / "收入里程碑". Default to "商業模式".
+- **Design risks**:
+  1. **PPT style violation**: Side-by-side comparison is inherently data-dense. The "one key point per page" principle is challenged. Mitigation: frame as ONE key point ("These two companies have different strategies") with the sub-toggle showing one dimension at a time.
+  2. **Mobile responsiveness**: Two-column layout doesn't stack well on mobile. Mitigation: use CSS media queries to stack vertically on small screens.
+  3. **Content generation**: Requires narrative content for each company pair. This is a significant content generation challenge.
+- **Recommendation**: Implement as a sub-tab within the Peer Comparison page. Use `st.columns` with the existing color system. Start with "商業模式" only — add other dimensions in future sprints.
+
+**Effort estimate**: 6-8h (narrative generation + UI + responsive layout)
+
+---
+
+## Recommendations for Sprint 4
+
+### Priority 1 (Quick Wins — < 1h total)
+1. **Fix D-024**: Change `_info_card` background from `#FFF8F0` to `#F8F9FA` (5 min)
+2. **Fix D-025**: Add empty state message for C39 when no deltas (15 min)
+3. **Fix D-021 remaining**: Pass underlying metric values into snowflake hover template and dimension cards (1-2h)
+
+### Priority 2 (New Features — Sprint 4 backlog)
+4. **C41**: Read Next Recommendations (3-4h) — lowest effort, high engagement value
+5. **C44**: Risk Analysis (4-6h) — unique differentiator, no TW competitor has this
+6. **C38**: Compare Stories (6-8h) — highest effort, defer to Sprint 5 if needed
+
+### Priority 3 (Ongoing)
+7. **D-003**: Standardize card styling across all pages (group_structure.py, watchlist_page.py, etf_detail.py)
+8. **D-004**: Copy/link design system doc from `docs/domain/design_system.md` to `docs/design/design_system.md`
+9. **D-006**: Mobile responsiveness improvements
+
+### Target Page Layout After Sprint 4
+1. Header (company name + price)
+2. **C37** — Key Takeaways (orange hero card)
+3. **C39** — What Changed (delta card, max 2, with empty state)
+4. **C43** — Snowflake Health (visual anchor, with metric-specific explanations)
+5. **C44** — Risk Analysis (expandable, warning card) [NEW]
+6. 一句話定位 (one-liner)
+7. 你知道嗎？ (Did You Know)
+8. 關鍵數字三連卡 (key metrics)
+9. 配息故事 (dividend story)
+10. 營收組成 (revenue pie)
+11. 營收趨勢 (revenue trend)
+12. 估值區間 (valuation band)
+13. 近期動態 (news)
+14. **C41** — Read Next (recommendations) [NEW]
+15. 免責聲明 (disclaimer)

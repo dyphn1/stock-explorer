@@ -13,3 +13,11 @@ C51: "Sector Heatmap" — Visual Market Overview | P2 | 8-12h | Benchmark-orient
 C52: "Quiz Mode" — Interactive Knowledge Assessment | P2 | 10-14h | Point-to-point knowledge construction + Ten-second test | source: competitor research round 11
 C53: "Social Sharing" — Shareable Analysis Cards | P2 | 6-10h | Story first + Viral distribution | source: competitor research round 11
 C54: "Video Explanation" — Audio/Visual Learning Modality | P2 | 20-30h | Point-to-point knowledge construction + Accessibility | source: competitor research round 11
+C55: "Investment Diary" — Personal Reflection Journal | P2 | 10-14h | Story first + Historian positioning | source: competitor research round 12
+C56: "Explain This Metric" — Interactive Financial Concept Explainer | P1 | 12-16h | Point-to-point knowledge construction + Ten-second test | source: competitor research round 12
+C57: "Compare Concepts" — Financial Concept Comparison Tool | P2 | 10-14h | Point-to-point knowledge construction + Benchmark-oriented analysis | source: competitor research round 12
+C58: "Beginner Onboarding Flow" — Guided First Experience | P1 | 14-20h | Point-to-point knowledge construction + Ten-second test | source: competitor research round 12
+C59: "AI Q&A Chatbot" — Natural Language Stock Questions | P2 | 16-24h | Story first + Point-to-point knowledge construction | source: competitor research round 12
+C60: "Concept Mastery Badges" — Gamified Learning Achievement System | P2 | 8-12h | Point-to-point knowledge construction + Engagement | source: competitor research round 12
+C61: "Sector Rotation Visualizer" — Market Momentum Map | P2 | 10-14h | Benchmark-oriented analysis + Adaptive | source: competitor research round 12
+C62: "Pre-Investment Checklist" — Educational Scaffolding Tool | P2 | 8-12h | Story first + Historian positioning | source: competitor research round 12

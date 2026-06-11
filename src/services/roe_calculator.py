@@ -3,7 +3,7 @@ ROE 計算服務
 支援 TTM（近四季）計算，處理季節性產業
 """
 
-from src.pages._router_base import _find_financial_value
+from src.services.financial_metrics import find_financial_value
 
 SEASONAL_INDUSTRIES = frozenset({
     "觀光餐旅",
@@ -38,7 +38,7 @@ def calc_roe_ttm(financial_df, balance_sheet_df) -> dict | None:
         quarterly_ni = []
         for d in dates_sorted:
             subset = financial_df[financial_df["date"] == d]
-            ni = _find_financial_value(subset, net_income_kw)
+            ni = find_financial_value(subset, net_income_kw)
             if ni != 0:
                 quarterly_ni.append(ni)
             if len(quarterly_ni) >= 4:
@@ -56,12 +56,12 @@ def calc_roe_ttm(financial_df, balance_sheet_df) -> dict | None:
 
         # Ending equity (latest)
         latest_bs = balance_sheet_df[balance_sheet_df["date"] == bs_dates_sorted[0]]
-        equity_end = _find_financial_value(latest_bs, equity_kw)
+        equity_end = find_financial_value(latest_bs, equity_kw)
 
         # Beginning equity (quarters_used quarters back, or earliest available)
         begin_idx = min(quarters_used, len(bs_dates_sorted)) - 1
         earliest_bs = balance_sheet_df[balance_sheet_df["date"] == bs_dates_sorted[begin_idx]]
-        equity_begin = _find_financial_value(earliest_bs, equity_kw)
+        equity_begin = find_financial_value(earliest_bs, equity_kw)
 
         if equity_end <= 0 and equity_begin <= 0:
             return None
