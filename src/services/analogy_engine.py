@@ -419,7 +419,7 @@ def generate_key_takeaways(
             takeaways.append(f"負債比 {debt:.0f}%，財務結構穩健")
 
     # 最多回傳 5 條
-    return takeaways[:5]
+    return takeaways[:3]
 
 
 # ── C39: Recent Deltas (最近有什麼變化) ────────────────────
@@ -503,8 +503,8 @@ def compute_recent_deltas(
             "",  # stock_name 可選，留空使用通用描述
             "",
         )
-
-    return deltas
+    
+    return deltas[:2]
 
 
 def explain_delta(
