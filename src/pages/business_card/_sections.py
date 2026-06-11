@@ -1,8 +1,4 @@
-"""
-公司名片頁 — M1 MVP
-目標：使用者在 10 秒內知道這家公司靠什麼賺錢
-"""
-
+"""Business card section rendering functions — 14 sections (D24)."""
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
@@ -38,60 +34,18 @@ from src.services.watchlist import (
 )
 from src.pages._router_base import _白话_card, _info_card, _summary_card
 from src.pages.url_sync import navigate_to
+from src.pages.business_card._helpers import (
+    get_health_dimension_explanation,
+    _render_risk_dimension,
+)
 
 
-def get_health_dimension_explanation(dim_name: str, score: float) -> str:
-    """Return a plain-language explanation for a health dimension score."""
-    if score >= 70:
-        return "表現優異，在同產業中屬於前段班"
-    elif score >= 40:
-        return "表現穩定，有改善空間"
-    else:
-        return "需要留意，可能拖累整體表現"
-
-
-_RISK_BADGES = {
-    "high":   "🔴 高風險",
-    "medium": "🟡 中風險",
-    "low":    "🟢 低風險",
-}
-
-_RISK_COLORS = {
-    "high":   "#E74C3C",
-    "medium": "#F39C12",
-    "low":    "#27AE60",
-}
-
-
-def _render_risk_dimension(dim: dict, stock_name: str):
-    """Render a single risk dimension as an expandable info card."""
-    badge = _RISK_BADGES.get(dim["risk_level"], "⚪ 未知")
-    color = _RISK_COLORS.get(dim["risk_level"], "#7F8C8D")
-
-    st.markdown(
-        f"""<div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;
-        border-left:4px solid {color};margin:0.5rem 0 1rem 0;">
-            <div style="font-weight:600;color:#2C3E50;">
-                {badge} {dim["title"]}
-            </div>
-            <div style="font-size:0.9rem;color:#2C3E50;margin-top:0.4rem;
-            line-height:1.7;">{dim["plain_language_description"]}</div>
-        </div>""",
-        unsafe_allow_html=True,
-    )
-
-
-def _render_business_card(data: dict, client):
-    """公司名片主頁（M1）"""
+def _render_header(data: dict, client) -> None:
+    """Watchlist header with stock name, price, watchlist buttons."""
     stock_id = data["stock_id"]
     stock_name = data["stock_name"]
     industry = data["industry"]
     latest_price = data["latest_price"]
-    latest_per_pbr = data["latest_per_pbr"]
-    monthly_revenue = data["monthly_revenue"]
-    financial = data["financial"]
-    news = data["news"]
-    extra_metrics = data["extra_metrics"]
 
     # Header
     col1, col2, col3 = st.columns([3, 1, 1])
@@ -180,6 +134,17 @@ def _render_business_card(data: dict, client):
 
     st.markdown("---")
 
+
+def _render_takeaways(data: dict, client) -> None:
+    """C37 Key Takeaways section."""
+    stock_id = data["stock_id"]
+    stock_name = data["stock_name"]
+    industry = data["industry"]
+    extra_metrics = data["extra_metrics"]
+    latest_per_pbr = data["latest_per_pbr"]
+    monthly_revenue = data["monthly_revenue"]
+    financial = data["financial"]
+
     # 📋 重點摘要 (C37: Key Takeaways)
     takeaways = generate_key_takeaways(
         stock_id=stock_id,
@@ -193,6 +158,13 @@ def _render_business_card(data: dict, client):
     if takeaways:
         takeaways_text = "\\n\\n".join(f"• {t}" for t in takeaways)
         _summary_card("重點摘要", takeaways_text, "📋")
+
+
+def _render_deltas(data: dict, client) -> None:
+    """C39 Recent Deltas section."""
+    extra_metrics = data["extra_metrics"]
+    monthly_revenue = data["monthly_revenue"]
+    latest_per_pbr = data["latest_per_pbr"]
 
     # 🔄 最近有什麼變化 (C39: Recent Deltas)
     deltas = compute_recent_deltas(
@@ -208,13 +180,22 @@ def _render_business_card(data: dict, client):
             sign = "+" if d["change_pct"] >= 0 else ""
             color = "#27AE60" if d["direction"] == "up" else "#E74C3C"
             delta_lines.append(
-                f"{emoji} <span style=\"color:{color}\">**{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）</span><br>\\n"
+                f"{emoji} <span style=\\\"color:{color}\\\">**{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）</span><br>\\n"
                 f"　→ {d['explanation']}"
             )
         delta_text = "\\n\\n".join(delta_lines)
         _info_card("最近有什麼變化", delta_text, "🔄")
     else:
         _info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")
+
+
+def _render_health(data: dict, client) -> None:
+    """C43 Health Snowflake chart + 5-dimension score cards + summary."""
+    extra_metrics = data["extra_metrics"]
+    latest_per_pbr = data["latest_per_pbr"]
+    financial = data["financial"]
+    monthly_revenue = data["monthly_revenue"]
+    stock_name = data["stock_name"]
 
     # 🏥 公司健康狀況 (C43: Health Snowflake)
     health_scores = compute_health_scores(
@@ -253,6 +234,11 @@ def _render_business_card(data: dict, client):
         health_summary = get_health_summary(health_scores)
         _info_card("健康摘要", health_summary, "🏥")
 
+
+def _render_risk(data: dict, client) -> None:
+    """C44 Risk Analysis with expandable dimensions."""
+    stock_name = data["stock_name"]
+
     # ⚠️ 風險分析 (C44: Risk Analysis)
     risk = assess_risk(data)
     has_risk_dims = any(
@@ -273,6 +259,13 @@ def _render_business_card(data: dict, client):
                     continue
                 _render_risk_dimension(dim, stock_name)
 
+
+def _render_one_liner(data: dict, client) -> None:
+    """One-liner + rotating company facts tip card."""
+    stock_id = data["stock_id"]
+    stock_name = data["stock_name"]
+    industry = data["industry"]
+
     # 一句話定位
     one_liner = get_one_liner(stock_id, stock_name, industry)
     _info_card("一句話定位", one_liner, "💡")
@@ -288,6 +281,14 @@ def _render_business_card(data: dict, client):
         st.session_state[fact_key] = (idx + 1) % len(facts)
         current_fact = facts[idx]
         _info_card("你知道嗎？", current_fact, "💡")
+
+
+def _render_key_metrics(data: dict, client) -> None:
+    """Triple cards: PER/gross margin, revenue/ROE, dividend yield/PBR."""
+    latest_per_pbr = data["latest_per_pbr"]
+    extra_metrics = data["extra_metrics"]
+    monthly_revenue = data["monthly_revenue"]
+    industry = data["industry"]
 
     # 關鍵數字三連卡
     st.markdown("### 📊 關鍵數字")
@@ -320,6 +321,11 @@ def _render_business_card(data: dict, client):
             _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analyzer(pbr))
 
     st.markdown("---")
+
+
+def _render_dividend(data: dict, client) -> None:
+    """Dividend story: countdown, summary, mini-cards, expandable history table."""
+    latest_price = data["latest_price"]
 
     # === 💵 配息故事 (Dividend Story) ===
     # Extract current price for yield calculation
@@ -431,6 +437,14 @@ def _render_business_card(data: dict, client):
 
     st.markdown("---")
 
+
+def _render_revenue_breakdown(data: dict, client) -> None:
+    """Revenue pie chart + plain-language descriptions."""
+    financial = data["financial"]
+    stock_id = data["stock_id"]
+    stock_name = data["stock_name"]
+    industry = data["industry"]
+
     # 營收組成（圓餅圖 + 白話說明）
     st.markdown("### 📊 營收組成")
     st.markdown("*這家公司靠什麼賺錢？*")
@@ -448,6 +462,12 @@ def _render_business_card(data: dict, client):
 
     st.markdown("---")
 
+
+def _render_revenue_trend(data: dict, client) -> None:
+    """Revenue trend chart or 'no data' message."""
+    monthly_revenue = data["monthly_revenue"]
+    stock_name = data["stock_name"]
+
     # 營收趨勢圖
     st.markdown("### 📊 營收趨勢")
     if len(monthly_revenue) > 0:
@@ -457,6 +477,14 @@ def _render_business_card(data: dict, client):
         st.info("暫無營收資料")
 
     st.markdown("---")
+
+
+def _render_valuation(data: dict, client) -> None:
+    """Valuation band chart + interpretation card."""
+    latest_per_pbr = data["latest_per_pbr"]
+    financial = data["financial"]
+    stock_id = data["stock_id"]
+    stock_name = data["stock_name"]
 
     # 估值區間圖（歷史 P/E 範圍）
     st.markdown("### 📊 估值區間")
@@ -481,6 +509,12 @@ def _render_business_card(data: dict, client):
 
     st.markdown("---")
 
+
+def _render_news(data: dict, client) -> None:
+    """Recent news with impact level badges."""
+    news = data["news"]
+    stock_name = data["stock_name"]
+
     # 近期動態（白話摘要版）
     st.markdown("### 📊 近期動態")
     if len(news) > 0:
@@ -497,6 +531,13 @@ def _render_business_card(data: dict, client):
             _info_card(f"{impact_class} {title}\n\n{summary}\n\n📡 {source} ｜ {date_str}", "", "📰")
     else:
         st.info("近期無重大新聞")
+
+
+def _render_read_next(data: dict, client) -> None:
+    """C41 Read Next: peer stocks + curated fun facts."""
+    stock_id = data["stock_id"]
+    stock_name = data["stock_name"]
+    industry = data["industry"]
 
     # 📖 推薦閱讀 (C41: Read Next Recommendations)
     st.markdown("### 📖 推薦閱讀")
@@ -555,6 +596,9 @@ def _render_business_card(data: dict, client):
         for _fact in _remaining_facts[:2]:
             _info_card("💡 你知道嗎？", _fact, "🤔")
 
+
+def _render_footer(data: dict, client) -> None:
+    """Disclaimer."""
     st.markdown("---")
 
     # 免責聲明
