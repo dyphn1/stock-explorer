@@ -69,7 +69,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `chart.py` (create_health_snowflake hover template), `business_card.py` (dimension cards)
 - **Proposed Fix**: Pass the underlying metric values (ROE, gross margin, etc.) into the hover template for each dimension. Add metric-specific plain-language explanations below each dimension card (e.g., "ROE 25%，每100元股東資金賺25元").
 - **Effort**: 1-2h
-- **Status**: Partially fixed in Round 12 — generic explanations added, metric values still missing
+- **Status**: ✅ RESOLVED via D-034 (4de8b8e) — metric values now shown in both hover and dimension cards with raw numbers.
 
 ### D-034: C3 Metric Value Tooltips Missing from Hover and Cards
 - **Severity**: P1
@@ -79,6 +79,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `chart.py` (hover template), `business_card.py` (dimension cards)
 - **Proposed Fix**: (1) Enhance hover template to show metric name + value + plain-language explanation. (2) Add metric values below each dimension card (e.g., "ROE 25%｜毛利率 66%"). (3) Add "❓" button for visual explanation (connects to C56).
 - **Effort**: 1-2h
+- **Status**: ✅ RESOLVED in Sprint 4 — `create_health_snowflake()` now accepts optional `metric_values` param. Hover shows metric values as bullet points. Dimension cards display raw values in blue text below score. `_get_health_metric_values()` helper added to `src/pages/business_card/_helpers.py`. Commit: 4de8b8e.
 
 ---
 
@@ -225,6 +226,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 | D-023 | C45 Uses 2-Year Window Instead of 5-Year | P2 | 2026-06-18 | Extended to 5-year window (1825 days) with graceful fallback for insufficient data. |
 | D-024 | _info_card Uses Wrong Background Color | P1 | 2026-06-19 | Changed `background:#FFF8F0` to `background:#F8F9FA` in `_router_base.py` line 110. |
 | D-025 | C39 Missing Empty State Message | P2 | 2026-06-19 | Added `else` branch showing `_info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")` when no deltas exceed threshold. |
+| D-034 | C3 Metric Value Tooltips Missing from Hover and Cards | P1 | 2026-06-12 | Enhanced `create_health_snowflake()` with optional `metric_values` param. Hover now shows raw metric values as bullet points. Dimension cards display values in blue text. `_get_health_metric_values()` helper added to `_helpers.py`. Commit: 4de8b8e. |
 
 ---
 
@@ -232,9 +234,9 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 - **Total Issues**: 25
 - **P0 (Blocking)**: 0
-- **P1 (Important)**: 6 (D-003, D-004, D-005, D-006, D-021, D-034)
+- **P1 (Important)**: 4 (D-003, D-005, D-006)
 - **P2 (Optimization)**: 13 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-037, D-038)
-- **Resolved**: 13 (D-001, D-002, D-013, D-014, D-016, D-017, D-018, D-019, D-020, D-022, D-023, D-024, D-025)
+- **Resolved**: 15
 
 ---
 
