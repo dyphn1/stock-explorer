@@ -21,3 +21,9 @@ C59: "AI Q&A Chatbot" — Natural Language Stock Questions | P2 | 16-24h | Story
 C60: "Concept Mastery Badges" — Gamified Learning Achievement System | P2 | 8-12h | Point-to-point knowledge construction + Engagement | source: competitor research round 12
 C61: "Sector Rotation Visualizer" — Market Momentum Map | P2 | 10-14h | Benchmark-oriented analysis + Adaptive | source: competitor research round 12
 C62: "Pre-Investment Checklist" — Educational Scaffolding Tool | P2 | 8-12h | Story first + Historian positioning | source: competitor research round 12
+C63: "Sector Stories" — Thematic Stock Collections with Plain-Language Explanations | P2 | 10-14h | Story first + Beginner-friendly + Point-to-point knowledge construction | source: competitor research round 13
+C64: "Daily Market Quiz" — Gamified Daily Engagement | P2 | 8-12h | Point-to-point knowledge construction + Engagement + Ten-second test | source: competitor research round 13
+C65: "Company Filing Explorer" — AI-Parsed Annual Reports in Plain Language | P2 | 16-24h | Story first + Historian positioning + Point-to-point knowledge construction | source: competitor research round 13
+C66: "Risk Profile Quiz" — Comprehensive Risk Assessment Onboarding | P2 | 6-10h | Story first + Beginner-friendly + Historian positioning | source: competitor research round 13
+C67: "Community Sentiment" Indicator — Social Proof for Stock Discovery | P2 | 12-16h | Benchmark-oriented analysis + Beginner-friendly + Engagement | source: competitor research round 13
+C68: "Weekly Market Digest" — Curated Weekly Market Summary | P2 | 8-12h | Story first + Historian positioning + Beginner-friendly | source: competitor research round 13

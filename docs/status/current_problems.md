@@ -1,7 +1,7 @@
 # Stock Explorer — Current Problems
 
-> **Last Updated**: 2026-06-18
-> **Source**: Design Review Round 12 (2026-06-18)
+> **Last Updated**: 2026-06-19
+> **Source**: Design Review Round 13 (2026-06-19)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
@@ -80,6 +80,25 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Effort**: 1-2h
 - **Status**: Partially fixed in Round 12 — generic explanations added, metric values still missing
 
+### D-032: No Progressive Disclosure Pattern for Business Card Page
+- **Severity**: P1
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 13
+- **Description**: The business card page already has 13+ sections. C44 (Risk), C48 (Story Card), and C56 (Explain Metric) will add 3+ more sections. Without progressive disclosure, this violates the "one key point per page" PPT-style principle and pushes content far below the fold. Competitors (Robinhood minimalist, 富邦e富 card-based) handle this with expandable sections.
+- **Affected Pages**: `business_card.py`
+- **Proposed Fix**: Implement a "Beginner Mode" / "Advanced Mode" toggle. Beginner Mode shows only C37 + C43 + C39 with expandable sections for everything else. Store preference in session state. Add `_expandable_card()` component.
+- **Effort**: 3-4h
+- **Competitor Benchmark**: Robinhood (minimalist default), 富邦e富 (card-based with whitespace)
+
+### D-034: C3 Metric Value Tooltips Missing from Hover and Cards
+- **Severity**: P1
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 13 (related to D-021)
+- **Description**: C43 snowflake hover template only shows "獲利能力: 85分" without the underlying metric values. Dimension cards show generic explanations but no actual numbers. Robinhood has metric tooltips on every stock page. Magnify.money generates visual explanations for every metric. Users see scores but don't know what they mean in concrete terms.
+- **Affected Files**: `chart.py` (hover template), `business_card.py` (dimension cards)
+- **Proposed Fix**: (1) Enhance hover template to show metric name + value + plain-language explanation. (2) Add metric values below each dimension card (e.g., "ROE 25%｜毛利率 66%"). (3) Add "❓" button for visual explanation (connects to C56).
+- **Effort**: 1-2h
+
 ---
 
 ## P2 — Optimization Issues
@@ -150,6 +169,16 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Related Features**: C47
 - **Competitor Benchmark**: Investopedia (Academy), Stockopedia (Academy)
 
+### D-033: No Standardized Empty State Component
+- **Severity**: P2
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 13
+- **Description**: Empty data shows different messages on different pages (`st.info("暫無資料")`, `st.error()`, `st.warning()`). No standardized empty state design. Every competitor has a consistent empty state — same icon, same message style, same layout.
+- **Affected Pages**: All pages
+- **Proposed Fix**: Create a shared `_empty_state()` component in `_router_base.py` with icon + title + optional subtitle. Replace all ~15-20 inline empty-state messages across pages.
+- **Effort**: 1h
+- **Competitor Benchmark**: Robinhood (friendly illustration + message), 富邦e富 (clean card with icon)
+
 ---
 
 ## Resolved Issues
@@ -173,10 +202,10 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## Statistics
 
-- **Total Issues**: 19
+- **Total Issues**: 22
 - **P0 (Blocking)**: 0
-- **P1 (Important)**: 6 (D-003, D-004, D-005, D-006, D-007, D-021)
-- **P2 (Optimization)**: 8 (D-008, D-009, D-010, D-011, D-012, D-013, D-015)
+- **P1 (Important)**: 7 (D-003, D-004, D-005, D-006, D-007, D-021, D-032, D-034)
+- **P2 (Optimization)**: 10 (D-008, D-009, D-010, D-011, D-012, D-013, D-015, D-033)
 - **Resolved**: 12 (D-001, D-002, D-014, D-016, D-017, D-018, D-019, D-020, D-022, D-023, D-024, D-025)
 
 ---

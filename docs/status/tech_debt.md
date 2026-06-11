@@ -1,7 +1,7 @@
 # Stock Explorer — Technical Debt Register
 
-> **Last Updated**: 2026-06-18
-> **Source**: Review Cycle Round 12 (Architect's findings)
+> **Last Updated**: 2026-06-19
+> **Source**: Review Cycle Round 14 (Architect's findings)
 > **Maintainer**: System Architect
 
 This file tracks all known architecture and technical debt in Stock Explorer, organized by severity.
@@ -21,6 +21,7 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 
 ### D16: `analogy_engine.py` god module (850 lines, 6 responsibilities)
 - **Effort**: 2-3h
+- **Status**: ⏳ **PENDING** — Still 850 lines, un-split. Was deferred to end of Sprint 3 after C44 and C38. C48 (Sprint 4) is blocked on this.
 - **Description**: `analogy_engine.py` contains 6 distinct responsibilities:
   1. Analogy/revenue explanations (original purpose, lines 1–136)
   2. Curated key takeaways data `_KEY_TAKEAWAYS` (120 lines of hardcoded dict)
@@ -28,12 +29,13 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
   4. `compute_recent_deltas()` + `explain_delta()` — delta detection (180 lines)
   5. Health scoring: 6 `_score_*` functions + `compute_health_scores()` + `get_health_summary()` (270 lines)
   6. EPS extraction logic (now delegated to `financial_metrics.py` via R1)
-- **Impact**: The module is doing the work of 3–4 separate services. The health scoring functions (`_score_roe`, `_score_gross_margin`, etc.) are pure functions that could be independently tested but are buried in a module dominated by string templates.
+- **Impact**: The module is doing the work of 3–4 separate services. The health scoring functions (`_score_roe`, `_score_gross_margin`, etc.) are pure functions that could be independently tested but are buried in a module dominated by string templates. **Critical path for C48.**
 - **Recommended Action**: Split into focused modules:
   - `src/services/analogy_engine.py` — keep only analogy functions (lines 1–136)
   - `src/services/key_takeaways.py` — `generate_key_takeaways()` + `_KEY_TAKEAWAYS` data
   - `src/services/delta_engine.py` — `compute_recent_deltas()` + `explain_delta()`
   - `src/services/health_scoring.py` — all `_score_*` + `compute_health_scores()` + `get_health_summary()`
+- **Priority for Sprint 4**: 🔴 HIGH — Must be completed before C48 starts. D26 explicitly flags D16 as a blocker for `story_composer.py`.
 
 ## Medium Severity Debt
 
@@ -56,7 +58,7 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 
 ### D4: Service layer `__init__.py` wildcard imports
 - **Effort**: 0.5h
-- **Description**: `src/services/__init__.py` uses `from X import *` for 4 of 11 service modules. This creates implicit dependencies and makes it unclear which services are "public API" vs internal.
+- **Description**: `src/services/__init__.py` uses `from X import *` for 4 of 11 service modules. This creates implicit dependencies and makes it unclear which services are "public API" vs internal. Only 4 modules are exported (`analogy_engine`, `news_summarizer`, `revenue_analyzer`, `financial_metrics`), leaving 7 "hidden" — this actually makes the hidden modules good candidates for internal-only status.
 - **Recommended Action**: Replace wildcard imports with explicit imports. Document which services are stable public API.
 
 ### D6: Hardcoded data in Python modules
@@ -123,11 +125,13 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 - **Effort**: 1h (with R5)
 - **Description**: C37 added a 120-line hardcoded `_KEY_TAKEAWAYS` dict (20 stocks, 4–5 bullets each) directly in `analogy_engine.py`. This is the same anti-pattern as D6 (hardcoded data in Python). The handoff explicitly notes "C37 uses curated takeaways for top 20 stocks as PRIMARY approach" — this data will grow.
 - **Recommended Action**: Move to `src/data/key_takeaways.yaml` as part of R5 (YAML migration). The loading function stays in the service module.
+- **Note**: This item will be resolved as part of D16 split — the data moves to `key_takeaways.py` module.
 
 ### D19: `business_card.py` inline HTML table generation (30+ lines)
 - **Effort**: 1-2h (with R9)
 - **Description**: `business_card.py` lines 340–360 contain inline HTML table generation for the dividend history table with badge columns. This is raw HTML string concatenation in a page file, bypassing the `_info_card()` / `_白话_card()` pattern. The health score dimension cards (lines 242–248) also use inline HTML with hardcoded styles.
 - **Recommended Action**: Create a `render_badge_table(df, badge_col, badge_styles)` helper in `ui_components.py` (R2/R9). Move health dimension cards to a reusable `render_score_cards(scores, columns=5)` component.
+- **Note**: Will be easier to address after D24 (sub-directory extraction) separates these into individual section files.
 
 ### D20: `business_card.py` valuation interpretation duplicates `chart.py` logic
 - **Effort**: RESOLVED (0.5-1h)
@@ -139,7 +143,7 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 - **Effort**: Included in D16
 - **Description**: All Sprint 2 features were added to existing files (`analogy_engine.py`, `chart.py`, `business_card.py`) rather than creating new service modules. The Round 9 analysis recommended creating `summary_engine.py` (C37) and `delta_engine.py` (C39) as separate modules. Instead, everything went into `analogy_engine.py`.
 - **Impact**: Contributes to D16 (god module). Makes it harder to locate feature logic. The `analogy_engine.py` import in `business_card.py` now pulls in 850 lines when only ~136 lines of analogies are needed.
-- **Recommended Action**: Address as part of D16 refactoring. No immediate action needed if D16 is planned for Sprint 3.
+- **Recommended Action**: Address as part of D16 refactoring. No immediate action needed if D16 is planned for Sprint 3/4.
 
 ## New Architecture Debt Identified in Round 12
 
@@ -149,15 +153,17 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 - **Impact**: Low. The 4-layer architecture is slightly bent but not broken. `financial_metrics.py` is a pure utility module (pure functions, no state), so the layer violation is minimal.
 - **Recommended Action**: No immediate action. If more shared utility modules are extracted, consider a `src/services/shared/` sub-directory for pure utility functions.
 
-### D23: Tone guidelines for market-level features (from Round 11 discussion)
+### D23: Tone guidelines for market-level features
 - **Effort**: Content task (1h)
+- **Status**: ⏳ **PENDING** — No `docs/design/tone_guidelines.md` file exists yet.
 - **Description**: C51 (Sector Heatmap) and C49 (Market Pulse) will display market-level data. The current tone guidelines (from `company_facts.yaml` and analogy functions) are designed for single-stock explanations. Market-level features need "過去發生" language — factual, not predictive.
 - **Impact**: Without tone guidelines, market features may accidentally sound like investment advice.
-- **Recommended Action**: Add tone guidelines to `docs/design/tone_guidelines.md` before C51 implementation. This is a content task, not a code task.
+- **Recommended Action**: Add tone guidelines to `docs/design/tone_guidelines.md` before C51 implementation. This is a content task, not a code task. **Should be done in Sprint 4 before C51 starts.**
 
 ### D24/D27: `business_card.py` approaching architectural limit
 - **Effort**: 2-3h (extract + update imports)
-- **Description**: `business_card.py` is 447 lines after R1/D-020 cleanup (down from 479). Adding C44 risk section (~40 lines), C41 read-next (~30 lines), and C48 story card (~70 lines) will push it to ~590+ lines.
+- **Status**: ⏳ **PENDING** — `business_card.py` is now 509 lines (up from 447 after C41 Read Next). No sub-directory exists yet. Planned for Sprint 4 (before C48).
+- **Description**: `business_card.py` is 509 lines after R1/D-020/C41 work. Adding C44 risk section (~40 lines), C48 story card (~70 lines), and potential C38 compare stories section (~50 lines) will push it to ~670+ lines.
 - **Impact**: The page file becomes hard to navigate. Multiple features competing for space.
 - **Recommended Action**: Extract to `src/pages/business_card/` sub-directory before C48 implementation. Proposed structure:
   - `src/pages/business_card/__init__.py`
@@ -169,6 +175,7 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
   - `src/pages/business_card/sections/read_next.py` (C41)
   - `src/pages/business_card/sections/story.py` (C48)
   - `src/pages/business_card/sections/details.py` (metrics, events, etc.)
+- **Priority for Sprint 4**: 🔴 HIGH — Must be done before C48. Handoff flags this as "non-negotiable for architectural limits."
 
 ### D25: Market-level data flow is architecturally distinct from single-stock flow
 - **Effort**: Part of C51 implementation
@@ -178,23 +185,78 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 
 ### D26: `story_composer.py` will import from multiple unstable services
 - **Effort**: Blocker for C48
+- **Status**: ⏳ **PENDING** — Blocked on D16.
 - **Description**: C48's `story_composer.py` will import from `analogy_engine.py` (being split via D16), `company_facts.py`, `chart.py`, and `financial_metrics.py`.
 - **Impact**: C48 development may be blocked or coupled to unstable interfaces if D16 slips.
 - **Recommended Action**: Complete D16 before starting C48.
+
+## New Architecture Debt Identified in Round 13
+
+### D27: C34 timeline UI complexity
+- **Effort**: Requires spike (4-6h approved for Sprint 4)
+- **Description**: C34 (Company Story Timeline) requires a timeline UI but Streamlit has no native timeline component. The approved approach is a C34-spike in Sprint 4 to prototype using Streamlit native components.
+- **Impact**: If the spike reveals Streamlit cannot adequately render a timeline, C34 (18-26h) may need significant rework or a different tech approach.
+- **Recommended Action**: Run C34-spike in Sprint 4 to de-risk. Evaluate `streamlit-timeline` or custom HTML/CSS approaches.
+
+### D28: Notification system session state tracking
+- **Effort**: Monitor (escalate to D25 session state manager if needed)
+- **Description**: The Notification System (Sprint 6) will add 6+ new session_state keys. The current ad-hoc session_state pattern (already 8+ keys in `business_card.py` alone) does not scale.
+- **Impact**: Session state proliferation across features will make debugging and testing difficult. Risk of key collisions.
+- **Recommended Action**: Add session state audit to Sprint 5 plan (already in handoff). Consider a session state manager pattern.
+
+## New Architecture Debt Identified in Round 14 (Sprint 3 Review)
+
+### D29: C41 Read Next inline HTML in business_card.py
+- **Effort**: 1h (with D24)
+- **Description**: C41 added ~60 lines of inline HTML (lines 449–490) directly in `_render_business_card()` in `business_card.py`, including raw HTML string concatenation for peer stock cards (`_peer_html` at lines 470–480). This bypasses the `_info_card()` / `_白话_card()` pattern and adds to the file's growth (now 509 lines). The peer stock rendering with buttons (lines 482–488) is presentation logic that should be extracted.
+- **Impact**: Contributes to D24 (business_card.py bloat). The inline HTML is not reusable. If another page needs "related stocks" display, it can't reuse this code.
+- **Recommended Action**: Extract peer stock card rendering to a `render_peer_cards(peers_df, navigate_fn)` helper in `ui_components.py` (D3). Move to `read_next.py` section file when D24 extracts the sub-directory.
+- **New**: Identified during Round 14 review of C41 commit (1f98d73).
+
+### D30: C44 Risk Analysis will compound business_card.py growth
+- **Effort**: Depends on D24 timing
+- **Description**: C44 (Risk Analysis MVP) is next in Sprint 3 and will add ~40 lines to `business_card.py`. Combined with existing 509 lines, the file will reach ~550 lines before Sprint 4 even starts. If C38 also adds a section (~50 lines), the file hits ~600 lines — the exact threshold D24 was created to prevent. The planned 3 risk dimensions (customer concentration, financial health, event-based) all require new rendering logic and likely new HTML.
+- **Impact**: If D24 is deferred past C44, `business_card.py` crosses the 600-line threshold. This makes D24 harder to do later (more code to migrate).
+- **Recommended Action**: Strongly recommend starting D24 extraction before C44, not after. At minimum, extract the file structure and move existing code before adding C44 and C38 sections. The Sprint 4 sequence should be: R3 → **D24** → C44 → C38 → C51 → C48 → C53-1 (with C44 and C38 done within the business_card/ sub-directory).
+- **New**: Identified during Round 14 review. Urgency increased because C44 is the very next task.
 
 ## Low Severity Debt
 - None (all items classified as Medium or higher impact)
 
 ## Summary
-- **Total Debt Items**: 27
+- **Total Debt Items**: 30
 - **High Severity**: 2 items (D5, D16)
-- **Medium Severity**: 23 items (D1-D4, D6-D15, D17-D21, D22-D26)
+- **Medium Severity**: 26 items (D1-D4, D6-D15, D17-D21, D22-D30)
 - **Low Severity**: 0 items
 - **Resolved Items**: D1, D2, D17, D20 (4 items)
+- **Pending Sprint 3**: D16, D29 (business_card.py bloat from C41, but C41 is done), D30 (upcoming from C44)
+- **Pending Sprint 4**: D5, D6, D18, D23, D24, D25, D26, D27, D28, D29, D30
+
+## Sprint 4 Readiness Assessment
+
+### Prerequisites (Hard Blockers)
+1. **D16** (Split analogy_engine.py) — Blocks C48's `story_composer.py` (D26)
+2. **D24** (business_card.py sub-directory) — Must happen before C48 adds Story Card section. Ideally before C44 to prevent file from growing further.
+3. **R3** (Batch API minimal) — Blocks C51 Sector Heatmap
+
+### Recommended Sprint 4 Sequence
+1. **D16** — Split analogy_engine.py (2-3h) — unlocks C48
+2. **D24** — Extract business_card.py to sub-directory (2-3h) — prepares for C44/C48
+3. **R3** — Batch API minimal (1-2h) — unlocks C51
+4. **C44** — Risk Analysis MVP (12-14h) — now within business_card/ sub-directory
+5. **C51** — Sector Heatmap (12-16h) — with R3 prerequisite
+6. **C48** — Company Story Card (10-14h) — with D16 + D24 prerequisites
+7. **C53-1** — Social Sharing URL (2-3h) — quick win
+
+### Architecture Risks for Sprint 4
+- **business_card.py uncontrolled growth**: C44 (next task) + C48 will push the file past 600 lines if D24 is deferred. **Recommend moving D24 before C44.**
+- **C48 coupling to unstable interfaces**: story_composer.py needs analogy_engine.py split first (D16). If D16 slips, C48 slips.
+- **Market data abstraction gap**: C51 needs `market_data.py` (D25). Without it, sector heatmap will ad-hoc the market-wide data flow.
+- **Tone guidelines gap**: C51 displays market-level data. Without tone guidelines (D23), market features risk sounding like investment advice.
 
 ## Next Review
-This register should be updated after each review cycle. Next update: After Sprint 3 feature implementation.
+This register should be updated after each review cycle. Next update: After Sprint 3 completion (C44 + C38 + D16 + D-025).
 
--- 
+--
 *Created: 2026-06-11*
 *Maintainer: System Architect*

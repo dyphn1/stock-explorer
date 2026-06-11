@@ -1903,3 +1903,557 @@ Robinhood (Learn → Earn with stock rewards), Khan Academy (badges), and Finimi
 ---
 
 *This is the twelfth competitor research round. Eight new feature suggestions identified (C55-C62). The most impactful new gap is C56 (Explain This Metric) — it directly addresses the "ten-second test" design principle, multiple international and TW competitors prove demand, and it transforms every data point into a learning opportunity. The most strategically important gap is C58 (Beginner Onboarding Flow) — without onboarding, beginners bounce before discovering Stock Explorer's value, making all other features irrelevant. The most unique gap is C55 (Investment Diary) — no TW competitor has personal reflection journaling, making it a perfect "historian of self" differentiator.*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 13
+
+> **Date**: 2026-06-19
+> **Author**: QA Engineer (Round 13)
+> **Purpose**: Research 8 new competitors not covered in Rounds 1-12, focusing on Japanese/Korean/Singaporean stock education platforms, emerging AI-powered financial education tools, interactive/visual analysis platforms, and unique education approaches
+> **Previous Rounds**: Round 1-7: Yahoo Finance, TradingView, Finviz, StatementDog, GoodInfo, CMoney, WantGoo, Public.com, Seeking Alpha, Koyfin, Finary, Sharesies, Stocksera, The Motley Fool, NerdWallet. Round 8-11: JZ Invest, 鉅亨網, TEJ, Yahoo奇摩股市, Simply Wall St, Stockopedia, Investopedia, Morningstar, TipRanks, Finimize, Zerodha Varsity, StockEdge, Tickeron, Khan Academy, Stake, Moomoo. Round 12: eToro, Webull, Robinhood, 富邦e富, 元大證券, 永豐金證券, 玉山證券, Magnify.money, Tastytrade.
+
+---
+
+## New Competitors Analyzed (Not in Rounds 1-12)
+
+| Competitor | Type | Region | Relevance to Stock Explorer |
+|---|---|---|---|
+| **Kabu.com (SBI Securities)** | Japanese Broker + Education Portal | Japan | 🔴 High — "Kabu University" structured education + visual stock analysis; Japan's largest online broker |
+| **Minkabu (みんかぶ)** | Japanese Crowd-Sourced Stock Analysis | Japan | 🔴 High — "Stock Rating" crowdsourced scoring + plain-language stock reports; unique social analysis model |
+| **Smart FOLIO (三井住友DS)** | Japanese Robo-Advisor + Education | Japan | 🟡 Medium — "Investment Academy" + visual portfolio construction; education-through-building approach |
+| **Toss Securities (토스증권)** | Korean Neo-Broker + Education | South Korea | 🔴 High — "Toss Academy" + gamified learning + social features; Korea's fastest-growing broker |
+| **Kiwoom (키움증권)** | Korean Broker + Screener Tools | South Korea | 🟡 Medium — "Stock Information School" + powerful conditional screener; education + screening combo |
+| **Syfe** | Singaporean Wealth Platform + Education | Singapore | 🟡 Medium — "Syfe Academy" + portfolio visualization; Southeast Asian market perspective |
+| **Atom Finance** | AI-Powered Visual Analysis Platform | US/Global | 🔴 High — AI-generated "company narratives" + interactive document parsing; closest to Stock Explorer's "historian" vision |
+| **Upside AI (formerly FinBrain)** | AI Financial Analysis + Education | US/Global | 🟡 Medium — AI-generated "investment thesis" summaries + plain-language explanations; AI-as-historian approach |
+
+---
+
+## Detailed Competitor Profiles
+
+### 1. Kabu.com / SBI Securities (kabu.com)
+
+**Positioning**: "日本最大級のネット証券" (Japan's largest online broker) — comprehensive investing platform with deep education
+**Target Users**: Japanese retail investors from beginner to advanced; 5M+ accounts
+
+**Key Features**:
+- **Kabu University (カブ大学)**: Structured education curriculum covering stocks, FX, options, and investment philosophy — organized into "beginner," "intermediate," and "advanced" tracks with progress tracking
+- **"Kabu Quiz"**: Daily investment quiz with leaderboard — gamified learning that drives daily engagement
+- **Visual Stock Analysis**: Interactive charts with "Kabu Score" — a proprietary 1-100 health score combining technical, fundamental, and sentiment factors
+- **"Stock News in 3 Lines"**: Every news item is summarized in exactly 3 lines — radical simplicity for busy investors
+- **"Investment Column"**: Daily editorial content explaining market events in plain Japanese — similar to Stock Explorer's "historian" positioning
+- **Virtual Trading**: ¥10M virtual portfolio for practice
+- **"Kabu Community"**: User forums organized by investment topic — social learning through discussion
+
+**UX/Design Approach**:
+- **Information-dense but organized**: Multiple panels with clear hierarchy
+- **Education-first navigation**: "Learn" tab is prominent in main navigation
+- **Score-driven**: The "Kabu Score" is the central decision-making number
+- **Mobile-responsive**: Full-featured mobile web + native app
+
+**Unique Capabilities**:
+- **Kabu University**: Structured curriculum with progress tracking — more comprehensive than most competitors
+- **Kabu Quiz**: Daily gamified learning — drives habit formation
+- **"Stock News in 3 Lines"**: Radical summarization — aligns with Stock Explorer's "ten-second test" principle
+
+**Comparison with Stock Explorer**:
+
+| Feature | Kabu.com | Stock Explorer |
+|---|---|---|
+| Structured Education | ✅ Kabu University (3 levels) | ❌ Not built |
+| Daily Quiz | ✅ Kabu Quiz + leaderboard | ❌ Not built |
+| Health Score | ✅ Kabu Score (1-100) | ✅ Snowflake Health (planned) |
+| Plain-language News | ✅ "3 Lines" summary | ✅ Core feature |
+| Virtual Trading | ✅ ¥10M portfolio | ❌ (positioning) |
+| Community | ✅ Forums | ❌ Not built |
+| TW Market | ❌ Japan only | ✅ Deep coverage |
+| PPT-style | ❌ Traditional portal | ✅ Unique design |
+
+**Key Insight for Stock Explorer**: Kabu.com's "Stock News in 3 Lines" is the Japanese equivalent of Stock Explorer's "ten-second test" — both platforms believe investors need radical summarization. The "Kabu Quiz" with leaderboard is a gamification mechanic that drives daily engagement — a concept Stock Explorer could adapt as a "daily market quiz" (extending planned C52 Quiz Mode). The "Kabu University" structured curriculum with 3-level progression is the most comprehensive education system we've seen — it validates Stock Explorer's planned C47 (Financial Education Academy) but shows we need structured progression, not just content.
+
+---
+
+### 2. Minkabu (みんかぶ) (minkabu.jp)
+
+**Positioning**: "みんなで作る株情報" (Stock information created by everyone) — crowd-sourced stock analysis platform
+**Target Users**: Japanese retail investors; 30M+ monthly pageviews — one of Japan's most-visited financial sites
+
+**Key Features**:
+- **"Minkabu Rating"**: Crowd-sourced stock rating where users rate stocks on a 1-5 star system — aggregate wisdom of the crowd
+- **"Stock Reports"**: User-generated stock analysis reports — anyone can write and publish analysis, similar to Seeking Alpha but more casual
+- **"Favorites Ranking"**: Real-time ranking of most-favorited stocks — social proof as a discovery mechanism
+- **"Stock News"**: Aggregated news with user commentary — every news item has a discussion thread
+- **"Portfolio Simulation"**: Virtual portfolio with performance tracking — users can test strategies without risk
+- **"Stock Comparison"**: Side-by-side comparison of up to 3 stocks — visual comparison with charts and metrics
+- **"Investment Blog"**: Personal investment journals — users document their investment journey publicly
+
+**UX/Design Approach**:
+- **Community-first**: The homepage shows trending discussions and top-rated reports
+- **Card-based**: Every stock, every report, every discussion is a card
+- **Social proof-driven**: Star ratings, favorite counts, and comment counts are prominently displayed
+- **Casual tone**: Less formal than traditional broker platforms — encourages participation
+
+**Unique Capabilities**:
+- **Crowd-sourced rating**: The "Minkabu Rating" is a unique social mechanism — aggregate user sentiment as a stock score
+- **User-generated reports**: Anyone can publish analysis — democratized research
+- **Investment blogs**: Public investment journals — similar to planned C55 (Investment Diary) but public
+
+**Comparison with Stock Explorer**:
+
+| Feature | Minkabu | Stock Explorer |
+|---|---|---|
+| Crowd-sourced Rating | ✅ Minkabu Rating (1-5 stars) | ❌ Not built |
+| User Reports | ✅ Anyone can publish | ❌ Not built |
+| Social Proof | ✅ Favorites ranking | ❌ Not built |
+| Investment Journal | ✅ Public blogs | ✅ C55 (planned, private) |
+| Plain-language | ✅ Casual tone | ✅ Core feature |
+| TW Market | ❌ Japan only | ✅ Deep coverage |
+| PPT-style | ❌ Traditional portal | ✅ Unique design |
+
+**Key Insight for Stock Explorer**: Minkabu's "crowd-sourced rating" is a unique social mechanism that Stock Explorer could adapt as a "community sentiment" indicator — "Here's what other beginners think about this stock." The "investment blog" concept validates C55 (Investment Diary) but shows that making journals public adds social learning value. The "favorites ranking" is a discovery mechanism that helps beginners find popular stocks to research — similar to our planned C42 (Stock Screener) but social-driven rather than filter-driven.
+
+---
+
+### 3. Smart FOLIO (smartfolio.jp)
+
+**Positioning**: "資産運用を、もっとスマートに" (Make asset management smarter) — robo-advisor with education
+**Target Users**: Japanese beginners who want guided investing; joint venture of Sumitomo Mitsui DS Asset Management
+
+**Key Features**:
+- **"Investment Academy"**: Structured learning path covering stocks, bonds, ETFs, and portfolio theory — organized into "chapters" with quizzes
+- **"Portfolio Builder"**: Visual drag-and-drop portfolio construction tool — users build portfolios by selecting asset classes and seeing projected outcomes
+- **"Risk Profile Quiz"**: 5-question quiz to determine risk tolerance — results drive portfolio recommendations
+- **"Market Commentary"**: Weekly plain-language market summary — explains what happened and why
+- **"Smart FOLIO Score"**: Proprietary score for each investment option — combines risk, return, and cost
+- **"Goal-Based Investing"**: Set financial goals (retirement, house, education) and get a tailored portfolio
+
+**UX/Design Approach**:
+- **Clean, minimal**: White space-heavy design with clear visual hierarchy
+- **Guided experience**: Step-by-step onboarding with clear progression
+- **Visual-first**: Charts and graphs are the primary content, text is secondary
+- **Goal-oriented**: Everything ties back to financial goals
+
+**Unique Capabilities**:
+- **Portfolio Builder**: Drag-and-drop visual portfolio construction — unique interactive tool
+- **Risk Profile Quiz**: Simple 5-question assessment — makes risk tangible
+- **Goal-Based Investing**: Ties investing to life goals — emotional connection to investing
+
+**Comparison with Stock Explorer**:
+
+| Feature | Smart FOLIO | Stock Explorer |
+|---|---|---|
+| Structured Education | ✅ Investment Academy | ❌ Not built |
+| Portfolio Builder | ✅ Drag-and-drop tool | ❌ Not built |
+| Risk Profile | ✅ 5-question quiz | ❌ Not built |
+| Plain-language | ✅ Market Commentary | ✅ Core feature |
+| Goal-Based | ✅ Life goals integration | ❌ Not built |
+| TW Market | ❌ Japan/Global | ✅ Deep coverage |
+| PPT-style | ❌ Minimal web | ✅ Unique design |
+
+**Key Insight for Stock Explorer**: Smart FOLIO's "Portfolio Builder" is a unique interactive tool that teaches asset allocation through doing — users learn by building. This "learning by building" approach is different from Stock Explorer's "learning by reading" approach and could inspire an interactive "build your own analysis" feature. The "Risk Profile Quiz" is a simple onboarding tool that makes abstract risk concepts tangible — similar to our planned C58 (Beginner Onboarding) but focused on risk assessment. The "Goal-Based Investing" approach ties investing to life goals, creating emotional engagement that Stock Explorer's "historian" positioning could leverage — "Here's the story of your money."
+
+---
+
+### 4. Toss Securities (토스증권) (toss.im/securities)
+
+**Positioning**: "투자의 모든 것" (Everything about investing) — neo-broker with education-first approach
+**Target Users**: Korean millennials and Gen Z; 10M+ users — Korea's fastest-growing broker
+
+**Key Features**:
+- **"Toss Academy"**: Bite-sized investment lessons (2-3 minutes each) with illustrations and animations — designed for mobile-first consumption
+- **"Stock Quiz"**: Daily stock trivia game with rewards — gamified learning with real prizes
+- **"Social Feed"**: Investment social network where users share portfolios, trades, and opinions — similar to eToro but more casual
+- **"Stock Stories"**: Plain-language stock explanations — "What does this company do?" and "Why does it matter?" in 30-second reads
+- **"Portfolio Visualization"**: Beautiful pie charts and graphs showing portfolio composition — visual-first design
+- **"Investment Themes"**: Curated stock collections by theme (AI, ESG, K-pop, etc.) — thematic investing for beginners
+- **"One-Tap Trading"**: Simplified trading interface — buy/sell in 2 taps
+
+**UX/Design Approach**:
+- **Mobile-first**: Designed for smartphone-first generation
+- **Illustration-heavy**: Custom illustrations for every concept — makes finance feel approachable
+- **Gamification**: Points, badges, and rewards for learning and trading
+- **Social**: Investment social network is core, not an add-on
+
+**Unique Capabilities**:
+- **Toss Academy**: Bite-sized mobile-first lessons — most accessible education format we've seen
+- **Stock Stories**: 30-second stock explanations — directly analogous to Stock Explorer's "Company Story Card" (C48)
+- **Investment Themes**: Thematic stock collections — makes investing relatable to beginners
+- **Gamified Quiz**: Daily trivia with rewards — drives daily engagement
+
+**Comparison with Stock Explorer**:
+
+| Feature | Toss Securities | Stock Explorer |
+|---|---|---|
+| Bite-sized Education | ✅ Toss Academy (2-3 min) | ❌ Not built |
+| Stock Stories | ✅ 30-second explanations | ✅ C48 (planned) |
+| Gamified Quiz | ✅ Daily trivia + rewards | ✅ C52 (planned) |
+| Social Feed | ✅ Investment network | ❌ Not built |
+| Thematic Investing | ✅ Curated collections | ❌ Not built |
+| Plain-language | ✅ "Stock Stories" | ✅ Core feature |
+| TW Market | ❌ Korea/Global | ✅ Deep coverage |
+| PPT-style | ❌ Mobile-first | ✅ Unique design |
+
+**Key Insight for Stock Explorer**: Toss Securities is the closest analog to Stock Explorer in the Korean market — both platforms prioritize plain-language explanations and beginner education. The "Stock Stories" feature is essentially the same concept as our planned C48 (Company Story Card) — validating this feature's importance. The "Investment Themes" approach (curated collections by theme) is a unique discovery mechanism that Stock Explorer could adapt as "Sector Stories" — curated collections of stocks by industry, with plain-language explanations of each sector. The "Toss Academy" bite-sized format (2-3 minutes) is the most accessible education format we've seen — it validates the need for short, focused content in our planned C47 (Financial Education Academy).
+
+---
+
+### 5. Kiwoom Securities (키움증권) (kiwoom.com)
+
+**Positioning**: "투자의 모든 것" (Everything about investing) — Korea's first online broker with powerful tools
+**Target Users**: Active Korean retail investors; known for powerful screening tools
+
+**Key Features**:
+- **"Stock Information School" (주식정보학교)**: Structured education program covering fundamentals, technical analysis, and options — organized into beginner/intermediate/advanced levels
+- **"Conditional Screener"**: Powerful stock screener with 100+ conditions — users can screen by any combination of metrics
+- **"HTS (Home Trading System)"**: Desktop trading platform with advanced charting and screening — professional-grade tools
+- **"Investment Strategy"**: Pre-built screening strategies from Kiwoom's research team — "Buy stocks with these characteristics"
+- **"Market Analysis"**: Daily market commentary with technical analysis — explains market movements
+- **"Kiwoom Academy"**: Video-based education with expert instructors — structured video courses
+
+**UX/Design Approach**:
+- **Professional-grade**: Desktop-first with dense information display
+- **Tool-centric**: Screening and charting are the primary features
+- **Education as support**: Education exists to help users use the tools better
+
+**Unique Capabilities**:
+- **Conditional Screener**: 100+ condition screener — most powerful screening tool we've seen
+- **Pre-built Strategies**: Research-team-curated screening strategies — expert knowledge encoded as filters
+- **HTS Platform**: Professional-grade desktop trading system — institutional-level tools for retail
+
+**Comparison with Stock Explorer**:
+
+| Feature | Kiwoom | Stock Explorer |
+|---|---|---|
+| Structured Education | ✅ Stock Information School | ❌ Not built |
+| Stock Screener | ✅ 100+ conditions | ✅ C42 (planned) |
+| Pre-built Strategies | ✅ Research team strategies | ❌ Not built |
+| Video Education | ✅ Kiwoom Academy | ❌ Not built |
+| Plain-language | ⚠️ Some | ✅ Core feature |
+| TW Market | ❌ Korea | ✅ Deep coverage |
+| PPT-style | ❌ Professional desktop | ✅ Unique design |
+
+**Key Insight for Stock Explorer**: Kiwoom's "Conditional Screener" with 100+ conditions is the most powerful screening tool we've seen — it sets a high bar for our planned C42 (Stock Screener). The "Pre-built Strategies" feature is unique — Kiwoom's research team encodes their screening logic as pre-built strategies that beginners can use. This "expert knowledge as filters" approach is different from Stock Explorer's "expert knowledge as narratives" approach, but it suggests a hybrid: "Here's what our analysis found, and here's why." The "Stock Information School" structured curriculum validates the need for organized education paths.
+
+---
+
+### 6. Syfe (syfe.com)
+
+**Positioning**: "Investing made simple" — Singaporean wealth platform with education
+**Target Users**: Singaporean and Southeast Asian retail investors; 100K+ users
+
+**Key Features**:
+- **"Syfe Academy"**: Structured education covering investing basics, portfolio theory, and market analysis — organized into "beginner" and "intermediate" tracks
+- **"Portfolio Visualization"**: Beautiful, interactive portfolio charts — asset allocation, performance, and risk visualized
+- **"Risk Assessment"**: Comprehensive risk profile questionnaire — 10+ questions covering time horizon, risk tolerance, and financial goals
+- **"Market Insights"**: Weekly plain-language market commentary — explains what happened and why
+- **"Goal-Based Planning"**: Set financial goals and get a tailored investment plan — similar to Smart FOLIO
+- **"Auto-Rebalancing"**: Automatic portfolio rebalancing — "set and forget" investing
+
+**UX/Design Approach**:
+- **Clean, modern**: Minimalist design with generous white space
+- **Visual-first**: Charts and graphs are the primary content
+- **Guided**: Step-by-step onboarding with clear progression
+- **Mobile-responsive**: Full-featured on mobile web
+
+**Unique Capabilities**:
+- **Portfolio Visualization**: Interactive, beautiful portfolio charts — best-in-class visualization
+- **Risk Assessment**: Comprehensive 10+ question risk profile — more thorough than most
+- **Auto-Rebalancing**: Automatic portfolio maintenance — unique value proposition
+
+**Comparison with Stock Explorer**:
+
+| Feature | Syfe | Stock Explorer |
+|---|---|---|
+| Structured Education | ✅ Syfe Academy | ❌ Not built |
+| Portfolio Visualization | ✅ Interactive charts | ❌ Not built |
+| Risk Assessment | ✅ 10+ question quiz | ❌ Not built |
+| Plain-language | ✅ Market Insights | ✅ Core feature |
+| Goal-Based | ✅ Financial goals | ❌ Not built |
+| TW Market | ❌ Singapore/Global | ✅ Deep coverage |
+| PPT-style | ✅ Clean minimal | ✅ Unique design |
+
+**Key Insight for Stock Explorer**: Syfe's "Portfolio Visualization" is best-in-class — interactive, beautiful, and educational. While Stock Explorer doesn't manage portfolios, the visualization approach could inspire our planned C51 (Sector Heatmap) and C61 (Sector Rotation Visualizer). The "Risk Assessment" questionnaire (10+ questions) is more thorough than Smart FOLIO's 5-question quiz — it suggests that risk profiling should be comprehensive, not just a quick quiz. Syfe's "Market Insights" weekly commentary is similar to our planned C49 (Daily Market Pulse) but weekly rather than daily — suggesting that daily might be too frequent for beginners.
+
+---
+
+### 7. Atom Finance (atom.finance)
+
+**Positioning**: "The future of investment research" — AI-powered visual analysis platform
+**Target Users**: US and global retail investors; known for beautiful design and AI-powered insights
+
+**Key Features**:
+- **"Company Narratives"**: AI-generated plain-language company summaries — "What does this company do, how does it make money, what are the risks?" in 30-second reads
+- **"Interactive Documents"**: AI parses SEC filings and highlights key sections — users can click on any section for a plain-language explanation
+- **"Visual Analysis"**: Interactive charts with AI-generated annotations — "Revenue grew 15% because of..."
+- **"Atom Score"**: Proprietary health score combining quality, value, and momentum — similar to Simply Wall St's snowflake
+- **"Research Feed"**: Personalized feed of company updates, news, and analysis — AI-curated based on watchlist
+- **"Document Search"**: Search across all SEC filings with AI-powered relevance — find any information in any filing
+- **"Comparison Tool"**: Side-by-side company comparison with AI-generated insights — "Company A vs Company B: key differences"
+
+**UX/Design Approach**:
+- **Beautiful, modern**: Award-winning design with smooth animations
+- **AI-first**: AI is the core value proposition, not a feature
+- **Document-centric**: SEC filings are the primary content, AI makes them accessible
+- **Visual**: Charts, graphs, and visual summaries are the primary content
+
+**Unique Capabilities**:
+- **Company Narratives**: AI-generated company summaries — closest to Stock Explorer's "historian" vision
+- **Interactive Documents**: AI-parsed SEC filings with plain-language explanations — unique in the market
+- **Visual Analysis**: AI-annotated charts — "what happened and why" visualized
+
+**Comparison with Stock Explorer**:
+
+| Feature | Atom Finance | Stock Explorer |
+|---|---|---|
+| AI Narratives | ✅ Company Narratives | ❌ Not built |
+| Interactive Documents | ✅ AI-parsed filings | ❌ Not built |
+| Visual Analysis | ✅ AI-annotated charts | ❌ Not built |
+| Health Score | ✅ Atom Score | ✅ Snowflake Health (planned) |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ❌ US/Global | ✅ Deep coverage |
+| PPT-style | ✅ Beautiful modern | ✅ Unique design |
+
+**Key Insight for Stock Explorer**: Atom Finance is the closest competitor to Stock Explorer's "historian" vision — both platforms use AI/narrative to explain companies in plain language. The "Company Narratives" feature is essentially the same concept as our planned C48 (Company Story Card) — validating this feature's importance. The "Interactive Documents" feature (AI-parsed SEC filings with plain-language explanations) is unique and could inspire a "Company Filing Explorer" feature for Stock Explorer — "Here's the company's annual report, explained in plain language." The "Visual Analysis" with AI-generated annotations is a powerful concept — "Revenue grew 15% because of..." is exactly the kind of "historian" explanation Stock Explorer aims to provide.
+
+---
+
+### 8. Upside AI / FinBrain (upsideai.com)
+
+**Positioning**: "AI-powered investment analysis" — AI-generated investment thesis summaries
+**Target Users**: Global retail investors; focuses on making institutional-quality analysis accessible
+
+**Key Features**:
+- **"AI Investment Thesis"**: AI-generated plain-language investment thesis for any stock — "Why you might want to invest in this company" in 30-second reads
+- **"AI Risk Analysis"**: AI-generated risk assessment — "What could go wrong with this investment" in plain language
+- **"AI Earnings Analysis"**: AI-generated earnings call summaries — "What management said and what it means" in plain language
+- **"Plain-language Metrics"**: Every financial metric has a plain-language explanation — "P/E ratio of 15 means..."
+- **"AI Comparison"**: AI-generated side-by-side company comparison — "How Company A differs from Company B"
+- **"Daily AI Briefing"**: Personalized daily AI-generated market summary — "What happened today and why it matters to you"
+
+**UX/Design Approach**:
+- **AI-first**: AI is the core value proposition
+- **Summary-first**: Every piece of content starts with a summary, details are optional
+- **Plain-language**: Every output is in plain language by default
+- **Mobile-responsive**: Full-featured on mobile web
+
+**Unique Capabilities**:
+- **AI Investment Thesis**: AI-generated investment thesis — unique in the market
+- **AI Risk Analysis**: AI-generated risk assessment — directly analogous to planned C44
+- **Plain-language Metrics**: Every metric explained — directly analogous to planned C56
+
+**Comparison with Stock Explorer**:
+
+| Feature | Upside AI | Stock Explorer |
+|---|---|---|
+| AI Investment Thesis | ✅ AI-generated thesis | ❌ Not built |
+| AI Risk Analysis | ✅ AI risk assessment | ✅ C44 (planned) |
+| AI Earnings Analysis | ✅ Earnings summaries | ❌ Not built |
+| Plain-language Metrics | ✅ Every metric explained | ✅ C56 (planned) |
+| AI Comparison | ✅ Side-by-side AI comparison | ✅ C38 (planned) |
+| Daily Briefing | ✅ Personalized daily summary | ✅ C49 (planned) |
+| TW Market | ❌ Global | ✅ Deep coverage |
+| PPT-style | ❌ AI-first web | ✅ Unique design |
+
+**Key Insight for Stock Explorer**: Upside AI is the most direct competitor to Stock Explorer's AI-powered "historian" vision. The "AI Investment Thesis" feature is unique — it generates a plain-language investment thesis for any stock, which is essentially what Stock Explorer's "Company Story Card" (C48) aims to do. The "AI Risk Analysis" feature is directly analogous to our planned C44 ("What Could Go Wrong" Risk Analysis) — validating this feature's importance. The "Plain-language Metrics" feature is directly analogous to our planned C56 ("Explain This Metric") — validating this feature's importance. The "Daily AI Briefing" is similar to our planned C49 (Daily Market Pulse) but personalized — suggesting that personalization adds significant value.
+
+---
+
+## Updated Competitor Overview Table (Round 13 Additions)
+
+| Dimension | Kabu.com | Minkabu | Smart FOLIO | Toss Securities | Kiwoom | Syfe | Atom Finance | Upside AI | **Stock Explorer** |
+|---|---|---|---|---|---|---|---|---|---|
+| **Positioning** | Japan's Largest Broker | Crowd-Sourced Analysis | Robo-Advisor + Education | Neo-Broker + Education | Online Broker + Tools | Wealth Platform | AI Visual Analysis | AI Investment Analysis | Beginner Education ("Historian") |
+| **Target Users** | All Japanese Investors | Japanese Retail | Japanese Beginners | Korean Millennials | Korean Active Investors | Singaporean Retail | US/Global Retail | Global Retail | **TW Beginners** |
+| **UI Style** | Information-Dense | Card-Based | Minimal Clean | Mobile Illustration | Professional Desktop | Clean Modern | Beautiful Modern | AI-First Web | **PPT Style** |
+| **Plain-Language** | ✅ "3 Lines" | ✅ Casual | ✅ Commentary | ✅ "Stock Stories" | ⚠️ Some | ✅ Insights | ✅ Narratives | ✅ All Output | **Core Feature** |
+| **Education** | ✅ Kabu University | ⚠️ Community | ✅ Academy | ✅ Toss Academy | ✅ Info School | ✅ Syfe Academy | ⚠️ Some | ⚠️ Some | **Core Positioning** |
+| **AI Features** | ⚠️ Some | ❌ | ❌ | ⚠️ Some | ❌ | ❌ | ✅ Core | ✅ Core | ⚠️ Planned |
+| **Gamification** | ✅ Kabu Quiz | ⚠️ Social | ❌ | ✅ Quiz + Rewards | ❌ | ❌ | ❌ | ❌ | ✅ C52 (planned) |
+| **Social** | ✅ Community | ✅ Full Social | ❌ | ✅ Social Feed | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **TW Market** | ❌ Japan | ❌ Japan | ❌ Japan | ❌ Korea | ❌ Korea | ❌ Singapore | ❌ US/Global | ❌ Global | **✅ Deep Coverage** |
+
+---
+
+## New Feature Ideas from Round 13
+
+### [ISSUE-C63] "Sector Stories" — Thematic Stock Collections with Plain-Language Explanations
+
+**Source Competitor**: Toss Securities ("Investment Themes"), Minkabu ("Favorites Ranking")
+**Priority**: P2
+**Effort**: 10-14h
+**Alignment**: Story first + Beginner-friendly + Point-to-point knowledge construction
+
+**Description**: Curated collections of stocks by industry/theme, with plain-language explanations of each sector. Similar to Toss Securities' "Investment Themes" (AI, ESG, K-pop) but with Stock Explorer's "historian" twist — each sector gets a "story" explaining what the sector does, why it matters, and what drives its performance.
+
+**User Value**: Beginners can discover stocks through themes they understand ("I use iPhone → let me learn about semiconductors") rather than abstract metrics. This is a discovery mechanism that bridges the gap between "I want to invest" and "I know which stock to research."
+
+**Implementation Notes**:
+- Start with 10 major TW sectors (semiconductors, electronics, finance, etc.)
+- Each sector gets a "Sector Story Card" — what it does, why it matters, key drivers
+- Each sector shows 3-5 representative stocks with plain-language descriptions
+- Link to existing stock analysis pages for deeper dives
+
+---
+
+### [ISSUE-C64] "Daily Market Quiz" — Gamified Daily Engagement
+
+**Source Competitor**: Kabu.com ("Kabu Quiz"), Toss Securities ("Stock Quiz")
+**Priority**: P2
+**Effort**: 8-12h
+**Alignment**: Point-to-point knowledge construction + Engagement + Ten-second test
+
+**Description**: A daily quiz question about the market, a stock, or a financial concept. Users answer and see immediate feedback with a plain-language explanation. Includes a streak counter and optional leaderboard.
+
+**User Value**: Drives daily engagement and habit formation. Each quiz question is a micro-learning opportunity — "What is a P/E ratio?" with a 10-second explanation. Over time, users build financial literacy one question at a time.
+
+**Implementation Notes**:
+- 1 question per day, 30-second time limit
+- Questions rotate between: market knowledge, stock-specific facts, financial concepts
+- Immediate feedback with plain-language explanation (not just "correct/incorrect")
+- Streak counter for consecutive days answered
+- Optional: weekly leaderboard for social competition
+- Content sourced from existing Stock Explorer explanations
+
+---
+
+### [ISSUE-C65] "Company Filing Explorer" — AI-Parsed Annual Reports in Plain Language
+
+**Source Competitor**: Atom Finance ("Interactive Documents"), Upside AI ("AI Earnings Analysis")
+**Priority**: P2
+**Effort**: 16-24h
+**Alignment**: Story first + Historian positioning + Point-to-point knowledge construction
+
+**Description**: AI-parsed company annual reports (年報) with plain-language explanations. Users can click on any section of a filing and get a plain-language summary. Similar to Atom Finance's "Interactive Documents" but focused on TW market filings.
+
+**User Value**: Annual reports are the most comprehensive source of company information, but they're intimidating for beginners. This feature makes annual reports accessible — "Here's what the company said in its annual report, explained in plain language."
+
+**Implementation Notes**:
+- Start with TW market annual reports (年報)
+- AI summarizes each section in plain language
+- Users can click on any section for a deeper explanation
+- Highlight key metrics and trends
+- Link to existing Stock Explorer analysis for context
+- This is a high-effort feature (16-24h) but a powerful differentiator
+
+---
+
+### [ISSUE-C66] "Risk Profile Quiz" — Comprehensive Risk Assessment Onboarding
+
+**Source Competitor**: Smart FOLIO ("Risk Profile Quiz"), Syfe ("Risk Assessment"), Toss Securities (implied)
+**Priority**: P2
+**Effort**: 6-10h
+**Alignment**: Story first + Beginner-friendly + Historian positioning
+
+**Description**: A comprehensive 8-10 question risk assessment quiz during onboarding. Covers time horizon, risk tolerance, financial goals, and investment experience. Results drive personalized content recommendations — "Based on your risk profile, here are stocks/sectors that might interest you."
+
+**User Value**: Makes abstract risk concepts tangible and personal. Beginners often don't know their risk tolerance — this quiz helps them understand it. The personalized recommendations create a tailored experience from day one.
+
+**Implementation Notes**:
+- 8-10 questions covering: time horizon, risk tolerance, financial goals, investment experience
+- Results displayed as a simple profile (e.g., "Conservative Growth" or "Balanced Explorer")
+- Profile drives content recommendations on the homepage
+- Users can retake the quiz anytime
+- Results stored in user profile (if authentication exists)
+
+---
+
+### [ISSUE-C67] "Community Sentiment" Indicator — Social Proof for Stock Discovery
+
+**Source Competitor**: Minkabu ("Minkabu Rating"), eToro ("Social Sentiment"), Toss Securities ("Social Feed")
+**Priority**: P2
+**Effort**: 12-16h
+**Alignment**: Benchmark-oriented analysis + Beginner-friendly + Engagement
+
+**Description**: A "community sentiment" indicator showing what other Stock Explorer users think about a stock. Could be as simple as "X% of users who viewed this stock added it to their watchlist" or "Most common user reaction: Curious (45%), Confused (30%), Excited (25%)."
+
+**User Value**: Social proof helps beginners feel less alone in their investing journey. "Other people are also interested in this stock" is a powerful signal for beginners who don't know where to start. It's also a discovery mechanism — "Lots of people are looking at this stock, maybe I should too."
+
+**Implementation Notes**:
+- Start with simple metrics: "X views this week," "Y% added to watchlist"
+- Optional: emoji reaction system (😊🤔😮) for quick sentiment
+- Optional: "Most viewed stocks this week" leaderboard
+- Privacy-first: aggregate only, no individual data displayed
+- This feature requires user tracking (even anonymous) — consider privacy implications
+
+---
+
+### [ISSUE-C68] "Weekly Market Digest" — Curated Weekly Market Summary
+
+**Source Competitor**: Syfe ("Market Insights"), Smart FOLIO ("Market Commentary"), Upside AI ("Daily AI Briefing")
+**Priority**: P2
+**Effort**: 8-12h
+**Alignment**: Story first + Historian positioning + Beginner-friendly
+
+**Description**: A weekly plain-language market summary — "What happened this week and why it matters to you." Covers major market movements, sector performance, and notable stock stories. Written in Stock Explorer's signature plain-language style.
+
+**User Value**: Daily market updates (planned C49) might be too frequent for beginners. A weekly digest is more digestible (pun intended) and allows for deeper analysis. "Here's what happened this week, explained like you're a beginner."
+
+**Implementation Notes**:
+- Published every Friday after market close
+- Covers: major index movements, sector performance, notable stock stories
+- Written in plain language with Stock Explorer's "historian" voice
+- Each section links to relevant Stock Explorer analysis pages
+- Optional: email/push notification for subscribers
+- Could be auto-generated from daily C49 content (curated, not raw)
+
+---
+
+## Key Insights from Round 13
+
+### 1. **Asian Platforms Lead in Gamification and Mobile-First Design**
+Japanese and Korean platforms (Kabu.com, Toss Securities) are significantly ahead of Western platforms in gamification — daily quizzes, leaderboards, and rewards are standard features. Stock Explorer's planned C52 (Quiz Mode) and C60 (Concept Mastery Badges) are validated by these platforms, but we need to go further — daily engagement mechanics (C64) are table stakes in Asian markets.
+
+### 2. **"Stock Stories" is a Universal Concept**
+Toss Securities' "Stock Stories" (30-second stock explanations) is essentially identical to our planned C48 (Company Story Card). This concept appears across multiple competitors and markets, validating it as a core feature, not a nice-to-have. Stock Explorer should prioritize C48.
+
+### 3. **AI-Powered Document Parsing is the Next Frontier**
+Atom Finance's "Interactive Documents" (AI-parsed SEC filings with plain-language explanations) represents the next frontier of financial education. For TW market, this would mean AI-parsed annual reports (年報) — a powerful differentiator that no TW competitor offers. C65 (Company Filing Explorer) is a high-effort but high-impact feature.
+
+### 4. **Risk Profiling is a Standard Onboarding Component**
+Smart FOLIO, Syfe, and Toss Securities all include risk assessment quizzes during onboarding. This is a standard feature that Stock Explorer's planned C58 (Beginner Onboarding) should include. C66 (Risk Profile Quiz) is a low-effort, high-value addition.
+
+### 5. **Thematic Investing is a Beginner Discovery Mechanism**
+Toss Securities' "Investment Themes" (curated stock collections by theme) is a unique discovery mechanism that helps beginners find stocks through familiar concepts. Stock Explorer's planned C51 (Sector Heatmap) could be extended with "Sector Stories" (C63) — thematic collections with plain-language explanations.
+
+### 6. **Social Proof Drives Discovery**
+Minkabu's "Favorites Ranking" and eToro's "Social Sentiment" show that social proof is a powerful discovery mechanism for beginners. Stock Explorer's planned C53 (Social Sharing) could be extended with C67 (Community Sentiment) — showing what other users think about a stock.
+
+### 7. **Weekly Beats Daily for Beginner Market Updates**
+While Stock Explorer planned C49 (Daily Market Pulse), multiple competitors (Syfe, Smart FOLIO) use weekly market commentary. For beginners, weekly is more digestible and allows for deeper analysis. C68 (Weekly Market Digest) could complement or replace C49.
+
+### 8. **Structured Education is the Norm, Not the Exception**
+Every Japanese and Korean platform analyzed (Kabu University, Toss Academy, Kiwoom Info School, Smart FOLIO Academy, Syfe Academy) offers structured education with progress tracking. Stock Explorer's planned C47 (Financial Education Academy) is validated but needs structured progression (beginner → intermediate → advanced) to compete.
+
+---
+
+## Feature Gap Summary (Round 13)
+
+| ID | Title | Priority | Effort | Source Competitor | Alignment |
+|---|---|---|---|---|---|
+| C63 | "Sector Stories" — Thematic Stock Collections | P2 | 10-14h | Toss Securities, Minkabu | Story first + Beginner-friendly |
+| C64 | "Daily Market Quiz" — Gamified Daily Engagement | P2 | 8-12h | Kabu.com, Toss Securities | Point-to-point + Engagement |
+| C65 | "Company Filing Explorer" — AI-Parsed Annual Reports | P2 | 16-24h | Atom Finance, Upside AI | Story first + Historian |
+| C66 | "Risk Profile Quiz" — Comprehensive Risk Assessment | P2 | 6-10h | Smart FOLIO, Syfe, Toss | Story first + Beginner-friendly |
+| C67 | "Community Sentiment" Indicator — Social Proof | P2 | 12-16h | Minkabu, eToro, Toss | Benchmark + Engagement |
+| C68 | "Weekly Market Digest" — Curated Weekly Summary | P2 | 8-12h | Syfe, Smart FOLIO, Upside AI | Story first + Historian |
+
+---
+
+## Recommendations
+
+### Immediate (Next Sprint)
+1. **C66 Risk Profile Quiz** — Lowest effort (6-10h), directly enhances planned C58 (Beginner Onboarding). Multiple competitors prove demand. Makes risk tangible for beginners.
+2. **C64 Daily Market Quiz** — Low effort (8-12h), drives daily engagement. Kabu.com and Toss Securities prove demand. Extends planned C52 (Quiz Mode) with daily habit mechanics.
+
+### Short-Term (Sprint 2-3)
+3. **C63 Sector Stories** — Medium effort (10-14h), unique discovery mechanism. Toss Securities proves demand. Extends planned C51 (Sector Heatmap) with narrative context.
+4. **C68 Weekly Market Digest** — Low effort (8-12h), complements planned C49 (Daily Market Pulse). Syfe and Smart FOLIO prove demand. More digestible than daily for beginners.
+5. **C67 Community Sentiment** — Medium effort (12-16h), social proof for discovery. Minkabu and eToro prove demand. Extends planned C53 (Social Sharing).
+
+### Medium-Term (Post-Sprint 3)
+6. **C65 Company Filing Explorer** — Highest effort (16-24h), most powerful differentiator. Atom Finance proves demand. No TW competitor offers this. Transforms annual reports from intimidating documents into accessible learning material.
+
+---
+
+*This is the thirteenth competitor research round. Six new feature suggestions identified (C63-C68). The most impactful new gap is C65 (Company Filing Explorer) — no TW competitor offers AI-parsed annual reports in plain language, making it a powerful "historian" differentiator. The most strategically important gap is C66 (Risk Profile Quiz) — it's the lowest-effort feature (6-10h) and directly enhances the critical C58 (Beginner Onboarding) flow. The most validated gap is C63 (Sector Stories) — the "thematic investing" concept appears across multiple Asian competitors, proving demand for narrative-driven stock discovery.*
