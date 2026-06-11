@@ -4,8 +4,8 @@
 | Property | Value |
 |----------|-------|
 | **Role** | System Architect |
-| **Primary Model** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` |
-| **Fallback Model** | `openrouter/nvidia/nemotron-3-nano-30b-a3b:free` |
+| **Primary Model** | `nvidia/nemotron-3-super-120b-a12b:free` |
+| **Fallback Model** | `nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free` |
 | **Reports to** | Product Manager |
 
 ## Mission

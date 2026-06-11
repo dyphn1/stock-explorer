@@ -5,7 +5,7 @@
 |----------|-------|
 | **Role** | Product Manager |
 | **Primary Model** | `openrouter/owl-alpha` |
-| **Fallback Model** | `openrouter/meta-llama/llama-3.2-3b-instruct:free` |
+| **Fallback Model** | `meta-llama/llama-3.2-3b-instruct:free` |
 | **Reports to** | Daniel (Client) |
 
 ## Core Responsibility

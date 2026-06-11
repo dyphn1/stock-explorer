@@ -4,8 +4,8 @@
 | Property | Value |
 |----------|-------|
 | **Role** | Design Reviewer |
-| **Primary Model** | `openrouter/google/gemma-4-31b-it:free` |
-| **Fallback Model** | `openrouter/google/gemma-4-31b-it:free` |
+| **Primary Model** | `google/gemma-4-31b-it:free` |
+| **Fallback Model** | `google/gemma-4-31b-it:free` |
 | **Reports to** | Product Manager |
 
 ## Core Responsibility

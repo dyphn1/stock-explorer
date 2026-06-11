@@ -9,12 +9,12 @@
 
 | Role | Primary Model | **Fallback Model** | Type | Core Responsibility |
 |------|---------------|-------------------|------|---------------------|
-| **Product Manager (PM)** | `openrouter/owl-alpha` | `openrouter/meta-llama/llama-3.2-3b-instruct:free` | Main Agent | Coordination, topic initiation, status handoff, summary reporting |
-| **System Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | `openrouter/nvidia/nemotron-3-nano-30b-a3b:free` | Sub-Agent | Architecture analysis, technical feasibility, technical debt |
-| **Developer** | `openrouter/owl-alpha` | `openrouter/google/gemma-4-31b-it:free` | Sub-Agent | Implementation, bug fixing, verification |
-| **Design Reviewer** | `openrouter/google/gemma-4-31b-it:free` | `openrouter/google/gemma-4-31b-it:free` | Sub-Agent | UX/visual review, design system alignment |
-| **QA Engineer** | `openrouter/google/gemma-4-31b-it:free` | `openrouter/meta-llama/llama-3.2-3b-instruct:free` | Sub-Agent | Functional verification, competitor research |
-| **Challenger** | `openrouter/openai/gpt-oss-120b:free` | `openrouter/meta-llama/llama-3.2-3b-instruct:free` | Sub-Agent | Challenges, counter-arguments, ensuring goal alignment |
+| **Product Manager (PM)** | `openrouter/owl-alpha` | `meta-llama/llama-3.2-3b-instruct:free` | Main Agent | Coordination, topic initiation, status handoff, summary reporting |
+| **System Architect** | `nvidia/nemotron-3-super-120b-a12b:free` | `nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free` | Sub-Agent | Architecture analysis, technical feasibility, technical debt |
+| **Developer** | `openrouter/owl-alpha` | `google/gemma-4-31b-it:free` | Sub-Agent | Implementation, bug fixing, verification |
+| **Design Reviewer** | `google/gemma-4-31b-it:free` | `google/gemma-4-31b-it:free` | Sub-Agent | UX/visual review, design system alignment |
+| **QA Engineer** | `google/gemma-4-31b-it:free` | `meta-llama/llama-3.2-3b-instruct:free` | Sub-Agent | Functional verification, competitor research |
+| **Challenger** | `openai/gpt-oss-120b:free` | `meta-llama/llama-3.2-3b-instruct:free` | Sub-Agent | Challenges, counter-arguments, ensuring goal alignment |
 
 ---
 
@@ -49,7 +49,7 @@ Step 6: Update all status files
 
 ## 🏗️ System Architect
 
-**Model:** `openrouter/nvidia/nemotron-3-super-120b-a12b:free`
+**Model:** `nvidia/nemotron-3-super-120b-a12b:free`
 **Type:** Sub-Agent (spawned by PM)
 
 ### Core Responsibilities
@@ -118,7 +118,7 @@ Step 6: Update all status files
 
 ## 🎨 Design Reviewer
 
-**Model:** `openrouter/google/gemma-4-31b-it:free`
+**Model:** `google/gemma-4-31b-it:free`
 **Type:** Sub-Agent (spawned by PM)
 
 ### Core Responsibilities
@@ -152,7 +152,7 @@ Step 6: Update all status files
 
 ## 🧪 QA Engineer
 
-**Model:** `openrouter/google/gemma-4-31b-it:free`
+**Model:** `google/gemma-4-31b-it:free`
 **Type:** Sub-Agent (spawned by PM)
 
 ### Core Responsibilities
@@ -185,7 +185,7 @@ Step 6: Update all status files
 
 ## 🔥 Challenger
 
-**Model:** `openrouter/xai/gpt-oss-120b:free`
+**Model:** `openai/gpt-oss-120b:free`
 **Type:** Sub-Agent (spawned by PM during the **team discussion phase**)
 
 ### Core Responsibilities

@@ -5,7 +5,7 @@
 |----------|-------|
 | **Role** | Developer |
 | **Primary Model** | `openrouter/owl-alpha` |
-| **Fallback Model** | `openrouter/google/gemma-4-31b-it:free` |
+| **Fallback Model** | `google/gemma-4-31b-it:free` |
 | **Reports to** | Product Manager |
 
 ## Core Responsibility
