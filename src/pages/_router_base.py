@@ -131,7 +131,7 @@ def _find_financial_value(df, keywords: list) -> float:
 
 
 def _section_title(title: str):
-    if title and title[0] > "\u2e00":  # crude emoji/high-codepoint check
+    if title and (ord(title[0]) > 0x2e00 or (0x2600 <= ord(title[0]) <= 0x27bf)):  # crude emoji/high-codepoint check
         st.markdown(f"### {title}")
     else:
         st.markdown(f"### 📊 {title}")
