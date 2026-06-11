@@ -148,8 +148,44 @@ def _render_business_card(data: dict, client):
         financial_df=financial,
     )
     if takeaways:
-        takeaways_text = "\n\n".join(f"• {t}" for t in takeaways)
+        takeaways_text = "\\n\\n".join(f"• {t}" for t in takeaways)
         _summary_card("重點摘要", takeaways_text, "📋")
+
+    # 🏥 公司健康狀況 (C43: Health Snowflake)
+    health_scores = compute_health_scores(
+        extra_metrics=extra_metrics,
+        latest_per_pbr=latest_per_pbr,
+        financial_df=financial,
+        monthly_revenue=monthly_revenue,
+    )
+    if health_scores:
+        st.markdown("### 🏥 公司健康狀況")
+        health_fig = create_health_snowflake(stock_name, health_scores)
+        st.plotly_chart(health_fig, use_container_width=True)
+
+        # 五維度分數明細
+        dim_cols = st.columns(5)
+        for i, (dim_name, score) in enumerate(health_scores.items()):
+            with dim_cols[i]:
+                if score >= 70:
+                    indicator = "🟢"
+                elif score >= 40:
+                    indicator = "🟡"
+                else:
+                    indicator = "🔴"
+                st.markdown(
+                    f\"\"\"
+                    <div style=\"text-align:center;padding:0.5rem;background:#F8F9FA;border-radius:10px;margin:0.2rem 0;\">
+                        <div style=\"font-size:0.8rem;color:#7F8C8D;\">{indicator} {dim_name}</div>
+                        <div style=\"font-size:1.4rem;font-weight:700;color:#2C3E50;\">{score:.0f}</div>
+                    </div>
+                    \"\"",
+                    unsafe_allow_html=True,
+                )
+
+        # 白話健康摘要
+        health_summary = get_health_summary(health_scores)
+        _info_card("健康摘要", health_summary, "🏥")
 
     # 一句話定位
     one_liner = get_one_liner(stock_id, stock_name, industry)
@@ -184,18 +220,18 @@ def _render_business_card(data: dict, client):
             rev = monthly_revenue.iloc[-1]["revenue"] / 1e8
             yoy = extra_metrics.get("revenue_yoy")
             yoy_analogy = get_yoy_analogy(yoy) if yoy is not None else ""
-            _白话_card("最近月營收", f"{rev:,.0f} 億", get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""))
+            _白话_card("最近月營收", f"{rev:,.0f} 億", get_revenue_analyzer(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""))
         elif extra_metrics.get("roe"):
             roe = extra_metrics["roe"]
-            _白话_card("ROE", f"{roe:.1f}%", get_roe_analogy(roe))
+            _白话_card("ROE", f"{roe:.1f}%", get_roe_analyzer(roe))
 
     with col3:
         if latest_per_pbr and latest_per_pbr.get("dividend_yield"):
             dy = latest_per_pbr["dividend_yield"]
-            _白话_card("殖利率", f"{dy:.2f}%", get_dividend_analogy(dy))
+            _白话_card("殖利率", f"{dy:.2f}%", get_dividend_analyzer(dy))
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
-            _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr))
+            _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analyzer(pbr))
 
     # 🔄 最近有什麼變化 (C39: Recent Deltas)
     deltas = compute_recent_deltas(
@@ -214,43 +250,8 @@ def _render_business_card(data: dict, client):
                 f"{emoji} <span style=\"color:{color}\">**{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）</span><br>\\n"
                 f"　→ {d['explanation']}"
             )
-        delta_text = "\n\n".join(delta_lines)
+        delta_text = "\\n\\n".join(delta_lines)
         _info_card("最近有什麼變化", delta_text, "🔄")
-
-    # 🏥 公司健康狀況 (C43: Health Snowflake)
-    health_scores = compute_health_scores(
-        extra_metrics=extra_metrics,
-        latest_per_pbr=latest_per_pbr,
-        financial_df=financial,
-        monthly_revenue=monthly_revenue,
-    )
-    if health_scores:
-        st.markdown("### 🏥 公司健康狀況")
-        health_fig = create_health_snowflake(stock_name, health_scores)
-        st.plotly_chart(health_fig, use_container_width=True)
-
-        # 五維度分數明細
-        dim_cols = st.columns(5)
-        for i, (dim_name, score) in enumerate(health_scores.items()):
-            with dim_cols[i]:
-                if score >= 70:
-                    indicator = "🟢"
-                elif score >= 40:
-                    indicator = "🟡"
-                else:
-                    indicator = "🔴"
-                st.markdown(
-                    f"""
-                    <div style="text-align:center;padding:0.5rem;background:#F8F9FA;border-radius:10px;margin:0.2rem 0;">
-                        <div style="font-size:0.8rem;color:#7F8C8D;">{indicator} {dim_name}</div>
-                        <div style="font-size:1.4rem;font-weight:700;color:#2C3E50;">{score:.0f}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-
-        # 白話健康摘要
-        health_summary = get_health_summary(health_scores)
         _info_card("健康摘要", health_summary, "🏥")
 
     st.markdown("---")
