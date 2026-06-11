@@ -490,6 +490,100 @@ def create_price_area_chart(df: pd.DataFrame, title: str = "收盤價走勢") ->
     return fig
 
 
+def create_health_snowflake(stock_name: str, health_scores: dict) -> go.Figure:
+    """
+    公司健康狀況雷達圖（雪花圖）
+    health_scores: {"獲利能力": 85, "成長性": 72, "財務健康": 90, "股利品質": 65, "估值合理性": 55}
+    所有分數應為 0-100。
+    """
+    if not health_scores:
+        fig = go.Figure()
+        fig.add_annotation(text="暫無健康評分資料", x=0.5, y=0.5, showarrow=False)
+        _apply_theme_layout(fig)
+        return fig
+
+    categories = list(health_scores.keys())
+    values = [health_scores[c] for c in categories]
+
+    # 根據各維度分數決定顏色
+    def _score_color(score: float) -> str:
+        if score >= 70:
+            return "#27AE60"
+        elif score >= 40:
+            return "#F39C12"
+        else:
+            return "#E74C3C"
+
+    # 整體平均分數決定主色
+    avg_score = sum(values) / len(values) if values else 0
+    main_color = _score_color(avg_score)
+
+    # 每個維度的分數標籤（含顏色標記）
+    r_with_labels = [f"{v:.0f}" for v in values]
+
+    fig = go.Figure()
+
+    # 外框線（各維度實際分數）
+    fig.add_trace(go.Scatterpolar(
+        r=values + [values[0]],  # 閉合
+        theta=categories + [categories[0]],
+        fill="toself",
+        fillcolor=f"rgba(52, 152, 219, 0.15)",
+        line=dict(color=main_color, width=2.5),
+        name="目前評分",
+        text=[f"{c}: {v:.0f}分" for c, v in zip(categories, values)],
+        hovertemplate="%{text}<extra></extra>",
+    ))
+
+    # 參考線：及格線 40
+    fig.add_trace(go.Scatterpolar(
+        r=[40] * (len(categories) + 1),
+        theta=categories + [categories[0]],
+        line=dict(color="#F39C12", width=1, dash="dot"),
+        name="及格線 (40)",
+        hoverinfo="skip",
+    ))
+
+    # 參考線：良好線 70
+    fig.add_trace(go.Scatterpolar(
+        r=[70] * (len(categories) + 1),
+        theta=categories + [categories[0]],
+        line=dict(color="#27AE60", width=1, dash="dot"),
+        name="良好線 (70)",
+        hoverinfo="skip",
+    ))
+
+    theme = _get_chart_colors()
+
+    fig.update_layout(
+        title=dict(
+            text=f"{stock_name} 公司健康狀況",
+            font=dict(size=18, color=theme["title"]),
+            x=0.5,
+        ),
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, 100],
+                tickvals=[0, 20, 40, 60, 80, 100],
+                tickfont=dict(size=10, color=theme["text"]),
+                gridcolor=theme["grid"],
+            ),
+            angularaxis=dict(
+                tickfont=dict(size=13, color=theme["title"]),
+            ),
+            bgcolor="rgba(0,0,0,0)",
+        ),
+        showlegend=True,
+        legend=dict(orientation="h", yanchor="bottom", y=-0.15),
+        margin=dict(t=60, b=60, l=60, r=60),
+        height=420,
+    )
+    _apply_theme_layout(fig)
+
+    return fig
+
+
 def create_valuation_band_chart(
     stock_id: str,
     stock_name: str,

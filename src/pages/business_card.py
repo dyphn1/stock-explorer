@@ -6,7 +6,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
-from src.services.chart import create_revenue_trend_chart, create_revenue_pie_chart, create_valuation_band_chart
+from src.services.chart import create_revenue_trend_chart, create_revenue_pie_chart, create_valuation_band_chart, create_health_snowflake
 from src.services.revenue_analyzer import analyze_revenue_breakdown
 from src.services.analogy_engine import (
     get_one_liner,
@@ -19,6 +19,8 @@ from src.services.analogy_engine import (
     get_pbr_analogy,
     generate_key_takeaways,
     compute_recent_deltas,
+    compute_health_scores,
+    get_health_summary,
 )
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.news_summarizer import summarize_news, get_news_impact_level
@@ -213,6 +215,42 @@ def _render_business_card(data: dict, client):
             )
         delta_text = "\n\n".join(delta_lines)
         _info_card("最近有什麼變化", delta_text, "🔄")
+
+    # 🏥 公司健康狀況 (C43: Health Snowflake)
+    health_scores = compute_health_scores(
+        extra_metrics=extra_metrics,
+        latest_per_pbr=latest_per_pbr,
+        financial_df=financial,
+        monthly_revenue=monthly_revenue,
+    )
+    if health_scores:
+        st.markdown("### 🏥 公司健康狀況")
+        health_fig = create_health_snowflake(stock_name, health_scores)
+        st.plotly_chart(health_fig, use_container_width=True)
+
+        # 五維度分數明細
+        dim_cols = st.columns(5)
+        for i, (dim_name, score) in enumerate(health_scores.items()):
+            with dim_cols[i]:
+                if score >= 70:
+                    indicator = "🟢"
+                elif score >= 40:
+                    indicator = "🟡"
+                else:
+                    indicator = "🔴"
+                st.markdown(
+                    f"""
+                    <div style="text-align:center;padding:0.5rem;background:#F8F9FA;border-radius:10px;margin:0.2rem 0;">
+                        <div style="font-size:0.8rem;color:#7F8C8D;">{indicator} {dim_name}</div>
+                        <div style="font-size:1.4rem;font-weight:700;color:#2C3E50;">{score:.0f}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+        # 白話健康摘要
+        health_summary = get_health_summary(health_scores)
+        _info_card("健康摘要", health_summary, "🏥")
 
     st.markdown("---")
 
