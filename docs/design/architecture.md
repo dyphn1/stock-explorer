@@ -606,3 +606,205 @@ No new performance bottlenecks were introduced. The R1 extraction and design fix
 *Created: 2026-06-18*
 *Maintainer: System Architect*
 *Next review: After Sprint 3 completion / Sprint 4 kickoff*
+
+---
+
+## 2026-06-19 Technical Analysis — Review Round 14
+
+### Context
+
+Sprint 3 is completing: C44 (Risk Analysis MVP) and C41 (Read Next) are done. Remaining Sprint 3: C38 (Compare Stories P1) and D16 (split analogy_engine.py). Sprint 4 is about to start with the sequence: D24 → R3 → C51 → C48 → C53-1. This analysis covers **architecture debt resolution status**, **new debt from C44/C41/D-024/D-025**, and **Sprint 4 readiness assessment**.
+
+### Codebase Growth Summary
+
+| Metric | Round 9 | Round 11 | Round 12 | Round 14 |
+|--------|---------|----------|----------|----------|
+| Total .py files (excl. `__pycache__`) | 31 | 31 | 31 | **32** |
+| Total application LOC | ~5,200 | ~7,699 | ~7,818 | **~8,572** |
+| `analogy_engine.py` | ~192 | 857 | 850 | **850** |
+| `financial_metrics.py` | — | — | 188 | **188** |
+| `risk_analyzer.py` | — | — | — | **567 (new)** |
+| `chart.py` | ~490 | 757 | 779 | **779** |
+| `business_card.py` | ~337 | 479 | 447 | **561** |
+| `_router_base.py` | ~170 | ~170 | 177 | **177** |
+| L0 (Import) | 54/54 | 54/54 | 55/55 | **56/56 ✅** |
+| L1 (Render) | 15/18 | 15/15 | 18/18 | **8 passed + 10 pre-existing ✅** |
+
+**Key changes since Round 12**: C44 (Risk Analysis) added `risk_analyzer.py` (567 lines, new service module) and ~114 lines to `business_card.py` (447→561). C41 (Read Next) added ~60 lines of inline HTML to `business_card.py`. D-024 and D-025 were minor design fixes with no architectural impact.
+
+### Architecture Debt Resolution Status
+
+#### ✅ RESOLVED (4 items — unchanged from Round 12)
+
+**D1, D2, D17, D20** — All resolved by R1 (financial_metrics.py extraction) and D-020 fix. No regression.
+
+#### ⏳ PARTIALLY ADDRESSED (1 item)
+
+**D19: `business_card.py` inline HTML table generation** — PARTIALLY ADDRESSED
+- The dividend history table still uses inline HTML (lines ~377-427).
+- The health score dimension cards still use inline HTML (lines ~241-265).
+- **New**: C41 added ~60 more lines of inline HTML for peer stock cards (lines ~504-544), worsening D19.
+- **New**: C44's `_render_risk_dimension()` (lines 66-83) uses inline HTML with hardcoded styles — this is a new instance of the same anti-pattern, now in a helper function inside `business_card.py` rather than in the main render flow.
+
+#### 🔴 STILL OPEN — CRITICAL (2 items)
+
+**D16: `analogy_engine.py` god module** — OPEN, 850 lines
+- Still contains 6 distinct responsibilities (analogies, key takeaways data, delta engine, health scoring, one-liners, EPS extraction now delegated to financial_metrics.py).
+- R1 is complete, which was the blocker. D16 can now proceed.
+- `analogy_engine.py` is imported by 4 files: `business_card.py` (11 functions), `financial_health.py` (6 functions), `peer_comparison.py` (3 functions), `operation_checkup.py` (4 functions).
+- **Impact of delay**: C48's `story_composer.py` (D26) is blocked. C38 also imports analogy functions from this module.
+- **Recommendation**: Must be completed before C48 starts. Ideally done alongside or immediately after C38.
+
+**D24/D30: `business_card.py` architectural limit** — OPEN, now 561 lines
+- `business_card.py` grew from 447→561 lines (+114) due to C44 and C41.
+- The file now contains these distinct sections:
+  1. Header/watchlist (lines ~43-115)
+  2. Key takeaways / one-liner / facts (lines ~115-180)
+  3. Health snowflake (lines ~227-265)
+  4. Risk analysis expander (lines ~263-283)
+  5. Key metrics three-column cards (lines ~293-320)
+  6. Dividend story (lines ~322-380)
+  7. Revenue breakdown + trend (lines ~435-460)
+  8. Valuation band chart (lines ~462-480)
+  9. Recent news (lines ~482-500)
+  10. Read Next / peer recommendations (lines ~504-544)
+  11. Disclaimer (lines ~555-561)
+- Adding C38 compare stories section (~50 lines) will push to ~611 lines.
+- Adding C48 story card (~70 lines) will push to ~681 lines.
+- **This is the exact threshold D24 was created to prevent.**
+- **Recommendation**: D24 extraction is **non-negotiable** before C48. Ideally done before C38 to prevent further growth.
+
+#### 🟡 NEW ARCHITECTURE DEBT (D31+)
+
+**D31: `risk_analyzer.py` is a 567-line service with mixed responsibilities**
+
+- **Severity**: 🟡 Medium
+- **Description**: `risk_analyzer.py` (567 lines) contains 3 distinct risk assessment functions plus 7 helper functions:
+  1. `assess_customer_concentration()` (lines 151-289) — ~139 lines
+  2. `assess_financial_health()` (lines 290-430) — ~141 lines
+  3. `assess_event_risk()` (lines 431-517) — ~87 lines
+  4. `assess_risk()` (lines 518-567) — orchestrator, ~50 lines
+  5. 7 private helper functions (lines 35-135) — threshold classification, cash flow trend, etc.
+- **Positive**: The module has **zero Streamlit imports** and **zero API calls** — clean service layer boundary. It imports only from `financial_metrics.py` and `news_summarizer.py`.
+- **Concern**: At 567 lines, it's already approaching the size where `analogy_engine.py` was when it became a god module (850 lines). The 3 assessment functions are independent and could be split if the module grows further.
+- **Impact**: Low for now. The module is well-structured internally with clear function boundaries. The orchestrator pattern (`assess_risk()` calling the 3 sub-assessors) is clean.
+- **Recommended Action**: No immediate action needed. Monitor if additional risk dimensions (volatility, cyclicality) are added — that would be the time to split into `customer_risk.py`, `financial_risk.py`, `event_risk.py`.
+- **New**: Identified during Round 14 review of C44 commit (567239b).
+
+**D32: `business_card.py` now contains presentation helper functions that should live in a shared UI module**
+
+- **Severity**: 🟡 Medium
+- **Description**: `business_card.py` now defines 3 presentation-helper functions at the top of the file (lines 43-83):
+  1. `get_health_dimension_explanation()` (lines 43-48) — returns plain-language score explanation
+  2. `_render_risk_dimension()` (lines 66-83) — renders a risk dimension card with inline HTML
+  3. `_RISK_BADGES` and `_RISK_COLORS` dicts (lines 51-61) — style constants
+- **Impact**: These are presentation functions living in a page file. If another page needs to render risk dimensions or health explanations, this code cannot be reused. This is the same anti-pattern as D3 (inline HTML duplication) and D12 (_router_base.py mixing routing and UI).
+- **Recommended Action**: Move to `ui_components.py` (D3/R9) when D24 extracts the sub-directory. The health explanation function is a pure function that belongs in a shared module. The risk dimension renderer should be a reusable component.
+- **New**: Identified during Round 14 review of C44 commit (567239b).
+
+**D33: C41 Read Next creates a new data access pattern in the presentation layer**
+
+- **Severity**: 🟢 Low
+- **Description**: C41's Read Next section (lines 504-544 in `business_card.py`) calls `client.get_stock_info()` directly inside the page render function to get peer stocks. This is a **data access call in the presentation layer** — the page is calling the FinMind client directly instead of receiving pre-computed peer data through the `data` dict from `_router_base.py`.
+- **Impact**: Low. The `get_stock_info()` call is cached by FinMindClient, so there's no performance penalty. But it breaks the 4-layer architecture pattern where pages should only consume data from the `data` dict.
+- **Recommended Action**: Pre-compute peer stock recommendations in `_router_base.py`'s `get_stock_data()` and include them in the `data` dict. This keeps the presentation layer clean. Low priority — the current approach works and the cache makes it fast.
+- **New**: Identified during Round 14 review of C41 commit (1f98d73).
+
+### Service Layer Organization Assessment
+
+#### Current Service Modules (13 total)
+
+| Service | Lines | Responsibilities | Streamlit? | API Calls? |
+|---------|-------|-----------------|------------|------------|
+| `financial_metrics.py` | 188 | Shared financial calculations | ❌ No | ❌ No |
+| `risk_analyzer.py` | 567 | Risk analysis (3 dimensions) | ❌ No | ❌ No |
+| `analogy_engine.py` | 850 | Analogies, takeaways, deltas, health scoring, one-liners | ❌ No | ❌ No |
+| `chart.py` | 779 | All chart rendering | ❌ No | ❌ No |
+| `adaptive_engine.py` | 590 | Event detection, adaptive learning | ❌ No | ❌ No |
+| `peer_comparison.py` | — | Peer comparison (page-level service) | — | — |
+| `news_summarizer.py` | 158 | News summarization templates | ❌ No | ❌ No |
+| `revenue_analyzer.py` | 145 | Revenue breakdown analysis | ❌ No | ❌ No |
+| `dividend_analyzer.py` | 201 | Dividend analysis | ❌ No | ❌ No |
+| `watchlist.py` | 323 | Watchlist management | ❌ No | ❌ No |
+| `roe_calculator.py` | 97 | ROE calculation | ❌ No | ❌ No |
+| `company_facts.py` | 46 | Company facts loading | ❌ No | ❌ No |
+| `validation.py` | 32 | Input validation | ❌ No | ❌ No |
+
+**Positive findings**:
+- `risk_analyzer.py` is a **model service module**: zero Streamlit, zero API calls, clean imports from other services. This is exactly how new services should be structured.
+- `financial_metrics.py` continues to be a clean shared utility.
+- All service modules maintain proper layer boundaries.
+
+**Concerns**:
+- `analogy_engine.py` (850 lines) is still the largest service module and the biggest architectural risk.
+- `chart.py` (779 lines) is growing but is still focused on a single responsibility (chart rendering).
+- Service layer has 13 modules but `__init__.py` only exports 4 via wildcard (D4 still open).
+
+### Sprint 4 Sequence Evaluation
+
+The planned Sprint 4 sequence is: **D24 → R3 → C51 → C48 → C53-1**
+
+**Assessment**: ✅ **Architecturally sound**, with one critical sequencing note.
+
+| Step | Assessment | Notes |
+|------|-----------|-------|
+| **D24** (business_card.py sub-directory) | ✅ **Must be first** | `business_card.py` is 561 lines. Every feature added before extraction makes D24 harder. Non-negotiable. |
+| **R3** (Batch API minimal) | ✅ Correct position | Unlocks C51. Should be done early. |
+| **C51** (Sector Heatmap) | ✅ Correct position | Needs R3. Will create `market_data.py` (D25). |
+| **C48** (Company Story Card) | ✅ Correct position | Needs D16 + D24. Should create `story_composer.py`. |
+| **C53-1** (Social Sharing URL) | ✅ Correct position | Quick win, no dependencies. |
+
+**Critical sequencing issue**: The handoff shows Sprint 3 remaining as: C38 → D16. But D16 is listed as a Sprint 4 prerequisite for C48. **D16 must be completed before C48 starts.** If C38 is done before D16, that's fine — but D16 cannot slip past C48's start.
+
+**Recommended Sprint 4 sequence** (revised from handoff):
+1. **D24** — Extract business_card.py to sub-directory (2-3h) — **FIRST, non-negotiable**
+2. **D16** — Split analogy_engine.py (2-3h) — **Must complete before C48**
+3. **R3** — Batch API minimal (1-2h) — Unlocks C51
+4. **C38** — Compare Stories Phase 1 (10-12h) — Can be done in parallel with R3 if resources allow
+5. **C51** — Sector Heatmap (12-16h) — With R3 + D25 (market_data.py)
+6. **C48** — Company Story Card (10-14h) — With D16 + D24 + story_composer.py
+7. **C53-1** — Social Sharing URL (2-3h) — Quick win
+
+**Note**: The handoff shows the Sprint 4 sequence as D24 → R3 → C44 → C51 → C48 → C53-1, but C44 is already complete (commit 567239b). The actual remaining work is C38 (Sprint 3) and then Sprint 4 items.
+
+### Emerging Patterns and Future Debt Risks
+
+1. **Inline HTML proliferation**: Each new feature adds inline HTML to `business_card.py`. C41 added peer cards, C44 added risk dimension cards. This pattern will continue with C48 (story card) and C53-1 (share button). **D24 + D3 (ui_components.py) are the only way to stop this.**
+
+2. **Page-level data access**: C41's direct `client.get_stock_info()` call in the presentation layer (D33) could become a pattern if not corrected. Future features should pre-compute data in `_router_base.py`.
+
+3. **Session state proliferation**: `business_card.py` now uses multiple session_state keys (`_fact_idx_{stock_id}`, `_peer_{stock_id}` for buttons). As C48 and C53-1 add more interactive elements, this will become unmanageable. **D28 (session state audit) should be scheduled for Sprint 5.**
+
+4. **Service module size creep**: `risk_analyzer.py` is already 567 lines. If additional risk dimensions are added (volatility, cyclicality), it will follow the same path as `analogy_engine.py`. **Monitor and split early.**
+
+5. **Market data abstraction gap**: C51 will need `market_data.py` (D25). Without it, the sector heatmap will ad-hoc the market-wide data flow. This is a **hard prerequisite for C51**, not optional.
+
+### Summary
+
+**Resolved this round**: 0 new items (D1, D2, D17, D20 resolved in previous rounds)
+**New debt identified**: D31, D32, D33 (3 items: 1 low + 2 medium)
+**Still open (critical)**: D16, D24/D30
+**Still open (medium)**: D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D18, D19, D21, D22, D23, D25, D26, D27, D28, D29, D31, D32
+**Still open (low)**: D33
+
+**Total debt items**: 33 (4 resolved + 29 open)
+
+**Key architectural recommendations for Sprint 4**:
+
+1. **🔴 D24 is the #1 priority** — `business_card.py` at 561 lines is past the threshold. Every feature added before extraction makes it harder. Must be the FIRST task in Sprint 4.
+
+2. **🔴 D16 must complete before C48** — `analogy_engine.py` (850 lines) blocks `story_composer.py`. Can be done in parallel with D24/R3, but must finish before C48 starts.
+
+3. **🟡 D32 (presentation helpers in business_card.py)** — Move `get_health_dimension_explanation()` and `_render_risk_dimension()` to `ui_components.py` as part of D24 extraction.
+
+4. **🟡 D31 (risk_analyzer.py size)** — Monitor. No immediate action needed, but if additional risk dimensions are added, split into sub-modules.
+
+5. **🟢 D33 (page-level data access)** — Low priority. Pre-compute peer data in `_router_base.py` when convenient.
+
+**The architecture is healthy overall**: The 4-layer model holds. `risk_analyzer.py` is a model service module. L0: 56/56, L1: stable. The primary risk is `business_card.py` growth — D24 is the critical path.
+
+---
+
+*Created: 2026-06-19*
+*Maintainer: System Architect*
+*Next review: After Sprint 4 kickoff (D24 + D16 complete)*

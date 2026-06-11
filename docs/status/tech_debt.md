@@ -162,10 +162,10 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 
 ### D24/D27: `business_card.py` approaching architectural limit
 - **Effort**: 2-3h (extract + update imports)
-- **Status**: ⏳ **PENDING** — `business_card.py` is now 509 lines (up from 447 after C41 Read Next). No sub-directory exists yet. Planned for Sprint 4 (before C48).
-- **Description**: `business_card.py` is 509 lines after R1/D-020/C41 work. Adding C44 risk section (~40 lines), C48 story card (~70 lines), and potential C38 compare stories section (~50 lines) will push it to ~670+ lines.
-- **Impact**: The page file becomes hard to navigate. Multiple features competing for space.
-- **Recommended Action**: Extract to `src/pages/business_card/` sub-directory before C48 implementation. Proposed structure:
+- **Status**: ⏳ **PENDING** — `business_card.py` is now **561 lines** (up from 447 after C41 and C44). Planned for Sprint 4 (MUST be first task).
+- **Description**: `business_card.py` is 561 lines after C41 Read Next (~60 lines) and C44 Risk Analysis (~114 lines). Adding C38 compare stories section (~50 lines) and C48 story card (~70 lines) will push it to ~681 lines.
+- **Impact**: The page file is becoming hard to navigate. 11 distinct sections competing for space. Multiple inline HTML patterns.
+- **Recommended Action**: Extract to `src/pages/business_card/` sub-directory as the **FIRST task of Sprint 4**. Proposed structure:
   - `src/pages/business_card/__init__.py`
   - `src/pages/business_card/base.py` (shared layout, imports)
   - `src/pages/business_card/sections/summary.py` (C37)
@@ -175,7 +175,7 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
   - `src/pages/business_card/sections/read_next.py` (C41)
   - `src/pages/business_card/sections/story.py` (C48)
   - `src/pages/business_card/sections/details.py` (metrics, events, etc.)
-- **Priority for Sprint 4**: 🔴 HIGH — Must be done before C48. Handoff flags this as "non-negotiable for architectural limits."
+- **Priority for Sprint 4**: 🔴 **CRITICAL — Must be FIRST, before any Sprint 4 feature work.**
 
 ### D25: Market-level data flow is architecturally distinct from single-stock flow
 - **Effort**: Part of C51 implementation
@@ -208,55 +208,93 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 
 ### D29: C41 Read Next inline HTML in business_card.py
 - **Effort**: 1h (with D24)
-- **Description**: C41 added ~60 lines of inline HTML (lines 449–490) directly in `_render_business_card()` in `business_card.py`, including raw HTML string concatenation for peer stock cards (`_peer_html` at lines 470–480). This bypasses the `_info_card()` / `_白话_card()` pattern and adds to the file's growth (now 509 lines). The peer stock rendering with buttons (lines 482–488) is presentation logic that should be extracted.
-- **Impact**: Contributes to D24 (business_card.py bloat). The inline HTML is not reusable. If another page needs "related stocks" display, it can't reuse this code.
+- **Status**: ⚠️ **SUPERSEDED BY D24** — C41 is complete. The inline HTML (lines 449-490 in Round 12, now lines 504-544) will be moved to `read_next.py` section file when D24 extracts the sub-directory.
+- **Description**: C41 added ~60 lines of inline HTML directly in `_render_business_card()` in `business_card.py`, including raw HTML string concatenation for peer stock cards. This bypasses the `_info_card()` / `_白话_card()` pattern and adds to the file's growth.
+- **Impact**: Contributes to D24 (business_card.py bloat). The inline HTML is not reusable.
 - **Recommended Action**: Extract peer stock card rendering to a `render_peer_cards(peers_df, navigate_fn)` helper in `ui_components.py` (D3). Move to `read_next.py` section file when D24 extracts the sub-directory.
 - **New**: Identified during Round 14 review of C41 commit (1f98d73).
 
 ### D30: C44 Risk Analysis will compound business_card.py growth
-- **Effort**: Depends on D24 timing
-- **Description**: C44 (Risk Analysis MVP) is next in Sprint 3 and will add ~40 lines to `business_card.py`. Combined with existing 509 lines, the file will reach ~550 lines before Sprint 4 even starts. If C38 also adds a section (~50 lines), the file hits ~600 lines — the exact threshold D24 was created to prevent. The planned 3 risk dimensions (customer concentration, financial health, event-based) all require new rendering logic and likely new HTML.
-- **Impact**: If D24 is deferred past C44, `business_card.py` crosses the 600-line threshold. This makes D24 harder to do later (more code to migrate).
-- **Recommended Action**: Strongly recommend starting D24 extraction before C44, not after. At minimum, extract the file structure and move existing code before adding C44 and C38 sections. The Sprint 4 sequence should be: R3 → **D24** → C44 → C38 → C51 → C48 → C53-1 (with C44 and C38 done within the business_card/ sub-directory).
-- **New**: Identified during Round 14 review. Urgency increased because C44 is the very next task.
+- **Effort**: Included in D24
+- **Status**: ✅ **REALIZED** — C44 is complete (commit 567239b). It added ~114 lines to `business_card.py` (447→561 lines). The file now has risk analysis via `st.expander` progressive disclosure. D24 extraction is now more urgent since the file is already 561 lines.
+- **Description**: C44 added risk analysis to `business_card.py` with 3 dimensions (customer concentration, financial health, event-based) using `st.expander` progressive disclosure. New helper functions `_render_risk_dimension()` and `get_health_dimension_explanation()` were added to the page file.
+- **Impact**: Risk section added ~114 lines. Combined with C41's ~60 lines, the file grew from 447→561 lines. Without D24, C38 and C48 will push it to ~681 lines.
+- **Recommended Action**: D24 must be the FIRST task in Sprint 4. Extract before adding C38 or C48 sections.
+- **New**: Identified during Round 14 review. Urgency increased because C44 is complete and the file is already 561 lines.
+
+## New Architecture Debt Identified in Round 14 (Sprint 3 Review)
+
+### D31: `risk_analyzer.py` is a 567-line service with mixed responsibilities
+- **Effort**: Monitor (split only if it grows beyond ~700 lines)
+- **Description**: `risk_analyzer.py` (567 lines) contains 3 distinct risk assessment functions plus 7 helper functions:
+  1. `assess_customer_concentration()` (lines 151-289) — ~139 lines
+  2. `assess_financial_health()` (lines 290-430) — ~141 lines
+  3. `assess_event_risk()` (lines 431-517) — ~87 lines
+  4. `assess_risk()` (lines 518-567) — orchestrator, ~50 lines
+  5. 7 private helper functions (lines 35-135) — threshold classification, cash flow trend, etc.
+- **Positive**: The module has **zero Streamlit imports** and **zero API calls** — clean service layer boundary. It imports only from `financial_metrics.py` and `news_summarizer.py`. This is a model service module.
+- **Concern**: At 567 lines, it's already approaching the size where `analogy_engine.py` became a god module (850 lines). The 3 assessment functions are independent.
+- **Impact**: Low for now. Well-structured internally with clear function boundaries. The orchestrator pattern is clean.
+- **Recommended Action**: No immediate action needed. Monitor if additional risk dimensions (volatility, cyclicality) are added — that would be the time to split into `customer_risk.py`, `financial_risk.py`, `event_risk.py`.
+- **New**: Identified during Round 14 review of C44 commit (567239b).
+
+### D32: `business_card.py` now contains presentation helper functions that should live in a shared UI module
+- **Effort**: 1-2h (with D24)
+- **Description**: `business_card.py` defines 3 presentation-helper functions at the top of the file (lines 43-83):
+  1. `get_health_dimension_explanation()` (lines 43-48) — returns plain-language score explanation
+  2. `_render_risk_dimension()` (lines 66-83) — renders a risk dimension card with inline HTML
+  3. `_RISK_BADGES` and `_RISK_COLORS` dicts (lines 51-61) — style constants
+- **Impact**: These are presentation functions living in a page file. If another page needs to render risk dimensions or health explanations, this code cannot be reused. Same anti-pattern as D3 (inline HTML duplication) and D12 (_router_base.py mixing routing and UI).
+- **Recommended Action**: Move to `ui_components.py` (D3/R9) when D24 extracts the sub-directory. The health explanation function is a pure function that belongs in a shared module. The risk dimension renderer should be a reusable component.
+- **New**: Identified during Round 14 review of C44 commit (567239b).
+
+### D33: C41 Read Next creates a new data access pattern in the presentation layer
+- **Effort**: 0.5-1h (low priority)
+- **Description**: C41's Read Next section (lines 504-544 in `business_card.py`) calls `client.get_stock_info()` directly inside the page render function to get peer stocks. This is a **data access call in the presentation layer** — the page is calling the FinMind client directly instead of receiving pre-computed peer data through the `data` dict from `_router_base.py`.
+- **Impact**: Low. The `get_stock_info()` call is cached by FinMindClient, so there's no performance penalty. But it breaks the 4-layer architecture pattern where pages should only consume data from the `data` dict.
+- **Recommended Action**: Pre-compute peer stock recommendations in `_router_base.py`'s `get_stock_data()` and include them in the `data` dict. This keeps the presentation layer clean. Low priority — the current approach works and the cache makes it fast.
+- **New**: Identified during Round 14 review of C41 commit (1f98d73).
 
 ## Low Severity Debt
-- None (all items classified as Medium or higher impact)
+- D33: C41 Read Next page-level data access pattern (see above)
 
 ## Summary
-- **Total Debt Items**: 30
+- **Total Debt Items**: 33
 - **High Severity**: 2 items (D5, D16)
-- **Medium Severity**: 26 items (D1-D4, D6-D15, D17-D21, D22-D30)
-- **Low Severity**: 0 items
+- **Medium Severity**: 28 items (D3-D4, D6-D15, D18-D21, D22-D32)
+- **Low Severity**: 1 item (D33)
 - **Resolved Items**: D1, D2, D17, D20 (4 items)
-- **Pending Sprint 3**: D16, D29 (business_card.py bloat from C41, but C41 is done), D30 (upcoming from C44)
-- **Pending Sprint 4**: D5, D6, D18, D23, D24, D25, D26, D27, D28, D29, D30
+- **Pending Sprint 3**: D16 (after C38), D29 (business_card.py bloat from C41 — now superseded by D24)
+- **Pending Sprint 4**: D5, D6, D16, D18, D19, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32
 
 ## Sprint 4 Readiness Assessment
 
 ### Prerequisites (Hard Blockers)
 1. **D16** (Split analogy_engine.py) — Blocks C48's `story_composer.py` (D26)
-2. **D24** (business_card.py sub-directory) — Must happen before C48 adds Story Card section. Ideally before C44 to prevent file from growing further.
+2. **D24** (business_card.py sub-directory) — Must happen before C48 adds Story Card section. **Must be FIRST in Sprint 4** — `business_card.py` is already 561 lines.
 3. **R3** (Batch API minimal) — Blocks C51 Sector Heatmap
 
 ### Recommended Sprint 4 Sequence
-1. **D16** — Split analogy_engine.py (2-3h) — unlocks C48
-2. **D24** — Extract business_card.py to sub-directory (2-3h) — prepares for C44/C48
-3. **R3** — Batch API minimal (1-2h) — unlocks C51
-4. **C44** — Risk Analysis MVP (12-14h) — now within business_card/ sub-directory
-5. **C51** — Sector Heatmap (12-16h) — with R3 prerequisite
-6. **C48** — Company Story Card (10-14h) — with D16 + D24 prerequisites
-7. **C53-1** — Social Sharing URL (2-3h) — quick win
+1. **D24** — Extract business_card.py to sub-directory (2-3h) — **FIRST, non-negotiable**
+2. **D16** — Split analogy_engine.py (2-3h) — Must complete before C48
+3. **R3** — Batch API minimal (1-2h) — Unlocks C51
+4. **C38** — Compare Stories Phase 1 (10-12h) — Remaining Sprint 3 item, can parallelize with R3
+5. **C51** — Sector Heatmap (12-16h) — With R3 prerequisite
+6. **C48** — Company Story Card (10-14h) — With D16 + D24 prerequisites
+7. **C53-1** — Social Sharing URL (2-3h) — Quick win
 
 ### Architecture Risks for Sprint 4
-- **business_card.py uncontrolled growth**: C44 (next task) + C48 will push the file past 600 lines if D24 is deferred. **Recommend moving D24 before C44.**
+- **business_card.py uncontrolled growth**: File is already 561 lines. C38 (~50 lines) and C48 (~70 lines) will push it to ~681 lines if D24 is deferred. **D24 must be FIRST.**
 - **C48 coupling to unstable interfaces**: story_composer.py needs analogy_engine.py split first (D16). If D16 slips, C48 slips.
 - **Market data abstraction gap**: C51 needs `market_data.py` (D25). Without it, sector heatmap will ad-hoc the market-wide data flow.
 - **Tone guidelines gap**: C51 displays market-level data. Without tone guidelines (D23), market features risk sounding like investment advice.
+- **risk_analyzer.py size creep**: At 567 lines, monitor for future split if risk dimensions grow beyond 3.
+- **Presentation helper leakage**: D32 — `get_health_dimension_explanation()` and `_render_risk_dimension()` in `business_card.py` should move to `ui_components.py` during D24 extraction.
 
 ## Next Review
-This register should be updated after each review cycle. Next update: After Sprint 3 completion (C44 + C38 + D16 + D-025).
+This register should be updated after each review cycle. Next update: After Sprint 4 kickoff (D24 + D16 complete).
 
 --
 *Created: 2026-06-11*
 *Maintainer: System Architect*
+*Last Updated: 2026-06-19 (Round 14)*

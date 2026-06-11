@@ -31,6 +31,43 @@
 | D16: Split analogy_engine.py | 2-3h |
 | Design fixes (D-016-D-022) | <2h |
 
+## 🔍 Review Results (Round 14 — 2026-06-19)
+
+### Competitor Research
+- 8 new competitors analyzed (Groww, Dhan, Sensibull, Spiking, Cake Finance, SoFi, Finshots, Trading 212)
+- India identified as global leader in beginner financial education innovation
+- Dhan's "Read More, Trade Less" positioning directly validates our historian approach
+- 6 new features identified (C69-C74), revised to 3 after Challenger review
+
+### Architecture
+- business_card.py at 561 lines — D24 extraction is CRITICAL Sprint 4 first task
+- 3 new debt items (D31, D32, D33) — all low/medium urgency
+- Revised Sprint 4 sequence: D24 → D16 → R3 → C38 → C51 → C48 → C53-1
+
+### Design
+- Design grade A maintained (0 P0, 6 P1, 13 P2)
+- 4 new P2 issues (D-035 through D-038)
+- D-007, D-032 downgraded to P2; D-013 resolved
+
+### New Features (Revised after Challenger)
+- C69 (Paper Trading) — REMOVED (positioning conflict)
+- C70 ("Why This Matters") — Folded into C37 redesign
+- C71 (Study Log, reframed from Streak) — Sprint 5
+- C72 (TL;DR) — Merged into C48
+- C73 (Expert Analysis Synthesis, pivoted) — Sprint 5
+- C74 (Historical Scenario Explorer, pivoted) — Sprint 6
+
+### New Structural Policies
+1. Positioning Impact Score (1-5) for future features
+2. Feature Budget Rule: +1 = -1
+3. Beginner/Advanced Path labels
+4. Fix one, build one policy
+
+### Revised Sprint 5
+- P1 fixes + C71 (Study Log) + C73 (Expert Analysis) + C74 start
+- Full details: docs/state/handoff_review.md
+- Challenge details: docs/workflow/challenge_log.md
+
 ## 🔍 Review Results (Round 13 — 2026-06-19)
 - 8 new competitors → 6 new feature gaps (C63-C68)
 - 3 new architecture debt items (D29, D30, D-034)

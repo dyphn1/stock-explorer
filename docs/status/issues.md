@@ -27,3 +27,11 @@ C65: "Company Filing Explorer" — AI-Parsed Annual Reports in Plain Language | 
 C66: "Risk Profile Quiz" — Comprehensive Risk Assessment Onboarding | P2 | 6-10h | Story first + Beginner-friendly + Historian positioning | source: competitor research round 13
 C67: "Community Sentiment" Indicator — Social Proof for Stock Discovery | P2 | 12-16h | Benchmark-oriented analysis + Beginner-friendly + Engagement | source: competitor research round 13
 C68: "Weekly Market Digest" — Curated Weekly Market Summary | P2 | 8-12h | Story first + Historian positioning + Beginner-friendly | source: competitor research round 13
+C71: "Study Log" — Personal Learning Record (reframed from Learning Streak) | P2 | 8-12h | Point-to-point knowledge construction + Historian positioning | source: competitor research round 14
+C73: "Expert Analysis Synthesis" — Plain-Language Fundamental Analysis Summary (pivoted from Super Investor Thesis) | P1 | 8-12h | Story first + Benchmark-oriented analysis + Beginner-friendly | source: competitor research round 14
+C74: "Historical Scenario Explorer" — Past-Tense Factual Scenario Exploration (pivoted from What-If) | P1 | 10-15h | Point-to-point knowledge construction + Story first + Active learning | source: competitor research round 14
+
+## Declassified (Not C-Series Features)
+- C69 (Paper Trading Simulator) — REMOVED: contradicts historian positioning
+- C70 ("Why This Matters") → Folded into C37 Key Takeaways redesign (P2 design tweak)
+- C72 (TL;DR First) → Merged into C48 Company Story Card UX work (design tweak)

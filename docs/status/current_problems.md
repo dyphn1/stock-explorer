@@ -1,7 +1,7 @@
 # Stock Explorer — Current Problems
 
 > **Last Updated**: 2026-06-19
-> **Source**: Design Review Round 13 (2026-06-19)
+> **Source**: Design Review Round 14 (2026-06-19)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
@@ -18,7 +18,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## P0 — Blocking Issues
 
-*(None currently — all P0 issues from Round 9 have been resolved)*
+*(None currently — all P0 issues have been resolved)*
 
 ---
 
@@ -28,8 +28,8 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Severity**: P1
 - **Added**: 2026-06-14
 - **Source**: Design Review Round 9
-- **Description**: `_router_base.py` provides `_白话_card()` and `_info_card()` but pages frequently bypass these with inline HTML. `group_structure.py` uses completely different card styling (white background, different border colors). `watchlist_page.py` uses inline HTML for card rows. `etf_detail.py` uses inline HTML for the one-liner, header, and dividend sections. This creates visual inconsistency across pages.
-- **Affected Pages**: `group_structure.py`, `watchlist_page.py`, `etf_detail.py`, `etf_browser.py`
+- **Description**: `_router_base.py` provides `_白话_card()` and `_info_card()` but pages frequently bypass these with inline HTML. `group_structure.py` uses completely different card styling (white background, different border colors). `watchlist_page.py` uses inline HTML for card rows. `etf_detail.py` uses inline HTML for the one-liner, header, and dividend sections. **Round 14 regression**: C41 peer cards and C44 risk dimension cards also use inline HTML, worsening the inconsistency.
+- **Affected Pages**: `group_structure.py`, `watchlist_page.py`, `etf_detail.py`, `etf_browser.py`, `business_card.py` (C41 lines 522-532, C44 line 72)
 - **Proposed Fix**: Replace all inline HTML cards with shared components from `_router_base.py`. Create additional card types (summary card, warning card) as needed.
 - **Effort**: 2-3h
 
@@ -37,7 +37,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Severity**: P1
 - **Added**: 2026-06-14
 - **Source**: Design Review Round 9
-- **Description**: `docs/design/design_system.md` does NOT exist at the expected path. Color values, card styles, spacing, and typography are defined inline across multiple files. New features (C37, C39, C41, C36, C38, C42-C47) have no design system to follow, leading to inconsistencies.
+- **Description**: `docs/design/design_system.md` does NOT exist at the expected path. Color values, card styles, spacing, and typography are defined inline across multiple files. New features have no design system to follow, leading to inconsistencies.
 - **Affected Files**: All pages and services
 - **Proposed Fix**: Create `docs/design/design_system.md` documenting: color palette, card styles, typography, spacing system, Zone A/B/C rules, PPT-style principles. Note: A design system exists at `docs/domain/design_system.md` — should be copied/linked to the expected path.
 - **Effort**: 1h (copy existing doc to expected path)
@@ -46,10 +46,11 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Severity**: P1
 - **Added**: 2026-06-14
 - **Source**: Design Review Round 9
-- **Description**: The Business Card page already had 9 sections. Sprint 2 added C37, C39, C43, and C45, bringing the total to 13+ sections. This risks violating the "one key point per page" PPT-style principle and pushing content far below the fold.
+- **Description**: The Business Card page already had 9 sections. Sprint 2 added C37, C39, C43, and C45, bringing the total to 13+ sections. C41 adds a "推薦閱讀" section. C44 adds a risk section (mitigated by `st.expander`). This risks violating the "one key point per page" PPT-style principle and pushing content far below the fold.
 - **Affected Pages**: `business_card.py`
 - **Proposed Fix**: Follow the "one new card per page per sprint" principle. Use progressive disclosure (expandable sections) for less critical content. Consider a "beginner mode by default" approach instead of showing everything. Reorder sections per Round 11 recommendations (summary → snowflake → deltas → details).
-- **Related Features**: C37, C39, C41, C36, C43, C45
+- **Related Features**: C37, C39, C41, C36, C43, C45, C44
+- **Status**: C44's expander helps mitigate. C41 adds length. Net effect: stable but concerning.
 
 ### D-006: Mobile Responsiveness Gaps
 - **Severity**: P1
@@ -60,16 +61,6 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Proposed Fix**: Add mobile-specific CSS that stacks columns vertically, increases touch target sizes, and adjusts chart heights. Consider a mobile-first redesign for the Business Card page.
 - **Effort**: 4-6h
 
-### D-007: No Discovery Mechanism
-- **Severity**: P1
-- **Added**: 2026-06-14
-- **Source**: Design Review Round 9
-- **Description**: Users must know which stock to search for. No screening, no guided discovery, no "beginner path." 財報狗's #1 feature is its stock screener. Stock Explorer requires prior knowledge of TW stock tickers, which is a barrier for beginners.
-- **Affected Pages**: `main.py` (welcome page), `category_browser.py`
-- **Proposed Fix**: Implement C42 (Stock Screener / Discovery Engine) with beginner-friendly presets ("穩定收息", "成長潛力", "便宜估值") and card-based results.
-- **Related Features**: C42
-- **Competitor Benchmark**: 財報狗 (advanced screener), Stockopedia (StockRank screening)
-
 ### D-021: C43 Missing Per-Dimension Plain-Language Explanations (PARTIALLY FIXED)
 - **Severity**: P1
 - **Added**: 2026-06-17
@@ -79,16 +70,6 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Proposed Fix**: Pass the underlying metric values (ROE, gross margin, etc.) into the hover template for each dimension. Add metric-specific plain-language explanations below each dimension card (e.g., "ROE 25%，每100元股東資金賺25元").
 - **Effort**: 1-2h
 - **Status**: Partially fixed in Round 12 — generic explanations added, metric values still missing
-
-### D-032: No Progressive Disclosure Pattern for Business Card Page
-- **Severity**: P1
-- **Added**: 2026-06-19
-- **Source**: Design Review Round 13
-- **Description**: The business card page already has 13+ sections. C44 (Risk), C48 (Story Card), and C56 (Explain Metric) will add 3+ more sections. Without progressive disclosure, this violates the "one key point per page" PPT-style principle and pushes content far below the fold. Competitors (Robinhood minimalist, 富邦e富 card-based) handle this with expandable sections.
-- **Affected Pages**: `business_card.py`
-- **Proposed Fix**: Implement a "Beginner Mode" / "Advanced Mode" toggle. Beginner Mode shows only C37 + C43 + C39 with expandable sections for everything else. Store preference in session state. Add `_expandable_card()` component.
-- **Effort**: 3-4h
-- **Competitor Benchmark**: Robinhood (minimalist default), 富邦e富 (card-based with whitespace)
 
 ### D-034: C3 Metric Value Tooltips Missing from Hover and Cards
 - **Severity**: P1
@@ -102,6 +83,16 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 ---
 
 ## P2 — Optimization Issues
+
+### D-007: No Discovery Mechanism (DOWNGRADED TO P2)
+- **Severity**: P2 (downgraded from P1 in Round 14)
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 9
+- **Description**: Users must know which stock to search for. No screening, no guided discovery, no "beginner path." 財報狗's #1 feature is its stock screener. **Round 14 update**: C41 provides in-page peer discovery (同產業個股推薦), partially addressing this use case. Full screener (C42) still needed but P1 urgency reduced.
+- **Affected Pages**: `main.py` (welcome page), `category_browser.py`
+- **Proposed Fix**: Implement C42 (Stock Screener / Discovery Engine) with beginner-friendly presets ("穩定收息", "成長潛力", "便宜估值") and card-based results.
+- **Related Features**: C42, C41 (partial)
+- **Competitor Benchmark**: 財報狗 (advanced screener), Stockopedia (StockRank screening)
 
 ### D-008: Loading State Inconsistency
 - **Severity**: P2
@@ -149,16 +140,6 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Related Features**: C33
 - **Competitor Benchmark**: Investopedia (10K+ term glossary)
 
-### D-013: No Risk Analysis Section
-- **Severity**: P2
-- **Added**: 2026-06-14
-- **Source**: Design Review Round 9
-- **Description**: Stock Explorer has NO risk analysis section. Simply Wall St has visual risk analysis. Morningstar has uncertainty ratings. Stock Explorer's "historian" positioning is perfect for risk analysis that explains historical risks without predicting the future.
-- **Affected Pages**: `business_card.py`
-- **Proposed Fix**: Implement C44 ("What Could Go Wrong" Risk Analysis) with 3-5 key risks presented in plain language with historical evidence.
-- **Related Features**: C44
-- **Competitor Benchmark**: Simply Wall St (visual risk), Morningstar (uncertainty rating)
-
 ### D-015: No Structured Learning Path
 - **Severity**: P2
 - **Added**: 2026-06-14
@@ -168,6 +149,16 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Proposed Fix**: Implement C47 (Financial Education Academy) with 10-15 structured lessons organized by difficulty, each using real TW stock examples.
 - **Related Features**: C47
 - **Competitor Benchmark**: Investopedia (Academy), Stockopedia (Academy)
+
+### D-032: No Progressive Disclosure Pattern for Business Card Page (DOWNGRADED TO P2)
+- **Severity**: P2 (downgraded from P1 in Round 14)
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 13
+- **Description**: The business card page already has 13+ sections. C44 (Risk), C48 (Story Card), and C56 (Explain Metric) will add 3+ more sections. **Round 14 update**: C44 implements progressive disclosure via `st.expander` (expanded=False), proving the pattern works. Remaining work is applying it to other sections.
+- **Affected Pages**: `business_card.py`
+- **Proposed Fix**: Apply the `st.expander` pattern proven by C44 to remaining sections. Consider a "Beginner Mode" / "Advanced Mode" toggle for maximum effect.
+- **Effort**: 3-4h
+- **Competitor Benchmark**: Robinhood (minimalist default), 富邦e富 (card-based with whitespace)
 
 ### D-033: No Standardized Empty State Component
 - **Severity**: P2
@@ -179,6 +170,42 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Effort**: 1h
 - **Competitor Benchmark**: Robinhood (friendly illustration + message), 富邦e富 (clean card with icon)
 
+### D-035: C41 Peer Cards Use Inline HTML (D-003 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 14
+- **Description**: C41 Read Next peer stock cards use raw inline HTML (`<div>` with text styling) instead of the shared `_info_card()` / `_白话_card()` components. The peer cards lack `border-radius`, `border-left`, background color, and consistent padding. This is a regression of D-003 (inconsistent card styling).
+- **Affected Lines**: `business_card.py` lines 522-532
+- **Proposed Fix**: Either (a) create a `_peer_card()` component in `_router_base.py` with standard card styling + button, or (b) use `_info_card()` with the peer name/industry as content and the button below.
+- **Effort**: 0.5-1h
+
+### D-036: C44 Risk Dimension Cards Use Non-Standard Background
+- **Severity**: P2
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 14
+- **Description**: C44 risk dimension cards use `background:#FFF8F0` (tip/warning background) instead of the standard card background `#F8F9FA`. While defensible for risk context (warning = orange tint), this creates visual inconsistency. The design system specifies `#F8F9FA` for info cards and `#FFF8F0` for tip cards — risk dimensions are informational, not tips.
+- **Affected Lines**: `business_card.py` line 72
+- **Proposed Fix**: Change to `background:#F8F9FA` and rely on the `border-left:4px solid {color}` for risk level indication. The color-coded border already communicates risk level effectively.
+- **Effort**: <0.5h (one-line change)
+
+### D-037: `_白话_card` Uses Non-Standard Background Color
+- **Severity**: P2
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 14 (discovered during D-024 verification)
+- **Description**: `_白话_card()` in `_router_base.py` uses `background:#F5F5F5` while the design system specifies card background as `#F8F9FA`. This affects all 白話 cards across the entire app (key metrics, dividend cards, etc.). Pre-existing issue, not a regression.
+- **Affected Files**: `_router_base.py` line 91
+- **Proposed Fix**: Change `background:#F5F5F5` to `background:#F8F9FA` to match design system.
+- **Effort**: <0.5h (one-line change)
+
+### D-038: C41 Calls API in View Layer
+- **Severity**: P2
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 14
+- **Description**: C41's `_render_business_card` calls `client.get_stock_info()` directly in the view layer (line 505). This violates the architecture principle that the view layer should not make API calls — data should be fetched in the router and passed via `data` dict. This also means the API call happens on every render, not just on page load.
+- **Affected Lines**: `business_card.py` lines 505-512
+- **Proposed Fix**: Move the peer stock fetching to `get_stock_data()` in `_router_base.py` (add a `"peers"` key to the data dict), or accept peers as a parameter.
+- **Effort**: 1-2h
+
 ---
 
 ## Resolved Issues
@@ -187,6 +214,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 |----|-------|----------|----------|------------|
 | D-001 | No Visual Health Score | P0 | 2026-06-17 | C43 (Snowflake Health Visualization) fully implemented with 5-dimension radar chart, color-coded scores, reference lines, and plain-language health summary. |
 | D-002 | No Synthesis Layer | P0 | 2026-06-17 | C37 (Key Takeaways) implemented with curated templates for top 20 stocks and auto-generated fallback for others. |
+| D-013 | No Risk Analysis Section | P2 | 2026-06-19 | C44 (Risk Analysis MVP) implemented with 3 dimensions (customer concentration, financial health, event-based) using `st.expander` progressive disclosure. |
 | D-014 | No Valuation Context | P2 | 2026-06-17 | C45 (Valuation Band Chart) implemented with historical PER percentile band, current PER marker, and plain-language interpretation. |
 | D-016 | C37 Missing Orange/Amber Hero Card Style | P1 | 2026-06-18 | `_summary_card()` created with `#F39C12` border and `#FFF8F0` background. C37 now uses this component, making it the distinctive "hero card" of the page. |
 | D-017 | C37 Bullet Count Exceeds Spec | P2 | 2026-06-18 | Cap changed from `[:5]` to `[:3]` in `analogy_engine.py` line 423. |
@@ -202,11 +230,11 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## Statistics
 
-- **Total Issues**: 22
+- **Total Issues**: 25
 - **P0 (Blocking)**: 0
-- **P1 (Important)**: 7 (D-003, D-004, D-005, D-006, D-007, D-021, D-032, D-034)
-- **P2 (Optimization)**: 10 (D-008, D-009, D-010, D-011, D-012, D-013, D-015, D-033)
-- **Resolved**: 12 (D-001, D-002, D-014, D-016, D-017, D-018, D-019, D-020, D-022, D-023, D-024, D-025)
+- **P1 (Important)**: 6 (D-003, D-004, D-005, D-006, D-021, D-034)
+- **P2 (Optimization)**: 13 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-037, D-038)
+- **Resolved**: 13 (D-001, D-002, D-013, D-014, D-016, D-017, D-018, D-019, D-020, D-022, D-023, D-024, D-025)
 
 ---
 
