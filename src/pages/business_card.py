@@ -446,5 +446,64 @@ def _render_business_card(data: dict, client):
     else:
         st.info("近期無重大新聞")
 
+    # 📖 推薦閱讀 (C41: Read Next Recommendations)
+    st.markdown("### 📖 推薦閱讀")
+
+    # --- Peer stocks from same industry ---
+    _all_info = client.get_stock_info()
+    _current_industry = industry
+    _peers = pd.DataFrame()
+    if len(_all_info) > 0 and _current_industry and _current_industry != "未知":
+        _peers = _all_info[
+            (_all_info["industry_category"] == _current_industry) &
+            (_all_info["stock_id"] != stock_id)
+        ].head(5)
+
+    if len(_peers) > 0:
+        st.markdown("**同產業個股推薦**")
+        for _, _peer in _peers.iterrows():
+            _peer_id = str(_peer["stock_id"])
+            _peer_name = _peer["stock_name"]
+            _peer_industry = _peer.get("industry_category", _current_industry)
+            _key = f"read_next_{stock_id}_peer_{_peer_id}"
+
+            _peer_html = (
+                f"<div style='font-size:1rem;font-weight:600;color:#2C3E50;'>"
+                f"{_peer_name} <code style='font-size:0.85rem;color:#7F8C8D;'>{_peer_id}</code>"
+                f"</div>"
+                f"<div style='font-size:0.85rem;color:#7F8C8D;margin-top:0.2rem;'>"
+                f"📍 {_peer_industry}"
+                f"</div>"
+                f"<div style='font-size:0.85rem;color:#3498DB;margin-top:0.2rem;'>"
+                f"🔗 同產業同業，一起認識這家公司"
+                f"</div>"
+            )
+            st.markdown(_peer_html, unsafe_allow_html=True)
+            if st.button(
+                f"查看 {_peer_name} 名片",
+                key=_key,
+                use_container_width=True,
+            ):
+                navigate_to(page="名片", stock_id=_peer_id)
+            st.markdown("")
+    else:
+        _info_card("推薦閱讀", "目前沒有找到相關的同產業個股推薦", "📖")
+
+    # --- Curated fun facts from company_facts.yaml ---
+    _curated_facts = get_company_facts(stock_id)
+    if _curated_facts:
+        st.markdown("**你可能會好奇**")
+        # Show up to 2 remaining facts (skip the one already shown in 你知道嗎？ section)
+        _fact_idx_key = f"_fact_idx_{stock_id}"
+        _shown_idx = st.session_state.get(_fact_idx_key, 0) % len(_curated_facts) if _curated_facts else 0
+        _remaining_facts = [
+            f for i, f in enumerate(_curated_facts)
+            if i != _shown_idx
+        ]
+        for _fact in _remaining_facts[:2]:
+            _info_card("💡 你知道嗎？", _fact, "🤔")
+
+    st.markdown("---")
+
     # 免責聲明
     _info_card("免責聲明", "本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。", "⚠️")
