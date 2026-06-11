@@ -80,16 +80,6 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Effort**: 1-2h
 - **Status**: Partially fixed in Round 12 — generic explanations added, metric values still missing
 
-### D-024: _info_card Uses Wrong Background Color
-- **Severity**: P1
-- **Added**: 2026-06-18
-- **Source**: Design Review Round 12
-- **Description**: `_info_card()` in `_router_base.py` (line 110) uses `background:#FFF8F0` (warm orange tint) instead of the design system's specified `background:#F8F9FA` (neutral light gray). This makes ALL info cards visually similar to the `_summary_card` (C37 hero card), reducing the hero card's visual distinctiveness. Since info cards are the most common card type on the page, this creates an overall warm-tinted appearance that undermines the intentional use of orange as a "hero" accent color.
-- **Affected Files**: `_router_base.py` (line 110)
-- **Design System Reference**: `docs/domain/design_system.md` line 74: "Card background: Light gray #F8F9FA", line 102: info card example uses `#F8F9FA`
-- **Proposed Fix**: Change `background:#FFF8F0` to `background:#F8F9FA` in `_info_card()`. This will restore the neutral background for info cards and make the orange hero card stand out.
-- **Effort**: 5 min
-
 ---
 
 ## P2 — Optimization Issues
@@ -160,15 +150,6 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Related Features**: C47
 - **Competitor Benchmark**: Investopedia (Academy), Stockopedia (Academy)
 
-### D-025: C39 Missing Empty State Message
-- **Severity**: P2
-- **Added**: 2026-06-18
-- **Source**: Design Review Round 12
-- **Description**: When no deltas exceed the 10% threshold, the C39 section is completely hidden (`if deltas:` check at line 171). Users see no indication that the "what changed" analysis was performed. A brief "近期無顯著變化" message would be more informative than silence, maintaining user trust that the feature exists and was evaluated.
-- **Affected Files**: `business_card.py` (lines 171-182)
-- **Proposed Fix**: Add an `else` branch to show `_info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")` when no deltas exceed threshold.
-- **Effort**: 15 min
-
 ---
 
 ## Resolved Issues
@@ -185,6 +166,8 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 | D-020 | C39 Missing Directional Color Coding | P2 | 2026-06-18 | Green (`#27AE60`) / red (`#E74C3C`) color spans added to delta text in `business_card.py` lines 176-179. |
 | D-022 | C43 Placement Not Near Top of Page | P2 | 2026-06-18 | C43 now appears as 3rd content section (line 184), after C37 and C39. |
 | D-023 | C45 Uses 2-Year Window Instead of 5-Year | P2 | 2026-06-18 | Extended to 5-year window (1825 days) with graceful fallback for insufficient data. |
+| D-024 | _info_card Uses Wrong Background Color | P1 | 2026-06-19 | Changed `background:#FFF8F0` to `background:#F8F9FA` in `_router_base.py` line 110. |
+| D-025 | C39 Missing Empty State Message | P2 | 2026-06-19 | Added `else` branch showing `_info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")` when no deltas exceed threshold. |
 
 ---
 
@@ -192,9 +175,9 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 - **Total Issues**: 19
 - **P0 (Blocking)**: 0
-- **P1 (Important)**: 7 (D-003, D-004, D-005, D-006, D-007, D-021, D-024)
-- **P2 (Optimization)**: 9 (D-008, D-009, D-010, D-011, D-012, D-013, D-015, D-025)
-- **Resolved**: 10 (D-001, D-002, D-014, D-016, D-017, D-018, D-019, D-020, D-022, D-023)
+- **P1 (Important)**: 6 (D-003, D-004, D-005, D-006, D-007, D-021)
+- **P2 (Optimization)**: 8 (D-008, D-009, D-010, D-011, D-012, D-013, D-015)
+- **Resolved**: 12 (D-001, D-002, D-014, D-016, D-017, D-018, D-019, D-020, D-022, D-023, D-024, D-025)
 
 ---
 
