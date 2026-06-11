@@ -79,12 +79,24 @@
 - P1 count reduced from 6 → 4 (D-021 + D-034 resolved, D-004 resolved).
 - **Fix one, build one** policy honored: D24 (build) + D-034 (P1 fix) + D-004 (doc fix).
 
-## Next Cycle Handoff
-Next theme: 🔧 Development → Sprint 4 continued (D16 next, then R3 → C38/C51)
+## 💡 Discussion Results (Round 14 — 2026-06-19)
+- **Topic**: Sprint 4 Feature Directions — C48, C51, C38, C53-1, D16, R3
+- **Architect suggestion**: Prioritize C48 (Company Story Card) — highest competitive urgency. Atom Finance, Dhan, Toss, Stake all validate the "30-second stock story" concept. C51 establishes market_data.py pattern. C38 is a TW market first.
+- **Designer suggestion**: New `_story_card()` component (amber 6px hero border) for C48. Treemap visualization for C51 with 6-level green/red scale. Side-by-side narrative cards for C38 with mobile fallback. C48/C37 redundancy (DR-041) is P1 risk — monitor in testing.
+- **Developer estimate**: D16 (2-3h) + R3 (1-2h) + C38 (10-12h) + C51 (12-16h) + C48 (10-14h) + C53-1 (2-3h) = 37-50h total. C48 starts in parallel with C38/C51 after D16 completes.
+- **Challenger challenges**: 3 rounds conducted. C48/C37 redundancy flagged (P1). C51 historian alignment requires D23 tone guidelines. C38 mobile layout needs fallback. C64 (Daily Quiz) deferred to Sprint 5 evaluation.
+- **Final decision**: ✅ CONFIRMED with 6 conditions: (1) C48 parallelizes after D16, (2) D23 tone guidelines before C51, (3) C51 data validation spike, (4) C38 mobile fallback first, (5) C48/C37 redundancy monitoring, (6) C53-1 is first to defer if overrun.
+- **New architecture debt**: D34 (market-level data flow pattern), D35 (story_composer.py depends on post-D16 interfaces), D36 (sector_page.py bypasses _router_base.py)
+- **New P1 gap identified**: "Why This Matters" conclusion section (Dhan pattern) — add to Sprint 5
+- **Pending Daniel's decision**: Unchanged (C34 vs C46, C47 scope, Business Card IA)
 
-For full Round 14 review: docs/state/handoff_review.md
-For Round 14 challenge details: docs/workflow/challenge_log.md
+## Next Cycle Handoff
+Next theme: 🔧 Development → Sprint 4 execution (D16 → R3 → C48/C38/C51 parallel → C53-1)
+
+For full Round 14 discussion: docs/design/architect_discussion_r14.md
+For Round 14 designer analysis: docs/design/designer_discussion_r14.md
+For Round 14 developer estimates: docs/design/developer_discussion_r14.md
+For Round 14 challenge details: docs/design/challenger_discussion_r14.md
 For pending Daniel decisions: docs/state/pending_review.md
 For design details: docs/design/design_review.md
 For architecture: docs/design/architecture.md
-For developer estimates: docs/design/developer_estimates_round14.md
