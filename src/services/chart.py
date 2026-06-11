@@ -491,11 +491,13 @@ def create_price_area_chart(df: pd.DataFrame, title: str = "收盤價走勢") ->
     return fig
 
 
-def create_health_snowflake(stock_name: str, health_scores: dict) -> go.Figure:
+def create_health_snowflake(stock_name: str, health_scores: dict, metric_values: dict | None = None) -> go.Figure:
     """
     公司健康狀況雷達圖（雪花圖）
     health_scores: {"獲利能力": 85, "成長性": 72, "財務健康": 90, "股利品質": 65, "估值合理性": 55}
     所有分數應為 0-100。
+    metric_values: optional dict mapping dimension names to lists of metric labels,
+        e.g. {"獲利能力": ["ROE 25.3%", "毛利率 66.2%"], ...}
     """
     if not health_scores:
         fig = go.Figure()
@@ -532,7 +534,13 @@ def create_health_snowflake(stock_name: str, health_scores: dict) -> go.Figure:
         fillcolor=f"rgba(52, 152, 219, 0.15)",
         line=dict(color=main_color, width=2.5),
         name="目前評分",
-        text=[f"{c}: {v:.0f}分" for c, v in zip(categories, values)],
+        text=[
+            (
+                f"<b>{c}: {v:.0f}分</b>"
+                + ("<br>" + "<br>".join(f"  • {m}" for m in metric_values[c]) if metric_values and c in metric_values and metric_values[c] else "")
+            )
+            for c, v in zip(categories, values)
+        ],
         hovertemplate="%{text}<extra></extra>",
     ))
 
