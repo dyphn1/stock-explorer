@@ -36,6 +36,7 @@ from src.services.watchlist import (
     list_names,
 )
 from src.pages._router_base import _白话_card, _info_card, _summary_card
+from src.pages.url_sync import navigate_to
 
 
 def get_health_dimension_explanation(dim_name: str, score: float) -> str:
@@ -180,6 +181,8 @@ def _render_business_card(data: dict, client):
             )
         delta_text = "\\n\\n".join(delta_lines)
         _info_card("最近有什麼變化", delta_text, "🔄")
+    else:
+        _info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")
 
     # 🏥 公司健康狀況 (C43: Health Snowflake)
     health_scores = compute_health_scores(

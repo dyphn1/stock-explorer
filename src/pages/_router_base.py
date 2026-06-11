@@ -107,7 +107,7 @@ def _summary_card(title: str, content: str, icon: str = "📋"):
 
 def _info_card(title: str, content: str, icon: str = "💡"):
     st.markdown(f"""
-    <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
+    <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
         <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
         <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;line-height:1.6;">{content}</div>
     </div>
