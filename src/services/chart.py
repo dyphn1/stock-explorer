@@ -590,10 +590,11 @@ def create_valuation_band_chart(
     daily_price_df: pd.DataFrame,
     financial_df: pd.DataFrame,
     latest_per_pbr: dict,
-) -> go.Figure:
+) -> tuple:
     """
     估值區間圖（歷史 P/E 範圍）
     顯示當前 PER 在歷史百分位中的位置，含 25th-75th 百分位帶
+    Returns: (fig, interpretation_dict)
     """
     theme = _get_chart_colors()
 
@@ -602,19 +603,19 @@ def create_valuation_band_chart(
         fig = go.Figure()
         fig.add_annotation(text="暫無股價資料", x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
-        return fig
+        return fig, {}
 
     if financial_df is None or len(financial_df) == 0:
         fig = go.Figure()
         fig.add_annotation(text="暫無財務資料，無法計算本益比", x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
-        return fig
+        return fig, {}
 
     if not latest_per_pbr or not latest_per_pbr.get("PER"):
         fig = go.Figure()
         fig.add_annotation(text="目前無法取得本益比資料", x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
-        return fig
+        return fig, {}
 
     try:
         # ── Step 1: 整理每日股價 ──────────────────────────────
@@ -622,15 +623,28 @@ def create_valuation_band_chart(
         price_df["date"] = pd.to_datetime(price_df["date"])
         price_df = price_df.sort_values("date").reset_index(drop=True)
 
-        # 只取最近 2 年
-        cutoff_2y = pd.Timestamp.now() - pd.Timedelta(days=730)
-        price_df = price_df[price_df["date"] >= cutoff_2y]
+        # 只取最近 5 年
+        cutoff_5y = pd.Timestamp.now() - pd.Timedelta(days=1825)
+        price_df = price_df[price_df["date"] >= cutoff_5y]
 
+        # Fallback: if less than 2 years of data available, use whatever is available
         if len(price_df) == 0:
-            fig = go.Figure()
-            fig.add_annotation(text="近兩年無股價資料", x=0.5, y=0.5, showarrow=False)
-            _apply_theme_layout(fig)
-            return fig
+            price_df = daily_price_df.copy()
+            price_df["date"] = pd.to_datetime(price_df["date"])
+            price_df = price_df.sort_values("date").reset_index(drop=True)
+            if len(price_df) == 0:
+                fig = go.Figure()
+                fig.add_annotation(text="近五年無股價資料", x=0.5, y=0.5, showarrow=False)
+                _apply_theme_layout(fig)
+                return fig, {}
+            note = "（資料不足 5 年，顯示全部可用資料）"
+        else:
+            # Check if we have at least 2 years of data in the 5-year window
+            date_range = price_df["date"].max() - price_df["date"].min()
+            if date_range.days < 730:
+                note = "（資料不足 5 年，顯示全部可用資料）"
+            else:
+                note = ""
 
         # ── Step 2: 從財務資料提取季度 EPS ──────────────────
         fin = financial_df.copy()
@@ -647,7 +661,7 @@ def create_valuation_band_chart(
             fig = go.Figure()
             fig.add_annotation(text="無法從財務資料中提取 EPS", x=0.5, y=0.5, showarrow=False)
             _apply_theme_layout(fig)
-            return fig
+            return fig, {}
 
         # 每個日期取一列（同一日期可能有多列，取 value 最大的）
         eps_df = eps_df.groupby("date", as_index=False)["value"].max()
@@ -685,7 +699,7 @@ def create_valuation_band_chart(
             fig = go.Figure()
             fig.add_annotation(text="EPS 為負或零，無法計算本益比", x=0.5, y=0.5, showarrow=False)
             _apply_theme_layout(fig)
-            return fig
+            return fig, {}
 
         per_series = pd.Series(per_values, index=per_dates)
 
@@ -694,7 +708,22 @@ def create_valuation_band_chart(
         p75 = float(per_series.quantile(0.75))
         current_per = float(latest_per_pbr["PER"])
 
-        # ── Step 5: 繪圖 ─────────────────────────────────────
+        # ── Step 5: 估值解讀 ─────────────────────────────────
+        if current_per < p25:
+            valuation_text = "📉 目前估值偏低，比過去 75% 的時候都便宜"
+        elif current_per > p75:
+            valuation_text = "📈 目前估值偏高，比過去 75% 的時候都貴"
+        else:
+            valuation_text = "📊 目前估值在中間範圍"
+
+        interpretation = {
+            "p25": p25,
+            "p75": p75,
+            "current_per": current_per,
+            "valuation_text": valuation_text,
+        }
+
+        # ── Step 6: 繪圖 ─────────────────────────────────────
         fig = go.Figure()
 
         # 百分位帶（25th-75th）
@@ -733,9 +762,13 @@ def create_valuation_band_chart(
         fig.add_hline(y=p25, line_dash="dot", line_color=theme["divider"], line_width=1)
         fig.add_hline(y=p75, line_dash="dot", line_color=theme["divider"], line_width=1)
 
+        title_text = f"{stock_name} 估值區間（歷史 P/E 範圍）"
+        if note:
+            title_text += f" {note}"
+
         fig.update_layout(
             title=dict(
-                text=f"{stock_name} 估值區間（歷史 P/E 範圍）",
+                text=title_text,
                 font=dict(size=18, color=theme["title"]),
                 x=0.5,
             ),
@@ -748,10 +781,10 @@ def create_valuation_band_chart(
         )
         _apply_theme_layout(fig)
 
-        return fig
+        return fig, interpretation
 
     except Exception:
         fig = go.Figure()
         fig.add_annotation(text="估值區間圖計算失敗", x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
-        return fig
+        return fig, {}

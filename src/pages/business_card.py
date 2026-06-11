@@ -38,6 +38,16 @@ from src.services.watchlist import (
 from src.pages._router_base import _白话_card, _info_card, _summary_card
 
 
+def get_health_dimension_explanation(dim_name: str, score: float) -> str:
+    """Return a plain-language explanation for a health dimension score."""
+    if score >= 70:
+        return "表現優異，在同產業中屬於前段班"
+    elif score >= 40:
+        return "表現穩定，有改善空間"
+    else:
+        return "需要留意，可能拖累整體表現"
+
+
 def _render_business_card(data: dict, client):
     """公司名片主頁（M1）"""
     stock_id = data["stock_id"]
@@ -151,6 +161,26 @@ def _render_business_card(data: dict, client):
         takeaways_text = "\\n\\n".join(f"• {t}" for t in takeaways)
         _summary_card("重點摘要", takeaways_text, "📋")
 
+    # 🔄 最近有什麼變化 (C39: Recent Deltas)
+    deltas = compute_recent_deltas(
+        extra_metrics=extra_metrics,
+        monthly_revenue=monthly_revenue,
+        daily_price=data.get("daily_price"),
+        latest_per_pbr=latest_per_pbr,
+    )
+    if deltas:
+        delta_lines = []
+        for d in deltas:
+            emoji = "📈" if d["direction"] == "up" else "📉"
+            sign = "+" if d["change_pct"] >= 0 else ""
+            color = "#27AE60" if d["direction"] == "up" else "#E74C3C"
+            delta_lines.append(
+                f"{emoji} <span style=\"color:{color}\">**{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）</span><br>\\n"
+                f"　→ {d['explanation']}"
+            )
+        delta_text = "\\n\\n".join(delta_lines)
+        _info_card("最近有什麼變化", delta_text, "🔄")
+
     # 🏥 公司健康狀況 (C43: Health Snowflake)
     health_scores = compute_health_scores(
         extra_metrics=extra_metrics,
@@ -174,12 +204,13 @@ def _render_business_card(data: dict, client):
                 else:
                     indicator = "🔴"
                 st.markdown(
-                    f\"\"\"
-                    <div style=\"text-align:center;padding:0.5rem;background:#F8F9FA;border-radius:10px;margin:0.2rem 0;\">
-                        <div style=\"font-size:0.8rem;color:#7F8C8D;\">{indicator} {dim_name}</div>
-                        <div style=\"font-size:1.4rem;font-weight:700;color:#2C3E50;\">{score:.0f}</div>
+                    f"""
+                    <div style="text-align:center;padding:0.5rem;background:#F8F9FA;border-radius:10px;margin:0.2rem 0;">
+                        <div style="font-size:0.8rem;color:#7F8C8D;">{indicator} {dim_name}</div>
+                        <div style="font-size:1.4rem;font-weight:700;color:#2C3E50;">{score:.0f}</div>
+                        <div style="font-size:0.7rem;color:#7F8C8D;margin-top:0.2rem;">{get_health_dimension_explanation(dim_name, score)}</div>
                     </div>
-                    \"\"",
+                    """,
                     unsafe_allow_html=True,
                 )
 
@@ -232,27 +263,6 @@ def _render_business_card(data: dict, client):
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
             _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analyzer(pbr))
-
-    # 🔄 最近有什麼變化 (C39: Recent Deltas)
-    deltas = compute_recent_deltas(
-        extra_metrics=extra_metrics,
-        monthly_revenue=monthly_revenue,
-        daily_price=data.get("daily_price"),
-        latest_per_pbr=latest_per_pbr,
-    )
-    if deltas:
-        delta_lines = []
-        for d in deltas:
-            emoji = "📈" if d["direction"] == "up" else "📉"
-            sign = "+" if d["change_pct"] >= 0 else ""
-            color = "#27AE60" if d["direction"] == "up" else "#E74C3C"
-            delta_lines.append(
-                f"{emoji} <span style=\"color:{color}\">**{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）</span><br>\\n"
-                f"　→ {d['explanation']}"
-            )
-        delta_text = "\\n\\n".join(delta_lines)
-        _info_card("最近有什麼變化", delta_text, "🔄")
-        _info_card("健康摘要", health_summary, "🏥")
 
     st.markdown("---")
 
@@ -399,7 +409,7 @@ def _render_business_card(data: dict, client):
 
     daily_price = data.get("daily_price")
     if daily_price is not None and len(daily_price) > 0 and len(financial) > 0 and latest_per_pbr and latest_per_pbr.get("PER"):
-        fig = create_valuation_band_chart(
+        fig, interp = create_valuation_band_chart(
             stock_id=stock_id,
             stock_name=stock_name,
             daily_price_df=daily_price,
@@ -408,53 +418,9 @@ def _render_business_card(data: dict, client):
         )
         st.plotly_chart(fig, use_container_width=True)
 
-        # 白話解讀
-        try:
-            # 重新計算歷史 PER 百分位以判斷估值高低
-            price_df = daily_price.copy()
-            price_df["date"] = pd.to_datetime(price_df["date"])
-            price_df = price_df.sort_values("date")
-            cutoff_2y = pd.Timestamp.now() - pd.Timedelta(days=730)
-            price_df = price_df[price_df["date"] >= cutoff_2y]
-
-            fin = financial.copy()
-            fin["date"] = pd.to_datetime(fin["date"])
-            eps_keywords = ["eps", "每股盈餘", "earnings per share"]
-            eps_mask = fin["type"].str.lower().str.contains(
-                "|".join(eps_keywords), case=False, na=False
-            )
-            eps_df = fin[eps_mask].copy()
-            if len(eps_mask) > 0:
-                eps_df = eps_df.groupby("date", as_index=False)["value"].max()
-                eps_df = eps_df.sort_values("date")
-
-                per_values = []
-                for _, row in price_df.iterrows():
-                    available = eps_df[eps_df["date"] <= row["date"]]
-                    if len(available) < 1:
-                        continue
-                    ttm_eps = available.tail(4)["value"].sum()
-                    if ttm_eps <= 0:
-                        continue
-                    per_values.append(row["close"] / ttm_eps)
-
-                if len(per_values) > 0:
-                    import numpy as np
-                    per_arr = np.array(per_values)
-                    p25 = float(np.percentile(per_arr, 25))
-                    p75 = float(np.percentile(per_arr, 75))
-                    current_per = float(latest_per_pbr["PER"])
-
-                    if current_per < p25:
-                        valuation_text = "📉 目前估值偏低，比過去 75% 的時候都便宜"
-                    elif current_per > p75:
-                        valuation_text = "📈 目前估值偏高，比過去 75% 的時候都貴"
-                    else:
-                        valuation_text = "📊 目前估值在中間範圍"
-
-                    _info_card("估值解讀", valuation_text, "💡")
-        except Exception:
-            pass
+        # 白話解讀 — use interpretation returned by chart function
+        if interp and interp.get("valuation_text"):
+            _info_card("估值解讀", interp["valuation_text"], "💡")
     else:
         st.info("暫無足夠資料計算估值區間")
 
