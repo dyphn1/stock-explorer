@@ -17,6 +17,8 @@ from src.services.analogy_engine import (
     get_yoy_analogy,
     get_roe_analogy,
     get_pbr_analogy,
+    generate_key_takeaways,
+    compute_recent_deltas,
 )
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.news_summarizer import summarize_news, get_news_impact_level
@@ -133,6 +135,20 @@ def _render_business_card(data: dict, client):
 
     st.markdown("---")
 
+    # 📋 重點摘要 (C37: Key Takeaways)
+    takeaways = generate_key_takeaways(
+        stock_id=stock_id,
+        stock_name=stock_name,
+        industry=industry,
+        extra_metrics=extra_metrics,
+        latest_per_pbr=latest_per_pbr,
+        monthly_revenue=monthly_revenue,
+        financial_df=financial,
+    )
+    if takeaways:
+        takeaways_text = "\n\n".join(f"• {t}" for t in takeaways)
+        _info_card("重點摘要", takeaways_text, "📋")
+
     # 一句話定位
     one_liner = get_one_liner(stock_id, stock_name, industry)
     _info_card("一句話定位", one_liner, "💡")
@@ -178,6 +194,25 @@ def _render_business_card(data: dict, client):
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
             _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr))
+
+    # 🔄 最近有什麼變化 (C39: Recent Deltas)
+    deltas = compute_recent_deltas(
+        extra_metrics=extra_metrics,
+        monthly_revenue=monthly_revenue,
+        daily_price=data.get("daily_price"),
+        latest_per_pbr=latest_per_pbr,
+    )
+    if deltas:
+        delta_lines = []
+        for d in deltas:
+            emoji = "📈" if d["direction"] == "up" else "📉"
+            sign = "+" if d["change_pct"] >= 0 else ""
+            delta_lines.append(
+                f"{emoji} **{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）\n"
+                f"　→ {d['explanation']}"
+            )
+        delta_text = "\n\n".join(delta_lines)
+        _info_card("最近有什麼變化", delta_text, "🔄")
 
     st.markdown("---")
 
