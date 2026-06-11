@@ -289,5 +289,68 @@ For Round 13 design review: docs/design/design_review.md
 2. C47 Phase 1 scope: 5 vs 10 lessons
 3. Business Card Page IA: "above the fold" definition
 
+## 💡 Discussion Results (Round 15 — 2026-06-19)
+
+### New Feature Directions Evaluated (Round 13 Discussion)
+
+**Sprint 4 Additions (Approved):**
+| ID | Feature | Effort | Depends On |
+|----|---------|--------|------------|
+| C66 | Risk Profile Quiz | 6-10h | — |
+| D-032 | Progressive Disclosure Pattern | 2-3h | D24 (Sprint 4) |
+| D-038 | Non-Stock Landing Page IA | 1-2h | — |
+
+**Sprint 5 Approved:**
+| ID | Feature | Effort | Depends On |
+|----|---------|--------|------------|
+| C64 | Daily Market Quiz | 8-12h | D-038 IA |
+| C68 | Weekly Market Digest (replaces C49) | 8-12h | — |
+| C63 | Sector Stories | 10-14h | D-038 IA |
+
+**Sprint 6+ Approved:**
+| ID | Feature | Effort | Depends On |
+|----|---------|--------|------------|
+| C65-spike | Company Filing Explorer Data Source Spike | 4-6h | — |
+| C65 | Company Filing Explorer (full) | 16-24h | C65-spike |
+
+**Deferred (Sprint 8+):**
+| ID | Feature | Effort | Reason |
+|----|---------|--------|--------|
+| C67 | Community Sentiment Indicator | 12-16h | Historian positioning conflict (herd-following risk); defer until real user traffic exists |
+
+**Cancelled/Deferred Features:**
+| ID | Feature | Reason |
+|----|---------|--------|
+| C49 | Daily Market Pulse | Replaced by C68 (weekly > daily for beginners; saves 6-8h) |
+
+**Key Decisions:**
+1. **C68 replaces C49** — Designer and Developer both confirmed weekly is superior to daily for beginners (Syfe, Smart FOLIO validate). Saves 6-8h in Sprint 5.
+2. **C67 deferred to Sprint 8+** — Challenger identified fatal historian positioning conflict: social proof ("others added this to watchlist") contradicts "historian, not stock picker." Technical spike doesn't resolve positioning issue. Defer until real user traffic exists.
+3. **D-032 moved to Sprint 4** — P1 progressive disclosure issue is actively worsening as C44 and C48 add sections. Must be in place before page overload increases.
+4. **D-038 IA decision in Sprint 4** — 4 of 6 Round 13 features need a non-stock landing surface. The IA decision (1-2h) must be made in Sprint 4 before C64/C63/C68 implementation.
+5. **C65 requires data source spike** — FinMind has no annual report API. 4-6h spike in Sprint 6 to resolve (MOPS scraping, manual curation, or FinMind financial statements as proxy).
+6. **Content creation owner must be identified** — C63 (10 sector stories), C64 (30 quiz questions), C68 (digest templates) require ~20-30h content creation starting Sprint 4. Owner and QA process must be defined before work begins.
+7. **C64 and C52 share quiz_engine.py** — Shared service, separate question pools. Content pipeline must be coordinated.
+
+**Revised Total Effort:** 174-289h remaining (all sprints, with Round 13 additions and C49 removal)
+
+**New Architecture Debt:**
+- D-035: Quiz UI pattern not in design spec — P1
+- D-036: Community data tone guidelines (for C67 if revived) — P2
+- D-037: Contextual Zone B pattern for C65 — P2
+- D-038: Non-stock landing page architecture — P2 (Sprint 4 IA decision)
+
+**Challenger's 3-Round Summary:**
+- Round 1 (Feature Direction): ✅ RESOLVED with revision — C67 deferred; C68 replaces C49; D-032 moved to Sprint 4
+- Round 2 (Priority): ✅ RESOLVED with revision — Sprint 4 overflow risk acknowledged; C66 evaluated as potential Sprint 5 deferral if C38 causes overflow; D-038 IA elevated to Sprint 4
+- Round 3 (Goal Alignment): ✅ RESOLVED with conditions — Content creation owner must be identified; C65 fallback plan must be explicit; D-032 before page overload worsens
+
+**Final PM Decision:** "Engagement + Education Expansion" adopted with 5 conditions from Challenger:
+1. C68 replaces C49 (not complements)
+2. C67 deferred to Sprint 8+ pending positioning review
+3. D-032 moved to Sprint 4
+4. D-038 IA decision in Sprint 4
+5. Content creation owner identified before Sprint 4 workstream begins
+
 **Next Cycle Handoff**
-Next: 🔧 Development → Sprint 3 continued (C44 Risk Analysis MVP)
+Next: 🔧 Development → Sprint 3 continued (C38 Compare Stories Phase 1)
