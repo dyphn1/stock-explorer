@@ -127,6 +127,56 @@ For Round 11 discussion: docs/state/handoff_discuss.md
 - #5 Assessment (C52 Quiz Mode)
 - #2 Structured education (C50 deferred, C52 partial)
 
+## 💡 Discussion Results (Round 14 — 2026-06-19)
+
+### New Feature Directions Evaluated (Round 13 Discussion)
+
+**Sprint 4 Spike Approved:**
+| ID | Feature | Effort | Depends On |
+|----|---------|--------|------------|
+| C34-spike | Company Story Timeline Prototype | 4-6h | — |
+
+**Sprint 6 Approved:**
+| ID | Feature | Effort | Depends On |
+|----|---------|--------|------------|
+| C34 | Company Story Timeline (full) | 18-26h | D16, D24, C34-spike |
+| B | Notification System for Learning Engagement | 8-14h | — |
+
+**Deferred:**
+| ID | Feature | Effort | Reason |
+|----|---------|--------|--------|
+| C3 | AI-Augmented Historical Narrator | 14-22h | Fatal overlap with C34, C56, C59 — revisit Sprint 8+ |
+
+**Confirmed from Round 12 (Sprint 5 unchanged):**
+| ID | Feature | Effort | Depends On |
+|----|---------|--------|------------|
+| C58 | Beginner Onboarding Flow | 14-22h | — |
+| C62 | Pre-Investment Checklist | 8-14h | D24 |
+| C56 | Explain This Metric | 12-18h | D24 (contingent) |
+| C60 | Concept Mastery Badges | 8-14h | — |
+| C55 | Investment Diary | 10-16h | D24 |
+
+**Key Decisions:**
+1. **C3 (AI Narrator) indefinitely deferred** — Overlap risk with C34, C56, and C59 too high; saves 14-22h
+2. **Notification System moved to Sprint 6** — Limited value in Sprint 5 (only Quick Wins to notify about); frees 8-14h in Sprint 5 for C56 content creation
+3. **C34 spike in Sprint 4 (4-6h)** — Prototype using Streamlit native components to de-risk Sprint 6
+4. **C56 contingent on D24** — If D24 slips, C56 moves to Sprint 6
+5. **Content creation starts Sprint 4** — 19-30h content creation as parallel workstream
+6. **Session state audit in Sprint 5** — Before adding more keys, audit and consider session state manager (D25)
+
+**Revised Total Effort:** 154-260h remaining (all sprints, with Round 13 additions)
+
+**New Architecture Debt:**
+- D27: C34 timeline UI complexity — Streamlit has no native timeline; prototype spike needed — P2
+- D28: Notification system session state tracking — 6+ new keys; monitor for D25 escalation — P2
+
+**Challenger's 3-Round Summary:**
+- Round 1 (Feature Direction): ✅ PARTIALLY RESOLVED — C34 M3-before-M2 acknowledged; C3 overlap confirmed
+- Round 2 (Priority): ✅ RESOLVED with revision — C34 spike Sprint 4; Notifications moved to Sprint 6
+- Round 3 (Goal Alignment): ✅ RESOLVED with conditions — C3 deferred; C56 contingent on D24; content Sprint 4
+
+**Final PM Decision:** "Education Core Expansion" adopted with 4 conditions from Challenger.
+
 ## 💡 Discussion Results (Round 13 — 2026-06-18)
 
 ### Round 12 New Features Evaluated (C55-C62, from Round 12 Competitor Research)
@@ -216,4 +266,4 @@ For Round 11 discussion: docs/state/handoff_discuss.md
 3. Business Card Page IA: "above the fold" definition
 
 **Next Cycle Handoff**
-Next: 🔧 Development → Sprint 3 continued (C41 + C44 + C38 + D16 + D-025)
+Next: 🔧 Development → Sprint 3 continued (C44 Risk Analysis MVP)
