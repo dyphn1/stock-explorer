@@ -21,23 +21,9 @@ C59: "AI Q&A Chatbot" — Natural Language Stock Questions | P2 | 16-24h | Story
 C60: "Concept Mastery Badges" — Gamified Learning Achievement System | P2 | 8-12h | Point-to-point knowledge construction + Engagement | source: competitor research round 12
 C61: "Sector Rotation Visualizer" — Market Momentum Map | P2 | 10-14h | Benchmark-oriented analysis + Adaptive | source: competitor research round 12
 C62: "Pre-Investment Checklist" — Educational Scaffolding Tool | P2 | 8-12h | Story first + Historian positioning | source: competitor research round 12
-C63: "Sector Stories" — Thematic Stock Collections with Plain-Language Explanations | P2 | 10-14h | Story first + Beginner-friendly + Point-to-point knowledge construction | source: competitor research round 13
-C64: "Daily Market Quiz" — Gamified Daily Engagement | P2 | 8-12h | Point-to-point knowledge construction + Engagement + Ten-second test | source: competitor research round 13
-C65: "Company Filing Explorer" — AI-Parsed Annual Reports in Plain Language | P2 | 16-24h | Story first + Historian positioning + Point-to-point knowledge construction | source: competitor research round 13
-C66: "Risk Profile Quiz" — Comprehensive Risk Assessment Onboarding | P2 | 6-10h | Story first + Beginner-friendly + Historian positioning | source: competitor research round 13
-C67: "Community Sentiment" Indicator — Social Proof for Stock Discovery | P2 | 12-16h | Benchmark-oriented analysis + Beginner-friendly + Engagement | source: competitor research round 13
-C68: "Weekly Market Digest" — Curated Weekly Market Summary | P2 | 8-12h | Story first + Historian positioning + Beginner-friendly | source: competitor research round 13
-C71: "Study Log" — Personal Learning Record (reframed from Learning Streak) | P2 | 8-12h | Point-to-point knowledge construction + Historian positioning | source: competitor research round 14
-C73: "Expert Analysis Synthesis" — Plain-Language Fundamental Analysis Summary (pivoted from Super Investor Thesis) | P1 | 8-12h | Story first + Benchmark-oriented analysis + Beginner-friendly | source: competitor research round 14
-C74: "Historical Scenario Explorer" — Past-Tense Factual Scenario Exploration (pivoted from What-If) | P1 | 10-15h | Point-to-point knowledge construction + Story first + Active learning | source: competitor research round 14
-C75: "Dividend Calendar" — Market-Wide Upcoming Ex-Dividend View | P2 | 8-12h | Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 15
-C76: "Insider Activity Tracker" — Plain-Language Insider Trading Monitor | P2 | 12-16h | Story first + Historian positioning + Benchmark-oriented analysis | source: competitor research round 15
-C77: "Valuation Verdict" — Simple Over/Fair/Under-Valued Flag | P2 | 6-10h | Story first + Ten-second test + Benchmark-oriented analysis | source: competitor research round 15
-C78: "Analyst Consensus" — Aggregated Expert Opinions in Plain Language | P2 | 10-14h | Story first + Benchmark-oriented analysis + Historian positioning | source: competitor research round 15
-C79: "Compound Return Calculator" — Interactive Investment Estimator | P2 | 8-12h | Point-to-point knowledge construction + Active learning + Beginner-friendly | source: competitor research round 15
-C80: "News Sentiment Indicator" — Event Dashboard Sentiment Analysis | P2 | 10-14h | Adaptive and self-evolving + Benchmark-oriented analysis + Story first | source: competitor research round 15
-
-## Declassified (Not C-Series Features)
-- C69 (Paper Trading Simulator) — REMOVED: contradicts historian positioning
-- C70 ("Why This Matters") → Folded into C37 Key Takeaways redesign (P2 design tweak)
-- C72 (TL;DR First) → Merged into C48 Company Story Card UX work (design tweak)
+C63: "Audio Market Story" — Daily 3-Minute Market Narrative | P2 | 12-16h | Story first + Adaptive + Ten-second test | source: competitor research round 13
+C64: "Community Q&A" — Peer Learning Forum | P2 | 16-24h | Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 13
+C65: "Company Story Game" — Gamified Learning Through Play | P2 | 10-14h | Point-to-point knowledge construction + Ten-second test + Engagement | source: competitor research round 13
+C66: "Conversational Tone" — UX Writing Overhead for Approachability | P2 | 6-10h | Story first + Ten-second test + Beginner-friendly | source: competitor research round 13
+C67: "Community-Curated Stock Stories" — User-Generated Narrative Layer | P2 | 14-20h | Story first + Adaptive + Point-to-point knowledge construction | source: competitor research round 13
+C68: "Financial Concept Storytelling" — Narrative-Based Concept Explanations | P1 | 12-16h | Story first + Point-to-point knowledge construction + Ten-second test | source: competitor research round 13

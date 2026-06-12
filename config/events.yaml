@@ -84,28 +84,28 @@ events:
   title: 鴻海(2317)法說來了！股價7天漲18％、外資連10天買超30萬張為哪樁？劉揚偉會端什麼好菜上場｜今周重磅 - 旺得富
   type: news_major
 - date: '2026-06-12'
-  detected_at: '2026-06-12T00:06:37'
+  detected_at: '2026-06-12T00:04:21'
   severity: high
   stock_id: '2330'
   summary: 重大事件：財報
   title: 台積電配息創高攜應材！半導體廠財報大放異彩-財經焦點情報站 - CMoney投資網誌
   type: news_major
 - date: '2026-06-12'
-  detected_at: '2026-06-12T00:06:38'
+  detected_at: '2026-06-12T00:04:30'
   severity: high
   stock_id: '1101'
   summary: 重大事件：財報
   title: 台泥財報／第1季稅後淨利年增36% 毛利率提升至19%、股東權益增120億 - UDN
   type: news_major
 - date: '2026-06-12'
-  detected_at: '2026-06-12T00:06:38'
+  detected_at: '2026-06-12T00:04:30'
   severity: high
   stock_id: '1101'
   summary: 重大事件：財報
   title: 台泥財報／第1季稅後淨利年增36% 毛利率升至19%、股東權益增120億 - UDN
   type: news_major
 - date: '2026-06-12'
-  detected_at: '2026-06-12T00:06:38'
+  detected_at: '2026-06-12T00:04:30'
   severity: high
   stock_id: '2317'
   summary: 重大事件：法說

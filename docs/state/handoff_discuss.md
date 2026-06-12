@@ -1,80 +1,73 @@
-# Handoff – Discussion
+# Handoff – Discussion (Round 14)
 
 ## Summary
-- **Topic**: Discussion (💡) — Round 13
+- **Topic**: Discussion (💡) — Round 14
 - **Date**: 2026-06-19
-- **Participants**: PM, Architect, Designer, Developer, Challenger
-- **Theme**: Round 13 Feature Directions — Education Core Expansion
+- **Participants**: Product Manager, System Architect, Developer, Designer, Challenger
 
-## Idea Proposals
-| ID | Feature | Owner | Status |
-|----|---------|-------|--------|
-| C34 | Company Story Timeline (Historical Event Timeline) | Dev | ✅ Approved — Sprint 6 (spike in Sprint 4) |
-| B | Notification System for Learning Engagement | Dev | ✅ Approved — Sprint 6 (moved from Sprint 5) |
-| C3 | AI-Augmented Historical Narrator | Dev | ❌ Indefinitely Deferred (overlap risk) |
-| D | Quick Wins Bundle (C62+C60+C55) | Dev | ✅ Approved — Sprint 5 (confirmed from Round 12) |
+## Features Evaluated (C63-C68, from Round 13 Competitor Research)
+
+### Idea Proposals
+| ID | Feature | Effort | Direction | Sprint |
+|----|---------|--------|-----------|--------|
+| C63 | Audio Market Story (weekly) | 18-24h | Content-first | Sprint 8 |
+| C64 | Community Q&A | 26-38h | Community | Sprint 8 |
+| C65 | Company Story Game | 22-32h | Engagement | Sprint 7 |
+| C66 | Conversational Tone | 13-20h | Quick win | Sprint 3/4 fast-track |
+| C67 | Community-Curated Stories | 26-38h | Community | Sprint 9+ |
+| C68 | Financial Concept Storytelling | 30-44h | Education (P1) | Sprint 6-7 |
 
 ## Decisions Made
-1. **C3 (AI Narrator) indefinitely deferred** — Overlap risk with C34, C56, and C59 is too high. Can be revisited in Sprint 8+ after education core stabilizes. Saves 14-22h.
-2. **Notification System moved to Sprint 6** — Value in Sprint 5 is limited (only Quick Wins content to notify about). Moving to Sprint 6 allows it to notify about C56, C34, and the full education core. Frees 8-14h in Sprint 5 for C56 content creation.
-3. **C34 spike in Sprint 4 (4-6h)** — Prototype using Streamlit native components to de-risk Sprint 6 implementation. Validates concept without significant investment.
-4. **C56 contingent on D24** — If D24 completes in Sprint 4, C56 is in Sprint 5. If D24 slips, C56 moves to Sprint 6.
-5. **Content creation starts Sprint 4** — 19-30h content creation burden must start in Sprint 4 as parallel workstream. Non-negotiable for Sprint 5 readiness.
-6. **Session state audit in Sprint 5** — Before adding more session state keys, audit current usage and consider session state manager pattern (D25).
+1. **C66 fast-tracked** — Zero dependency, can start immediately in late Sprint 3 / Sprint 4
+2. **C63 deferred to Sprint 8** — D28 audio infrastructure risk too high for Sprint 7
+3. **C63 scope: weekly not daily** — 52/year max to limit content burden
+4. **D22 promoted to Sprint 6 P0** — Persistence layer hard prerequisite for C64/C67
+5. **Content cap: 100 items max** — Hard limit until team capacity proven
+6. **Content creation starts Sprint 4** — Parallel workstream for C68/C63/C65 content
+7. **Mandatory historian tone QA gate** — Cross-cutting checkpoint before any content feature ships
+8. **C68 split 5+5 concepts** — First 5 in Sprint 6, remaining 5 in Sprint 7
+9. **Sprint 5/6 cut-line rules** — Must be defined before Sprint 5 starts
 
-## Revised Sprint Plan
-| Sprint | Features | Effort | Dependencies |
-|--------|----------|--------|-------------|
-| **Sprint 3** (in progress) | C44 + C38 + D16 | 24-29h | — |
-| **Sprint 4** | R3 + D24 + C51 + C48 + C53-1 + C34 spike | 28-39h | D16 |
-| **Sprint 5** | C58 + C62 + C60 + C55 + C56 (if D24 ready) | 42-68h (50-82h w/ C56) | D24 |
-| **Sprint 6** | C57 + C61 + C34 (full) + Notification System | 46-68h | C51, D24 |
-| **Sprint 7+** | C59 | 18-28h | All education features stable |
+## Action Items
+| Item ID | Description | Owner | Due Date |
+|---------|-------------|-------|----------|
+| C66 | Start conversational tone rewrite (parallel workstream) | Dev + Designer | Sprint 3 late |
+| D22 | Build persistence layer (YAML-based, following watchlist pattern) | Dev | Sprint 6 |
+| C68-content | Write first 5 concept stories (P/E, ROE, P/B, Gross Margin, Debt Ratio) | PM/Designer | Sprint 4-5 |
+| C63-content | Write weekly audio script templates (5-7 templates) | PM/Designer | Sprint 4-5 |
+| C65-content | Extend company_facts.yaml to 15+ companies | PM/Designer | Sprint 4-5 |
+| QA-gate | Define historian tone QA checklist | Designer | Sprint 4 |
+| Cut-line | Define Sprint 5/6 cut-line rules | PM | Before Sprint 5 |
 
-## Revised Total Effort
-- New (Round 13, revised): 52-80h code + 16-24h content = 68-104h
-- With buffer: 82-125h
-- Total remaining (all sprints): 154-260h (185-312h with buffer)
+## Challenger 3-Round Summary
+- **Round 1 (Feature Direction)**: ✅ RESOLVED — Hour inflation explained; C63 dependency chain clarified; C65 redefinition validated; D22 commitment required
+- **Round 2 (Priority)**: ✅ RESOLVED — C66 fast-tracked; C63/C65 sequencing reversed; content creation parallelized; D22 promoted to P0
+- **Round 3 (Goal Alignment)**: ✅ RESOLVED — Content sustainability cap added; historian tone QA gate mandated; sprint cut-line rules required
 
-## New Architecture Decisions
-- `historical_timeline.py` — New service for C34 (Sprint 6)
-- `event_templates.yaml` — New data file for C34 event types (content creation Sprint 4-5)
-- `notification_service.py` — New service for notification system (Sprint 6)
-- `notification_templates.yaml` — New data file for notification templates
-- New card type: `_timeline_card()` (gold border, #F4D03F) for C34
+## Final PM Decision
+Direction B ("Quick Wins + Shared Infrastructure") adopted with 7 Challenger conditions:
+- Sprint 3/4: C66 (immediate, parallel)
+- Sprint 6: C68 (first 5 concepts) + D22 persistence layer
+- Sprint 7: C65 game + C68 (remaining 5 concepts)
+- Sprint 8: C63 (weekly audio) + C64 (community Q&A)
+- Sprint 9+: C67 (community stories, after C64 stable)
+- Content cap: 100 items max; C63 weekly only
+- Mandatory historian tone QA gate before each feature ships
+- Sprint 5/6 cut-line rules defined before Sprint 5
 
 ## New Architecture Debt
-- D27: C34 timeline UI complexity — Streamlit has no native timeline component; prototype spike needed to validate approach — P2
-- D28: Notification system session state tracking — adds 6+ new session state keys; monitor for D25 escalation — P2
+- D28: Audio service layer for C63 — Medium
+- D29: Community service layer for C64/C67 — Medium
+- D30: Game state management for C65 — Medium
+- D22: Persistence layer promoted to P0 — unblocks C64/C67
 
-## Challenger's 3-Round Summary
-| Round | Focus | Resolution |
-|-------|-------|------------|
-| 1 | Feature Direction | ✅ PARTIALLY RESOLVED — C34 M3-before-M2 concern acknowledged; C3 overlap confirmed; Direction D scope inconsistency noted |
-| 2 | Priority | ✅ RESOLVED with revision — C34 spike in Sprint 4; Notification System moved to Sprint 6 |
-| 3 | Goal Alignment | ✅ RESOLVED with conditions — C3 indefinitely deferred; C56 contingent on D24; content creation starts Sprint 4 |
-
-## Final PM Decision (Challenger ✅ Confirmed with 4 Conditions)
-**"Education Core Expansion" direction adopted with revisions:**
-- Sprint 5: C58 + C62 + C60 + C55 + C56 (if D24 ready)
-- Sprint 4: C34 spike (4-6h prototype)
-- Sprint 6: C34 (full) + C57 + C61 + Notification System
-- Sprint 7+: C59
-- C3 (AI Narrator) indefinitely deferred
-- Content creation for all YAML files starts Sprint 4 as parallel workstream
-- D24 is the single most critical enabler — non-negotiable for Sprint 4
-
-**Pending Daniel's Decision** (unchanged from previous):
-1. C34 vs C46 priority for Sprint 5
-2. C47 Phase 1 scope: 5 vs 10 lessons
-3. Business Card Page IA: "above the fold" definition
+## Competitor Insights Addressed
+- Audio modality (C63 weekly audio story)
+- Social learning (C64 community Q&A, C67 community stories)
+- Gamification (C65 company story game)
+- Conversational tone (C66 UX writing overhaul)
+- Narrative-based education (C68 concept storytelling)
+- User-generated content (C67 community stories)
 
 ## Next Cycle Handoff
-Next: 🔧 Development → Sprint 3 continued (C44 Risk Analysis MVP)
-Read `docs/state/handoff.md` for Sprint 3 entry point.
-
-## Full Discussion Docs
-- Architect: `docs/design/architect_discussion_r13.md`
-- Designer: `docs/design/designer_discussion_r13.md`
-- Developer: `docs/design/developer_discussion_r13.md`
-- Challenger: `docs/design/challenger_discussion_r13.md`
+Next: 🔧 Development → Sprint 3 continued (C41 + C44 + C38 + D16 + D-025)
