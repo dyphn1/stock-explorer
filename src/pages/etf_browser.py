@@ -7,7 +7,7 @@ import streamlit as st
 import pandas as pd
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
-from src.pages._router_base import _info_card, _summary_card
+from src.pages._router_base import _info_card, _summary_card, _count_label
 
 
 def _cached_get_stock_info(client: FinMindClient):
@@ -80,8 +80,7 @@ def _render_etf_browser(client: FinMindClient):
         st.warning("找不到任何 ETF 資料。")
         return
 
-    st.markdown(f"<div style='color:#7F8C8D;font-size:0.85rem;'>共找到 <b>{len(etf_info)}</b> 檔 ETF</div>",
-                unsafe_allow_html=True)
+    _count_label(len(etf_info), "檔 ETF")
 
     # ── 預取所有 ETF 價格（一次的迭代，全部 cache）────────────
     etf_ids = tuple(sorted(etf_info["stock_id"].tolist()))

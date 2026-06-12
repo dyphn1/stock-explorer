@@ -8,7 +8,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-from src.pages._router_base import _section_title, _info_card, _summary_card, _白话_card
+from src.pages._router_base import _section_title, _info_card, _summary_card, _白话_card, _subsidiary_card
 from src.services.chart import _apply_theme_layout
 
 
@@ -229,28 +229,15 @@ def _render_group_structure(data: dict):
             hold_label = "🟢 一般投資"
             hold_color = "#27AE60"
 
-        st.markdown(f"""
-        <div style="background:white;border-radius:12px;padding:1.5rem;border:1px solid #ECF0F1;margin:0.8rem 0;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-                <div>
-                    <span style="font-size:1.1rem;font-weight:700;color:#2C3E50;">{sub['name']}</span>
-                    <span style="background:{hold_color}15;color:{hold_color};padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;font-weight:600;margin-left:0.5rem;">
-                        {hold_label}
-                    </span>
-                </div>
-                <div style="text-align:right;">
-                    <span style="font-size:0.85rem;color:#7F8C8D;">持股 {holding}%</span>
-                    <span style="font-size:0.85rem;color:#7F8C8D;margin-left:1rem;">營收貢獻 ~{revenue}%</span>
-                </div>
-            </div>
-            <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.8rem;line-height:1.6;">
-                <strong>在做什麼：</strong>{sub['business']}
-            </div>
-            <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;line-height:1.5;">
-                <strong>跟母公司的關係：</strong>{sub['relation']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        _subsidiary_card(
+            name=sub['name'],
+            hold_label=hold_label,
+            hold_color=hold_color,
+            holding=holding,
+            revenue=revenue,
+            business=sub['business'],
+            relation=sub['relation'],
+        )
 
     st.markdown("---")
 

@@ -114,6 +114,56 @@ def _info_card(title: str, content: str, icon: str = "💡"):
     """, unsafe_allow_html=True)
 
 
+def _subsidiary_card(name: str, hold_label: str, hold_color: str,
+                     holding: int, revenue: int, business: str, relation: str):
+    """Render a subsidiary card with holding badge, business description, and relation.
+
+    Args:
+        name: Subsidiary company name.
+        hold_label: Badge text (e.g. '🔴 控股子公司').
+        hold_color: Hex color code for the badge (e.g. '#E74C3C').
+        holding: Ownership percentage.
+        revenue: Revenue contribution percentage.
+        business: Plain-language description of what the subsidiary does.
+        relation: Plain-language description of the parent-subsidiary relationship.
+    """
+    st.markdown(f"""
+    <div style="background:white;border-radius:12px;padding:1.5rem;border:1px solid #ECF0F1;margin:0.8rem 0;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <span style="font-size:1.1rem;font-weight:700;color:#2C3E50;">{name}</span>
+                <span style="background:{hold_color}15;color:{hold_color};padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;font-weight:600;margin-left:0.5rem;">
+                    {hold_label}
+                </span>
+            </div>
+            <div style="text-align:right;">
+                <span style="font-size:0.85rem;color:#7F8C8D;">持股 {holding}%</span>
+                <span style="font-size:0.85rem;color:#7F8C8D;margin-left:1rem;">營收貢獻 ~{revenue}%</span>
+            </div>
+        </div>
+        <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.8rem;line-height:1.6;">
+            <strong>在做什麼：</strong>{business}
+        </div>
+        <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;line-height:1.5;">
+            <strong>跟母公司的關係：</strong>{relation}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def _count_label(count: int, label: str):
+    """Render a muted count label (e.g. '共找到 42 檔 ETF').
+
+    Args:
+        count: The number to display.
+        label: Descriptive text after the count.
+    """
+    st.markdown(
+        f"<div style='color:#7F8C8D;font-size:0.85rem;'>共找到 <b>{count}</b> {label}</div>",
+        unsafe_allow_html=True,
+    )
+
+
 # ── M3: Timeline helpers ──────────────────────────────────
 
 _TIMELINE_OPTIONS = {
