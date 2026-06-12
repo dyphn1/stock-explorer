@@ -88,7 +88,7 @@ def _section_title(title: str):
 
 def _白话_card(label: str, value: str, analogy: str = ""):
     st.markdown(f"""
-    <div style="background:#F5F5F5;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
+    <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
         <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
         <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{value}</div>
         <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{analogy}</div>
