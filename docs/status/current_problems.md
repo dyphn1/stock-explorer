@@ -197,6 +197,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `_router_base.py` line 91
 - **Proposed Fix**: Change `background:#F5F5F5` to `background:#F8F9FA` to match design system.
 - **Effort**: <0.5h (one-line change)
+- **Status**: ✅ RESOLVED in Sprint 6 — `background:#F5F5F5` → `background:#F8F9FA` in `_router_base.py` line 91. Commit: b197764.
 
 ### D-038: C41 Calls API in View Layer
 - **Severity**: P2
@@ -328,8 +329,8 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Total Issues**: 35
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 23 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-037, D-038, D-039, D-040, D-041, D-042, D-043, D-044, D-045, D-046, D-047, D-048)
-- **Resolved**: 18
+- **P2 (Optimization)**: 22 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-038, D-039, D-040, D-041, D-042, D-043, D-045, D-048)
+- **Resolved**: 19
 
 ---
 
