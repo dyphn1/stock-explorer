@@ -3,8 +3,7 @@ import streamlit as st
 import pandas as pd
 from src.services.delta_engine import compute_recent_deltas
 from src.services.company_facts import get_company_facts
-from src.pages._router_base import _info_card
-from src.pages.business_card._helpers import _section_title
+from src.pages._router_base import _info_card, _section_title
 from src.pages.url_sync import navigate_to
 from src.services.compare_stories import generate_compare_stories
 
@@ -146,7 +145,7 @@ def _render_read_next(data: dict, client) -> None:
     industry = data["industry"]
 
     # 📖 推薦閱讀 (C41: Read Next Recommendations)
-    _section_title("📖", "推薦閱讀")
+    _section_title(f"📖 推薦閱讀")
 
     # --- Peer stocks from same industry ---
     _all_info = client.get_stock_info()

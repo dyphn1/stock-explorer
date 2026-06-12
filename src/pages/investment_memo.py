@@ -9,8 +9,8 @@ from __future__ import annotations
 import streamlit as st
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
-from src.pages._router_base import _info_card, _summary_card
-from src.pages.business_card._helpers import _section_title, _historian_disclaimer
+from src.pages._router_base import _info_card, _summary_card, _section_title
+from src.pages.business_card._helpers import _historian_disclaimer
 from src.services.investment_memo_service import (
     get_stock_suggestions,
     validate_memo_input,
@@ -32,7 +32,7 @@ def _render_investment_memo(client: FinMindClient):
     )
 
     # ── Stock selector ────────────────────────────────────
-    _section_title("🔍", "選擇股票")
+    _section_title(f"🔍 選擇股票")
 
     col_sel, col_btn = st.columns([3, 1])
     with col_sel:
@@ -77,7 +77,7 @@ def _render_investment_memo(client: FinMindClient):
         st.markdown("---\n")
 
         # ── Memo form ──────────────────────────────────────
-        _section_title("✏️", "寫下你的分析")
+        _section_title(f"✏️ 寫下你的分析")
 
         # Initialize session state for saved memos
         if "investment_memos" not in st.session_state:
@@ -178,7 +178,7 @@ def _render_investment_memo(client: FinMindClient):
 
         # ── Display saved memos ────────────────────────────
         st.markdown("---\n")
-        _section_title("📋", "已儲存的備忘錄")
+        _section_title(f"📋 已儲存的備忘錄")
 
         if saved_memos:
             for sid, memo in saved_memos.items():

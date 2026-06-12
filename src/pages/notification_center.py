@@ -10,11 +10,11 @@ from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
 from src.pages._router_base import _info_card, _summary_card
 from src.pages.business_card._helpers import (
-    _section_title,
     _historian_disclaimer,
     _study_card,
     _expert_card,
 )
+from src.pages._router_base import _section_title
 from src.services.notification_service import (
     get_notification_settings,
     update_notification_settings,
@@ -117,7 +117,7 @@ def _render_notification_center(client: FinMindClient):
     st.markdown("---\n")
 
     # ── 待處理通知列表 ────────────────────────────────────
-    _section_title("📋", "待處理通知")
+    _section_title(f"📋 待處理通知")
 
     with st.spinner("載入通知..."):
         pending = get_pending_notifications(client, stock_ids)
@@ -191,7 +191,7 @@ def _render_notification_center(client: FinMindClient):
 
     # ── 通知設定（收合） ──────────────────────────────────
     st.markdown("\n")
-    _section_title("⚙️", "通知設定")
+    _section_title(f"⚙️ 通知設定")
 
     settings = get_notification_settings()
 

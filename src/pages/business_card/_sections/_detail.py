@@ -1,8 +1,7 @@
 """Business card section: detail sections (share, footer)."""
 import streamlit as st
 import urllib.parse
-from src.pages._router_base import _info_card
-from src.pages.business_card._helpers import _section_title
+from src.pages._router_base import _info_card, _section_title
 
 
 def _render_share_section(data: dict, client) -> None:
@@ -17,7 +16,7 @@ def _render_share_section(data: dict, client) -> None:
     share_url_js = urllib.parse.quote(f"?{params}", safe="=?&")
 
     st.markdown("---")
-    _section_title("🔗", "分享這張名片")
+    _section_title(f"🔗 分享這張名片")
 
     # Use JS to get the full current URL (origin + path) and build shareable link
     js_get_url = """

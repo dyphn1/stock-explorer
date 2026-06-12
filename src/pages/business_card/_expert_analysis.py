@@ -2,9 +2,9 @@
 import streamlit as st
 from src.pages.business_card._helpers import (
     _expert_card,
-    _section_title,
     _historian_disclaimer,
 )
+from src.pages._router_base import _section_title
 
 # Curated expert analysis for 10 major Taiwan stocks
 _EXPERT_ANALYSIS = {
@@ -128,7 +128,7 @@ def _render_expert_analysis(data: dict, client) -> None:
     stock_id = data["stock_id"]
     stock_name = data["stock_name"]
 
-    _section_title("🎓", "專家分析")
+    _section_title(f"🎓 專家分析")
 
     analysis = _EXPERT_ANALYSIS.get(stock_id)
     if analysis:

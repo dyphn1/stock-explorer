@@ -3,9 +3,9 @@ import streamlit as st
 from datetime import datetime, date, timedelta
 from src.pages.business_card._helpers import (
     _study_card,
-    _section_title,
     _historian_disclaimer,
 )
+from src.pages._router_base import _section_title
 
 # Session state key for tracking study history
 _STUDY_LOG_KEY = "_study_log"
@@ -96,7 +96,7 @@ def _render_study_log(data: dict, client) -> None:
     total = _get_total_stocks(log)
     recent = _get_recent_history(log, days=7)
 
-    _section_title("📚", "學習日誌")
+    _section_title(f"📚 學習日誌")
 
     # Streak + total summary
     streak_text = f"目前連續學習 **{streak}** 天" if streak > 0 else "今天開始學習吧！"

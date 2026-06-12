@@ -10,8 +10,8 @@ import streamlit as st
 import pandas as pd
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
-from src.pages._router_base import _info_card, _summary_card
-from src.pages.business_card._helpers import _section_title, _historian_disclaimer
+from src.pages._router_base import _info_card, _summary_card, _section_title
+from src.pages.business_card._helpers import _historian_disclaimer
 from src.services.stock_screener_service import (
     get_all_stocks_with_metrics,
     apply_preset_filter,
@@ -88,7 +88,7 @@ def _render_stock_screener(client: FinMindClient):
 
 def _render_beginner_mode(df: pd.DataFrame):
     """Render beginner mode with preset profiles."""
-    _section_title("🎯", "選擇你的投資風格")
+    _section_title(f"🎯 選擇你的投資風格")
 
     # Preset cards
     col1, col2, col3 = st.columns(3)
@@ -163,7 +163,7 @@ def _render_beginner_mode(df: pd.DataFrame):
 
 def _render_advanced_mode(df: pd.DataFrame):
     """Render advanced mode with custom filters."""
-    _section_title("⚙️", "自訂篩選條件")
+    _section_title(f"⚙️ 自訂篩選條件")
 
     # Get unique industries
     industries = sorted(df["industry_category"].dropna().unique().tolist())
@@ -222,7 +222,7 @@ def _render_advanced_mode(df: pd.DataFrame):
 def _render_results(filtered_df: pd.DataFrame):
     """Render screening results as card grid."""
     st.markdown("---\n")
-    _section_title("📋", "篩選結果")
+    _section_title(f"📋 篩選結果")
 
     count = len(filtered_df)
     st.markdown(f"**符合條件的股票：{count} 檔**\n")

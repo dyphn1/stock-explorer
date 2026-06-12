@@ -110,11 +110,6 @@ def _section_header(icon: str, title: str, collapsed: bool = False):
         st.markdown(f"### {icon} {title}")
 
 
-def _section_title(icon: str, title: str):
-    """Shortcut for _section_header with collapsed=False."""
-    st.markdown(f"### {icon} {title}")
-
-
 # ── D-040: Standardized Disclaimer Component ────────────────────
 
 _DISCLAIMER_TEXTS = {

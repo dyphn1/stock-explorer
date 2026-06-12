@@ -9,8 +9,8 @@ from __future__ import annotations
 import streamlit as st
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
-from src.pages._router_base import _info_card, _summary_card, _白话_card, _subsidiary_card
-from src.pages.business_card._helpers import _section_title, _historian_disclaimer
+from src.pages._router_base import _info_card, _summary_card, _白话_card, _subsidiary_card, _section_title
+from src.pages.business_card._helpers import _historian_disclaimer
 from src.services.market_event_service import (
     get_case_studies,
     get_case_study,
@@ -92,7 +92,7 @@ def _render_market_event_case_study(client: FinMindClient):
     st.markdown("---\n")
 
     # ── What Happened ────────────────────────────────────────
-    _section_title("📖", "發生了什麼事")
+    _section_title(f"📖 發生了什麼事")
 
     for i, paragraph in enumerate(study["what_happened"]):
         if i == 0:
@@ -104,7 +104,7 @@ def _render_market_event_case_study(client: FinMindClient):
 
     # ── Key Metrics ──────────────────────────────────────────
     st.markdown("---\n")
-    _section_title("📊", "關鍵數據")
+    _section_title(f"📊 關鍵數據")
 
     key_metrics = study.get("key_metrics", {})
     if key_metrics:
@@ -124,7 +124,7 @@ def _render_market_event_case_study(client: FinMindClient):
 
     # ── Lessons Learned ──────────────────────────────────────
     st.markdown("---\n")
-    _section_title("🎓", "歷史教了我們什麼")
+    _section_title(f"🎓 歷史教了我們什麼")
 
     lessons = study.get("lessons", [])
     for lesson in lessons:
@@ -133,7 +133,7 @@ def _render_market_event_case_study(client: FinMindClient):
 
     # ── Related Stocks ───────────────────────────────────────
     st.markdown("---\n")
-    _section_title("🏷️", "相關個股")
+    _section_title(f"🏷️ 相關個股")
 
     related_stocks = study.get("related_stocks", [])
     if related_stocks:
@@ -160,7 +160,7 @@ def _render_market_event_case_study(client: FinMindClient):
 
     # ── All case studies overview ────────────────────────────
     st.markdown("---\n")
-    _section_title("📋", "所有案例研究")
+    _section_title(f"📋 所有案例研究")
 
     for cs in case_studies:
         badge = _severity_badge(cs["severity"])

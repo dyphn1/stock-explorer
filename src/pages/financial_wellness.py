@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import streamlit as st
 from src.data.finmind_client import FinMindClient
-from src.pages._router_base import _info_card, _summary_card
-from src.pages.business_card._helpers import _section_title, _historian_disclaimer
+from src.pages._router_base import _info_card, _summary_card, _section_title
+from src.pages.business_card._helpers import _historian_disclaimer
 from src.services.financial_wellness_service import (
     get_questions,
     calculate_score,
@@ -63,7 +63,7 @@ def _render_financial_wellness(client: FinMindClient):
 
     # ── Quiz form ──────────────────────────────────────────
     if st.session_state["wellness_show_form"] and not st.session_state["wellness_quiz_done"]:
-        _section_title("📝", "開始作答")
+        _section_title(f"📝 開始作答")
 
         with st.form("wellness_quiz_form"):
             answers = {}
@@ -106,7 +106,7 @@ def _render_financial_wellness(client: FinMindClient):
         tips = get_tips(answers)
 
         st.markdown("---\n")
-        _section_title("📊", "測驗結果")
+        _section_title(f"📊 測驗結果")
 
         # Score display
         score = result["total_score"]
@@ -167,7 +167,7 @@ def _render_financial_wellness(client: FinMindClient):
         # ── Personalized tips ───────────────────────────────
         if tips:
             st.markdown("---\n")
-            _section_title("💡", "個人化建議")
+            _section_title(f"💡 個人化建議")
             for tip in tips:
                 _info_card(
                     f"加強「{tip['category']}」",
@@ -177,7 +177,7 @@ def _render_financial_wellness(client: FinMindClient):
 
         # ── Category breakdown ─────────────────────────────
         st.markdown("---\n")
-        _section_title("📋", "各面向得分")
+        _section_title(f"📋 各面向得分")
 
         cat_scores = result.get("category_scores", {})
         if cat_scores:

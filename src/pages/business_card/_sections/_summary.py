@@ -31,8 +31,8 @@ from src.pages._router_base import _白话_card, _info_card, _summary_card
 from src.pages.business_card._helpers import (
     get_health_dimension_explanation,
     _get_health_metric_values,
-    _section_title,
 )
+from src.pages._router_base import _section_title
 
 
 def _render_story_card(data: dict, client) -> None:
