@@ -36,14 +36,15 @@ DEFAULT_SETTINGS = {
 }
 
 # ── In-memory cache (D-051: load once, cache in memory) ──
-_cached_data: dict = {}
+_cached_data: dict | None = None
 
 
 def _load_notifications() -> dict:
     """載入通知設定（with in-memory cache）"""
     global _cached_data
-    if _cached_data is not None:
-        return _cached_data
+    cached = _cached_data
+    if cached is not None:
+        return cached
 
     lock = FileLock(NOTIFICATIONS_LOCK_PATH, timeout=10)
     with lock:
@@ -53,13 +54,19 @@ def _load_notifications() -> dict:
         with open(NOTIFICATIONS_CONFIG_PATH, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f) or {}
         _cached_data = data
-        return _cached_data
+        return data
 
 
 def _invalidate_cache():
     """Invalidate the in-memory cache after writes."""
     global _cached_data
-    _cached_data = {}
+    _cached_data = None
+
+
+def reload_notifications() -> dict:
+    """Force reload notifications from YAML (for testing purposes)."""
+    _invalidate_cache()
+    return _load_notifications()
 
 
 def _save_notifications(data: dict):
