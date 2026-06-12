@@ -32,6 +32,10 @@ EVENTS_LOCK_PATH = os.path.join(
     "events.lock",
 )
 
+# ── In-memory cache ──────────────────────────────────────
+_events_cache: list = []
+_events_cache_mtime: float = 0.0
+
 # 嚴重程度分數映射
 SEVERITY_SCORES = {"high": 3, "medium": 2, "low": 1}
 
@@ -146,26 +150,54 @@ def _require_columns(df: pd.DataFrame, *logical_names: str) -> Optional[dict[str
 # ── 事件記錄管理 ──────────────────────────────────────────
 
 def _load_events() -> list:
-    """載入事件記錄"""
+    """載入事件記錄 (with in-memory cache + mtime checking)."""
+    global _events_cache, _events_cache_mtime
+
+    if os.path.exists(EVENTS_CONFIG_PATH):
+        try:
+            current_mtime = os.path.getmtime(EVENTS_CONFIG_PATH)
+        except OSError:
+            current_mtime = 0.0
+    else:
+        current_mtime = 0.0
+
+    if _events_cache and current_mtime == _events_cache_mtime:
+        return _events_cache
+
     lock = FileLock(EVENTS_LOCK_PATH, timeout=10)
     with lock:
         if not os.path.exists(EVENTS_CONFIG_PATH):
-            return []
-        with open(EVENTS_CONFIG_PATH, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f) or {}
-        return data.get("events", [])
+            result = []
+        else:
+            with open(EVENTS_CONFIG_PATH, "r", encoding="utf-8") as f:
+                data = yaml.safe_load(f) or {}
+            result = data.get("events", [])
+
+    _events_cache = result
+    _events_cache_mtime = current_mtime
+    return _events_cache
 
 
 def _save_events(events: list):
     """儲存事件記錄（atomic write under file lock）"""
+    global _events_cache, _events_cache_mtime
+
     lock = FileLock(EVENTS_LOCK_PATH, timeout=10)
     with lock:
         content = yaml.dump({"events": events}, allow_unicode=True, default_flow_style=False)
         _atomic_write(EVENTS_CONFIG_PATH, content.encode("utf-8"))
 
+    _events_cache = events
+    try:
+        _events_cache_mtime = os.path.getmtime(EVENTS_CONFIG_PATH) if os.path.exists(EVENTS_CONFIG_PATH) else 0.0
+    except OSError:
+        _events_cache_mtime = 0.0
+
 
 def prune_old_events(days: int = 90):
     """移除超過 days 天的事件，控制 events.yaml 檔案大小"""
+    global _events_cache, _events_cache_mtime
+
     events = _load_events()
     cutoff = datetime.now() - timedelta(days=days)
     pruned = []

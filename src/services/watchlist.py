@@ -4,6 +4,7 @@ Stores watchlist in config/watchlist.yaml
 Supports multiple named lists.
 """
 
+import os
 from pathlib import Path
 from datetime import datetime
 
@@ -16,40 +17,72 @@ from src.utils import _atomic_write
 WATCHLIST_PATH = Path("config/watchlist.yaml")
 WATCHLIST_LOCK = Path("config/watchlist.lock")
 
+# ── In-memory cache ──────────────────────────────────────
+_cache: dict = {}
+_cache_mtime: float = 0.0
+
 
 def _load_data() -> dict:
     """Load the entire watchlist data structure.
     Returns a dict with key 'lists' mapping list names to lists of entries.
     If file doesn't exist, returns {'lists': {}}.
     If old format (list) is detected, converts to {'lists': {'預設清單': <old list>}}.
+    Uses in-memory cache with mtime checking.
     """
+    global _cache, _cache_mtime
+
+    if WATCHLIST_PATH.exists():
+        try:
+            current_mtime = os.path.getmtime(WATCHLIST_PATH)
+        except OSError:
+            current_mtime = 0.0
+    else:
+        current_mtime = 0.0
+
+    if _cache and current_mtime == _cache_mtime:
+        return _cache
+
     lock = FileLock(str(WATCHLIST_LOCK), timeout=10)
     with lock:
         if not WATCHLIST_PATH.exists():
-            return {"lists": {}}
-        try:
-            with open(WATCHLIST_PATH, "r", encoding="utf-8") as f:
-                data = yaml.safe_load(f)
-            # Backward compatibility: if data is a list, assume old format
-            if isinstance(data, list):
-                # Convert to new structure with a single list named "預設清單"
-                return {"lists": {"預設清單": data}}
-            # If data is a dict but doesn't have 'lists', assume it's the old dict format? 
-            # We expect new format to have 'lists'. If not, we treat as empty.
-            if isinstance(data, dict) and "lists" in data:
-                return data
-            # Fallback: treat as empty
-            return {"lists": {}}
-        except Exception:
-            return {"lists": {}}
+            result = {"lists": {}}
+        else:
+            try:
+                with open(WATCHLIST_PATH, "r", encoding="utf-8") as f:
+                    data = yaml.safe_load(f)
+                # Backward compatibility: if data is a list, assume old format
+                if isinstance(data, list):
+                    # Convert to new structure with a single list named "預設清單"
+                    result = {"lists": {"預設清單": data}}
+                # If data is a dict but doesn't have 'lists', assume it's the old dict format?
+                # We expect new format to have 'lists'. If not, we treat as empty.
+                elif isinstance(data, dict) and "lists" in data:
+                    result = data
+                else:
+                    # Fallback: treat as empty
+                    result = {"lists": {}}
+            except Exception:
+                result = {"lists": {}}
+
+    _cache = result
+    _cache_mtime = current_mtime
+    return _cache
 
 
 def _save_data(data: dict) -> None:
     """Save the entire watchlist data structure under file lock."""
+    global _cache, _cache_mtime
+
     lock = FileLock(str(WATCHLIST_LOCK), timeout=10)
     with lock:
         content = yaml.dump(data, allow_unicode=True, default_flow_style=False, sort_keys=False)
         _atomic_write(WATCHLIST_PATH, content.encode("utf-8"))
+
+    _cache = data
+    try:
+        _cache_mtime = os.path.getmtime(WATCHLIST_PATH) if WATCHLIST_PATH.exists() else 0.0
+    except OSError:
+        _cache_mtime = 0.0
 
 
 def load_watchlist(list_name: str = "預設清單") -> list:

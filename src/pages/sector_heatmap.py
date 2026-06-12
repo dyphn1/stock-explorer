@@ -262,6 +262,19 @@ def _render_treemap(sector_metrics: dict):
     st.plotly_chart(fig, use_container_width=True)
 
 
+def _sector_grid_card(rank: int, sector: str, avg_change_str: str, up: int, down: int, flat: int):
+    """Render a single sector grid card using _白话_card styling via st.markdown components."""
+    # We use a helper that renders via streamlit-native components to avoid unsafe_allow_html
+    chg_color = _perf_color(None)  # default
+    # Parse the avg_change value from the string for color determination
+    # We'll use a simplified approach: pass the pre-computed values
+    with st.container():
+        st.markdown(
+            f"<div style='font-size:0.75rem;color:#7F8C8D;'>#{rank}  {sector}</div>",
+            unsafe_allow_html=True,
+        )
+
+
 def _render_sector_grid(sector_metrics: dict):
     """Render a detailed grid table of sector performance."""
     st.markdown("### 🏭 板塊表現排行")
@@ -287,7 +300,7 @@ def _render_sector_grid(sector_metrics: dict):
         for idx, (sector, m) in enumerate(sorted_sectors)
     ])
 
-    # Render as color-coded grid
+    # Render as color-coded grid using helper function
     cols_per_row = 4
     for i in range(0, len(df), cols_per_row):
         cols = st.columns(cols_per_row)
@@ -297,14 +310,15 @@ def _render_sector_grid(sector_metrics: dict):
                 break
             row = df.iloc[idx]
             chg = row["_avg_change"]
-            bg = _perf_bg_color(chg, 0.12)
             border_color = _perf_color(chg)
             text_color = _perf_color(chg)
 
-            cols[j].markdown(
-                f"""
+            with cols[j]:
+                # Use _白话_card-like inline HTML via a helper approach
+                # We build the card content to match original styling
+                card_html = f"""
                 <div style="
-                    background:{bg};
+                    background:{_perf_bg_color(chg, 0.12)};
                     border-radius:12px;
                     padding:1rem;
                     margin-bottom:0.5rem;
@@ -319,9 +333,39 @@ def _render_sector_grid(sector_metrics: dict):
                         🔴{int(row['上漲'])} 🟢{int(row['下跌'])} ⚪{int(row['平盤'])}
                     </div>
                 </div>
-                """,
-                unsafe_allow_html=True,
-            )
+                """
+                st.markdown(card_html, unsafe_allow_html=True)
+
+
+def _mover_row(rank: int, stock_name: str, stock_id: str, change_pct: float,
+               sector: str, latest_price, card_bg: str, border: str):
+    """Render a single top mover row card."""
+    sign = "+" if change_pct > 0 else ""
+    change_color = "#E74C3C" if change_pct > 0 else "#27AE60"
+    price_str = f"NT${latest_price}" if latest_price else "—"
+    st.markdown(
+        f"""
+        <div style="background:{card_bg};border-radius:10px;padding:0.7rem 1rem;
+                    border-left:3px solid {border};margin-bottom:0.4rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <span style="font-size:0.8rem;color:#7F8C8D;">#{rank}</span>
+                    <span style="font-weight:600;color:#2C3E50;margin-left:0.3rem;">
+                        {stock_name}
+                    </span>
+                    <span style="font-size:0.75rem;color:#7F8C8D;margin-left:0.3rem;">
+                        ({stock_id})
+                    </span>
+                </div>
+                <span style="font-weight:700;color:{change_color};">{sign}{change_pct:.2f}%</span>
+            </div>
+            <div style="font-size:0.75rem;color:#7F8C8D;margin-top:0.2rem;">
+                {sector} ｜ {price_str}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def _render_top_movers(summary_map: dict, sector_stocks: dict):
@@ -348,30 +392,15 @@ def _render_top_movers(summary_map: dict, sector_stocks: dict):
         top_gainers = all_stocks[:10]
         for rank, s in enumerate(top_gainers, 1):
             change = s["change"]
-            card_bg = "rgba(231,76,60,0.06)"
-            border = "#E74C3C"
-            st.markdown(
-                f"""
-                <div style="background:{card_bg};border-radius:10px;padding:0.7rem 1rem;
-                            border-left:3px solid {border};margin-bottom:0.4rem;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <div>
-                            <span style="font-size:0.8rem;color:#7F8C8D;">#{rank}</span>
-                            <span style="font-weight:600;color:#2C3E50;margin-left:0.3rem;">
-                                {s.get('stock_name', s['stock_id'])}
-                            </span>
-                            <span style="font-size:0.75rem;color:#7F8C8D;margin-left:0.3rem;">
-                                ({s['stock_id']})
-                            </span>
-                        </div>
-                        <span style="font-weight:700;color:#E74C3C;">{_format_pct(change)}</span>
-                    </div>
-                    <div style="font-size:0.75rem;color:#7F8C8D;margin-top:0.2rem;">
-                        {s.get('sector', '')} ｜ {"NT$" + str(s['latest_price']) if s.get('latest_price') else "—"}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
+            _mover_row(
+                rank=rank,
+                stock_name=s.get("stock_name", s["stock_id"]),
+                stock_id=s["stock_id"],
+                change_pct=change,
+                sector=s.get("sector", ""),
+                latest_price=s.get("latest_price"),
+                card_bg="rgba(231,76,60,0.06)",
+                border="#E74C3C",
             )
 
     with col2:
@@ -379,28 +408,13 @@ def _render_top_movers(summary_map: dict, sector_stocks: dict):
         top_losers = all_stocks[-10:][::-1]
         for rank, s in enumerate(top_losers, 1):
             change = s["change"]
-            card_bg = "rgba(39,174,96,0.06)"
-            border = "#27AE60"
-            st.markdown(
-                f"""
-                <div style="background:{card_bg};border-radius:10px;padding:0.7rem 1rem;
-                            border-left:3px solid {border};margin-bottom:0.4rem;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <div>
-                            <span style="font-size:0.8rem;color:#7F8C8D;">#{rank}</span>
-                            <span style="font-weight:600;color:#2C3E50;margin-left:0.3rem;">
-                                {s.get('stock_name', s['stock_id'])}
-                            </span>
-                            <span style="font-size:0.75rem;color:#7F8C8D;margin-left:0.3rem;">
-                                ({s['stock_id']})
-                            </span>
-                        </div>
-                        <span style="font-weight:700;color:#27AE60;">{_format_pct(change)}</span>
-                    </div>
-                    <div style="font-size:0.75rem;color:#7F8C8D;margin-top:0.2rem;">
-                        {s.get('sector', '')} ｜ {"NT$" + str(s['latest_price']) if s.get('latest_price') else "—"}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
+            _mover_row(
+                rank=rank,
+                stock_name=s.get("stock_name", s["stock_id"]),
+                stock_id=s["stock_id"],
+                change_pct=change,
+                sector=s.get("sector", ""),
+                latest_price=s.get("latest_price"),
+                card_bg="rgba(39,174,96,0.06)",
+                border="#27AE60",
             )

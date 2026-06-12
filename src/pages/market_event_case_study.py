@@ -9,7 +9,7 @@ from __future__ import annotations
 import streamlit as st
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
-from src.pages._router_base import _info_card, _summary_card, _白话_card
+from src.pages._router_base import _info_card, _summary_card, _白话_card, _subsidiary_card
 from src.pages.business_card._helpers import _section_title, _historian_disclaimer
 from src.services.market_event_service import (
     get_case_studies,
@@ -24,6 +24,19 @@ def _severity_badge(severity: str) -> str:
         "low": "🟢 參考事件",
     }
     return badges.get(severity, "⚪ 未知")
+
+
+def _render_related_stock_card(stock_id: str, stock_name: str, impact: str):
+    """Render a related stock card using shared _subsidiary_card component."""
+    _subsidiary_card(
+        name=stock_name,
+        hold_label=f"📈 {stock_id}",
+        hold_color="#3498DB",
+        holding=0,
+        revenue=0,
+        business=impact,
+        relation=f"股票代碼 {stock_id}",
+    )
 
 
 def _render_market_event_case_study(client: FinMindClient):
@@ -106,15 +119,8 @@ def _render_market_event_case_study(client: FinMindClient):
                 label, data = items[idx]
                 value = data.get("value", "N/A")
                 analogy = data.get("analogy", "")
-                cols[j].markdown(
-                    f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;
-                    border-left:4px solid #3498DB;margin:0.5rem 0;">
-                        <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
-                        <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{value}</div>
-                        <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{analogy}</div>
-                    </div>""",
-                    unsafe_allow_html=True,
-                )
+                with cols[j]:
+                    _白话_card(label, value, analogy)
 
     # ── Lessons Learned ──────────────────────────────────────
     st.markdown("---\n")
@@ -140,20 +146,10 @@ def _render_market_event_case_study(client: FinMindClient):
                     break
                 stock = related_stocks[idx]
                 with cols[j]:
-                    st.markdown(
-                        f"""<div style="background:white;border-radius:12px;padding:1.2rem;
-                        border:1px solid #ECF0F1;margin:0.5rem 0;">
-                            <div style="font-weight:700;color:#2C3E50;font-size:1.05rem;">
-                                {stock['stock_name']}
-                            </div>
-                            <div style="font-size:0.8rem;color:#7F8C8D;margin-bottom:0.5rem;">
-                                {stock['stock_id']}
-                            </div>
-                            <div style="font-size:0.85rem;color:#5D6D7E;line-height:1.5;">
-                                {stock['impact']}
-                            </div>
-                        </div>""",
-                        unsafe_allow_html=True,
+                    _render_related_stock_card(
+                        stock_id=stock["stock_id"],
+                        stock_name=stock["stock_name"],
+                        impact=stock["impact"],
                     )
                     if st.button(
                         f"查看 {stock['stock_name']} 名片",
