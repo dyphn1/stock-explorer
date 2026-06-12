@@ -232,3 +232,146 @@
 - Sprint 6+: 42-58h (C93 + C94 + C97)
 - Sprint 7+: 26-36h (C95 + C96)
 - **Grand Total: ~115-141h** (vs 141-157h pre-revision, -26h from deferrals)
+
+---
+
+## Round 18: Three-Round Challenge (2026-06-23)
+**Theme**: Sprint 7 Planning — C84 Market Event Case Study + Debt Cleanup
+
+### Round 1 (Gap Authenticity): ⚠️ PARTIALLY REVISED
+
+**Challenger Findings:**
+
+The team's summary contains **outdated status information** that materially affects Sprint 7 planning:
+
+1. **D-043 is NOT "still open after 2 sprints"** — it was fixed in Sprint 5 (commit 318d30f, handoff_dev.md line 12). The `get_roe_analyzer`/`get_pbr_analyzer` → `get_roe_analogy`/`get_pbr_analogy` rename was completed. The tech_debt.md and review_report.md still list it as open, but the actual code in `_financial.py` already uses the correct function names. This is a **documentation debt** problem, not a code problem. The team summary incorrectly presents a fixed bug as a current crisis.
+
+2. **D-046 is NOT "st.html() JS still broken"** — handoff_dev.md line 21 shows D-046 was about "Sector heatmap 4th KPI uses inline HTML" which was fixed with `_白话_card()` (344a895). The share section JS issue (if it still exists) is a separate, untracked problem. The team is conflating two different issues under one ID.
+
+3. **st.markdown counts are dramatically overstated**:
+   - D-048: financial_wellness.py has **14** st.markdown calls, not 84. The "84" figure may have been from a different version or included all st.* calls.
+   - D-049: notification_center.py has **10** st.markdown calls, not 47.
+   - D-050: investment_memo.py has **7** st.markdown calls, not 35.
+   - The _sections/ sub-modules collectively have **32** st.markdown calls across 5 files.
+   - **Total st.markdown across all Sprint 6 deliverables: ~63, not 166 as implied.** The debt severity is significantly lower than presented.
+
+4. **Sprint 6 scope change is significant** — The team planned C93/C94/C97 for Sprint 6 but delivered C83/C85/C02/C43/C45 instead. This means:
+   - C02 (Notifications) was added as a P0 competitive gap fix — correct decision
+   - C43 (Health Snowflake) was extracted from existing code — correct decision
+   - C93/C94/C97 were deferred — but the team summary doesn't acknowledge this as a scope change, it just lists them as "Sprint 7 priorities"
+   - The real question: should C93/C94/C97 still be on the roadmap, or has the product moved past them?
+
+5. **Is 38.4h realistic?** The estimate has several hidden costs:
+   - C84's 12h dev estimate excludes **content creation** (5-10 case studies). The developer notes say "8-10h of PM/Designer time" for content — this is parallel work but it's real work that must happen.
+   - D3 (inline HTML consolidation) at 3.5h is optimistic for 5+ pages with unique layouts. The risk section itself says "could hit 6-8h."
+   - D6 (YAML migration) could break import chains — the risk section acknowledges this.
+   - **Realistic range: 38-50h**, not 34-44h. The 38.4h midpoint assumes everything goes right.
+
+**Team Response:**
+- D-043: Acknowledged as fixed in Sprint 5. The tech_debt.md and review_report.md are outdated — documentation debt, not code debt. Will update status docs.
+- D-046: The sector heatmap KPI fix is complete. The share section JS issue (st.html with fragile element IDs) may still exist but is a separate, lower-priority issue. Will create a new debt item if confirmed.
+- st.markdown counts: The original counts (84/47/35) were from an earlier analysis that may have included all st.* calls or been from a pre-refactor version. The current counts (14/10/7) are accurate for the shipped code. Debt severity is lower than presented.
+- Sprint 6 scope change: C02 and C43 were correctly prioritized as competitive gap fixes. C93/C94/C97 remain on the roadmap for future sprints.
+- 38.4h estimate: Acknowledged as optimistic. The 34-44h range should be 38-50h to account for content creation and risk contingencies.
+
+**Challenger Verdict: ⚠️ PARTIALLY REVISED**
+- **D-043**: CLOSED (was fixed in Sprint 5). Remove from Sprint 7 priorities. Update tech_debt.md and review_report.md.
+- **D-046**: CLOSED (sector heatmap KPI fixed). Share section JS issue needs a new debt item if confirmed.
+- **D-048/D-049/D-050**: Severity DOWNGRADED. st.markdown counts are 55-78% lower than claimed. These are minor style issues, not architectural problems.
+- **Sprint 6 scope change**: ACKNOWLEDGED. C02 and C43 were correct additions. C93/C94/C97 remain for future sprints.
+- **38.4h estimate**: ADJUSTED to 38-50h. The 34-44h range is too narrow.
+
+---
+
+### Round 2 (Priority): ⚠️ REVISED
+
+**Challenger Questions:**
+
+1. **Should C84 (12h, 31% of Sprint 7 budget) be the main feature?** C84 is "Market Event Case Study" — an interactive historical market event explorer. At 12h dev + 8-10h content creation, it's actually a 20-22h feature. That's 46-58% of the adjusted Sprint 7 budget. Is this the right centerpiece for Sprint 7?
+
+2. **Should we do more debt cleanup instead?** The top 5 debt items (D-044, D3, D6, D13, D7) total 17.6h. C84 alone is 12h. Combined: 29.6h + 4h verification = 33.6h before content creation. That leaves 4.6-16.4h of buffer in the 38-50h range. Is this enough buffer for a content-heavy feature?
+
+3. **Is the Sprint 7 scope appropriate?** The original Sprint 7 plan was 30-45h. The current estimate is 38-50h. That's at the high end AND above the original range. Should we defer one debt item to Sprint 8 to create more buffer?
+
+4. **C84 depends on content creation that's outside the dev estimate.** The developer notes say "8-10h of PM/Designer time" for case study writing. Who is doing this work? Is the PM/Designer available? If content creation slips, C84 ships with fewer case studies — is that acceptable?
+
+5. **D13 (test infrastructure) at 4.2h is a long-term investment with no immediate user value.** Should D13 be deferred to Sprint 8 to free up 4.2h for C84 buffer or additional debt work? Tests are important but invisible to users.
+
+6. **The debt items selected are all "infrastructure" improvements** (service extraction, component consolidation, YAML migration, test setup). None of them directly improve the user experience. Should we include at least one user-facing debt fix in Sprint 7?
+
+**Team Response:**
+- C84 as main feature: Yes — it's the #1 "historian" differentiator. No TW competitor has interactive historical market events. The 12h dev estimate is for the framework; content creation is parallel work that doesn't block other Sprint 7 items.
+- Debt + C84 balance: 17.6h debt + 12h C84 = 29.6h is appropriate for a 38-50h sprint. The buffer (8.4-20.4h) accounts for content creation and risk contingencies.
+- D13 deferral: Agreed — D13 (test infrastructure) can be deferred to Sprint 8. It's important but not urgent, and it frees 4.2h for buffer. **Revised Sprint 7: 34.2h (38 - 4.2h D13).**
+- User-facing debt: Good point. Recommend adding D-045 (card-count limit compliance) as a user-facing fix — it directly improves the sector heatmap UX. Already included at 1.2h.
+- Content creation risk: If PM/Designer bandwidth is constrained, C84 ships with 3 case studies instead of 5-10. The framework works regardless of content volume.
+
+**Challenger Verdict: ⚠️ REVISED**
+- **C84 as main feature**: CONFIRMED. It's the strongest "historian" feature in the pipeline. The 12h dev + parallel content creation model is sound.
+- **D13 deferred to Sprint 8**: CONFIRMED. Frees 4.2h buffer. Revised Sprint 7 total: 34.2h (range 34-44h).
+- **Debt + feature balance**: 13.4h debt (4 items) + 12h C84 + 4.8h spikes = 30.2h + 4h verification = 34.2h. This is appropriate.
+- **Add user-facing debt**: D-045 (card-count audit) is already included. Additionally, recommend fixing the share section JS issue (currently untracked) as a quick win alongside D3.
+- **Content creation**: C84 ships with minimum 3 case studies. If content creation slips, the feature still delivers value.
+
+---
+
+### Round 3 (Goal Alignment): ✅ CONFIRMED with conditions
+
+**Challenger Questions:**
+
+1. **Does C84 pass the "historian, not stock picker" test?** "Market Event Case Study" — exploring historical market events like the 2008 crisis, COVID crash, etc. This is pure historian: "here's what happened, here's how stocks behaved, here's what we learned." No prediction, no recommendation. This is the **strongest historian feature** in the entire roadmap.
+
+2. **Does Sprint 7 balance features vs debt well?** 12h feature + 13.4h debt + 4.8h spikes = 30.2h. That's a 40/52/8% split (feature/debt/spikes). This is a reasonable balance — slightly debt-heavy, which is appropriate after 6 sprints of feature development.
+
+3. **Are we building the right things in the right order?** Sprint 7 is the first sprint where we're NOT adding a major new page type. C84 is a standalone page, but it's thematically aligned with the business card page (historical context). The debt work (D-044, D3, D6, D7) improves existing pages. This feels like a "consolidation sprint" — appropriate timing.
+
+4. **Is the "historian" positioning being diluted?** Looking at the full roadmap: C84 (historical events), C82 (animated data story), C81 (decision scenarios), C63 (weekly brief), C64 (community), C65 (filings), C68 (concept storytelling). Every feature is historian-aligned. No dilution detected.
+
+5. **What about the deferred features (C93/C94/C97)?** These were deferred from Sprint 6, not cancelled. C93 (dividend calendar) and C94 (earnings story) are historian-aligned. C97 (first 30 days) is beginner education. All three should remain on the roadmap for Sprint 8+.
+
+6. **The 9th consecutive Design Grade A is impressive but fragile.** Sprint 7 adds C84 (new page) + debt cleanup (touches existing pages). Each change is a regression risk. Should we add a design review gate before C84 ships?
+
+**Team Response:**
+- C84 historian alignment: Strongly confirmed. "What happened during the 2008 crisis for TW stocks?" is the quintessential historian question. No competitor has this.
+- Feature/debt balance: 40/52/8% is appropriate. The debt work enables future features (D-044 enables market-level features, D3 enables consistent UI, D6 enables content scaling, D7 improves performance).
+- Right order: Sprint 7 as consolidation sprint is correct timing. After 6 sprints of feature development, the infrastructure needs attention.
+- Historian positioning: Not diluted. The roadmap is coherent — all features explain the past/present, none predict the future.
+- Deferred features: C93/C94/C97 remain on the roadmap. C93 and C94 for Sprint 8, C97 for Sprint 9+.
+- Design review gate: Agreed — add a design review checkpoint before C84 ships. The Designer should review the case study template, event timeline UI, and navigation patterns.
+
+**Challenger Verdict: ✅ CONFIRMED with conditions**
+- C84 is the **strongest historian feature** in the roadmap. Full support.
+- Sprint 7 balance is appropriate — slightly debt-heavy, which is correct for this stage.
+- Roadmap coherence is maintained. No positioning drift.
+- Design review gate added as a condition.
+
+---
+
+### Final Challenger Decision: ✅ CONFIRMED with conditions
+
+**Sprint 7 Scope (CONFIRMED):**
+1. **C84** — Market Event Case Study (12h dev + parallel content creation) — Main feature
+2. **D28 spike** — Animated Data Story feasibility (3.6h)
+3. **D-045 spike** — Card-count limit compliance (1.2h)
+4. **D-044** — market_data.py extraction (3.0h)
+5. **D3** — ui_components.py consolidation (4.2h)
+6. **D6** — YAML migration (4.2h)
+7. **D7** — N+1 fix in category_browser.py (3.0h)
+
+**Deferred to Sprint 8:**
+- D13 (test infrastructure) — 4.2h, important but not urgent
+
+**Revised Sprint 7 Total: 34.2h (range 34-44h)**
+
+**Conditions:**
+1. **D-043 status must be updated** in tech_debt.md and review_report.md — it's been fixed since Sprint 5
+2. **D-046 status must be updated** — sector heatmap KPI fix is complete
+3. **D-048/D-049/D-050 severity downgraded** — st.markdown counts are 55-78% lower than originally claimed
+4. **C84 ships with minimum 3 case studies** — content creation is parallel and may slip
+5. **Design review gate before C84 ships** — Designer reviews case study template, timeline UI, and navigation
+6. **Share section JS issue** — create new debt item if confirmed still broken
+7. **C93/C94/C97 remain on roadmap** for Sprint 8+
+
+**Total Committed Effort:**
+- Sprint 7: 34.2h (range 34-44h)
+- Sprint 8+: C93 (14h) + C94 (16h) + C97 (21h) + D13 (4.2h) + C82 (conditional on D28) = 55.2h+ C82
