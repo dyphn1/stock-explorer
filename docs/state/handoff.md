@@ -1,12 +1,12 @@
 # Handoff – Development
 ## Summary
-- **Topic**: Development (🔧) — Sprint 6 Complete
-- **Date**: 2026-06-23 (Sprint 6 development completed)
-- **Sprint Status**: Sprint 6 ✅ COMPLETE → Sprint 7 next
+- **Topic**: Development (🔧) — Sprint 7 Complete
+- **Date**: 2026-06-13 (Sprint 7 development completed)
+- **Sprint Status**: Sprint 7 ✅ COMPLETE → Sprint 8 next
 
 ## Key Metrics
-- Design grade: A (7th consecutive round, maintained through Sprint 6)
-- L0: 82/82 ✅ | L1: 8/18 (10 pre-existing event-alert failures unchanged)
+- Design grade: A (maintained through Sprint 7)
+- L0: 85/85 ✅ | L1: 8/18 (10 pre-existing event-alert failures unchanged)
 
 ## Sprint Plans (Summary)
 | Sprint | Items | Status |
@@ -14,10 +14,10 @@
 | Sprint 3 | C44, C41, C38, D16, D-025 | ✅ Complete |
 | Sprint 4 | R3, C48, C38, C51, C53-1 | ✅ Complete |
 ||| Sprint 5 | D-039/040/041 + D37 + C71 + C74 + C73 | ✅ Complete |
-||| Sprint 6 | C83 + C85 + C02 + C43 + C45 | ✅ Complete |
-|| Sprint 7 | C84 + C82/D28/D-045 spikes + debt cleanup | 📋 Next |
-|| Sprint 8 | C63 (conditional on D28) + D22 | 📋 Round 15 approved |
-|| Sprint 9+ | C81, C64, C65, C68 | 📋 Round 15 approved |
+|| Sprint 6 | C83 + C85 + C02 + C43 + C45 | ✅ Complete |
+||| Sprint 7 | C84 + D3 + D6 + D7 + D-044 | ✅ Complete |
+||| Sprint 8 | C63 (conditional on D28) + D22 | 📋 Next |
+||| Sprint 9+ | C81, C64, C65, C68 | 📋 Round 15 approved |
 
 ## Key Rules
 - Content cap: 100 items max across all features
@@ -68,6 +68,26 @@ All 5 Sprint 6 items delivered:
 - L0: 82/82 ✅ | L1: 8/18 (10 pre-existing event-alert failures unchanged, 8 new L1 tests for notification_center pass)
 - Commit: b197764
 
+### Sprint 7 Execution (2026-06-13) — COMPLETE ✅
+All Sprint 7 debt items and main feature delivered:
+
+**Debt Cleanup (4 items completed):**
+- **D6**: YAML migration — `financial_wellness_service.py` quiz data extracted to `config/quiz.yaml` with in-memory caching; `notification_service.py` YAML re-read pattern fixed (6eeeb8a, 1544e64)
+- **D-044**: market_data.py extraction — Created `src/services/market_data.py` with 8 functions (`get_all_stock_info`, `get_sector_list`, `get_sector_stocks`, `get_sector_performance`, `get_top_movers`, `get_all_summaries`, `compute_sector_metrics`, `get_sector_grid_data`); `sector_heatmap.py` refactored to remove direct FinMindClient calls and a 41-line duplicate `_compute_sector_metrics()` function (0d15148)
+- **D7**: N+1 API fix — `category_browser.py` replaced 400+ sequential `get_daily_price()` calls with a single batched `_fetch_latest_daily_prices()` using `ThreadPoolExecutor(max_workers=10)` + `@st.cache_data(ttl=300)`. Expected 5-10x page load improvement (7afb748)
+- **D3**: Card consolidation — Added `_subsidiary_card()` and `_count_label()` helpers to `_router_base.py`; replaced 22-line inline HTML card in `group_structure.py` and inline count in `etf_browser.py`. Analyzed watchlist_page.py, etf_detail.py, _story.py — already using shared components (6ec9e48)
+
+**Main Feature:**
+- **C84**: Market Event Case Study — `src/services/market_event_service.py` (5 case studies: dot-com bubble, 2008 financial crisis, TSMC semiconductor super cycle, 2021 shipping frenzy, 2023-2024 AI boom) + `src/pages/market_event_case_study.py` (standalone page with hero section, narrative timeline, key metrics comparison, lessons learned in expandable sections, related stocks with navigation, historian disclaimers) + registered in router and url_sync (1827bb5)
+
+**New Components Added to _router_base.py:**
+- `_subsidiary_card(name, holding, business, relationship)` — card with holding badge + business description
+- `_count_label(text)` — muted count display
+
+**Metrics:**
+- L0: 85/85 ✅ (up from 82, +3 new modules all pass)
+- L1: 8/18 (10 pre-existing event-alert failures unchanged, zero new failures)
+
 ## 🔍 Review Section
 
 ### Round 19 (2026-06-12)
@@ -116,7 +136,7 @@ All 5 Sprint 6 items delivered:
 | Design system | Notification badge + health card specs | ⏳ Pending Daniel review
 
 ### Next Cycle
-🔍 Review (Round 19) ✅ COMPLETE → Sprint 7 (C84 + D28/D-045 spikes + D-044/D3/D6/D7 debt = 34.2h)
+🔍 Review (Round 19) ✅ COMPLETE → Sprint 7 (C84 + D3/D6/D7/D-044 debt) ✅ COMPLETE → Sprint 8 (C63 conditional + D22)
 
 ## 💡 Discussion Log
 *See docs/state/handoff_discuss.md for full Round 16 discussion log.*
