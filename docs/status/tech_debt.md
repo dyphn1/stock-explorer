@@ -470,12 +470,12 @@ This register should be updated after each review cycle. Next update: Sprint 4 m
 - **Recommended Action**: Change `if not title:` to `if title:` and swap the return/markdown logic.
 
 ## Updated Summary
-- **Total Debt Items**: 50
-- **High Severity**: 1 item (D5)
-- **Medium Severity**: 42 items (D3, D4, D6-D15, D18-D23, D25, D27-D32, D37-D38, D-042, D-044, D-046, D-048-D-055)
+- **Total Debt Items**: 55
+- **High Severity**: 2 items (D5, D-057)
+- **Medium Severity**: 46 items (D3, D4, D6-D15, D18-D23, D25, D27-D32, D37-D38, D-042, D-044, D-046, D-048-D-055, D-058-D-061)
 - **Low Severity**: 2 items (D33, D-056)
-- **Resolved Items**: D1, D2, D16, D17, D20, D24, D26, D-044, D7, D3 (10 items)
-- **Sprint 7 Claims**: D6 (partially — 1 of 6 data blocks migrated), D-044 (✅), D7 (✅), D3 (✅)
+- **Resolved Items**: D1, D2, D16, D17, D20, D24, D26, D-044, D7, D3, D-048, D-055, D-050, D8, D9, D10, D-056 (17 items)
+- **Sprint 8 Claims**: All 7 items confirmed resolved (D-048 ✅, D-055 ✅, D-050 ✅, D8 ✅, D9 ✅, D10 ✅, D-056 ✅)
 
 ## Round 20 Top 3 Architecture Recommendations
 
@@ -489,3 +489,163 @@ This register should be updated after each review cycle. Next update: Sprint 4 m
 *Created: 2026-06-11*
 *Maintainer: System Architect*
 *Last Updated: 2026-06-13 (Round 20)*
+
+---
+
+## Round 21 — Architecture Debt Review (2026-06-13, Post-Sprint 8)
+
+> **Context**: Sprint 8 complete. Sprint 9 next (C98 + C101 + C103 Lite).
+> **Reviewer**: System Architect
+> **Scope**: Verify Sprint 8 debt claims, assess Sprint 9 prerequisites, architecture health check.
+
+---
+
+### 1. Sprint 8 Debt Resolution Status
+
+| Item | Sprint 8 Claim | Round 21 Verdict | Evidence |
+|------|---------------|------------------|----------|
+| **D-048** | ✅ Resolved | ✅ **CONFIRMED RESOLVED** | `market_event_service.py` is 58 lines (was 283). Loads from `src/data/case_studies.yaml` (16,508 bytes). Public API unchanged. |
+| **D6 (partial)** | ✅ Resolved | ⚠️ **PARTIALLY RESOLVED** | `case_studies.yaml` migrated ✅. But 5 other hardcoded blocks remain: `revenue_analyzer.py` (KNOWN_COMPANY_REVENUE, ~50 lines), `group_structure.py` (KNOWN_GROUP_STRUCTURES, ~160 lines), `analogy_engine.py` (one_liners ~24 lines + industry_templates ~15 lines), `key_takeaways.py` (_KEY_TAKEAWAYS, ~140 lines). D6 was already marked partially resolved in Round 20. No further progress in Sprint 8. |
+| **D-055** | ✅ Resolved | ✅ **CONFIRMED RESOLVED** | `sector_heatmap.py` is 369 lines (was 406). All `unsafe_allow_html=True` eliminated. Uses `_白话_card()` for KPI cards and `_render_mover_row()` with pure Streamlit components. |
+| **D-050** | ✅ Resolved | ✅ **CONFIRMED RESOLVED** | `market_event_case_study.py` (179 lines) already uses `_白话_card()`, `_subsidiary_card()`, `_info_card()`, `_summary_card()` from `_router_base`. No inline HTML found. |
+| **D8** | ✅ Resolved | ✅ **CONFIRMED RESOLVED** | `etf_browser.py` uses `ThreadPoolExecutor(max_workers=10)` in `_get_all_etf_prices()` (line 49) and `_render_dividend_ranking()` (line 387). Both price and dividend fetching are parallelized. |
+| **D9** | ✅ Resolved | ✅ **CONFIRMED RESOLVED** | `watchlist.py` has in-memory cache with mtime checking (`_cache` + `_cache_mtime` globals, lines 21-22). Cache invalidated on writes in `_save_data()`. |
+| **D10** | ✅ Resolved | ✅ **CONFIRMED RESOLVED** | `adaptive_engine.py` has in-memory cache with mtime checking (`_events_cache` + `_events_cache_mtime` globals, lines 36-37). Cache invalidated on writes in `_save_events()`. |
+| **D-056** | ✅ Resolved | ✅ **CONFIRMED RESOLVED** | `_router_base.py` line 70: `if not title:` now correctly returns early for empty titles. Logic is sound. |
+
+**Sprint 8 Summary**: 7 of 7 claimed items are **genuinely resolved**. D6 partial was already known from Round 20 and remains unchanged — the Sprint 8 claim of "D6 resolved" specifically referred to the case_studies.yaml migration, which is correct. The broader D6 (all hardcoded data) remains open.
+
+---
+
+### 2. New Architecture Debt from Sprint 9 Features
+
+Sprint 9 plan: C98 (Event Interpretation Engine) + C101 (Comprehension Check Quiz) + C103 Lite (First Visit Guide).
+
+#### D-057: No LLM abstraction layer (D5) — now a hard blocker for C98
+- **Severity**: 🔴 **HIGH** — C98 requires hybrid template + LLM interpretation. Currently zero LLM integration exists.
+- **Effort**: 2-3h (as estimated in D5)
+- **Description**: C98's hybrid approach needs an `src/services/llm/` abstraction with a protocol/interface. Current template engines (`analogy_engine.py`, `news_summarizer.py`) become the "fallback" implementation. Without this abstraction, C98 will either (a) hardcode LLM calls throughout page code, or (b) be template-only (defeating the purpose).
+- **Prerequisite**: ✅ **MUST be done before C98 coding begins.** This is D5 — already high severity, now elevated to P0 for Sprint 9.
+- **Recommended Action**: Create `src/services/llm/protocol.py` (abstract base class), `src/services/llm/template_engine.py` (current templates as fallback), `src/services/llm/llm_provider.py` (OpenRouter/Anthropic adapter). C98 imports from the protocol.
+
+#### D-058: C101 Quiz will duplicate scoring/interpretation patterns from C85
+- **Severity**: 🟡 **MEDIUM**
+- **Effort**: 1-2h (extract shared quiz engine)
+- **Description**: C85 (Financial Wellness Check) has a `financial_wellness_service.py` with quiz data in `config/quiz.yaml`, score calculation, and interpretation. C101 (Comprehension Check Quiz) will need nearly identical patterns: question bank, scoring, result interpretation. Without extracting a shared `quiz_engine.py`, this will be duplicated.
+- **Prerequisite**: ⚠️ **Should be done before or alongside C101.** Not a hard blocker if C101 reuses C85's service directly, but a shared abstraction would be cleaner.
+- **Recommended Action**: Create `src/services/quiz_engine.py` with generic `run_questions(questions_yaml_path)` → score + interpretation. Both C85 and C101 consume this. C101's questions go in `src/data/comprehension_quiz.yaml`.
+
+#### D-059: C103 Lite first-visit guide needs session-state management pattern
+- **Severity**: 🟡 **MEDIUM**
+- **Effort**: 1-2h
+- **Description**: C103 Lite (2-card dismissible primer) needs to track "has user seen this?" state. The current ad-hoc session_state pattern (already 8+ keys in `business_card.py` alone, plus notification system keys) does not scale. Adding more session_state keys for onboarding will compound D28 (session state tracking).
+- **Prerequisite**: 🟡 **Can be deferred** — C103 Lite can use a simple `st.session_state["_first_visit_dismissed"]` boolean for now. But a proper session state manager (D28) should be built before the full C103 (with persistence layer) in Sprint 10.
+- **Recommended Action**: For C103 Lite, use a simple session_state key. For full C103 (Sprint 10), implement a session state manager or use `st.query_params` + local storage pattern.
+
+#### D-060: C98 event interpretation will need access to multiple service modules — risk of tight coupling
+- **Severity**: 🟡 **MEDIUM**
+- **Effort**: 1-2h (create facade/adapter)
+- **Description**: C98 will need to compose interpretations from `adaptive_engine.py` (event detection), `market_event_service.py` (case studies), `analogy_engine.py` (plain-language translation), and potentially the new LLM layer. Without a facade, the page will import from 4+ services directly, creating tight coupling.
+- **Prerequisite**: 🟡 **Should be done alongside C98**, not as a separate task. The facade emerges naturally during C98 implementation.
+- **Recommended Action**: Create `src/services/event_interpretation.py` as a facade that composes from adaptive_engine + market_event_service + analogy_engine + llm. C98 page imports only from this facade.
+
+#### D-061: No test infrastructure (D13) — increasingly risky as feature count grows
+- **Severity**: 🟡 **MEDIUM** (escalating to HIGH)
+- **Effort**: 3-4h initial setup
+- **Description**: Zero test files exist. With 22 service modules and 33 page modules, the surface area for regressions is growing. C98 (LLM integration) and C101 (quiz scoring) are both testable in isolation but have no test harness.
+- **Prerequisite**: 🟢 **Can be deferred** to Sprint 10, but each sprint without tests increases risk. D13 has been deferred since Round 14.
+- **Recommended Action**: Add pytest + `tests/` directory in Sprint 10. Start with service layer tests (pure functions). For Sprint 9, rely on manual QA.
+
+---
+
+### 3. Architecture Health Metrics
+
+#### Service Layer (`src/services/`)
+| Metric | Value |
+|--------|-------|
+| **Total service modules** | 22 (excluding `__init__.py`) |
+| **Largest service** | `chart.py` — 787 lines |
+| **2nd largest** | `adaptive_engine.py` — 622 lines |
+| **3rd largest** | `risk_analyzer.py` — 567 lines |
+| **Services under 300 lines** | 19 of 22 (86%) |
+| **Services with zero Streamlit imports** | 18 of 22 (82%) — clean service layer |
+| **New services since Round 20** | 0 (Sprint 8 was debt-only) |
+
+#### Page Layer (`src/pages/`)
+| Metric | Value |
+|--------|-------|
+| **Total page modules** | 33 (excluding `__init__.py`, including sub-modules) |
+| **Largest page** | `etf_browser.py` — 437 lines |
+| **2nd largest** | `peer_comparison.py` — 421 lines |
+| **3rd largest** | `sector_heatmap.py` — 369 lines |
+| **business_card/ sub-modules** | 10 files (main, helpers, expert_analysis, historical_scenarios, study_log, sections/__init__, summary, financial, health, story, detail) |
+| **Pages using `_router_base` components** | 8+ (group_structure, etf_browser, market_event_case_study, sector_heatmap, etc.) |
+
+#### Overall Codebase
+| Metric | Value |
+|--------|-------|
+| **Total Python source lines** | 13,109 |
+| **Largest file overall** | `chart.py` — 787 lines |
+| **2nd largest** | `adaptive_engine.py` — 622 lines |
+| **3rd largest** | `risk_analyzer.py` — 567 lines |
+| **God modules (>800 lines)** | 0 ✅ |
+| **Modules >600 lines** | 2 (chart.py at 787, adaptive_engine.py at 622) — both monitored |
+| **Modules 400-600 lines** | 3 (risk_analyzer.py 567, watchlist.py 356, compare_stories.py 328) — acceptable |
+| **YAML data files** | 3 (`company_facts.yaml`, `case_studies.yaml`, `quiz.yaml`) + `watchlist.yaml` + `events.yaml` |
+
+#### 4-Layer Architecture Assessment
+| Layer | Status | Notes |
+|-------|--------|-------|
+| **Data** (`src/data/`) | ✅ Clean | `finmind_client.py` (431 lines) is the single data access point. `batch_api.py` for batch operations. YAML files for config data. |
+| **Service** (`src/services/`) | ✅ Clean | 22 modules, 86% under 300 lines. 82% have zero Streamlit imports. Clean boundaries. |
+| **Page** (`src/pages/`) | ✅ Clean | 33 modules, largest is 437 lines. `business_card/` properly sub-modularized. |
+| **Presentation** (inline) | ⚠️ Improving | `_router_base.py` provides 6 reusable components (`_section_title`, `_白话_card`, `_summary_card`, `_info_card`, `_subsidiary_card`, `_count_label`). `sector_heatmap.py` and `market_event_case_study.py` now use them. Remaining inline HTML in `business_card/_sections/` files (D3, D19). |
+
+**Architecture Health Grade**: 🟢 **HEALTHY** — The 4-layer architecture is holding. No god modules. Service layer boundaries are clean. Page layer is well-modularized. The main concern is the growing service count (22 modules) without a test harness.
+
+---
+
+### 4. Top 3 Recommendations for Sprint 9
+
+#### 1. 🔴 Create LLM Abstraction Layer (D5 → D-057) — PREREQUISITE for C98
+- **Effort**: 2-3h
+- **Why**: C98 (Event Interpretation Engine) cannot be built cleanly without an LLM protocol/interface. Without it, LLM calls will be hardcoded in page code, violating the 4-layer architecture.
+- **What**: Create `src/services/llm/` with protocol.py (ABC), template_engine.py (fallback), llm_provider.py (adapter). Current template engines become the fallback implementation.
+- **When**: **Day 1 of Sprint 9**, before any C98 feature coding.
+- **Risk if deferred**: C98 will be either template-only (no LLM) or have LLM calls scattered in page code.
+
+#### 2. 🟡 Extract Shared Quiz Engine (D-058) — alongside C101
+- **Effort**: 1-2h
+- **Why**: C85 already has quiz infrastructure (YAML questions, scoring, interpretation). C101 will duplicate this pattern. Extracting a shared `quiz_engine.py` prevents duplication.
+- **What**: Create `src/services/quiz_engine.py` with generic question-runner. Move C85's `config/quiz.yaml` loading pattern into the shared engine. C101 adds `src/data/comprehension_quiz.yaml`.
+- **When**: **Alongside C101 implementation**, not as a separate task.
+- **Risk if deferred**: Minor — C101 can directly reuse C85's service module. Duplication is limited to YAML loading + scoring logic.
+
+#### 3. 🟡 Create Event Interpretation Facade (D-060) — alongside C98
+- **Effort**: 1-2h
+- **Why**: C98 will need to compose from 4+ services (adaptive_engine, market_event_service, analogy_engine, llm). A facade prevents tight coupling.
+- **What**: Create `src/services/event_interpretation.py` as a composition layer. C98 page imports only from this facade.
+- **When**: **During C98 implementation**, as the natural composition point emerges.
+- **Risk if deferred**: C98 page will have 4+ service imports. Manageable for now, but the facade makes testing easier.
+
+---
+
+### 5. Sprint 9 Readiness Gate
+
+| Prerequisite | Status | Action Required |
+|-------------|--------|-----------------|
+| D-057 (LLM abstraction) | 🔴 **NOT STARTED** | Must be Day 1 task |
+| D-058 (quiz engine) | 🟡 **NOT STARTED** | Do alongside C101 |
+| D-060 (event interpretation facade) | 🟡 **NOT STARTED** | Do during C98 |
+| D-059 (session state for C103) | 🟢 **DEFERRABLE** | Simple session_state key is sufficient for Lite |
+| D5 (LLM layer) | 🔴 **BLOCKER** | Same as D-057 |
+| D6 (YAML migration remaining) | 🟢 **DEFERRABLE** | Can be done in Sprint 10 |
+| D13 (test infrastructure) | 🟢 **DEFERRABLE** | Sprint 10 |
+
+**Verdict**: Sprint 9 can proceed, but **D-057 (LLM abstraction) must be the first task** before C98 feature coding begins. D-058 and D-060 can be done alongside feature implementation.
+
+---
+
+*Section added: 2026-06-13 (Round 21)*
+*Reviewer: System Architect*
+*Next review: Sprint 9 mid-point or Sprint 10 kickoff*

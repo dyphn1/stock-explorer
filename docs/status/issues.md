@@ -49,4 +49,7 @@ C67: "Community-Curated Stock Stories" — User-Generated Narrative Layer | P2 |
 ||||C100: "Natural Language Screener" — Plain-Language Stock Screening with "Why It Passed" Explanations | P1 | 18-24h | Point-to-point + Beginner-friendly + Benchmark-oriented | source: competitor research round 20
 ||||C101: "Comprehension Check" — Contextual Quiz After Reading with Adaptive Learning Recommendations | P2 | 8-12h | Point-to-point + Ten-second test + Adaptive | source: competitor research round 20
 ||||C102: "Market Narrative Feed" — Social-Media-Style AI-Generated Daily Market Story Stream | P1 | 16-22h | Story first + Adaptive + Ten-second test | source: competitor research round 20
-||||C103: "Learn First Gate" — Soft Educational Onboarding Before Viewing Stock Data | P2 | 10-14h | Story first + Point-to-point + Ten-second test + Beginner-friendly | source: competitor research round 20
+|||||C103: "Learn First Gate" — Soft Educational Onboarding Before Viewing Stock Data | P2 | 10-14h | Story first + Point-to-point + Ten-second test + Beginner-friendly | source: competitor research round 20
+|||||C104: "Post-Narrative Comprehension Check" — Contextual Quiz Cards After Each Section (Finimize Model) | P2 | 8-12h | Point-to-point + Ten-second test + Historian | source: competitor research round 21
+|||||C105: "Simple/Detailed Content Depth Toggle" — ELI5 Mode Switch for Beginner/Intermediate Users | P2 | 10-14h | Ten-second test + Beginner-friendly + Historian | source: competitor research round 21
+|||||C106: "First 7 Days" — Beginner Onboarding Curriculum with Daily Micro-Lessons Using TW Stock Examples | P2 | 16-22h | Story first + Point-to-point + Beginner-friendly + Historian | source: competitor research round 21

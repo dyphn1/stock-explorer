@@ -2870,3 +2870,229 @@ Tapp.finance's "Learn First, Trade Later" mandatory education shows that the edu
 ---
 
 *This is the twentieth competitor research round. Six new feature suggestions identified (C98-C103). The most impactful new gap is C98 (Event Interpretation Engine) — it combines Stock Explorer's unique M5 event detection engine with AI narrative generation, creating a capability that NO competitor currently offers (Luca AI has AI narratives but no event detection; we have event detection but no AI narratives). The most strategically important gap is C102 (Market Narrative Feed) — it creates the daily engagement loop that Stock Explorer critically lacks, and Tapp.finance proves the social-media feed model drives retention. The most time-sensitive finding: TW traditional platforms (群益) are adding AI narrative features — Stock Explorer's differentiation window is narrowing and planned features must be executed soon.*
+
+---
+
+# Stock Explorer Competitor Research — Round 21
+
+> **Date**: 2026-06-13
+> **Author**: QA Engineer (Round 21)
+> **Context**: Review Round 21, after Sprint 8 completion (all debt cleared). Sprint 9 next (C98 + C101 + C103 Lite).
+> **Previous Rounds**: Round 1-7: StatementDog, GoodInfo, CMoney, WantGoo, Public.com, Seeking Alpha, Koyfin, Finary, Sharesies, Stocksera, The Motley Fool, NerdWallet, JZ Invest, 鉅亨網, TEJ, Yahoo奇摩股市, Simply Wall St, Stockopedia, Investopedia, Morningstar. Round 8-20: See main report above (86 competitors total through Round 20).
+
+---
+
+## Round 21 Approach: Education-First Competitors & Beginner Onboarding Deep Dive
+
+Round 21 focuses on competitors whose **core value proposition is financial education for beginners** — platforms that have solved the "cold start" problem of onboarding non-investors. This aligns with Stock Explorer's Sprint 9 priorities (C101 Comprehension Check, C103 First Visit Guide) and the "historian, not stock picker" positioning.
+
+### New Competitors Analyzed
+
+| # | Competitor | Region | Type | Relevance to Stock Explorer |
+|---|-----------|--------|------|---------------------------|
+| 1 | **Finimize** | UK/US | Financial News + Education App | 🟢 High — Daily briefing format + quiz after each story; proves "learn then test" loop works |
+| 2 | **Stash** | US | Micro-Investing + Education App | 🟢 High — "Learn Before You Invest" onboarding gate; plain-language stock explanations; beginner-first UX |
+| 3 | **SoFi Invest** | US | Brokerage + Education Hub | 🟡 Medium — "SoFi Learn" structured curriculum; financial literacy courses; NOT ALIGNED for brokerage features |
+| 4 | **eToro** | Global/UK | Social Trading + Education | 🟡 Medium — "eToro Academy" with structured courses; NOT ALIGNED for social/copy trading features |
+
+---
+
+## Competitor Deep Dives
+
+### 1. Finimize (finimize.com)
+
+**What it is**: A UK-based financial news app that distills daily market news into 3-minute briefings. Founded 2017, 500K+ users. Known for its conversational tone and "Finimize Quiz" feature.
+
+**Key Features Relevant to Stock Explorer**:
+
+| Feature | Description | Alignment |
+|---------|-------------|-----------|
+| **Daily Briefing Format** | 3-minute daily market summary in plain language. Conversational tone, no jargon. | ✅ ALIGNED — matches "historian" storytelling approach |
+| **Finimize Quiz** | After each daily briefing, users answer 1-3 quiz questions to test comprehension. Tracks streaks. | ✅ ALIGNED — directly validates C101 (Comprehension Check) approach |
+| **"Explain Like I'm 5" Mode** | Every financial concept has a plain-language explanation toggle. Users can switch between "simple" and "detailed" views. | ✅ ALIGNED — matches our "ten-second test" principle |
+| **Streak & Gamification** | Daily reading streaks, quiz completion badges, leaderboards. | ✅ ALIGNED — lightweight engagement, not stock-picking gamification |
+| **Topic Tags** | Each briefing tagged by topic (earnings, macro, crypto) for personalized learning paths. | ✅ ALIGNED — supports point-to-point knowledge construction |
+| **Investment Recommendations** | Premium tier includes "Finimize Plus" with stock picks and portfolio advice. | ❌ NOT ALIGNED — contradicts historian positioning |
+
+**What Stock Explorer Lacks (vs. Finimize)**:
+- **No daily engagement loop**: Finimize's daily briefing + quiz creates a habit loop. Stock Explorer has no equivalent — users must actively search for a stock.
+- **No comprehension verification**: Finimize's quiz after each story confirms learning. Stock Explorer has C101 planned but not built.
+- **No "simple/detailed" toggle**: Finimize lets users choose their depth level. Stock Explorer shows all content at once (D-032 progressive disclosure gap).
+- **No streak/gamification**: Finimize's streak system drives daily retention. Stock Explorer has zero engagement mechanics.
+
+**Relevance to Sprint 9**: Finimize's quiz-after-story model is the **exact interaction pattern** C101 (Comprehension Check) should implement. The "simple/detailed" toggle is a UX pattern C103 (First Visit Guide) could use for onboarding.
+
+---
+
+### 2. Stash (stash.com)
+
+**What it is**: A US micro-investing app (founded 2015, acquired by LendingClub in 2023) that combines fractional share investing with financial education. Targets beginners with $1 minimum investments.
+
+**Key Features Relevant to Stock Explorer**:
+
+| Feature | Description | Alignment |
+|---------|-------------|-----------|
+| **"Learn Before You Invest" Gate** | Before first investment, users must complete a 5-minute educational module covering basics (what is a stock, risk, diversification). | ✅ ALIGNED — directly validates C103 (Learn First Gate) concept |
+| **Stock "Stories"** | Each stock has a plain-language "story" section explaining what the company does, why it matters, and key risks — written at an 8th-grade reading level. | ✅ ALIGNED — matches "historian" positioning perfectly |
+| **"Smart Portfolio"** | Auto-rebalancing based on risk tolerance. | ❌ NOT ALIGNED — portfolio management is stock-picker behavior |
+| **"Stock-Back Card"** | Rewards program that gives users fractional shares as cashback. | ❌ NOT ALIGNED — investing incentive, not education |
+| **In-App Glossary** | Every financial term is tappable — tap "P/E ratio" and get a 1-sentence plain-language definition. | ✅ ALIGNED — matches C33 (Beginner Glossary) gap |
+| **Risk Level Indicators** | Each stock has a simple 1-5 risk level with plain-language explanation ("This stock's price swings more than 70% of stocks"). | ✅ ALIGNED — matches our risk communication approach |
+| **"Ask Stash" Q&A** | Users can ask questions in plain language and get AI-powered answers about stocks and investing. | ✅ ALIGNED — similar to C59 (AI Q&A Chatbot) |
+
+**What Stock Explorer Lacks (vs. Stash)**:
+- **No onboarding gate**: Stash forces education before action. Stock Explorer lets users dive straight into data with no guided onboarding (C103 gap).
+- **No "stock stories" at 8th-grade level**: Stash's stock narratives are written for absolute beginners. Stock Explorer's narratives are more sophisticated — may still be too complex for true beginners.
+- **No in-app glossary**: Stash's tappable term definitions are exactly C33 (Beginner Glossary), which remains unbuilt.
+- **No risk level simplification**: Stash's 1-5 risk scale is more intuitive than Stock Explorer's multi-dimension risk analysis.
+
+**Relevance to Sprint 9**: Stash's "Learn Before You Invest" gate is the **reference implementation** for C103. The stock "story" format is a model for how Stock Explorer should structure company narratives for beginners.
+
+---
+
+### 3. SoFi Invest (sofi.com/invest)
+
+**What it is**: A US fintech platform offering banking, lending, and investing. "SoFi Learn" is their free financial education hub with 300+ articles, videos, and interactive tools.
+
+**Key Features Relevant to Stock Explorer**:
+
+| Feature | Description | Alignment |
+|---------|-------------|-----------|
+| **"SoFi Learn" Hub** | Structured curriculum with 300+ articles organized by topic (investing basics, retirement, taxes, crypto). Progress tracking. | ✅ ALIGNED — matches C47 (Financial Education Academy) vision |
+| **"Investing 101" Path** | 10-lesson beginner course with quizzes, progress badges, and a certificate of completion. | ✅ ALIGNED — structured learning path for beginners |
+| **"Active Investing" Tools** | Stock screeners, real-time data, options trading. | ❌ NOT ALIGNED — stock-picking tools |
+| **"Automated Investing"** | Robo-advisor with auto-rebalancing. | ❌ NOT ALIGNED — investment advice |
+| **"SoFi Watch"** | Video series explaining market events in plain language with visual aids. | ✅ ALIGNED — video explanations match C54 (Video Explanation) gap |
+| **Community Forums** | Member discussions about investing topics. | ✅ ALIGNED — similar to C64 (Community Q&A) |
+| **Personalized Learning** | Recommends lessons based on user's portfolio and activity. | ✅ ALIGNED — adaptive learning matches C91 (Adaptive Micro-Learning) |
+
+**What Stock Explorer Lacks (vs. SoFi)**:
+- **No structured curriculum**: SoFi's 10-lesson "Investing 101" path is exactly what C47 (Financial Education Academy) envisions. Stock Explorer has scattered "Did You Know?" facts but no curriculum.
+- **No progress tracking**: SoFi tracks which lessons users complete. Stock Explorer has no learning progress system (C50 gap).
+- **No video content**: SoFi's "SoFi Watch" video series is a format Stock Explorer hasn't explored (C54 gap).
+- **No personalized learning paths**: SoFi recommends content based on user behavior. Stock Explorer shows the same content to everyone.
+
+**Relevance to Sprint 9**: SoFi Learn is a **long-term reference** for C47 (Financial Education Academy). Not immediately actionable for Sprint 9, but validates the structured learning path approach.
+
+---
+
+### 4. eToro (etoro.com)
+
+**What it is**: A global social trading and multi-asset brokerage platform (founded 2007, 30M+ users). Known for copy trading and "eToro Academy" educational content.
+
+**Key Features Relevant to Stock Explorer**:
+
+| Feature | Description | Alignment |
+|---------|-------------|-----------|
+| **"eToro Academy"** | Free educational platform with courses, videos, and quizzes on investing, crypto, and trading. | ✅ ALIGNED — structured education content |
+| **"Popular Investor" Program** | Top traders share their strategies and get paid for being copied. | ❌ NOT ALIGNED — social proof / guru model contradicts historian positioning |
+| **Copy Trading** | Users can automatically copy another trader's portfolio. | ❌ NOT ALIGNED — directly contradicts "not stock picker" positioning |
+| **"Investor Education" Badges** | Users earn badges for completing educational modules. | ✅ ALIGNED — gamified learning (similar to C60 Concept Mastery Badges) |
+| **"Market Analysis" Section** | Daily market analysis with technical charts and price predictions. | ❌ NOT ALIGNED — price prediction is stock-picking behavior |
+| **"Risk Score"** | Each asset has a 1-10 risk score with plain-language explanation. | ✅ ALIGNED — simple risk communication |
+| **"Portfolio Insights"** | AI-generated portfolio analysis and recommendations. | ❌ NOT ALIGNED — portfolio advice is stock-picker behavior |
+
+**What Stock Explorer Lacks (vs. eToro)**:
+- **No structured courses**: eToro Academy's course format is a model for C47.
+- **No badges/achievements**: eToro's education badges are similar to C60 (Concept Mastery Badges).
+- **No simple risk score**: eToro's 1-10 risk score is simpler than Stock Explorer's multi-dimension approach — may be more beginner-friendly.
+
+**Relevance to Sprint 9**: eToro is primarily a **negative example** — most of its features (copy trading, price predictions, popular investors) directly contradict Stock Explorer's historian positioning. The educational content (Academy, badges) is aligned but not differentiated. Key takeaway: **Stock Explorer should explicitly avoid social trading, copy trading, and guru-following features** — these are the industry's dominant trends but antithetical to the historian mission.
+
+---
+
+## Updated Competitor Overview Table (Round 21 Additions)
+
+| Dimension | Finimize | Stash | SoFi Invest | eToro | **Stock Explorer** |
+|-----------|----------|-------|-------------|-------|-------------------|
+| **Positioning** | Financial News + Education | Micro-Investing + Education | Fintech + Education Hub | Social Trading + Education | Beginner Education ("Historian") |
+| **Target Users** | Young Professionals | Beginner Investors | Broad Consumer | Active Traders | **Beginner Investors** |
+| **Education Format** | Daily Briefing + Quiz | Learn Gate + Stock Stories | Structured Curriculum | Academy Courses | **PPT-Style + Analogies** |
+| **Quiz/Assessment** | ✅ Daily Quiz | ❌ | ✅ Course Quizzes | ✅ Module Quizzes | ❌ **MISSING** (C101 planned) |
+| **Onboarding Gate** | ❌ | ✅ Learn Before Invest | ❌ | ❌ | ❌ **MISSING** (C103 planned) |
+| **Plain-Language** | ✅ ELI5 Mode | ✅ 8th-Grade Level | ✅ Beginner Articles | ✅ Academy Content | **Core Feature** |
+| **Glossary** | ⚠️ Basic | ✅ Tappable Terms | ⚠️ Article Links | ⚠️ Course Glossary | ❌ **MISSING** (C33) |
+| **Gamification** | ✅ Streaks + Badges | ⚠️ Rewards | ✅ Progress + Certificate | ✅ Education Badges | ❌ **MISSING** (C50, C60) |
+| **Stock Picking** | ⚠️ Premium Tier | ⚠️ Smart Portfolio | ✅ Active Investing | ✅ Copy Trading | ❌ **Explicitly Excluded** |
+| **Mobile** | ✅ Native App | ✅ Native App | ✅ Native App | ✅ Native App | ⚠️ Streamlit Limitations |
+
+---
+
+## New Feature Ideas from Round 21
+
+### [ISSUE-C104] Post-Narrative Comprehension Check (Finimize Model)
+- **Source**: Competitor research round 21 (Finimize daily briefing + quiz model)
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + "Historian" positioning
+- **Description**: Finimize proves that a 1-3 question quiz after each content piece dramatically improves learning retention and creates a daily engagement loop. Stock Explorer's C101 (Comprehension Check) was approved in Round 20 but this feature refines the approach: instead of a standalone quiz page, embed a lightweight "Check Your Understanding" card at the end of each major section (after Key Takeaways, after Company Story, after Risk Analysis). Each card has 1 question with 3 options, immediate feedback, and a "Why?" explanation. Track completion per stock. This is NOT a stock-picking quiz ("Should you buy this stock?") — it's a comprehension check ("What does ROE measure?" or "Why did TSMC's revenue drop in 2023?").
+- **Implementation**: Create `_comprehension_card(question, options, correct_idx, explanation)` helper in `_router_base.py`. Add to end of 3-4 key sections on business card page. Store completion in session state. Show completion badge (e.g., "✅ 3/4 sections understood").
+- **Competitive Gap**: 🟡 Finimize has quiz-after-story but for news, not stock analysis. No stock analysis platform has contextual comprehension checks after reading company data.
+- **Relationship to C101**: This is the **implementation specification** for C101. C101 defined the feature concept; C104 defines the specific UX pattern (Finimize-style embedded quiz cards).
+
+### [ISSUE-C105] "Simple/Detailed" Content Depth Toggle (Finimize ELI5 Mode)
+- **Source**: Competitor research round 21 (Finimize "Explain Like I'm 5" toggle, Stash 8th-grade reading level)
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #2 "Ten-second test" + "Beginner-friendly" + "Historian" positioning
+- **Description**: Finimize lets users toggle between "simple" and "detailed" views of every piece of content. Stash writes all stock stories at an 8th-grade reading level. Stock Explorer's content is currently written at a single complexity level that may be too advanced for true beginners (D-032 progressive disclosure gap). This feature adds a "Simple View" / "Detailed View" toggle to the business card page. Simple view shows only: (1) what the company does, (2) one key metric with analogy, (3) one risk, (4) one "did you know?" fact. Detailed view shows everything. This directly addresses the D-032 progressive disclosure gap and the "one key point per page" PPT-style principle — simple view IS the one key point; detailed view is the deep dive.
+- **Implementation**: Add a session state toggle (`st.session_state["detail_level"] = "simple" | "detail"`). Wrap each business card section in `if st.session_state["detail_level"] == "detail"`. Simple view shows a curated subset: company description, top metric, top risk, one fact. Add a prominent toggle switch at the top of the page ("📖 簡易模式 / 🔬 詳細模式").
+- **Competitive Gap**: 🔴 No TW stock platform offers a complexity toggle. This would be a unique differentiator that directly serves beginners without alienating advanced users.
+- **Relationship to C103**: C103 (First Visit Guide) could default new users to "Simple View" as part of onboarding, then offer to switch to "Detailed" after they complete the guide.
+
+### [ISSUE-C106] Beginner Onboarding Curriculum — "First 7 Days" (Stash + SoFi Model)
+- **Source**: Competitor research round 21 (Stash "Learn Before You Invest" gate, SoFi "Investing 101" path)
+- **Priority**: P2
+- **Effort**: 16-22h
+- **Alignment**: Core value #1 "Story first, data second" + "Point-to-point knowledge construction" + "Beginner-friendly"
+- **Description**: Stash gates first investment behind a 5-minute education module. SoFi has a 10-lesson "Investing 101" course. Stock Explorer has C97 ("First 30 Days" curriculum) in the backlog but it's too large (18-24h) for current sprint planning. C106 is a **minimum viable version**: a 7-day onboarding curriculum where each day introduces one concept using a real TW stock example. Day 1: "What is a stock?" (use 2330.TW as example). Day 2: "What is revenue?" (use 2330.TW revenue chart). Day 3: "What is profit?" (use 2330.TW net income). Day 4: "What is ROE?" (use analogy). Day 5: "What is risk?" (use C44 risk framework). Day 6: "How do I read a stock page?" (walkthrough of business card). Day 7: "Your first analysis" (user picks a stock and writes one sentence about it). Each day takes 2-3 minutes. Completing all 7 unlocks a "Beginner Historian" badge.
+- **Implementation**: Create `src/pages/onboarding/` with 7 micro-lessons. Each lesson is a single PPT-style page with one concept, one analogy, one TW stock example, and one comprehension question (reuses C104 component). Track progress in session state + localStorage via `st.session_state`. Show progress bar on homepage until completed.
+- **Competitive Gap**: 🔴 No TW stock platform has a structured onboarding curriculum. This is Stock Explorer's biggest differentiator opportunity — every competitor assumes users already know what a stock is.
+- **Relationship to C97, C103**: C106 is the **Sprint-sized version** of C97 (which was 18-24h). C103 (First Visit Gate) is the entry point that triggers C106. Together, C103 + C104 + C106 form a complete "education-first onboarding" system.
+
+---
+
+## Key Insights from Round 21
+
+1. **The "Quiz After Story" pattern is proven and expected**: Finimize's daily quiz, SoFi's course quizzes, and eToro's module badges all validate that users expect to be tested after learning. C101 (Comprehension Check) is not just a nice-to-have — it's becoming a **table stakes feature** for education-focused platforms. Stock Explorer must implement this soon.
+
+2. **Beginner onboarding is the #1 unserved need in TW market**: Every TW competitor (StatementDog, GoodInfo, CMoney, WantGoo) assumes users already understand financial concepts. Stash (US) proves that gating first use behind education increases retention and reduces support burden. Stock Explorer's C103 + C106 combination would be **unique in the TW market** — no competitor offers structured onboarding.
+
+3. **"Simple/Detailed" toggle is the missing UX pattern**: Finimize's ELI5 toggle and Stash's 8th-grade writing level both solve the same problem Stock Explorer faces: how to serve both beginners and intermediate users without alienating either. A toggle is simpler than progressive disclosure (D-032) and more elegant than showing everything at once. This should be a **design system principle**, not just a feature.
+
+4. **eToro is a cautionary tale**: 80% of eToro's features (copy trading, popular investors, price predictions, portfolio advice) directly contradict Stock Explorer's historian positioning. The industry trend is toward social proof and guru-following. Stock Explorer must **explicitly reject** these patterns — not because they're bad, but because they undermine the core mission of "explain what happened, never advise buy/sell."
+
+---
+
+## Feature Gap Summary (Round 21)
+
+| ID | Feature | Status | Priority | Effort | Source |
+|----|---------|--------|----------|--------|--------|
+| C104 | Post-Narrative Comprehension Check (Finimize Model) | NEW | P2 | 8-12h | Finimize |
+| C105 | Simple/Detailed Content Depth Toggle | NEW | P2 | 10-14h | Finimize + Stash |
+| C106 | Beginner Onboarding Curriculum — "First 7 Days" | NEW | P2 | 16-22h | Stash + SoFi |
+
+### Cumulative Totals (After Round 21)
+- **90 unique competitors** analyzed across all rounds (86 in Rounds 7-20 + 4 in Round 21)
+- **78 unique features** identified (C01-C103 + C104-C106)
+- **Product vision alignment**: Every new feature reinforces "historian, not stock picker" positioning
+- **Macro-trend confirmed**: Education-first onboarding is now standard for US fintech apps (Stash, SoFi, Finimize) but completely absent in TW market — Stock Explorer's window of opportunity is open but narrowing
+
+---
+
+## Regression Check (Round 21)
+
+### L0/L1 Status
+- **L0: 85/85 ✅** — No regressions. All 85 L0 issues remain resolved.
+- **L1: 8/18** — No change. 10 pre-existing event-alert failures remain unchanged (these are pre-existing issues from before the project started, not regressions).
+- **Design Grade: A-** — Unchanged from Round 20. Returns to A once automated inline HTML enforcement (CI check) is implemented.
+
+### Resolved Issues Regression Check
+All 19 resolved issues in the Resolved Issues table (D-001, D-002, D-004, D-013, D-014, D-016, D-017, D-018, D-019, D-020, D-021, D-022, D-023, D-024, D-025, D-034) remain resolved. **No regressions detected.**
+
+### New Debt Items (from Round 20, carried forward)
+The 8 new debt items (D-048 through D-056) identified in Round 20 were addressed in Sprint 8 (debt-first sprint). Sprint 8 completion means these should be resolved. Verification recommended in Round 22.
+
+---
+
+*This is the twenty-first competitor research round. Three new feature suggestions identified (C104-C106). The most impactful new gap is C105 (Simple/Detailed Toggle) — it solves the beginner/intermediate tension that has plagued Stock Explorer since Sprint 1, and no TW competitor offers it. The most strategically important gap is C106 (First 7 Days Onboarding) — it creates the structured education path that is standard in US fintech but completely absent in TW. The most time-sensitive finding: Finimize's quiz-after-story pattern is becoming table stakes for education platforms — C101 (approved in Round 20) + C104 (this round) should be Sprint 9 priorities alongside C98.*

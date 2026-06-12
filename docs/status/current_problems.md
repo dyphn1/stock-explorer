@@ -372,12 +372,495 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## Statistics
 
-- **Total Issues**: 40
+- **Total Issues**: 43
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 27 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-038, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053)
+- **P2 (Optimization)**: 30 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-038, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-057, D-058, D-059)
 - **Resolved**: 19
 
 ---
 
 *This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 8 feature implementation.*
+
+---
+
+# Round 21 Design Assessment (2026-06-13, after Sprint 8 Completion)
+
+> **Reviewer**: Design Reviewer
+> **Scope**: Sprint 8 debt clearance verification, competitor design comparison, Sprint 9 design prerequisites
+> **Sprint 8 Changes Verified**: D-048 (YAML migration), D-055 (sector_heatmap inline HTML removed), D-056 (_section_title bug fixed), D-050 (market_event_case_study already clean)
+
+---
+
+## 1. Design Grade Assessment
+
+### Recommendation: **A- → A** (upgrade back to A)
+
+**Justification:**
+
+Sprint 8 was a debt-first sprint that directly addressed the Round 20 downgrade rationale. The A- grade was assigned because the "No Inline HTML" rule was unenforceable and new inline HTML kept appearing. Sprint 8 made significant progress:
+
+**Positive changes verified:**
+1. **D-055 (sector_heatmap.py inline HTML removed)**: Confirmed. The sector grid (`_render_sector_grid`) now uses `_白话_card()` instead of inline HTML grid cells. The top movers (`_render_top_movers`) now uses `_render_mover_row()` with pure Streamlit-native components (`st.text`, `st.markdown`, `st.caption`) instead of inline HTML rows. All 4 KPI cards now use `_白话_card()`. The file went from 150+ lines of inline HTML to zero. This is the single biggest design improvement in Sprint 8.
+
+2. **D-056 (_section_title() inverted logic bug fixed)**: Confirmed. The `_section_title()` in `_router_base.py` (line 69) now correctly detects emoji-first titles using Unicode range checks and skips adding a redundant 📊 prefix. The `_helpers.py` version (line 113) provides a simpler `(icon, title)` signature for business_card sections. Both versions now work correctly.
+
+3. **D-048 (_CASE_STUDIES → YAML)**: The `market_event_service.py` hardcoded `_CASE_STUDIES` dict (230 lines) was extracted to `case_studies.yaml`. No UI impact, but eliminates a D6 architecture violation and enables content scaling without code changes.
+
+4. **D-050 (market_event_case_study.py inline HTML)**: Confirmed already clean — the page now uses `_白话_card()` for key metrics, `_subsidiary_card()` for related stocks, and `_info_card()` for the historian disclaimer. Zero inline HTML in the page file.
+
+**Remaining concerns (not grade-blocking):**
+- D-052: `_subsidiary_card()` still uses `background:white; border:1px solid #ECF0F1` — non-standard card styling. However, this is a deliberate design choice (white background distinguishes subsidiary cards from info cards) and is now the established pattern used by both `group_structure.py` and `market_event_case_study.py`. Should be documented as a "subsidiary card" variant in the design system.
+- D-053: `_count_label()` remains undocumented but is a minor utility component.
+- D-003: `watchlist_page.py`, `etf_detail.py`, `business_card.py` C41/C44 still have inline HTML. These are pre-existing issues, not Sprint 8 regressions.
+
+**Net assessment**: The inline HTML enforcement gap that caused the A- downgrade has been substantially closed. Sprint 8 removed more inline HTML than it added. The design system components (`_白话_card`, `_info_card`, `_summary_card`, `_subsidiary_card`) are now used consistently across 6+ pages. The grade returns to **A** with the caveat that continued vigilance is needed to prevent regressions.
+
+**Grade trajectory**: A (R19) → A- (R20, inline HTML gap) → **A (R21, gap closed)**
+
+---
+
+## 2. Competitor Design Comparison (Top 5 Most Relevant)
+
+### Selected Competitors (from 90 analyzed across all rounds)
+
+The 5 most relevant competitors for design comparison, based on overlap with Stock Explorer's "beginner education + historian positioning":
+
+| # | Competitor | Relevance | Key Design Insight |
+|---|-----------|-----------|-------------------|
+| 1 | **Finimize** | 🔴 Highest | Daily briefing + quiz model; ELI5 toggle; streak gamification |
+| 2 | **Stash** | 🔴 High | "Learn Before Invest" gate; 8th-grade reading level; tappable glossary |
+| 3 | **Simply Wall St** | 🔴 High | Visual-first infographic style; snowflake analysis; progressive disclosure |
+| 4 | **SoFi Invest** | 🟡 Medium | Structured curriculum (300+ articles); progress tracking; video content |
+| 5 | **Public.com** | 🟡 Medium | Story cards per stock; key takeaways; social learning |
+
+### Design Pattern Comparison
+
+**How Stock Explorer's PPT-style design compares:**
+
+| Design Dimension | Stock Explorer | Competitors |
+|-----------------|---------------|-------------|
+| **Layout** | PPT-style, one key point per page | Most use dashboard/grid layouts |
+| **Card System** | 4 card types (info, 白话, summary, subsidiary) | Simply Wall St has similar card variety |
+| **Plain-Language** | Core feature (analogies on every metric) | Stash (8th-grade), Finimize (ELI5 toggle) |
+| **Visual-First** | Charts > 60% of page area | Simply Wall St matches this approach |
+| **Quiz/Assessment** | ❌ Not built (C101 planned) | Finimize, SoFi, eToro all have quizzes |
+| **Onboarding** | ❌ Not built (C103 planned) | Stash gates first use behind education |
+| **Complexity Toggle** | ❌ Not built (C105 planned) | Finimize has ELI5 toggle |
+| **Gamification** | ❌ Not built (C50, C60 planned) | Finimize (streaks), eToro (badges) |
+| **Mobile** | ⚠️ Streamlit limitations | All competitors have native apps |
+
+### Patterns Competitors Use That We Should Adopt
+
+1. **Finimize's "Quiz After Story" pattern**: After each content piece, embed 1-3 comprehension questions with immediate feedback. This is the #1 pattern to adopt for C101. Finimize proves it drives engagement and learning retention.
+
+2. **Stash's "Learn Before Invest" gate**: Force a brief educational module before first use. For Stock Explorer, this translates to C103 (First Visit Gate) — show 2 cards explaining "what is a stock" and "how to read this page" before letting users explore freely.
+
+3. **Finimize's ELI5 Toggle**: A simple toggle between "simple" and "detailed" views. Stock Explorer's C105 should implement this as a session-state toggle that shows/hides advanced sections.
+
+4. **Simply Wall St's Progressive Disclosure**: Summary first, details on click. Stock Explorer's business card page should adopt this more aggressively — show the hero summary card by default, collapse everything else.
+
+5. **Stash's Tappable Glossary**: Every financial term is tappable for a 1-sentence definition. Stock Explorer's C33 (Beginner Glossary) should implement this as hover tooltips or click-to-expand definitions.
+
+### Patterns We Have That Competitors Don't (Unique Value)
+
+1. **PPT-style presentation**: No competitor uses a true "one key point per page" approach. Simply Wall St comes closest with infographic-style pages, but still shows more content per page.
+
+2. **Plain-language analogies on every metric**: Stock Explorer's analogy engine provides contextual explanations for every financial metric. No competitor has this level of systematic plain-language translation.
+
+3. **Historian positioning**: Stock Explorer is the only platform that explicitly commits to "explain what happened, never advise buy/sell." This is a unique brand differentiator that competitors like eToro (copy trading) and SoFi (robo-advisor) directly contradict.
+
+4. **Point-to-point group structure**: Parent-subsidiary mapping with ownership % is more detailed than any competitor's group structure visualization.
+
+5. **TW market focus with educational positioning**: All TW competitors (StatementDog, GoodInfo, CMoney) target intermediate/advanced investors. Stock Explorer is the only TW platform targeting beginners with a structured educational approach.
+
+### Mobile UX Comparison
+
+Stock Explorer's mobile UX is its weakest dimension. All 5 comparison competitors have native mobile apps with:
+- Native navigation (bottom tab bars, swipe gestures)
+- Push notifications
+- Optimized touch targets
+- Offline reading
+
+Stock Explorer is limited by Streamlit's responsive CSS. The current media queries (768px, 600px) only adjust padding and font sizes. Multi-column layouts don't stack gracefully. This is a known limitation (D-006) that cannot be fully resolved without moving away from Streamlit.
+
+**Recommendation**: For the current Streamlit-based architecture, add a mobile-specific CSS rule that forces all `st.columns` to stack vertically below 768px, and increase touch target sizes to 44px minimum. This is a 2-3h effort that would significantly improve mobile UX.
+
+---
+
+## 3. Sprint 9 Design Prerequisites
+
+### C98: Event Interpretation Cards
+
+**Purpose**: Replace the current event dashboard's disconnected list with interpreted "story cards" that explain what happened and why it matters.
+
+**Design Spec**:
+
+```
+┌─────────────────────────────────────────────────┐
+│  📅 2026年1月15日                                │
+│  ┌───────────────────────────────────────────┐  │
+│  │  🔴 重大事件                               │  │
+│  │  「台積電法說會展望不如預期」                 │  │
+│  │                                           │  │
+│  │  發生了什麼：                               │  │
+│  │  台積電在法說會中給出的營收展望低於分析師     │  │
+│  │  預期，導致股價當日下跌 3.2%。               │  │
+│  │                                           │  │
+│  │  為什麼重要：                               │  │
+│  │  台積電佔台股加權指數權重約 30%，其股價      │  │
+│  │  波動會直接影響大盤走勢。                    │  │
+│  │                                           │  │
+│  │  📊 關鍵數據：                              │  │
+│  │  ┌─────────────┬─────────────┐            │  │
+│  │  │ 股價變化     │ 成交量變化   │            │  │
+│  │  │ 🔴 -3.2%    │ 🟡 +45%     │            │  │
+│  │  └─────────────┴─────────────┘            │  │
+│  │                                           │  │
+│  │  💡 歷史學家說：                            │  │
+│  │  「這不是台積電基本面的改變，而是市場預期    │  │
+│  │   的調整。過去 5 年，台積電法說會後股價      │  │
+│  │   波動超過 3% 的情況發生了 8 次。」          │  │
+│  └───────────────────────────────────────────┘  │
+│                                                 │
+│  [📖 深入了解此事件]  [📊 查看相關個股]          │
+└─────────────────────────────────────────────────┘
+```
+
+**Components from design system**:
+- Card container: `_info_card()` variant with date header
+- Severity badge: `_severity_badge()` (already exists in market_event_case_study.py)
+- Key metrics: `_白话_card()` in 2-column layout
+- Historian quote: `_summary_card()` with `#FFF8F0` background
+- Action buttons: `st.button()` with `use_container_width=True`
+
+**Interaction pattern**:
+- Cards are displayed in reverse chronological order (newest first)
+- Each card is collapsed by default (showing only date + title + severity)
+- Click to expand for full interpretation
+- "深入了解" button navigates to the full case study (C84)
+- "查看相關個股" navigates to the business card page for the most affected stock
+
+**Layout**: Zone C (main content area), one card per event, max 5 cards visible with "載入更多" button.
+
+---
+
+### C101: Quiz UI (Comprehension Check)
+
+**Purpose**: Verify users understand what they just read. Replace C52 (Quiz Mode).
+
+**Design Spec — Inline Card Pattern (Finimize Model)**:
+
+```
+┌─────────────────────────────────────────────────┐
+│  ✅ 你已經讀完了「公司基本資料」                  │
+│                                                 │
+│  📝 快速測驗                                     │
+│                                                 │
+│  問題 1/3                                       │
+│  「ROE 15%」代表什麼意思？                       │
+│                                                 │
+│  ○ A. 公司每年營收成長 15%                       │
+│  ○ B. 每 100 元股東資金賺 15 元                 │
+│  ○ C. 公司負債佔資產的 15%                       │
+│                                                 │
+│  [提交答案]                                      │
+│                                                 │
+│  ── After submission: ──                        │
+│  ✅ 答對了！                                     │
+│  ROE（股東權益報酬率）衡量的是公司運用股東      │
+│  資金的效率。15% 表示每投入 100 元，公司每年     │
+│  賺 15 元。                                     │
+│                                                 │
+│  [下一題 →]                                      │
+└─────────────────────────────────────────────────┘
+```
+
+**Components from design system**:
+- Card container: `_summary_card()` with green border (`#27AE60`) for correct, red border (`#E74C3C`) for incorrect
+- Question text: `st.markdown()` with `**bold**`
+- Options: `st.radio()` with custom styling
+- Submit button: `st.button()` with `use_container_width=True`
+- Feedback: `st.success()` / `st.error()` with explanation text
+- Progress: `st.progress(current / total)`
+
+**Interaction pattern**:
+- Quiz card appears at the end of each major section (after Key Takeaways, after Company Story, after Risk Analysis)
+- 1 question per section, 3-4 questions total per stock page
+- Questions are contextual to the section just read
+- Immediate feedback after each answer (no delayed grading)
+- "Why?" explanation always shown after answering
+- Completion badge: "✅ 3/4 個區段已理解" shown at bottom of page
+- Progress stored in `session_state["quiz_progress_{stock_id}"]`
+
+**Layout**: Inline card (not modal, not bottom card). Appears as a natural part of the page flow, after the section content. This is critical — a modal would break the PPT-style flow; a bottom card would be missed.
+
+**Alternative considered and rejected**:
+- Modal: Breaks PPT-style flow, feels like an interruption
+- Bottom card: Would be missed by users who don't scroll to the end
+- Standalone quiz page: Too disconnected from the learning context
+
+---
+
+### C103 Lite: First Visit Guide
+
+**Purpose**: Onboard first-time users with a 2-card guided tour before they explore freely.
+
+**Design Spec**:
+
+```
+┌─────────────────────────────────────────────────┐
+│                                                 │
+│  ┌───────────────────────────────────────────┐  │
+│  │  👋 歡迎來到股識！                          │  │
+│  │                                           │  │
+│  │  這是一個「認識公司」的工具，不是投資建議。  │  │
+│  │                                           │  │
+│  │  我們用歷史學家的角度，告訴你：              │  │
+│  │  • 這家公司是做什麼的                        │  │
+│  │  • 它最近發生了什麼事                        │  │
+│  │  • 它的財務狀況如何                          │  │
+│  │                                           │  │
+│  │  我們不會告訴你「該買」或「該賣」。          │  │
+│  │                                           │  │
+│  │  [繼續 →]                                  │  │
+│  └───────────────────────────────────────────┘  │
+│                                                 │
+│  ── After clicking "繼續": ──                   │
+│                                                 │
+│  ┌───────────────────────────────────────────┐  │
+│  │  📖 怎麼使用這個工具？                      │  │
+│  │                                           │  │
+│  │  1️⃣ 在左側搜尋公司名稱或股票代碼            │  │
+│  │  2️⃣ 查看「公司名片」了解基本資料            │  │
+│  │  3️⃣ 點擊分頁查看更多資訊                    │  │
+│  │  4️⃣ 看到不懂的名詞？點擊 ❓ 查看解釋        │  │
+│  │                                           │  │
+│  │  💡 小提示：從「台積電 (2330)」開始，      │  │
+│  │     這是台灣最大的上市公司。                │  │
+│  │                                           │  │
+│  │  [開始探索 🚀]    [跳過導覽]               │  │
+│  └───────────────────────────────────────────┘  │
+│                                                 │
+└─────────────────────────────────────────────────┘
+```
+
+**Components from design system**:
+- Card container: `_summary_card()` with `#FFF8F0` background (tip/warning style)
+- Title: `_section_title()` or `st.markdown("## ...")`
+- Content: `st.markdown()` with bullet points
+- Buttons: `st.button()` with `use_container_width=True`
+- Dismiss: "跳過導覽" as `st.button()` with `type="secondary"`
+
+**Interaction pattern**:
+- Triggered on first visit only (check `session_state["first_visit"]`)
+- Card 1: Positioning (what this tool is / is not)
+- Card 2: How to use (4 steps + tip)
+- "開始探索" dismisses the guide and sets `session_state["first_visit"] = False`
+- "跳過導覽" dismisses immediately
+- Guide does NOT auto-advance — user must click "繼續" to proceed
+- If dismissed, never shown again (stored in session state)
+- Optional: Add a "?" button in the sidebar that re-triggers the guide
+
+**Layout**: Full-width cards in Zone C (main content area). The guide replaces the normal page content for first-time users. After dismissal, the normal page content is shown.
+
+**Dismissible behavior**:
+- Dismissal is permanent (per session)
+- No "Are you sure?" confirmation — one click to dismiss
+- No countdown or forced reading time
+- Progress indicator: "卡片 1/2" shown as `st.caption()`
+
+---
+
+## 4. New Design Issues Identified
+
+### D-057: Duplicate _section_title() Functions with Inconsistent Signatures
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 21
+- **Description**: There are two `_section_title()` functions in the codebase:
+  - `_router_base.py` line 69: `def _section_title(title: str)` — takes a single string, auto-detects emoji prefix
+  - `_helpers.py` line 113: `def _section_title(icon: str, title: str)` — takes icon and title separately
+  
+  The `_helpers.py` version is imported by `market_event_case_study.py` (line 13) and `business_card/_sections.py`. The `_router_base.py` version is imported by `sector_heatmap.py`. This creates confusion about which version to use and risks inconsistent rendering. The `_helpers.py` version doesn't have the emoji auto-detection logic.
+- **Affected Files**: `_router_base.py` line 69, `_helpers.py` line 113
+- **Proposed Fix**: Consolidate into a single function in `_router_base.py` with signature `def _section_title(title: str = "", icon: str = "", subtitle: str = "")` that handles both cases. Update all imports.
+- **Effort**: 0.5-1h
+
+### D-058: _render_related_stock_card() Misuses _subsidiary_card() for Non-Subsidiary Stocks
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 21
+- **Description**: The `_render_related_stock_card()` function in `market_event_case_study.py` (line 29) uses `_subsidiary_card()` to render related stocks for market events. However, these are NOT subsidiaries — they are stocks affected by the same event. The `_subsidiary_card()` component shows "持股 X%" and "營收 X%" fields which are meaningless for event-related stocks (passing 0 for both). This is a semantic misuse of the component that could confuse future developers.
+- **Affected Files**: `market_event_case_study.py` lines 29-39
+- **Proposed Fix**: Create a dedicated `_event_stock_card(stock_id, stock_name, impact)` helper that renders a card with the stock info and impact description without the holding/revenue fields. Use `_info_card()` as the base if the card is simple enough.
+- **Effort**: 0.5-1h
+
+### D-059: _section_title() in market_event_case_study.py Passes Separate Icon/Title Instead of Combined String
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 21
+- **Description**: `market_event_case_study.py` calls `_section_title("📖", "發生了什麼事")` (two args) while `sector_heatmap.py` calls `_section_title("📊 關鍵數據")` (one arg). This works because they're different functions (see D-057), but it creates an inconsistent calling convention across the codebase.
+- **Affected Files**: `market_event_case_study.py` lines 95, 107, 127, 136, 163
+- **Proposed Fix**: Resolve as part of D-057 consolidation.
+- **Effort**: Included in D-057
+
+### Verification of D-049 through D-053 (from Round 20):
+
+| ID | Description | Status | Notes |
+|----|------------|--------|-------|
+| D-049 | C84 Key Metrics inline HTML | ✅ **RESOLVED** | `market_event_case_study.py` now uses `_白话_card()` for key metrics (line 123). Zero inline HTML in this section. |
+| D-050 | C84 Related Stocks non-standard cards | ⚠️ **PARTIALLY RESOLVED** | Now uses `_subsidiary_card()` (via `_render_related_stock_card()`), but this is a semantic misuse (see D-058). The card styling is now consistent, but the component is semantically wrong. |
+| D-051 | ETF Browser inline HTML | ❌ **STILL OPEN** | `etf_browser.py` still has inline HTML for colored change values (lines 145-155, 397-411). Not addressed in Sprint 8. |
+| D-052 | _subsidiary_card() non-standard styling | ❌ **STILL OPEN** | `_subsidiary_card()` still uses `background:white; border:1px solid #ECF0F1`. This is now an established pattern but should be documented. |
+| D-053 | _count_label() undocumented | ❌ **STILL OPEN** | `_count_label()` remains undocumented in the design system. |
+
+---
+
+## 5. Design System Update Recommendations
+
+The design system (`docs/design/design_system.md`) needs the following updates to reflect Sprint 8 changes and prepare for Sprint 9:
+
+### 5.1 New Component: Subsidiary Card (Document Existing)
+
+Add to Section 3.3 Cards:
+
+```html
+<!-- Subsidiary card (white background, flex layout) -->
+<div style="background:white;border-radius:12px;padding:1.5rem;border:1px solid #ECF0F1;margin:0.8rem 0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+            <span style="font-size:1.1rem;font-weight:700;color:#2C3E50;">{name}</span>
+            <span style="background:{color}15;color:{color};padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;font-weight:600;margin-left:0.5rem;">{badge}</span>
+        </div>
+        <div style="text-align:right;">
+            <span style="font-size:0.85rem;color:#7F8C8D;">{holding_label}</span>
+        </div>
+    </div>
+    <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.5rem;line-height:1.6;">{business}</div>
+    <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{relation}</div>
+</div>
+```
+
+**Rationale**: The white background distinguishes subsidiary cards from info cards (which use `#F8F9FA`). This is intentional — subsidiary cards are "entity cards" while info cards are "content cards."
+
+### 5.2 New Component: Count Label (Document Existing)
+
+Add to Section 3.3 Cards:
+
+```html
+<!-- Muted count label -->
+<div style="color:#7F8C8D;font-size:0.85rem;">{count} {label}</div>
+```
+
+**Usage**: Below card grids to show "共 X 個" or "顯示 X / Y 個".
+
+### 5.3 New Component: Summary Card (Document Existing)
+
+The `_summary_card()` component (orange border, `#FFF8F0` background) is already in `_router_base.py` but not in the design system. Add:
+
+```html
+<!-- Summary/hero card (orange border) -->
+<div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
+    <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
+    <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;line-height:1.6;">{content}</div>
+</div>
+```
+
+### 5.4 New Component: Event Interpretation Card (C98 — New for Sprint 9)
+
+Add to Section 3.3 Cards:
+
+```html
+<!-- Event interpretation card -->
+<div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;border-left:4px solid #E74C3C;margin:0.8rem 0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:0.85rem;color:#7F8C8D;">{date}</span>
+        <span style="background:{severity_color}15;color:{severity_color};padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;">{severity_badge}</span>
+    </div>
+    <div style="font-size:1.1rem;font-weight:700;color:#2C3E50;margin-top:0.3rem;">{title}</div>
+    <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.5rem;line-height:1.6;">{what_happened}</div>
+    <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{historian_quote}</div>
+</div>
+```
+
+### 5.5 New Component: Quiz Card (C101 — New for Sprint 9)
+
+Add to Section 3.3 Cards:
+
+```html
+<!-- Quiz/Comprehension check card -->
+<div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
+    <div style="font-weight:600;color:#2C3E50;">📝 快速測驗</div>
+    <div style="font-size:0.85rem;color:#7F8C8D;">問題 {current}/{total}</div>
+    <div style="font-size:0.95rem;color:#2C3E50;margin-top:0.5rem;font-weight:600;">{question}</div>
+    <!-- Options rendered via st.radio() -->
+    <!-- Feedback rendered via st.success()/st.error() -->
+</div>
+```
+
+### 5.6 New Component: First Visit Guide Card (C103 — New for Sprint 9)
+
+Add to Section 3.3 Cards:
+
+```html
+<!-- First visit onboarding card -->
+<div style="background:#FFF8F0;border-radius:12px;padding:1.5rem;border-left:4px solid #F39C12;margin:1rem 0;">
+    <div style="font-size:1.2rem;font-weight:700;color:#2C3E50;">{icon} {title}</div>
+    <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.5rem;line-height:1.8;">{content}</div>
+    <div style="font-size:0.8rem;color:#7F8C8D;margin-top:0.5rem;">卡片 {current}/{total}</div>
+    <!-- Buttons rendered via st.button() -->
+</div>
+```
+
+### 5.7 Section Title Pattern (Clarify Dual Signature)
+
+Add to Section 3.3 or a new "Typography Helpers" section:
+
+```
+_section_title(title: str) — Auto-detects emoji prefix, adds 📊 if no emoji
+_section_title(icon: str, title: str) — Explicit icon + title (business_card variant)
+
+Recommendation: Consolidate to single function with optional icon parameter.
+```
+
+### 5.8 Pre-Development Checklist Update
+
+Add to Section VI:
+- [ ] Event cards use `_event_card()` helper (not inline HTML)
+- [ ] Quiz cards use `_quiz_card()` helper (not inline HTML)
+- [ ] Onboarding cards use `_onboarding_card()` helper (not inline HTML)
+- [ ] Section titles use `_section_title()` (not raw `st.markdown("### ...")`)
+
+---
+
+## 6. Summary of Round 21 Findings
+
+### Design Grade: **A** (upgraded from A-)
+
+Sprint 8 successfully closed the inline HTML enforcement gap. The design system components are now used consistently across 6+ pages. Remaining issues (D-051, D-052, D-053) are minor and don't block the A grade.
+
+### Competitor Key Takeaways
+1. **Quiz-after-story is table stakes** for education platforms (Finimize proves it)
+2. **Beginner onboarding is the #1 unserved need** in TW market (Stash model)
+3. **Simple/Detailed toggle** solves the beginner/intermediate tension (Finimize ELI5)
+4. **Stock Explorer's PPT-style + historian positioning** remains unique vs all 90 competitors
+
+### Sprint 9 Design Specs Delivered
+- C98: Event interpretation card — layout, components, interaction pattern
+- C101: Quiz UI — inline card pattern, Finimize model, 3-question flow
+- C103 Lite: First visit guide — 2-card design, dismissible, session-state tracked
+
+### New Design Issues: 3
+- D-057: Duplicate _section_title() functions (P2)
+- D-058: _render_related_stock_card() misuses _subsidiary_card() (P2)
+- D-059: Inconsistent _section_title() calling convention (P2, resolved by D-057)
+
+### Design System Updates Needed: 7 items
+- Document existing: _subsidiary_card, _count_label, _summary_card
+- Add new: event interpretation card, quiz card, onboarding card
+- Clarify: _section_title() dual signature issue
+
+---
+
+*This section was added by the Design Reviewer in Round 21 (2026-06-13). Next update: After Sprint 9 feature implementation.*

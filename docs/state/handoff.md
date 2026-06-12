@@ -126,6 +126,19 @@ All Sprint 8 debt-first items delivered. 3 commits, all L0/L1 verified.
 
 ## 🔍 Review Section
 
+### Round 21 (2026-06-13)
+- Design Grade **A** (upgraded from A- — inline HTML enforcement gap closed by Sprint 8)
+- Sprint 8 debt claims verified: All 7 items (D-048, D-055, D-050, D8, D9, D10, D-056) genuinely resolved
+- 5 new debt items: D-057 (HIGH — LLM abstraction, Sprint 9 Day 1 prerequisite, 3-4h), D-058 (quiz engine dup), D-059 (session state), D-060 (event interpretation facade), D-061 (test infra — hard Sprint 10 commitment)
+- 3 new competitor features (C104-C106): C104 merged into C101, C105 (Simple/Detailed Toggle) → Sprint 10, C106 (First 7 Days) → Sprint 10 (cut candidate)
+- 4 new competitors: Finimize, Stash, SoFi Invest, eToro (90 total analyzed, 106 features identified)
+- C104 merged into C101 (same feature, different specificity)
+- D-057 estimate revised to 3-4h (was 2-3h)
+- D-061 scheduled as hard Sprint 10 commitment (no longer deferrable)
+- Challenger: ✅ CONFIRMED after 4 revisions (C104→C101 merge, D-057 estimate, D-061 commitment, C106 cut candidate)
+- New design issues: D-057 (duplicate _section_title), D-058 (_subsidiary_card misuse), D-059 (inconsistent calling convention)
+- 7 design system updates needed (3 document existing, 3 add new, 1 clarify)
+
 ### Round 20 (2026-06-13)
 - Design Grade A- (downgraded from A — inline HTML enforcement gap)
 - D6 PARTIALLY resolved: only 1/6 YAML blocks migrated; _CASE_STUDIES (230 lines) is new D6 violation
@@ -248,7 +261,7 @@ All Sprint 8 debt-first items delivered. 3 commits, all L0/L1 verified.
 | Backlog cleanup | Mark C37/C39/C41/C42 as Done in issues.md | 📋 This cycle |
 
 ### Next Cycle
-🔧 Development → Sprint 9 (C98 + C101 + C103 Lite) → 🔍 Review Round 21 → Sprint 10 (C34 + M5 remediation)
+🔧 Development → Sprint 9 (D-057 Day 1 + C103 Lite + C101 + C98) → 🔍 Review Round 22 → Sprint 10 (C34 + C105 + M5 remediation + D-061 hard commitment)
 
 ## 💡 Discussion Log
 *See docs/state/handoff_discuss.md for full Round 18 discussion log. See docs/state/challenge_log_r18.md for Round 18 challenger analysis.*
