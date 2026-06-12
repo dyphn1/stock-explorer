@@ -1,11 +1,11 @@
 # Handoff – Development
 ## Summary
-- **Topic**: Development (🔧) — Sprint 4 Complete
-- **Date**: 2026-06-20 (Sprint 4 execution completed)
-- **Sprint Status**: Sprint 4 ✅ COMPLETE → Sprint 5 prerequisites remaining
+- **Topic**: Discussion (💡) — Round 15 Complete
+- **Date**: 2026-06-21 (Discussion Round 15 completed)
+- **Sprint Status**: Sprint 4 ✅ COMPLETE → Sprint 5 in progress → Round 15 discussion confirmed post-Sprint 5 plan
 
 ## Key Metrics
-- Design grade: A (6th consecutive round, maintained through Sprint 4)
+- Design grade: A (6th consecutive round, maintained through Sprint 5)
 - L0: 65/65 ✅ | L1: 8/8 ✅ (10 pre-existing event-alert failures unchanged)
 
 ## Sprint Plans (Summary)
@@ -13,75 +13,82 @@
 |--------|-------|--------|
 | Sprint 3 | C44, C41, C38, D16, D-025 | ✅ Complete |
 | Sprint 4 | R3, C48, C38, C51, C53-1 | ✅ Complete |
-| Sprint 5 | D-039/040/041 prereqs → C71 → C74 → C73 | 📋 Prerequisites first |
-| Sprint 6 | C66 (moved to Sprint 4), C68 (5 concepts), D22 (P0) | 📋 Round 14 approved |
-| Sprint 7 | C65 (game), C68 (5 concepts) | 📋 Round 14 approved |
-| Sprint 8 | C63 (weekly audio), C64 (community Q&A) | 📋 Round 14 approved |
-| Sprint 9+ | C67 (community stories) | 📋 Round 14 approved |
+| Sprint 5 | D-039/040/041 + D37 + C71 + C74 + C73 | 📋 In Progress |
+| Sprint 6 | C83 + C85 + C42 + C43 + C45 | 📋 Round 15 approved |
+| Sprint 7 | C84 + C82/D28/D-045 spikes + debt cleanup | 📋 Round 15 approved |
+| Sprint 8 | C63 (conditional on D28) + D22 | 📋 Round 15 approved |
+| Sprint 9+ | C81, C64, C65, C68 | 📋 Round 15 approved |
 
 ## Key Rules
 - Content cap: 100 items max across all features
 - Mandatory historian tone QA gate before each content feature ships
-- C63 weekly only (52/year), not daily
-- Sprint 5/6 cut-line rules must be defined before Sprint 5
+- C63 weekly only (start with 12 quarterly, not 52)
 - D-041 (card components) is a HARD PREREQUISITE before Sprint 5 feature coding
+- D37 (_sections.py split) is a HARD PREREQUISITE for Sprint 6 C43
+- Card-count limit: max 5 cards per page section (Direction A)
 
 ## Pending Daniel Decisions
-1. C34 vs C46 priority for Sprint 5
-2. C47 Phase 1 scope: 5 vs 10 lessons
-3. Business Card Page IA: "above the fold" definition
+1. C34 vs C46 priority — Recommend defer both to Sprint 9+
+2. C47 Phase 1 scope: 5 vs 10 lessons — Recommend 5
+3. Business Card Page IA: "above the fold" definition — Recommend C37 + C43 only
+4. NEW: Color palette expansion (purple/teal for content types) — Direction C Phase 2
 
 ## Detailed Logs
-- Round 14 Discussion: docs/state/handoff_discuss.md
+- Round 14 Discussion: docs/state/handoff_discuss.md (superseded by Round 15 below)
+- Round 15 Discussion: docs/state/handoff_discuss.md
 - Round 16 Review: docs/state/review_report.md
 - Review History: docs/state/handoff_review.md
 
 ## 🔧 Development Section
 
-### Sprint 4 Execution (2026-06-20)
-All 5 Sprint 4 items completed ✅:
+### Sprint 4 Execution (2026-06-20) — COMPLETE ✅
+All 5 items delivered: R3 (batch_api.py), C48 (story card), C38 (compare stories), C51 (sector heatmap), C53-1 (social sharing). L0: 65/65, L1: 8/8. Effort: 35-43h.
 
-| Item | Description | Commit | L0 | L1 |
-|------|-------------|--------|----|----|
-| **R3** | Batch API minimal utility (`src/data/batch_api.py`) | `f2632da` | 63/63 ✅ | 8 pass (10 pre-existing) |
-| **C48** | Company Story Card — 30-second visual summary | `f284af3` | 63/63 ✅ | 8 pass (10 pre-existing) |
-| **C38** | Compare Stories Phase 1 — narrative peer comparison | `cb8a446` | 64/64 ✅ | 8 pass (10 pre-existing) |
-| **C51** | Sector Heatmap — visual market overview page | `4af2020` | 65/65 ✅ | 8 pass (10 pre-existing) |
-| **C53-1** | Social Sharing URL — shareable analysis links | `edf8e89` | 65/65 ✅ | 8 pass (10 pre-existing) |
-
-**New files created:**
-- `src/data/batch_api.py` — BatchAPI utility (8 methods for multi-stock data fetching)
-- `src/services/compare_stories.py` — Narrative peer comparison service
-- `src/pages/sector_heatmap.py` — Sector heatmap page (444 lines)
-
-**Files modified:**
-- `src/pages/business_card/_sections.py` — Added `_render_story_card()`, `_render_compare_stories()`, `_render_share_section()`
-- `src/pages/business_card/_main.py` — Wired new sections into render flow
-- `src/pages/router.py` — Added sector heatmap route
-- `src/pages/url_sync.py` — Added "產業熱力圖" to VALID_PAGES
-- `src/main.py` — Added sidebar nav button for sector heatmap
-
-**Verification:** All L0 checks pass (65/65). No new L1 failures introduced.
-
-**Estimated effort spent:** ~35-43h (within 43.5h plan)
-
-### Sprint 5 Prerequisites (NOT STARTED — must complete before Sprint 5 features)
-- **D-039**: Standardized section header pattern (`_section_header()` helper)
-- **D-040**: Standardized disclaimer component (`_historian_disclaimer()` helper)
-- **D-041**: Sprint 5 card components (`_study_card()`, `_expert_card()`, `_scenario_card()`)
-- **Total prerequisite effort:** ~2.5h
+### Sprint 5 Status (2026-06-21) — IN PROGRESS
+Prerequisites (D-039/040/041 + D37) underway. Features C71 → C74 → C73 to follow.
 
 ## 🔍 Review Section
 
 ### Round 16 (2026-06-20)
-- **D16 RESOLVED**: `analogy_engine.py` split into 4 modules (commit `f128fb0`)
-- **D26 UNBLOCKED**: `story_composer.py` can now proceed
-- **Design Grade**: A (6th consecutive round)
-- **New Issues**: D-042, D-043, D-044 (all P2)
-- **New Features**: C81-C85 added to backlog
-- **Sprint 5 Plan**: D-039/040/041 prerequisites → C71 → C74 → C73 (44.8h)
-- **Challenger**: ✅ CONFIRMED with 4 conditions (D-041 before Sprint 5, C83 first post-Sprint 5, C82 MVP first, design system updates alongside features)
-- **Key Risk**: D-003 regression if D-041 not completed before Sprint 5
+- D16 RESOLVED, D26 UNBLOCKED, Design Grade A (6th consecutive)
+- New: D-042/043/044 (P2), C81-C85 added to backlog
+- Challenger: ✅ CONFIRMED with D-041 before Sprint 5, C83 first post-Sprint 5
 
 ## Next Cycle Handoff
-Next: 🔧 Development → Sprint 5 prerequisites (D-039 + D-040 + D-041) → then Sprint 5 features (C71 + C74 + C73)
+Next: 🔧 Development → Sprint 5 execution → Sprint 6 (C83 + C85 + C42 + C43 + C45)
+
+## 💡 Discussion Section (Round 15 — 2026-06-21)
+
+### Post-Sprint 5 Plan (Challenger ✅ CONFIRMED)
+| Sprint | Features | Effort | Content |
+|--------|----------|--------|---------|
+| 5 | D-039/040/041 + D37 + C71 + C74 + C73 | 44.8-55.8h | 10 |
+| 6 | C83 + C85 + C42 + C43 + C45 | 50-72h | 1 |
+| 7 | C84 + C82/D28/D-045 spikes + debt | 23-32h | 5-10 |
+| 8 | C63 (conditional) + D22 | 26-36h | 12 |
+| 9+ | C81 + C64 + C65 + C68 | 92-136h | 45 |
+
+### Key Decisions
+1. Primary direction: "Discovery & Health" (C42+C43+C45) in Sprint 6
+2. Quick wins (C83+C85) first — standalone pages, zero dependencies
+3. Direction B (Dual-Mode) rejected — card-count limit solves bloat
+4. C65/C68 deferred to Sprint 9+ (content-heavy)
+5. D-045 spike for M5 milestone (Sprint 7)
+6. D37 hard prerequisite for Sprint 6
+
+### Round 14 Reconciliation
+- C66: ✅ Complete (Sprint 4)
+- C65, C68: 🔄 Deferred to Sprint 9+
+- D22: ⚠️ P0 for C64, scheduled Sprint 8
+
+### Content Cap Ledger
+Running total through Sprint 9+: 73-78 items used, 22-27 headroom remaining.
+
+### Discussion Logs
+- Architect: docs/logs/discuss_architect_round15.md
+- Designer: docs/logs/discuss_designer_round15.md
+- Developer: docs/logs/discuss_developer_round15.md
+- Challenge: docs/logs/discuss_challenger_round15.md
+- PM response: docs/logs/discuss_pm_response_round15.md
+- Confirmation: docs/logs/discuss_challenger_round15_final.md
+- Full handoff: docs/state/handoff_discuss.md
