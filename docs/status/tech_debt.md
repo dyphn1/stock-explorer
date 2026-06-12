@@ -1,7 +1,7 @@
 # Stock Explorer — Technical Debt Register
 
 > **Last Updated**: 2026-06-19
-> **Source**: Review Cycle Round 14 (Architect's findings)
+> **Source**: Review Cycle Round 15 (Architect's findings)
 > **Maintainer**: System Architect
 
 This file tracks all known architecture and technical debt in Stock Explorer, organized by severity.
@@ -161,21 +161,12 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 - **Recommended Action**: Add tone guidelines to `docs/design/tone_guidelines.md` before C51 implementation. This is a content task, not a code task. **Should be done in Sprint 4 before C51 starts.**
 
 ### D24/D27: `business_card.py` approaching architectural limit
-- **Effort**: 2-3h (extract + update imports)
-- **Status**: ⏳ **PENDING** — `business_card.py` is now **561 lines** (up from 447 after C41 and C44). Planned for Sprint 4 (MUST be first task).
-- **Description**: `business_card.py` is 561 lines after C41 Read Next (~60 lines) and C44 Risk Analysis (~114 lines). Adding C38 compare stories section (~50 lines) and C48 story card (~70 lines) will push it to ~681 lines.
-- **Impact**: The page file is becoming hard to navigate. 11 distinct sections competing for space. Multiple inline HTML patterns.
-- **Recommended Action**: Extract to `src/pages/business_card/` sub-directory as the **FIRST task of Sprint 4**. Proposed structure:
-  - `src/pages/business_card/__init__.py`
-  - `src/pages/business_card/base.py` (shared layout, imports)
-  - `src/pages/business_card/sections/summary.py` (C37)
-  - `src/pages/business_card/sections/delta.py` (C39)
-  - `src/pages/business_card/sections/health.py` (C43)
-  - `src/pages/business_card/sections/risk.py` (C44)
-  - `src/pages/business_card/sections/read_next.py` (C41)
-  - `src/pages/business_card/sections/story.py` (C48)
-  - `src/pages/business_card/sections/details.py` (metrics, events, etc.)
-- **Priority for Sprint 4**: 🔴 **CRITICAL — Must be FIRST, before any Sprint 4 feature work.**
+- **Effort**: RESOLVED (2-3h)
+- **Status**: ✅ **RESOLVED** — Commit e12c103. Extracted to `src/pages/business_card/` sub-directory with 4 files: `__init__.py` (4 lines), `_main.py` (84 lines), `_sections.py` (612 lines), `_helpers.py` (95 lines). Total: 795 lines across 4 files (vs. 561 monolith). Net structural improvement despite +234 lines from duplicated import headers.
+- **Description**: `business_card.py` was 561 lines after C41 Read Next (~60 lines) and C44 Risk Analysis (~114 lines). Adding C38 compare stories section (~50 lines) and C48 story card (~70 lines) would have pushed it to ~681 lines.
+- **Impact**: Resolved. The page file is now properly modularized. Section functions are isolated and can be tested/split further.
+- **Priority for Sprint 4**: ✅ COMPLETE — Was the FIRST task of Sprint 4.
+- **New concern**: `_sections.py` is 612 lines and will grow with C38 + C48. See D37.
 
 ### D25: Market-level data flow is architecturally distinct from single-stock flow
 - **Effort**: Part of C51 implementation
@@ -255,46 +246,70 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 - **Recommended Action**: Pre-compute peer stock recommendations in `_router_base.py`'s `get_stock_data()` and include them in the `data` dict. This keeps the presentation layer clean. Low priority — the current approach works and the cache makes it fast.
 - **New**: Identified during Round 14 review of C41 commit (1f98d73).
 
+## New Architecture Debt Identified in Round 15 (Sprint 4 Kickoff)
+
+### D37: `_sections.py` is 612 lines and will grow with C38 + C48
+- **Effort**: 1-2h (split alongside feature implementation)
+- **Status**: ⏳ **PENDING** — `_sections.py` is 612 lines after D24 extraction. C38 and C48 will each add ~50-70 lines.
+- **Description**: The D24 extraction created `_sections.py` as the single file containing all 14 section rendering functions (header, takeaways, deltas, health, risk, one-liner, key metrics, dividend, revenue breakdown, revenue trend, valuation, news, read next, footer). C38 (Compare Stories) and C48 (Company Story Card) will push it to ~730+ lines.
+- **Impact**: `_sections.py` is becoming the new monolith — the same problem D24 solved for `business_card.py` is re-emerging at the section level.
+- **Recommended Action**: When C38 and C48 are implemented, split `_sections.py` into:
+  - `_sections_core.py` — header, one-liner, key metrics, footer (stable sections)
+  - `_sections_analysis.py` — takeaways, deltas, health, risk (analysis sections)
+  - `_sections_detail.py` — dividend, revenue breakdown, revenue trend, valuation, news (detail sections)
+  - `_sections_discovery.py` — read next, compare stories, story card (discovery sections)
+- **Priority for Sprint 4**: 🟡 Do alongside C38/C48 implementation, not as a separate task.
+- **New**: Identified during Round 15 review of D24 extraction (e12c103).
+
+### D38: `chart.py` grew to 787 lines with chart functions added incrementally
+- **Effort**: 1h (if needed — split only if market charts are added)
+- **Status**: ⏳ **MONITOR** — `chart.py` is 787 lines. Single responsibility (chart rendering) but growing.
+- **Description**: `chart.py` grew from 779→787 lines since Round 14. Contains all chart types: revenue trend, revenue pie, valuation band, health snowflake. If C51 (Sector Heatmap) adds treemap/sunburst charts to this file, it will cross 850+ lines.
+- **Impact**: Low for now. The module is coherent — all functions are chart rendering. But finding a specific chart function requires scrolling through 787 lines.
+- **Recommended Action**: If C51 adds sector/market charts, create `chart_sector.py` for market-level visualizations. Keep `chart.py` for single-stock charts.
+- **Priority for Sprint 4**: 🟢 Monitor. Act only if market charts push it beyond 850 lines.
+- **New**: Identified during Round 15 review.
+
 ## Low Severity Debt
 - D33: C41 Read Next page-level data access pattern (see above)
 
 ## Summary
-- **Total Debt Items**: 33
+- **Total Debt Items**: 35
 - **High Severity**: 2 items (D5, D16)
-- **Medium Severity**: 28 items (D3-D4, D6-D15, D18-D21, D22-D32)
+- **Medium Severity**: 29 items (D3-D4, D6-D15, D18-D21, D22-D32, D37-D38)
 - **Low Severity**: 1 item (D33)
-- **Resolved Items**: D1, D2, D17, D20 (4 items)
-- **Pending Sprint 3**: D16 (after C38), D29 (business_card.py bloat from C41 — now superseded by D24)
-- **Pending Sprint 4**: D5, D6, D16, D18, D19, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32
+- **Resolved Items**: D1, D2, D17, D20, D24 (5 items)
+- **Pending Sprint 4**: D5, D6, D16, D18, D19, D23, D25, D26, D27, D28, D29, D30, D31, D32, D37, D38
 
 ## Sprint 4 Readiness Assessment
 
 ### Prerequisites (Hard Blockers)
 1. **D16** (Split analogy_engine.py) — Blocks C48's `story_composer.py` (D26)
-2. **D24** (business_card.py sub-directory) — Must happen before C48 adds Story Card section. **Must be FIRST in Sprint 4** — `business_card.py` is already 561 lines.
+2. ~~D24~~ (business_card.py sub-directory) — ✅ COMPLETE
 3. **R3** (Batch API minimal) — Blocks C51 Sector Heatmap
 
 ### Recommended Sprint 4 Sequence
-1. **D24** — Extract business_card.py to sub-directory (2-3h) — **FIRST, non-negotiable**
+1. ~~**D24**~~ — ✅ COMPLETE (e12c103)
 2. **D16** — Split analogy_engine.py (2-3h) — Must complete before C48
 3. **R3** — Batch API minimal (1-2h) — Unlocks C51
-4. **C38** — Compare Stories Phase 1 (10-12h) — Remaining Sprint 3 item, can parallelize with R3
+4. **C38** — Compare Stories Phase 1 (10-12h) — Can parallelize with R3
 5. **C51** — Sector Heatmap (12-16h) — With R3 prerequisite
 6. **C48** — Company Story Card (10-14h) — With D16 + D24 prerequisites
 7. **C53-1** — Social Sharing URL (2-3h) — Quick win
 
 ### Architecture Risks for Sprint 4
-- **business_card.py uncontrolled growth**: File is already 561 lines. C38 (~50 lines) and C48 (~70 lines) will push it to ~681 lines if D24 is deferred. **D24 must be FIRST.**
+- **analogy_engine.py uncontrolled growth**: File is still 850 lines. C38 and C48 need functions from it. **D16 must be FIRST or second task.**
+- **_sections.py emerging monolith** (D37): At 612 lines, C38 and C48 will push it to ~730+. Split alongside feature implementation.
 - **C48 coupling to unstable interfaces**: story_composer.py needs analogy_engine.py split first (D16). If D16 slips, C48 slips.
 - **Market data abstraction gap**: C51 needs `market_data.py` (D25). Without it, sector heatmap will ad-hoc the market-wide data flow.
 - **Tone guidelines gap**: C51 displays market-level data. Without tone guidelines (D23), market features risk sounding like investment advice.
 - **risk_analyzer.py size creep**: At 567 lines, monitor for future split if risk dimensions grow beyond 3.
-- **Presentation helper leakage**: D32 — `get_health_dimension_explanation()` and `_render_risk_dimension()` in `business_card.py` should move to `ui_components.py` during D24 extraction.
+- **chart.py growth** (D38): At 787 lines, monitor. Split to `chart_sector.py` if market charts are added.
 
 ## Next Review
-This register should be updated after each review cycle. Next update: After Sprint 4 kickoff (D24 + D16 complete).
+This register should be updated after each review cycle. Next update: After D16 + R3 complete (Sprint 4 mid-point).
 
---
+---
 *Created: 2026-06-11*
 *Maintainer: System Architect*
-*Last Updated: 2026-06-19 (Round 14)*
+*Last Updated: 2026-06-19 (Round 15)*

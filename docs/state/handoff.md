@@ -50,6 +50,17 @@
 3. **Beginner/Advanced Path labels** — complete Beginner Path first
 4. **Fix one, build one** — per new feature, one P1 fix completed
 
+## 🔍 Review Results (Round 15 — 2026-06-19)
+- 8 new competitors → 6 features identified (C75-C80), 5 rejected, 1 consolidated (C79→C74)
+- 2 new architecture debt items (D37, D38) — both downgraded to monitor
+- 3 design issues resolved (D-004, D-021, D-034)
+- 3 new design prerequisites (D-039, D-040, D-041) — Sprint 5 prerequisites
+- Design grade A maintained (4th consecutive), conditional on D-041
+- C73 scope locked at 10 stocks (permanent MVP without LLM)
+- Feature Intake Filter adopted (4-question historian test)
+- Challenger confirmed with 8 conditions; no fundamental disagreements
+- Full details: docs/state/handoff_review.md
+
 ## 🔍 Review Results (Round 14 — 2026-06-19)
 - 8 new competitors → 6 features identified, revised to 3 net new after Challenger
 - 3 new architecture debt items (D31, D32, D33)
@@ -91,12 +102,10 @@
 - **Pending Daniel's decision**: Unchanged (C34 vs C46, C47 scope, Business Card IA)
 
 ## Next Cycle Handoff
-Next theme: 🔧 Development → Sprint 4 execution (D16 → R3 → C48/C38/C51 parallel → C53-1)
+Next theme: 🔧 Development → Sprint 4 execution (D16 first, non-negotiable; complete within first 25% of sprint)
 
-For full Round 14 discussion: docs/design/architect_discussion_r14.md
-For Round 14 designer analysis: docs/design/designer_discussion_r14.md
-For Round 14 developer estimates: docs/design/developer_discussion_r14.md
-For Round 14 challenge details: docs/design/challenger_discussion_r14.md
+For full Round 15 discussion: docs/design/architect_review_r15.md, docs/design/designer_review_r15.md, docs/research/competitor_research_r15.md
+For Round 15 challenge details: docs/design/challenger_r15.md
 For pending Daniel decisions: docs/state/pending_review.md
 For design details: docs/design/design_review.md
 For architecture: docs/design/architecture.md

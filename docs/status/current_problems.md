@@ -207,6 +207,34 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Proposed Fix**: Move the peer stock fetching to `get_stock_data()` in `_router_base.py` (add a `"peers"` key to the data dict), or accept peers as a parameter.
 - **Effort**: 1-2h
 
+### D-039: No Standardized Section Header Pattern
+- **Severity**: P2
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 15
+- **Description**: The business card page has 15+ sections with 3 different header styles (markdown `###`, `st.expander`, inline HTML). As Sprint 5 adds C71/C73/C74 sections, this inconsistency will worsen.
+- **Affected Files**: `src/pages/business_card/_sections.py` (all section functions)
+- **Proposed Fix**: Create `_section_header(icon, title, collapsed=False)` helper in `_helpers.py`. Use `st.expander` when collapsed=True, `st.markdown(f"### {icon} {title}")` otherwise.
+- **Effort**: 1-2h
+
+### D-040: No Standardized Disclaimer Component
+- **Severity**: P2
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 15
+- **Description**: C73 (Expert Analysis) and C74 (Historical Scenarios) both require historian positioning disclaimers. Currently written inline. Inconsistent disclaimer text could create regulatory risk in TW financial content.
+- **Affected Files**: C73 and C74 implementations (Sprint 5)
+- **Proposed Fix**: Create `_historian_disclaimer(type)` helper returning standardized disclaimer text. Types: 'expert', 'scenario', 'general'. Use `st.caption()` for rendering.
+- **Effort**: 0.5h
+
+### D-041: No Sprint 5 Card Components (D-003 Regression Risk)
+- **Severity**: P2
+- **Added**: 2026-06-19
+- **Source**: Design Review Round 15
+- **Description**: C71, C73, and C74 will each add new card types to the business card page. Without standardized components, these will likely use inline HTML (continuing D-003). This is the single most important P2 item to resolve before Sprint 5 coding starts.
+- **Affected Files**: C71/C73/C74 implementations (Sprint 5)
+- **Proposed Fix**: Before Sprint 5 feature implementation, create `_study_card()`, `_expert_card()`, `_scenario_card()` in `_router_base.py` or `ui_components.py`. Follow design system specs for colors and spacing.
+- **Effort**: 1h
+- **Status**: 🔴 **Sprint 5 PREREQUISITE** — must complete before any C71/C73/C74 implementation
+
 ---
 
 ## Resolved Issues
@@ -226,17 +254,19 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 | D-023 | C45 Uses 2-Year Window Instead of 5-Year | P2 | 2026-06-18 | Extended to 5-year window (1825 days) with graceful fallback for insufficient data. |
 | D-024 | _info_card Uses Wrong Background Color | P1 | 2026-06-19 | Changed `background:#FFF8F0` to `background:#F8F9FA` in `_router_base.py` line 110. |
 | D-025 | C39 Missing Empty State Message | P2 | 2026-06-19 | Added `else` branch showing `_info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")` when no deltas exceed threshold. |
-| D-034 | C3 Metric Value Tooltips Missing from Hover and Cards | P1 | 2026-06-12 | Enhanced `create_health_snowflake()` with optional `metric_values` param. Hover now shows raw metric values as bullet points. Dimension cards display values in blue text. `_get_health_metric_values()` helper added to `_helpers.py`. Commit: 4de8b8e. |
+|| D-034 | C3 Metric Value Tooltips Missing from Hover and Cards | P1 | 2026-06-12 | Enhanced `create_health_snowflake()` with optional `metric_values` param. Hover now shows raw metric values as bullet points. Dimension cards display values in blue text. `_get_health_metric_values()` helper added to `_helpers.py`. Commit: 4de8b8e. |
+|| D-004 | No Design System Documentation | P1 | 2026-06-19 | `docs/design/design_system.md` now exists at expected path (copied from `docs/domain/design_system.md` in Sprint 4). |
+|| D-021 | C43 Missing Per-Dimension Plain-Language Explanations | P1 | 2026-06-19 | Resolved via D-034 fix — metric values now shown in both hover template and dimension cards with raw numbers and plain-language explanations. |
 
 ---
 
 ## Statistics
 
-- **Total Issues**: 25
+- **Total Issues**: 28
 - **P0 (Blocking)**: 0
-- **P1 (Important)**: 4 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 13 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-037, D-038)
-- **Resolved**: 15
+- **P1 (Important)**: 3 (D-003, D-005, D-006)
+- **P2 (Optimization)**: 16 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-037, D-038, D-039, D-040, D-041)
+- **Resolved**: 18
 
 ---
 

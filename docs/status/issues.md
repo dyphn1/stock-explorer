@@ -30,6 +30,12 @@ C68: "Weekly Market Digest" — Curated Weekly Market Summary | P2 | 8-12h | Sto
 C71: "Study Log" — Personal Learning Record (reframed from Learning Streak) | P2 | 8-12h | Point-to-point knowledge construction + Historian positioning | source: competitor research round 14
 C73: "Expert Analysis Synthesis" — Plain-Language Fundamental Analysis Summary (pivoted from Super Investor Thesis) | P1 | 8-12h | Story first + Benchmark-oriented analysis + Beginner-friendly | source: competitor research round 14
 C74: "Historical Scenario Explorer" — Past-Tense Factual Scenario Exploration (pivoted from What-If) | P1 | 10-15h | Point-to-point knowledge construction + Story first + Active learning | source: competitor research round 14
+C75: "Dividend Calendar" — Market-Wide Upcoming Ex-Dividend View | P2 | 8-12h | Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 15
+C76: "Insider Activity Tracker" — Plain-Language Insider Trading Monitor | P2 | 12-16h | Story first + Historian positioning + Benchmark-oriented analysis | source: competitor research round 15
+C77: "Valuation Verdict" — Simple Over/Fair/Under-Valued Flag | P2 | 6-10h | Story first + Ten-second test + Benchmark-oriented analysis | source: competitor research round 15
+C78: "Analyst Consensus" — Aggregated Expert Opinions in Plain Language | P2 | 10-14h | Story first + Benchmark-oriented analysis + Historian positioning | source: competitor research round 15
+C79: "Compound Return Calculator" — Interactive Investment Estimator | P2 | 8-12h | Point-to-point knowledge construction + Active learning + Beginner-friendly | source: competitor research round 15
+C80: "News Sentiment Indicator" — Event Dashboard Sentiment Analysis | P2 | 10-14h | Adaptive and self-evolving + Benchmark-oriented analysis + Story first | source: competitor research round 15
 
 ## Declassified (Not C-Series Features)
 - C69 (Paper Trading Simulator) — REMOVED: contradicts historian positioning
