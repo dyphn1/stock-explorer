@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
+from src.pages._router_base import _info_card, _summary_card
 
 
 def _cached_get_stock_info(client: FinMindClient):
@@ -57,22 +58,7 @@ def _render_etf_browser(client: FinMindClient):
     st.markdown("---")
 
     # ── 白話解釋卡片 ──────────────────────────────────────
-    st.markdown("""
-    <div style="background:#EBF5FB;border-radius:14px;
-                padding:1.4rem 1.6rem;border-left:5px solid #3498DB;margin-bottom:1.2rem;">
-        <div style="font-weight:700;font-size:1.1rem;color:#2C3E50;margin-bottom:0.4rem;">
-            💡 什麼是 ETF？
-        </div>
-        <div style="font-size:0.92rem;color:#2C3E50;line-height:1.7;">
-            ETF（指數股票型基金）就像一個「股票籃子」，一次買進就等於買進一籃子標的。<br>
-            例如買入 <b>0050</b>，等於同時持有台灣市值最大的 50 間公司股票。<br>
-            ETF 可以像股票一樣在交易所買賣，費用比基金低，適合新手分散投資。<br>
-            <span style="color:#7F8C8D;font-size:0.85rem;">
-                ⚠️ 注意：ETF 價格會隨市場波動，投資前請評估自身風險承受能力。
-            </span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    _info_card("💡 什麼是 ETF？", "ETF（指數股票型基金）就像一個「股票籃子」，一次買進就等於買進一籃子標的。\n例如買入 0050，等於同時持有台灣市值最大的 50 間公司股票。\nETF 可以像股票一樣在交易所買賣，費用比基金低，適合新手分散投資。\n\n⚠️ 注意：ETF 價格會隨市場波動，投資前請評估自身風險承受能力。", "💡")
 
     # ── 取得 ETF 股票清單（cached） ──────────────────────────
     with st.spinner("載入 ETF 資料中…"):
@@ -299,27 +285,7 @@ def _render_etf_categories(etf_info: pd.DataFrame, price_df: pd.DataFrame):
                     color = "#E74C3C" if change >= 0 else "#27AE60"
 
                     with cols[j]:
-                        st.markdown(
-                            f"""
-                            <div style="background:#F8F9FA;border-radius:10px;
-                                        padding:0.8rem;margin-bottom:0.5rem;
-                                        border-left:3px solid #3498DB;">
-                                <div style="font-size:0.8rem;color:#7F8C8D;">
-                                    {row['stock_id']}
-                                </div>
-                                <div style="font-weight:600;color:#2C3E50;">
-                                    {row['stock_name']}
-                                </div>
-                                <div style="font-size:0.9rem;color:#2C3E50;">
-                                    {row['close']:,.2f}
-                                    <span style="color:{color};font-size:0.8rem;margin-left:0.4rem;">
-                                        {sign}{change:,.2f} ({sign}{change_pct:.2f}%)
-                                    </span>
-                                </div>
-                            </div>
-                            """,
-                            unsafe_allow_html=True,
-                        )
+                        _info_card(f"{row['stock_name']} ({row['stock_id']})", f"價格：{row['close']:,.2f}  漲跌：{sign}{change:,.2f} ({sign}{change_pct:.2f}%)", "📊")
                         if st.button(
                             "查看名片",
                             key=f"cat_{row['stock_id']}",
@@ -446,13 +412,4 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
             navigate_to(page="名片", stock_id=row["stock_id"])
 
     # 白話補充
-    st.markdown("""
-    <div style="background:#FEF9E7;border-radius:10px;padding:0.8rem 1.2rem;
-                border-left:4px solid #F1C40F;margin-top:0.8rem;">
-        <div style="font-size:0.85rem;color:#7F8C8D;">
-            💡 <b>殖利率小知識</b>：殖利率 = 年度股利 ÷ 股價 × 100%。
-            殖利率越高代表每投入 1 元能領回的現金越多，但高殖利率不等於高報酬，
-            仍需留意 ETF 的追蹤誤差、費用率及折溢價狀況。
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    _info_card("殖利率小知識", "殖利率 = 年度股利 ÷ 股價 × 100%。\n殖利率越高代表每投入 1 元能領回的現金越多，但高殖利率不等於高報酬，仍需留意 ETF 的追蹤誤差、費用率及折溢價狀況。", "💡")

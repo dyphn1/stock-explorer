@@ -8,7 +8,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-from src.pages._router_base import _section_title, _info_card
+from src.pages._router_base import _section_title, _info_card, _summary_card, _白话_card
 from src.services.chart import _apply_theme_layout
 
 
@@ -200,28 +200,14 @@ def _render_group_structure(data: dict):
     # ── 1. 集團總覽 ──────────────────────────────────
     _section_title("集團總覽")
 
-    st.markdown(f"""
-    <div style="background:#EBF5FB;border-radius:16px;padding:2rem;margin:1rem 0;">
-        <div style="font-size:1.5rem;font-weight:700;color:#2C3E50;">{parent_name}</div>
-        <div style="font-size:1rem;color:#5D6D7E;margin-top:0.5rem;">{group['parent_desc']}</div>
-        <div style="font-size:0.9rem;color:#7F8C8D;margin-top:1rem;">
-            旗下主要成員：{len(subsidiaries)} 家
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    _summary_card(f"{parent_name} — {group['parent_desc']}", f"旗下主要成員：{len(subsidiaries)} 家", "🏢")
 
     st.markdown("---")
 
     # ── 2. 母公司 ────────────────────────────────────
     _section_title("母公司")
 
-    st.markdown(f"""
-    <div style="background:#F8F9FA;border-radius:12px;padding:1.5rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
-        <div style="font-size:1.2rem;font-weight:700;color:#2C3E50;">🏢 {parent_name}</div>
-        <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.5rem;">{group['parent_desc']}</div>
-        <div style="font-size:0.85rem;color:#7F8C8D;margin-top:0.5rem;">股票代號：{stock_id} ｜ 產業：{industry}</div>
-    </div>
-    """, unsafe_allow_html=True)
+    _info_card(f"🏢 {parent_name}", f"{group['parent_desc']}\n\n股票代號：{stock_id} ｜ 產業：{industry}", "🏢")
 
     st.markdown("---")
 

@@ -106,11 +106,7 @@ def _render_etf_detail(data: dict, client: FinMindClient):
 
     # ── 一句話定位 ──────────────────────────────────────────
     one_liner = _get_etf_one_liner(stock_name)
-    st.markdown(f"""
-    <div style="font-size:1.3rem;font-weight:500;color:#2C3E50;text-align:center;padding:1.5rem 2rem;background:#EBF5FB;border-radius:12px;margin:1rem 0;line-height:1.8;border-left:5px solid #3498DB;">
-        💡 {one_liner}
-    </div>
-    """, unsafe_allow_html=True)
+    _info_card(f"💡 {one_liner}", "", "💡")
 
     # ── 績效走勢 ────────────────────────────────────────────
     _section_title("績效走勢")
@@ -180,12 +176,7 @@ def _render_etf_detail(data: dict, client: FinMindClient):
             st.dataframe(recent, use_container_width=True, hide_index=True)
 
             # 白話說明
-            st.markdown("""
-            <div style="background:#F8F9FA;border-radius:10px;padding:1rem;margin-top:0.5rem;font-size:0.85rem;color:#5D6D7E;">
-                💡 <b>白話說明：</b>「現金股利」是公司直接發錢給你，就像房東每月匯房租到你戶頭。
-                「除息日」是股價會扣除配息金額的日子，所以除息當天股價會「自然下跌」，不代表賠錢。
-            </div>
-            """, unsafe_allow_html=True)
+            _info_card("股利白話說明", "「現金股利」是公司直接發錢給你，就像房東每月匯房租到你戶頭。\n「除息日」是股價會扣除配息金額的日子，所以除息當天股價會「自然下跌」，不代表賠錢。", "💡")
         except Exception:
             st.info("配息資料處理中")
     else:
@@ -248,12 +239,7 @@ def _render_etf_detail(data: dict, client: FinMindClient):
                     st.dataframe(df_inst.tail(10), use_container_width=True, hide_index=True)
 
                 # 白話說明
-                st.markdown("""
-                <div style="background:#F8F9FA;border-radius:10px;padding:1rem;margin-top:0.5rem;font-size:0.85rem;color:#5D6D7E;">
-                    💡 <b>白話說明：</b>「法人」指的是外資、投信、自營商這些大資金玩家。
-                    法人連續買超 = 大戶看好；法人連續賣超 = 大戶在撤退。散戶可以參考法人動向，但不要盲目跟單。
-                </div>
-                """, unsafe_allow_html=True)
+                _info_card("法人動向白話說明", "「法人」指的是外資、投信、自營商這些大資金玩家。\n法人連續買超 = 大戶看好；法人連續賣超 = 大戶在撤退。散戶可以參考法人動向，但不要盲目跟單。", "💡")
             else:
                 st.info("近 30 日無法人交易資料")
         except Exception:
@@ -303,9 +289,4 @@ def _render_etf_detail(data: dict, client: FinMindClient):
     )
 
     # 免責聲明
-    st.markdown("""
-    <div style="background:#FEF9E7;border:1px solid #F9E79F;border-radius:8px;padding:1rem;font-size:0.85rem;color:#7D6608;margin-top:2rem;">
-        ⚠️ 本工具僅供認識 ETF 使用，所有數據來自公開資訊觀測站與 FinMind。
-        不構成任何投資建議。投資有風險，請自行評估。
-    </div>
-    """, unsafe_allow_html=True)
+    _info_card("免責聲明", "本工具僅供認識 ETF 使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。", "⚠️")

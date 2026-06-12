@@ -14,11 +14,10 @@ from src.services.analogy_engine import (
     get_yoy_analogy,
     get_roe_analogy,
     get_pbr_analogy,
-    generate_key_takeaways,
-    compute_recent_deltas,
-    compute_health_scores,
-    get_health_summary,
 )
+from src.services.key_takeaways import generate_key_takeaways
+from src.services.delta_engine import compute_recent_deltas
+from src.services.health_scoring import compute_health_scores, get_health_summary
 from src.services.risk_analyzer import assess_risk
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.news_summarizer import summarize_news, get_news_impact_level

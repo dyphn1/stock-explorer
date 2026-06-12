@@ -13,11 +13,10 @@ from src.services.analogy_engine import (
     get_yoy_analogy,
     get_roe_analogy,
     get_pbr_analogy,
-    generate_key_takeaways,
-    compute_recent_deltas,
-    compute_health_scores,
-    get_health_summary,
 )
+from src.services.key_takeaways import generate_key_takeaways
+from src.services.delta_engine import compute_recent_deltas
+from src.services.health_scoring import compute_health_scores, get_health_summary
 from src.services.risk_analyzer import assess_risk
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.news_summarizer import summarize_news, get_news_impact_level
@@ -567,18 +566,11 @@ def _render_read_next(data: dict, client) -> None:
             _peer_industry = _peer.get("industry_category", _current_industry)
             _key = f"read_next_{stock_id}_peer_{_peer_id}"
 
-            _peer_html = (
-                f"<div style='font-size:1rem;font-weight:600;color:#2C3E50;'>"
-                f"{_peer_name} <code style='font-size:0.85rem;color:#7F8C8D;'>{_peer_id}</code>"
-                f"</div>"
-                f"<div style='font-size:0.85rem;color:#7F8C8D;margin-top:0.2rem;'>"
-                f"📍 {_peer_industry}"
-                f"</div>"
-                f"<div style='font-size:0.85rem;color:#3498DB;margin-top:0.2rem;'>"
-                f"🔗 同產業同業，一起認識這家公司"
-                f"</div>"
+            _info_card(
+                f"{_peer_name} ({_peer_id})",
+                f"📍 {_peer_industry}\n🔗 同產業同業，一起認識這家公司",
+                "📖",
             )
-            st.markdown(_peer_html, unsafe_allow_html=True)
             if st.button(
                 f"查看 {_peer_name} 名片",
                 key=_key,
