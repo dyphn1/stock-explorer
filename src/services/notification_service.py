@@ -35,24 +35,42 @@ DEFAULT_SETTINGS = {
     "subscribed_lists": ["預設清單"],
 }
 
+# ── In-memory cache (D-051: load once, cache in memory) ──
+_cached_data: dict = {}
+
 
 def _load_notifications() -> dict:
-    """載入通知設定"""
+    """載入通知設定（with in-memory cache）"""
+    global _cached_data
+    if _cached_data is not None:
+        return _cached_data
+
     lock = FileLock(NOTIFICATIONS_LOCK_PATH, timeout=10)
     with lock:
         if not os.path.exists(NOTIFICATIONS_CONFIG_PATH):
-            return {"settings": DEFAULT_SETTINGS, "acknowledged_events": []}
+            _cached_data = {"settings": DEFAULT_SETTINGS, "acknowledged_events": []}
+            return _cached_data
         with open(NOTIFICATIONS_CONFIG_PATH, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f) or {}
-        return data
+        _cached_data = data
+        return _cached_data
+
+
+def _invalidate_cache():
+    """Invalidate the in-memory cache after writes."""
+    global _cached_data
+    _cached_data = {}
 
 
 def _save_notifications(data: dict):
     """儲存通知設定（atomic write under file lock）"""
+    global _cached_data
     lock = FileLock(NOTIFICATIONS_LOCK_PATH, timeout=10)
     with lock:
         content = yaml.dump(data, allow_unicode=True, default_flow_style=False)
         _atomic_write(NOTIFICATIONS_CONFIG_PATH, content.encode("utf-8"))
+    # Update cache with the saved data
+    _cached_data = data
 
 
 def get_notification_settings() -> dict:
