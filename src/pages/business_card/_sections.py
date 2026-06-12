@@ -37,6 +37,7 @@ from src.pages.business_card._helpers import (
     get_health_dimension_explanation,
     _render_risk_dimension,
     _get_health_metric_values,
+    _section_title,
 )
 from src.services.compare_stories import generate_compare_stories
 
@@ -765,7 +766,7 @@ def _render_read_next(data: dict, client) -> None:
     industry = data["industry"]
 
     # 📖 推薦閱讀 (C41: Read Next Recommendations)
-    st.markdown("### 📖 推薦閱讀")
+    _section_title("📖", "推薦閱讀")
 
     # --- Peer stocks from same industry ---
     _all_info = client.get_stock_info()
@@ -829,7 +830,7 @@ def _render_share_section(data: dict, client) -> None:
     share_url_js = urllib.parse.quote(f"?{params}", safe="=?&")
 
     st.markdown("---")
-    st.markdown("### 🔗 分享這張名片")
+    _section_title("🔗", "分享這張名片")
 
     # Use JS to get the full current URL (origin + path) and build shareable link
     js_get_url = """

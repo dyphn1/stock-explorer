@@ -93,3 +93,85 @@ def _render_risk_dimension(dim: dict, stock_name: str):
         </div>""",
         unsafe_allow_html=True,
     )
+
+
+# ── D-039: Standardized Section Header Pattern ──────────────────
+
+def _section_header(icon: str, title: str, collapsed: bool = False):
+    """Render a standardized section header.
+
+    If collapsed=False: renders a markdown header (### icon title).
+    If collapsed=True: renders a st.expander with the header as label.
+    Returns the expander context manager if collapsed, else None.
+    """
+    if collapsed:
+        return st.expander(f"{icon} {title}", expanded=False)
+    else:
+        st.markdown(f"### {icon} {title}")
+
+
+def _section_title(icon: str, title: str):
+    """Shortcut for _section_header with collapsed=False."""
+    st.markdown(f"### {icon} {title}")
+
+
+# ── D-040: Standardized Disclaimer Component ────────────────────
+
+_DISCLAIMER_TEXTS = {
+    "expert": "⚠️ 專家分析由 AI 輔助整理，僅供參考，不構成投資建議。",
+    "scenario": "⚠️ 歷史情境為假設性試算，僅供教育用途，不構成投資建議。過去績效不代表未來表現。",
+    "general": "⚠️ 本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。",
+}
+
+
+def _historian_disclaimer(disclaimer_type: str = "general"):
+    """Render a standardized disclaimer caption.
+
+    Types:
+        'expert'   — for expert analysis sections
+        'scenario' — for historical scenario sections
+        'general'  — default general disclaimer
+    """
+    text = _DISCLAIMER_TEXTS.get(disclaimer_type, _DISCLAIMER_TEXTS["general"])
+    st.caption(text)
+
+
+# ── D-041: Card Components for Sprint 5 ─────────────────────────
+
+def _study_card(title: str, content: str, icon: str = "📚"):
+    """Render a study log card with consistent styling."""
+    st.markdown(
+        f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;
+        border-left:4px solid #3498DB;margin:0.5rem 0 1rem 0;">
+            <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
+            <div style="font-size:0.9rem;color:#2C3E50;margin-top:0.4rem;
+            line-height:1.7;">{content}</div>
+        </div>""",
+        unsafe_allow_html=True,
+    )
+
+
+def _expert_card(title: str, content: str, icon: str = "🎓"):
+    """Render an expert analysis card with consistent styling."""
+    st.markdown(
+        f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;
+        border-left:4px solid #9B59B6;margin:0.5rem 0 1rem 0;">
+            <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
+            <div style="font-size:0.9rem;color:#2C3E50;margin-top:0.4rem;
+            line-height:1.7;">{content}</div>
+        </div>""",
+        unsafe_allow_html=True,
+    )
+
+
+def _scenario_card(title: str, content: str, icon: str = "🔍"):
+    """Render a historical scenario card with consistent styling."""
+    st.markdown(
+        f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;
+        border-left:4px solid #E67E22;margin:0.5rem 0 1rem 0;">
+            <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
+            <div style="font-size:0.9rem;color:#2C3E50;margin-top:0.4rem;
+            line-height:1.7;">{content}</div>
+        </div>""",
+        unsafe_allow_html=True,
+    )
