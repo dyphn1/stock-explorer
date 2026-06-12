@@ -2,7 +2,7 @@
 ## Summary
 - **Topic**: Discussion (💡) — Round 15 Complete
 - **Date**: 2026-06-21 (Discussion Round 15 completed)
-- **Sprint Status**: Sprint 4 ✅ COMPLETE → Sprint 5 in progress → Round 15 discussion confirmed post-Sprint 5 plan
+- **Sprint Status**: Sprint 5 ✅ COMPLETE → Sprint 6 next
 
 ## Key Metrics
 - Design grade: A (6th consecutive round, maintained through Sprint 5)
@@ -13,8 +13,8 @@
 |--------|-------|--------|
 | Sprint 3 | C44, C41, C38, D16, D-025 | ✅ Complete |
 | Sprint 4 | R3, C48, C38, C51, C53-1 | ✅ Complete |
-| Sprint 5 | D-039/040/041 + D37 + C71 + C74 + C73 | 📋 In Progress |
-| Sprint 6 | C83 + C85 + C42 + C43 + C45 | 📋 Round 15 approved |
+|| Sprint 5 | D-039/040/041 + D37 + C71 + C74 + C73 | ✅ Complete |
+| Sprint 6 | C83 + C85 + C42 + C43 + C45 | 📋 Next |
 | Sprint 7 | C84 + C82/D28/D-045 spikes + debt cleanup | 📋 Round 15 approved |
 | Sprint 8 | C63 (conditional on D28) + D22 | 📋 Round 15 approved |
 | Sprint 9+ | C81, C64, C65, C68 | 📋 Round 15 approved |
@@ -44,8 +44,17 @@
 ### Sprint 4 Execution (2026-06-20) — COMPLETE ✅
 All 5 items delivered: R3 (batch_api.py), C48 (story card), C38 (compare stories), C51 (sector heatmap), C53-1 (social sharing). L0: 65/65, L1: 8/8. Effort: 35-43h.
 
-### Sprint 5 Status (2026-06-21) — IN PROGRESS
-Prerequisites (D-039/040/041 + D37) underway. Features C71 → C74 → C73 to follow.
+### Sprint 5 Status (2026-06-22) — COMPLETE ✅
+All prerequisites, features, and D37 split delivered:
+- **D-043**: P0 bug fix — `get_roe_analyzer`/`get_pbr_analyzer` → `get_roe_analogy`/`get_pbr_analogy` (318d30f)
+- **D-039/040/041**: Section header, disclaimer, card component helpers (075df11)
+- **C71**: Study Log — `_study_log.py` (e6c79f3)
+- **C73**: Expert Analysis MVP — `_expert_analysis.py` (e6c79f3)
+- **C74**: Historical Scenarios — `_historical_scenarios.py` (e6c79f3)
+- **D37**: `_sections.py` split into `_sections/` sub-modules — `__init__.py`, `_summary.py`, `_financial.py`, `_health.py`, `_story.py`, `_detail.py` (cf27659)
+- **D-044**: Read Next/Share headers already using `_section_title()` (verified)
+- **D-046**: Sector heatmap 4th KPI card now uses `_白话_card()` (344a895)
+- L0: 74/74 ✅ | L1: 8/8 + 10 pre-existing event-alert failures unchanged
 
 ## 🔍 Review Section
 
@@ -65,7 +74,7 @@ Prerequisites (D-039/040/041 + D37) underway. Features C71 → C74 → C73 to fo
 - Sprint 5 total: ~50.85h (prerequisites + C71/C73/C74 + D37 split + market_data.py)
 
 ## Next Cycle Handoff
-Next: 🔧 Development → Sprint 5 execution (D-043 fix → D-039/D-040/D-041 prerequisites → C71 → C73 → C74 + D37 split + market_data.py)
+Next: 🔧 Development → Sprint 6 execution (C83 + C85 + C42 + C43 + C45)
 
 ## 💡 Discussion Section (Round 15 — 2026-06-21)
 
