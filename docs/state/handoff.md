@@ -160,6 +160,47 @@ All Sprint 8 debt-first items delivered. 3 commits, all L0/L1 verified.
 - D16 RESOLVED, D26 UNBLOCKED, Design Grade A (6th consecutive)
 - New: D-042/043/044 (P2), C81-C85 added to backlog
 
+## 💡 Discussion Section (Round 18 — 2026-06-13)
+
+### Team Decision: Sprint 9 Feature Plan — Modified Direction A (Challenger ✅ CONFIRMED)
+| Sprint | Features | Effort | Type |
+|--------|----------|--------|------|
+| 9 | C98 (Hybrid) + C101 (Scoped) + C103 Lite | 44.5-51.5h | Education Layer |
+| 10 | C34 Company Story Timeline + M5 remediation | 36-52h | Core Differentiator |
+| 11+ | C68 Financial Concept Storytelling → C65 Game → C64 Community | 86-116h | Long-haul |
+
+### Key Discoveries
+1. **Estimate gap**: Developer estimates (44.5-51.5h) exceed PM estimates (34-46h) by 7-9h due to unaccounted LLM infrastructure (+3h) and C101 dynamic scope (+5-6h)
+2. **C34 deprioritized to Sprint 10**: C98 is a prerequisite foundation for C34 (need event interpretation before building narrative timeline)
+3. **C101 scoped down**: 5-8 generic questions (not stock-specific) to fit sprint capacity; adaptive version deferred to Sprint 10
+4. **C103 Lite**: 2-card primer optimized for mobile; full version deferred to Sprint 10 with persistence layer
+
+### Key Decisions
+1. C98 hybrid: Templates replace summaries on dashboard (ten-second test), LLM for drill-down
+2. C101: 5-8 generic questions reusing C85 pattern, embedded in content sections
+3. C103 Lite: 2-card dismissible primer (what you'll learn + historian disclaimer)
+4. Implementation order: C103 → C101 → C98 (risk-based, not priority-based)
+5. Mid-sprint checkpoint at week 1 with C103 Lite as cut candidate
+6. Historian filter QA gate: PM writes → designer reviews → both sign off before coding
+7. Developer's estimates adopted as working plan (not PM's lower bound)
+
+### Challenger 3-Round Summary
+- **Round 1**: Template-only dashboard vs AI competitors; C101 generic vs contextual → PARTIALLY REVISED
+- **Round 2**: Implementation order vs priority; estimate gap; C103 session-state → REVISED
+- **Round 3**: Historian QA process; ten-second test; M5 milestone; estimate contingency → REVISED
+- **Final Verdict**: ✅ CONFIRMED after 4 required revisions adopted
+
+### Action Items
+| Item ID | Description | Status |
+|---------|-------------|--------|
+| C98 spike | Validate LLM approach (2h) | 📋 Sprint 9 Day 1 |
+| C98 dev | Hybrid interpretation engine | 📋 Sprint 9 |
+| C101 | Comprehension Check Quiz (5-8 questions) | 📋 Sprint 9 |
+| C103 Lite | First Visit Guide (2-card primer) | 📋 Sprint 9 |
+| Historian QA | Write + review C98 templates | 📋 Before C98 coding |
+| C34 | Company Story Timeline | 📋 Sprint 10 |
+| M5 remediation | Fix 10 pre-existing L1 event-alert failures | 📋 Sprint 10 |
+
 ## 💡 Discussion Section (Round 17 — 2026-06-13)
 
 ### Team Decision: Narrative-First Education Path (Challenger ✅ CONFIRMED after revision)
@@ -207,7 +248,7 @@ All Sprint 8 debt-first items delivered. 3 commits, all L0/L1 verified.
 | Backlog cleanup | Mark C37/C39/C41/C42 as Done in issues.md | 📋 This cycle |
 
 ### Next Cycle
-🔍 Review Round 21 → Sprint 9 (C98 + C101 + C103) → 🔧 Development
+🔧 Development → Sprint 9 (C98 + C101 + C103 Lite) → 🔍 Review Round 21 → Sprint 10 (C34 + M5 remediation)
 
 ## 💡 Discussion Log
-*See docs/state/handoff_discuss.md for full Round 16 discussion log. See docs/state/challenge_log.md for Round 17 challenger analysis.*
+*See docs/state/handoff_discuss.md for full Round 18 discussion log. See docs/state/challenge_log_r18.md for Round 18 challenger analysis.*
