@@ -1,67 +1,118 @@
-# Handoff – Discussion (Round 18)
+# Handoff – Discussion
 
 ## Summary
-- **Topic**: Discussion (💡) — Round 18: Sprint 9 Feature Directions (C98 + C101 + C103)
+- **Topic**: Discussion (💡) — Post-Sprint 10 Feature Directions
 - **Date**: 2026-06-13
 - **Participants**: Product Manager, System Architect, Designer, Developer, Challenger
-- **Sprint Context**: Sprint 8 complete → Sprint 9 (C98 + C101 + C103) → Sprint 10+
+- **Sprint Status**: Sprint 9 ✅ COMPLETE → Sprint 10 in progress
 
-## Critical Discovery: Estimate Gap
-The developer's estimates (44.5-51.5h) significantly exceed the PM's original estimates (34-46h). The gap comes from:
-- C98: No existing LLM client in codebase (+3h infrastructure)
-- C101: Stock-specific scope requires dynamic question selection (+5-6h)
-- Contingency buffers (+4h)
+## Sprint Plans (Summary)
+| Sprint | Items | Status |
+|--------|-------|--------|
+| Sprint 3 | C44, C41, C38, D16, D-025 | ✅ Complete |
+| Sprint 4 | R3, C48, C38, C51, C53-1 | ✅ Complete |
+| Sprint 5 | D-039/040/041 + D37 + C71 + C74 + C73 | ✅ Complete |
+| Sprint 6 | C83 + C85 + C02 + C43 + C45 | ✅ Complete |
+| Sprint 7 | C84 + D3 + D6 + D7 + D-044 | ✅ Complete |
+| Sprint 8 | D-048 + D6 + D-055 + D-050 + D8/D9/D10 | ✅ Complete |
+| Sprint 9 | D-057 + C103 Lite + C101 + C98 | ✅ Complete |
+| Sprint 10 | C34 + C105 + M5 remediation + D-061 | 📋 In Progress |
+| Sprint 11 | D16 + D24 + R3 + C51 + C53 | 📋 Planned |
+| Sprint 12 | C58 + C42 + C56 + C43-verify | 📋 Planned |
+| Sprint 13 | C48 + C68 + C84 | 📋 Planned |
+| Sprint 14 | C50 + C60 + C52 + C104 + C66 | 📋 Planned |
+| Sprint 15+ | D5 (LLM layer) → C86, C100, C59 | 📋 Deferred |
 
-**Resolution**: Developer's estimates adopted as working plan. PM estimates are lower bound.
+## Key Rules
+- Content cap: 100 items max across all features
+- Mandatory historian tone QA gate before each content feature ships
+- C63 weekly only (start with 12 quarterly, not 52)
+- Card-count limit: max 5 cards per page section (Direction A)
+- Community features (C64, C67, C89) deprioritized — not feasible in Streamlit
+- Content creation must be budgeted at 40% of effort for education features
 
-## Idea Proposals
-| ID | Feature | Effort | Direction | Sprint |
-|----|---------|--------|-----------|--------|
-| C98 | Event Interpretation Engine (Hybrid) | 16-23.5h + 2h spike | P1 CONDITIONAL | Sprint 9 |
-| C101 | Comprehension Check Quiz (Scoped) | ~11h | P2 CONFIRMED | Sprint 9 |
-| C103 Lite | First Visit Guide (2-card primer) | 8-11.5h | P2 CONDITIONAL | Sprint 9 |
+## 💡 Discussion Section
+
+### Round 19 — Post-Sprint 10 Feature Directions (2026-06-13)
+
+**Topic**: What should we build after Sprint 10?
+
+**Challenger Verdict**: ❌ REJECTED → ✅ CONFIRMED after revision (see below)
+
+**Key Revisions from Challenge**:
+1. Moved C58 (Beginner Onboarding) from Sprint 13 → Sprint 12 (retention-critical, gates all other features)
+2. Added C43 (Snowflake verification) to Sprint 12 (already built, needs design system alignment check)
+3. Clarified C44/C45 already built — removed from future backlog
+4. Reduced Sprint 12 from 4 features → 3 features + C43 verification
+5. Restructured Sprint 13 from 4 features → 3 features with explicit content creation budget
+6. Added R3 fallback plan: C42 degrades to top-50 stocks sequential if batch API fails
+7. Established priority resolution: product vision alignment > user retention > technical risk
+
+**Team Final Decision — 3 Directions:**
+
+### Direction A: Discovery & Screening (Sprint 11-12)
+- **C42 Stock Screener** (P1, 18-26h) — #1 competitive gap. MVP: top 200 stocks + 5 presets
+- **C51 Sector Heatmap** (P2, 12-16h) — Visual market overview, creates market_data.py
+- **C49 Daily Market Pulse** (P2, 12-16h) — Deferred to Sprint 13+
+- **Feasibility**: 🟡 Medium (conditional on R3). R3 fallback: top-50 sequential mode
+
+### Direction B: Deep Education (Sprint 12-13) — HIGHEST UX PRIORITY
+- **C58 Beginner Onboarding** (P1, 16-22h) — Sprint 12. 5-step guided tour. Skip option always visible
+- **C56 Explain This Metric** (P1, 10-14h) — Sprint 12. Interactive tooltip system for all metrics
+- **C48 Company Story Card** (P2, 10-14h) — Sprint 13. Hero card at top of business page
+- **C68 Concept Storytelling** (P1, 10-14h) — Sprint 13. Narrative-based concept explanations
+- **Feasibility**: 🟡 Medium-High. Content creation is 40% of effort
+
+### Direction C: Smart Narrative (Sprint 13+, deferred)
+- **C98 Event Interpretation** (P1, 14-18h) — Template-first, leverages M5 remediation
+- **C86 AI Narrative Agent** (P2, 24-34h) — Deferred to Sprint 15+ (needs D5 LLM layer)
+- **C100 Natural Language Screener** (P1, 22-30h) — Deferred to Sprint 15+ (needs C42 + D5)
+- **Feasibility**: 🟡 Medium (template) / 🔴 Low (AI-powered)
+
+### Architecture Debt Resolution (Sprint 11 priority order):
+1. **D16**: Split analogy_engine.py (850 lines → 4 modules) — 2-3h
+2. **D24**: Extract business_card.py to sub-directory — 2-3h
+3. **R3**: Batch API calls utility — 1-2h (with fallback plan)
+
+### Design System Updates (needed for Sprint 12+):
+- 4 new components: Hero Story Card, Risk Card, Metric Explanation Expander, Quiz Card
+- 1 new color: Purple `#9B59B6` for educational interactive elements
+- Text limit adjustment: 200 chars static, 400 chars expandable
+- Mini chart label typography: 0.75rem, #7F8C8D
+
+### Priority Resolution Framework (established this round):
+When roles disagree on priorities, decide by:
+1. **Product vision alignment** — Does it serve "historian, not stock picker"?
+2. **User retention impact** — Does it reduce bounce rate or increase return visits?
+3. **Technical risk** — Can it be built with current architecture?
 
 ## Decisions Made
-1. **C98 Hybrid approach**: Templates for dashboard (replacing summaries, not supplementing), LLM for individual event drill-down. 2h spike first to validate LLM approach.
-2. **C101 Scoped to 5-8 generic questions**: Not stock-specific in Sprint 9. Reuses C85 quiz pattern. Can be enhanced to adaptive in Sprint 10.
-3. **C103 Lite (2-card primer)**: "What you'll learn" + historian disclaimer. Dismissible with single click. Mobile-optimized.
-4. **Implementation order**: C103 → C101 → C98 (lowest to highest risk)
-5. **Mid-sprint checkpoint**: End of week 1. If behind: C103 Lite reduced to 1 card (-4h). If significantly behind: C103 Lite dropped.
-6. **Historian filter QA gate**: PM writes templates → designer reviews → both sign off before coding begins.
-7. **Interpretation replaces summary**: C98 interpretation card replaces event summary on dashboard (summary in expander) for ten-second test compliance.
-
-## Challenger 3-Round Summary
-- **Round 1** (Feature Direction): ⚠️ PARTIALLY REVISED — Template-only dashboard vs AI competitors; C101 generic vs contextual; C103 Lite value; C34 deprioritization concern
-- **Round 2** (Priority): ⚠️ REVISED — Implementation order vs priority mismatch; estimate gap; C103 session-state unreliability; C98/C101 integration opportunity
-- **Round 3** (Goal Alignment): ⚠️ REVISED — Historian filter QA process; ten-second test compliance; M5 milestone non-advancement; estimate gap contingency; C103 under-investment
-- **Final Verdict**: ✅ CONFIRMED after 4 required revisions adopted
-
-## Required Revisions Adopted
-1. Interpretation card REPLACES event summary on dashboard (not supplements)
-2. Historian filter QA gate established (PM writes → designer reviews → both sign off)
-3. Mid-sprint checkpoint with explicit cut criteria added
-4. Developer's estimates (44.5-51.5h) adopted as working plan
+1. **C58 Onboarding moved to Sprint 12** — retention-critical, gates all other features
+2. **C43 verified as already built** — Sprint 12 includes design alignment check, not new build
+3. **C44/C45 confirmed as already built** — removed from future backlog
+4. **Sprint 13 reduced to 3 features** — explicit 40% content creation budget added
+5. **R3 fallback defined** — C42 degrades to top-50 sequential if batch API fails
+6. **Community features (C64, C67, C89) deprioritized** — not feasible in Streamlit, revisit for v2
+7. **D5 (LLM layer) scheduled for Sprint 15** — unblocks AI features (C86, C100, C59)
+8. **Content creation budget established** — 40% of effort for education features across all sprints
 
 ## Action Items
-| Item ID | Description | Owner | Due Date |
-|---------|-------------|-------|----------|
-| C98 spike | Validate LLM approach for event interpretation | Dev | Sprint 9, Day 1 |
-| C98 dev | Hybrid interpretation engine (templates + LLM drill-down) | Dev | Sprint 9 |
-| C101 | Comprehension Check Quiz (5-8 generic questions) | Dev + PM content | Sprint 9 |
-| C103 Lite | First Visit Guide (2-card primer) | Dev | Sprint 9 |
-| Historian QA | Write + review C98 interpretation templates | PM + Designer | Before C98 coding |
-| Mid-sprint check | Week 1 checkpoint with cut criteria | PM | Sprint 9, Week 1 |
+| Item | Description | Owner | Due |
+|------|-------------|-------|-----|
+| D16 | Split analogy_engine.py into 4 modules | Developer | Sprint 11 |
+| D24 | Extract business_card.py to sub-directory | Developer | Sprint 11 |
+| R3 | Create batch_fetch_prices utility | Developer | Sprint 11 |
+| C53 | Social sharing (HTML-to-image export) | Developer | Sprint 11 |
+| C51 | Sector Heatmap with market_data.py | Developer | Sprint 11 |
+| C58 | Beginner Onboarding Flow | Developer | Sprint 12 |
+| C42 | Stock Screener (top-200 MVP) | Developer | Sprint 12 |
+| C56 | Explain This Metric (tooltip system) | Developer | Sprint 12 |
+| C43-verify | Snowflake design alignment check | Designer | Sprint 12 |
+| C48 | Company Story Card (hero element) | Developer | Sprint 13 |
+| C68 | Financial Concept Storytelling | Developer | Sprint 13 |
+| C84 | Market Event Case Study | Developer | Sprint 13 |
+| Design System | 4 new components + color + typography | Designer | Sprint 12 |
+| D5 | LLM abstraction layer | Architect | Sprint 15 |
 
-## Total Effort Estimate
-- **PM estimate**: 35-42.5h
-- **Developer estimate (adopted)**: 44.5-51.5h
-- **Mid-sprint checkpoint**: End of week 1
-- **Cut candidate**: C103 Lite (if behind schedule)
-
-## Strategic Notes
-- Sprint 9 does NOT address the 10 pre-existing L1 event-alert failures. Recommend Sprint 10 explicitly address M5 milestone remediation.
-- C98's hybrid template+LLM approach is a bridge — plan for full LLM integration in Sprint 10 to maintain competitive differentiation (TW platforms adding AI narratives now).
-- C34 (Company Story Timeline) remains the #1 priority for Sprint 10+ as the "purest historian differentiator."
-
-## Next Cycle Handoff
-🔧 Development → Sprint 9 (C98 + C101 + C103 Lite) → 🔍 Review Round 21 → Sprint 10 (C34 + M5 remediation)
+## Next Cycle
+🔍 Review Round 22 → Sprint 10 (C34 + C105 + M5 remediation + D-061)

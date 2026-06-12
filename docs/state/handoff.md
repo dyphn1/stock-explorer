@@ -1,11 +1,11 @@
 # Handoff – Development
 ## Summary
-- **Topic**: Development (🔧) — Sprint 9 Complete
-- **Date**: 2026-06-13 (Sprint 9 development completed)
-- **Sprint Status**: Sprint 9 ✅ COMPLETE → Sprint 10 next (C34 + C105 + M5 remediation + D-061)
+- **Topic**: Discussion (💡) — Post-Sprint 10 Feature Directions
+- **Date**: 2026-06-13 (Round 19 Discussion completed)
+- **Sprint Status**: Sprint 9 ✅ COMPLETE → Sprint 10 in progress (C34 + C105 + M5 remediation + D-061)
 
 ## Key Metrics
-- Design grade: A (D-057 consolidated duplicate _section_title; 11th consecutive A/A-)
+- Design grade: A (11th consecutive A/A-)
 - L0: 89/89 ✅ | L1: 8/18 (10 pre-existing event-alert failures unchanged, zero new failures)
 - Sprint 9: Education Layer (C98 + C101 + C103 Lite) + D-057 prerequisite
 - Features delivered: 4 (D-057, C103 Lite, C101, C98)
@@ -20,14 +20,21 @@
 | Sprint 7 | C84 + D3 + D6 + D7 + D-044 | ✅ Complete |
 | Sprint 8 | D-048 + D6 + D-055 + D-050 + D8/D9/D10 | ✅ Complete |
 | Sprint 9 | D-057 + C103 Lite + C101 + C98 | ✅ Complete |
-| Sprint 10 | C34 + C105 + M5 remediation + D-061 | 📋 Next |
-| Sprint 11+ | C99 + C81, C64, C65, C68 | 📋 Deferred |
+| Sprint 10 | C34 + C105 + M5 remediation + D-061 | 📋 In Progress |
+| Sprint 11 | D16 + D24 + R3 + C51 + C53 | 📋 Planned |
+| Sprint 12 | C58 + C42 + C56 + C43-verify | 📋 Planned |
+| Sprint 13 | C48 + C68 + C84 | 📋 Planned |
+| Sprint 14 | C50 + C60 + C52 + C104 + C66 | 📋 Planned |
+| Sprint 15+ | D5 (LLM layer) → C86, C100, C59 | 📋 Deferred |
 
 ## Key Rules
 - Content cap: 100 items max across all features
 - Mandatory historian tone QA gate before each content feature ships
 - C63 weekly only (start with 12 quarterly, not 52)
 - Card-count limit: max 5 cards per page section (Direction A)
+- Community features (C64, C67, C89) deprioritized — not feasible in Streamlit
+- Content creation must be budgeted at 40% of effort for education features
+- Priority resolution: vision alignment > retention impact > technical risk
 
 ## 🔧 Development Section
 
@@ -63,9 +70,54 @@ All Sprint 9 items delivered. 4 commits, all L0/L1 verified.
 ### Sprint 8 Execution (2026-06-13) — COMPLETE ✅
 7 of 7 debt items. 3 code changes (D-048 YAML migration, D-055 sector_heatmap inline HTML, D-056 _section_title guard), 4 already done. L0: 85/85 ✅
 
-## 💡 Discussion Section (Round 18 — 2026-06-13)
-Sprint 9 plan: C98 + C101 + C103 Lite (Education Layer). Challenger ✅ CONFIRMED after 4 revisions.
-Full discussion: docs/state/handoff_discuss.md | Challenge log: docs/state/challenge_log_r18.md
+## 💡 Discussion Section (Round 19 — 2026-06-13)
+
+**Topic**: Post-Sprint 10 Feature Directions — What should we build after Sprint 10?
+
+**Challenger Verdict**: ❌ REJECTED → ✅ CONFIRMED after revision
+
+**Key Revisions from 3-Round Challenge**:
+1. C58 (Beginner Onboarding) moved from Sprint 13 → Sprint 12 (retention-critical)
+2. C43 (Snowflake) verified as already built — Sprint 12 includes design alignment check
+3. C44/C45 confirmed as already built — removed from future backlog
+4. Sprint 12 reduced from 4 → 3 features + C43 verification
+5. Sprint 13 reduced from 4 → 3 features with 40% content creation budget
+6. R3 fallback plan defined: C42 degrades to top-50 sequential if batch API fails
+7. Priority resolution framework established: vision alignment > retention > technical risk
+
+**Team Final Decision — 3 Directions:**
+
+**Direction A: Discovery & Screening (Sprint 11-12)**
+- C42 Stock Screener (P1, 18-26h) — MVP: top-200 stocks + 5 presets
+- C51 Sector Heatmap (P2, 12-16h) — Creates market_data.py service
+- Feasibility: 🟡 Medium (conditional on R3)
+
+**Direction B: Deep Education (Sprint 12-13) — HIGHEST UX PRIORITY**
+- C58 Beginner Onboarding (P1, 16-22h) — 5-step guided tour, always skippable
+- C56 Explain This Metric (P1, 10-14h) — Interactive tooltip system
+- C48 Company Story Card (P2, 10-14h) — Hero card at top of business page
+- C68 Concept Storytelling (P1, 10-14h) — Narrative-based explanations
+- Feasibility: 🟡 Medium-High (content creation = 40% of effort)
+
+**Direction C: Smart Narrative (Sprint 13+, deferred)**
+- C98 Event Interpretation (P1, 14-18h) — Template-first
+- C86/C100 AI features — Deferred to Sprint 15+ (needs D5 LLM layer)
+- Feasibility: 🟡 Medium (template) / 🔴 Low (AI-powered)
+
+**Architecture Debt (Sprint 11 priority):**
+- D16: Split analogy_engine.py (850 lines → 4 modules) — 2-3h
+- D24: Extract business_card.py — 2-3h
+- R3: Batch API utility — 1-2h
+
+**Design System Updates Needed (Sprint 12):**
+- 4 new components: Hero Story Card, Risk Card, Metric Explanation Expander, Quiz Card
+- 1 new color: Purple #9B59B6 for educational elements
+- Text limit: 200 chars static, 400 chars expandable
+
+**Full discussion**: docs/state/handoff_discuss.md | Challenge log: docs/design/challenge_log_r19.md
+**Architect analysis**: docs/design/architect_discussion_r19.md
+**Designer analysis**: docs/design/designer_discussion_r19.md
+**Developer estimates**: docs/design/developer_discussion_r19.md
 
 ## Next Cycle
 🔍 Review Round 22 → Sprint 10 (C34 Company Story Timeline + C105 Simple/Detailed Toggle + M5 remediation + D-061 test infra)
