@@ -1,7 +1,7 @@
 # Stock Explorer — Current Problems
 
-> **Last Updated**: 2026-06-19
-> **Source**: Design Review Round 14 (2026-06-19)
+> **Last Updated**: 2026-06-20
+> **Source**: Design Review Round 16 (2026-06-20)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
@@ -235,6 +235,33 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Effort**: 1h
 - **Status**: 🔴 **Sprint 5 PREREQUISITE** — must complete before any C71/C73/C74 implementation
 
+### D-042: Health Dimension Mini-Cards Use Non-Standard Styling
+- **Severity**: P2
+- **Added**: 2026-06-20
+- **Source**: Design Review Round 16
+- **Description**: The 5-dimension score cards in `_render_health()` (lines 227-236 of `_sections.py`) use inline HTML with `padding:0.5rem`, `border-radius:10px`, and no `border-left`. This differs from the design system's card spec (`padding:1.2rem`, `border-radius:12px`, `border-left:4px solid`). While the compact style is appropriate for the 5-column layout, it creates a visual mismatch with all other cards on the page.
+- **Affected Files**: `src/pages/business_card/_sections.py` lines 227-236
+- **Proposed Fix**: Create a `_mini_score_card(label, score, indicator, color)` helper in `_router_base.py` with standardized compact styling. This would be a recognized "mini card" variant in the design system.
+- **Effort**: 0.5h
+
+### D-043: Dividend History Table Uses Inline HTML Instead of st.dataframe
+- **Severity**: P2
+- **Added**: 2026-06-20
+- **Source**: Design Review Round 16
+- **Description**: The dividend history table in `_render_dividend()` (lines 420-439 of `_sections.py`) builds a complete HTML table from scratch with inline styles. This bypasses Streamlit's `st.dataframe()` which provides sorting, filtering, and responsive behavior. The inline HTML table also uses `border-bottom:1px solid #F8F9FA` which is nearly invisible on white backgrounds.
+- **Affected Files**: `src/pages/business_card/_sections.py` lines 420-439
+- **Proposed Fix**: Build the badge list as a separate column, then use `st.dataframe()` with column config for badges. Or, if HTML is kept, use `border-bottom:1px solid #BDC3C7` for visible row separators.
+- **Effort**: 1-2h
+
+### D-044: C41 Read Next Header Doesn't Use _section_title() Helper
+- **Severity**: P2
+- **Added**: 2026-06-20
+- **Source**: Design Review Round 16
+- **Description**: `_render_read_next()` at line 549 uses raw `st.markdown("### 📖 推薦閱讀")` instead of the `_section_title()` helper from `_router_base.py`. This means the header doesn't get the emoji-prefix detection and consistent formatting that `_section_title()` provides.
+- **Affected Files**: `src/pages/business_card/_sections.py` line 549
+- **Proposed Fix**: Replace with `_section_title("📖 推薦閱讀")`.
+- **Effort**: <0.5h (one-line change)
+
 ---
 
 ## Resolved Issues
@@ -262,10 +289,10 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## Statistics
 
-- **Total Issues**: 28
+- **Total Issues**: 31
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 16 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-037, D-038, D-039, D-040, D-041)
+- **P2 (Optimization)**: 19 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-037, D-038, D-039, D-040, D-041, D-042, D-043, D-044)
 - **Resolved**: 18
 
 ---

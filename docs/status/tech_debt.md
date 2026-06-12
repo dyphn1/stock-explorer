@@ -1,7 +1,7 @@
 # Stock Explorer — Technical Debt Register
 
-> **Last Updated**: 2026-06-19
-> **Source**: Review Cycle Round 15 (Architect's findings)
+> **Last Updated**: 2026-06-20
+> **Source**: Review Cycle Round 16 (Architect's findings)
 > **Maintainer**: System Architect
 
 This file tracks all known architecture and technical debt in Stock Explorer, organized by severity.
@@ -20,22 +20,15 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 - **Recommended Action**: Define an `src/services/llm/` abstraction layer with a protocol/interface. Current template engines become the "fallback" implementation.
 
 ### D16: `analogy_engine.py` god module (850 lines, 6 responsibilities)
-- **Effort**: 2-3h
-- **Status**: ⏳ **PENDING** — Still 850 lines, un-split. Was deferred to end of Sprint 3 after C44 and C38. C48 (Sprint 4) is blocked on this.
-- **Description**: `analogy_engine.py` contains 6 distinct responsibilities:
-  1. Analogy/revenue explanations (original purpose, lines 1–136)
-  2. Curated key takeaways data `_KEY_TAKEAWAYS` (120 lines of hardcoded dict)
-  3. `generate_key_takeaways()` — rule-based synthesis (100 lines)
-  4. `compute_recent_deltas()` + `explain_delta()` — delta detection (180 lines)
-  5. Health scoring: 6 `_score_*` functions + `compute_health_scores()` + `get_health_summary()` (270 lines)
-  6. EPS extraction logic (now delegated to `financial_metrics.py` via R1)
-- **Impact**: The module is doing the work of 3–4 separate services. The health scoring functions (`_score_roe`, `_score_gross_margin`, etc.) are pure functions that could be independently tested but are buried in a module dominated by string templates. **Critical path for C48.**
-- **Recommended Action**: Split into focused modules:
-  - `src/services/analogy_engine.py` — keep only analogy functions (lines 1–136)
-  - `src/services/key_takeaways.py` — `generate_key_takeaways()` + `_KEY_TAKEAWAYS` data
-  - `src/services/delta_engine.py` — `compute_recent_deltas()` + `explain_delta()`
-  - `src/services/health_scoring.py` — all `_score_*` + `compute_health_scores()` + `get_health_summary()`
-- **Priority for Sprint 4**: 🔴 HIGH — Must be completed before C48 starts. D26 explicitly flags D16 as a blocker for `story_composer.py`.
+- **Effort**: RESOLVED (2-3h)
+- **Status**: ✅ **RESOLVED** — Commit `f12c103`. Split into 4 focused modules:
+  - `src/services/analogy_engine.py` (193 lines) — analogy functions only (10 `get_*_analogy()` + `get_one_liner()`)
+  - `src/services/key_takeaways.py` (232 lines) — `_KEY_TAKEAWAYS` data + `generate_key_takeaways()`
+  - `src/services/delta_engine.py` (164 lines) — `compute_recent_deltas()` + `explain_delta()`
+  - `src/services/health_scoring.py` (269 lines) — 6 `_score_*` + `compute_health_scores()` + `get_health_summary()`
+- **Impact**: Eliminates the largest god module. Unblocks C48's `story_composer.py` (D26). All 4 modules have clean service-layer boundaries.
+- **Note**: D18 (hardcoded `_KEY_TAKEAWAYS` dict) and D6 (hardcoded data in Python) still apply to `key_takeaways.py` and `analogy_engine.py` — YAML migration remains pending.
+- **Priority for Sprint 4**: ✅ COMPLETE — Was the FIRST task of Sprint 4.
 
 ## Medium Severity Debt
 
@@ -176,10 +169,9 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 
 ### D26: `story_composer.py` will import from multiple unstable services
 - **Effort**: Blocker for C48
-- **Status**: ⏳ **PENDING** — Blocked on D16.
-- **Description**: C48's `story_composer.py` will import from `analogy_engine.py` (being split via D16), `company_facts.py`, `chart.py`, and `financial_metrics.py`.
-- **Impact**: C48 development may be blocked or coupled to unstable interfaces if D16 slips.
-- **Recommended Action**: Complete D16 before starting C48.
+- **Status**: ✅ **UNBLOCKED** — D16 is resolved. `story_composer.py` can now import from 4 stable, focused modules instead of one 850-line god module.
+- **Description**: C48's `story_composer.py` will import from `analogy_engine.py` (now 193 lines, stable), `key_takeaways.py`, `delta_engine.py`, `health_scoring.py`, `company_facts.py`, `chart.py`, and `financial_metrics.py`.
+- **Impact**: C48 development can proceed without coupling to unstable interfaces.
 
 ## New Architecture Debt Identified in Round 13
 
@@ -274,42 +266,41 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 - D33: C41 Read Next page-level data access pattern (see above)
 
 ## Summary
-- **Total Debt Items**: 35
-- **High Severity**: 2 items (D5, D16)
-- **Medium Severity**: 29 items (D3-D4, D6-D15, D18-D21, D22-D32, D37-D38)
+- **Total Debt Items**: 37
+- **High Severity**: 1 item (D5)
+- **Medium Severity**: 30+ items (D3-D4, D6-D15, D18-D23, D25, D27-D32, D37-D39)
 - **Low Severity**: 1 item (D33)
-- **Resolved Items**: D1, D2, D17, D20, D24 (5 items)
-- **Pending Sprint 4**: D5, D6, D16, D18, D19, D23, D25, D26, D27, D28, D29, D30, D31, D32, D37, D38
+- **Resolved Items**: D1, D2, D16, D17, D20, D24, D26 (7 items)
+- **Pending Sprint 4**: D5, D6, D18, D19, D23, D25, D27, D28, D29, D30, D31, D32, D37, D38, D39
 
 ## Sprint 4 Readiness Assessment
 
-### Prerequisites (Hard Blockers)
-1. **D16** (Split analogy_engine.py) — Blocks C48's `story_composer.py` (D26)
-2. ~~D24~~ (business_card.py sub-directory) — ✅ COMPLETE
-3. **R3** (Batch API minimal) — Blocks C51 Sector Heatmap
+### Prerequisites (All Clear ✅)
+1. ~~D16~~ (Split analogy_engine.py) — ✅ COMPLETE (`f12c103`)
+2. ~~D24~~ (business_card.py sub-directory) — ✅ COMPLETE (`e12c103`)
 
 ### Recommended Sprint 4 Sequence
-1. ~~**D24**~~ — ✅ COMPLETE (e12c103)
-2. **D16** — Split analogy_engine.py (2-3h) — Must complete before C48
-3. **R3** — Batch API minimal (1-2h) — Unlocks C51
-4. **C38** — Compare Stories Phase 1 (10-12h) — Can parallelize with R3
-5. **C51** — Sector Heatmap (12-16h) — With R3 prerequisite
-6. **C48** — Company Story Card (10-14h) — With D16 + D24 prerequisites
+1. ~~**D24**~~ — ✅ COMPLETE (`e12c103`)
+2. ~~**D16**~~ — ✅ COMPLETE (`f12c103`)
+3. **R3** — Batch API minimal (1-2h) — No dependencies, start immediately
+4. **C48** — Company Story Card (10-14h) — No dependencies, start immediately (parallel with R3)
+5. **C38** — Compare Stories Phase 1 (10-12h) — No dependencies
+6. **C51** — Sector Heatmap (12-16h) — With R3 prerequisite + `market_data.py` (D25)
 7. **C53-1** — Social Sharing URL (2-3h) — Quick win
 
 ### Architecture Risks for Sprint 4
-- **analogy_engine.py uncontrolled growth**: File is still 850 lines. C38 and C48 need functions from it. **D16 must be FIRST or second task.**
-- **_sections.py emerging monolith** (D37): At 612 lines, C38 and C48 will push it to ~730+. Split alongside feature implementation.
-- **C48 coupling to unstable interfaces**: story_composer.py needs analogy_engine.py split first (D16). If D16 slips, C48 slips.
+- **_sections.py emerging monolith** (D37): At 604 lines, C38 and C48 will push it to ~730+. Split alongside feature implementation.
+- **C48 coupling to unstable interfaces**: UNBLOCKED — D16 is resolved. analogy_engine.py is now 193 lines and stable.
 - **Market data abstraction gap**: C51 needs `market_data.py` (D25). Without it, sector heatmap will ad-hoc the market-wide data flow.
 - **Tone guidelines gap**: C51 displays market-level data. Without tone guidelines (D23), market features risk sounding like investment advice.
 - **risk_analyzer.py size creep**: At 567 lines, monitor for future split if risk dimensions grow beyond 3.
 - **chart.py growth** (D38): At 787 lines, monitor. Split to `chart_sector.py` if market charts are added.
+- **Duplicate import headers** (D39): `_main.py` and `_sections.py` have near-identical import blocks. Maintenance risk when adding new services.
 
 ## Next Review
-This register should be updated after each review cycle. Next update: After D16 + R3 complete (Sprint 4 mid-point).
+This register should be updated after each review cycle. Next update: Sprint 4 mid-point (after R3 + one major feature complete).
 
 ---
 *Created: 2026-06-11*
 *Maintainer: System Architect*
-*Last Updated: 2026-06-19 (Round 15)*
+*Last Updated: 2026-06-20 (Round 16)*

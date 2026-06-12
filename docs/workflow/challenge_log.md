@@ -48,8 +48,25 @@
 - C73 locked at 10 stocks (permanent MVP)
 - Feature Intake Filter adopted (4-question historian test)
 
-**✅ CONFIRMED** with 8 conditions. No fundamental strategic disagreements.
-**Theme**: Review Round 14 — New features + Architecture + Design
+## Round 16: Final Confirmation (2026-06-20)
+**Theme**: Review Round 16 — New features + Architecture + Design
+
+### Round 1 (Gap Authenticity): ✅ CONFIRMED
+- C83 (Investment Memo) and C85 (Wellness Check) validated as genuine gaps — no TW competitor has these
+- C81 (Decision Scenarios), C82 (Animated Story), C84 (Case Studies) are medium-term opportunities
+- No features rejected — all pass historian filter
+
+### Round 2 (Priority): ✅ CONFIRMED
+- Sprint 4/5 planned work remains priority
+- C83/C85 for Sprint 6+; C81, C82, C84 post-Sprint 5
+- No priority changes to existing sprint plans
+
+### Round 3 (Goal Alignment): ✅ CONFIRMED with conditions
+- All new features pass historian test
+- A grade conditional on D-041 before Sprint 5
+- C82 de-risked: start with static MVP
+
+**✅ CONFIRMED** with 4 conditions. No fundamental strategic disagreements.
 
 ### Round 1 (Gap Authenticity): ❌ REQUIRES REVISION
 - **C69 REJECTED** — Paper trading contradicts historian positioning

@@ -26,4 +26,9 @@ C64: "Community Q&A" — Peer Learning Forum | P2 | 16-24h | Point-to-point know
 C65: "Company Story Game" — Gamified Learning Through Play | P2 | 10-14h | Point-to-point knowledge construction + Ten-second test + Engagement | source: competitor research round 13
 C66: "Conversational Tone" — UX Writing Overhead for Approachability | P2 | 6-10h | Story first + Ten-second test + Beginner-friendly | source: competitor research round 13
 C67: "Community-Curated Stock Stories" — User-Generated Narrative Layer | P2 | 14-20h | Story first + Adaptive + Point-to-point knowledge construction | source: competitor research round 13
-C68: "Financial Concept Storytelling" — Narrative-Based Concept Explanations | P1 | 12-16h | Story first + Point-to-point knowledge construction + Ten-second test | source: competitor research round 13
+|C68: "Financial Concept Storytelling" — Narrative-Based Concept Explanations | P1 | 12-16h | Story first + Point-to-point knowledge construction + Ten-second test | source: competitor research round 13
+|C81: "Historical Decision Scenario Explorer" — "What Would Have Happened If..." | P2 | 14-20h | Story first + Point-to-point knowledge construction + Historian | source: competitor research round 16
+|C82: "Animated Data Story" — Scrollable Visual Company History | P2 | 12-16h | Story first + PPT-style + Ten-second test | source: competitor research round 16
+|C83: "Investment Memo Template" — Structured Reflection Tool | P2 | 6-10h | Story first + Point-to-point knowledge construction + Historian | source: competitor research round 16
+|C84: "Market Event Case Study" — Interactive Historical Market Event Explorer | P2 | 10-14h | Story first + Adaptive + Historian | source: competitor research round 16
+|C85: "Financial Wellness Check" — Behavioral Finance Self-Assessment | P2 | 8-12h | Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 16
