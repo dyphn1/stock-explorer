@@ -48,6 +48,7 @@ from src.pages.business_card._sections import (
     _render_revenue_breakdown,
     _render_revenue_trend,
     _render_valuation,
+    _render_compare_stories,
     _render_news,
     _render_read_next,
     _render_footer,
@@ -80,6 +81,7 @@ def _render_business_card(data: dict, client):
     _render_revenue_breakdown(data, client)
     _render_revenue_trend(data, client)
     _render_valuation(data, client)
+    _render_compare_stories(data, client)
     _render_news(data, client)
     _render_read_next(data, client)
     _render_footer(data, client)

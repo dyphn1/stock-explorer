@@ -38,6 +38,7 @@ from src.pages.business_card._helpers import (
     _render_risk_dimension,
     _get_health_metric_values,
 )
+from src.services.compare_stories import generate_compare_stories
 
 
 def _render_story_card(data: dict, client) -> None:
@@ -654,6 +655,107 @@ def _render_news(data: dict, client) -> None:
             _info_card(f"{impact_class} {title}\n\n{summary}\n\n📡 {source} ｜ {date_str}", "", "📰")
     else:
         st.info("近期無重大新聞")
+
+
+def _render_compare_stories(data: dict, client) -> None:
+    """C38 Compare Stories: narrative comparison with peer companies.
+
+    Shows a collapsible section with plain-language narrative comparing
+    the current stock against 2-3 peer companies in the same industry.
+    Uses the analogy engine for generating comparison text.
+    """
+    stock_id = data["stock_id"]
+    stock_name = data["stock_name"]
+    industry = data["industry"]
+    extra_metrics = data["extra_metrics"]
+    latest_per_pbr = data["latest_per_pbr"]
+    monthly_revenue = data["monthly_revenue"]
+    financial = data["financial"]
+
+    # ── Find peers ──
+    all_info = client.get_stock_info()
+    if all_info is None or len(all_info) == 0:
+        return
+    if not industry or industry == "未知":
+        return
+
+    peer_mask = (
+        (all_info["industry_category"] == industry)
+        & (all_info["stock_id"] != stock_id)
+    )
+    try:
+        peers_df = all_info[peer_mask]
+        if not isinstance(peers_df, pd.DataFrame):
+            return
+        peers_df = peers_df.sort_values("stock_id").head(3)
+    except Exception:
+        return
+
+    if len(peers_df) == 0:
+        return
+
+    # ── Generate comparison narratives ──
+    stories = generate_compare_stories(
+        stock_id=stock_id,
+        stock_name=stock_name,
+        industry=industry,
+        extra_metrics=extra_metrics,
+        latest_per_pbr=latest_per_pbr,
+        monthly_revenue=monthly_revenue,
+        financial_df=financial,
+        all_stock_info=all_info,
+    )
+
+    if not stories:
+        return
+
+    # ── Render in collapsible section (D-032 progressive disclosure) ──
+    with st.expander("📖 同業比較故事 — 跟同業比起來怎麼樣？", expanded=False):
+        st.markdown(f"*{stock_name} 與同產業同業的敘事比較*")
+        st.markdown("")
+
+        for story in stories:
+            peer_name = story["peer_name"]
+            peer_id = story["peer_id"]
+            lines = story["narrative_lines"]
+
+            # Peer header with navigation button
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                st.markdown(f"**vs. {peer_name}** `{peer_id}`")
+            with col2:
+                if st.button(
+                    f"查看 {peer_name}",
+                    key=f"compare_story_{stock_id}_peer_{peer_id}",
+                    use_container_width=True,
+                ):
+                    navigate_to(page="名片", stock_id=peer_id)
+
+            # Narrative lines — use _info_card for each comparison point
+            for line in lines:
+                # Determine icon based on content
+                icon = "📊"
+                if line.startswith("📏"):
+                    icon = "📏"
+                elif line.startswith("💰"):
+                    icon = "💰"
+                elif line.startswith("📈"):
+                    icon = "📈"
+                elif line.startswith("🏷️"):
+                    icon = "🏷️"
+                elif line.startswith("💵"):
+                    icon = "💵"
+
+                # Strip leading emoji from line for cleaner display
+                clean_line = line
+                # Remove leading emoji + space if present
+                parts = line.split(" ", 1)
+                if len(parts) == 2 and parts[0] in ("📏", "💰", "📈", "🏷️", "💵", "📊"):
+                    clean_line = parts[1]
+
+                _info_card("", clean_line, icon)
+
+            st.markdown("---")
 
 
 def _render_read_next(data: dict, client) -> None:
