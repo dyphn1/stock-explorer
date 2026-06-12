@@ -68,8 +68,7 @@ def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
 
 def _section_title(title: str):
     if not title:
-        st.markdown(f"### 📊 {title}")
-        return
+        return  # don't render anything for empty titles
 
     first_char = title[0]
     code = ord(first_char)
