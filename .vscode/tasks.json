@@ -15,10 +15,7 @@
             "type": "shell",
             "command": "./.venv/Scripts/python",
             "args": [
-                "-m",
-                "streamlit",
-                "run",
-                "src/main.py"
+                "run.py"
             ],
             "group": {
                 "kind": "build",
