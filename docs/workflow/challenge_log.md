@@ -375,3 +375,165 @@ The team's summary contains **outdated status information** that materially affe
 **Total Committed Effort:**
 - Sprint 7: 34.2h (range 34-44h)
 - Sprint 8+: C93 (14h) + C94 (16h) + C97 (21h) + D13 (4.2h) + C82 (conditional on D28) = 55.2h+ C82
+
+---
+
+## Round 20: Three-Round Challenge (2026-06-13)
+**Theme**: Sprint 7 Completion Review — C84 Market Event Case Study + Debt Cleanup + 6 New Feature Gaps (C98-C103) + 8 New Debt Items (D-048 through D-056)
+
+### Round 1 (Gap Authenticity): ⚠️ PARTIALLY REVISED
+
+**Challenger Questions:**
+
+1. **C98 (Event Interpretation Engine) — P1 or premature?** The concept is compelling: combine M5 event detection with AI narrative to answer "Why did this stock move?" But let's examine feasibility. M5 detects events from structured data (price spikes, volume anomalies, earnings releases). The "interpretation" layer requires an LLM to synthesize multiple data points into a coherent narrative. Our current LLM usage is strictly limited to "plain-language translation only" (per product vision line 76). Are we ready to expand LLM scope from translation to interpretation? And is this truly P1 — or is it P2 until M5 event detection is more mature? The 14-18h estimate assumes the M5 event data is clean enough to feed into narrative generation. Is it?
+
+2. **C99 (Scrollytelling Visual Company History) — Who is this for?** At 16-22h, this is expensive. Scrollytelling is a premium visualization technique (think NYT-style interactive articles). Our target users are beginners who feel overwhelmed by jargon. Will a beginner appreciate — or even sit through — a scrollytelling experience? Or is this actually for advanced users who already understand the basics? If it's for advanced users, does it align with our "beginner-first" positioning?
+
+3. **C100 (Natural Language Screener with "Why It Passed") — Feature creep toward stock picker?** A natural language screener that says "Show me companies with rising revenue and low debt" sounds useful. But the "Why It Passed" explanation is the dangerous part — it implies the screener is making recommendations. "This stock passed because revenue is rising" sounds like "this is a good stock." Are we building a screener (stock picker tool) or an educational tool? The product vision explicitly says "Do not say buy or sell; only explain what has happened." A screener inherently filters toward "buy" candidates.
+
+4. **C101 (Comprehension Check Quiz) — Genuine gap or nice-to-have?** At 8-12h, this is relatively cheap. But we already have C52 (Quiz Mode) on the backlog. Is C101 a replacement for C52 or a different feature? If it's a replacement, we should explicitly cancel C52. If it's different, what's the distinction? Having two quiz features on the backlog is confusing.
+
+5. **C102 (Market Narrative Feed) — Social media feature in a historian tool?** "Social-Media AI Story Stream" sounds like a news/social feed. Our product is about understanding companies, not consuming market news. This feels like it belongs in a trading platform, not Stock Explorer. The product vision says "Focus on the company itself, not short-term price movement." A narrative feed is inherently about short-term market sentiment. Is this a genuine gap or are we copying competitors because they have it?
+
+6. **C103 (Learn First Gate) — Onboarding gate or user friction?** Requiring users to complete a learning module before accessing the tool is a bold UX decision. It signals "our tool is too complex to use without training" — which contradicts the "PPT-style presentation" and "ten-second test" principles. If users need a gate to understand our tool, the tool has failed. Is this solving a real problem or creating one?
+
+7. **6 features at once — triage needed?** The competitor research identified 6 gaps simultaneously. But not all gaps are equal. C98 and C100 are P1; C99, C101, C102, C103 are P2. Should we focus on the P1 items first and validate them before even considering P2? Adding 6 features to the backlog in one round is how backlogs become unwieldy.
+
+**Team Response:**
+- C98: The M5 event detection is already operational. The interpretation layer uses the same LLM we already use for plain-language translation — we're expanding from "translate this number" to "explain this event." The structured data from M5 (event type, magnitude, timing) provides the factual backbone; the LLM adds narrative context. This is a natural extension, not a new capability. P1 is correct because no TW competitor offers event detection + narrative.
+- C99: Scrollytelling is for the "curious observer" user persona — someone who wants to understand a company's journey. It's not for advanced users; it's for beginners who learn through narrative. The NYT comparison is apt — NYT uses scrollytelling for general audiences, not experts.
+- C100: The screener is educational, not recommendatory. Users define criteria; the tool shows matching companies and explains WHY they match. "Why it passed" means "here's the data that matches your criteria," not "here's why you should buy." The historian framing is: "here's what the data shows." This is C68 (Concept Storytelling) applied to screening.
+- C101: C101 IS C52. Same feature, renamed. C52 should be cancelled and replaced by C101. The distinction: C52 was a generic quiz concept; C101 is specifically "comprehension checks" tied to case studies and educational content.
+- C102: The narrative feed is about market stories, not stock picks. "Here's what happened in the market today" — historian framing. It's not about sentiment or momentum; it's about explaining market events in plain language. This is C84 (Case Studies) in a feed format.
+- C103: The Learn First Gate is optional — it's a "guided first visit" pattern, not a hard gate. Users can skip it. The goal is to reduce the "overwhelmed beginner" problem by providing a structured first experience. It aligns with the "ten-second test" by ensuring users understand the basics before exploring.
+- Triage: Agreed — P1 items (C98, C100) should be prioritized. P2 items (C99, C101, C102, C103) are backlog items for future consideration.
+
+**Challenger Verdict: ⚠️ PARTIALLY REVISED**
+- **C98 CONDITIONAL**: Confirmed as P1, but the LLM scope expansion from "translation" to "interpretation" needs explicit approval. The product vision limits LLM to "plain-language translation only." Adding narrative interpretation is a policy change, not just a feature. Condition: Update product vision to allow LLM interpretation layer, with the constraint that all interpretations must cite structured data sources (no hallucinated narratives). The 14-18h estimate is realistic IF M5 event data is clean. Recommend a 2h spike to validate M5 data quality before committing to C98 development.
+- **C99 DOWNGRADED to P2→P3**: Scrollytelling at 16-22h is too expensive for a P2 feature when we have 11-17h of debt to address. The "curious observer" persona is valid, but this feature doesn't serve the core "beginner investor" persona as directly as other features. Defer to Sprint 9+. The NYT comparison is misleading — NYT has a team of journalists and designers. We have one developer.
+- **C100 REJECTED**: This is the most dangerous feature in the batch. A natural language screener, no matter how carefully framed, teaches users to filter stocks by criteria — which is stock-picking behavior. "Show me companies with rising revenue" is a stock screen. "Why it passed" is stock-picking logic. This directly contradicts "historian, not stock picker." The educational framing is a thin veneer over a screening tool. **REJECTED.** If the team wants educational screening, build it as a "Screening Concepts" educational page that teaches what screening IS, not a functional screener.
+- **C101 CONFIRMED (replaces C52)**: Cancel C52, replace with C101. 8-12h is reasonable for comprehension checks tied to existing educational content. This is a natural extension of C84 case studies.
+- **C102 REJECTED**: A "Market Narrative Feed" is a news/social product feature. It requires ongoing content curation, real-time data feeds, and moderation. It's not a historian feature — it's a market news feature. The product vision explicitly says "Focus on the company itself, not short-term price movement." A narrative feed is inherently about short-term market sentiment. **REJECTED.** If the team wants market event narratives, that's what C84 already provides — in a structured, educational format.
+- **C103 CONDITIONAL**: The "optional guided first visit" pattern is acceptable IF truly optional (skip button prominent, no nag screens). But calling it a "gate" is misleading — it's an onboarding flow. Rename to "First Visit Guide" and position as C58 implementation, not a separate feature. Condition: Must be completable in under 3 minutes, must have a visible skip option, and must not block access to any feature.
+- **Net result**: 6 features → 2 confirmed (C98 conditional, C101 confirmed), 2 rejected (C100, C102), 2 deferred (C99 P3, C103 conditional/rename). Effort reduced from 82-112h to 22-30h for near-term (C98 + C101).
+
+---
+
+### Round 2 (Priority): ⚠️ REVISED
+
+**Challenger Questions:**
+
+1. **D6 was claimed "resolved" in Sprint 7 but architect says only 1/6 blocks migrated. Is this acceptable?** The Sprint 7 summary says D6 (YAML migration) was delivered. The architect says only 1 of 6 data blocks was migrated, and market_event_service.py's _CASE_STUDIES (230 lines of hardcoded data) is a NEW violation. This is a significant discrepancy. Was D6 tested before marking it resolved? The 230-line _CASE_STUDIES block is the largest single hardcoded data block in the codebase — it's the exact problem D6 was supposed to solve.
+
+2. **11-17h of debt before Sprint 8 features — is this acceptable?** The total remaining debt is: D6(3-4h) + D8(1-2h) + D9(1-2h) + D10(1-2h) + D-048(1-2h) + D-050(1-2h) + D-055(2-3h) = ~11-17h. That's essentially a full sprint of debt work before any new features. At what point do we stop adding new features and focus on debt? We've been accumulating debt for 7 sprints.
+
+3. **D-048 (230-line _CASE_STUDIES) should be P1, not Medium.** This isn't just "hardcoded data" — it's 230 lines of educational content mixed with code. Every new case study requires a code change, not a data change. This is the exact anti-pattern D6 was supposed to fix. The fact that Sprint 7 delivered C84 (which added this block) while claiming to resolve D6 is ironic. Shouldn't migrating _CASE_STUDIES to YAML be the FIRST task of Sprint 8?
+
+4. **The "No Inline HTML" rule failed — is it enforceable?** D3 (card consolidation) was marked resolved in Sprint 7, but C84 introduced 116 lines of new inline HTML in market_event_case_study.py (lines 109-117, 143-157). The sector_heatmap.py has 150+ lines of inline HTML. The etf_browser.py has inline HTML in the hot ETFs and dividend ranking tables. The pattern is clear: developers use inline HTML because it's faster than using shared components. Is the rule enforceable without a linting rule or code review checklist? "No Inline HTML" as a policy has failed — every sprint adds more inline HTML.
+
+5. **D-056 (_section_title inverted logic) — is this really Low?** The architect flagged _section_title() as having "inverted logic." Looking at the code: `_section_title(icon, title)` calls `st.markdown(f"### {icon} {title}")` — this looks correct. But the architect says the logic is inverted. If there's a bug in a shared component used across 209 call sites, this isn't Low — it's at least Medium. A bug in a shared component has multiplied impact. What exactly is the inverted logic?
+
+6. **Should we do a "Debt Sprint" before Sprint 8?** With 11-17h of debt, plus new debt from C84 (D-048, D-050), maybe Sprint 8 should be a debt-only sprint. No new features — just pay down the backlog. This would free up Sprint 9 for C98 and C101 without the debt overhang.
+
+**Team Response:**
+- D6 discrepancy: The Sprint 7 claim was based on migrating 1 of 6 blocks (the market_data.py block, D-044). The architect is correct that 5 blocks remain, and _CASE_STUDIES is a new violation. D6 should be reclassified as "partially resolved" not "resolved." The 3-4h remaining estimate is for the other 5 blocks.
+- 11-17h debt: This is acceptable IF we dedicate Sprint 8 to debt + small features. The alternative — letting debt accumulate further — is worse. We recommend Sprint 8 be "debt-heavy" (60% debt, 40% features).
+- D-048 priority: Agreed — D-048 should be elevated to P1. Migrating _CASE_STUDIES to YAML is the single highest-impact debt item because it unblocks content scaling (new case studies without code changes). Recommend D-048 as the first Sprint 8 task.
+- "No Inline HTML" rule: The rule is enforceable but requires tooling. Recommend adding a pre-commit hook or CI check that flags `unsafe_allow_html=True` in new files. Without automated enforcement, the rule relies on code review — which has consistently missed inline HTML.
+- D-056: The "inverted logic" refers to _section_title() being a shortcut for `_section_header(collapsed=False)`, but the function name doesn't convey "collapsed=False" — it's just "title." The logic isn't inverted per se; the naming is misleading. The architect's "inverted logic" label was overstated. This is a naming issue, not a logic bug. Downgrade to "naming clarity" — 0.1h to add a docstring.
+- Debt Sprint: Agreed in principle. Sprint 8 should be debt-first. Recommend: D-048 (P1, 1-2h) → D6 remaining blocks (3-4h) → D-055 (2-3h) → D-050 (1-2h) → D8/D9/D10 (3-6h) = 10-17h debt, leaving 8-14h for C98 spike + C101.
+
+**Challenger Verdict: ⚠️ REVISED**
+- **D6 status**: CONFIRMED as "partially resolved" — update all status docs. The 1/6 migration is real progress, but claiming "resolved" was incorrect. Remaining: 5 blocks, 3-4h.
+- **D-048 elevated to P1**: CONFIRMED. _CASE_STUDIES migration to YAML is the highest-impact debt item. First task of Sprint 8. This unblocks content scaling for C84.
+- **"No Inline HTML" rule**: The rule is NOT enforceable without automated tooling. RECOMMENDATION: Add a CI check that fails on `unsafe_allow_html=True` in new code. Until then, the rule is aspirational, not enforceable. Every sprint will continue to add inline HTML without automated enforcement.
+- **D-056**: DOWNGRADED to "naming clarity" — not a logic bug. 0.1h to improve docstring. No code change needed.
+- **Debt Sprint 8**: CONFIRMED. Sprint 8 should be debt-first: D-048 → D6 → D-055 → D-050 → D8/D9/D10. This clears 10-17h of debt before Sprint 9 features.
+- **11-17h debt + new debt**: The total debt burden is now ~13-21h (including D-048 and D-050 from C84). This is significant but manageable if Sprint 8 is debt-first. The risk is that Sprint 8 adds new features that create more debt — perpetuating the cycle.
+
+---
+
+### Round 3 (Goal Alignment): ⚠️ REVISED
+
+**Challenger Questions:**
+
+1. **Does the overall direction still align with "historian, not stock picker"?** Let's audit the full feature set: C84 (Case Studies) — pure historian ✅. C98 (Event Interpretation) — historian IF properly constrained ⚠️. C100 (Natural Language Screener) — stock picker ❌ (rejected). C102 (Narrative Feed) — market news ❌ (rejected). C99 (Scrollytelling) — historian ✅ but expensive. C101 (Comprehension Check) — education ✅. C103 (Learn First Gate) — onboarding ✅. The two rejected features (C100, C102) were the ones that most clearly violated historian positioning. This suggests the competitor research is identifying features that don't fit our positioning. Are we doing enough filtering BEFORE features reach the backlog?
+
+2. **The product vision says "Refuse to implement all features at once" (line 85). Are we following this?** We now have ~103 identified features (C01-C103). ~30 are implemented. The gap grows every round. The product vision explicitly warns against this. At what point do we stop identifying new features and focus on implementing existing ones? Round 20 added 6 new features and 8 new debt items. That's 14 new items in one review cycle. Is this sustainable?
+
+3. **The "ten-second test" (line 88) — do C98-C103 pass?** C98: "Why did this stock move?" — a beginner can restate this in 10 seconds ✅. C99: "Company history as a visual story" — ✅. C100: "Screen stocks with natural language" — this is jargon, fails the test ❌. C101: "Quiz to check understanding" — ✅. C102: "Market narrative feed" — "narrative feed" is jargon ❌. C103: "Learn before you explore" — ✅. The two that fail the ten-second test are the two we rejected. This validates the filtering approach.
+
+4. **Design Grade A for 10 consecutive rounds — but inline HTML keeps growing.** How can the design grade be A when inline HTML is increasing every round? The designer noted that D3 (card consolidation) was "partially effective" — group_structure.py was consolidated, but C84 introduced new inline HTML. The grade seems to reflect the design system's quality, not its adoption. Is an A grade meaningful if developers keep bypassing the design system?
+
+5. **The product vision's "Risks" section (line 102) lists "Scope creep" as a risk with countermeasure "Strict milestone verification enforcement." Are we enforcing this?** M5 (Adaptive updates) was the last milestone. We're now on Sprint 7, working on C84, C83, C85, and planning C98-C103. The milestones don't map to current features. M5 says "Content updated within 24 hours of a major event" — we don't have this yet. Are we verifying milestones or just sprint completions?
+
+6. **The competitor research identified 10 competitors but the analysis is surface-level.** The QA engineer listed competitors (Luca AI, ticker.ai, Chartr, etc.) but the feature gaps are generic: "Event Interpretation," "Scrollytelling," "Natural Language Screener." These sound like features the competitors might have, not features that Stock Explorer needs. Are we doing competitor-driven development (copying) or vision-driven development (building what fits)? The product vision says "Competitor features must be filtered through historian positioning, not copied directly" (distilled lesson from Rounds 1-12). Are we following this?
+
+**Team Response:**
+- Historian alignment: The two rejected features (C100, C102) were the ones that violated historian positioning. The remaining features (C98, C99, C101, C103) are historian-aligned. The filtering is working — but it happens at the challenge stage, not at the research stage. Recommend adding a "historian filter" to the competitor research template so features are pre-filtered before reaching the backlog.
+- Feature count: 103 identified features is a concern. Recommend a "Feature Triage" process (as suggested in Round 17) — every 3 rounds, review the entire backlog and explicitly defer or cancel low-priority items. The backlog should shrink over time.
+- Ten-second test: Agreed — it's a good filter. The two rejected features failed it. Recommend adding the ten-second test to the competitor research template as a gating criterion.
+- Design Grade A: The grade reflects the design system's quality, not its adoption. The designer acknowledges that inline HTML is a growing problem. The A grade is conditional on implementing automated enforcement (CI check for unsafe_allow_html). Without enforcement, the grade should be A- at best.
+- Milestone verification: M5 (Adaptive updates) is not yet achieved. The adaptive_engine.py exists but doesn't update content within 24 hours of events. This is a gap between milestone definition and implementation. Recommend a milestone verification sprint (or adding milestone checks to sprint reviews).
+- Competitor-driven vs vision-driven: The team acknowledges that competitor research is currently "feature identification" not "gap analysis." The features identified are competitor features, not necessarily Stock Explorer needs. Recommend restructuring competitor research to start from user pain points (from product vision) and check whether competitors address them, rather than starting from competitor features.
+
+**Challenger Verdict: ⚠️ REVISED**
+- **Historian alignment**: CONDITIONAL. The remaining features (C98, C99, C101, C103) pass the historian filter, but the research process needs improvement. RECOMMENDATION: Add "historian filter" and "ten-second test" to the competitor research template. Features that fail either filter should not reach the backlog.
+- **Feature count**: VALID CONCERN. 103 features with ~30 implemented is a 71% backlog ratio. This is demoralizing and unmanageable. RECOMMENDATION: Implement Feature Triage (every 3 rounds) as a formal process. Target: reduce identified features to 60-70 by Sprint 10 through explicit deferrals and cancellations.
+- **Design Grade A**: DOWNGRADE to A- until automated inline HTML enforcement is implemented. The design system is excellent (A), but adoption is inconsistent (B+). The composite grade should reflect both.
+- **Milestone verification**: M5 is not achieved. This is a significant gap. RECOMMENDATION: Add milestone verification to the sprint review checklist. Each sprint should check: "Does this sprint advance any unachieved milestone?"
+- **Competitor research quality**: The research is feature-identification, not gap-analysis. RECOMMENDATION: Restructure competitor research to start from the 5 market pain points in the product vision, then check whether competitors address each pain point. This ensures vision-driven, not competitor-driven, development.
+
+---
+
+### Final Challenger Decision: ⚠️ REQUIRES REVISION
+
+**Sprint 8 Scope (REVISED — Debt-First):**
+1. **D-048** — Migrate _CASE_STUDIES to YAML (P1, 1-2h) — FIRST task
+2. **D6** — Complete remaining 5 YAML migrations (3-4h)
+3. **D-055** — Extract inline HTML from sector_heatmap.py (2-3h)
+4. **D-050** — Extract inline HTML from market_event_case_study.py (1-2h)
+5. **D8** — Parallelize etf_browser.py (1-2h)
+6. **D9** — Add cache to watchlist.py (1-2h)
+7. **D10** — Add cache to adaptive_engine.py (1-2h)
+8. **D-056** — Improve _section_title() docstring (0.1h)
+
+**Sprint 9+ (New Features — Post-Debt):**
+- C98 (Event Interpretation Engine) — P1, 14-18h — CONDITIONAL on: (a) 2h spike to validate M5 data quality, (b) product vision update to allow LLM interpretation layer, (c) all interpretations cite structured data sources
+- C101 (Comprehension Check Quiz, replaces C52) — P2, 8-12h — CONFIRMED
+- C103 (First Visit Gate, rename to "First Visit Guide") — P2, 10-14h — CONDITIONAL on: optional (prominent skip), completable in <3 min, no feature blocking
+
+**Sprint 10+ (Deferred):**
+- C99 (Scrollytelling) — P3, 16-22h — Defer until debt is cleared and core features are stable
+
+**Explicitly Rejected:**
+- C100 (Natural Language Screener) — REJECTED — Contradicts "historian, not stock picker" positioning
+- C102 (Market Narrative Feed) — REJECTED — Market news feature, not historian feature
+
+**Explicitly Cancelled:**
+- C52 (Quiz Mode) — CANCELLED — Replaced by C101
+
+**Structural Changes Required:**
+1. **Add "historian filter" and "ten-second test" to competitor research template** — Features that fail either filter should not reach the backlog
+2. **Implement Feature Triage process** — Every 3 rounds, review entire backlog and explicitly defer/cancel low-priority items. Target: reduce to 60-70 features by Sprint 10.
+3. **Add automated inline HTML enforcement** — CI check that flags `unsafe_allow_html=True` in new code. Until implemented, Design Grade is A- not A.
+4. **Add milestone verification to sprint review checklist** — Each sprint checks whether it advances unachieved milestones (M5 is currently not achieved).
+5. **Restructure competitor research** — Start from product vision pain points, not competitor features.
+6. **Update product vision** — Expand LLM scope from "plain-language translation only" to "plain-language translation and interpretation" with the constraint that all interpretations must cite structured data sources.
+
+**Total Committed Effort:**
+- Sprint 8 (Debt): 10-17h debt + 0.1h naming fix = ~10.2-17.1h
+- Sprint 9: C98 spike (2h) + C98 dev (14-18h) + C101 (8-12h) + C103 (10-14h) = 34-46h
+- Sprint 10+: C99 (16-22h) + remaining backlog
+- **Sprint 8 is debt-first by design** — no new features until debt is cleared
+
+**Key Metrics:**
+- Features rejected: 2 (C100, C102) — both failed historian filter
+- Features cancelled: 1 (C52) — replaced by C101
+- Features deferred: 1 (C99) — P3, too expensive for current priority
+- Features conditional: 3 (C98, C101, C103) — confirmed with conditions
+- Debt items addressed: 8 (D-048, D6, D-055, D-050, D8, D9, D10, D-056)
+- Structural changes required: 6
+
+**Rationale:**
+The consolidated findings revealed two critical issues: (1) Sprint 7's D6 "resolution" was overstated — only 1 of 6 blocks migrated, and C84 introduced a new 230-line violation; (2) the competitor research is producing features that don't pass the historian filter (C100, C102). The debt burden (13-21h including new debt from C84) requires a debt-first Sprint 8. The 6 new feature gaps were triaged: 2 rejected, 1 deferred, 3 confirmed with conditions. The structural changes (historian filter, feature triage, automated enforcement, milestone verification) address systemic issues that have persisted for 20 rounds.

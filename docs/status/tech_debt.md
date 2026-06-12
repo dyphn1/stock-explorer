@@ -1,7 +1,7 @@
 # Stock Explorer — Technical Debt Register
 
-> **Last Updated**: 2026-06-20
-> **Source**: Review Cycle Round 16 (Architect's findings)
+> **Last Updated**: 2026-06-13
+> **Source**: Review Cycle Round 20 (Architect's findings)
 > **Maintainer**: System Architect
 
 This file tracks all known architecture and technical debt in Stock Explorer, organized by severity.
@@ -351,6 +351,141 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 This register should be updated after each review cycle. Next update: Sprint 4 mid-point (after R3 + one major feature complete).
 
 ---
+
+## New Architecture Debt Identified in Round 20 (Sprint 7 Review)
+
+### Sprint 7 Debt Resolution Assessment
+
+#### D6 (YAML Migration) — ✅ CONFIRMED RESOLVED
+- **Assessment**: The YAML migration (D6) claimed in Sprint 7 is **partially resolved**. `company_facts.yaml` exists and `company_facts.py` loads from it. However, the following hardcoded data remains in Python modules:
+  - `revenue_analyzer.py` — `KNOWN_COMPANY_REVENUE` dict (8 stocks, ~50 lines) — **still hardcoded**
+  - `group_structure.py` (page file) — `KNOWN_GROUP_STRUCTURES` dict (5 groups, ~160 lines) — **still hardcoded**
+  - `analogy_engine.py` — `one_liners` dict (20 stocks, ~24 lines) — **still hardcoded**
+  - `analogy_engine.py` — `industry_templates` dict (10 industries, ~15 lines) — **still hardcoded**
+  - `key_takeaways.py` — `_KEY_TAKEAWAYS` dict (20 stocks, ~140 lines) — **still hardcoded**
+  - `market_event_service.py` — `_CASE_STUDIES` list (5 events, ~230 lines) — **NEW hardcoded data**
+- **Verdict**: D6 is **NOT fully resolved**. The YAML migration was applied to `company_facts.py` only. 6 other hardcoded data blocks remain. The Sprint 7 claim of "D6 resolved" is inaccurate.
+- **Remaining Effort**: 3-4h (same as original estimate — the work is largely still pending)
+
+#### D-044 (market_data.py extraction) — ✅ CONFIRMED RESOLVED
+- **Assessment**: `src/services/market_data.py` (283 lines) is a clean service-layer abstraction. It provides:
+  - `get_all_stock_info()` — wraps `client.get_stock_info()`
+  - `get_sector_list()` — derives sectors from stock info
+  - `get_sector_stocks()` — builds industry → stock_ids mapping
+  - `get_sector_performance()` — batch-fetches and computes sector metrics
+  - `get_top_movers()` — top N movers by absolute change
+  - `get_all_summaries()` — batch-fetch with progress callback
+  - `compute_sector_metrics()` — pure function for sector aggregation
+  - `get_sector_grid_data()` — convenience function combining all of the above
+- **Consumers**: `sector_heatmap.py` imports from `market_data` service (not `BatchAPI` directly). Clean 4-layer architecture.
+- **Verdict**: ✅ **RESOLVED**. This is a well-designed service module with clear boundaries.
+
+#### D7 (N+1 API fix) — ✅ CONFIRMED RESOLVED
+- **Assessment**: `category_browser.py` now uses `_fetch_latest_daily_prices()` (lines 14-48) which implements `ThreadPoolExecutor(max_workers=10)` for concurrent API calls. Both `_render_top_stocks_by_value()` and `_render_hot_stocks_by_volume()` consume the pre-fetched `price_map` dict. No sequential per-stock API calls remain.
+- **Verdict**: ✅ **RESOLVED**. The N+1 pattern is eliminated.
+
+#### D3 (Card Consolidation) — ✅ CONFIRMED RESOLVED
+- **Assessment**: `_router_base.py` now provides:
+  - `_subsidiary_card()` (lines 117-151) — reusable subsidiary card with holding badge, business description, and relation
+  - `_count_label()` (lines 154-164) — reusable muted count label
+- **Consumers**: `group_structure.py` uses `_subsidiary_card`; `etf_browser.py` uses `_count_label`. Both helpers are imported from `_router_base`.
+- **Verdict**: ✅ **RESOLVED**. New reusable components reduce inline HTML duplication.
+
+### New Debt Items Identified in Round 20
+
+### D-048: `market_event_service.py` — hardcoded `_CASE_STUDIES` data (~230 lines) violates D6
+- **Effort**: 1-2h (extract to YAML)
+- **Severity**: Medium
+- **Description**: `market_event_service.py` contains `_CASE_STUDIES`, a 230-line hardcoded list of 5 case study dicts with nested data (title, date, summary, what_happened, key_metrics, lessons, related_stocks). This is the exact anti-pattern as D6 (hardcoded data in Python). The module's own docstring says "Hardcoded educational case studies" — this is acknowledged technical debt.
+- **Impact**: Adding new case studies requires editing a Python file. Non-technical contributors cannot add/edit case studies. The data will grow over time.
+- **Recommended Action**: Move to `src/data/case_studies.yaml`. Keep the loading/parsing logic in `market_event_service.py`. The `get_case_studies()`, `get_case_study()`, and `get_events_for_stock()` functions become thin wrappers around YAML-loaded data.
+- **Priority**: 🟡 Do as part of D6 completion (batch with other YAML migrations).
+
+### D-049: `get_events_for_stock()` name collision between `adaptive_engine.py` and `market_event_service.py`
+- **Effort**: 0.25h (rename one function)
+- **Severity**: Medium
+- **Description**: Two service modules export a function with the same name but different semantics:
+  - `adaptive_engine.get_events_for_stock(stock_id, days=30)` — returns user-tracked events from `events.yaml` (adaptive framework)
+  - `market_event_service.get_events_for_stock(stock_id)` — returns curated case studies that mention a stock
+- **Impact**: Currently no collision in practice — `event_dashboard.py` imports from `adaptive_engine`, `market_event_case_study.py` doesn't call `get_events_for_stock` at all. But any future page that needs both will have a naming conflict. The similar names are confusing for developers.
+- **Recommended Action**: Rename `market_event_service.get_events_for_stock()` to `get_case_studies_for_stock()` to clarify the distinction.
+
+### D-050: `market_event_case_study.py` has 116 lines of inline HTML across 3 card patterns
+- **Effort**: 1-2h (extract to reusable components)
+- **Severity**: Medium
+- **Description**: `market_event_case_study.py` contains 3 inline HTML card patterns:
+  1. **Key metrics cards** (lines 109-117) — nearly identical to `_白话_card()` and `_info_card()` in `_router_base.py` (same CSS, same structure: label/value/analogy)
+  2. **Related stocks cards** (lines 143-156) — similar to `_subsidiary_card()` but simpler (name, ID, impact text)
+  3. **Lessons expanders** (lines 124-126) — uses `st.expander` (good), no HTML
+- **Impact**: The key metrics card pattern (lines 109-117) is a near-duplicate of `_router_base._白话_card()`. The page already imports `_info_card` and `_summary_card` from `_router_base` but doesn't use them for the metrics section.
+- **Recommended Action**: Refactor key metrics to use `_白话_card()` or create a `_metric_card()` variant in `_router_base.py`. The related stocks card could use `_subsidiary_card()` with simplified parameters.
+
+### D-051: `market_event_service.py` — `get_events_for_stock()` uses linear scan O(n) per query
+- **Effort**: 0.5h (pre-compute index)
+- **Severity**: Low
+- **Description**: `get_events_for_stock()` (line 269-283) iterates all case studies and their `related_stocks` lists for each call. With 5 case studies this is trivial, but if the YAML migration (D-048) adds more case studies, this will scale poorly.
+- **Impact**: Negligible now (5 case studies, 3 related stocks each = 15 iterations). Will matter if case studies grow to 50+.
+- **Recommended Action**: Pre-compute a `stock_id → [case_study]` index dict at module load time. Use it for O(1) lookups. Do alongside D-048 YAML migration.
+
+### D-052: `etf_browser.py` — `_get_all_etf_prices()` still uses sequential fetching (D8 not resolved)
+- **Effort**: 1-2h (apply ThreadPoolExecutor pattern)
+- **Severity**: Medium
+- **Description**: `etf_browser.py` lines 22-48 iterate ETFs sequentially with `for sid in ids: client.get_daily_price(sid)`. This is the same N+1 pattern that was fixed in `category_browser.py` (D7). The dividend ranking section (line 217) also fetches sequentially.
+- **Impact**: For ~100 ETFs, sequential fetching is significantly slower than the `ThreadPoolExecutor` pattern used in `category_browser.py`.
+- **Recommended Action**: Apply the same `ThreadPoolExecutor(max_workers=10)` pattern from `category_browser._fetch_latest_daily_prices()`. Reuse or extract the batch-fetch helper to a shared utility.
+- **Note**: D8 was not claimed as resolved in Sprint 7. This is a reminder that it's still open.
+
+### D-053: `adaptive_engine.py` — `_load_events()` still reads YAML on every call (D10 not resolved)
+- **Effort**: 1-2h (add in-memory cache)
+- **Severity**: Medium
+- **Description**: `adaptive_engine.py` calls `_load_events()` (file read + YAML parse + file lock) for every `get_events_for_stock()` (line 213) and `get_all_recent_events()` (line 230) call. No caching.
+- **Impact**: Each call triggers a file read + YAML parse + file lock acquisition. For pages that call both functions in one render, this doubles the I/O.
+- **Recommended Action**: Add a module-level cache with TTL (e.g., 60 seconds) or cache in `st.session_state`. Invalidate on writes (`_save_events` / `prune_old_events`).
+- **Note**: D10 was not claimed as resolved in Sprint 7. Still open.
+
+### D-054: `watchlist.py` — `_load_data()` still called on every operation (D9 not resolved)
+- **Effort**: 1-2h (add in-memory cache)
+- **Severity**: Medium
+- **Description**: `watchlist.py` calls `_load_data()` (file read + YAML parse) for every operation: `add`, `remove`, `is_in`, `get_summary` (10 call sites found). No in-memory caching.
+- **Impact**: Each watchlist operation triggers a file read + YAML parse. For pages that check `is_in` multiple times, this is wasteful.
+- **Recommended Action**: Add a session-level cache or in-memory store that's invalidated on writes. Same pattern as D10.
+- **Note**: D9 was not claimed as resolved in Sprint 7. Still open.
+
+### D-055: `sector_heatmap.py` — 150+ lines of inline HTML despite using market_data service
+- **Effort**: 2-3h (extract HTML components)
+- **Severity**: Medium
+- **Description**: Despite the clean `market_data.py` service layer (D-044 resolved), `sector_heatmap.py` contains 150+ lines of inline HTML across 3 render functions:
+  - `_render_sector_grid()` (lines 304-324) — color-coded grid cards with inline HTML
+  - `_render_top_movers()` (lines 353-375, 384-406) — top gainers/losers with inline HTML
+  - `_render_treemap()` — uses Plotly (no HTML, clean)
+- **Impact**: The grid cards and top movers cards duplicate CSS patterns from `_router_base.py`. If other pages need similar card layouts, they'll duplicate again.
+- **Recommended Action**: Create `render_sector_grid_card()` and `render_mover_row()` helpers in a shared UI module. Or extend `_router_base.py` with sector-specific variants.
+- **Priority**: 🟡 Do alongside D3 completion (card consolidation).
+
+### D-056: `_section_title()` in `_router_base.py` — inverted logic bug (D-047) still present
+- **Effort**: 0.1h (single-line fix)
+- **Severity**: Low
+- **Description**: `_router_base.py` line 70: `if not title:` should be `if title:` — the condition is inverted (same bug as D-047). When title is falsy, it tries to render `### 📊 {title}` (empty). When title is truthy, it falls through to emoji detection.
+- **Status**: D-047 was identified in Round 17 but marked as "pre-existing bug." It remains unfixed.
+- **Recommended Action**: Change `if not title:` to `if title:` and swap the return/markdown logic.
+
+## Updated Summary
+- **Total Debt Items**: 50
+- **High Severity**: 1 item (D5)
+- **Medium Severity**: 42 items (D3, D4, D6-D15, D18-D23, D25, D27-D32, D37-D38, D-042, D-044, D-046, D-048-D-055)
+- **Low Severity**: 2 items (D33, D-056)
+- **Resolved Items**: D1, D2, D16, D17, D20, D24, D26, D-044, D7, D3 (10 items)
+- **Sprint 7 Claims**: D6 (partially — 1 of 6 data blocks migrated), D-044 (✅), D7 (✅), D3 (✅)
+
+## Round 20 Top 3 Architecture Recommendations
+
+1. **Complete D6 YAML Migration** (3-4h): Migrate all remaining hardcoded data (`_CASE_STUDIES`, `KNOWN_COMPANY_REVENUE`, `KNOWN_GROUP_STRUCTURES`, `_KEY_TAKEAWAYS`, `one_liners`, `industry_templates`) to YAML files under `src/data/`. This is the single highest-impact cleanup — it unblocks non-technical contributors from adding content and eliminates the largest source of Python-module bloat. **Effort: 3-4h. Impact: High.**
+
+2. **Extract Inline HTML from `sector_heatmap.py` and `market_event_case_study.py`** (2-3h): Both pages have 100+ lines of inline HTML that duplicates patterns from `_router_base.py`. Create reusable components or extend existing ones. **Effort: 2-3h. Impact: Medium.**
+
+3. **Fix D8/D9/D10 Performance Debt** (3-4h total): Apply `ThreadPoolExecutor` to `etf_browser.py` (D8), add caching to `watchlist.py` (D9) and `adaptive_engine.py` (D10). These are quick wins that improve UX responsiveness. **Effort: 3-4h. Impact: Medium (UX improvement).**
+
+---
 *Created: 2026-06-11*
 *Maintainer: System Architect*
-*Last Updated: 2026-06-20 (Round 16)*
+*Last Updated: 2026-06-13 (Round 20)*

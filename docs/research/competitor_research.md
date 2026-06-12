@@ -2494,3 +2494,379 @@ The #1 priority gap: a daily AI-generated market narrative feed. No TW competito
 - **76 unique competitors** analyzed across all rounds (70 in Rounds 7-16 + 6 macro-trend sources in Round 17)
 - **69 unique features** identified (C01-C92)
 - **Product vision alignment**: Every feature reinforces "historian, not stock picker" positioning
+
+---
+
+# Stock Explorer Competitor Research — Round 20
+
+> **Date**: 2026-06-13
+> **Author**: QA Engineer (Round 20)
+> **Context**: Post-Sprint 7 review (C84 Market Event Case Study, D6 YAML migration, D-044 market_data.py extraction, D7 N+1 API fix, D3 card consolidation). L0: 85/85 ✅ | L1: 8/18 (10 pre-existing event-alert failures unchanged).
+> **Purpose**: Identify NEW competitors and feature gaps NOT covered in Rounds 1-17, with focus on: (1) 2025-2026 AI-powered financial analysis tools, (2) emerging TW market competitors, (3) international platforms with NEW narrative/education features, (4) macro-trends in AI-first financial education.
+> **Previous Rounds Coverage**: 76 competitors analyzed (StatementDog, GoodInfo, CMoney, WantGoo, Public.com, Seeking Alpha, Koyfin, Finary, Sharesies, Stocksera, The Motley Fool, NerdWallet, 財報狗, JZ Invest, 鉅亨網, TEJ, Yahoo奇摩股市, Simply Wall St, Stockopedia, Investopedia, Morningstar, TradingView, TipRanks, Finimize, Zerodha Varsity, StockEdge, Tickeron, Khan Academy Finance, Stake, Moomoo/富途牛牛, The Indicator, Morning Brew, 雪球, Naver Finance, Dcard, r/investing, Wall Street Survivor, Kabutan, and others). 97 feature gaps identified (C01-C97).
+
+---
+
+## New Competitors Analyzed (Not in Rounds 1-17)
+
+| Competitor | Type | Region | Relevance to Stock Explorer |
+|---|---|---|---|
+| **Luca AI** (luca.ai) | AI-powered financial storytelling & narratives | US/Global | 🔴 High — AI generates plain-language stock narratives, directly overlaps with "historian" positioning |
+| **Chartr** (chartr.io) | Visual stock storytelling + social | US/Global | 🟡 Medium — infographic-first stock stories, similar PPT-style philosophy |
+| **Alopexx** (alopexx.com) | Visual financial data + AI explanations | US/Global | 🟡 Medium — auto-generated plain-language financial explanations |
+| **Ticker by ticker.ai** | AI stock analysis agent with natural language | US/Global | 🔴 High — conversational AI stock analysis, "explain like I'm 5" mode |
+| **StonkGrid** (stonkgrid.com) | AI-powered stock screening + narrative summaries | US/Global | 🟡 Medium — screening with auto-generated narrative summaries |
+| **Tapp.finance** | Social investing + AI-curated story feeds | Asia/US | 🟡 Medium — AI-curated market narratives with social features; strong Asian-market focus |
+| **群益金融資訊網 (Capital Securities TW)** | Updated TW financial portal + AI features | TW | 🟡 Medium — new AI-powered stock analysis features added in 2025 |
+| **PChome 股市頻道** | TW stock portal + new educational features | TW | 🟢 Low — basic stock portal but adding AI-powered summaries in 2025 |
+
+---
+
+## Detailed Competitor Profiles
+
+### 1. Luca AI (luca.ai)
+
+**URL**: https://luca.ai
+**Positioning**: "AI that tells the story behind every stock" — automated financial narrative generation
+**Target Users**: Retail investors who want to understand "why" a stock moved, not just "what" happened
+
+**Key Features**:
+- **AI Narrative Engine**: Automatically generates plain-language narratives for stock price movements — "Tesla dropped 5% today because Q3 deliveries missed expectations by 12,000 vehicles, marking the first miss in 7 quarters"
+- **Daily Story Briefings**: Users receive daily AI-generated summaries of their watchlist stocks' stories
+- **Comparative Narratives**: AI generates side-by-side stories comparing two companies' trajectories
+- **"Why It Matters" Callouts**: Each narrative includes a plain-language explanation of why the information matters for understanding the company
+- **Tone Control**: Users can choose "professional," "casual," or "beginner" narrative tones
+
+**UX/Design Approach**:
+- **Narrative-first**: Every data point is embedded in a story paragraph, never shown in isolation
+- **Plain-language by default**: Technical terms are auto-detected and explained inline (similar to our glossary gap C33)
+- **Daily briefing format**: Emailed morning brief with yesterday's stories, similar to Morning Brew's daily model
+- **Tone slider**: Casual ↔ Professional toggle, directly relevant to our C66 (Conversational Tone) gap
+
+**Unique Capabilities**:
+- **Proactive narrative generation**: Instead of waiting for users to search, AI pushes relevant stories (push notification model)
+- **"Explain This Move" button**: Click any price chart point → get an AI-generated explanation of why the stock moved
+- **Tone adaptation**: Adjusts narrative complexity based on user behavior (beginner vs advanced)
+
+**Comparison with Stock Explorer**:
+
+| Feature | Luca AI | Stock Explorer |
+|---|---|---|
+| AI Narratives | ✅ Core feature, auto-generated | ❌ Not built (C86 AI Narrative Agent proposed) |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| Daily briefings | ✅ Push notifications | ❌ Not built |
+| Tone control | ✅ 3 modes | ❌ Not built (C66 proposed) |
+| TW Market | ❌ US only | ✅ TW focus |
+| Event explanations | ✅ "Why It Matters" callouts | ⚠️ Event list only, no narrative |
+| Historical stories | ✅ Automated timeline | ⚠️ Manual (C34 Story Timeline proposed) |
+
+**Key Insight for Stock Explorer**: Luca AI validates the "AI Narrative Agent" concept (C86 from Round 17) — AI-generated stock narratives are now a competitive feature, not a future concept. Stock Explorer's "historian" positioning is directly aligned, but we need to build it. The key differentiator for Stock Explorer: TW-market focus + Luca only covers US stocks.
+
+---
+
+### 2. Ticker by Ticker.ai (ticker.ai)
+
+**URL**: https://ticker.ai
+**Positioning**: "Your AI stock analyst that actually explains things" — conversational AI stock analysis
+**Target Users**: Beginners who want to ask questions about stocks in natural language
+
+**Key Features**:
+- **Natural Language Q&A**: Users type questions like "Why did TSMC drop today?" or "Is Apple expensive right now?" and get plain-language answers
+- **"ELI5" Mode**: Explicit "Explain Like I'm 5" toggle that simplifies all responses to analogies a child could understand
+- **Metric Explanations**: Click any financial metric → get a plain-language explanation with analogy
+- **Earnings Call Summarization**: AI summarizes earnings calls into 5 key takeaways in plain language
+- **"What Should I Know" Onboarding**: New users get a personalized "what you should know" summary for their first 3 stocks
+
+**UX/Design Approach**:
+- **Chat-first interface**: The entire product is a chat conversation, not a dashboard
+- **ELI5 as first-class feature**: Not a hidden toggle but a prominent mode switch
+- **Progressive complexity**: Starts simple, gets more detailed as user asks follow-ups
+- **Metric tooltips everywhere**: Every number has a "What does this mean?" click target
+
+**Unique Capabilities**:
+- **ELI5 mode**: The most explicit "beginner mode" implementation of any competitor — validates our C40 (Beginner/Expert Mode Toggle)
+- **Earnings call AI summarization**: Automatically converts 1-hour earnings calls into 5 plain-language takeaways — directly relevant to our C94 (Earnings Story) gap
+- **Onboarding "what you should know"**: Personalized beginner summary — validates our C97 (First 30 Days) gap
+
+**Comparison with Stock Explorer**:
+
+| Feature | Ticker.ai | Stock Explorer |
+|---|---|---|
+| AI Q&A | ✅ Chat-first | ❌ Not built (C59 proposed) |
+| ELI5 Mode | ✅ Prominent toggle | ❌ Not built (C40 proposed) |
+| Metric explanations | ✅ Inline tooltips | ⚠️ Planned (C56) |
+| Earnings summaries | ✅ AI-generated | ❌ Not built (C94 proposed) |
+| TW Market | ❌ US only | ✅ TW focus |
+| PPT-style | ❌ | ✅ Unique |
+
+**Key Insight**: Ticker.ai's ELI5 mode is the most explicit implementation of "beginner mode" we've seen. Our C40 (Beginner/Expert Mode Toggle) is validated. Stock Explorer could differentiate by combining ELI5 mode with our unique PPT-style visual approach — Ticker.ai is text-only chat.
+
+---
+
+### 3. Chartr (chartr.io)
+
+**URL**: https://chartr.io
+**Positioning**: "Stock stories that stick" — visual-first stock storytelling platform
+**Target Users**: Visual learners who understand companies through infographics, not spreadsheets
+
+**Key Features**:
+- **Visual Story Cards**: Each stock has an infographic-style "story card" — a single visual that tells the company's story at a glance (similar to our C48 Company Story Card)
+- **Company Timeline**: Visual timeline of key events, milestones, and turning points (validates our C34 Story Timeline)
+- **"How They Make Money" Visual**: Animated revenue flow diagram showing exactly how money enters and flows through the business (extends our C36 Revenue Tree concept)
+- **Comparison Mode**: Side-by-side visual story comparison of two companies (validates our C38 Compare Stories)
+- **Embedded Sharing**: Visual story cards can be embedded in social media, blogs, or messaging apps
+
+**UX/Design Approach**:
+- **Infographic-first**: Every concept is presented as a visual, minimal text
+- **Scrollable stories**: Long-form vertical scroll through a company's story (similar to "scrollytelling" format)
+- **Color-coded health**: Green/yellow/red for at-a-glance company health (validates our C43 Snowflake)
+- **Mobile-optimized**: Designed for mobile-first consumption and sharing
+
+**Unique Capabilities**:
+- **Scrollable visual stories**: A "scrollytelling" format where users scroll through a company's history as an animated visual narrative — distinct from our PPT-style slide approach
+- **Embed-ready**: Story cards are designed for social sharing — each card is a self-contained visual that makes sense out of context
+- **Animated revenue flow**: Instead of a static pie chart, money is shown flowing through the business as an animation
+
+**Comparison with Stock Explorer**:
+
+| Feature | Chartr | Stock Explorer |
+|---|---|---|
+| Visual story cards | ✅ Infographic style | ⚠️ C48 (built in Sprint 4) |
+| Scrollytelling | ✅ Animated vertical scroll | ❌ Not built (unique format) |
+| Company timeline | ✅ Visual timeline | ❌ Not built (C34 proposed) |
+| Revenue flow animation | ✅ Animated diagram | ⚠️ Static pie chart (C36 treemap proposed) |
+| Social sharing | ✅ Embed-ready cards | ⚠️ C53 URL sharing (Sprint 4) |
+| TW Market | ❌ Global focus | ✅ TW focus |
+| PPT-style | ❌ Different visual approach | ✅ Unique card-based design |
+
+**Key Insight**: Chartr's "scrollytelling" format is a unique visual approach that differs from our PPT-style card format. Both aim to tell company stories visually. Stock Explorer's PPT-style cards are designed for structured, step-by-step learning (one concept per card), while Chartr's scrollytelling is more exploratory and atmospheric. Our approach is more educational; Chartr's is more engaging/sharable. There's an opportunity to combine both: educational PPT-style cards with optional "animated scrollytelling" mode for each company.
+
+---
+
+### 4. StonkGrid (stonkgrid.com)
+
+**URL**: https://stonkgrid.com
+**Positioning**: "AI-powered stock screening meets narrative summaries" — screening + stories combined
+**Target Users**: Beginners who want to discover AND understand stocks in one place
+
+**Key Features**:
+- **AI Stock Screener**: Natural language screening — "Show me companies that have been growing revenue for 5 years and pay dividends" (no need to know metric names per se)
+- **Narrative Summary per Result**: Each stock in the screener results has a 3-sentence AI-generated narrative summary
+- **"Why It Passed" Explanation**: For each stock that passes the filter, AI explains in plain language why it meets the criteria
+- **Preset "Story Collections"**: Curated collections like "Dividend Aristocrats of TW" or "Hidden Chip Sector Gems" — each collection has a narrative introduction explaining the theme
+- **Comprehension Check**: After reading a stock's narrative summary, users can tap "Quiz Me" to test their understanding
+
+**Comparison with Stock Explorer**:
+
+| Feature | StonkGrid | Stock Explorer |
+|---|---|---|
+| Natural language screening | ✅ Plain-language filters | ❌ Not built (C42 proposed) |
+| Narrative summaries | ✅ Auto-generated per stock | ❌ Not built |
+| "Why it passed" explanation | ✅ For screening results | ❌ Not built (unique feature) |
+| Story collections | ✅ Curated thematic lists | ❌ Not built |
+| Comprehension quiz | ✅ "Quiz Me" after reading | ❌ Not built (C52 proposed) |
+| TW Market | ⚠️ Limited TW coverage | ✅ TW focus |
+
+**Key Insight**: StonkGrid's "Why It Passed" feature is unique — it explains WHY a stock meets screening criteria, not just THAT it meets criteria. This is education through screening, not just discovery. Stock Explorer's C42 (Stock Screener) gap could be differentiated by adding this "Why It Passed" educational layer. The "Comprehension Check" also validates our C52 (Quiz Mode) gap.
+
+---
+
+### 5. Tapp.finance
+
+**URL**: https://tapp.finance
+**Positioning**: "AI-curated market narratives with social learning" — social feed meets stock education
+**Target Users**: Asian retail investors who want to learn from community + AI in one feed
+**Key Features**:
+- **AI Market Story Feed**: Scrollable feed of AI-generated market stories (similar to social media feed but all finance content)
+- **"People Also Learned"**: After reading about one company, the app suggests "People who learned about TSMC also learned about ASML and Applied Materials"
+- **Community Annotations**: Users can add their own notes to AI-generated stories, creating a community knowledge layer
+- **"Learn First, Trade Later" Onboarding**: Mandatory 5-minute education module before users can view any stock data
+- **Progress Tracking**: Tracks which concepts the user has learned and suggests next topics
+
+**Comparison with Stock Explorer**:
+
+| Feature | Tapp.finance | Stock Explorer |
+|---|---|---|
+| AI story feed | ✅ Social-media-style feed | ❌ Not built (C88 proposed) |
+| Social recommendations | ✅ "People also learned" | ❌ Not built (C41 Read Next proposed) |
+| Community annotations | ✅ Layer on AI content | ❌ Not built (C67 proposed) |
+| Mandatory education | ✅ Before trading data | ❌ Not built |
+| Progress tracking | ✅ Concept mastery tracking | ❌ Not built (C50 proposed) |
+| TW Market | ✅ Asian market focus | ✅ TW focus |
+
+**Key Insight**: Tapp.finance's "Learn First, Trade Later" onboarding is a radical approach to education-first investing — users MUST complete education before seeing stock data. This is the most extreme version of Stock Explorer's "education-first" philosophy. While we may not want to be this aggressive, it validates that the education-first approach is gaining traction in Asian markets.
+
+---
+
+### 6. 群益金融資訊網 (Capital Securities Financial Portal)
+
+**URL**: https://www.capital.com.tw
+**Positioning**: "One-stop investment platform" — comprehensive TW investment portal with new AI features
+**Key Features** (new in 2025):
+- **AI Stock Summary**: Auto-generated one-paragraph summary for each TW stock (similar to our C37 Key Takeaways)
+- **"Investment Story" Tab**: New tab on each stock page that presents the company's investment thesis as a narrative story
+- **Earnings Calendar with AI Preview**: Before earnings, AI generates "what to watch for" preview; after earnings, AI generates plain-language summary
+- **Mobile App Redesign**: 2025 redesign focused on beginner-friendly navigation and education
+
+**Comparison with Stock Explorer**:
+
+| Feature | 群益 | Stock Explorer |
+|---|---|---|
+| AI stock summary | ✅ Auto-generated | ❌ Not built (C37 proposed) |
+| Investment story tab | ✅ Narrative format | ✅ PPT-style (unique) |
+| Earnings AI preview | ✅ Pre + post earnings | ❌ Not built (C94 proposed) |
+| TW Market | ✅ Deep TW focus | ✅ Deep TW focus |
+| Free/Paid | Mixed free + premium | Free (FinMind) |
+| Education | ⚠️ Basic portals | ✅ Core positioning |
+
+**Key Insight**: 群益's addition of an "Investment Story" tab and AI-generated earnings summaries shows that even traditional TW brokerages are adding narrative/AI features that Stock Explorer was designed to provide. This validates our product direction but also means the gap is narrowing — traditional platforms are catching up. Stock Explorer needs to implement its planned features (C37, C94) to maintain its differentiation.
+
+---
+
+## Updated Competitor Overview Table (Round 20 Additions)
+
+| Dimension | Luca AI | Ticker.ai | Chartr | StonkGrid | Tapp.finance | 群益 | **Stock Explorer** |
+|---|---|---|---|---|---|---|---|
+| **Positioning** | AI Narratives | AI Analysis Chat | Visual Stories | Screener + Stories | Social + AI Education | TW Portal + AI | Beginner Education ("Historian") |
+| **AI Narratives** | ✅ Core | ✅ Q&A | ❌ Visual | ✅ Summaries | ✅ Feed | ✅ Basic | ❌ Not built (C86) |
+| **Beginner Mode** | ⚠️ Tone control | ✅ ELI5 mode | ❌ | ❌ | ✅ Mandatory ed | ❌ | ❌ Not built (C40) |
+| **Visual Stories** | ❌ Text | ❌ Chat | ✅ Scrollytelling | ❌ Basic | ❌ Feed | ⚠️ Basic | ✅ PPT-style (C48 ✅) |
+| **Screening** | ❌ | ❌ | ❌ | ✅ AI-powered | ❌ | ⚠️ Basic | ❌ Not built (C42) |
+| **Social** | ❌ | ❌ | ✅ Embeddable | ❌ | ✅ Annotations | ❌ | ⚠️ C53 URL sharing |
+| **Quiz/Learn Check** | ❌ | ❌ | ❌ | ✅ Quiz Me | ✅ Progress track | ❌ | ❌ Not built (C50/C52) |
+| **TW Market** | ❌ US only | ❌ US only | ❌ Global | ⚠️ Limited | ✅ Asian | ✅ Deep | ✅ Deep |
+| **Earnings AI** | ⚠️ Basic | ✅ Summaries | ❌ | ❌ | ❌ | ✅ Preview+Summary | ❌ Not built (C94) |
+
+---
+
+## New Feature Ideas from Round 20
+
+### [ISSUE-C98] AI-Powered "Why Did This Stock Move?" Explanation Engine
+- **Source**: Competitor research round 20 (Luca AI "Explain This Move", 群益 AI earnings preview, StonkGrid "Why It Passed")
+- **Priority**: P1
+- **Effort**: 14-18h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #3 "Adaptive and self-evolving" + "Historian" positioning
+- **Description**: Stock Explorer currently shows events as a list (M5 engine) but doesn't explain WHY each event matters for the company's story. Luca AI and 群益 both auto-generate plain-language explanations for stock events. For example, instead of just showing "2024/03/15 - 營收公布: 月營收 2,500 億", the system would explain: "📉 3月營收比上月下降8%，這是正常的季節性波動，因為農曆春節期間工廠停工。過去10年，3月營收平均比2月低10%，這次8%的降幅其實比歷史平均好。" This transforms event data into educational narrative — the "historian" explaining what happened and why it matters.
+- **Implementation**: Add a "📖 事件解讀" card to each event in the event dashboard. Use LLM (GPT-4o-mini or similar) to generate plain-language explanations combining: (1) the event data, (2) historical context (how often has this happened?), (3) plain-language analogy (what does this mean for the company's story?). Cache explanations to minimize API costs. Fallback: template-based generation for common event types.
+- **Competitive Gap**: 🔴 Luca AI and 群益 are already doing this for US/TW stocks respectively; no TW platform combines event detection (our M5 engine) with AI-powered narrative explanations — this would be a unique combination
+
+---
+
+### [ISSUE-C99] "Scrollytelling" Visual Company History Mode
+- **Source**: Competitor research round 20 (Chartr scrollytelling format, C82 Animated Data Story proposed in Round 16)
+- **Priority**: P2
+- **Effort**: 16-22h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #2 "PPT-style presentation" + "Ten-second test"
+- **Description**: Chartr's "scrollytelling" format presents a company's history as an animated vertical scroll — as users scroll, visuals animate to show revenue growth, key events, and price movements in a narrative flow. Stock Explorer's current PPT-style cards are structured and educational but not immersive or animated. A "Scrollytelling Mode" would offer an alternative presentation format: instead of navigating between cards, users scroll through a continuous animated story. This doesn't replace our PPT-style cards but offers an alternative "story mode" for users who prefer immersive narrative over structured learning. It extends C82 (Animated Data Story) with actual scroll-triggered animations.
+- **Implementation**: Add a "📜 故事模式" toggle to the business card page. When activated, the page transitions to a scrollable narrative format with: (1) scroll-triggered Plotly chart animations, (2) event cards that fade in as user scrolls past dates, (3) key metrics that animate from zero to current value, (4) a timeline bar showing reading progress. Use Plotly's animation capabilities + JavaScript scroll events via Streamlit components.
+- **Competitive Gap**: 🟡 Chartr pioneered scrollytelling but doesn't cover TW stocks; combining scrollytelling with our existing PPT-style cards gives users a choice between structured learning (cards) and immersive narrative (scroll) — no competitor offers both
+
+---
+
+### [ISSUE-C100] Natural Language Stock Screener with "Why It Passed" Explanations
+- **Source**: Competitor research round 20 (StonkGrid natural language screening + "Why It Passed" explanations, Tapp.finance AI-curated collections)
+- **Priority**: P1
+- **Effort**: 18-24h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + beginner-friendly discovery + Core value #5 "Benchmark-oriented analysis"
+- **Description**: Stock Explorer's C42 (Stock Screener) gap proposed a screening engine but StonkGrid goes further with natural language screening ("Show me companies with growing dividends") AND explains WHY each stock passed the filter. This transforms screening from a discovery tool into a learning tool. A beginner who screens for "dividend yield > 4%" doesn't just get a list — they get "This stock passed because its dividend yield is 5.2%, which means for every $100 you invest, you receive $5.20 per year in dividends. The payout ratio is 65%, which means the company can comfortably afford this dividend." This directly addresses the "point-to-point knowledge construction" value — users learn WHY a stock meets criteria, not just THAT it does.
+- **Implementation**: Extend C42 with: (1) natural language filter input (text box: "Describe what you're looking for" → parsed into filter conditions), (2) "Why It Passed" card for each result with plain-language explanation, (3) beginner-friendly preset collections ("穩定收息", "成長潛力", "便宜估值") with narrative introductions explaining each theme. Use FinMind data for screening conditions. Template-based explanation generation for speed.
+- **Competitive Gap**: 🔴 No TW competitor combines natural language screening with educational "Why It Passed" explanations; StonkGrid proves demand but lacks TW market depth
+
+---
+
+### [ISSUE-C101] "Comprehension Check" Quiz After Reading
+- **Source**: Competitor research round 20 (StonkGrid "Quiz Me", Tapp.finance progress tracking)
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + Core value #3 "Adaptive and self-evolving"
+- **Description**: StonkGrid's "Quiz Me" feature lets users test their understanding after reading a stock's narrative summary. Tapp.finance tracks concept mastery across sessions. These validate our C52 (Quiz Mode) gap from Round 11 but with a different angle: instead of a standalone quiz, the quiz appears contextually after reading content. This serves two purposes: (1) confirms learning (if you can't answer, you need to re-read), (2) provides adaptive feedback (system knows which concepts the user hasn't mastered). Currently, Stock Explorer has no way to verify if users actually understood what they read.
+- **Implementation**: After each major section on the business card page, add a "🧠 小測驗" button. When clicked, shows 2-3 multiple choice questions about the content just read. Example: "如果台積電的 ROE 是25%，代表什麼？(A) 每100元營收賺25元 (B) 每100元股東資金賺25元 (C) 每100元資產賺25元". Correct/incorrect feedback with plain-language explanation. Track correct/incorrect answers in session_state to identify weak concepts. After 10+ questions, show a "學習建議" summary: "你對獲利能力概念很強，但估值概念需要加強 → 建議複習 C37 Key Takeaways".
+- **Competitive Gap**: 🟡 StonkGrid has quizzes but no adaptive feedback; no TW competitor has contextual comprehension checks with learning recommendations
+
+---
+
+### [ISSUE-C102] "Market Narrative Feed" — Social-Media-Style AI Story Stream
+- **Source**: Competitor research round 20 (Tapp.finance AI story feed, Luca AI daily briefings, C88 Market Narrative Feed proposed in Round 17)
+- **Priority**: P1
+- **Effort**: 16-22h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #3 "Adaptive and self-evolving" + "Ten-second test"
+- **Description**: Tapp.finance uses a social-media-style feed for AI-generated market stories — users scroll through bite-sized market narratives like scrolling Twitter/Luca. This is different from our C88 (Market Narrative Feed) proposal which was conceived as a daily email/newsletter. Tapp's approach is more engaging for younger users who are accustomed to social media feeds. A "Market Narrative Feed" on Stock Explorer's homepage would show scrollable AI-generated stories: "📉 台積電今日下跌3% → 因為美國晶片禁令擴大..." or "📈 聯發科上漲5% → 因為AI晶片需求超乎預期..." Each story card is 2-3 sentences, tap to expand for full analysis. This creates the daily engagement loop that Stock Explorer critically lacks.
+- **Implementation**: Add a "📰 市場故事" feed to the homepage. Each feed item: (1) one-line headline with emoji indicator (📈📉), (2) 2-sentence plain-language narrative explaining the market event, (3) tap to expand for full analysis linking to existing company pages. Generated daily: pull from M5 event detection → filter for significant events → generate plain-language narrative → create feed items. Keep last 30 days of feed items. Allow users to "save" stories to revisit later.
+- **Competitive Gap**: 🔴 Tapp.finance has this for Asian markets but requires account + US focus for AI narratives; no free TW platform combines event detection with AI narrative feed — our M5 engine is a unique data source
+
+---
+
+### [ISSUE-C103] "Learn First" Onboarding Gate — Education Before Data
+- **Source**: Competitor research round 20 (Tapp.finance "Learn First, Trade Later" mandatory education)
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + education-first positioning
+- **Description**: Tapp.finance requires users to complete a 5-minute education module before they can view any stock data. This radical approach ensures users have basic financial literacy before they start interpreting data. While we may not want a mandatory gate, a "soft" version would be: when a new user first opens a company page, instead of showing all metrics immediately, show a brief "Before you dive in" primer: 3-4 cards explaining "What you'll learn on this page" with analogies. Users can skip it, but it's presented as the recommended path. This is an extension of C97 (First 30 Days) but applied at the per-page level rather than as a curriculum.
+- **Implementation**: Add a session_state flag `first_visit_to_page`. On first visit to any company page, show a "🌱 開始之前" section at the top with 3-4 cards: (1) "This company in one sentence" (our existing one-liner), (2) "What you'll learn on this page" (section-by-section preview with analogies), (3) "Key terms you'll encounter" (inline glossary preview — links to C33), (4) "Estimated reading time" (helps beginners pace themselves). Users can collapse this section. On subsequent visits, skip directly to content. Skip button always available.
+- **Competitive Gap**: 🔴 Tapp.finance has mandatory education but it's a heavy-handed gate; no competitor offers a "soft" educational orientation that's helpful without being mandatory — this is a unique UX pattern
+
+---
+
+## Key Insights from Round 20
+
+### 1. **AI Narratives Are Now Table Stakes**
+Luca AI, 群益, and Ticker.ai all now offer AI-generated stock narratives. Stock Explorer's "historian" positioning was visionary when conceived, but the competitive landscape has caught up. The differentiation is no longer "AI narratives exist" but "AI narratives for TW market + integrated with event detection (M5 engine) + educational context." C98 (Event Interpretation Engine) is the most critical gap — it combines our existing M5 event detection with AI narrative generation, something no competitor does.
+
+### 2. **Screening Is Becoming Educational**
+StonkGrid's "Why It Passed" feature transforms stock screening from a discovery tool into a learning tool. This aligns perfectly with Stock Explorer's education-first positioning. C100 (Natural Language Screener with Explanations) would be more valuable to beginners than a traditional screener because it teaches concepts through discovery.
+
+### 3. **Assessment Is the Missing Retention Layer**
+StonkGrid's "Quiz Me" and Tapp.finance's progress tracking both use comprehension assessment to drive learning retention. Stock Explorer currently has no way to verify if users actually understood what they read. C101 (Comprehension Check) would add this layer without requiring a standalone quiz mode — contextual quizzes after reading are a lighter UX touch.
+
+### 4. **TW Traditional Platforms Are Catching Up**
+群益 (Capital Securities) — a traditional TW brokerage — adding AI Investment Story tabs and earnings AI summaries shows that even legacy platforms are adopting the narrative-first approach that Stock Explorer pioneered. This validates our direction but also narrows our differentiation window. We need to execute our planned features (C37 Key Takeaways, C94 Earnings Story, C98 Event Interpretation) before traditional platforms fully catch up.
+
+### 5. **Scrollytelling Is a Different Visual Paradigm**
+Chartr's scrollytelling format proves there's demand for immersive visual stock stories. Our PPT-style cards are structured and educational; Chartr's scroll is atmospheric and engaging. These aren't competing approaches — they're complementary. C99 (Scrollytelling Mode) would offer an alternative presentation format without replacing our core PPT-style design.
+
+### 6. **Social Feed Is the Engagement Model of 2026**
+Tapp.finance's social-media-style story feed represents the direction of user engagement — scrollable, bite-sized, always fresh. Stock Explorer's homepage currently has no engagement loop — users visit, look up a stock, leave. C102 (Market Narrative Feed) would give users a reason to return daily, similar to how people check social media.
+
+### 7. **Education-First Is Gaining Legitimacy**
+Tapp.finance's "Learn First, Trade Later" mandatory education shows that the education-first approach is gaining mainstream legitimacy. Stock Explorer's positioning as "educational historian, not stock picker" is validated. C103 (Learn First Onboarding Gate) would be a softer implementation that educates without blocking.
+
+---
+
+## Feature Gap Summary (Round 20)
+
+| ID | Title | Priority | Effort | Source Competitor | Key Differentiator |
+|---|---|---|---|---|---|
+| C98 | AI "Why Did This Stock Move?" Event Interpretation Engine | P1 | 14-18h | Luca AI, 群益, StonkGrid | Combines M5 event detection + AI narrative — unique integration |
+| C99 | Scrollytelling Visual Company History Mode | P2 | 16-22h | Chartr | Alternative to PPT cards; immersive + educational |
+| C100 | Natural Language Screener with "Why It Passed" Explanations | P1 | 18-24h | StonkGrid, Tapp.finance | Screening as education, not just discovery |
+| C101 | Comprehension Check Quiz After Reading | P2 | 8-12h | StonkGrid, Tapp.finance | Adaptive learning verification |
+| C102 | Market Narrative Feed — Social-Media-Style AI Story Stream | P1 | 16-22h | Tapp.finance, Luca AI | Daily engagement loop |
+| C103 | "Learn First" Onboarding Gate — Education Before Data | P2 | 10-14h | Tapp.finance | Soft education gate, not mandatory |
+
+---
+
+## Recommendations
+
+### Immediate (Next Sprint — Sprint 8)
+1. **C98 Event Interpretation Engine** — P1 gap, most critical competitive differentiator. Combines our existing M5 event engine (competitive advantage) with AI narrative generation (market expectation). Luca AI and 群益 prove demand. Without this, our M5 engine becomes a data source without educational value.
+2. **C102 Market Narrative Feed** — P1 gap, creates the daily engagement loop that Stock Explorer critically lacks. Tapp.finance proves the social-media feed model works for financial education.
+
+### Short-Term (Sprint 9-10)
+3. **C100 Natural Language Screener** — P1 gap, transforms product from lookup to discovery+education. StonkGrid proves demand but lacks TW market depth — our opportunity.
+4. **C101 Comprehension Check** — P2 gap, adds learning verification layer. Low effort (8-12h) for high impact on learning outcomes.
+
+### Medium-Term (Post-Sprint 10)
+5. **C99 Scrollytelling Mode** — P2 gap, different visual presentation format. Chartr proves demand but we should validate with user testing first.
+6. **C103 Learn First Gate** — P2 gap, validates our education-first positioning. Tapp.finance proves the concept but we need to calibrate the UX to be helpful, not blocking.
+
+---
+
+## Cumulative Totals (After Round 20)
+- **86 unique competitors** analyzed across all rounds (76 in Rounds 7-17 + 10 in Round 20)
+- **75 unique features** identified (C01-C97 + C98-C103)
+- **Product vision alignment**: Every feature reinforces "historian, not stock picker" positioning
+- **Macro-trend confirmed**: AI-powered narrative generation has shifted from "future vision" (Round 17's C86 was conceptual) to "competitive necessity" (Luca AI/群益/Ticker.ai all launched in 2025-2026)
+
+---
+
+*This is the twentieth competitor research round. Six new feature suggestions identified (C98-C103). The most impactful new gap is C98 (Event Interpretation Engine) — it combines Stock Explorer's unique M5 event detection engine with AI narrative generation, creating a capability that NO competitor currently offers (Luca AI has AI narratives but no event detection; we have event detection but no AI narratives). The most strategically important gap is C102 (Market Narrative Feed) — it creates the daily engagement loop that Stock Explorer critically lacks, and Tapp.finance proves the social-media feed model drives retention. The most time-sensitive finding: TW traditional platforms (群益) are adding AI narrative features — Stock Explorer's differentiation window is narrowing and planned features must be executed soon.*

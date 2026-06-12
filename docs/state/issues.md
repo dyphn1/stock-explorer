@@ -1228,11 +1228,14 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 #### [ISSUE-C37] "Key Takeaways" Summary Card
 - **Source**: Competitor research round 8 (Seeking Alpha "Key Takeaways", Public.com "Quick Summary")
 - **Priority**: P2
-- **Status**: 📋 Todo
-- **Description**: Seeking Alpha and Public.com both have a "Key Takeaways" or "Quick Summary" card at the top of each stock page — 3-5 bullet points that synthesize the most important information. Stock Explorer's business card page has metrics scattered across sections but no synthesized summary. A beginner opening TSMC's page sees 15+ metrics but doesn't know which 3 matter most. This directly violates the "ten-second test" — a beginner should be able to restate the core concept within 10 seconds.
-- **Implementation**: Add a "📋 重點摘要" card at the top of the business card page with 3-5 auto-generated key takeaways. Use existing analogy_engine.py patterns to generate plain-language summaries. Example: "① 台積電是全球90%先進晶片的製造商 ② 毛利率55%代表每賣100元賺55元 ③ 過去3年營收穩定成長，但資本支出很高"
-- **Effort**: 6-8h
-- **Competitive Gap**: 🟡 No TW competitor has auto-generated key takeaways; aligns with "ten-second test" design principle
+- **Status**: ✅ Done
+- **Description**: Seeking Alpha and Public.com both have a "Key Takeaways" or "Quick Summary" card at the top of each stock page — 3-5 bullet points that synthesize the most important information. Stock Explorer's business card page has metrics scattered across sections but no synthesized summary.
+- **Implementation (complete)**:
+  - `src/services/key_takeaways.py` — Service layer with auto-generated plain-language takeaways ✅
+  - `_render_takeaways()` in `_sections/_summary.py` — UI rendering wired into business card ✅
+  - Already shipped and live in production ✅
+- **Related files**: `src/services/key_takeaways.py`, `src/pages/business_card/_sections/_summary.py`
+- **Note**: Discovered as already implemented during Round 17 discussion (2026-06-13). Backlog was stale.
 
 ---
 
@@ -1250,11 +1253,14 @@ Critical path: D01 (M5 verification) → C07 (custom thresholds) and D02 (backgr
 #### [ISSUE-C39] "What Changed Recently" Delta Card
 - **Source**: Competitor research round 8 (Koyfin "Recent Changes", Finary "What's New")
 - **Priority**: P2
-- **Status**: 📋 Todo
-- **Description**: Koyfin and Finary both highlight what changed recently — metrics that moved significantly compared to the previous period. Stock Explorer shows historical data in charts but doesn't explicitly highlight recent changes. Beginners don't know what to look for in a 3-year revenue chart. A "What Changed Recently" card would say: "📈 最近3個月營收成長15%，是過去一年最快的增速" or "📉 毛利率從55%下降到52%，因為晶片價格競爭加劇". This makes the data feel alive and relevant.
-- **Implementation**: Add a "🔄 最近有什麼變化" card to the business card page. Compare current metrics (last 30 days) vs previous period (30-60 days ago). Highlight significant changes (>10%) with plain-language explanations. Reuse existing data pipeline.
-- **Effort**: 8-10h
-- **Competitive Gap**: 🟡 No TW competitor highlights recent changes with plain-language explanations
+- **Status**: ✅ Done
+- **Description**: Koyfin and Finary both highlight what changed recently — metrics that moved significantly compared to the previous period. Stock Explorer shows historical data in charts but doesn't explicitly highlight recent changes.
+- **Implementation (complete)**:
+  - `src/services/delta_engine.py` — Service layer computing metric deltas ✅
+  - `_render_deltas()` in `_sections/_story.py` — UI rendering wired into business card ✅
+  - Already shipped and live in production ✅
+- **Related files**: `src/services/delta_engine.py`, `src/pages/business_card/_sections/_story.py`
+- **Note**: Discovered as already implemented during Round 17 discussion (2026-06-13). Backlog was stale.
 
 ---
 

@@ -111,3 +111,45 @@ events:
   summary: 重大事件：法說
   title: 【即時新聞】鴻海(2317)最新外資狂掃3萬張，法說前爆量還能追嗎？ - CMoney投資網誌
   type: news_major
+- date: '2026-06-13'
+  detected_at: '2026-06-13T00:46:19'
+  severity: high
+  stock_id: '2330'
+  summary: 重大事件：法說
+  title: 2330 台積電 - 力旺法說會解析影片-股市爆料同學會 - CMoney
+  type: news_major
+- date: '2026-06-13'
+  detected_at: '2026-06-13T00:46:19'
+  severity: medium
+  stock_id: '2454'
+  summary: 注意事件：訂單
+  title: 【即時新聞】聯發科協助雍智科技切入Google TPU供應鏈，搶下晶圓與成品測試訂單 - CMoney投資網誌
+  type: news_medium
+- date: '2026-06-13'
+  detected_at: '2026-06-13T00:46:20'
+  severity: high
+  stock_id: '1101'
+  summary: 重大事件：出售
+  title: 個股：台泥(1101)竹東鎮台泥段1,883.97坪土地出售完成簽約，估獲利10.2億元 - ww2.money-lin
+  type: news_major
+- date: '2026-06-13'
+  detected_at: '2026-06-13T00:46:20'
+  severity: high
+  stock_id: '2317'
+  summary: 重大事件：法說
+  title: '2317 鴻海 - 今天2026/Q1,法說會: 三率三升 預測未來QoQ都會成...-股市爆料同學會 - CMoney'
+  type: news_major
+- date: '2026-06-13'
+  detected_at: '2026-06-13T00:46:20'
+  severity: high
+  stock_id: '2317'
+  summary: 重大事件：法說
+  title: 鴻海法說下午登場關注四大焦點 本土法人暖場喊買調升目標價 - news.cnyes.com
+  type: news_major
+- date: '2026-06-13'
+  detected_at: '2026-06-13T00:46:20'
+  severity: high
+  stock_id: '2317'
+  summary: 重大事件：法說
+  title: 鴻海法說會下午登場法人「喊買」調升目標價| 財經 - Newtalk新聞
+  type: news_major

@@ -1,5 +1,236 @@
 # Stock Explorer Design Review
 
+## 2026-06-13 Design Review — Review Round 20 (Sprint 7)
+
+> **Author**: Design Reviewer
+> **Date**: 2026-06-13
+> **Context**: Round 20 review — Sprint 7 deliverables: C84 (Market Event Case Study page), D3 (card consolidation with `_subsidiary_card` and `_count_label` helpers). Reviewing design compliance of new page and card consolidation results.
+> **Current Design Grade**: A (maintained for 10th consecutive round)
+
+---
+
+## Table of Contents
+
+1. [Design Grade Assessment](#design-grade-assessment-round-20)
+2. [C84 Market Event Case Study — Design Compliance Review](#c84-market-event-case-study--design-compliance-review)
+3. [D3 Card Consolidation — Verification](#d3-card-consolidation--verification)
+4. [New Design Issues Identified](#new-design-issues-identified-round-20)
+5. [D3 Effectiveness Assessment](#d3-effectiveness-assessment)
+6. [Updated Issue Checklist](#updated-issue-checklist-round-20)
+7. [Recommendations Summary](#recommendations-summary-round-20)
+
+---
+
+## Design Grade Assessment (Round 20)
+
+### Overall Grade: A (Maintained — 10th Consecutive)
+
+### Grade Breakdown
+
+| Dimension | Grade | Notes |
+|-----------|-------|-------|
+| **Zone A/B/C Compliance** | A | C84 is a standalone page (no stock_id) — correctly uses Zone C only. No zone mixing. |
+| **PPT-Style Adherence** | A- | C84 follows one-key-point-per-page (each case study answers "what happened?"). Lessons use `st.expander` for progressive disclosure. Minor: text volume in "What Happened" section exceeds 200-char guideline. |
+| **Card Component Consistency** | B+ | **Mixed results**: D3 fixed `group_structure.py` (0 inline HTML). But C84 introduces 2 new inline HTML blocks (D-049, D-050). `etf_browser.py` still has 3 inline HTML usages (D-051). Net effect: inline HTML count roughly unchanged. |
+| **Color System** | A | C84 uses correct colors: `#3498DB` (info), `#27AE60` (positive), `#E74C3C` (negative), `#F8F9FA` (card bg). `_subsidiary_card` uses non-standard white bg (D-052). |
+| **Plain-Language System** | A | C84 historian tone is excellent. Disclaimer at top and bottom. Lessons use beginner-friendly language. |
+| **Loading/Error States** | B | C84 has no loading spinner (data is local JSON). Error state for missing case study uses `st.error()`. No standardized empty state component used. |
+| **Mobile Responsiveness** | B- | D-006 still unresolved. C84 key metrics use 2-col layout that won't stack gracefully. |
+| **Design System Documentation** | B | D-004 resolved (doc exists at `docs/design/design_system.md`). But new components (`_subsidiary_card`, `_count_label`) not yet added to design system doc. |
+
+### Grade Justification
+
+The grade is maintained at **A** for the 10th consecutive round because:
+- All P0 issues remain resolved
+- C84 is a well-designed standalone page with strong historian positioning
+- D3 card consolidation successfully standardized `group_structure.py`
+- `_subsidiary_card()` and `_count_label()` are valuable additions to the shared component library
+- No new P0 or P1 issues introduced
+- New P2 issues (D-049 through D-053) are minor and fixable within 0.5-2h each
+
+**Risk**: The grade could slip to A- in Round 21 if:
+- Inline HTML continues to be added in new pages faster than old pages are fixed (D-003 net-negative trend)
+- `_subsidiary_card` non-standard styling (D-052) is copied as a pattern by future developers
+- ETF browser table-like layout (D-051) is extended to more pages
+
+---
+
+## C84 Market Event Case Study — Design Compliance Review
+
+### What Was Implemented
+- **Page**: `src/pages/market_event_case_study.py` (183 lines)
+- **Data**: Local JSON via `market_event_service` (no API calls for case study content)
+- **Sections**: Historian disclaimer → Case study selector → Hero → What Happened → Key Metrics → Lessons Learned → Related Stocks → All Case Studies overview → Historian disclaimer
+- **Components used**: `_info_card()`, `_section_title()`, `_historian_disclaimer()` — all shared components
+
+### Design Compliance Assessment
+
+| Criterion | Status | Notes |
+|-----------|--------|-------|
+| **Zone layering** | ✅ Pass | Standalone page, no navbar/sidebar mixing. All content in Zone C. |
+| **PPT-style** | ✅ Pass | One key point per case study ("what happened and why"). Clear hero section. |
+| **Progressive disclosure** | ✅ Pass | Lessons use `st.expander(expanded=False)`. All case studies in expandable list. |
+| **Historian tone** | ✅ **Excellent** | Disclaimer at top and bottom. Factual language throughout. No buy/sell advice. |
+| **Card usage** | ⚠️ **Mixed** | Historian disclaimer correctly uses `_info_card()`. But Key Metrics (lines 109-117) and Related Stocks (lines 143-157) use inline HTML. |
+| **Color system** | ✅ Pass | All colors match design system. Severity badges use correct emoji + color mapping. |
+| **Plain-language** | ✅ Pass | "以歷史學家的角度，回顧台灣與全球金融市場的重大事件" — clear purpose. |
+| **Ten-second test** | ✅ Pass | Page purpose is immediately clear from hero section. |
+| **Button keys** | ✅ Pass | Uses `f"related_{study['id']}_{stock['stock_id']}"` and `f"goto_{cs['id']}"` — unique. |
+| **Error handling** | ⚠️ Partial | Uses `st.error()` for missing case study. No standardized empty state component. |
+| **Text volume** | ⚠️ Concern | "What Happened" section may exceed 200-char guideline for long case studies. |
+
+### Verdict
+**Well-designed page with strong historian positioning.** The overall structure, tone, and progressive disclosure are excellent. The main issues are the two inline HTML card blocks (D-049, D-050) that duplicate existing shared component styling.
+
+---
+
+## D3 Card Consolidation — Verification
+
+### What D3 Delivered
+1. **`_subsidiary_card()`** added to `_router_base.py` (lines 117-151) — renders subsidiary info with holding badge, business description, and relation
+2. **`_count_label()`** added to `_router_base.py` (lines 154-164) — renders muted count label
+3. **`group_structure.py`** refactored to use `_subsidiary_card()` and `_info_card()` — **zero inline HTML** (verified: 0 `unsafe_allow_html` occurrences)
+4. **`etf_browser.py`** uses `_count_label()` for the ETF count display (line 83)
+
+### Verification Results
+
+| File | Before D3 | After D3 | Status |
+|------|-----------|----------|--------|
+| `group_structure.py` | Inline HTML cards with non-standard styling | Uses `_subsidiary_card()`, `_info_card()`, `_summary_card()`, `_section_title()` | ✅ **Fully consolidated** |
+| `etf_browser.py` | No count label component | Uses `_count_label()` for count display | ✅ **Partially consolidated** (3 inline HTML usages remain in table rows) |
+| `_router_base.py` | 3 card components (`_白话_card`, `_summary_card`, `_info_card`) | 5 components (+ `_subsidiary_card`, `_count_label`) | ✅ **Extended** |
+
+### D3 Effectiveness Assessment
+
+**Strengths**:
+- `group_structure.py` is now a model page — all shared components, zero inline HTML
+- `_subsidiary_card()` is a well-designed component with clear API (name, hold_label, hold_color, holding, revenue, business, relation)
+- `_count_label()` is simple and effective
+- The pattern of adding page-specific card types to `_router_base.py` is a good extensibility approach
+
+**Weaknesses**:
+- `_subsidiary_card()` uses non-standard card styling (D-052) — `background:white` + `border:1px solid #ECF0F1` instead of standard `background:#F8F9FA` + `border-left:4px solid`
+- `_count_label()` is undocumented in the design system (D-053)
+- D3 did not address existing inline HTML in `watchlist_page.py`, `etf_detail.py`, `business_card.py` (C41/C44)
+- New page `market_event_case_study.py` was created during the same sprint but did NOT use shared components for all cards — suggesting the D3 consolidation message didn't fully propagate
+
+**Net Assessment**: D3 was **partially effective**. It successfully consolidated `group_structure.py` and added useful new components. However, the overall inline HTML problem (D-003) remains unresolved because:
+1. New pages still use inline HTML (C84 added 2 new blocks)
+2. Old pages were not cleaned up (`watchlist_page.py`, `etf_detail.py`, `business_card.py`)
+3. The new `_subsidiary_card` itself uses non-standard styling
+
+---
+
+## New Design Issues Identified (Round 20)
+
+### D-049: C84 Key Metrics Cards Use Inline HTML Instead of _白话_card()
+- **Severity**: P2 | **Effort**: <0.5h
+- **Issue**: Lines 109-117 use inline HTML that is a near-exact copy of `_白话_card()` styling
+- **Fix**: Replace with `_白话_card(label, value, analogy)` — data structure already matches
+
+### D-050: C84 Related Stocks Cards Use Non-Standard Card Styling
+- **Severity**: P2 | **Effort**: 0.5-1h
+- **Issue**: Lines 143-157 use `background:white` + `border:1px solid #ECF0F1` instead of standard card styling
+- **Fix**: Create `_related_stock_card()` or use `_info_card()` + button
+
+### D-051: ETF Browser Table-Like Rows Use Inline HTML for Colored Values
+- **Severity**: P2 | **Effort**: 2-3h
+- **Issue**: Hot ETF and Dividend Ranking rows use `st.columns` with inline HTML color spans — same pattern as D-010 watchlist
+- **Fix**: Redesign using card-based layout with `_info_card()`
+
+### D-052: _subsidiary_card() Uses Non-Standard Card Styling
+- **Severity**: P2 | **Effort**: 0.5-1h
+- **Issue**: Uses `background:white` + `border:1px solid #ECF0F1` instead of design system standard
+- **Fix**: Change to standard styling or document as "subsidiary card" variant in design system
+
+### D-053: _count_label() Is an Undocumented Component Type
+- **Severity**: P2 | **Effort**: 0.5h
+- **Issue**: New component type not documented in design system
+- **Fix**: Add to design system doc as "muted label" component type
+
+---
+
+## Updated Issue Checklist (Round 20)
+
+### P0 — Blocking Issues
+*(None)*
+
+### P1 — Important Issues (3 items)
+
+| ID | Title | Status | Effort |
+|----|-------|--------|--------|
+| D-003 | Inconsistent Card Styling | ⚠️ Partially Fixed (D3) | 2-3h remaining |
+| D-005 | Business Card Page Overload | ⚠️ Stable | 3-4h |
+| D-006 | Mobile Responsiveness Gaps | ❌ Unresolved | 4-6h |
+
+### P2 — Optimization Issues (22 items)
+
+| ID | Title | Status | Effort |
+|----|-------|--------|--------|
+| D-007 | No Discovery Mechanism | ❌ Unresolved | 12-16h |
+| D-008 | Loading State Inconsistency | ❌ Unresolved | 1-2h |
+| D-009 | Error State Inconsistency | ❌ Unresolved | 1h |
+| D-010 | Watchlist Uses Non-PPT Layout | ❌ Unresolved | 2-3h |
+| D-011 | Category Browser Uses Dense Tables | ❌ Unresolved | 2-3h |
+| D-012 | No Glossary/Tooltip System | ❌ Unresolved | 8-12h |
+| D-015 | No Structured Learning Path | ❌ Unresolved | 20-30h |
+| D-032 | No Progressive Disclosure Pattern | ❌ Unresolved | 3-4h |
+| D-033 | No Standardized Empty State | ❌ Unresolved | 1h |
+| D-035 | C41 Peer Cards Use Inline HTML | ❌ Unresolved | 0.5-1h |
+| D-036 | C44 Risk Cards Non-Standard Bg | ❌ Unresolved | <0.5h |
+| D-038 | C41 Calls API in View Layer | ❌ Unresolved | 1-2h |
+| D-039 | No Standardized Section Header | ❌ Unresolved | 1-2h |
+| D-040 | No Standardized Disclaimer | ❌ Unresolved | 0.5h |
+| D-041 | No Sprint 5 Card Components | ❌ Unresolved | 1h |
+| D-042 | Health Mini-Cards Non-Standard | ❌ Unresolved | 0.5h |
+| D-043 | Dividend Table Uses Inline HTML | ❌ Unresolved | 1-2h |
+| D-044 | C41 Header Doesn't Use _section_title | ❌ Unresolved | <0.5h |
+| D-045 | Sector Grid Uses Inline HTML | ❌ Unresolved | 1-2h |
+| D-046 | 4th KPI Card Uses Inline HTML | ❌ Unresolved | <0.5h |
+| D-047 | Share Section Header Not Standard | ❌ Unresolved | <0.5h |
+| D-048 | Share Button Uses Non-Functional JS | ❌ Unresolved | 1-2h |
+| D-049 | C84 Key Metrics Inline HTML | 🆕 New | <0.5h |
+| D-050 | C84 Related Stocks Non-Standard | 🆕 New | 0.5-1h |
+| D-051 | ETF Browser Table-Like Rows | 🆕 New | 2-3h |
+| D-052 | _subsidiary_card Non-Standard | 🆕 New | 0.5-1h |
+| D-053 | _count_label Undocumented | 🆕 New | 0.5h |
+
+---
+
+## Recommendations Summary (Round 20)
+
+### Top 3 Design Recommendations
+
+1. **🔴 Enforce "No Inline HTML" Rule Before Sprint 8**
+   - The D3 consolidation added new components but didn't prevent new inline HTML in C84
+   - **Action**: Add a pre-commit or pre-review checklist item: "All new cards must use shared components from `_router_base.py`"
+   - **Impact**: Prevents D-003 from worsening. Estimated 5-10h to fix all existing inline HTML across pages.
+
+2. **🟡 Standardize _subsidiary_card Styling**
+   - The new `_subsidiary_card` uses non-standard styling that could be copied as a pattern
+   - **Action**: Change to `background:#F8F9FA` + `border-left:4px solid` to match design system, OR document as a recognized "subsidiary card" variant
+   - **Impact**: Prevents D-052 from becoming a pattern for future components. <0.5h.
+
+3. **🟢 Create Card Component Gallery in Design System Doc**
+   - New components (`_subsidiary_card`, `_count_label`) are not documented in the design system
+   - **Action**: Add a "Component Gallery" section to `docs/design/design_system.md` with all 5 card components, their APIs, and usage examples
+   - **Impact**: Prevents future developers from reinventing card styles. 1-2h.
+
+### Quick Wins (Can be done in <1h each)
+- D-049: Replace C84 key metrics inline HTML with `_白话_card()` (<0.5h)
+- D-052: Fix `_subsidiary_card` background to `#F8F9FA` (<0.5h)
+- D-053: Document `_count_label` in design system (0.5h)
+
+### Design Grade Forecast
+
+| Scenario | Grade | Condition |
+|----------|-------|-----------|
+| **Best case** | A+ | D-003 fully resolved (all inline HTML replaced), D-005 addressed with progressive disclosure |
+| **Expected case** | A | D-049-D-053 fixed in Sprint 8, D-003 net unchanged |
+| **Worst case** | A- | Inline HTML continues to grow, D-003 becomes unmanageable |
+
+---
+
 ## 2026-06-19 Design Review — Review Round 13
 
 > **Author**: Design Reviewer

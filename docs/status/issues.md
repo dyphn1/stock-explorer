@@ -43,4 +43,10 @@ C67: "Community-Curated Stock Stories" — User-Generated Narrative Layer | P2 |
 |||C94: "Earnings Story" — Post-Earnings Plain-Language Narrative Analysis | P1 | 14-18h | Story first + Adaptive + Ten-second test + Historian | source: competitor research round 17
 |||C95: "Watchlist Health Dashboard" — Aggregate Portfolio Health with Plain-Language Summary | P2 | 10-14h | Story first + PPT-style + Ten-second test + Historian | source: competitor research round 17
 |||C96: "Sector Ecosystem Map" — Visual Supply Chain & Ecosystem Relationship Map | P2 | 16-22h | Story first + PPT-style + Point-to-point + Historian | source: competitor research round 17
-|||C97: "First 30 Days" — Structured Beginner Onboarding Curriculum with Daily Micro-Tasks | P1 | 18-24h | Point-to-point + Ten-second test + Historian + Beginner-friendly | source: competitor research round 17
+||||C97: "First 30 Days" — Structured Beginner Onboarding Curriculum with Daily Micro-Tasks | P1 | 18-24h | Point-to-point + Ten-second test + Historian + Beginner-friendly | source: competitor research round 17
+||||C98: "Event Interpretation Engine" — AI-Powered "Why Did This Stock Move?" Explanation for Every Event | P1 | 14-18h | Story first + Adaptive + Historian | source: competitor research round 20
+||||C99: "Scrollytelling Mode" — Animated Vertical Scroll Through Company History | P2 | 16-22h | Story first + PPT-style + Ten-second test | source: competitor research round 20
+||||C100: "Natural Language Screener" — Plain-Language Stock Screening with "Why It Passed" Explanations | P1 | 18-24h | Point-to-point + Beginner-friendly + Benchmark-oriented | source: competitor research round 20
+||||C101: "Comprehension Check" — Contextual Quiz After Reading with Adaptive Learning Recommendations | P2 | 8-12h | Point-to-point + Ten-second test + Adaptive | source: competitor research round 20
+||||C102: "Market Narrative Feed" — Social-Media-Style AI-Generated Daily Market Story Stream | P1 | 16-22h | Story first + Adaptive + Ten-second test | source: competitor research round 20
+||||C103: "Learn First Gate" — Soft Educational Onboarding Before Viewing Stock Data | P2 | 10-14h | Story first + Point-to-point + Ten-second test + Beginner-friendly | source: competitor research round 20

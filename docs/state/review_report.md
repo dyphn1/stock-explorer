@@ -1,138 +1,171 @@
 # Review Report
-## Theme: Review (🔍) — Round 19
-## Date: 2026-06-12
+## Theme: Review (🔍) — Round 20
+## Date: 2026-06-13
 
 ---
 
 ## 1. Key Findings Summary
 
 ### Architecture
-- **D37 RESOLVED** — `_sections.py` split into 6 sub-modules under `_sections/` (57-line orchestrator + _summary.py, _financial.py, _health.py, _detail.py, _story.py). Clean resolution.
-- **D-043 was a false alarm** — Challenger verified it was fixed in Sprint 5 (commit 318d30f). Documentation debt, not code debt.
-- **D-046 was a false alarm** — Sector heatmap KPI fix was applied. Share section JS issue (if still broken) is untracked.
-- **6 new debt items from Sprint 6**: D-048 (financial_wellness.py inline HTML), D-049 (notification_center.py helpers), D-050 (investment_memo.py minor), D-051 (YAML re-read pattern), D-052 (hardcoded quiz data), D-054 (stock_screener_service.py clean)
-- **st.markdown counts 55-78% lower than originally claimed** — Challenger verified: financial_wellness.py has 14 (not 84), notification_center.py has 10 (not 47), investment_memo.py has 7 (not 35)
-- **Sprint 6 scope change** — Delivered C83/C85/C02/C43/C45 instead of planned C93/C94/C97. Correct decisions for competitive gaps.
+- **D6 (YAML migration)**: Partially resolved — only 1 of 6 data blocks migrated. `market_event_service.py`'s `_CASE_STUDIES` (230 lines) is a NEW D6 violation introduced by C84.
+- **D-044 (market_data.py)**: ✅ Confirmed resolved — clean 283-line service with 8 well-designed functions.
+- **D7 (N+1 fix)**: ✅ Confirmed resolved — `ThreadPoolExecutor(max_workers=10)` in `category_browser.py`.
+- **D3 (card consolidation)**: ✅ Confirmed resolved — `_subsidiary_card()` and `_count_label()` helpers added.
+- **8 new debt items**: D-048 through D-056 (see Technical Debt section).
+- **Top 3 architecture recommendations**:
+  1. Complete D6 YAML migration (3-4h) — highest impact, unblocks content scaling
+  2. Extract inline HTML from `sector_heatmap.py` and `market_event_case_study.py` (2-3h)
+  3. Fix D8/D9/D10 performance debt (3-4h)
 
 ### Design
-- **Design Grade: A (9th consecutive round)** — maintained
-- **C83 Investment Memo: A+** — Perfect card-per-memo pattern, zero inline HTML, cleanest new page
-- **C02 Notification Center: A** — Severity-based card selection, clean progressive disclosure
-- **C85 Financial Wellness: B+** — Clean quiz flow but inline HTML for score cards
-- **2 new P2 issues**: D-049 (C85 score cards inline HTML), D-050 (C02 settings raw st.expander)
-- **D-005 stable** — Business card has 19 sections, only 2 collapsed. Recommend collapsing C71, C73, C38, C41
+- **Design Grade: A-** (downgraded from A due to inline HTML enforcement gap)
+- **D3 card consolidation**: Partially effective — `group_structure.py` fully consolidated, but C84 introduced 116 lines of new inline HTML.
+- **5 new P2 issues**: D-049 through D-053 (C84 inline HTML, non-standard card styling, undocumented components).
+- **"No Inline HTML" rule**: NOT enforceable without automated CI checking. Every sprint adds more inline HTML.
+- **Top 3 design recommendations**:
+  1. Add CI check for `unsafe_allow_html=True` before Sprint 8
+  2. Standardize `_subsidiary_card()` styling to match design system
+  3. Create card component gallery in design system doc
 
 ### Competitor Research
-- **Sprint 6 closed 3 major gaps**: Notifications (C02), Structured Reflection (C83), Financial Wellness (C85)
-- **Remaining gaps**: Stock Screener (C42), Visual Revenue Tree (C36), Story Timeline (C34), Beginner/Expert Toggle (C40), Learning Path (C47)
-- **Emerging trends validated**: Narrative-first platforms, AI-powered education, progressive disclosure as standard
+- **10 new competitors analyzed**: Luca AI, ticker.ai, Chartr, Alopexx, StonkGrid, Tapp.finance, 群益金融資訊網, PChome股市頻道, etc.
+- **6 new feature gaps identified** (C98-C103):
+  - C98: Event Interpretation Engine — P1, 14-18h — CONDITIONAL
+  - C99: Scrollytelling — P3 (downgraded), 16-22h — DEFERRED to Sprint 10+
+  - C100: Natural Language Screener — **REJECTED** (contradicts historian positioning)
+  - C101: Comprehension Check Quiz — P2, 8-12h — CONFIRMED (replaces C52)
+  - C102: Market Narrative Feed — **REJECTED** (market news, not historian)
+  - C103: Learn First Gate — P2, 10-14h — CONDITIONAL (rename to "First Visit Guide")
+- **Cumulative totals**: 86 competitors analyzed, 103 feature gaps identified (C01-C103)
 
 ### Cost Estimates
-- **Sprint 7 total: 34.2h (range 34-44h)** — after D13 deferral and D-043/D-046 closure
-- **C84 (Market Event Case Study): 12h** — main feature, strongest historian differentiator
-- **Debt cleanup: 13.4h** — D-044 (3h) + D3 (4.2h) + D6 (4.2h) + D7 (3h) — reduced from 17.6h
-- **Spikes: 4.8h** — D28 (3.6h) + D-045 (1.2h)
+- **Sprint 8 (Debt-First)**: 10-17h debt clearance before any new features
+- **Sprint 9**: C98 spike (2h) + C98 dev (14-18h) + C101 (8-12h) + C103 (10-14h) = 34-46h
+- **Sprint 10+**: C99 (16-22h) + remaining backlog
 
 ---
 
-## 2. Feature Gaps (New from Round 19)
+## 2. Feature Gaps (New from Round 20)
 
-No new feature gaps identified this round. Sprint 6 closed 3 major gaps (C83, C85, C02). The remaining gaps (C42, C36, C34, C40, C47) were identified in previous rounds and remain on the roadmap.
-
-**Competitive positioning update**: We now have 7 sustained differentiators (plain-language, PPT-style, point-to-point group structure, investment memo, financial wellness, snowflake health, benchmark-oriented comparison) vs. 0 in Round 1.
+| ID | Feature | Status | Priority | Effort |
+|----|---------|--------|----------|--------|
+| C98 | Event Interpretation Engine | CONDITIONAL | P1 | 14-18h |
+| C99 | Scrollytelling Visual History | DEFERRED to Sprint 10+ | P3 | 16-22h |
+| C100 | Natural Language Screener | **REJECTED** | — | — |
+| C101 | Comprehension Check Quiz | CONFIRMED (replaces C52) | P2 | 8-12h |
+| C102 | Market Narrative Feed | **REJECTED** | — | — |
+| C103 | First Visit Guide (renamed) | CONDITIONAL | P2 | 10-14h |
 
 ---
 
 ## 3. Design Improvements
 
-### Immediate (Before Sprint 7)
-1. **D-003** (P1): Replace inline HTML cards in 5+ page files with shared components — 2-3h
-2. **D-005** (P1): Apply progressive disclosure to C71, C73, C38, C41 — 1h
+### Immediate (Before Sprint 8)
+1. **Add CI check for inline HTML** — automated enforcement of "No Inline HTML" rule
+2. **Standardize `_subsidiary_card()` styling** — change to `background:#F8F9FA` + `border-left:4px solid`
 
-### During Sprint 7
-3. **D-049** (P2): Create `_score_card()` helper for C85 — 1h
-4. **D-050** (P2): Use `_section_header()` for C02 settings — <0.5h
-5. **D-033** (P2): Create `_empty_state()` component — 1h
+### During Sprint 8
+3. **D-049**: Refactor C84 key metrics to use `_白话_card()` — <0.5h
+4. **D-050**: Refactor C84 related stocks to use `_subsidiary_card()` — 0.5-1h
+5. **D-052**: Standardize `_subsidiary_card()` styling — 0.5-1h
+6. **D-053**: Document `_count_label()` in design system — 0.5h
 
-### PPT-Style Compliance
-- C83 Investment Memo: A+ (perfect)
-- C02 Notification Center: A (excellent)
-- C85 Financial Wellness: B+ (inline HTML for score cards)
+### Design Grade
+**A-** (downgraded from A) — Design system quality is A, but adoption is B+ due to persistent inline HTML. Grade returns to A once automated enforcement is implemented.
 
 ---
 
 ## 4. Technical Debt Updates
 
 ### Newly Identified This Round
-- **D-048**: financial_wellness.py inline HTML (14 st.markdown calls) — 2-3h
-- **D-049**: notification_center.py presentation helpers in page file — 1-2h
-- **D-050**: investment_memo.py minor st.markdown usage — <0.5h
-- **D-051**: notification_service.py YAML re-read pattern — 1h
-- **D-052**: financial_wellness_service.py hardcoded quiz data — 2h (part of D6)
+- **D-048**: `market_event_service.py` `_CASE_STUDIES` hardcoded (230 lines) — P1, 1-2h
+- **D-049**: `get_events_for_stock()` name collision — Medium, 0.25h
+- **D-050**: `market_event_case_study.py` 116 lines inline HTML — Medium, 1-2h
+- **D-051**: O(n) linear scan for case study lookups — Low, 0.5h
+- **D-052**: `etf_browser.py` still sequential (D8) — Medium, 1-2h
+- **D-053**: `adaptive_engine.py` no cache (D10) — Medium, 1-2h
+- **D-054**: `watchlist.py` no cache (D9) — Medium, 1-2h
+- **D-055**: `sector_heatmap.py` 150+ lines inline HTML — Medium, 2-3h
+- **D-056**: `_section_title()` naming clarity — Low, 0.1h
 
-### Closed This Round
-- **D-043**: Was fixed in Sprint 5 — documentation debt only
-- **D-046**: Sector heatmap KPI fix applied — documentation debt only
-- **D37**: _sections.py split into 6 sub-modules — fully resolved
+### Confirmed Resolved
+- **D-044**: market_data.py extraction — clean service layer
+- **D7**: N+1 fix in category_browser.py — ThreadPoolExecutor
+- **D3**: Card consolidation — new helpers in _router_base.py
 
-### Still Open (High Priority for Sprint 7)
-- **D-044**: sector_heatmap.py needs service-layer abstraction — 3h
-- **D3**: Inline HTML consolidation across 5+ pages — 4.2h
-- **D6**: YAML migration for hardcoded data — 4.2h
-- **D7**: N+1 API calls in category_browser.py — 3h
+### Still Open (High Priority for Sprint 8)
+- **D-048** (P1): _CASE_STUDIES YAML migration — first task of Sprint 8
+- **D6** (P1): Complete remaining 5 YAML migrations
+- **D-055** (Medium): sector_heatmap.py inline HTML
+- **D-050** (Medium): market_event_case_study.py inline HTML
+- **D8/D9/D10** (Medium): Performance debt (parallelize ETF, cache watchlist/engine)
 
 ---
 
 ## 5. Challenger 3-Round Challenge
 
 ### Round 1: Gap Authenticity Challenge — ⚠️ PARTIALLY REVISED
-**Challenger Finding**: D-043 and D-046 were already fixed — team's summary was outdated. st.markdown counts were 55-78% overstated. Sprint 6 delivered different features than planned (C83/C85/C02 instead of C93/C94/C97).
+**Challenger Finding**: C100 (Natural Language Screener) contradicts "historian, not stock picker" — a screener is stock-picking behavior regardless of framing. C102 (Market Narrative Feed) is a market news feature, not a historian feature. C99 (Scrollytelling) is too expensive (16-22h) for P2 priority.
 
-**Verdict**: D-043 CLOSED, D-046 CLOSED, D-048/D-049/D-050 severity DOWNGRADED. Sprint 6 scope change ACKNOWLEDGED.
+**Verdict**: 2 features REJECTED (C100, C102), 1 DOWNGRADED to P3 (C99), 3 CONDITIONAL (C98, C101, C103).
 
 ### Round 2: Priority Challenge — ⚠️ REVISED
-**Challenger Finding**: 38.4h estimate was optimistic. C84 at 12h is 31% of budget (46-58% with content creation). D13 (test infrastructure) should be deferred to Sprint 8.
+**Challenger Finding**: D6 was claimed "resolved" in Sprint 7 but only 1/6 blocks migrated. D-048 (_CASE_STUDIES) should be P1, not Medium. "No Inline HTML" rule is unenforceable without automated CI checking. Sprint 8 should be debt-first.
 
-**Verdict**: D13 deferred. Revised Sprint 7: 34.2h. C84 confirmed as main feature. C84 ships with minimum 3 case studies.
+**Verdict**: D6 reclassified as "partially resolved." D-048 elevated to P1. Sprint 8 confirmed as debt-first. CI enforcement recommended.
 
-### Round 3: Goal Alignment Challenge — ✅ CONFIRMED
-**Challenger Finding**: C84 is the strongest historian feature in the entire roadmap. 40/52/8% feature/debt/spikes balance is appropriate for a consolidation sprint.
+### Round 3: Goal Alignment Challenge — ⚠️ REVISED
+**Challenger Finding**: The two rejected features (C100, C102) failed the "ten-second test" — validates the filtering approach. Design Grade A downgraded to A- until automated inline HTML enforcement. M5 milestone (Adaptive updates within 24h) is NOT achieved. Competitor research needs restructuring to start from product vision pain points, not competitor features.
 
-**Verdict**: CONFIRMED with conditions — design review gate before C84 ships, C93/C94/C97 remain for Sprint 8+.
+**Verdict**: 6 structural changes required (historian filter, feature triage, CI enforcement, milestone verification, competitor research restructuring, product vision update).
+
+### Final Challenger Verdict: ⚠️ REQUIRES REVISION
+- 2 features rejected, 1 cancelled, 1 deferred, 3 conditional
+- Sprint 8 is debt-first (10-17h debt before features)
+- 6 structural changes required
 
 ---
 
 ## 6. PM Decisions
 
-### Sprint 7 Scope (CONFIRMED by Challenger)
+### Sprint 8 Scope (REVISED — Debt-First, No New Features)
 | Item | Hours | Type |
 |------|-------|------|
-| C84 Market Event Case Study | 12.0 | Feature |
-| D28 Spike (animation feasibility) | 3.6 | Spike |
-| D-045 Spike (card-count audit) | 1.2 | Spike |
-| D-044 market_data.py extraction | 3.0 | Debt |
-| D3 ui_components.py consolidation | 4.2 | Debt |
-| D6 YAML migration | 4.2 | Debt |
-| D7 N+1 fix | 3.0 | Debt |
-| Verification overhead | 4.0 | QA |
-| **TOTAL** | **34.2** | |
+| D-048: _CASE_STUDIES → YAML | 1-2h | Debt (P1) |
+| D6: Remaining 5 YAML migrations | 3-4h | Debt (P1) |
+| D-055: sector_heatmap.py inline HTML | 2-3h | Debt |
+| D-050: market_event_case_study.py inline HTML | 1-2h | Debt |
+| D8: Parallelize etf_browser.py | 1-2h | Debt |
+| D9: Cache watchlist.py | 1-2h | Debt |
+| D10: Cache adaptive_engine.py | 1-2h | Debt |
+| D-056: _section_title() docstring | 0.1h | Debt |
+| **TOTAL** | **10.2-17.1h** | |
 
-### Deferred to Sprint 8
-- D13 (test infrastructure) — 4.2h
-- C82 (Animated Data Story) — conditional on D28 spike
-- C93 (Dividend Income Calendar) — 14h
-- C94 (Earnings Story) — 16h
+### Sprint 9 (Post-Debt Features)
+- C98 spike (2h) → C98 dev (14-18h) + C101 (8-12h) + C103 (10-14h) = 34-46h
 
-### Documentation Updates Required
-1. tech_debt.md: Mark D-043 and D-046 as resolved
-2. tech_debt.md: Add D-048 through D-052
-3. review_report.md: Update D-043/D-046 status
-4. current_problems.md: Update D-037, D-041 to resolved
+### Sprint 10+ (Deferred)
+- C99 (Scrollytelling) — P3, 16-22h
+
+### Explicitly Rejected
+- C100 (Natural Language Screener) — contradicts historian positioning
+- C102 (Market Narrative Feed) — market news, not historian
+
+### Explicitly Cancelled
+- C52 (Quiz Mode) — replaced by C101
+
+### Structural Changes Required
+1. Add "historian filter" and "ten-second test" to competitor research template
+2. Implement Feature Triage process (every 3 rounds, review entire backlog)
+3. Add automated inline HTML enforcement (CI check)
+4. Add milestone verification to sprint review checklist
+5. Restructure competitor research to start from product vision pain points
+6. Update product vision to expand LLM scope (translation → interpretation with data citation)
 
 ### Design Grade
-**A (9th consecutive round)** — Sprint 6 pages are the cleanest new additions. Only 2 new P2 issues. Overall trajectory positive.
+**A-** (downgraded from A) — returns to A once CI enforcement is implemented.
 
 ---
 
-*Effort: 34.2h Sprint 7, 55.2h+ Sprint 8, 26-36h Sprint 9+*
-*Cumulative remaining: ~115-135h*
+*Effort: 10.2-17.1h Sprint 8 (debt), 34-46h Sprint 9 (features), 16-22h Sprint 10+*
+*Cumulative remaining: ~60-85h (reduced from 82-112h by rejecting 2 features)*

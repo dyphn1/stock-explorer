@@ -5,8 +5,11 @@
 - **Sprint Status**: Sprint 7 ✅ COMPLETE → Sprint 8 next
 
 ## Key Metrics
-- Design grade: A (maintained through Sprint 7)
+- Design grade: A- (downgraded from A — inline HTML enforcement gap; 10th consecutive A/A-)
 - L0: 85/85 ✅ | L1: 8/18 (10 pre-existing event-alert failures unchanged)
+- Sprint 8: Debt-first (10-17h debt before new features)
+- Features rejected this round: 2 (C100, C102)
+- Structural changes required: 6 (historian filter, feature triage, CI enforcement, milestone verification, competitor research restructuring, product vision LLM scope update)
 
 ## Sprint Plans (Summary)
 | Sprint | Items | Status |
@@ -16,8 +19,9 @@
 ||| Sprint 5 | D-039/040/041 + D37 + C71 + C74 + C73 | ✅ Complete |
 || Sprint 6 | C83 + C85 + C02 + C43 + C45 | ✅ Complete |
 ||| Sprint 7 | C84 + D3 + D6 + D7 + D-044 | ✅ Complete |
-||| Sprint 8 | C63 (conditional on D28) + D22 | 📋 Next |
-||| Sprint 9+ | C81, C64, C65, C68 | 📋 Round 15 approved |
+|| Sprint 8 | D-048 + D6 + D-055 + D-050 + D8/D9/D10 (Debt-First) | 📋 Next |
+|||| Sprint 9 | C98 + C101 + C103 | 📋 Round 20 approved |
+|||| Sprint 10+ | C99 + C81, C64, C65, C68 | 📋 Deferred |
 
 ## Key Rules
 - Content cap: 100 items max across all features
@@ -90,6 +94,20 @@ All Sprint 7 debt items and main feature delivered:
 
 ## 🔍 Review Section
 
+### Round 20 (2026-06-13)
+- Design Grade A- (downgraded from A — inline HTML enforcement gap)
+- D6 PARTIALLY resolved: only 1/6 YAML blocks migrated; _CASE_STUDIES (230 lines) is new D6 violation
+- D-044/D7/D3: ✅ Confirmed resolved (market_data.py, N+1 fix, card consolidation)
+- 8 new debt items: D-048 through D-056 (D-048 elevated to P1 — _CASE_STUDIES YAML migration)
+- 6 new competitor features (C98-C103): 2 REJECTED (C100, C102), 1 deferred (C99→P3), 3 conditional
+- C100 (Natural Language Screener) REJECTED — contradicts "historian, not stock picker"
+- C102 (Market Narrative Feed) REJECTED — market news, not historian
+- C52 (Quiz Mode) CANCELLED — replaced by C101
+- Sprint 8 = DEBT-FIRST (10-17h debt before any new features)
+- 6 structural changes required: historian filter, feature triage, CI enforcement, milestone verification, competitor research restructuring, product vision LLM scope update
+- Challenger: ⚠️ REQUIRES REVISION — 2 features rejected, Sprint 8 debt-first confirmed
+- New: D-049 (C84 inline HTML), D-050 (C84 non-standard cards), D-051 (ETF browser inline HTML), D-052 (_subsidiary_card non-standard), D-053 (_count_label undocumented)
+
 ### Round 19 (2026-06-12)
 - Design Grade A (9th consecutive) — maintained, Sprint 6 pages are cleanest new additions
 - D37 RESOLVED: _sections.py split into 6 sub-modules (57-line orchestrator)
@@ -110,33 +128,54 @@ All Sprint 7 debt items and main feature delivered:
 - D16 RESOLVED, D26 UNBLOCKED, Design Grade A (6th consecutive)
 - New: D-042/043/044 (P2), C81-C85 added to backlog
 
-## 💡 Discussion Section (Round 16 — 2026-06-22)
+## 💡 Discussion Section (Round 17 — 2026-06-13)
 
-### Team Decision: Foundation & Competitive Parity (Challenger ✅ CONFIRMED)
-| Sprint | Features | Effort | Content |
-|--------|----------|--------|---------|
-| 6 | C83 + C85 + C02 + C43 | 40-50h | 4 |
-| 7 | C42 + C45 + C84 + C82/D28/D-045 spikes + debt | 30-45h | 5-10 |
-| 8 | C63 (conditional) + D22 | 26-36h | 12 |
-| 9+ | C81 + C64 + C65 + C68 | 92-136h | 45 |
+### Team Decision: Narrative-First Education Path (Challenger ✅ CONFIRMED after revision)
+| Sprint | Features | Effort | Type |
+|--------|----------|--------|------|
+| 8 | D22 (Persistence + C64 feasibility) + D28 (Audio spike) + [C63 if D28 ✓] OR [D-049/D-050 debt if D28 ✗] | 18-44h | Infrastructure + Conditional |
+| 9 | C34 Company Story Timeline (top 15 stocks) + C81 Interactive Historical Scenarios | 32-44h | Core Differentiator |
+| 10 | C68 Financial Concept Storytelling | 32-44h | Education |
+| 11+ | C65 Company Story Game → C64 Community Q&A (if D22 ✓) | 54-72h | Long-haul |
+| Parallel | Content creation (C34 narratives + C68 stories + C63 scripts) | 20-30h | Content |
+| **TOTAL** | | **156-234h** (+ 20-30h content) | |
+
+### Key Discoveries
+1. **C37/C39/C41 already implemented** — backlog was stale, these shipped in Sprints 3-5
+2. **C42 Stock Screener already implemented** — shipped in Sprint 6, backlog stale
+3. **C40 Beginner/Expert Mode previously cut** — "beginner mode by default" design philosophy adopted
+4. **Net new features remaining: C34, C81, C63, C65, C64, C68** (6 features, not 10+)
 
 ### Key Decisions
-1. C02 (Notifications) prioritized — leverages M5 adaptive engine
-2. C43 (Health Score) extracts existing `health_scoring.py` service
-3. C83 + C85 quick wins first — zero dependencies
-4. All 3-round challenger completed ✅
+1. C34 (Company Story Timeline) is the #1 priority after Sprint 8 — the purest "historian" differentiator
+2. C81 (Interactive Historical Scenarios) moves to Sprint 9 alongside C34 — leverages C34 narrative patterns
+3. C68 (Financial Concept Storytelling) before C64 (Community Q&A) — education before community
+4. C63 (Audio) remains conditional on D28 spike — if D28 fails, D-049/D-050 debt cleanup fills Sprint 8
+5. C34 scoped to top 15 stocks for Sprint 9 — content cap compliance (100 items max)
+6. D22 must include C64 feasibility proof-of-concept — 30-40h feature can't assume unproven infrastructure
+7. Content creation effort (20-30h) added as explicit PM/Designer line item — was excluded from dev estimates
+
+### Challenger 3-Round Summary
+- **Round 1**: C42 was missing from plan → DISCOVERED C42 already implemented (backlog stale); C64/C68 sequence swapped; Sprint 8 fallback added
+- **Round 2**: C34 content scope unbounded → capped at top 15 stocks; Sprint 8 fallback confirmed; C37/C39/C41 polish confirmed unnecessary (already ship)
+- **Round 3**: Content creation effort excluded → added 20-30h; D22 C64 feasibility requirement added; MVP boundary clarified (C34+C81 = MVP)
+- **Final Verdict**: ✅ CONFIRMED after 6 required revisions adopted
 
 ### Action Items
 | Item ID | Description | Status |
 |---------|-------------|--------|
-| C02 | Notification service + page | ✅ Complete (b197764) |
-| C43 | Health scoring service extraction | ✅ Complete (Sprint 5) |
-| C83 | Investment Memo Template | ✅ Complete (eb5e962) |
-| C85 | Financial Wellness Check | ✅ Complete (eb5e962) |
-| Design system | Notification badge + health card specs | ⏳ Pending Daniel review
+| C34 | Company Story Timeline (top 15 stocks) | 📋 Sprint 9 |
+| C81 | Interactive Historical Scenarios | 📋 Sprint 9 |
+| D22 | Persistence Layer + C64 feasibility test | 📋 Sprint 8 |
+| D28 | Audio Infrastructure spike | 📋 Sprint 8 |
+| C63 | Audio Market Story (conditional) | 📋 Sprint 8 (if D28 ✓) |
+| C68 | Financial Concept Storytelling | 📋 Sprint 10 |
+| C65 | Company Story Game | 📋 Sprint 11+ |
+| C64 | Community Q&A (if D22 ✓) | 📋 Sprint 11+ |
+| Backlog cleanup | Mark C37/C39/C41/C42 as Done in issues.md | 📋 This cycle |
 
 ### Next Cycle
-🔍 Review (Round 19) ✅ COMPLETE → Sprint 7 (C84 + D3/D6/D7/D-044 debt) ✅ COMPLETE → Sprint 8 (C63 conditional + D22)
+🔧 Development → Sprint 8 (DEBT-FIRST: D-048 → D6 → D-055 → D-050 → D8/D9/D10 = 10-17h) → 🔍 Review Round 21 → Sprint 9 (C98 + C101 + C103)
 
 ## 💡 Discussion Log
-*See docs/state/handoff_discuss.md for full Round 16 discussion log.*
+*See docs/state/handoff_discuss.md for full Round 16 discussion log. See docs/state/challenge_log.md for Round 17 challenger analysis.*

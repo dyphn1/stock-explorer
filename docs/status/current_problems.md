@@ -1,7 +1,7 @@
 # Stock Explorer — Current Problems
 
-> **Last Updated**: 2026-06-20
-> **Source**: Design Review Round 16 (2026-06-20)
+> **Last Updated**: 2026-06-13
+> **Source**: Design Review Round 20 (2026-06-13, Sprint 7)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
@@ -24,7 +24,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## P1 — Important Issues
 
-### D-003: Inconsistent Card Styling
+### D-003: Inconsistent Card Styling (PARTIALLY FIXED)
 - **Severity**: P1
 - **Added**: 2026-06-14
 - **Source**: Design Review Round 9
@@ -32,6 +32,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Pages**: `group_structure.py`, `watchlist_page.py`, `etf_detail.py`, `etf_browser.py`, `business_card.py` (C41 lines 522-532, C44 line 72)
 - **Proposed Fix**: Replace all inline HTML cards with shared components from `_router_base.py`. Create additional card types (summary card, warning card) as needed.
 - **Effort**: 2-3h
+- **Status**: ✅ **PARTIALLY FIXED in Sprint 7 (D3)** — `group_structure.py` now uses `_subsidiary_card()` and `_info_card()` with zero inline HTML. `_subsidiary_card()` and `_count_label()` added to `_router_base.py`. **Remaining**: `watchlist_page.py`, `etf_detail.py`, `business_card.py` C41/C44 inline HTML still present. **New regressions**: `market_event_case_study.py` (D-049, D-050) and `etf_browser.py` (D-051) introduced new inline HTML in Sprint 7. Net effect: group_structure fixed, but new pages added inline HTML. Overall inline HTML count: roughly unchanged.
 
 ### D-004: No Design System Documentation
 - **Severity**: P1
@@ -299,6 +300,51 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Proposed Fix**: Replace with pure Streamlit approach: `st.text_input(disabled=True)` + `st.button("📋 複製")` with `st.toast()` feedback. Create `_share_button()` helper in `_router_base.py`.
 - **Effort**: 1-2h (includes functional fix for non-working feature)
 
+### D-049: C84 Key Metrics Cards Use Inline HTML Instead of _白话_card() (D-003 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 20
+- **Description**: The Key Metrics section in `market_event_case_study.py` (lines 109-117) uses inline HTML with `unsafe_allow_html=True` instead of the shared `_白话_card()` component. The inline HTML is a near-exact copy of `_白话_card()`'s styling (`background:#F8F9FA`, `border-radius:12px`, `padding:1.2rem`, `border-left:4px solid #3498DB`). This is a textbook D-003 regression — the developer duplicated the card style inline rather than using the shared component.
+- **Affected Files**: `src/pages/market_event_case_study.py` lines 109-117
+- **Proposed Fix**: Replace the inline HTML block with `_白话_card(label, value, analogy)` calls. The data structure already matches the `_白话_card` API (label, value, analogy fields).
+- **Effort**: <0.5h (direct replacement)
+
+### D-050: C84 Related Stocks Cards Use Non-Standard Card Styling (D-003 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 20
+- **Description**: The Related Stocks section in `market_event_case_study.py` (lines 143-157) uses inline HTML with `background:white` and `border:1px solid #ECF0F1` instead of the standard card styling (`background:#F8F9FA`, `border-left:4px solid`). This creates a third card style on the page (alongside `_info_card` and the key metrics inline cards). The white background with light gray border is nearly invisible and doesn't match any design system card variant.
+- **Affected Files**: `src/pages/market_event_case_study.py` lines 143-157
+- **Proposed Fix**: Either (a) create a `_related_stock_card()` helper in `_router_base.py` with standard card styling + button, or (b) use `_info_card()` with the stock name/impact as content and the button below.
+- **Effort**: 0.5-1h
+
+### D-051: ETF Browser Table-Like Rows Use Inline HTML for Colored Values (D-003 / D-010 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 20
+- **Description**: The Hot ETF rows (lines 145-155) and Dividend Ranking rows (lines 397-411) in `etf_browser.py` use `st.columns` with inline HTML (`<span style='color:...'>`) for colored change values. This is the same table-like layout pattern flagged in D-010 (watchlist page). The ETF browser is now the second page using this dense table layout, making it feel like a different product from the card-based PPT-style pages.
+- **Affected Files**: `src/pages/etf_browser.py` lines 145-155, 397-411
+- **Proposed Fix**: Redesign using card-based layout. Each ETF as a card with key info (name, price, change) and a "查看" button. Use `_info_card()` for the card container and colored text via markdown emoji (🔴/🟢) instead of inline HTML color spans.
+- **Effort**: 2-3h
+
+### D-052: _subsidiary_card() Uses Non-Standard Card Styling
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 20
+- **Description**: The new `_subsidiary_card()` helper in `_router_base.py` (lines 117-151) uses `background:white` and `border:1px solid #ECF0F1` instead of the design system's standard card styling (`background:#F8F9FA`, `border-left:4px solid #3498DB`). While the white background may be intentional to distinguish subsidiary cards from info cards, this creates a new card style variant not documented in the design system. The component also uses `display:flex` for layout, which is a departure from the simple stacked div pattern used by all other card components.
+- **Affected Files**: `src/pages/_router_base.py` lines 117-151
+- **Proposed Fix**: Either (a) change to standard card styling (`background:#F8F9FA`, `border-left:4px solid`) and document as a "subsidiary card" variant, or (b) add a `card_type="subsidiary"` parameter to a unified card component. If the white background is intentional, document it in the design system.
+- **Effort**: 0.5-1h
+
+### D-053: _count_label() Is an Undocumented Component Type
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 20
+- **Description**: The new `_count_label()` helper in `_router_base.py` (lines 154-164) renders a bare `<div>` with inline styling (`color:#7F8C8D`, `font-size:0.85rem`). This is a new component type (muted count label) that isn't documented in the design system. While simple, it establishes a precedent for adding one-off inline-styled components to `_router_base.py` without design system documentation. The component is used in `etf_browser.py` (line 83) and could be needed elsewhere.
+- **Affected Files**: `src/pages/_router_base.py` lines 154-164
+- **Proposed Fix**: Document `_count_label()` as a "muted label" component type in the design system. Consider whether this should be a full component with standardized margins/padding matching other components.
+- **Effort**: 0.5h
+
 ---
 
 ## Resolved Issues
@@ -326,12 +372,12 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## Statistics
 
-- **Total Issues**: 35
+- **Total Issues**: 40
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 22 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-038, D-039, D-040, D-041, D-042, D-043, D-045, D-048)
+- **P2 (Optimization)**: 27 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-038, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053)
 - **Resolved**: 19
 
 ---
 
-*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 4 feature implementation.*
+*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 8 feature implementation.*
