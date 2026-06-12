@@ -148,9 +148,9 @@ Done
 | Model | Role(s) |
 |-------|---------|
 | `openrouter/owl-alpha` | PM, Developer |
-| `nvidia/nemotron-3-super-120b-a12b:free` | Architect |
-| `google/gemma-4-31b-it:free` | Design Reviewer, QA Engineer |
-| `openai/gpt-oss-120b:free` | **Challenger** |
+| `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | Architect |
+| `openrouter/google/gemma-4-31b-it:free` | Design Reviewer, QA Engineer |
+| `openrouter/openai/gpt-oss-120b:free` | **Challenger** |
 
 ---
 

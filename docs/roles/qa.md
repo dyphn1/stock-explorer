@@ -5,8 +5,8 @@
 | Property | Value |
 |----------|-------|
 | **Role** | QA Engineer |
-| **Primary Model** | `google/gemma-4-31b-it:free` |
-| **Fallback Model** | `meta-llama/llama-3.2-3b-instruct:free` |
+| **Primary Model** | `openrouter/google/gemma-4-31b-it:free` |
+| **Fallback Model** | `openrouter/meta-llama/llama-3.2-3b-instruct:free` |
 | **Reports to** | Product Manager |
 | **Also uses** | `_verify_layer*.py` scripts for automated testing |
 
