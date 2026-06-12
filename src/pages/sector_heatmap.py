@@ -1,17 +1,21 @@
 """
 Sector Heatmap — C51 Visual Market Overview
 Displays a color-coded grid of Taiwan stock sectors showing performance.
-Uses BatchAPI for efficient multi-stock data fetching.
+Uses market_data service for data access (D-044).
 """
 
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-from src.data.finmind_client import FinMindClient
-from src.data.batch_api import BatchAPI
 from src.pages.url_sync import navigate_to
 from src.pages._router_base import _白话_card, _info_card, _section_title
+from src.services.market_data import (
+    compute_sector_metrics,
+    get_all_stock_info,
+    get_all_summaries,
+    get_sector_stocks,
+)
 
 
 # ── Sector color palette (PPT-style, distinct) ────────────
@@ -55,16 +59,16 @@ def _format_pct(value: float | None) -> str:
     return f"{sign}{value:.2f}%"
 
 
-def _render_sector_heatmap(client: FinMindClient):
+def _render_sector_heatmap(client):
     """Sector Heatmap main page — visual market overview."""
     st.markdown("## 🗺️ 產業熱力圖")
     st.markdown("*即時掌握各產業板塊的漲跌分布*")
     st.markdown("---\n")
 
-    # ── Load stock info ────────────────────────────────────
+    # ── Load stock info via market_data service ────────────
     with st.spinner("載入股票資料中…"):
         try:
-            all_stock_info = client.get_stock_info()
+            all_stock_info = get_all_stock_info(client)
         except Exception as e:
             st.error(f"無法取得股票資訊：{e}")
             return
@@ -79,86 +83,45 @@ def _render_sector_heatmap(client: FinMindClient):
             st.error(f"資料缺少必要欄位：{col}")
             return
 
-    # ── Collect stock IDs per industry ─────────────────────
-    industries = (
-        all_stock_info["industry_category"]
-        .dropna()
-        .unique()
-    )
-    industries = sorted([str(i).strip() for i in industries if str(i).strip()])
+    # ── Build industry → stock_ids mapping via service ────
+    sector_stocks = get_sector_stocks(all_stock_info)
 
-    if not industries:
+    if not sector_stocks:
         st.info("無產業分類資料。")
         return
 
-    # Build industry → stock_ids mapping
-    sector_stocks: dict[str, list[str]] = {}
-    for industry in industries:
-        stocks_in_sector = all_stock_info[
-            all_stock_info["industry_category"] == industry
-        ]["stock_id"].tolist()
-        if stocks_in_sector:
-            sector_stocks[industry] = stocks_in_sector
-
-    # ── Fetch prices via BatchAPI ──────────────────────────
-    batch_api = BatchAPI(client)
-
-    # Progress UI
+    # ── Fetch prices via market_data service ───────────────
     progress = st.progress(0, text="正在取得即時報價…")
     all_stock_ids = sorted(all_stock_info["stock_id"].unique())
     total_stocks = len(all_stock_ids)
-
-    # Fetch in batches to show progress
-    summaries = []
     batch_size = 50
-    for i in range(0, len(all_stock_ids), batch_size):
-        batch_ids = all_stock_ids[i: i + batch_size]
-        try:
-            batch_summaries = batch_api.get_watchlist_summaries(batch_ids)
-            summaries.extend(batch_summaries)
-        except Exception:
-            pass
+
+    def _update_progress(fraction: float):
         progress.progress(
-            min((i + batch_size) / total_stocks, 1.0),
-            text=f"已處理 {min(i + batch_size, total_stocks)}/{total_stocks} 檔…",
+            fraction,
+            text=f"已處理 {int(fraction * total_stocks)}/{total_stocks} 檔…",
         )
+
+    try:
+        _, summary_map = get_all_summaries(
+            client,
+            all_stock_info=all_stock_info,
+            batch_size=batch_size,
+            progress_callback=_update_progress,
+        )
+    except Exception as e:
+        progress.empty()
+        st.warning(f"無法取得報價資料：{e}")
+        return
+
     progress.empty()
 
-    if not summaries:
+    if not summary_map:
         st.warning("無法取得報價資料，請稍後再試。")
         return
 
-    # Build lookup: stock_id → summary
-    summary_map: dict[str, dict] = {s["stock_id"]: s for s in summaries}
-
-    # ── Compute sector-level metrics ───────────────────────
-    sector_metrics = {}
-    for sector, stock_ids in sector_stocks.items():
-        changes = []
-        names = []
-        stock_data = []
-        for sid in stock_ids:
-            s = summary_map.get(sid)
-            if s:
-                chg = s.get("change")
-                if chg is not None:
-                    changes.append(chg)
-                stock_data.append(s)
-
-        if changes:
-            avg_change = float(np.mean(changes))
-            # Count up/down/flat
-            up = sum(1 for c in changes if c > 0)
-            down = sum(1 for c in changes if c < 0)
-            flat = len(changes) - up - down
-            sector_metrics[sector] = {
-                "avg_change": avg_change,
-                "up": up,
-                "down": down,
-                "flat": flat,
-                "count": len(changes),
-                "stocks": stock_data,
-            }
+    # ── Compute sector-level metrics via service ───────────
+    sector_metrics = compute_sector_metrics(summary_map, sector_stocks)
 
     if not sector_metrics:
         st.info("無報價資料可分析。")
@@ -353,7 +316,7 @@ def _render_sector_grid(sector_metrics: dict):
                         {row['平均漲跌']}
                     </div>
                     <div style="font-size:0.75rem;color:#7F8C8D;">
-                        🔴{int(row['上漲'])} 🟢{int(row['down'])} ⚪{int(row['flat'])}
+                        🔴{int(row['上漲'])} 🟢{int(row['下跌'])} ⚪{int(row['平盤'])}
                     </div>
                 </div>
                 """,
