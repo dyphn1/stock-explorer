@@ -9,6 +9,7 @@ import streamlit as st
 VALID_PAGES = frozenset({
     "名片", "營運健檢", "財務體質", "同業比較", "集團架構",
     "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "產業熱力圖",
+    "投資備忘錄", "理財健康檢查", "股票探索",
 })
 
 DEFAULT_PAGE = "名片"

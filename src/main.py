@@ -217,6 +217,9 @@ def _render_sidebar(client):
         ("🏷️", "ETF 專區", "sidebar_nav_etf"),
         ("📋", "我的關注", "sidebar_nav_watchlist"),
         ("🔔", "事件儀表板", "sidebar_nav_events"),
+        ("📝", "投資備忘錄", "sidebar_nav_memo"),
+        ("💰", "理財健康檢查", "sidebar_nav_wellness"),
+        ("🔎", "股票探索", "sidebar_nav_screener"),
     ]
     for icon, label, key in nav_items:
         if st.button(f"{icon} {label}", key=key, use_container_width=True):
