@@ -1,10 +1,10 @@
 # Stock Explorer Status
 
-## Current Theme: Development (Sprint 4 Complete → Sprint 5)
-- **Status**: Sprint 4 complete, Sprint 5 prerequisites next
-- **Last Updated**: 2026-06-20
-- **Cycle Type**: Sprint 4 execution completed
-- **Next Cycle**: Sprint 5 prerequisites (D-039 + D-040 + D-041) → Sprint 5 features
+## Current Theme: Development (Sprint 8 Complete → Sprint 9)
+- **Status**: Sprint 8 (Debt-First) complete, Sprint 9 features unlocked
+- **Last Updated**: 2026-06-13
+- **Cycle Type**: Sprint 8 debt-first execution completed
+- **Next Cycle**: 🔍 Review Round 21 → Sprint 9 (C98 + C101 + C103)
 
 ## 🔧 Development Log — Sprint 4 (2026-06-20)
 - **R3** ✅ Batch API minimal → `src/data/batch_api.py` (commit `f2632da`)
@@ -16,10 +16,9 @@
 - **Sprint 5 Prerequisites**: D-039, D-040, D-041 (NOT STARTED — 2.5h total)
 
 ## Verification Log
-||||| Date | Gate 1 (Import) | Gate 2 (Render) | Gate 3 (Smoke) | Notes ||
-||||------|-----------------|-----------------|-----------------|-----------------|---||
-|||| 2026-06-18 06:47 | ✅ 55/55 (L0) | ✅ 18/18 (L1) | — | All verification gates passed — L0 and L1 green for first time ||
-|||| 2026-06-20 06:00 | ✅ 65/65 (L0) | ✅ 8/8 (L1) | — | Sprint 4 complete: all 5 items pass L0, no new L1 failures ||
+||||| Date | Gate 1 (Import) | Gate 2 (Render) | Gate 3 (Smoke) | Notes |
+|||||------|-----------------|-----------------|-----------------|-----------------|---||
+||||| 2026-06-13 06:00 | ✅ 85/85 (L0) | ✅ 8/8 (L1) | — | Sprint 8 debt-first complete: D-048 YAML migration, D-055 inline HTML refactor, D-056 section_title fix; D8/D9/D10 already implemented |
 
 ## 💡 Discussion Record - 2026-06-18
 - **Topic**: Evaluate 6 new feature proposals from Round 13 competitor research (C63-C68) and review architecture/design status
