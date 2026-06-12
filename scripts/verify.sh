@@ -14,6 +14,28 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+if command -v uv >/dev/null 2>&1; then
+    USE_UV=true
+else
+    USE_UV=false
+    if [ -f "$PROJECT_DIR/.venv/Scripts/python.exe" ]; then
+        PYTHON_CMD="$PROJECT_DIR/.venv/Scripts/python.exe"
+    elif [ -f "$PROJECT_DIR/.venv/bin/python" ]; then
+        PYTHON_CMD="$PROJECT_DIR/.venv/bin/python"
+    else
+        PYTHON_CMD="python"
+    fi
+fi
+
+run_python() {
+    if [ "$USE_UV" = true ]; then
+        uv run python "$@"
+    else
+        "$PYTHON_CMD" "$@"
+    fi
+}
+
 PORT=8501
 STREAMLIT_PID=""
 REPORT_FILE="$PROJECT_DIR/docs/status/verify_report.md"
@@ -55,7 +77,6 @@ echo "── Gate 1: Import Check ──"
 IMPORT_MODULES=(
     "src.main"
     "src.data.finmind_client"
-    "src.data.models"
     "src.services.chart"
     "src.services.analogy_engine"
     "src.services.revenue_analyzer"
@@ -79,7 +100,7 @@ IMPORT_MODULES=(
 
 IMPORT_FAIL=0
 for mod in "${IMPORT_MODULES[@]}"; do
-    if uv run python -c "import $mod" 2>/dev/null; then
+    if run_python -c "import $mod" 2>/dev/null; then
         pass "$mod"
     else
         fail "$mod"
@@ -108,15 +129,19 @@ if lsof -i ":$PORT" -t 2>/dev/null | xargs kill -9 2>/dev/null; then
 fi
 
 # Check playwright is available
-if ! uv run python -c "from playwright.sync_api import sync_playwright" 2>/dev/null; then
+if ! run_python -c "from playwright.sync_api import sync_playwright" 2>/dev/null; then
     warn "Playwright not installed, installing..."
-    uv add playwright 2>/dev/null
-    uv run python -m playwright install chromium 2>/dev/null
+    if [ "$USE_UV" = true ]; then
+        uv add playwright 2>/dev/null || uv pip install playwright 2>/dev/null
+    else
+        "$PYTHON_CMD" -m pip install playwright 2>/dev/null
+    fi
+    run_python -m playwright install chromium 2>/dev/null
 fi
 
 # Start Streamlit in background
 info "Starting Streamlit on port $PORT..."
-uv run streamlit run src/main.py --server.port "$PORT" --server.headless true --server.headless true 2>/dev/null &
+run_python run.py --server.port "$PORT" --server.headless true 2>/dev/null &
 STREAMLIT_PID=$!
 
 # Wait for server to be ready
@@ -209,7 +234,7 @@ else:
 PYEOF
 )
 
-if uv run python -c "$VERIFY_SCRIPT" "$PORT"; then
+if run_python -c "$VERIFY_SCRIPT" "$PORT"; then
     pass "Gate 2 PASSED — all pages render without stException"
 else
     fail "Gate 2 FAILED — some pages have errors"
@@ -269,7 +294,7 @@ with sync_playwright() as p:
 PYEOF
 )
 
-if uv run python -c "$SMOKE_SCRIPT" "$PORT"; then
+if run_python -c "$SMOKE_SCRIPT" "$PORT"; then
     pass "Gate 3 PASSED — content smoke test OK"
 else
     fail "Gate 3 FAILED — content issues detected"

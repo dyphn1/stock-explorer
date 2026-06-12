@@ -11,5 +11,8 @@ import sys
 from streamlit.web.cli import main
 
 if __name__ == '__main__':
-    sys.argv = ["streamlit", "run", "src/main.py"]
+    if len(sys.argv) > 1:
+        sys.argv = ["streamlit", "run", "src/main.py"] + sys.argv[1:]
+    else:
+        sys.argv = ["streamlit", "run", "src/main.py"]
     main()
