@@ -5,8 +5,47 @@
 
 import streamlit as st
 import pandas as pd
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
+
+
+@st.cache_data(ttl=300)
+def _fetch_latest_daily_prices(client: FinMindClient, stock_ids: tuple) -> dict:
+    """批量取得多檔股票的最新日收盤價（平行 API 呼叫）。
+
+    Args:
+        client: FinMindClient 實例
+        stock_ids: stock_id tuple（可 hash，供 cache 使用）
+
+    Returns:
+        dict: {stock_id: {"trading_money": float, "trading_volume": int, "close": float}}
+              若取得失敗則該 stock_id 不會出現在 dict 中。
+    """
+    results: dict = {}
+
+    def _fetch_one(sid: str):
+        try:
+            daily = client.get_daily_price(sid)
+            if daily is not None and len(daily) > 0:
+                latest = daily.iloc[-1]
+                return sid, {
+                    "trading_money": float(latest.get("Trading_money", 0) or 0),
+                    "trading_volume": int(latest.get("Trading_Volume", 0) or 0),
+                    "close": float(latest.get("close", 0) or 0),
+                }
+        except Exception:
+            pass
+        return sid, None
+
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = {executor.submit(_fetch_one, sid): sid for sid in stock_ids}
+        for future in as_completed(futures):
+            sid, data = future.result()
+            if data is not None:
+                results[sid] = data
+
+    return results
 
 
 def _render_category_browser(client: FinMindClient):
@@ -35,8 +74,25 @@ def _render_category_browser(client: FinMindClient):
             st.error(f"資料缺少必要欄位：{col}")
             return
 
+    # 取得候選股票列表（前 200 檔）
+    candidate_stocks = all_stock_info.sort_values("stock_id").head(200)
+    candidate_ids = tuple(candidate_stocks["stock_id"].tolist())
+
+    # ── 批量取得日收盤價（平行 API 呼叫，取代 N+1 逐一查詢）──
+    with st.spinner("正在取得行情資料…"):
+        price_map = _fetch_latest_daily_prices(client, candidate_ids)
+
+    # 建立 stock_id → name / industry 對照表
+    info_map = {
+        row["stock_id"]: {
+            "stock_name": row.get("stock_name", row["stock_id"]),
+            "industry": row.get("industry_category", "—"),
+        }
+        for _, row in candidate_stocks.iterrows()
+    }
+
     # ── Section A: 權值股列表 ──────────────────────────────
-    _render_top_stocks_by_value(client, all_stock_info)
+    _render_top_stocks_by_value(price_map, info_map)
 
     st.markdown("---")
 
@@ -46,53 +102,32 @@ def _render_category_browser(client: FinMindClient):
     st.markdown("---")
 
     # ── Section C: 熱門列表 ─────────────────────────────────
-    _render_hot_stocks_by_volume(client, all_stock_info)
+    _render_hot_stocks_by_volume(price_map, info_map)
 
 
 # ════════════════════════════════════════════════════════════
 # Section A: 權值股列表（依成交金額排序）
 # ════════════════════════════════════════════════════════════
 
-def _render_top_stocks_by_value(client: FinMindClient, all_stock_info: pd.DataFrame):
+def _render_top_stocks_by_value(price_map: dict, info_map: dict):
     """權值股列表：取最近一日成交金額最高的前 20 檔"""
     st.markdown("### 💰 權值股列表（依成交金額）")
 
-    # 收集每檔股票的最新日成交金額
-    stock_money = []
-    # 只取前 200 檔避免 API 呼叫過多（依 stock_id 排序確保穩定）
-    candidate_stocks = all_stock_info.sort_values("stock_id").head(200)
-
-    progress = st.progress(0, text="正在取得成交金額…")
-    total = len(candidate_stocks)
-
-    for idx, (_, row) in enumerate(candidate_stocks.iterrows()):
-        sid = row["stock_id"]
-        try:
-            daily = client.get_daily_price(sid)
-            if daily is not None and len(daily) > 0:
-                latest = daily.iloc[-1]
-                money = float(latest.get("Trading_money", 0) or 0)
-                volume = int(latest.get("Trading_Volume", 0) or 0)
-                close = float(latest.get("close", 0) or 0)
-                stock_money.append({
-                    "stock_id": sid,
-                    "stock_name": row.get("stock_name", sid),
-                    "industry": row.get("industry_category", "—"),
-                    "trading_money": money,
-                    "trading_volume": volume,
-                    "close": close,
-                })
-        except Exception:
-            pass
-
-        if idx % 10 == 0:
-            progress.progress(min((idx + 1) / total, 1.0), text=f"已處理 {idx + 1}/{total} 檔…")
-
-    progress.empty()
-
-    if not stock_money:
+    if not price_map:
         st.info("暫無成交金額資料。")
         return
+
+    stock_money = []
+    for sid, price_data in price_map.items():
+        info = info_map.get(sid, {})
+        stock_money.append({
+            "stock_id": sid,
+            "stock_name": info.get("stock_name", sid),
+            "industry": info.get("industry", "—"),
+            "trading_money": price_data["trading_money"],
+            "trading_volume": price_data["trading_volume"],
+            "close": price_data["close"],
+        })
 
     df_value = pd.DataFrame(stock_money).sort_values("trading_money", ascending=False).head(20)
     df_value["排名"] = range(1, len(df_value) + 1)
@@ -192,44 +227,25 @@ def _render_industry_browser(all_stock_info: pd.DataFrame):
 # Section C: 熱門列表（依成交量排序）
 # ════════════════════════════════════════════════════════════
 
-def _render_hot_stocks_by_volume(client: FinMindClient, all_stock_info: pd.DataFrame):
+def _render_hot_stocks_by_volume(price_map: dict, info_map: dict):
     """熱門列表：取最近一日成交量最高的前 20 檔"""
     st.markdown("### 🔥 熱門列表（依成交量）")
 
-    stock_volume = []
-    candidate_stocks = all_stock_info.sort_values("stock_id").head(200)
-
-    progress = st.progress(0, text="正在取得成交量…")
-    total = len(candidate_stocks)
-
-    for idx, (_, row) in enumerate(candidate_stocks.iterrows()):
-        sid = row["stock_id"]
-        try:
-            daily = client.get_daily_price(sid)
-            if daily is not None and len(daily) > 0:
-                latest = daily.iloc[-1]
-                volume = int(latest.get("Trading_Volume", 0) or 0)
-                money = float(latest.get("Trading_money", 0) or 0)
-                close = float(latest.get("close", 0) or 0)
-                stock_volume.append({
-                    "stock_id": sid,
-                    "stock_name": row.get("stock_name", sid),
-                    "industry": row.get("industry_category", "—"),
-                    "trading_volume": volume,
-                    "trading_money": money,
-                    "close": close,
-                })
-        except Exception:
-            pass
-
-        if idx % 10 == 0:
-            progress.progress(min((idx + 1) / total, 1.0), text=f"已處理 {idx + 1}/{total} 檔…")
-
-    progress.empty()
-
-    if not stock_volume:
+    if not price_map:
         st.info("暫無成交量資料。")
         return
+
+    stock_volume = []
+    for sid, price_data in price_map.items():
+        info = info_map.get(sid, {})
+        stock_volume.append({
+            "stock_id": sid,
+            "stock_name": info.get("stock_name", sid),
+            "industry": info.get("industry", "—"),
+            "trading_volume": price_data["trading_volume"],
+            "trading_money": price_data["trading_money"],
+            "close": price_data["close"],
+        })
 
     df_volume = pd.DataFrame(stock_volume).sort_values("trading_volume", ascending=False).head(20)
     df_volume["排名"] = range(1, len(df_volume) + 1)
