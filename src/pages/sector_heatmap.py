@@ -170,6 +170,9 @@ def _render_sector_heatmap(client: FinMindClient):
     leading_sector = max(sector_metrics.items(), key=lambda x: x[1]["avg_change"])
     lagging_sector = min(sector_metrics.items(), key=lambda x: x[1]["avg_change"])
 
+    up_sectors = sum(1 for m in sector_metrics.values() if m["avg_change"] > 0)
+    down_sectors = sum(1 for m in sector_metrics.values() if m["avg_change"] < 0)
+
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         _白话_card(
@@ -190,15 +193,11 @@ def _render_sector_heatmap(client: FinMindClient):
             f"平均 {_format_pct(lagging_sector[1]['avg_change'])}",
         )
     with col4:
-        up_sectors = sum(1 for m in sector_metrics.values() if m["avg_change"] > 0)
-        down_sectors = sum(1 for m in sector_metrics.values() if m["avg_change"] < 0)
-        st.markdown(f"""
-        <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
-            <div style="font-size:0.85rem;color:#7F8C8D;">漲跌產業數</div>
-            <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">🔴 {up_sectors} / 🟢 {down_sectors}</div>
-            <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">上漲 / 下跌</div>
-        </div>
-        """, unsafe_allow_html=True)
+        _白话_card(
+            "漲跌產業數",
+            f"🔴 {up_sectors} / 🟢 {down_sectors}",
+            "上漲 / 下跌",
+        )
 
     st.markdown("---\n")
 
