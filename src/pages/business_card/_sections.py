@@ -434,7 +434,7 @@ def _render_key_metrics(data: dict, client) -> None:
             _白话_card("最近月營收", f"{rev:,.0f} 億", get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""))
         elif extra_metrics.get("roe"):
             roe = extra_metrics["roe"]
-            _白话_card("ROE", f"{roe:.1f}%", get_roe_analyzer(roe))
+            _白话_card("ROE", f"{roe:.1f}%", get_roe_analogy(roe))
 
     with col3:
         if latest_per_pbr and latest_per_pbr.get("dividend_yield"):
@@ -442,7 +442,7 @@ def _render_key_metrics(data: dict, client) -> None:
             _白话_card("殖利率", f"{dy:.2f}%", get_dividend_analogy(dy))
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
-            _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analyzer(pbr))
+            _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr))
 
     st.markdown("---")
 
