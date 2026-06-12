@@ -7,13 +7,20 @@ description: "Entry point router for Stock Explorer (股識) multi-agent workflo
 
 > **WARNING**: This is an ultra-lightweight router. It contains NO domain knowledge or architecture rules. Do not read the entire codebase upon waking. Execute the Bootstrap Protocol immediately.
 
-## 1. Team Roster
+## 1. Team Roster & Model Assignments
+
 Available sub-agents that the PM can summon. Their behavioral rules are injected automatically at spawn via System Prompt caching from their respective files:
-- **Architect** (`docs/roles/architect.md`): System architecture, data flow, feasibility.
-- **Developer** (`docs/roles/developer.md`): Implementation, bug fixes, automated verification.
-- **Designer** (`docs/roles/designer.md`): UX/UI alignment, visual system.
-- **QA** (`docs/roles/qa.md`): Verification, testing, competitor analysis.
-- **Challenger** (`docs/roles/challenger.md`): Cross-examination for Tier 3 architectural changes.
+
+| Role | Model | Responsibility | Role File |
+|------|-------|----------------|-----------|
+| **PM** | `openrouter/owl-alpha` | Coordinate, synthesize, assign work | — |
+| **Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | System architecture, data flow, feasibility | `docs/roles/architect.md` |
+| **Developer** | `openrouter/owl-alpha` | Implementation, bug fixes, automated verification | `docs/roles/developer.md` |
+| **Designer** | `openrouter/google/gemma-4-31b-it:free` | UX/UI alignment, visual system | `docs/roles/designer.md` |
+| **QA** | `openrouter/google/gemma-4-31b-it:free` | Verification, testing, competitor analysis | `docs/roles/qa.md` |
+| **Challenger** | `openrouter/openai/gpt-oss-120b:free` | Cross-examine decisions, 3-round challenge | `docs/roles/challenger.md` |
+
+**CRITICAL**: When spawning sub-agents via `delegate_task`, the PM MUST pass the `model` parameter from the table above. Never spawn a sub-agent without specifying its designated model.
 
 ## 2. The Bootstrap Protocol (PM's Waking Steps)
 When the PM is awakened by the cron trigger, you MUST execute these 3 steps sequentially:

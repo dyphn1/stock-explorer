@@ -31,14 +31,38 @@ You only read the state, start discussion, synthesize input, assign work, and su
 
 ### Step 2: Start a Standup
 
-Use `delegate_task` to summon all relevant roles:
+Use `delegate_task` to summon all relevant roles. **You MUST specify the `model` parameter for each sub-agent** — do not let them default to the PM's model:
 
 ```
-Architect — Analyze technical feasibility / architecture proposal
-Developer — Estimate implementation cost / provide approach
-Designer — Evaluate UX / visual impact
-QA — Evaluate testing strategy / competitor comparison
-Challenger — Listen to all discussions, prepare to challenge
+delegate_task(
+    model="openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+    goal="Analyze technical feasibility / architecture proposal",
+    ...
+) → Architect
+
+delegate_task(
+    model="openrouter/owl-alpha",
+    goal="Estimate implementation cost / provide approach",
+    ...
+) → Developer
+
+delegate_task(
+    model="openrouter/google/gemma-4-31b-it:free",
+    goal="Evaluate UX / visual impact",
+    ...
+) → Designer
+
+delegate_task(
+    model="openrouter/google/gemma-4-31b-it:free",
+    goal="Evaluate testing strategy / competitor comparison",
+    ...
+) → QA
+
+delegate_task(
+    model="openrouter/openai/gpt-oss-120b:free",
+    goal="Listen to all discussions, prepare to challenge",
+    ...
+) → Challenger
 ```
 
 After each role reports, the PM consolidates the input and proposes a first draft plan.
