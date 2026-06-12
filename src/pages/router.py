@@ -29,6 +29,7 @@ from src.pages.event_dashboard import (
 from src.pages.sector_heatmap import _render_sector_heatmap
 from src.pages.investment_memo import _render_investment_memo
 from src.pages.financial_wellness import _render_financial_wellness
+from src.pages.comprehension_check import _render_comprehension_check
 from src.pages.market_event_case_study import _render_market_event_case_study
 from src.pages.stock_screener import _render_stock_screener
 from src.pages.notification_center import _render_notification_center
@@ -51,7 +52,7 @@ def get_client():
 
 def _render_navbar_minimal(current_page: str):
     """精簡導航列：僅分頁標籤（用於非股票頁面）"""
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "股票探索", "新手導覽"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "股票探索", "新手導覽"]
     current_idx = pages.index(current_page) if current_page in pages else 0
 
     selected = st.radio(
@@ -118,6 +119,11 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         _render_navbar_minimal(page)
         with st.spinner("載入理財健康檢查..."):
             _render_financial_wellness(client)
+        return
+    if page == "理解力測驗":
+        _render_navbar_minimal(page)
+        with st.spinner("載入理解力測驗..."):
+            _render_comprehension_check(client)
         return
     if page == "股票探索":
         _render_navbar_minimal(page)
@@ -199,7 +205,7 @@ def _render_navbar(data: dict, current_page: str):
             st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
 
     # 分頁標籤
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "股票探索", "新手導覽"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "股票探索", "新手導覽"]
     current_idx = pages.index(current_page) if current_page in pages else 0
 
     selected = st.radio(
