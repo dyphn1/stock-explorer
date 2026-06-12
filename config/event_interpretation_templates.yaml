@@ -1,0 +1,34 @@
+# Event Interpretation Templates (C98)
+# Pre-written interpretation templates for each event type.
+# Used by event_interpretation_service.py for template-based interpretations.
+# LLM integration deferred to a future sprint.
+
+revenue_surge:
+  short: "這家公司的營收出現大幅變化，代表市場需求或營運策略有重大調整。"
+  detail: "營收大幅變化通常來自幾個原因：新產品上市、季節性需求、或產業景氣循環。這不一定是好或壞，要看變化的原因是否持續。"
+  key_concept: "營收變化要看原因，不能只看數字"
+
+news_major:
+  short: "這則重大新聞可能對公司的未來營運產生深遠影響。"
+  detail: "重大新聞如收購、合併、或重大虧損，會改變公司的競爭格局。歷史告訴我們，這類事件後股價波動會加大，需要密切觀察後續發展。"
+  key_concept: "重大新聞改變公司格局，需要持續觀察"
+
+news_medium:
+  short: "這則新聞反映了公司在日常營運中的重要變化。"
+  detail: "股利政策、訂單、合作等消息，雖然不如收購合併重大，但反映了公司的經營方向和市場地位變化。"
+  key_concept: "日常新聞反映經營方向"
+
+price_abnormal:
+  short: "股價異常波動通常代表市場對這家公司有了新的看法。"
+  detail: "單日漲跌幅超過 7% 通常伴隨著重大消息或市場情緒變化。歷史數據顯示，極端波動後股價往往會回歸基本面。"
+  key_concept: "股價波動要看背後原因，不要跟著情緒走"
+
+dividend_change:
+  short: "股利政策的變化反映了公司對未來現金流的預期。"
+  detail: "增加股利通常代表公司對未來獲利有信心，減少股利可能是保留現金因應未來挑戰。要搭配獲利能力一起看。"
+  key_concept: "股利變化要看獲利能力搭配"
+
+institutional_shift:
+  short: "法人買賣超變化代表專業投資者對這家公司的看法改變。"
+  detail: "外資、投信等法人的買賣動向，通常反映他們對公司基本面的研究結論。但法人也會看錯，不能盲目跟隨。"
+  key_concept: "法人動向是參考，不是明牌"

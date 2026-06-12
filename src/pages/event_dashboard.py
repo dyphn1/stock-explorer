@@ -14,6 +14,11 @@ from src.services.adaptive_engine import (
     check_data_freshness,
     SEVERITY_SCORES,
 )
+from src.services.event_interpretation_service import (
+    get_interpretation,
+    get_drilldown_interpretation,
+)
+from src.pages._router_base import _summary_card, _info_card
 
 
 def _severity_badge(severity: str) -> str:
@@ -87,7 +92,54 @@ def _render_event_dashboard(client):
 
                 with st.expander(f"{badge} {event_type} — {title}"):
                     st.markdown(f"**股票代號：** `{stock_id}`")
-                    st.markdown(f"**摘要：** {summary}")
+
+                    # ── Interpretation card (replaces plain summary) ──────
+                    interp = get_interpretation(
+                        event.get("type", ""),
+                        severity,
+                        title,
+                        summary,
+                    )
+                    _summary_card(
+                        title="歷史學家解讀",
+                        content=interp["short"],
+                        icon="🧭",
+                    )
+
+                    # ── Key concept (ten-second test) ────────────────────
+                    st.markdown(
+                        f"<div style='font-size:0.85rem;color:#5D6D7E;"
+                        f"margin:0.3rem 0 0.6rem 0;'>"
+                        f"💡 核心概念：<b>{interp['key_concept']}</b></div>",
+                        unsafe_allow_html=True,
+                    )
+
+                    # ── Drill-down button ────────────────────────────────
+                    if st.button("🔍 為什麼？", key=f"why_{evt_idx}"):
+                        drilldown = get_drilldown_interpretation(
+                            {
+                                "type": event.get("type", ""),
+                                "severity": severity,
+                                "title": title,
+                                "summary": summary,
+                            }
+                        )
+                        _info_card(
+                            title="詳細解讀",
+                            content=drilldown["detail"],
+                            icon="📖",
+                        )
+                        st.markdown(
+                            f"<div style='font-size:0.8rem;color:#95A5A6;"
+                            f"margin-top:0.5rem;'>"
+                            f"⚠️ 以上解讀僅說明事件背景與可能意涵，不構成投資建議。</div>",
+                            unsafe_allow_html=True,
+                        )
+
+                    # ── Raw summary in collapsed section ────────────────
+                    with st.expander("📄 原始摘要", expanded=False):
+                        st.markdown(summary)
+
                     if st.button("查看名片", key=f"evt_{evt_idx}"):
                         navigate_to(page="名片", stock_id=stock_id)
                 evt_idx += 1
