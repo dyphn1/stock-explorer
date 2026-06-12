@@ -40,6 +40,123 @@ from src.pages.business_card._helpers import (
 )
 
 
+def _render_story_card(data: dict, client) -> None:
+    """C48 Company Story Card — 30-second visual summary.
+
+    A PPT-style hero card at the top of the business card page showing:
+    - Company name + industry
+    - One-liner description
+    - 3 key metric highlights (bold numbers with plain-language)
+    - Health score indicator
+    - Rotating "Did You Know?" fact
+    """
+    stock_id = data["stock_id"]
+    stock_name = data["stock_name"]
+    industry = data["industry"]
+    extra_metrics = data["extra_metrics"]
+    latest_per_pbr = data["latest_per_pbr"]
+    monthly_revenue = data["monthly_revenue"]
+
+    # ── One-liner ──
+    one_liner = get_one_liner(stock_id, stock_name, industry)
+
+    # ── Pick top 3 most notable metrics ──
+    metrics = []
+
+    # Revenue (monthly)
+    if len(monthly_revenue) > 0:
+        rev = monthly_revenue.iloc[-1]["revenue"] / 1e8
+        yoy = extra_metrics.get("revenue_yoy")
+        yoy_analogy = get_yoy_analogy(yoy) if yoy is not None else ""
+        metrics.append(("最近月營收", f"{rev:,.0f} 億", get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else "")))
+
+    # PER
+    if latest_per_pbr and latest_per_pbr.get("PER") is not None:
+        per = latest_per_pbr["PER"]
+        metrics.append(("本益比 (PER)", f"{per:.1f}", get_per_analogy(per)))
+
+    # Gross margin
+    if extra_metrics.get("gross_margin") is not None:
+        gm = extra_metrics["gross_margin"]
+        metrics.append(("毛利率", f"{gm:.1f}%", get_gross_margin_analogy(gm)))
+
+    # Dividend yield
+    if latest_per_pbr and latest_per_pbr.get("dividend_yield") is not None:
+        dy = latest_per_pbr["dividend_yield"]
+        metrics.append(("殖利率", f"{dy:.2f}%", get_dividend_analogy(dy)))
+
+    # ROE
+    if extra_metrics.get("roe") is not None:
+        roe = extra_metrics["roe"]
+        metrics.append(("ROE", f"{roe:.1f}%", get_roe_analogy(roe)))
+
+    # PBR
+    if latest_per_pbr and latest_per_pbr.get("PBR") is not None:
+        pbr = latest_per_pbr["PBR"]
+        metrics.append(("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr)))
+
+    # Take top 3
+    top_metrics = metrics[:3]
+
+    # ── Health score indicator ──
+    health_scores = compute_health_scores(
+        extra_metrics=extra_metrics,
+        latest_per_pbr=latest_per_pbr,
+        financial_df=data["financial"],
+        monthly_revenue=monthly_revenue,
+    )
+    overall_health = None
+    health_label = "—"
+    if health_scores:
+        overall_health = sum(health_scores.values()) / len(health_scores)
+        if overall_health >= 70:
+            health_label = "🟢 健康"
+        elif overall_health >= 40:
+            health_label = "🟡 一般"
+        else:
+            health_label = "🔴 留意"
+
+    # ── Did You Know? fact ──
+    facts = get_company_facts(stock_id)
+    fact_text = ""
+    if facts:
+        fact_key = f"_story_fact_idx_{stock_id}"
+        if fact_key not in st.session_state:
+            st.session_state[fact_key] = 0
+        idx = st.session_state[fact_key] % len(facts)
+        st.session_state[fact_key] = (idx + 1) % len(facts)
+        fact_text = facts[idx]
+
+    # ── Build the story card using shared components ──
+    # We use st.expander to avoid overloading the page (D-032)
+    with st.expander("📌 30 秒認識這家公司", expanded=True):
+        # Company name + industry header
+        st.markdown(f"### {stock_name} `{stock_id}`")
+        st.markdown(f"*{industry}*")
+
+        # One-liner
+        _info_card("一句話定位", one_liner, "💡")
+
+        # Key metrics row — use _白话_card for each
+        if top_metrics:
+            cols = st.columns(len(top_metrics))
+            for col, (label, value, analogy) in zip(cols, top_metrics):
+                with col:
+                    _白话_card(label, value, analogy)
+
+        # Health score
+        if overall_health is not None:
+            _summary_card(
+                "整體健康分數",
+                f"{health_label}（{overall_health:.0f} / 100）",
+                "🏥",
+            )
+
+        # Did You Know?
+        if fact_text:
+            _info_card("你知道嗎？", fact_text, "🤔")
+
+
 def _render_header(data: dict, client) -> None:
     """Watchlist header with stock name, price, watchlist buttons."""
     stock_id = data["stock_id"]

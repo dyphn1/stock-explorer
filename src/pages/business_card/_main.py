@@ -37,6 +37,7 @@ from src.pages.url_sync import navigate_to
 
 from src.pages.business_card._sections import (
     _render_header,
+    _render_story_card,
     _render_takeaways,
     _render_deltas,
     _render_health,
@@ -68,6 +69,7 @@ def _render_business_card(data: dict, client):
 
     # ── Section dispatch ──
     _render_header(data, client)
+    _render_story_card(data, client)
     _render_takeaways(data, client)
     _render_deltas(data, client)
     _render_health(data, client)
