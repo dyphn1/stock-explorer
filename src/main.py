@@ -212,6 +212,7 @@ def _render_sidebar(client):
     st.markdown("### 頁面導航")
     nav_items = [
         ("📊", "名片", "sidebar_nav_home"),
+        ("🗺️", "產業熱力圖", "sidebar_nav_sector"),
         ("📈", "分類瀏覽", "sidebar_nav_category"),
         ("🏷️", "ETF 專區", "sidebar_nav_etf"),
         ("📋", "我的關注", "sidebar_nav_watchlist"),

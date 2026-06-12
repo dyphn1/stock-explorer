@@ -8,7 +8,7 @@ import streamlit as st
 # Canonical list of valid page names
 VALID_PAGES = frozenset({
     "名片", "營運健檢", "財務體質", "同業比較", "集團架構",
-    "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板",
+    "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "產業熱力圖",
 })
 
 DEFAULT_PAGE = "名片"
