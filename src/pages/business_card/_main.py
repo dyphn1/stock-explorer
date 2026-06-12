@@ -54,6 +54,9 @@ from src.pages.business_card._sections import (
     _render_share_section,
     _render_footer,
 )
+from src.pages.business_card._study_log import _render_study_log
+from src.pages.business_card._expert_analysis import _render_expert_analysis
+from src.pages.business_card._historical_scenarios import _render_historical_scenarios
 
 
 def _render_business_card(data: dict, client):
@@ -84,6 +87,9 @@ def _render_business_card(data: dict, client):
     _render_valuation(data, client)
     _render_compare_stories(data, client)
     _render_news(data, client)
+    _render_study_log(data, client)
+    _render_expert_analysis(data, client)
+    _render_historical_scenarios(data, client)
     _render_read_next(data, client)
     _render_share_section(data, client)
     _render_footer(data, client)
