@@ -31,4 +31,16 @@ C67: "Community-Curated Stock Stories" — User-Generated Narrative Layer | P2 |
 |C82: "Animated Data Story" — Scrollable Visual Company History | P2 | 12-16h | Story first + PPT-style + Ten-second test | source: competitor research round 16
 |C83: "Investment Memo Template" — Structured Reflection Tool | P2 | 6-10h | Story first + Point-to-point knowledge construction + Historian | source: competitor research round 16
 |C84: "Market Event Case Study" — Interactive Historical Market Event Explorer | P2 | 10-14h | Story first + Adaptive + Historian | source: competitor research round 16
-|C85: "Financial Wellness Check" — Behavioral Finance Self-Assessment | P2 | 8-12h | Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 16
+||C85: "Financial Wellness Check" — Behavioral Finance Self-Assessment | P2 | 8-12h | Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 16
+||C86: "AI Narrative Agent" — Proactive Plain-Language Analysis Generator | P2 | 20-30h | Story first + Adaptive + Historian | source: competitor research round 17
+||C87: "Explainable Analysis Layer" — Source & Reasoning Transparency for Every Claim | P2 | 12-16h | Story first + Point-to-point knowledge construction + Historian | source: competitor research round 17
+||C88: "Market Narrative Feed" — Daily AI-Generated Market Story Stream | P1 | 14-20h | Story first + Adaptive + Ten-second test + Historian | source: competitor research round 17
+||C89: "Collaborative Company Analysis" — Group Research Room for Stocks | P2 | 24-32h | Point-to-point knowledge construction + Adaptive + Beginner-friendly | source: competitor research round 17
+||C90: "Financial Empathy Engine" — Emotional Context Layer for Market Events | P2 | 10-14h | Story first + Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 17
+||C91: "Adaptive Micro-Learning" — Contextually-Triggered 30-Second Lessons | P2 | 16-22h | Point-to-point knowledge construction + Ten-second test + Adaptive | source: competitor research round 17
+|||C92: "TW Market Persona Explorer" — Learn Through Investor Archetypes | P2 | 12-16h | Story first + Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 17
+|||C93: "Dividend Income Calendar" — Market-Wide Dividend Calendar with Income Projection | P1 | 12-16h | Story first + Point-to-point knowledge construction + Historian | source: competitor research round 17
+|||C94: "Earnings Story" — Post-Earnings Plain-Language Narrative Analysis | P1 | 14-18h | Story first + Adaptive + Ten-second test + Historian | source: competitor research round 17
+|||C95: "Watchlist Health Dashboard" — Aggregate Portfolio Health with Plain-Language Summary | P2 | 10-14h | Story first + PPT-style + Ten-second test + Historian | source: competitor research round 17
+|||C96: "Sector Ecosystem Map" — Visual Supply Chain & Ecosystem Relationship Map | P2 | 16-22h | Story first + PPT-style + Point-to-point + Historian | source: competitor research round 17
+|||C97: "First 30 Days" — Structured Beginner Onboarding Curriculum with Daily Micro-Tasks | P1 | 18-24h | Point-to-point + Ten-second test + Historian + Beginner-friendly | source: competitor research round 17

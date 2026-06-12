@@ -262,16 +262,66 @@ This file tracks all known architecture and technical debt in Stock Explorer, or
 - **Priority for Sprint 4**: 🟢 Monitor. Act only if market charts push it beyond 850 lines.
 - **New**: Identified during Round 15 review.
 
+## New Architecture Debt Identified in Round 17 (Sprint 4 Post-Implementation)
+
+### D-042: `_sections.py` grew to 918 lines — exceeds D37 threshold
+- **Effort**: 1-2h (split into sub-modules)
+- **Status**: ⏳ PENDING — OVERDUE. Was 612 lines after D24, Sprint 4 added 306 lines.
+- **Description**: `_sections.py` was 612 lines after D24 extraction. Sprint 4 added `_render_story_card()` (~115 lines), `_render_compare_stories()` (~99 lines), `_render_share_section()` (~101 lines). Total: 918 lines — far exceeding the D37 threshold of ~730 lines.
+- **Impact**: Largest file in business_card/ sub-directory. Finding a specific section requires scrolling through 918 lines. Sprint 5 will add more sections.
+- **Recommended Action**: Split into `_sections_core.py`, `_sections_analysis.py`, `_sections_detail.py`, `_sections_discovery.py` as proposed in D37.
+- **Priority**: 🟡 P1 (elevated by Challenger Round 2) — must be done before or alongside Sprint 5 feature implementation.
+
+### D-043: `_render_key_metrics()` calls non-existent `get_roe_analyzer()` and `get_pbr_analyzer()`
+- **Effort**: 0.25h (2 lines changed)
+- **Status**: ⏳ BUG — P0
+- **Description**: `_sections.py` lines 437 and 445 call `get_roe_analyzer(roe)` and `get_pbr_analyzer(pbr)`. These functions do not exist. The correct functions `get_roe_analogy()` and `get_pbr_analogy()` are already imported (lines 14-15) but not used in these calls.
+- **Impact**: Runtime NameError crash when `_render_key_metrics()` renders the ROE fallback (col2) or PBR fallback (col3). Breaks the business card page for affected stocks.
+- **Recommended Action**: Rename `get_roe_analyzer` → `get_roe_analogy` and `get_pbr_analyzer` → `get_pbr_analogy` on lines 437 and 445.
+- **Priority**: 🔴 P0 — fix immediately before any other work (Challenger Round 2).
+
+### D-044: `sector_heatmap.py` (444 lines) has no service-layer abstraction
+- **Effort**: 2-3h (extract market data service)
+- **Status**: ⏳ PENDING
+- **Description**: `sector_heatmap.py` contains inline sector metric computation (lines 134-165), inline batch fetching (lines 104-125), and direct `BatchAPI` usage from the presentation layer. Violates the 4-layer architecture. Also contains 150+ lines of inline HTML.
+- **Impact**: Works but violates architecture. Sector metric computation should be in a service module. Inline HTML duplicates patterns from `_router_base.py`.
+- **Recommended Action**: Create `src/services/market_data.py` (as proposed in D25). Extract computation and data fetching from `sector_heatmap.py`.
+- **Priority**: 🟡 Do alongside D37 split. Not blocking for Sprint 5 features.
+
+### D-045: `compare_stories.py` imports `generate_key_takeaways` but never uses it
+- **Effort**: 0.1h (remove dead import)
+- **Status**: ⏳ CODE SMELL
+- **Description**: `compare_stories.py` line 25 imports `generate_key_takeaways` from `key_takeaways.py`, but the function is never called. Dead code.
+- **Impact**: Minimal — adds module load time and creates false dependency.
+- **Recommended Action**: Remove the dead import on line 25.
+- **Priority**: 🟢 Quick fix, do alongside D-043.
+
+### D-046: `_render_share_section()` uses `st.html()` with fragile JS element IDs
+- **Effort**: 1h (fix JS or replace with pure Streamlit)
+- **Status**: ⏳ FRAGILE — feature is non-functional
+- **Description**: `_render_share_section()` (C53-1) uses `st.html()` to inject JavaScript that references `document.getElementById('share-url-input')`. Streamlit's `st.text_input()` does NOT render elements with this ID. The JS will silently fail.
+- **Impact**: Copy-to-clipboard button and URL auto-update are broken. Users see a non-functional share UI.
+- **Recommended Action**: Replace with pure Streamlit: `st.text_input(disabled=True)` + `st.button("📋 複製")` with `st.toast()` feedback.
+- **Priority**: 🟡 Should be fixed before Sprint 5 user testing.
+
+### D-047: `_section_title()` in `_router_base.py` has inverted logic
+- **Effort**: 0.1h (single-line fix)
+- **Status**: ⏳ PRE-EXISTING BUG (not introduced in Sprint 4)
+- **Description**: `_router_base.py` line 70: `if not title:` should be `if title:` — the condition is inverted. When title is falsy, it tries to render `### 📊 {title}` (empty). When title is truthy, it falls through to emoji detection.
+- **Impact**: Low — function still renders something for all inputs. But empty titles produce a header with no text.
+- **Recommended Action**: Change `if not title:` to `if title:` and swap the return/markdown logic.
+- **Priority**: 🟢 Quick fix, do alongside D-039.
+
 ## Low Severity Debt
 - D33: C41 Read Next page-level data access pattern (see above)
 
 ## Summary
-- **Total Debt Items**: 37
+- **Total Debt Items**: 43
 - **High Severity**: 1 item (D5)
-- **Medium Severity**: 30+ items (D3-D4, D6-D15, D18-D23, D25, D27-D32, D37-D39)
+- **Medium Severity**: 36 items (D3-D4, D6-D15, D18-D23, D25, D27-D32, D37-D39, D-042, D-044, D-046)
 - **Low Severity**: 1 item (D33)
 - **Resolved Items**: D1, D2, D16, D17, D20, D24, D26 (7 items)
-- **Pending Sprint 4**: D5, D6, D18, D19, D23, D25, D27, D28, D29, D30, D31, D32, D37, D38, D39
+- **Pending Sprint 5**: D-043, D-042, D-044, D-045, D-046, D-047, D5, D6, D18, D19, D23, D25, D27, D28, D29, D30, D31, D32, D37, D38, D39
 
 ## Sprint 4 Readiness Assessment
 

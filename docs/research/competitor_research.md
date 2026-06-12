@@ -2456,3 +2456,41 @@ The Indicator (daily podcast), Morning Brew (daily newsletter), 雪球 (social f
 ---
 
 *This is the thirteenth competitor research round. Six new feature suggestions identified (C63-C68). The most impactful new gap is C68 (Financial Concept Storytelling) — it directly extends Stock Explorer's #1 core value ("story first, data second") from company-level to concept-level, and multiple international competitors prove that narrative-based education is the most effective approach for beginners. The most strategically important gap is C64 (Community Q&A) — community is the dominant learning model among competitors, and Stock Explorer is entirely solo-learning. The most unique gap is C65 (Company Story Game) — a "guess the company" game that teaches company understanding through play, perfectly aligned with the "historian" positioning.*
+
+---
+
+# Stock Explorer Competitor Research — Round 17 Summary
+
+> **Date**: 2026-06-19
+> **Full Report**: See `docs/research/competitor_research_r17.md` for complete analysis.
+
+## Round 17 Key Findings
+
+**7 new features identified (C86-C92)** — the most strategically diverse round yet:
+
+| ID | Feature | Priority | Effort | White Space |
+|---|---|---|---|---|
+| **C86** | AI Narrative Agent — Proactive Plain-Language Analysis Generator | P2 | 20-30h | 🔴 No TW competitor has proactive AI narratives |
+| **C87** | Explainable Analysis Layer — Source & Reasoning Transparency | P2 | 12-16h | 🔴 No TW competitor cites sources for every claim |
+| **C88** | Market Narrative Feed — Daily AI-Generated Market Stories | **P1** | 14-20h | 🔴 No TW competitor has a market story feed |
+| **C89** | Collaborative Company Analysis — Group Research Rooms | P2 | 24-32h | 🔴 Global white space — no competitor has this |
+| **C90** | Financial Empathy Engine — Emotional Context for Market Events | P2 | 10-14h | 🔴 No TW competitor has empathy-first design |
+| **C91** | Adaptive Micro-Learning — Contextual 30-Second Lessons | P2 | 16-22h | 🔴 No TW competitor has adaptive micro-learning |
+| **C92** | TW Market Persona Explorer — Learn Through Investor Archetypes | P2 | 12-16h | 🔴 Culturally-specific TW white space |
+
+### Round 17 Approach: Macro Trend Analysis
+Unlike previous rounds that profiled individual competitors, Round 17 analyzed **6 macro-level trends** in the 2025-2026 financial education landscape:
+1. Explainable AI becomes standard
+2. Collaborative sense-making replaces solo learning
+3. Micro-learning paths replace structured courses
+4. Native AI financial agents emerge
+5. Financial empathy becomes a design principle
+6. TW-specific persona-based learning patterns
+
+### Top Recommendation: C88 (Market Narrative Feed)
+The #1 priority gap: a daily AI-generated market narrative feed. No TW competitor has this. It creates the daily engagement loop that Stock Explorer critically lacks. It teaches market dynamics through story. It's the "historian's daily newspaper."
+
+### Cumulative Totals (After Round 17)
+- **76 unique competitors** analyzed across all rounds (70 in Rounds 7-16 + 6 macro-trend sources in Round 17)
+- **69 unique features** identified (C01-C92)
+- **Product vision alignment**: Every feature reinforces "historian, not stock picker" positioning

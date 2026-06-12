@@ -54,8 +54,18 @@ Prerequisites (D-039/040/041 + D37) underway. Features C71 → C74 → C73 to fo
 - New: D-042/043/044 (P2), C81-C85 added to backlog
 - Challenger: ✅ CONFIRMED with D-041 before Sprint 5, C83 first post-Sprint 5
 
+### Round 17 (2026-06-21)
+- D-043 P0 BUG: `get_roe_analyzer()`/`get_pbr_analyzer()` NameError crash (0.25h fix)
+- D-042: `_sections.py` at 918 lines — exceeds D37 threshold, split elevated to P1
+- D-044: `sector_heatmap.py` no service-layer abstraction (2-3h)
+- D-045-D-048: 4 new P2 design issues from Sprint 4 (C51 inline HTML, C53-1 header/JS)
+- Design Grade A (7th consecutive) — maintained but fragile
+- New: C93-C97 (5 features), C52/C55 deferred to Sprint 8+
+- Challenger: ⚠️ REVISED — Sprint 5 scope locked, Feature Triage established, Feature Budget enforced
+- Sprint 5 total: ~50.85h (prerequisites + C71/C73/C74 + D37 split + market_data.py)
+
 ## Next Cycle Handoff
-Next: 🔧 Development → Sprint 5 execution → Sprint 6 (C83 + C85 + C42 + C43 + C45)
+Next: 🔧 Development → Sprint 5 execution (D-043 fix → D-039/D-040/D-041 prerequisites → C71 → C73 → C74 + D37 split + market_data.py)
 
 ## 💡 Discussion Section (Round 15 — 2026-06-21)
 

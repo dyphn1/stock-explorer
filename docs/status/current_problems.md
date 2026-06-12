@@ -262,6 +262,42 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Proposed Fix**: Replace with `_section_title("📖 推薦閱讀")`.
 - **Effort**: <0.5h (one-line change)
 
+### D-045: C51 Sector Grid and Top Movers Use Inline HTML with Non-Standard Styling
+- **Severity**: P2
+- **Added**: 2026-06-21
+- **Source**: Design Review Round 17
+- **Description**: The sector grid cells in `_render_sector_grid()` (lines 342-362) and top-mover rows in `_render_top_movers()` (lines 391-444) of `sector_heatmap.py` use inline HTML with non-standard styling. Grid cells use `padding:1rem` (vs design system `1.2rem`). Top-movers use `border-radius:10px` (vs `12px`) and `padding:0.7rem 1rem` (vs `1.2rem`). This creates a third distinct card style on the sector heatmap page.
+- **Affected Files**: `src/pages/sector_heatmap.py` lines 342-362, 391-444
+- **Proposed Fix**: Create `_sector_grid_card()` and `_mover_row()` helpers, or adapt existing `_info_card()` / `_白话_card()` for these use cases. If compact style is intentional, document as "compact card" variant in design system.
+- **Effort**: 1-2h
+
+### D-046: C51 4th KPI Card Uses Inline HTML Instead of _白话_card()
+- **Severity**: P2
+- **Added**: 2026-06-21
+- **Source**: Design Review Round 17
+- **Description**: The first 3 KPI cards on the sector heatmap page (lines 175-192) correctly use `_白话_card()`, but the 4th card (漲跌產業數, lines 195-201) uses inline HTML with manually specified styling.
+- **Affected Files**: `src/pages/sector_heatmap.py` lines 195-201
+- **Proposed Fix**: Replace with `_白话_card()` call for consistency.
+- **Effort**: <0.5h (one-line replacement)
+
+### D-047: C53-1 Share Section Header Doesn't Use _section_title()
+- **Severity**: P2
+- **Added**: 2026-06-21
+- **Source**: Design Review Round 17
+- **Description**: `_render_share_section()` at line 832 uses raw `st.markdown("### 🔗 分享這張名片")` instead of `_section_title()`. Same pattern as D-044.
+- **Affected Files**: `src/pages/business_card/_sections.py` line 832
+- **Proposed Fix**: Replace with `_section_title("🔗 分享這張名片")`.
+- **Effort**: <0.5h (one-line change)
+
+### D-048: C53-1 Share Button Uses st.html() with Non-Functional JS
+- **Severity**: P2
+- **Added**: 2026-06-21
+- **Source**: Design Review Round 17
+- **Description**: The social sharing copy button uses `st.html()` with raw JavaScript (lines 875-910 of `_sections.py`). The JS references `document.getElementById('share-url-input')` which Streamlit doesn't render — making the copy button non-functional. This is the first use of `st.html()` for a UI component in the project.
+- **Affected Files**: `src/pages/business_card/_sections.py` lines 875-910
+- **Proposed Fix**: Replace with pure Streamlit approach: `st.text_input(disabled=True)` + `st.button("📋 複製")` with `st.toast()` feedback. Create `_share_button()` helper in `_router_base.py`.
+- **Effort**: 1-2h (includes functional fix for non-working feature)
+
 ---
 
 ## Resolved Issues
@@ -289,10 +325,10 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## Statistics
 
-- **Total Issues**: 31
+- **Total Issues**: 35
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 19 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-037, D-038, D-039, D-040, D-041, D-042, D-043, D-044)
+- **P2 (Optimization)**: 23 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-037, D-038, D-039, D-040, D-041, D-042, D-043, D-044, D-045, D-046, D-047, D-048)
 - **Resolved**: 18
 
 ---
