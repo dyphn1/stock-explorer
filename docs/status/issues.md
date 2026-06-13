@@ -57,5 +57,11 @@ C67: "Community-Curated Stock Stories" — User-Generated Narrative Layer | P2 |
 |||||||C108: "Insider Trading Context Layer" — Plain-Language Historical Analysis of Insider Activity | P2 | 10-14h | Story first + Benchmark-oriented + Historian | source: competitor research round 22
 |||||||C109: "Compare Timelines" — Side-by-Side Company Story Comparison (Cake Model) | P2 | 14-18h | Benchmark-oriented + Story first + Historian | source: competitor research round 22
 |||||||C110: "Earnings Story" — Post-Earnings Plain-Language Narrative Connecting Earnings History | P1 | 14-18h | Story first + Adaptive + Benchmark-oriented + Ten-second test | source: competitor research round 22
-|||||||C111: "Badge & Achievement System" — Gamified Learning Milestones for Engagement | P2 | 8-12h | Point-to-point + Engagement + Ten-second test | source: competitor research round 22
-|||||||C112: "Investment Diary" — Personal Reflection Journal with Historian Education Lens | P2 | 10-14h | Story first + Historian + Point-to-point | source: competitor research round 22
+||||||||C111: "Badge & Achievement System" — Gamified Learning Milestones for Engagement | P2 | 8-12h | Point-to-point + Engagement + Ten-second test | source: competitor research round 22
+||||||||C112: "Investment Diary" — Personal Reflection Journal with Historian Education Lens | P2 | 10-14h | Story first + Historian + Point-to-point | source: competitor research round 22
+||||||||||C113: "Sector Story Timeline" — Industry-Level Historical Narrative Connecting Multiple Companies | P2 | 20-28h | Story first + Benchmark-oriented + Historian | source: competitor research round 24A
+||||||||||C114: "Financial Goal Narrative" — Connecting Stock Analysis to Life Goals with Historical Framing | P2 | 14-20h | Story first + Point-to-point + Beginner-friendly | source: competitor research round 24A
+||||||||||C115: "Scenario Explorer" — Historical "What Would Have Happened If..." Analysis Tool | P2 | 16-22h | Story first + Historian + Point-to-point | source: competitor research round 24A
+||||||||||C116: "Investor Story Feed" — Personalized Daily Narrative Feed with AI Context | P1 | 14-20h | Story first + Adaptive + Historian | source: competitor research round 24A
+|||||||||||C117: "In-Context Metric Education" — Tap-to-Explain Financial Metrics with Analogies | P1 | 10-14h | Ten-second test + Point-to-point + Beginner-friendly | source: competitor research round 24B
+|||||||||||C118: "Compound Growth Visualizer" — Interactive Historical Dividend Reinvestment Calculator | P2 | 12-16h | Story first + Point-to-point + Historian | source: competitor research round 24B
