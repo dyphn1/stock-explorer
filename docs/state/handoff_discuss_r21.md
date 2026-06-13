@@ -111,4 +111,4 @@
 - **Challenge log**: docs/design/challenge_r21.md
 
 ## Next Cycle
-🔍 Review Round 25 → Sprint 12 execution (Polish + Info Hierarchy + D02 Spike)
+✅ Sprint 12 completed (Info Hierarchy + User Feedback + 8 debt items) → 🔍 Review Round 26 → Sprint 13a (C33 Glossary + C48 Story Card)

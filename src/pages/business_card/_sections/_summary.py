@@ -123,38 +123,27 @@ def _render_story_card(data: dict, client) -> None:
         fact_text = facts[idx]
 
     # ── Build the story card using shared components ──
-    # We use st.expander to avoid overloading the page (D-032)
-    with st.expander("📌 30 秒認識這家公司", expanded=True):
-        # Company name + industry header
-        st.markdown(f"### {stock_name} `{stock_id}`")
-        st.markdown(f"*{industry}*")
+    # Company name + industry header
+    st.markdown(f"### {stock_name} `{stock_id}`")
+    st.markdown(f"*{industry}*")
 
-        # One-liner
-        _info_card("一句話定位", one_liner, "💡")
+    # One-liner
+    _info_card("一句話定位", one_liner, "💡")
 
-        # Key metrics row — use _白话_card for each
-        if top_metrics:
-            cols = st.columns(len(top_metrics))
-            for col, (label, value, analogy) in zip(cols, top_metrics):
-                with col:
-                    _白话_card(label, value, analogy)
+    # Key metrics row — use _白话_card for each
+    if top_metrics:
+        cols = st.columns(len(top_metrics))
+        for col, (label, value, analogy) in zip(cols, top_metrics):
+            with col:
+                _白话_card(label, value, analogy)
 
-        # Health score
-        if overall_health is not None:
-            st.markdown(
-                f"""<div style="text-align:center;padding:0.5rem;
-                background:#F8F9FA;border-radius:10px;margin:0.5rem 0;">
-                    <div style="font-size:0.85rem;color:#7F8C8D;">整體健康度</div>
-                    <div style="font-size:1.5rem;font-weight:700;color:#2C3E50;">
-                        {overall_health:.0f}/100</div>
-                    <div style="font-size:0.85rem;">{health_label}</div>
-                </div>""",
-                unsafe_allow_html=True,
-            )
+    # Health score
+    if overall_health is not None:
+        _summary_card("整體健康度", f"{overall_health:.0f}/100 {health_label}", "🏥")
 
-        # Did You Know?
-        if fact_text:
-            _info_card("你知道嗎？", fact_text, "🤔")
+    # Did You Know?
+    if fact_text:
+        _info_card("你知道嗎？", fact_text, "🤔")
 
 
 def _render_header(data: dict, client) -> None:
