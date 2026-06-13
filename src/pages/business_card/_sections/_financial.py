@@ -147,7 +147,7 @@ def _render_key_metrics(data: dict, client) -> None:
                     f"{edu['display_name']} — {item['value']:.2f} {edu['unit']}",
                     f"**💡 {edu['explanation']}**\n\n"
                     f"**🏠 比喻：** {edu['analogy']}\n\n"
-                    f"<span style='color:{direction_color};font-weight:600;'>{direction_icon}</span>\n\n"
+                    f"{direction_icon}\n\n"
                     f"*{edu['historical_context']}*",
                     "📖",
                 )

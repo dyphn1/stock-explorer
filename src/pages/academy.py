@@ -94,6 +94,28 @@ def _render_stock_example(block: dict, client: FinMindClient) -> None:
     st.markdown("---")
 
 
+def _get_score_style(percentage: float) -> dict:
+    """Get score styling based on percentage."""
+    if percentage >= 80:
+        return {
+            "emoji": "🟢",
+            "title": "優秀！",
+            "desc": "你對這課的內容有很好的理解，繼續保持！"
+        }
+    elif percentage >= 60:
+        return {
+            "emoji": "🟡",
+            "title": "不錯！",
+            "desc": "你有基本的概念，但還有一些地方可以加強。"
+        }
+    else:
+        return {
+            "emoji": "🔴",
+            "title": "加油！",
+            "desc": "別擔心，回頭看看解說，你會進步的！"
+        }
+
+
 def _render_quiz(lesson: dict, lesson_id: str, progress: dict) -> None:
     """Render the quiz section for a lesson."""
     quiz_list = lesson.get("quiz", [])
@@ -167,24 +189,13 @@ def _render_quiz(lesson: dict, lesson_id: str, progress: dict) -> None:
         _section_title("📊 測驗結果")
 
         # Score summary
-        if percentage >= 80:
-            score_emoji = "🟢"
-            score_title = "優秀！"
-            score_desc = "你對這課的內容有很好的理解，繼續保持！"
-        elif percentage >= 60:
-            score_emoji = "🟡"
-            score_title = "不錯！"
-            score_desc = "你有基本的概念，但還有一些地方可以加強。"
-        else:
-            score_emoji = "🔴"
-            score_title = "加油！"
-            score_desc = "別擔心，回頭看看解說，你會進步的！"
+        score_style = _get_score_style(percentage)
 
         col1, col2 = st.columns(2)
         with col1:
-            _白话_card("答對題數", f"{correct_count} / {total}", f"{score_emoji} {score_title}")
+            _白话_card("答對題數", f"{correct_count} / {total}", f"{score_style['emoji']} {score_style['title']}")
         with col2:
-            _白话_card("正確率", f"{percentage:.0f}%", score_desc)
+            _白话_card("正確率", f"{percentage:.0f}%", score_style['desc'])
 
         st.markdown("")
 
