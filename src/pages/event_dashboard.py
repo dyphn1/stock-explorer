@@ -160,7 +160,11 @@ def _render_freshness_indicator(freshness: dict):
     needs_update = freshness.get("needs_update", False)
 
     if needs_update:
-        st.warning("⚠️ 部分資料可能較舊，建議重新載入以取得最新資訊。")
+        _info_card(
+            title="⚠️ 資料新鮮度提醒",
+            content="部分資料可能較舊，建議重新載入以取得最新資訊。",
+            icon="📡",
+        )
 
     # 可展開的詳情
     items = freshness.get("items", [])
@@ -196,11 +200,21 @@ def _render_event_alerts(stock_id: str):
     medium_events = [e for e in events if e.get("severity") == "medium"]
 
     if high_events:
-        st.error(f"🔴 近期有 {len(high_events)} 項重大事件需要注意！")
-        for event in high_events[:3]:
-            st.markdown(f"- **{event['title']}**：{event['summary']}")
+        high_details = "\n".join(
+            f"- **{e['title']}**：{e['summary']}" for e in high_events[:3]
+        )
+        _summary_card(
+            title=f"🔴 近期有 {len(high_events)} 項重大事件需要注意！",
+            content=high_details,
+            icon="⚠️",
+        )
 
     if medium_events:
-        st.warning(f"🟡 近期有 {len(medium_events)} 項注意事件")
-        for event in medium_events[:2]:
-            st.markdown(f"- **{event['title']}**：{event['summary']}")
+        medium_details = "\n".join(
+            f"- **{e['title']}**：{e['summary']}" for e in medium_events[:2]
+        )
+        _info_card(
+            title=f"🟡 近期有 {len(medium_events)} 項注意事件",
+            content=medium_details,
+            icon="📌",
+        )
