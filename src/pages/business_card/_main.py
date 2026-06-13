@@ -266,9 +266,7 @@ def _render_business_card(data: dict, client):
         with st.expander("🔍 歷史情境", expanded=False):
             _render_historical_scenarios(data, client)
 
-        # ── C36: Revenue Structure (compact) ──
-        with st.expander("🌳 營收結構", expanded=False):
-            _render_revenue_compact(data, client)
+
 
         # ── C46: Moat Analysis ──
         with st.expander("🏰 護城河分析", expanded=False):

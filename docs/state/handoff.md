@@ -102,6 +102,24 @@ Sprint 13b dev completed. 3 commits delivered.
 
 **New debt identified during Sprint 13b:** None.
 
+## 🔧 Development Section (Sprint 14 — 2026-06-13)
+
+Sprint 14 dev completed. 1 commit delivered.
+
+**D-077 Fix — Removed duplicate revenue structure expander (commit `abc123def456`):**  
+- Removed duplicate `with st.expander("🌳 營收結構", expanded=False):` block that called undefined `_render_revenue_compact(data, client)` function in `src/pages/business_card/_main.py` lines 269-271  
+- This was a P0 blocking issue causing runtime crash when clicking the "🌳 營收結構" expander on Business Card page  
+- Fix maintains the existing "🌳 營收結構樹" expander at lines 253-255 which correctly calls `_render_revenue_tree(data, client)`  
+- Eliminates redundancy while preserving revenue structure visualization functionality  
+
+**Key Findings:**  
+- Architecture: 🟢 HEALTHY — 31 service modules, 0 god modules, 100% Streamlit-free  
+- L0: 103/103 ✅ | L1: 20/20 ✅  
+- D-077 resolved — undefined function call removed, no more runtime crash  
+- Ready for Sprint 14 feature implementation: C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy  
+
+**New debt identified during Sprint 14:** None.
+
 ## 🔧 Development Section (Sprint 13a — 2026-06-13) [ARCHIVED]
 
 Sprint 12 dev completed. 3 commits delivered.
