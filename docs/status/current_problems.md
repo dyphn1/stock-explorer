@@ -407,6 +407,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Proposed Fix**: Create a `_白话_card_with_help(label, value, analogy, help_key)` helper in `_router_base.py` that renders the card + button in a two-column layout using shared component styling. Alternatively, modify `_白话_card()` to accept an optional `help_icon` parameter.
 - **Effort**: 0.5-1h
 - **Note**: This is a D-003 regression, but the trade-off is architecturally justified (two-column layout requirement). Still should be consolidated into a shared component.
+- **Status**: ✅ **RESOLVED in Sprint 14** — `_render_metric_popover()` now calls `_白话_card()` within the column layout. The two-column requirement is preserved by wrapping the `_白话_card()` call in `st.columns([5, 1])`. Commit: `724921c`.
 
 ### D-082: Moat Dimension Mini-Cards Use _summary_card() with Empty Icon
 - **Severity**: P2
@@ -416,6 +417,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `src/pages/business_card/_sections/_moat.py` line 49
 - **Proposed Fix**: Create a `_mini_score_card(label, score)` helper in `_router_base.py` with compact styling: `background:#F8F9FA;border-radius:8px;padding:0.5rem;border-left:4px solid {score_color}`. Use score-based border color (green/amber/red).
 - **Effort**: 0.5h
+- **Status**: ✅ **RESOLVED in Sprint 14** — `_mini_score_card()` created in `_router_base.py` with score-based border colors (green ≥70, amber ≥40, red <40). Moat dimension cards now use this component. Commit: `724921c`.
 
 ### D-083: Story Card Health Score Border Not Color-Coded by Health Level (D-080 Continuation)
 - **Severity**: P2
@@ -426,7 +428,72 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Proposed Fix**: Add optional `border_color` parameter to `_summary_card()` in `_router_base.py`. Pass health-score-based color: `#27AE60` (≥70), `#F39C12` (≥40), `#E74C3C` (<40).
 - **Effort**: 0.25h
 - **Note**: Continuation of D-080. Now tracked as D-083 for Sprint 14 resolution.
+- **Status**: ✅ **RESOLVED in Sprint 14** — `border_color` parameter added to `_summary_card()`. Health score now passes score-based color. Commit: `724921c`.
 
+### D-084: Moat Comparison Page Section Headers Use Raw st.markdown Instead of _section_title()
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 32
+- **Description**: The moat_comparison.py page has 5 section headers (lines 65, 113, 127, 145, 156) that use raw `st.markdown("### ...")` instead of `_section_title()`. This means they don't get the emoji-prefix detection and consistent formatting that `_section_title()` provides.
+- **Affected Files**: `src/pages/moat_comparison.py` lines 65, 113, 127, 145, 156
+- **Proposed Fix**: Replace with `_section_title()` calls for consistency.
+- **Effort**: 0.25h
+
+### D-085: Moat Comparison Page Fetches Data in View Layer
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 32
+- **Description**: `moat_comparison.py` calls `client.get_stock_info()` (line 35) and `get_stock_data()` (line 96) directly in the page renderer. This is a view-layer data fetch (same pattern as D-038). Lower severity since it's a standalone page with its own data loading, but still architecturally inconsistent.
+- **Affected Files**: `src/pages/moat_comparison.py` lines 35, 96
+- **Proposed Fix**: Move peer data fetching to the router layer.
+- **Effort**: 1-2h
+
+### D-086: Academy Quiz Score Color/Emoji Logic in View Layer
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 32
+- **Description**: The score color/emoji/title/desc logic (percentage → color mapping) is hardcoded in `academy.py` lines 170-181. Same pattern as D-063. If this pattern is reused in future quiz features, it will be duplicated.
+- **Affected Files**: `src/pages/academy.py` lines 170-181
+- **Proposed Fix**: Move to a helper `_get_score_style(percentage)` returning `(color, emoji, title, desc)` dict.
+- **Effort**: <0.5h
+
+### D-087: Academy Content Block Headings Don't Use _section_title()
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 32
+- **Description**: `_render_content_block()` heading type uses `st.markdown(f"#### {block.get('text', '')}")` instead of `_section_title()`. Since these are content-level headings within a lesson (below the `##` lesson title), `####` is appropriate, but it's inconsistent with the section-file convention.
+- **Affected Files**: `src/pages/academy.py` line 31
+- **Proposed Fix**: Acceptable as-is for content-level headings. Document the convention.
+- **Effort**: <0.1h
+
+### D-088: _financial.py Metric Education Passes Inline HTML Through _info_card()
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 32
+- **Description**: `_financial.py` line 150 passes `<span style='color:...'>` HTML fragments as content to `_info_card()`. Since `_info_card()` already uses `unsafe_allow_html=True` internally, the HTML renders, but it bypasses the semantic contract of the card component.
+- **Affected Files**: `src/pages/business_card/_sections/_financial.py` line 150
+- **Proposed Fix**: Replace with emoji-only indicators (🟢/🔴) or add a `direction_indicator` parameter to `_info_card()`.
+- **Effort**: 0.5h
+
+### D-089: _financial.py Growing Multi-Responsibility Section File
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Challenger Round 32
+- **Description**: `_financial.py` (343 lines) contains 6 distinct render functions: `_render_metric_popover()`, `_render_key_metrics()`, `_render_dividend()`, `_render_revenue_breakdown()`, `_render_revenue_trend()`, `_render_valuation()`. The dividend function alone is 113 lines with inline HTML table generation. If it grows beyond 400 lines, splitting should be considered.
+- **Affected Files**: `src/pages/business_card/_sections/_financial.py`
+- **Proposed Fix**: Monitor. Split into `_financial_metrics.py`, `_financial_dividend.py`, `_financial_revenue.py` if it exceeds 400 lines.
+- **Effort**: 1-2h (when needed)
+
+### D-090: Metric Popover session_state Accumulation Anti-Pattern
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Challenger Round 32
+- **Description**: `_render_metric_popover()` in `_financial.py` uses `st.session_state[f"_open_popover_{popover_key}"] = True` to track popover state. These dynamic keys are never cleaned up, causing session_state accumulation over long sessions. The D-081 fix moved to `_白话_card()` but the underlying session_state toggle remains.
+- **Affected Files**: `src/pages/business_card/_sections/_financial.py` line 45
+- **Proposed Fix**: Replace with `st.popover()` built-in toggle if Streamlit version supports it. Eliminates the stale key accumulation.
+- **Effort**: 0.5h
+
+---
 ---
 
 ## Resolved Issues
@@ -459,20 +526,23 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 || D-066 | Adaptive Banner Uses Inline HTML | P2 | 2026-06-15 | Already resolved — uses `_info_card()`. Verified in Sprint 12. Commit: 658bd3f. |
 || D-079 | Dual Tooltip Pattern on Key Metrics | P2 | 2026-06-18 | Merged into single `_render_metric_popover()` with glossary + metric education. Commit: b51c13b. |
 || D-080 | Story Card Health Score Border Color | P2 | — | **DEFERRED to Sprint 14** — tracked as D-083. Low priority, emoji indicator already communicates health level. |
+||| D-081 | Metric Popover Card Uses Inline HTML | P2 | 2026-06-13 | RESOLVED in Sprint 14 — `_render_metric_popover()` now calls `_白话_card()`. Commit: `724921c`. |
+||| D-082 | Moat Dimension Mini-Cards Use _summary_card() | P2 | 2026-06-13 | RESOLVED in Sprint 14 — `_mini_score_card()` created with score-based border colors. Commit: `724921c`. |
+||| D-083 | Story Card Health Score Border Not Color-Coded | P2 | 2026-06-13 | RESOLVED in Sprint 14 — `border_color` param added to `_summary_card()`. Commit: `724921c`. |
 
 ---
 
 ## Statistics
 
-- **Total Issues**: 76
+- **Total Issues**: 85
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 32 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-062, D-063, D-068, D-069, D-070, D-081, D-082, D-083)
-- **Resolved**: 27
+- **P2 (Optimization)**: 37 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-062, D-063, D-068, D-069, D-070, D-084, D-085, D-086, D-087, D-088, D-089, D-090)
+- **Resolved**: 30
 
 ---
 
-*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 14 feature implementation.*
+*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 15 feature implementation.*
 
 ---
 

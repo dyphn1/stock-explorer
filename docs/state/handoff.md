@@ -79,6 +79,56 @@
 || A10| Execute R5: migrate hardcoded data to YAML files | Developer | Ongoing ||
 ## Next Cycle
 ✅ Discussion Round 31 Complete → 🔧 Development Next Sprint (Notifications → Key Takeaways → Company Story Timeline spike → Health Score after D-16) → 🔍 Review Round 31
+
+## 🔍 Review Section (Round 32 — 2026-06-13)
+**Theme**: Review Round 32 — Sprint 14 Post-Mortem + Sprint 15 Prerequisites
+
+### Sprint 14 Development Verified
+- C126 (Moat Comparison): ✅ moat_comparison.py created, uses shared components, zero inline HTML
+- C47 (Education Academy): ✅ academy.py + lesson_service.py + 5 lesson YAMLs, clean separation
+- D-081: ✅ Metric popover now uses _白话_card()
+- D-082: ✅ _mini_score_card() created with score-based border colors
+- D-083: ✅ Story card health border now color-coded
+
+### Key Metrics
+- L0: 106/106 ✅ | L1: 20/20 ✅ | Tests: 165+
+- Architecture: 🟡 A- (chart.py at 842 lines — large coherent module, not god module)
+- Design: A- (D-081/D-082/D-083 resolved, 5 new P2 issues consolidated)
+- Service modules: 31 | Page modules: ~38
+
+### New Debt Identified
+- D-077: chart.py large coherent module (842 lines) — MEDIUM — split into chart_stock.py + chart_market.py
+- D-078: _financial.py inline HTML span in _info_card() — LOW
+- D-079: _financial.py dividend table unsafe_allow_html — LOW
+- D-080: academy.py st.error()/st.warning() — LOW
+- D-089: _financial.py growing multi-responsibility (343 lines, 6 render functions) — monitor
+- D-090: Metric popover session_state accumulation — LOW — replace with st.popover()
+
+### Challenger 3-Round Challenge: ✅ CONFIRMED with 6 conditions
+1. D6 YAML migration must be FIRST task (content scaling #1 risk)
+2. CI check for inline HTML must be implemented before new features
+3. Any feature must pass historian filter AND ten-second test
+4. Backlog Budget enforced (max 100 features, +1/-1 rule)
+5. Grading criteria updated (god module vs. large coherent module)
+6. Moat comparison page must include historian disclaimer
+
+### Sprint 15 Confirmed Plan
+1. **D6 YAML Migration** (3-4h) — FIRST. Migrate _CASE_STUDIES + 5 remaining blocks
+2. **chart.py Split** (1-2h) — chart_stock.py + chart_market.py
+3. **CI Check: No Inline HTML** (1-2h) — automated enforcement
+4. **Design Cleanup** (2-3h) — batch D-084 through D-088
+5. **C101 Comprehension Check Quiz** (8-12h) — story/education feature
+6. **D-090 Metric Popover Fix** (0.5h) — replace with st.popover()
+- Total: 15.5-23.5h
+
+### Structural Changes
+- Backlog Budget: max 100 features (currently 131, target ≤125 by Sprint 15 end)
+- Feature Triage: every 3 rounds, review entire backlog
+- Grading criteria: distinguish "god module" from "large coherent module"
+- CI check: automated enforcement for unsafe_allow_html
+
+### Next Cycle
+🔍 Review Round 32 Complete → 🔧 Development Round 33 (Sprint 15: D6 YAML → chart.py split → CI check → C101) → 🔍 Review Round 33
 ## Archive
 See git history for previous rounds and development sections.
 

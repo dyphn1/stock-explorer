@@ -537,3 +537,182 @@ The team's summary contains **outdated status information** that materially affe
 
 **Rationale:**
 The consolidated findings revealed two critical issues: (1) Sprint 7's D6 "resolution" was overstated — only 1 of 6 blocks migrated, and C84 introduced a new 230-line violation; (2) the competitor research is producing features that don't pass the historian filter (C100, C102). The debt burden (13-21h including new debt from C84) requires a debt-first Sprint 8. The 6 new feature gaps were triaged: 2 rejected, 1 deferred, 3 confirmed with conditions. The structural changes (historian filter, feature triage, automated enforcement, milestone verification) address systemic issues that have persisted for 20 rounds.
+
+---
+
+## Round 32: Three-Round Challenge (2026-06-13)
+**Theme**: Review Round 32 — Sprint 14 Post-Mortem + Sprint 15 Prerequisites
+
+### Round 1 (Gap Authenticity)
+
+**Challenger Questions:**
+
+1. **D-077: chart.py god module (842 lines) — Is 800 lines really a "god module" threshold or an arbitrary line count?** The module has 11 functions: `_get_chart_colors()`, `_apply_theme_layout()`, `create_revenue_pie_chart()`, `create_revenue_trend_chart()`, `create_revenue_treemap()`, `create_price_chart()`, `create_funnel_chart()`, `create_comparison_radar()`, `create_institutional_chart()`, `create_price_area_chart()`, `create_health_snowflake()`, `create_valuation_band_chart()`. Every single function is a chart-rendering function. There are zero Streamlit imports, zero business logic, zero data access. This is a coherent single-responsibility module — "all Plotly chart rendering." The 800-line threshold was designed to catch modules with *mixed responsibilities* (like analogy_engine.py at 850 lines which had analogies + takeaways + deltas + health scoring). chart.py has one responsibility spread across many similar functions. Is this really HIGH severity?
+
+2. **D-078: _financial.py passes inline HTML to _info_card() — How bad is this really?** At line 146-153, `_info_card()` receives content with `<span style='color:...'>` HTML fragments for the direction indicator. But `_info_card()` already uses `unsafe_allow_html=True` internally — so the HTML is already expected and rendered. The "inline HTML" here is a small styled span within otherwise plain text, not a full card bypassing the design system. Is this meaningfully different from passing any formatted string to a card function?
+
+3. **D-079: _financial.py dividend table uses unsafe_allow_html — Verified real.** Lines 246-264 construct a full HTML table with badge spans for the dividend history. This is 18 lines of HTML string concatenation in a section file. This is a genuine violation — the table could be rendered with `st.dataframe()` or a dedicated table component. CONFIRMED as real.
+
+4. **D-080: academy.py uses st.error()/st.warning() — Verified real.** Lines 145, 200, 315 use raw `st.warning()` and `st.error()` calls. However, these are in edge cases (missing quiz answers, missing lesson content) where the user has done something unexpected. The question is: should these use a standardized error display pattern? The current approach is functional but inconsistent with the design system's card-based error presentation.
+
+5. **D-081: Metric popover uses session_state for toggle — Already resolved per design review.** The design reviewer marked D-081 as RESOLVED — metric popover now uses `_白话_card()`. But the architecture debt register still lists it. Is this a documentation lag issue?
+
+6. **D-082: _mini_score_card() needs dark-theme verification — Verified.** The `_mini_score_card()` function at line 106-126 of `_router_base.py` uses hardcoded `#F8F9FA` background and `#2C3E50` text colors. These are light-theme-only values. In dark mode, `#F8F9FA` (very light gray) text on a dark background would be unreadable. The function has no theme detection. This is a real issue but affects only the moat comparison cards — a small surface area.
+
+7. **D-083: _moat.py doesn't use _section_title() — Verified real.** `_moat.py` line 40 uses `st.markdown("##### 五維度評分")` directly instead of `_section_title()`. This is a minor consistency issue — the section won't have the same styling as other sections.
+
+8. **D-084 through D-088: 5 new P2 design issues — Are these noise?** The consolidated report says D-084 through D-088 are all P2 (minor) from the design review. Without the specific descriptions, I can't evaluate each one. But the pattern from previous rounds is clear: P2 design issues accumulate and are rarely addressed. At what point do P2 issues get triaged?
+
+9. **What the team missed: chart.py is NOT a god module, but it IS a navigation problem.** The real issue with chart.py isn't that it's 842 lines — it's that finding a specific chart function requires scrolling through 842 lines of similar-looking Plotly code. The module has no table of contents, no grouping, and the functions range from 40 lines (`_apply_theme_layout`) to 191 lines (`create_valuation_band_chart`). The severity should be MEDIUM (navigation/maintainability), not HIGH (architectural violation).
+
+10. **What the team missed: _financial.py is the real god module at 343 lines with 5 responsibilities.** `_financial.py` contains `_render_metric_popover()`, `_render_key_metrics()`, `_render_dividend()`, `_render_revenue_breakdown()`, `_render_revenue_trend()`, `_render_valuation()` — that's 6 render functions in one file. The dividend function alone is 113 lines with inline HTML table generation. If we're worried about chart.py at 842 lines with 1 responsibility, shouldn't we be more concerned about _financial.py at 343 lines with 6 distinct rendering responsibilities?
+
+11. **What the team missed: The metric popover session_state pattern (D-081) is actually an anti-pattern that was "resolved" by moving to _白话_card but the underlying session_state toggle remains.** Line 45 still uses `st.session_state[f"_open_popover_{popover_key}"] = True` to track popover state. This is a fragile pattern — session_state keys with dynamic suffixes that are never cleaned up. Over a long session, this accumulates stale keys.
+
+**Team Response:**
+- D-077: The 800-line threshold is a heuristic, not a hard rule. The architect acknowledges that chart.py is single-responsibility but argues that 842 lines of Plotly code is hard to navigate and that the module grew by ~55 lines in Sprint 14 (from the moat comparison radar chart and health snowflake additions). The recommendation to split into chart_stock.py + chart_market.py is based on the observation that create_comparison_radar() and create_health_snowflake() are used by the business card page, while create_revenue_treemap() and create_price_area_chart() are used by market-level pages. The split would improve discoverability.
+- D-078: The architect agrees this is LOW severity. The HTML span is minor and `_info_card()` already uses `unsafe_allow_html=True`. The real fix is to add a `direction_indicator` parameter to `_info_card()` that renders the styled span internally — but that's a 0.5h refactor, not urgent.
+- D-079: CONFIRMED as real. The dividend table HTML (lines 246-264) is the largest inline HTML block in _financial.py. The fix is to either use `st.dataframe()` with column config or create a `render_badge_table()` helper. Estimated 1-2h.
+- D-080: The architect agrees this is LOW severity. The `st.error()`/`st.warning()` calls are in edge cases. The fix is to use `_info_card()` with an error icon for consistency — 0.5h.
+- D-081: Documentation lag — the architecture debt register hasn't been updated to reflect the design review resolution. Will update.
+- D-082: The architect confirms dark-theme verification is needed. The `_mini_score_card()` colors are hardcoded for light mode. Fix: add theme detection or use CSS variables. 0.5-1h.
+- D-083: Agreed as minor. 0.1h to replace `st.markdown("##### ...")` with `_section_title()`.
+- D-084-D-088: The architect doesn't have the specific descriptions from the design review. Will follow up with the designer.
+- chart.py severity: The architect REVISES the severity from HIGH to MEDIUM. The module is single-responsibility but large. The split recommendation stands — not because it's a god module, but because the stock vs. market chart distinction is architecturally meaningful.
+- _financial.py: The architect ACKNOWLEDGES this is a growing concern. At 343 lines with 6 render functions, it's approaching the threshold where splitting into `_financial_metrics.py`, `_financial_dividend.py`, and `_financial_revenue.py` would improve maintainability. Not urgent for Sprint 15 but should be monitored.
+- Metric popover session_state: The architect ACKNOWLEDGES the anti-pattern. The session_state keys are never cleaned up. Recommend using `st.popover()` with a built-in toggle instead of manual session_state tracking. This would eliminate D-081 entirely.
+
+**Challenger Verdict: ⚠️ REVISED**
+- **D-077**: Severity DOWNGRADED from HIGH to MEDIUM. chart.py is NOT a god module — it's a single-responsibility chart rendering module. The 800-line threshold is a heuristic that doesn't account for module coherence. However, the split into chart_stock.py + chart_market.py is still recommended for navigational reasons (1-2h, Day 1 Sprint 15). The split should be by *consumer* (stock pages vs. market pages), not arbitrarily.
+- **D-078**: CONFIRMED as LOW. Minor issue, 0.5h to add `direction_indicator` parameter to `_info_card()`.
+- **D-079**: CONFIRMED as LOW. Genuine inline HTML violation. 1-2h to create `render_badge_table()` helper.
+- **D-080**: CONFIRMED as LOW. 0.5h to standardize error display.
+- **D-081**: Status UPDATE needed — design review marked it RESOLVED but the session_state anti-pattern remains. Reclassify as "partially resolved" — the UI now uses `_白话_card()` but the underlying toggle mechanism is still fragile.
+- **D-082**: CONFIRMED as LOW. 0.5-1h for dark-theme verification.
+- **D-083**: CONFIRMED as LOW. 0.1h consistency fix.
+- **D-084-D-088**: INSUFFICIENT DATA — need design review details to evaluate. Recommend PM obtain the specific descriptions before Sprint 15 planning.
+- **NEW D-089 (Challenger-identified)**: _financial.py is a growing multi-responsibility section file (343 lines, 6 render functions, inline HTML table generation). Monitor for splitting in Sprint 16+.
+- **NEW D-090 (Challenger-identified)**: Metric popover session_state accumulation — dynamic keys `_open_popover_{popover_key}` are never cleaned up. Replace with `st.popover()` built-in toggle.
+
+---
+
+### Round 2 (Priority)
+
+**Challenger Questions:**
+
+1. **The top 3 recommendations are: (1) Split chart.py, (2) Complete D6 YAML migration, (3) Standardize error handling + eliminate unsafe_allow_html. Is this the right order?** Recommendation 1 (chart.py split, 1-2h) is a structural improvement with no user-facing value. Recommendation 2 (D6 YAML, 3-4h) unblocks non-technical content contributors from adding case studies, analogies, and takeaways. Recommendation 3 (error handling, 2-3h) is invisible infrastructure. Given that Sprint 14 just shipped C84 (Market Event Case Study) which added a 230-line hardcoded `_CASE_STUDIES` block, shouldn't D6 YAML migration be FIRST? Every day it's deferred is another day content contributors can't add case studies without code changes.
+
+2. **Should Sprint 15 be debt-first or feature-first?** Sprint 8 was a debt-first sprint. Since then, every sprint has added new features while debt accumulated. The current debt burden (D-077 through D-090, plus carryover from previous rounds) is approximately 15-25h. The backlog has 131 identified features with ~45 implemented (67% backlog ratio). The product vision says "Refuse to implement all features at once." Shouldn't Sprint 15 be another debt-first sprint?
+
+3. **What about the 5 P2 design issues (D-084-D-088)?** If these are truly minor, they should be batched into a single "design cleanup" task (2-3h) rather than tracked as 5 separate items. If they're not minor, they need proper severity assessment. The current approach — "5 new P2 issues" without details — is how debt accumulates invisibly.
+
+4. **The chart.py split (1-2h) is recommended for "Day 1 Sprint 15." But is a 1-2h file split really Day 1 priority?** File splits are low-risk, high-reward tasks that are perfect for the first day of a sprint when the team is ramping up. However, if the split is truly MEDIUM severity (not HIGH as originally claimed), it could also be done as a "quick win" alongside feature work. Does it need to be Day 1, or can it be "first available slot"?
+
+5. **D6 YAML migration has been pending for 8+ rounds. Why should Sprint 15 be different?** The YAML migration was first identified in Round 12. It's been 20 rounds. The effort estimate hasn't changed (3-4h). What's changed in Sprint 15 that makes this the right time? If the answer is "C84 just shipped and its 230-line _CASE_STUDIES block is the largest hardcoded data violation," then the priority is clear — but it should be explicitly framed as "C84 follow-up" not "D6 completion."
+
+6. **Standardizing error handling (Recommendation 3) — is this the right time?** The codebase has 165+ tests, L0/L1 compliance is 100%, and the architecture grade is B+ (down from A due to chart.py). Error handling standardization is important but invisible to users. With 131 features in the backlog and ~45 implemented, shouldn't user-facing work take priority over invisible infrastructure?
+
+**Team Response:**
+- Priority order: The architect REVISES the order. (1) D6 YAML migration FIRST (3-4h) — C84's _CASE_STUDIES block makes this urgent. Content contributors are blocked. (2) chart.py split SECOND (1-2h) — do alongside YAML migration on Day 1 as a warm-up task. (3) Error handling standardization THIRD (2-3h) — do after YAML and chart split, or defer to Sprint 16 if feature work takes priority.
+- Debt-first vs feature-first: The architect recommends a "debt-heavy" Sprint 15 (60% debt, 40% features) rather than a pure debt sprint. The debt items (D6 + chart.py split + error handling = 6-9h) clear the way for feature work in the second half of the sprint. This is a pragmatic middle ground — pay down the most critical debt, then build.
+- D-084-D-088: The architect agrees these should be batched into a single "design cleanup" task. Will consolidate.
+- chart.py split timing: Agreed — "first available slot" not "Day 1 mandatory." The split is MEDIUM severity, not HIGH.
+- D6 framing: Agreed — frame as "C84 follow-up: migrate _CASE_STUDIES to YAML" rather than abstract "D6 completion." The concrete framing makes the urgency clear.
+- Error handling: The architect agrees this can be deferred to Sprint 16 if needed. It's important but not urgent.
+
+**Challenger Verdict: ⚠️ REVISED**
+- **Priority order REVISED**: (1) D6 YAML migration — FIRST, framed as C84 follow-up (3-4h). (2) chart.py split — alongside YAML migration, first available slot (1-2h). (3) Error handling — defer to Sprint 16 if Sprint 15 features need the time.
+- **Sprint 15 approach**: DEBT-HEAVY (60/40), not pure debt-first. Clear the critical debt (D6 + chart.py split = 4-6h), then allocate remaining time to the highest-priority feature from the backlog.
+- **D-084-D-088**: CONSOLIDATE into a single "design cleanup" task (2-3h) in Sprint 15.
+- **Conditions for Sprint 15 features**: Any new feature must pass the historian filter AND the ten-second test AND must not introduce new inline HTML. The "No Inline HTML" rule (aspirational for 20+ rounds) must be enforced via the CI check recommended in Round 20.
+
+---
+
+### Round 3 (Goal Alignment)
+
+**Challenger Questions:**
+
+1. **Does the overall direction still align with "historian, not stock picker"?** Sprint 14 delivered C126 (Moat Comparison) and C47 (Education Academy). Moat comparison is pure historian — "here's how this company's competitive advantage compares to peers." Education Academy is pure historian — "here's how investing concepts work." Both pass the historian filter. The debt items (chart.py, inline HTML, error handling) are infrastructure, not directional. No drift detected.
+
+2. **Are we building the right things?** The backlog has 131 identified features (C01-C131) with ~45 implemented. That's a 67% backlog ratio. The product vision says "Refuse to implement all features at once." But the team keeps identifying new features every review round without explicitly deferring or canceling existing ones. Round 20 added C98-C103. Round 32 adds D-077-D-088. The feature identification pipeline is working — but the feature triage pipeline is not. When does the backlog shrink?
+
+3. **What are the risks?** Three risks stand out:
+   - **Content scaling risk**: C84 (Market Event Case Study) shipped with 5 hardcoded case studies. Adding more requires code changes (the 230-line _CASE_STUDIES block). This is the #1 blocker for content growth. D6 YAML migration is not optional — it's a prerequisite for the product to scale.
+   - **Design system erosion risk**: Inline HTML has been "banned" for 20+ rounds but keeps growing. C126 (Moat Comparison) added `_mini_score_card()` which uses hardcoded light-theme colors. C47 (Academy) uses `st.error()`/`st.warning()` instead of design system components. Without automated enforcement (CI check), the design system will continue to erode.
+   - **Backlog paralysis risk**: 131 features with 67% backlog ratio. Every review round adds more features. The Feature Triage process (recommended in Round 17, re-recommended in Round 20) has not been implemented. Without triage, the backlog becomes a wish list that demoralizes the team.
+
+4. **Is the B+ architecture grade fair?** The grade dropped from A to B+ due to chart.py crossing 800 lines. But as established in Round 1, chart.py is a single-responsibility module. The grade drop is based on a heuristic (line count) that doesn't account for module coherence. Should the grading criteria be updated to distinguish between "god module" (mixed responsibilities) and "large coherent module" (single responsibility, many similar functions)?
+
+5. **The product vision says "historian, not stock picker" — but are we being too narrow?** C47 (Education Academy) teaches investing concepts. C126 (Moat Comparison) compares competitive advantages. These are educational, not predictive. But the product vision also says "Focus on the company itself, not short-term price movement." C126's moat comparison uses PER and PBR — which are valuation metrics that could be interpreted as "is this stock cheap/expensive?" Are we accidentally teaching valuation-based stock picking through moat analysis?
+
+6. **Sprint 14 delivered C126 and C47 — both are "analysis/education" features. When do we ship "story" features?** The product vision emphasizes "Story first" — the business card page should tell a company's story. C48 (Story Card) shipped in Sprint 4, C84 (Case Studies) shipped in Sprint 7. But the next story features (C94 Earnings Story, C99 Scrollytelling) are deferred to Sprint 8+. Is the product becoming an "analysis tool" rather than a "story tool"?
+
+**Team Response:**
+- Historian alignment: CONFIRMED. C126 and C47 are historian-aligned. No drift.
+- Backlog concern: The architect ACKNOWLEDGES the backlog is growing faster than features are being implemented. The Feature Triage process (Round 17) needs to be implemented. Target: reduce the backlog to 80-90 features by Sprint 18 through explicit deferrals and cancellations.
+- Content scaling risk: CONFIRMED as the #1 risk. D6 YAML migration is the highest-priority debt item.
+- Design system erosion: CONFIRMED. The CI check for `unsafe_allow_html=True` (recommended in Round 20) must be implemented in Sprint 15. Without it, the "No Inline HTML" rule is unenforceable.
+- Backlog paralysis: CONFIRMED. The architect recommends a "Backlog Budget" — no more than 100 identified features at any time. New features can only be added if existing features are deferred or cancelled (+1/-1 rule from Round 14, but applied to the entire backlog, not just within a sprint).
+- B+ grade: The architect AGREES the grading criteria need updating. A "large coherent module" (single responsibility, >800 lines) should not be penalized the same as a "god module" (mixed responsibilities, >800 lines). Propose: Grade A for architecture with large coherent modules, Grade B+ for architecture with god modules. chart.py would be "large coherent" → A.
+- Moat comparison and valuation: The architect argues that moat comparison uses PER/PBR as *inputs* to competitive advantage analysis, not as valuation signals. "This company has a moat AND trades at a low PER" is different from "This stock is cheap." The historian framing is: "Here's what the data shows about competitive position." Not: "Here's whether to buy."
+- Story vs analysis balance: The architect acknowledges the concern. Sprint 14 was analysis-heavy (C126 Moat, C47 Academy). Sprint 15 should include at least one story-oriented feature. Recommend prioritizing C94 (Earnings Story) or C101 (Comprehension Check) in Sprint 15's feature slot.
+
+**Challenger Verdict: ⚠️ REVISED**
+- **Historian alignment**: ✅ CONFIRMED. No drift. C126 and C47 are historian-aligned.
+- **Backlog**: ⚠️ VALID CONCERN. Implement Backlog Budget (max 100 features, +1/-1 rule) and Feature Triage (every 3 rounds) as formal processes in Sprint 15.
+- **Content scaling risk**: ✅ CONFIRMED as #1 risk. D6 YAML migration is Sprint 15's top priority.
+- **Design system erosion**: ✅ CONFIRMED. Implement CI check for `unsafe_allow_html=True` in Sprint 15.
+- **B+ grade**: ⚠️ GRADING CRITERIA UPDATE NEEDED. Distinguish "god module" from "large coherent module." chart.py is the latter → architecture grade should be A- (not B+) pending the split.
+- **Moat comparison framing**: ✅ CONDITIONAL. Moat comparison must use historian framing ("here's the competitive data") not valuation framing ("here's whether it's cheap"). Add historian disclaimer to moat comparison page.
+- **Story vs analysis balance**: ⚠️ Sprint 15 should include at least one story/education feature (C94 or C101) alongside debt work.
+
+---
+
+### Final Challenger Decision
+
+**Sprint 15 Scope (CONFIRMED):**
+
+1. **D6 YAML Migration (C84 follow-up)** — P1, 3-4h — FIRST task. Migrate _CASE_STUDIES (230 lines) + remaining 5 hardcoded data blocks to YAML. This is the #1 blocker for content scaling.
+
+2. **chart.py Split** — MEDIUM, 1-2h — Alongside D6 on Day 1. Split into chart_stock.py (business card charts: revenue pie, revenue trend, valuation band, health snowflake, comparison radar) + chart_market.py (market-level charts: revenue treemap, price area, institutional). Split by consumer, not arbitrarily.
+
+3. **CI Check: No Inline HTML** — MEDIUM, 1-2h — Add automated enforcement for `unsafe_allow_html=True` in new code. This is the prerequisite for the design system to stop eroding. Without this, every future sprint will add more inline HTML.
+
+4. **Design Cleanup (D-084-D-088 consolidated)** — LOW, 2-3h — Batch the 5 P2 design issues into a single cleanup task.
+
+5. **Feature Slot (Story/Education)** — P2, 10-14h — After debt work (items 1-4, total 7-11h), allocate remaining sprint time to ONE of:
+   - **C101 (Comprehension Check Quiz)** — 8-12h — Replaces C52. Ties into C84 case studies and C47 academy. Highest historian value.
+   - **C94 (Earnings Story)** — 14-18h — More expensive but strongly historian-aligned. Requires _historian_disclaimer() on every narrative.
+   - **Recommendation**: C101 first (cheaper, ties into existing features), C94 in Sprint 16.
+
+6. **D-090: Metric Popover session_state Fix** — LOW, 0.5h — Replace manual session_state toggle with `st.popover()` built-in toggle. Eliminates the stale key accumulation anti-pattern.
+
+**Deferred to Sprint 16:**
+- Error handling standardization (Recommendation 3) — 2-3h
+- D-089: _financial.py split — monitor, split in Sprint 16 if it grows beyond 400 lines
+- C94 (Earnings Story) — if not done in Sprint 15
+
+**Conditions:**
+1. **D6 YAML migration must be the FIRST task** — not chart.py split, not features. Content scaling is the #1 risk.
+2. **CI check for inline HTML must be implemented before any new feature development** — this is the prerequisite for design system integrity.
+3. **Any feature in Sprint 15 must pass the historian filter AND ten-second test** — no exceptions.
+4. **Backlog Budget must be enforced** — before adding any new features in Sprint 15 review, at least one existing feature must be deferred or cancelled. Target: reduce from 131 to ≤125 by end of Sprint 15.
+5. **Grading criteria update** — the architect must update the architecture grading rubric to distinguish "god module" (mixed responsibilities) from "large coherent module" (single responsibility, many similar functions). chart.py is the latter.
+6. **Moat comparison page must include historian disclaimer** — "歷史資料，不構成投資建議" to prevent valuation framing drift.
+
+**Total Committed Effort:**
+- Debt (items 1-4): 7-11h
+- Feature (item 5): 8-12h (C101) or 14-18h (C94)
+- Quick fix (item 6): 0.5h
+- **Sprint 15 Total: 15.5-23.5h (C101) or 21.5-29.5h (C94)**
+- Recommended: C101 path (15.5-23.5h) to keep sprint manageable alongside debt work
+
+**Key Metrics:**
+- Debt items resolved: 6 (D6, D-077/chart split, D-084-D-088/cleanup, D-090/popover, CI check)
+- Features delivered: 1 (C101 or C94)
+- Backlog target: ≤125 features (from 131)
+- Architecture grade target: A- (after chart.py split + CI check)
+- Design grade target: A (after CI check enforcement)
+
+**Rationale:**
+Round 32's consolidated report identified 12 new debt items (D-077 through D-088) and recommended 3 architecture actions. The Challenger's investigation revealed that: (1) the chart.py "god module" severity was overstated — it's a large coherent module, not a mixed-responsibility god module; (2) the real priority is D6 YAML migration, which has been deferred for 8+ rounds and is now blocking content scaling for C84 case studies; (3) the "No Inline HTML" rule has been aspirational for 20+ rounds and requires automated enforcement (CI check) to be meaningful; (4) the backlog (131 features, 67% ratio) requires a formal Backlog Budget and Feature Triage process. Sprint 15 is debt-heavy (60/40) with a single story/education feature to maintain the historian "story first" balance. The grading criteria update (god module vs. large coherent module) is a structural fix that prevents future misclassification.
