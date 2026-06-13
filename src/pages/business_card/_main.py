@@ -178,10 +178,9 @@ def _render_business_card(data: dict, client):
         _render_expert_analysis(data, client)
         _render_historical_scenarios(data, client)
 
-    # ── Compare stories (already collapsed by default, fine for both modes) ──
-    _render_compare_stories(data, client)
-
     # ── Footer sections (always shown) ──
-    _render_read_next(data, client)
+    all_info = client.get_stock_info()
+    _render_compare_stories(data, client, all_info=all_info)
+    _render_read_next(data, client, all_info=all_info)
     _render_share_section(data, client)
     _render_footer(data, client)

@@ -37,7 +37,7 @@ def _render_deltas(data: dict, client) -> None:
         _info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")
 
 
-def _render_compare_stories(data: dict, client) -> None:
+def _render_compare_stories(data: dict, client, all_info=None) -> None:
     """C38 Compare Stories: narrative comparison with peer companies.
 
     Shows a collapsible section with plain-language narrative comparing
@@ -53,7 +53,6 @@ def _render_compare_stories(data: dict, client) -> None:
     financial = data["financial"]
 
     # ── Find peers ──
-    all_info = client.get_stock_info()
     if all_info is None or len(all_info) == 0:
         return
     if not industry or industry == "未知":
@@ -138,7 +137,7 @@ def _render_compare_stories(data: dict, client) -> None:
             st.markdown("---")
 
 
-def _render_read_next(data: dict, client) -> None:
+def _render_read_next(data: dict, client, all_info=None) -> None:
     """C41 Read Next: peer stocks + curated fun facts."""
     stock_id = data["stock_id"]
     stock_name = data["stock_name"]
@@ -148,13 +147,11 @@ def _render_read_next(data: dict, client) -> None:
     _section_title(f"📖 推薦閱讀")
 
     # --- Peer stocks from same industry ---
-    _all_info = client.get_stock_info()
-    _current_industry = industry
     _peers = pd.DataFrame()
-    if len(_all_info) > 0 and _current_industry and _current_industry != "未知":
-        _peers = _all_info[
-            (_all_info["industry_category"] == _current_industry) &
-            (_all_info["stock_id"] != stock_id)
+    if all_info is not None and len(all_info) > 0 and industry and industry != "未知":
+        _peers = all_info[
+            (all_info["industry_category"] == industry) &
+            (all_info["stock_id"] != stock_id)
         ].head(5)
 
     if len(_peers) > 0:
@@ -162,7 +159,7 @@ def _render_read_next(data: dict, client) -> None:
         for _, _peer in _peers.iterrows():
             _peer_id = str(_peer["stock_id"])
             _peer_name = _peer["stock_name"]
-            _peer_industry = _peer.get("industry_category", _current_industry)
+            _peer_industry = _peer.get("industry_category", industry)
             _key = f"read_next_{stock_id}_peer_{_peer_id}"
 
             _info_card(

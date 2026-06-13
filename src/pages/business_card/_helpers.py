@@ -83,7 +83,7 @@ def _render_risk_dimension(dim: dict, stock_name: str):
     color = _RISK_COLORS.get(dim["risk_level"], "#7F8C8D")
 
     st.markdown(
-        f"""<div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;
+        f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;
         border-left:4px solid {color};margin:0.5rem 0 1rem 0;">
             <div style="font-weight:600;color:#2C3E50;">
                 {badge} {dim["title"]}
