@@ -12,6 +12,8 @@ from src.pages._router_base import (
     get_stock_data,
 )
 from src.pages.business_card import _render_business_card
+from src.pages.revenue_tree import _render_revenue_tree
+from src.pages.compare_stories import _render_compare_stories_page
 from src.pages.operation_checkup import _render_operation_checkup
 from src.pages.financial_health import _render_financial_health
 from src.pages.peer_comparison import _render_peer_comparison
@@ -54,7 +56,7 @@ def get_client():
 
 def _render_navbar_minimal(current_page: str):
     """精簡導航列：僅分頁標籤（用於非股票頁面）"""
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "股票探索", "新手導覽", "故事時間軸", "每日故事"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "股票探索", "新手導覽", "故事時間軸", "每日故事", "營收結構樹", "同業比較故事"]
     current_idx = pages.index(current_page) if current_page in pages else 0
 
     selected = st.radio(
@@ -195,6 +197,12 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
     elif page == "故事時間軸":
         with st.spinner("載入故事時間軸..."):
             render_company_timeline(data, client)
+    elif page == "營收結構樹":
+        with st.spinner("載入營收結構..."):
+            _render_revenue_tree(data, client)
+    elif page == "同業比較故事":
+        with st.spinner("載入同業比較..."):
+            _render_compare_stories_page(data, client)
 
 
 def _render_navbar(data: dict, current_page: str):
@@ -215,7 +223,7 @@ def _render_navbar(data: dict, current_page: str):
             st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
 
     # 分頁標籤
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "股票探索", "新手導覽", "故事時間軸", "每日故事"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "股票探索", "新手導覽", "故事時間軸", "每日故事", "營收結構樹", "同業比較故事"]
     current_idx = pages.index(current_page) if current_page in pages else 0
 
     selected = st.radio(

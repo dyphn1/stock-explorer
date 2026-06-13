@@ -1,4 +1,4 @@
-"""Business card main orchestrator."""
+"""Business card main orchestrator — Sprint 12 Info Hierarchy."""
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
@@ -48,9 +48,7 @@ from src.pages.business_card._sections import (
     _render_revenue_breakdown,
     _render_revenue_trend,
     _render_valuation,
-    _render_compare_stories,
     _render_news,
-    _render_read_next,
     _render_share_section,
     _render_footer,
 )
@@ -128,7 +126,12 @@ def _render_simple_overview(data: dict, client) -> None:
 
 
 def _render_business_card(data: dict, client):
-    """公司名片主頁（M1）— orchestrator"""
+    """公司名片主頁（M1）— Sprint 12 Info Hierarchy
+
+    Above-fold (first 720px): C37 Key Takeaways, C39 What Changed, C43 Health Snowflake.
+    All other sections via progressive disclosure (st.expander) or below the fold.
+    C36 (Revenue Tree) and C38 (Compare Stories) relocated to separate pages.
+    """
     # ── Data extraction ──
     stock_id = data["stock_id"]
     stock_name = data["stock_name"]
@@ -150,37 +153,82 @@ def _render_business_card(data: dict, client):
         simple_mode = st.toggle("簡易模式", value=True, key="simple_mode_toggle")
     st.session_state["simple_mode"] = simple_mode
     if simple_mode:
-        st.caption("🔰 簡易模式：只顯示重點摘要，适合新手快速瀏覽")
+        st.caption("🔰 簡易模式：只顯示重點摘要，適合新手快速瀏覽")
     else:
         st.caption("📖 詳細模式：顯示完整數據與深度分析")
 
-    # ── Sections always shown in both modes ──
+    # ══════════════════════════════════════════════════════════
+    # ABOVE-FOLD: The 3 most important sections (C37, C39, C43)
+    # ══════════════════════════════════════════════════════════
+
+    # C48/C37: Company Story Card + Key Takeaways
     _render_story_card(data, client)
     _render_takeaways(data, client)
-    _render_deltas(data, client)
-    _render_one_liner(data, client)
-    _render_news(data, client)
-    _render_study_log(data, client)
 
-    # ── C105: Conditional detail sections ──
+    # C39: What Changed — Recent Deltas
+    _render_deltas(data, client)
+
+    # C43: Health Snowflake
     if simple_mode:
-        # Simple mode: show a compact overview instead of detail-heavy sections
+        # Simple mode: show compact health summary
         _render_simple_overview(data, client)
     else:
-        # Detailed mode: show full data tables, charts, and analysis
+        # Detailed mode: show full health snowflake
         _render_health(data, client)
-        _render_risk(data, client)
-        _render_key_metrics(data, client)
-        _render_dividend(data, client)
-        _render_revenue_breakdown(data, client)
-        _render_revenue_trend(data, client)
-        _render_valuation(data, client)
-        _render_expert_analysis(data, client)
-        _render_historical_scenarios(data, client)
+
+    # ══════════════════════════════════════════════════════════
+    # PROGRESSIVE DISCLOSURE: Secondary sections in expanders
+    # ══════════════════════════════════════════════════════════
+
+    # ── 一句話定位 + 近期動態 ──
+    with st.expander("💡 一句話定位與近期動態", expanded=False):
+        _render_one_liner(data, client)
+        _render_news(data, client)
+
+    # ── 學習日誌 ──
+    with st.expander("📚 學習日誌", expanded=False):
+        _render_study_log(data, client)
+
+    # ── Detailed mode: full data sections in expanders ──
+    if not simple_mode:
+        # 關鍵數字 + 配息 + 營收組成 + 營收趨勢 + 估值
+        with st.expander("📊 關鍵數字與配息", expanded=False):
+            _render_key_metrics(data, client)
+            _render_dividend(data, client)
+
+        with st.expander("📈 營收組成與趨勢", expanded=False):
+            _render_revenue_breakdown(data, client)
+            _render_revenue_trend(data, client)
+
+        with st.expander("💎 估值區間", expanded=False):
+            _render_valuation(data, client)
+
+        with st.expander("⚠️ 風險分析", expanded=False):
+            _render_risk(data, client)
+
+        with st.expander("🎓 專家分析", expanded=False):
+            _render_expert_analysis(data, client)
+
+        with st.expander("🔍 歷史情境", expanded=False):
+            _render_historical_scenarios(data, client)
+
+    # ══════════════════════════════════════════════════════════
+    # 更多分析: Navigation to C36 (Revenue Tree) & C38 (Compare Stories)
+    # ══════════════════════════════════════════════════════════
+    with st.expander("🔬 更多分析", expanded=False):
+        st.markdown("*想更深入了解這家公司？看看以下深度分析：*")
+        col_a, col_b = st.columns(2)
+
+        with col_a:
+            if st.button("🌳 營收結構樹", key="nav_revenue_tree", use_container_width=True):
+                navigate_to(page="營收結構樹", stock_id=stock_id)
+            st.caption("深入拆解營收來源與產品組合")
+
+        with col_b:
+            if st.button("📖 同業比較故事", key="nav_compare_stories", use_container_width=True):
+                navigate_to(page="同業比較故事", stock_id=stock_id)
+            st.caption("與同業的敘事比較分析")
 
     # ── Footer sections (always shown) ──
-    all_info = client.get_stock_info()
-    _render_compare_stories(data, client, all_info=all_info)
-    _render_read_next(data, client, all_info=all_info)
     _render_share_section(data, client)
     _render_footer(data, client)

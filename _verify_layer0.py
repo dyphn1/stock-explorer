@@ -53,6 +53,8 @@ MODULES = [
     ("watchlist_page", "src.pages.watchlist_page"),
     ("event_dashboard", "src.pages.event_dashboard"),
     ("_router_base", "src.pages._router_base"),
+    ("revenue_tree", "src.pages.revenue_tree"),
+    ("compare_stories", "src.pages.compare_stories"),
     # 服務
     ("chart", "src.services.chart"),
     ("analogy_engine", "src.services.analogy_engine"),
