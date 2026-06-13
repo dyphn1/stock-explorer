@@ -1,10 +1,10 @@
 # Stock Explorer Status
 
 ## Current Theme: Development Sprint 14 (D-077 fix → C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy + C125 stretch)
-- **Status**: Development Sprint 14 in progress — D-077 P0 bug resolved
+- **Status**: Development Sprint 14 COMPLETE — C126 + C47 + D-081/D-082/D-083 delivered
 - **Last Updated**: 2026-06-13
-- **Cycle Type**: Development cycle — Fixing P0 bug and preparing for feature implementation
-- **Next Cycle**: 🔍 Review Round 31 → Sprint 15 planning
+- **Cycle Type**: Development cycle — C126 Moat Comparison + C47 Education Academy + P2 fixes
+- **Next Cycle**: 🔍 Review Round 32 → Sprint 15 planning
 
 ## 🔧 Development Log — Sprint 14 (2026-06-13)
 - **D-077** ✅ Fixed undefined `_render_revenue_compact()` function call by removing duplicate expander in `src/pages/business_card/_main.py` (commit `ecdadc8`)

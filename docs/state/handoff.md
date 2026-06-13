@@ -81,3 +81,49 @@
 ✅ Discussion Round 31 Complete → 🔧 Development Next Sprint (Notifications → Key Takeaways → Company Story Timeline spike → Health Score after D-16) → 🔍 Review Round 31
 ## Archive
 See git history for previous rounds and development sections.
+
+## 🔧 Development Section (Round 32 — 2026-06-13)
+
+### Summary
+- **Date**: 2026-06-13
+- **Theme**: 🔧 Development — Sprint 14 Continuation
+- **Participants**: Product Manager, System Architect, Developer
+- **Status**: ✅ COMPLETE
+
+### Completed Items
+| Issue ID | Description | Owner | Result | Commit |
+|----------|-------------|-------|--------|--------|
+| C126 | Competitor Moat Comparison View — side-by-side moat analysis page | Developer | ✅ Created `src/pages/moat_comparison.py` with peer discovery, moat score/dimension/type/evidence comparison; registered in router + url_sync; nav button in business card "更多分析" expander | `724921c` |
+| D-081 | Metric popover card uses inline HTML instead of `_白话_card()` | Developer | ✅ Replaced inline HTML in `_render_metric_popover()` in `_financial.py` with `_白话_card()` call | `724921c` |
+| D-082 | Moat dimension mini-cards use `_summary_card()` with wrong styling | Developer | ✅ Created `_mini_score_card()` helper in `_router_base.py` with score-based border colors; replaced in `_moat.py` | `724921c` |
+| D-083 | Story card health score border not color-coded | Developer | ✅ Added `border_color` param to `_summary_card()` in `_router_base.py`; health score now passes score-based color | `724921c` |
+| C47 | Financial Education Academy — 5 structured lessons + quiz + progress | Developer | ✅ Created `lesson_service.py`, `academy.py` page, 5 lesson YAMLs (lesson_01–05), `academy_meta.yaml`; registered in router + url_sync | `85f03b6`, `5d6df6a`, `b2cac6d` |
+
+### Architecture Decisions
+- **C126**: No new service functions needed; reused `moat_analyzer.get_moat_summary()` and followed `compare_stories.py` page pattern
+- **C47**: YAML-defined content + pure Python service + Streamlit page; progress tracking via `st.session_state`; no database needed for v1
+- **`_mini_score_card()`**: New compact card variant in `_router_base.py` for score-based dimension displays (green ≥70, amber ≥40, red <40 border)
+- **`_summary_card()` border_color param**: Optional parameter added with default `#F39C12` for backward compatibility
+- **lesson_service.py**: Pure Python (no Streamlit imports); `get_progress()` accepts progress_dict parameter instead of accessing session_state directly
+
+### Verification
+- **L0**: 106/106 ✅ (0 failures, 0 warnings)
+- **L1**: 20/20 ✅ (0 failures, 0 warnings)
+- **Total tests**: 165+ (L0 + L1 + existing 149)
+
+### Git Commits
+| Hash | Message |
+|------|---------|
+| `724921c` | feat: add C126 moat comparison page + fix D-081/D-082/D-083 |
+| `85f03b6` | feat: add lesson_service.py and 5 lesson YAML files for C47 Education Academy |
+| `5d6df6a` | feat: add academy page and router registration for C47 Education Academy |
+| `b2cac6d` | fix: remove streamlit import from lesson_service.py; wire academy page session_state management |
+
+### Pending Items
+| Issue ID | Description | Owner | Next Steps |
+|----------|-------------|-------|------------|
+| C125 | Segment-Level Profitability View | Developer | Stretch goal — needs data validation; deferred to next sprint |
+| C34 | Company Story Timeline spike | Designer/Architect | Requires narrative synthesis spike; deferred |
+
+### Next Cycle
+🔧 Development Round 32 Complete → 🔍 Review Round 32 → Sprint 15 Planning (C125 Segment Profitability + C40 Mode Toggle refinement + architecture debt R2-R5)
