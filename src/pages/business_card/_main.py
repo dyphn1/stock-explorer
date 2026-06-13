@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, date
 
-from src.services.chart import create_revenue_trend_chart, create_revenue_pie_chart, create_valuation_band_chart, create_health_snowflake
+from src.services.chart import create_revenue_trend_chart, create_revenue_pie_chart, create_valuation_band_chart, create_health_snowflake, create_revenue_treemap
 from src.services.revenue_analyzer import analyze_revenue_breakdown
 from src.services.analogy_engine import (
     get_one_liner,
@@ -34,6 +34,7 @@ from src.services.watchlist import (
 )
 from src.pages._router_base import _白话_card, _info_card, _summary_card
 from src.pages.url_sync import navigate_to
+from src.pages.revenue_tree import _render_revenue_tree
 
 from src.pages.business_card._sections import (
     _render_header,
@@ -248,6 +249,10 @@ def _render_business_card(data: dict, client):
             _render_revenue_breakdown(data, client)
             _render_revenue_trend(data, client)
 
+        with st.expander("🌳 營收結構樹", expanded=False):
+            st.markdown("*深入拆解這家公司靠什麼賺錢*")
+            _render_revenue_tree(data, client)
+
         with st.expander("💎 估值區間", expanded=False):
             _render_valuation(data, client)
 
@@ -259,6 +264,14 @@ def _render_business_card(data: dict, client):
 
         with st.expander("🔍 歷史情境", expanded=False):
             _render_historical_scenarios(data, client)
+
+        # ── C36: Revenue Structure (compact) ──
+        with st.expander("🌳 營收結構", expanded=False):
+            _render_revenue_compact(data, client)
+
+        # ── C46: Moat Analysis ──
+        with st.expander("🏰 護城河分析", expanded=False):
+            _render_moat(data, client)
 
     # ══════════════════════════════════════════════════════════
     # 更多分析: Navigation to C36 (Revenue Tree) & C38 (Compare Stories)

@@ -187,6 +187,61 @@ def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢")
     return fig
 
 
+def create_revenue_treemap(revenue_items: list, title: str = "營收來源") -> go.Figure:
+    """
+    Create a treemap visualization of revenue breakdown.
+    
+    Args:
+        revenue_items: list of dicts with keys: name, value, description
+        title: chart title
+    
+    Returns:
+        plotly go.Figure
+    """
+    # Use a pleasant color palette
+    colors = ["#3498DB", "#2ECC71", "#F39C12", "#E74C3C", "#9B59B6", 
+              "#1ABC9C", "#E67E22", "#34495E", "#16A085", "#C0392B"]
+    
+    labels = [item["name"] for item in revenue_items]
+    values = [item["value"] for item in revenue_items]
+    descriptions = [item.get("description", "") for item in revenue_items]
+    parents = [""] * len(labels)
+    
+    # Build custom hover text
+    hover_texts = [f"{item['name']}: {item['value']:.0f}%<br>{item.get('description', '')}" 
+                   for item in revenue_items]
+    
+    color_list = colors[:len(labels)]
+    
+    fig = go.Figure(go.Treemap(
+        labels=labels,
+        parents=parents,
+        values=values,
+        textinfo="label+value",
+        hovertext=hover_texts,
+        hovertemplate="%{hovertext}<extra></extra>",
+        marker=dict(
+            colors=color_list,
+            line=dict(width=2, color="white"),
+        ),
+        textfont=dict(size=14, color="white"),
+        textposition="middle center",
+        pathbar=dict(visible=False),
+    ))
+    
+    # Apply same theme-aware styling as other charts
+    colors_theme = _get_chart_colors()
+    fig.update_layout(
+        title=dict(text=title, font=dict(size=16, color=colors_theme["title"])),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        margin=dict(t=40, b=20, l=20, r=20),
+        font=dict(color=colors_theme["text"]),
+    )
+    
+    return fig
+
+
 def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figure:
     """股價走勢圖（K 線 + 成交量）；單日資料時以分組長條圖呈現 OHLC"""
     if df is None or len(df) == 0:

@@ -6,46 +6,65 @@ It provides a deep dive into the company's revenue structure and product mix.
 import streamlit as st
 import pandas as pd
 
-from src.pages._router_base import _section_title, _info_card, _白话_card
+from src.pages._router_base import _section_title, _info_card, _白话_card, _glossary_tooltip
 from src.services.revenue_analyzer import analyze_revenue_breakdown
-from src.services.chart import create_revenue_pie_chart
+from src.services.chart import create_revenue_pie_chart, create_revenue_treemap, create_revenue_trend_chart
 from src.services.analogy_engine import get_revenue_analogy, get_yoy_analogy
+from src.services import glossary_service
 from src.pages.business_card._helpers import _historian_disclaimer
 
 
 def _render_revenue_tree(data: dict, client) -> None:
-    """C36 Revenue Tree — deep dive into revenue structure and product mix.
+    """C36 Revenue Tree V2 — deep dive into revenue structure and product mix.
 
     Shows:
-    - Revenue pie chart with detailed breakdown
+    - Revenue pie chart (default) with treemap toggle
+    - Revenue concentration warning
+    - Revenue trend mini-chart (12-month sparkline)
     - Product/category revenue tree
-    - Revenue trend comparison
     - Plain-language analogy for each revenue source
+    - Glossary tooltips on revenue breakdown items
     """
     stock_id = data["stock_id"]
     stock_name = data["stock_name"]
     industry = data["industry"]
     financial = data["financial"]
     extra_metrics = data["extra_metrics"]
+    monthly_revenue = data["monthly_revenue"]
 
     # Page header
     _section_title(f"🌳 營收結構樹 — {stock_name} ({stock_id})")
     st.markdown("*深入拆解這家公司靠什麼賺錢*")
     st.markdown("")
 
-    # ── Revenue breakdown pie chart ──
+    # ── Revenue breakdown chart with treemap toggle ──
     revenue_items = analyze_revenue_breakdown(financial, stock_id, industry)
 
     if revenue_items:
         st.markdown("### 📊 營收來源佔比")
-        col1, col2 = st.columns([3, 2])
-        with col1:
-            fig = create_revenue_pie_chart(revenue_items, f"{stock_name} 營收來源")
-            st.plotly_chart(fig, use_container_width=True)
 
-        with col2:
-            for item in revenue_items:
-                _info_card(f"{item['name']} — {item['value']:.0f}%", item['description'], "📊")
+        # Treemap toggle
+        treemap_mode = st.toggle("🔬 切換樹狀圖", value=False, help="切換為樹狀圖視圖，面積大小代表營收佔比")
+        if treemap_mode:
+            fig = create_revenue_treemap(revenue_items, f"{stock_name} 營收來源")
+        else:
+            fig = create_revenue_pie_chart(revenue_items, f"{stock_name} 營收來源")
+        st.plotly_chart(fig, use_container_width=True)
+
+        # Concentration warning
+        max_item = max(revenue_items, key=lambda x: x["value"])
+        if max_item["value"] > 60:
+            _info_card("⚠️ 營收集中風險", 
+                       f"{max_item['name']}佔營收 {max_item['value']:.0f}%，超過 60% 營收來自單一來源，需留意客戶集中度風險", 
+                       "⚠️")
+
+        # Revenue trend sparkline
+        if len(monthly_revenue) >= 3:
+            st.markdown("##### 📈 近 12 個月營收趨勢")
+            trend_fig = create_revenue_trend_chart(monthly_revenue.tail(12), "")
+            trend_fig.update_layout(height=200, margin=dict(t=10, b=10, l=10, r=10),
+                                   showlegend=False)
+            st.plotly_chart(trend_fig, use_container_width=True)
 
         st.markdown("---")
 
