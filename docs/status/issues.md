@@ -38,30 +38,38 @@ C67: "Community-Curated Stock Stories" — User-Generated Narrative Layer | P2 |
 ||C89: "Collaborative Company Analysis" — Group Research Room for Stocks | P2 | 24-32h | Point-to-point knowledge construction + Adaptive + Beginner-friendly | source: competitor research round 17
 ||C90: "Financial Empathy Engine" — Emotional Context Layer for Market Events | P2 | 10-14h | Story first + Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 17
 ||C91: "Adaptive Micro-Learning" — Contextually-Triggered 30-Second Lessons | P2 | 16-22h | Point-to-point knowledge construction + Ten-second test + Adaptive | source: competitor research round 17
-|||C92: "TW Market Persona Explorer" — Learn Through Investor Archetypes | P2 | 12-16h | Story first + Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 17
-|||C93: "Dividend Income Calendar" — Market-Wide Dividend Calendar with Income Projection | P1 | 12-16h | Story first + Point-to-point knowledge construction + Historian | source: competitor research round 17
-|||C94: "Earnings Story" — Post-Earnings Plain-Language Narrative Analysis | P1 | 14-18h | Story first + Adaptive + Ten-second test + Historian | source: competitor research round 17
-|||C95: "Watchlist Health Dashboard" — Aggregate Portfolio Health with Plain-Language Summary | P2 | 10-14h | Story first + PPT-style + Ten-second test + Historian | source: competitor research round 17
-|||C96: "Sector Ecosystem Map" — Visual Supply Chain & Ecosystem Relationship Map | P2 | 16-22h | Story first + PPT-style + Point-to-point + Historian | source: competitor research round 17
-||||C97: "First 30 Days" — Structured Beginner Onboarding Curriculum with Daily Micro-Tasks | P1 | 18-24h | Point-to-point + Ten-second test + Historian + Beginner-friendly | source: competitor research round 17
-||||C98: "Event Interpretation Engine" — AI-Powered "Why Did This Stock Move?" Explanation for Every Event | P1 | 14-18h | Story first + Adaptive + Historian | source: competitor research round 20
-||||C99: "Scrollytelling Mode" — Animated Vertical Scroll Through Company History | P2 | 16-22h | Story first + PPT-style + Ten-second test | source: competitor research round 20
-||||C100: "Natural Language Screener" — Plain-Language Stock Screening with "Why It Passed" Explanations | P1 | 18-24h | Point-to-point + Beginner-friendly + Benchmark-oriented | source: competitor research round 20
-||||C101: "Comprehension Check" — Contextual Quiz After Reading with Adaptive Learning Recommendations | P2 | 8-12h | Point-to-point + Ten-second test + Adaptive | source: competitor research round 20
-||||C102: "Market Narrative Feed" — Social-Media-Style AI-Generated Daily Market Story Stream | P1 | 16-22h | Story first + Adaptive + Ten-second test | source: competitor research round 20
-|||||C103: "Learn First Gate" — Soft Educational Onboarding Before Viewing Stock Data | P2 | 10-14h | Story first + Point-to-point + Ten-second test + Beginner-friendly | source: competitor research round 20
-|||||C104: "Post-Narrative Comprehension Check" — Contextual Quiz Cards After Each Section (Finimize Model) | P2 | 8-12h | Point-to-point + Ten-second test + Historian | source: competitor research round 21
-||||||C105: "Simple/Detailed Content Depth Toggle" — ELI5 Mode Switch for Beginner/Intermediate Users | P2 | 10-14h | Ten-second test + Beginner-friendly + Historian | source: competitor research round 21
-||||||C106: "First 7 Days" — Beginner Onboarding Curriculum with Daily Micro-Lessons Using TW Stock Examples | P2 | 16-22h | Story first + Point-to-point + Beginner-friendly + Historian | source: competitor research round 21
-|||||||C107: "Why Is This Stock Moving?" Inline AI Explanations — Spiking + Busyu Model | P1 | 12-16h | Story first + Adaptive + Historian | source: competitor research round 22
-|||||||C108: "Insider Trading Context Layer" — Plain-Language Historical Analysis of Insider Activity | P2 | 10-14h | Story first + Benchmark-oriented + Historian | source: competitor research round 22
-|||||||C109: "Compare Timelines" — Side-by-Side Company Story Comparison (Cake Model) | P2 | 14-18h | Benchmark-oriented + Story first + Historian | source: competitor research round 22
-|||||||C110: "Earnings Story" — Post-Earnings Plain-Language Narrative Connecting Earnings History | P1 | 14-18h | Story first + Adaptive + Benchmark-oriented + Ten-second test | source: competitor research round 22
-||||||||C111: "Badge & Achievement System" — Gamified Learning Milestones for Engagement | P2 | 8-12h | Point-to-point + Engagement + Ten-second test | source: competitor research round 22
-||||||||C112: "Investment Diary" — Personal Reflection Journal with Historian Education Lens | P2 | 10-14h | Story first + Historian + Point-to-point | source: competitor research round 22
-||||||||||C113: "Sector Story Timeline" — Industry-Level Historical Narrative Connecting Multiple Companies | P2 | 20-28h | Story first + Benchmark-oriented + Historian | source: competitor research round 24A
-||||||||||C114: "Financial Goal Narrative" — Connecting Stock Analysis to Life Goals with Historical Framing | P2 | 14-20h | Story first + Point-to-point + Beginner-friendly | source: competitor research round 24A
-||||||||||C115: "Scenario Explorer" — Historical "What Would Have Happened If..." Analysis Tool | P2 | 16-22h | Story first + Historian + Point-to-point | source: competitor research round 24A
-||||||||||C116: "Investor Story Feed" — Personalized Daily Narrative Feed with AI Context | P1 | 14-20h | Story first + Adaptive + Historian | source: competitor research round 24A
-|||||||||||C117: "In-Context Metric Education" — Tap-to-Explain Financial Metrics with Analogies | P1 | 10-14h | Ten-second test + Point-to-point + Beginner-friendly | source: competitor research round 24B
-|||||||||||C118: "Compound Growth Visualizer" — Interactive Historical Dividend Reinvestment Calculator | P2 | 12-16h | Story first + Point-to-point + Historian | source: competitor research round 24B
+||||C92: "TW Market Persona Explorer" — Learn Through Investor Archetypes | P2 | 12-16h | Story first + Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 17
+||||C93: "Dividend Income Calendar" — Market-Wide Dividend Calendar with Income Projection | P1 | 12-16h | Story first + Point-to-point knowledge construction + Historian | source: competitor research round 17
+||||C94: "Earnings Story" — Post-Earnings Plain-Language Narrative Analysis | P1 | 14-18h | Story first + Adaptive + Ten-second test + Historian | source: competitor research round 17
+||||C95: "Watchlist Health Dashboard" — Aggregate Portfolio Health with Plain-Language Summary | P2 | 10-14h | Story first + PPT-style + Ten-second test + Historian | source: competitor research round 17
+||||C96: "Sector Ecosystem Map" — Visual Supply Chain & Ecosystem Relationship Map | P2 | 16-22h | Story first + PPT-style + Point-to-point + Historian | source: competitor research round 17
+|||||C97: "First 30 Days" — Structured Beginner Onboarding Curriculum with Daily Micro-Tasks | P1 | 18-24h | Point-to-point + Ten-second test + Historian + Beginner-friendly | source: competitor research round 17
+|||||C98: "Event Interpretation Engine" — AI-Powered "Why Did This Stock Move?" Explanation for Every Event | P1 | 14-18h | Story first + Adaptive + Historian | source: competitor research round 20
+|||||C99: "Scrollytelling Mode" — Animated Vertical Scroll Through Company History | P2 | 16-22h | Story first + PPT-style + Ten-second test | source: competitor research round 20
+|||||C100: "Natural Language Screener" — Plain-Language Stock Screening with "Why It Passed" Explanations | P1 | 18-24h | Point-to-point + Beginner-friendly + Benchmark-oriented | source: competitor research round 20
+|||||C101: "Comprehension Check" — Contextual Quiz After Reading with Adaptive Learning Recommendations | P2 | 8-12h | Point-to-point + Ten-second test + Adaptive | source: competitor research round 20
+|||||C102: "Market Narrative Feed" — Social-Media-Style AI-Generated Daily Market Story Stream | P1 | 16-22h | Story first + Adaptive + Ten-second test | source: competitor research round 20
+||||||C103: "Learn First Gate" — Soft Educational Onboarding Before Viewing Stock Data | P2 | 10-14h | Story first + Point-to-point + Ten-second test + Beginner-friendly | source: competitor research round 20
+||||||C104: "Post-Narrative Comprehension Check" — Contextual Quiz Cards After Each Section (Finimize Model) | P2 | 8-12h | Point-to-point + Ten-second test + Historian | source: competitor research round 21
+|||||||C105: "Simple/Detailed Content Depth Toggle" — ELI5 Mode Switch for Beginner/Intermediate Users | P2 | 10-14h | Ten-second test + Beginner-friendly + Historian | source: competitor research round 21
+|||||||C106: "First 7 Days" — Beginner Onboarding Curriculum with Daily Micro-Lessons Using TW Stock Examples | P2 | 16-22h | Story first + Point-to-point + Beginner-friendly + Historian | source: competitor research round 21
+||||||||C107: "Why Is This Stock Moving?" Inline AI Explanations — Spiking + Busyu Model | P1 | 12-16h | Story first + Adaptive + Historian | source: competitor research round 22
+||||||||C108: "Insider Trading Context Layer" — Plain-Language Historical Analysis of Insider Activity | P2 | 10-14h | Story first + Benchmark-oriented + Historian | source: competitor research round 22
+||||||||C109: "Compare Timelines" — Side-by-Side Company Story Comparison (Cake Model) | P2 | 14-18h | Benchmark-oriented + Story first + Historian | source: competitor research round 22
+||||||||C110: "Earnings Story" — Post-Earnings Plain-Language Narrative Connecting Earnings History | P1 | 14-18h | Story first + Adaptive + Benchmark-oriented + Ten-second test | source: competitor research round 22
+|||||||||C111: "Badge & Achievement System" — Gamified Learning Milestones for Engagement | P2 | 8-12h | Point-to-point + Engagement + Ten-second test | source: competitor research round 22
+|||||||||C112: "Investment Diary" — Personal Reflection Journal with Historian Education Lens | P2 | 10-14h | Story first + Historian + Point-to-point | source: competitor research round 22
+|||||||||||C113: "Sector Story Timeline" — Industry-Level Historical Narrative Connecting Multiple Companies | P2 | 20-28h | Story first + Benchmark-oriented + Historian | source: competitor research round 24A
+|||||||||||C114: "Financial Goal Narrative" — Connecting Stock Analysis to Life Goals with Historical Framing | P2 | 14-20h | Story first + Point-to-point + Beginner-friendly | source: competitor research round 24A
+|||||||||||C115: "Scenario Explorer" — Historical "What Would Have Happened If..." Analysis Tool | P2 | 16-22h | Story first + Historian + Point-to-point | source: competitor research round 24A
+|||||||||||C116: "Investor Story Feed" — Personalized Daily Narrative Feed with AI Context | P1 | 14-20h | Story first + Adaptive + Historian | source: competitor research round 24A
+||||||||||||C117: "In-Context Metric Education" — Tap-to-Explain Financial Metrics with Analogies | P1 | 10-14h | Ten-second test + Point-to-point + Beginner-friendly | source: competitor research round 24B
+||||||||||||C118: "Compound Growth Visualizer" — Interactive Historical Dividend Reinvestment Calculator | P2 | 12-16h | Story first + Point-to-point + Historian | source: competitor research round 24B
+|||||||||||||C123: "Revenue Geography Breakdown" — Where Customers Are | P2 | 8-12h | Story first + Historian | source: competitor research round 28
+|||||||||||||C125: "Segment-Level Profitability View" — Margin per Business Segment | P2 | 6-10h | Benchmark-oriented + Story first | source: competitor research round 28
+|||||||||||||C126: "Competitor Moat Comparison View" — Side-by-Side Moat Analysis | P2 | 10-14h | Benchmark-oriented + Story first | source: competitor research round 28
+||||||||||||||C127: "Moat Trend Indicator" — Is the Competitive Advantage Strengthening or Weakening? | P2 | 8-12h | Adaptive + Benchmark-oriented + Historian | source: competitor research round 29
+||||||||||||||C128: "Revenue Quality Score" — Recurring vs One-Time Revenue Distinction | P2 | 10-14h | Story first + Historian | source: competitor research round 29
+||||||||||||||C129: "Education Completion Certificates" — Credentialing for Learning | P2 | 6-10h | Point-to-point + Engagement | source: competitor research round 29
+||||||||||||||C130: "Investor Profile Quiz" — Self-Assessment Driven Mode Selection | P2 | 8-12h | Adaptive + Point-to-point + Beginner-friendly | source: competitor research round 29
+||||||||||||||C131: "Revenue Quality Segment Overlay" — Which Segments Have Recurring Revenue? | P2 | 8-10h | Story first + Benchmark-oriented | source: competitor research round 29

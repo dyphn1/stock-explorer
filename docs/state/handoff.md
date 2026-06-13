@@ -1,16 +1,17 @@
-# Handoff – Development
+# Handoff – Review
 ## Summary
-- **Topic**: Development (🔧) — Sprint 13b
-- **Date**: 2026-06-18 (Sprint 13b Dev completed)
-- **Sprint Status**: Sprint 13b ✅ COMPLETE → Sprint 14 next
+- **Topic**: Review (🔍) — Round 30, Sprint 13b Post-Mortem
+- **Date**: 2026-06-18 (Review Round 30 completed)
+- **Sprint Status**: Sprint 13b ✅ COMPLETE → Sprint 14 planned
 
 ## Key Metrics
-- Design grade: A (18th consecutive A/A-) — to be confirmed in Round 29
-- L0: 103/103 ✅ | L1: 20/20 ✅
-- Sprint 13b: 3 commits, ~26-38h budget
-- Features delivered: D-079 tooltip merge + C36 Revenue Tree V2 (treemap toggle, concentration warning, trend mini-chart) + C46 Moat Analysis (5-dimension scoring, C124 moat type merged, evidence-first)
+- Design grade: A- (downgraded from A due to D-081 regression)
+- L0: 103/103 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
 - Architecture: 🟢 HEALTHY — 31 service modules, 0 god modules, 100% Streamlit-free
-- Sprint 14: C47 Education Academy + C40 Mode Toggle + C123/C125/C126
+- Sprint 13b: 3 features delivered (D-079 + C36 Revenue Tree V2 + C46 Moat Analysis with C124 merged)
+- Sprint 14: D-077 fix → C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy + C125 stretch
+- New P0 bug: D-077 (`_render_revenue_compact()` undefined — runtime crash)
+- New feature gaps: C127-C131 (Moat Trend, Revenue Quality, Certificates, Investor Quiz, Segment Quality)
 
 ## Sprint Plans (Summary)
 | Sprint | Items | Status |
@@ -275,10 +276,80 @@ Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free.
 - Document "one help icon per metric" rule
 - Add moat analysis page spec
 
+## 🔍 Review Section (Round 30 — 2026-06-18)
+
+**Theme**: Review Round 30 — Sprint 13b Post-Mortem + Sprint 14 Prerequisites
+**Participants**: PM, Architect, Designer, QA Engineer
+
+### Key Findings
+
+**Sprint 13b Verification**: All 4 claims confirmed — D-079 tooltip merge, C36 Revenue Tree V2, C46 Moat Analysis, C124 Moat Type merged.
+
+**Verification**: L0: 103/103 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
+
+**Architecture** (Architect review):
+- Health: 🟢 HEALTHY (after D-077 fix) — 31 service modules, 0 god modules, 100% Streamlit-free
+- New P0 bug: D-077 — `_render_revenue_compact()` undefined, runtime crash on Business Card page
+- New debt: D-078 (low, working as designed), D-079-debt (D-073 still open), D-080 (chart.py 842 lines, monitor)
+- C40: ✅ READY (C105 toggle exists, needs enhancement only)
+- C126: ✅ READY (C46 scoring is comparison-ready)
+- C47: 🟡 NEEDS SPIKE (2-4h architecture spike for curriculum content model)
+
+**Design** (Designer review):
+- Grade: A- (downgraded from A — D-081 inline HTML regression, D-082 mini-card style)
+- New issues: D-081 (P2, metric popover inline HTML), D-082 (P2, moat mini-card _summary_card misuse), D-083 (P2, health border color)
+- C40 design: Toggle exists, needs naming enhancement + visual distinction
+- C126 design: Side-by-side comparison layout spec delivered
+- C47 design: Lesson card pattern spec delivered, content creation budget 40%
+
+**QA** (Competitor research):
+- 8 new competitors analyzed (BullsEye, Koyfin, Morningstar, SoFi Learn, Freetrade, Stash, Chartr, Groww)
+- 5 new feature gaps: C127 (Moat Trend), C128 (Revenue Quality), C129 (Certificates), C130 (Investor Profile Quiz), C131 (Segment Quality Overlay)
+- Cumulative: 131 feature candidates (C01-C131), 135+ competitors analyzed
+- Regression check: D-074, D-079, D-070, D-068 all still resolved. D-077 is NEW P0 regression.
+
+### Three-Round Challenge
+- **Round 1** (Gap Authenticity): All 5 new gaps (C127-C131) confirmed as real gaps
+- **Round 2** (Priority): D-077 → C40 → C126 → C47 → C125 order confirmed
+- **Round 3** (Goal Alignment): Sprint 14 fully aligns with product vision ✅
+- **Challenger**: ✅ CONFIRMED with conditions: fix D-077 Day 0, run C47 spike before implementation
+
+### Sprint 14 Adjusted Plan
+1. **Day 0**: Fix D-077 (0.5h) + C47 architecture spike (2-4h)
+2. **C40 Mode Toggle**: Enhance existing C105 toggle (8-12h)
+3. **C126 Moat Comparison**: Side-by-side moat comparison (12-16h)
+4. **C47 Education Academy**: 5 structured lessons + quiz + progress (20-30h, 40% content)
+5. **C125 Segment Profitability**: Stretch goal, needs data validation (10-14h)
+
+### New Debt Summary
+- Total: 76 items | P0: 1 (D-077) | P1: 3 | P2: 32 | Resolved: 27
+
+### Design System Updates Needed
+- Add metric popover card pattern (D-081)
+- Add mini score card component (D-082)
+- Add dynamic border color to `_summary_card()` (D-083)
+- Add lesson card component (C47)
+- Add comparison row component (C126)
+
+### Competitor Insights
+1. Moat trend (C127) is Morningstar's gold standard — no TW competitor has it
+2. Revenue quality (C128) is Simply Wall St's 2025 addition — no TW competitor has it
+3. Education certificates (C129) drive completion rates — Zerodha Varsity proves model
+4. Investor profile quiz (C130) sets default mode — Sharesies/Freetrade prove model
+5. Moat analysis is becoming Stock Explorer's signature differentiator
+
+### Full Details
+- Architect: `docs/logs/review_r30_architect.md`
+- Designer: `docs/logs/review_r30_designer.md`
+- QA: `docs/logs/review_r30_qa.md`
+- PM Consolidated: `docs/logs/review_r30_pm.md`
+
 ## Next Cycle
-✅ Discussion Round 29 COMPLETE → 🔧 Development Sprint 14 (C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy + C125 stretch) → 🔍 Review Round 30
+✅ Review Round 30 COMPLETE → 🔧 Development Sprint 14 (D-077 fix → C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy + C125 stretch) → 🔍 Review Round 31
 
 ## Archive (Previous Rounds)
+- Round 30 Review: docs/logs/review_r30_pm.md | Sprint 13b verified, Sprint 14 planned
+- Round 29 Discussion: docs/state/handoff_discuss_r29.md | Sprint 14 scope validated
 - Round 24 Review: docs/state/review_report_r24.md | Sprint 10 verified, Sprint 11 planned
 - R19/R20 Discussion: docs/state/handoff_discuss.md | docs/state/handoff_discuss_r20.md
 - Sprint 11 Execution: C117 + C116 + R3 + D-067 + D-071 (5 commits)

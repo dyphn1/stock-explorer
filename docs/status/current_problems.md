@@ -1,7 +1,7 @@
 # Stock Explorer — Current Problems
 
-> **Last Updated**: 2026-06-17
-> **Source**: Design Review Round 26 (2026-06-17, after Sprint 12 Completion)
+> **Last Updated**: 2026-06-18
+> **Source**: Design Review Round 30 (2026-06-18, after Sprint 13b Completion)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
@@ -398,6 +398,35 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Effort**: <0.5h
 - **Status**: ✅ RESOLVED in Sprint 12 — already uses `_info_card()`. Commit: 658bd3f.
 
+### D-081: Metric Popover Card Uses Inline HTML Instead of _白话_card() (D-003 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-18
+- **Source**: Design Review Round 30
+- **Description**: `_render_metric_popover()` in `_financial.py` (lines 41-47) renders the metric card using `unsafe_allow_html=True` with inline HTML instead of calling `_白话_card()`. The inline HTML is a near-exact copy of `_白话_card()`'s styling (`background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB`). This was introduced as part of the D-079 fix — the card needs to be rendered inline to share a row with the ❓ help button via `st.columns([5, 1])`.
+- **Affected Files**: `src/pages/business_card/_sections/_financial.py` lines 41-47
+- **Proposed Fix**: Create a `_白话_card_with_help(label, value, analogy, help_key)` helper in `_router_base.py` that renders the card + button in a two-column layout using shared component styling. Alternatively, modify `_白话_card()` to accept an optional `help_icon` parameter.
+- **Effort**: 0.5-1h
+- **Note**: This is a D-003 regression, but the trade-off is architecturally justified (two-column layout requirement). Still should be consolidated into a shared component.
+
+### D-082: Moat Dimension Mini-Cards Use _summary_card() with Empty Icon
+- **Severity**: P2
+- **Added**: 2026-06-18
+- **Source**: Design Review Round 30
+- **Description**: The 5 moat dimension mini-cards in `_moat.py` (line 49) use `_summary_card(f"{color_emoji} {dim_name}", f"{score_val:.0f} 分", "")`. The `_summary_card()` renders with orange `border-left:4px solid #F39C12` and `#FFF8F0` background — a "hero card" style that's inappropriate for dimension score cards that should be neutral information display. The empty icon parameter `""` also renders an empty icon slot in the card header.
+- **Affected Files**: `src/pages/business_card/_sections/_moat.py` line 49
+- **Proposed Fix**: Create a `_mini_score_card(label, score)` helper in `_router_base.py` with compact styling: `background:#F8F9FA;border-radius:8px;padding:0.5rem;border-left:4px solid {score_color}`. Use score-based border color (green/amber/red).
+- **Effort**: 0.5h
+
+### D-083: Story Card Health Score Border Not Color-Coded by Health Level (D-080 Continuation)
+- **Severity**: P2
+- **Added**: 2026-06-18
+- **Source**: Design Review Round 30 (continuation of D-080 from Round 28)
+- **Description**: The health score in the story card (line 142 `_summary_card("整體健康度", ...)`) always renders with orange border (#F39C12). D-080 identified this in Round 28 but was not resolved in Sprint 13b. The health label shows 🟢/🟡/🔴 emoji but the card border doesn't match. This creates a visual disconnect between the emoji indicator and the card styling.
+- **Affected Files**: `src/pages/business_card/_sections/_summary.py` line 142
+- **Proposed Fix**: Add optional `border_color` parameter to `_summary_card()` in `_router_base.py`. Pass health-score-based color: `#27AE60` (≥70), `#F39C12` (≥40), `#E74C3C` (<40).
+- **Effort**: 0.25h
+- **Note**: Continuation of D-080. Now tracked as D-083 for Sprint 14 resolution.
+
 ---
 
 ## Resolved Issues
@@ -428,20 +457,22 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 || D-064 | Key Concept Line Uses Inline HTML | P2 | 2026-06-15 | Already resolved — uses `st.caption()`. Verified in Sprint 12. Commit: 658bd3f. |
 || D-065 | Disclaimer Text Uses Inline HTML | P2 | 2026-06-15 | Already resolved — uses `st.caption()`. Verified in Sprint 12. Commit: 658bd3f. |
 || D-066 | Adaptive Banner Uses Inline HTML | P2 | 2026-06-15 | Already resolved — uses `_info_card()`. Verified in Sprint 12. Commit: 658bd3f. |
+|| D-079 | Dual Tooltip Pattern on Key Metrics | P2 | 2026-06-18 | Merged into single `_render_metric_popover()` with glossary + metric education. Commit: b51c13b. |
+|| D-080 | Story Card Health Score Border Color | P2 | — | **DEFERRED to Sprint 14** — tracked as D-083. Low priority, emoji indicator already communicates health level. |
 
 ---
 
 ## Statistics
 
-- **Total Issues**: 59
+- **Total Issues**: 76
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 29 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-057, D-058, D-059, D-062, D-063, D-068, D-069, D-070)
+- **P2 (Optimization)**: 32 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-062, D-063, D-068, D-069, D-070, D-081, D-082, D-083)
 - **Resolved**: 27
 
 ---
 
-*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 13a feature implementation.*
+*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 14 feature implementation.*
 
 ---
 
