@@ -55,6 +55,54 @@ from src.pages.business_card._sections import (
 from src.pages.business_card._study_log import _render_study_log
 from src.pages.business_card._expert_analysis import _render_expert_analysis
 from src.pages.business_card._historical_scenarios import _render_historical_scenarios
+from src.services.feedback_service import record_feedback, get_feedback_count
+
+
+_FEEDBACK_SESSION_KEY_PREFIX = "_feedback_given_"
+
+
+def _feedback_session_key(stock_id: str) -> str:
+    return f"{_FEEDBACK_SESSION_KEY_PREFIX}{stock_id}"
+
+
+def _has_feedbacked(stock_id: str) -> bool:
+    return st.session_state.get(_feedback_session_key(stock_id), False)
+
+
+def _mark_feedbacked(stock_id: str) -> None:
+    st.session_state[_feedback_session_key(stock_id)] = True
+
+
+def _render_feedback_section(data: dict) -> None:
+    """Binary 👍/👎 feedback UI at the bottom of the business card.
+
+    Uses st.session_state to prevent duplicate feedback per stock per session.
+    Records feedback to data/feedback.jsonl via feedback_service.
+    """
+    stock_id = data["stock_id"]
+
+    st.markdown("---")
+    st.markdown("#### 💬 這張名片對你有幫助嗎？")
+
+    if _has_feedbacked(stock_id):
+        st.caption("✅ 感謝你的回饋！")
+        return
+
+    col_up, col_down, _ = st.columns([1, 1, 6])
+
+    with col_up:
+        if st.button("👍", key=f"feedback_up_{stock_id}", use_container_width=True):
+            record_feedback(stock_id=stock_id, feedback_type="up")
+            _mark_feedbacked(stock_id)
+            st.toast("感謝你的正面回饋！👍", icon="🎉")
+            st.rerun()
+
+    with col_down:
+        if st.button("👎", key=f"feedback_down_{stock_id}", use_container_width=True):
+            record_feedback(stock_id=stock_id, feedback_type="down")
+            _mark_feedbacked(stock_id)
+            st.toast("感謝你的回饋，我們會持續改進！👎", icon="💪")
+            st.rerun()
 
 
 def _render_simple_overview(data: dict, client) -> None:
@@ -230,5 +278,6 @@ def _render_business_card(data: dict, client):
             st.caption("與同業的敘事比較分析")
 
     # ── Footer sections (always shown) ──
+    _render_feedback_section(data)
     _render_share_section(data, client)
     _render_footer(data, client)
