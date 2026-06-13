@@ -160,9 +160,70 @@ Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free.
 - C48: Add `_hero_card()` or enhanced `_summary_card()` spec
 - D-069: Document or consolidate `_helpers.py` card components
 
+## 🔍 Review Section (Round 28 — 2026-06-18)
+
+**Theme**: Review Round 28 — Sprint 13a Post-Mortem + Sprint 13b Prerequisites
+**Participants**: PM, Architect, Designer, QA, Challenger
+
+### Key Findings
+
+**Sprint 13a Verification**: Both C33 Glossary and C48 Story Card verified clean.
+- C33: `glossary_service.py` (73 lines), `glossary.yaml` (99 terms), `_glossary_tooltip()` — no debt
+- C48: Always visible, zero inline HTML, pure component construction — D-068/D-070 resolved
+
+**Architecture** (Architect review):
+- Health: 🟢 HEALTHY — 30 service modules, 0 god modules, 100% Streamlit-free
+- New debt: 2 items (D-077, D-078) — both 🟢 Low, deferrable
+- C36 Revenue Tree: 🟢 READY — all infrastructure exists (73-line page + service layer)
+- C46 Moat Analysis: 🟡 CONDITIONALLY READY — needs data model pre-work
+
+**Design** (Designer review):
+- Grade: A (18th consecutive A/A-)
+- New issues: 2 items
+  - D-079 (P2): Dual tooltip pattern on key metrics — merge into single interaction
+  - D-080 (P2): Story card health score border should be color-coded by health level
+- C36 design: Add glossary tooltips, concentration warning, trend mini-chart
+- C46 design: Radar chart + card-based layout, standalone page, YAML data source
+
+**QA** (Competitor research):
+- 4 new feature gaps: C123 (Revenue Geography), C124 (Moat Types), C125 (Segment Profitability), C126 (Moat Comparison)
+- Regression check: 10 of 12 previous gaps still fully relevant
+- Cumulative: 126 feature candidates (C01-C126)
+
+**Challenger**: ✅ CONFIRMED with 6 conditions
+1. C46 must be evidence-first (not rating-first) to avoid stock-picking drift
+2. C124 (Moat Type Classification) must be merged into C46's Sprint 13b scope — not deferred
+3. C46 scoring rubric must be comparison-ready for C126 in Sprint 14
+4. C123 needs TW-competitor validation before Sprint 14 commitment
+5. Content creation must be explicitly budgeted at 40% for C46 (education feature)
+6. D-079 must be a Day 0 prerequisite before any Sprint 13b tooltip work
+
+### Sprint 13b Adjusted Plan (per Challenger conditions)
+1. **Day 0**: Fix D-079 (merge dual tooltips, 1-2h) + begin C46 content pre-work
+2. **C36 Revenue Tree polish**: Glossary tooltips, concentration warning, trend mini-chart
+3. **C46 Moat Analysis**: Include moat type classification (C124 merged), evidence-first design, comparison-ready scoring
+4. **Content budget**: 40% of C46 effort for moat.yaml + scoring rubric + explanations
+
+### New Debt Summary
+- Total: 73 items | High: 1 | Medium: ~47 | Low: ~25
+- Resolved in Sprint 13a: 0 new (all from Sprint 12, already counted)
+- New in Round 28: D-077, D-078 (architect), D-079, D-080 (designer)
+
+### Competitor Insights
+1. Revenue geography (C123) is proven by Koyfin/Simply Wall St but data availability for TW stocks uncertain
+2. Moat type classification (C124) is Morningstar's gold standard — no TW competitor has it
+3. Segment profitability (C125) is Simply Wall St's differentiator — no TW competitor shows it
+4. Moat comparison (C126) directly serves core value #5 (benchmark-oriented)
+
+### Design System Updates Needed
+- Add `_glossary_tooltip()` component spec
+- Add "health card" variant with dynamic border color
+- Document "one help icon per metric" rule
+- Add moat analysis page spec
+
 ## Next Cycle
-✅ Round 27 Discussion COMPLETE → Sprint 13b (C36 Revenue Tree + C46 Moat Analysis) → 🔧 Development
-OR → 💡 Discussion Round 28 (Sprint 14 scope: C47 Education Academy + C40 Mode Toggle)
+✅ Round 28 Review COMPLETE → Sprint 13b (C36 Revenue Tree + C46 Moat Analysis with C124 merged) → 🔧 Development
+OR → 💡 Discussion Round 29 (Sprint 14 scope: C47 Education Academy + C40 Mode Toggle + C123/C125/C126)
 
 ## Archive (Previous Rounds)
 - Round 24 Review: docs/state/review_report_r24.md | Sprint 10 verified, Sprint 11 planned

@@ -126,3 +126,25 @@
 ---
 
 *This challenge record was created by the Challenger during the Round 13 (Revised) discussion cycle. 2026-06-19.*
+
+---
+
+## 2026-06-18 Theme: Review — Round 28
+
+### Round 1
+- **Team proposal**: 4 new feature gaps (C123-C126): Revenue Geography, Moat Types, Segment Profitability, Moat Comparison. All deferred to Sprint 14+. Sprint 13b focuses on C36 Revenue Tree + C46 Moat Analysis.
+- **Challenge**: (1) C123 has uncertain data availability for TW stocks. (2) C124 (Moat Type Classification) is essentially already baked into C46's planned design — deferring it creates an incomplete feature. (3) C125 depends on C123's data sourcing. (4) C126 requires C46 scoring to be comparison-ready from day one. (5) No TW-competitor validation done. (6) Sprint 13b may be incorrectly prioritized over P1 backlog items (C42 Stock Screener, C119 Onboarding).
+
+### Round 2
+- **Team response**: C36 is low-risk enhancement; C46 is new but architecturally prepared. D-079 must be fixed before adding tooltips. D-080 can be fixed during Sprint 13b.
+- **Re-challenge**: (1) 2-3h pre-work for C46 is likely insufficient — recommend 4-5h with dimension alignment. (2) D-079 must be Day 0, not concurrent. (3) D-080 should be coupled with C46's card work. (4) No content creation budget allocated for C46 despite 40% rule for education features. (5) No go/no-go gate between C36 and C46.
+
+### Round 3
+- **Team response**: C46 will use evidence-first (historian) design with disclaimer. Moat types from C124 will be included. Content will be budgeted.
+- **Confirmation**: ✅ Aligned — with 6 conditions:
+  1. C46 must be evidence-first (not rating-first) to avoid stock-picking drift
+  2. C124 must be merged into C46's Sprint 13b scope — not deferred
+  3. C46 scoring rubric must be comparison-ready for C126 in Sprint 14
+  4. C123 needs TW-competitor validation before Sprint 14 commitment
+  5. Content creation must be explicitly budgeted at 40% for C46
+  6. D-079 must be a Day 0 prerequisite before any Sprint 13b tooltip work
