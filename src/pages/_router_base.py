@@ -163,6 +163,30 @@ def _count_label(count: int, label: str):
     )
 
 
+def _glossary_tooltip(term_key: str, glossary_service):
+    """Render a clickable ℹ️ tooltip that shows glossary definition.
+
+    Uses st.popover to show plain-language explanation.
+    """
+    term = glossary_service.get_glossary_term(term_key)
+    if term is None:
+        return
+
+    name = term.get("name", term_key)
+    plain = term.get("plain", "")
+    example = term.get("example", "")
+    analogy = term.get("analogy", "")
+
+    popover_label = f"ℹ️ {name}"
+    with st.popover(popover_label):
+        st.markdown(f"**{name}**")
+        st.markdown(f"_{plain}_")
+        if example:
+            st.markdown(f"**例子：** {example}")
+        if analogy:
+            st.markdown(f"**比喻：** {analogy}")
+
+
 # ── M3: Timeline helpers ──────────────────────────────────
 
 _TIMELINE_OPTIONS = {
