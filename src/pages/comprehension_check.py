@@ -146,24 +146,15 @@ def _render_comprehension_check(client: FinMindClient):
             qid = r["question_id"]
             is_correct = r["correct"]
             status = "✅ 答對" if is_correct else "❌ 答錯"
-            result_color = "#27AE60" if is_correct else "#E74C3C"
 
-            st.markdown(
-                f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;
-                border-left:4px solid {result_color};margin:0.8rem 0;">
-                    <div style="font-weight:600;color:#2C3E50;">
-                        {status} 第 {i} 題
-                    </div>
-                    <div style="font-size:0.9rem;color:#2C3E50;margin-top:0.5rem;">
-                        {r['question_text']}
-                    </div>
-                    <div style="font-size:0.85rem;color:#5D6D7E;margin-top:0.5rem;
-                    line-height:1.6;padding:0.5rem;background:white;border-radius:8px;">
-                        {r['explanation']}
-                    </div>
-                </div>""",
-                unsafe_allow_html=True,
-            )
+            with st.container():
+                if is_correct:
+                    st.success(f"{status} 第 {i} 題")
+                else:
+                    st.error(f"{status} 第 {i} 題")
+                st.markdown(f"**{r['question_text']}**")
+                st.info(r["explanation"])
+                st.markdown("---")
 
         st.markdown("\n")
 

@@ -107,12 +107,7 @@ def _render_event_dashboard(client):
                     )
 
                     # ── Key concept (ten-second test) ────────────────────
-                    st.markdown(
-                        f"<div style='font-size:0.85rem;color:#5D6D7E;"
-                        f"margin:0.3rem 0 0.6rem 0;'>"
-                        f"💡 核心概念：<b>{interp['key_concept']}</b></div>",
-                        unsafe_allow_html=True,
-                    )
+                    st.caption(f"💡 核心概念：{interp['key_concept']}")
 
                     # ── Drill-down button ────────────────────────────────
                     if st.button("🔍 為什麼？", key=f"why_{evt_idx}"):
@@ -129,12 +124,7 @@ def _render_event_dashboard(client):
                             content=drilldown["detail"],
                             icon="📖",
                         )
-                        st.markdown(
-                            f"<div style='font-size:0.8rem;color:#95A5A6;"
-                            f"margin-top:0.5rem;'>"
-                            f"⚠️ 以上解讀僅說明事件背景與可能意涵，不構成投資建議。</div>",
-                            unsafe_allow_html=True,
-                        )
+                        st.caption("⚠️ 以上解讀僅說明事件背景與可能意涵，不構成投資建議。")
 
                     # ── Raw summary in collapsed section ────────────────
                     with st.expander("📄 原始摘要", expanded=False):
@@ -190,18 +180,10 @@ def _render_adaptive_banner(data: dict):
     framework = get_adaptive_framework(company_type)
 
     if company_type != "default":
-        st.markdown(f"""
-        <div style="background:#EBF5FB;
-                    border-radius:10px;padding:1rem 1.5rem;margin:0.5rem 0;
-                    border-left:4px solid #3498DB;">
-            <div style="font-weight:600;color:#2C3E50;">
-                🎯 分析框架：{framework['name']}
-            </div>
-            <div style="font-size:0.85rem;color:#5D6D7E;margin-top:0.3rem;">
-                {framework['description']} — {framework['focus']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        _info_card(
+            title=f"🎯 分析框架：{framework['name']}",
+            content=f"{framework['description']} — {framework['focus']}",
+        )
 
 
 def _render_event_alerts(stock_id: str):

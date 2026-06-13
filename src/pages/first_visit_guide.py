@@ -6,11 +6,10 @@ First Visit Guide — C103 Lite
 from __future__ import annotations
 
 import streamlit as st
-from src.data.finmind_client import FinMindClient
 from src.pages._router_base import _summary_card, _白话_card
 
 
-def _render_first_visit_guide(client: FinMindClient):
+def _render_first_visit_guide(client):
     """First Visit Guide — 2-card dismissible primer for new users."""
     # Already dismissed — show nothing
     if st.session_state.get("first_visit_dismissed", False):
