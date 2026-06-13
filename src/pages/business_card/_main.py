@@ -19,6 +19,7 @@ from src.services.key_takeaways import generate_key_takeaways
 from src.services.delta_engine import compute_recent_deltas
 from src.services.health_scoring import compute_health_scores, get_health_summary
 from src.services.risk_analyzer import assess_risk
+from src.services.risk_simplifier import get_risk_level
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.news_summarizer import summarize_news, get_news_impact_level
 from src.services.company_facts import get_company_facts
@@ -41,6 +42,7 @@ from src.pages.business_card._sections import (
     _render_story_card,
     _render_takeaways,
     _render_deltas,
+    _render_read_next,
     _render_health,
     _render_risk,
     _render_one_liner,
@@ -120,7 +122,7 @@ def _render_simple_overview(data: dict, client) -> None:
     financial = data["financial"]
     dividend_data = data.get("dividend") if isinstance(data, dict) else None
 
-    # ── Quick health summary (1-line) ──
+    # ── Health narrative (C14 + C135 merged) ──
     health_scores = compute_health_scores(
         extra_metrics=extra_metrics,
         latest_per_pbr=latest_per_pbr,
@@ -128,14 +130,16 @@ def _render_simple_overview(data: dict, client) -> None:
         monthly_revenue=monthly_revenue,
     )
     if health_scores:
-        overall = sum(health_scores.values()) / len(health_scores)
-        if overall >= 70:
-            health_text = "🟢 整體健康度良好，各項指標表現不錯"
-        elif overall >= 40:
-            health_text = "🟡 整體健康度中等，部分指標還有改善空間"
-        else:
-            health_text = "🔴 整體健康度偏弱，需要留意風險"
-        _summary_card("公司健康狀況", f"{health_text}（{overall:.0f}/100）", "🏥")
+        health_summary = get_health_summary(health_scores)
+        _info_card("公司健康狀況", health_summary, "🏥")
+
+    # ── Risk level (C132: simplified 1-5 scale) ──
+    risk_level = get_risk_level(data)
+    risk_content = (
+        f"{risk_level['emoji']} **{risk_level['label']}**（等級 {risk_level['level']}/5）\n\n"
+        f"{risk_level['description']}"
+    )
+    _summary_card("投資風險", risk_content, "⚠️")
 
     # ── Key financial snapshot ──
     snap_parts = []
@@ -217,6 +221,9 @@ def _render_business_card(data: dict, client):
 
     # C39: What Changed — Recent Deltas
     _render_deltas(data, client)
+
+    # C41: Read Next — peer recommendations (above-fold discovery)
+    _render_read_next(data, client)
 
     # C43: Health Snowflake
     if simple_mode:
