@@ -19,8 +19,19 @@ from src.pages._router_base import _白话_card, _info_card, _glossary_tooltip
 from src.services import glossary_service
 
 
-def _render_metric_popover(label: str, value: str, analogy: str, metric_name: str, metric_value: float, stock_id: str) -> None:
-    """Render a 白话_card with a ❓ help button that opens a popover with metric education."""
+# Mapping from metric_name to glossary term key for D-079 merged popover
+_METRIC_GLOSSARY_MAP: dict[str, str] = {
+    "PER": "本益比",
+    "gross_margin": "毛利率",
+    "revenue_yoy": "營收年增率",
+    "ROE": "ROE",
+    "dividend_yield": "殖利率",
+    "PBR": "淨值比",
+}
+
+
+def _render_metric_popover(label: str, value: str, analogy: str, metric_name: str, metric_value: float, stock_id: str, glossary_service) -> None:
+    """Render a 白话_card with a ❓ help button that opens a popover with glossary + metric education."""
     # Unique key for this popover button
     popover_key = f"metric_popover_{metric_name}_{stock_id}"
 
@@ -42,9 +53,22 @@ def _render_metric_popover(label: str, value: str, analogy: str, metric_name: st
     # Show popover content via expander (works in all Streamlit versions)
     if st.session_state.get(f"_open_popover_{popover_key}", False):
         edu = get_metric_explanation(metric_name, metric_value, stock_id)
+        glossary_key = _METRIC_GLOSSARY_MAP.get(metric_name)
+        glossary_term = glossary_service.get_glossary_term(glossary_key) if glossary_key else None
+
         with st.expander(f"📖 {edu['display_name']} 是什麼？", expanded=True):
             st.markdown(f"**數值：{metric_value:.2f} {edu['unit']}**")
             st.markdown("---")
+
+            # ── Glossary definition (D-079: merged from separate _glossary_tooltip) ──
+            if glossary_term:
+                st.markdown(f"**📖 名詞解釋**\n\n_{glossary_term.get('plain', '')}_")
+                if glossary_term.get("analogy"):
+                    st.markdown(f"**🌰 名詞比喻**\n\n{glossary_term['analogy']}")
+                if glossary_term.get("example"):
+                    st.markdown(f"**📌 例子**\n\n{glossary_term['example']}")
+                st.markdown("---")
+
             st.markdown(f"**💡 白話解釋**\n\n{edu['explanation']}")
             st.markdown(f"**🏠 生活比喻**\n\n{edu['analogy']}")
             direction = "⬆️ 越高越好" if edu["is_higher_better"] else "⬇️ 越低越好"
@@ -70,17 +94,15 @@ def _render_key_metrics(data: dict, client) -> None:
     with col1:
         if latest_per_pbr and latest_per_pbr.get("PER"):
             per = latest_per_pbr["PER"]
-            _glossary_tooltip("本益比", glossary_service)
             _render_metric_popover(
                 "本益比 (PER)", f"{per:.1f}", get_per_analogy(per),
-                "PER", per, stock_id,
+                "PER", per, stock_id, glossary_service,
             )
         elif extra_metrics.get("gross_margin"):
             gm = extra_metrics["gross_margin"]
-            _glossary_tooltip("毛利率", glossary_service)
             _render_metric_popover(
                 "毛利率", f"{gm:.1f}%", get_gross_margin_analogy(gm),
-                "gross_margin", gm, stock_id,
+                "gross_margin", gm, stock_id, glossary_service,
             )
 
     with col2:
@@ -88,35 +110,30 @@ def _render_key_metrics(data: dict, client) -> None:
             rev = monthly_revenue.iloc[-1]["revenue"] / 1e8
             yoy = extra_metrics.get("revenue_yoy")
             yoy_analogy = get_yoy_analogy(yoy) if yoy is not None else ""
-            if yoy is not None:
-                _glossary_tooltip("營收年增率", glossary_service)
             _render_metric_popover(
                 "最近月營收", f"{rev:,.0f} 億",
                 get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""),
-                "revenue_yoy", yoy if yoy is not None else 0.0, stock_id,
+                "revenue_yoy", yoy if yoy is not None else 0.0, stock_id, glossary_service,
             )
         elif extra_metrics.get("roe"):
             roe = extra_metrics["roe"]
-            _glossary_tooltip("ROE", glossary_service)
             _render_metric_popover(
                 "ROE", f"{roe:.1f}%", get_roe_analogy(roe),
-                "ROE", roe, stock_id,
+                "ROE", roe, stock_id, glossary_service,
             )
 
     with col3:
         if latest_per_pbr and latest_per_pbr.get("dividend_yield"):
             dy = latest_per_pbr["dividend_yield"]
-            _glossary_tooltip("殖利率", glossary_service)
             _render_metric_popover(
                 "殖利率", f"{dy:.2f}%", get_dividend_analogy(dy),
-                "dividend_yield", dy, stock_id,
+                "dividend_yield", dy, stock_id, glossary_service,
             )
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
-            _glossary_tooltip("淨值比", glossary_service)
             _render_metric_popover(
                 "淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr),
-                "PBR", pbr, stock_id,
+                "PBR", pbr, stock_id, glossary_service,
             )
 
     st.markdown("---")
@@ -259,7 +276,7 @@ def _render_dividend(data: dict, client) -> None:
 
 
 def _render_revenue_breakdown(data: dict, client) -> None:
-    """Revenue pie chart + plain-language descriptions."""
+    """Revenue pie chart + plain-language descriptions + glossary tooltips."""
     financial = data["financial"]
     stock_id = data["stock_id"]
     stock_name = data["stock_name"]
@@ -279,6 +296,8 @@ def _render_revenue_breakdown(data: dict, client) -> None:
     with col2:
         for item in revenue_items:
             _info_card(f"{item['name']} — {item['value']:.0f}%", item['description'], "📊")
+            # Glossary tooltip for each revenue source
+            _glossary_tooltip(item['name'], glossary_service)
 
     st.markdown("---")
 
