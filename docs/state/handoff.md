@@ -1,29 +1,32 @@
 # Handoff – Development
 ## Summary
-- **Topic**: Development (🔧) — Round 35, Sprint 16a
-- **Date**: 2026-06-14 (Development Round 35 completed)
-- **Sprint Status**: Sprint 16a ✅ COMPLETE → Sprint 16b conditional
+- **Topic**: Development (🔧) — Round 36, Sprint 16b
+- **Date**: 2026-06-14 (Development Round 36 completed)
+- **Sprint Status**: Sprint 16a ✅ COMPLETE → Sprint 16b ✅ COMPLETE → Sprint 17 planned
 
 ## Completed Items
 | Issue ID | Description | Owner | Result | Commit |
 |----------|-------------|-------|--------|--------|
-| C14+C135 | Health Score Badge + Narrative — enhanced simple mode with `get_health_summary()` narrative | Developer | ✅ `_render_simple_overview()` now shows full health narrative via `_info_card()` | `8051cb8` |
-| C132 | Risk Simplification 1-5 Scale | Developer | ✅ Created `risk_simplifier.py` with `get_risk_level()`; added to simple mode via `_summary_card()` | `8051cb8` |
-| C41 | Read Next Phase A wire-up | Developer | ✅ `_render_read_next()` imported and called in `_main.py` above-fold after deltas | `8051cb8` |
-| C28 | Story Timeline Spike | Architect | ✅ Analysis complete — Option A (event-layered pipeline) recommended; go/no-go criteria defined | docs/design/architect_timeline_spike_r35.md |
+| C28 | Story Timeline MVP — compose-and-enrich pipeline (events + case studies + milestones) | Developer | ✅ `timeline_service.py` created with `get_timeline()` pipeline; `company_milestones.yaml` for 10 TW stocks; `story_timeline.py` page with severity-coded timeline cards, dedup, empty state; nav button in story section | `ca49d2c` |
+| D5 | LLM Abstraction Layer | Developer | ✅ `src/services/llm/` package: `ExplanationProvider` protocol, `ExplanationRequest`/`ExplanationResponse` dataclasses, `TemplateExplanationProvider` with 10 metric templates, `get_explanation_provider()` factory | `5e7fde8` |
+| C07 | Custom Thresholds Settings Skeleton | Developer | ✅ `settings.py` page with 3 risk threshold sliders (price/volume/revenue), session_state persistence, reset-to-defaults button, validation; registered in router + url_sync | `84142f5` |
+| C14+C135 | Health Score Badge + Narrative (Sprint 16a) | Developer | ✅ Enhanced simple mode with `get_health_summary()` narrative | `8051cb8` |
+| C132 | Risk Simplification 1-5 Scale (Sprint 16a) | Developer | ✅ `risk_simplifier.py` with `get_risk_level()` | `8051cb8` |
+| C41 | Read Next Phase A wire-up (Sprint 16a) | Developer | ✅ `_render_read_next()` wired into `_main.py` | `8051cb8` |
 
-## C28 Spike Results
-- **Verdict**: ✅ GO — Timeline is feasible with existing data
-- **Architecture**: Option A — compose-and-enrich pipeline merging events.yaml + case_studies.yaml + milestones
-- **Key gaps**: sparse event history (1 week), no milestone data, undated company facts
-- **Go/No-Go for Sprint 16b**: (1) ≥5 entries per stock for 90-day lookback, (2) all entries dated, (3) interpretation coverage, (4) dedup works, (5) <200ms response
+## Architecture Decisions
+- **Timeline Service**: Pure Python compose-and-enrich pipeline merging 3 data sources (events.yaml + case_studies.yaml + company_milestones.yaml). Deduplicates same-day same-type events with count badges. All local YAML — no API calls, <200ms.
+- **LLM Abstraction**: Protocol-based design (`ExplanationProvider`) with `runtime_checkable` for structural subtyping. Template fallback covers 10 financial metrics. Future `LLMProvider` can implement same interface without changing callers.
+- **Settings**: Skeleton only — 3 sliders + session_state persistence. Full threshold UI deferred to Sprint 17.
+- **Page Registration**: Both `story_timeline.py` and `settings.py` registered in router with URL sync.
 
 ## Verification
 - **L0**: 110 passed (2 pre-existing failures in quiz_service.py — unrelated)
 - **L1**: 20/20 ✅
+- **Commits**: `ca49d2c`, `5e7fde8`, `84142f5`
 
 ## Next Cycle
-🔧 Development Round 35 Complete → 🔍 Review Round 35 → Sprint 16b (C28 Full if spike passes OR C02+C07 if spike fails)
+🔧 Development Round 36 Complete → 🔍 Review Round 36 → Sprint 17 (C07 Full Thresholds + C134 Change Explanations + C29 Explain Any Metric + C14 Full Radar)
 
 ---
 
@@ -184,6 +187,52 @@ See git history for previous rounds and development sections.
 - **Theme**: 🔧 Development — Sprint 14 Continuation
 - **Participants**: Product Manager, System Architect, Developer
 - **Status**: ✅ COMPLETE
+
+# 🔍 Review Section (Round 35 — 2026-06-14)
+**Theme**: Review Round 35 — Sprint 15 Post-Mortem + Sprint 16 Prerequisites
+
+## Competitor Research Findings
+QA Engineer completed analysis of competitors including StatementDog, GoodInfo, CMoney, WantGoo, Public.com, Seeking Alpha, Koyfin, Stocksera, 財報狗, JZ Invest, 鉅亨網, TEJ, Yahoo Finance Taiwan, Simply Wall St, Stockopedia, and Investopedia. Identified 18 high-potential feature opportunities from rounds 20-27, with top recommendations being:
+- **Immediate Priority (P1)**: C134 (AI-Generated Change Explanations), C138 (Smart Notifications with Explanations), C119 (Glossary-First Onboarding), C98 (AI Event Interpretation Engine)
+- **Strategic Opportunities (P2)**: C120 (Story Card Export), C116 (Investor Story Feed), C113 (Sector Story Timeline)
+
+## Design Improvements
+Design Reviewer analyzed current problems and competitor designs, identifying:
+- **P1 Issues**: D-003 (Inconsistent Card Styling), D-006 (Mobile Responsiveness Gaps), D-005 (Business Card Page Overload Risk)
+- **P2 Issues**: D-004 (Design System Documentation), D-010/D-011 (Non-PPT layouts), D-012 (No Glossary/Tooltip System), D-015 (No Structured Learning Path)
+- **Proposed Plans**: Fix card styling inconsistencies, implement progressive disclosure, improve mobile responsiveness, update design system, and incorporate competitor-inspired features like Stock Screener (C42), Snowflake Health Visualization (C43), Risk Analysis (C44), Valuation Band Chart (C45), Moat Analysis (C46), Financial Education Academy (C47), Tappable Glossary (C33), and Beginner/Expert Mode Toggle (C40)
+
+## Technical Debt Priorities
+System Architect assessed architecture health as 🟢 HEALTHY with:
+- **High Severity**: D5 (LLM integration layer) - blocker for C98 and LLM-dependent features
+- **Medium Severity**: D6 (YAML migration completion), D-074 (test infrastructure fix), D-042/D-046 (section file growth and inline HTML)
+- **Low Severity**: Various minor issues mostly resolved or deferrable
+- **Architecture Metrics**: 38 service modules (89% <300 lines, 100% Streamlit-free), ~42 page modules (largest 437 lines), 0 god modules, 165+ tests passing
+- **Recommendations**: Prioritize D6 YAML migration (3-4h), D5 LLM layer (2-3h), and D-074 test fix (0.25h) before Sprint 16 feature work
+
+## Optimization & Feature Cost Estimates
+Developer provided implementation cost estimates:
+- **Sprint 16a** (C14 Health Score + Narrative, C132 Risk Simplification, C45 Valuation Band, C28 Story Timeline Spike): 17-24h (updated from initial 12-18h estimate)
+- **Sprint 16b Conditional**: 
+  - If C28 spike passes: C28 Full Story Timeline (26-36h)
+  - If C28 spike fails: C02 Notifications + C07 Custom Thresholds (18-28h)
+- **Technical Debt Optimization**: D6 YAML migration (3-4h), D5 LLM layer (2-3h), D-074 test fix (0.25h), Inline HTML extraction (2-3h), Performance debt fixes (3-4h)
+- **Competitor Research Features**: C33 Glossary (8-12h), C34 Story Timeline (16-24h), C37 Key Takeaways (6-8h), C38 Compare Stories (12-16h), C39 Delta Card (8-10h), C40 Beginner/Expert Mode (10-14h)
+
+## Action Items
+| Item ID | Description | Owner | Due Date |
+|---------|-------------|-------|----------|
+| R35-OPT1 | Complete D6 YAML migration (remaining hardcoded data blocks) | Developer | Before Sprint 16 feature work |
+| R35-OPT2 | Create LLM abstraction layer (src/services/llm/) | Developer | Before Sprint 16 feature work |
+| R35-OPT3 | Fix D-074 test infrastructure (add filelock dependency) | Developer/QA Engineer | Before Sprint 16 feature work |
+| R35-DES1 | Fix inconsistent card styling (D-003) by enforcing shared components | Designer/Developer | Ongoing - begin Sprint 16 |
+| R35-DES2 | Improve mobile responsiveness (D-006) with responsive CSS | Designer/Developer | Ongoing - begin Sprint 16 |
+| R35-FEAT1 | Implement Sprint 16a planned features: C14, C132, C45, C28 Spike | Developer | Sprint 16a |
+| R35-FEAT2 | Prepare for Sprint 16b decision based on C28 spike validation results | PM/Architect | End of Sprint 16a |
+| R35-FEAT3 | Update design system documentation (D-004) with current components | Designer | Sprint 16 |
+
+## Next Cycle Handoff
+Reference `docs/state/handoff_review.md` for detailed review artifacts. Next theme will be determined based on Sprint 16a completion and C28 spike validation outcome.
 
 ### Completed Items
 | Issue ID | Description | Owner | Result | Commit |
