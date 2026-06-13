@@ -1,24 +1,23 @@
 # Handoff – Development
 ## Summary
-- **Topic**: Development (🔧) — Sprint 12
-- **Date**: 2026-06-15 (Sprint 12 Dev completed)
-- **Sprint Status**: Sprint 12 ✅ COMPLETE → Sprint 13 planned
+- **Topic**: Development (🔧) — Sprint 13a
+- **Date**: 2026-06-13 (Sprint 13a Dev completed)
+- **Sprint Status**: Sprint 13a ✅ COMPLETE → Sprint 13b planned
 
 ## Key Metrics
-- Design grade: A (16th consecutive A/A-)
-- L0: 100/100 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
-- Sprint 12: 3 commits, ~19-32h
-- Features delivered: 1 (User Feedback) + 1 infrastructure (Info Hierarchy) + 8 debt items
-- Architecture: 🟢 HEALTHY — 28 service modules, 0 god modules, 100% Streamlit-free
-- Sprint 13a: C33 Glossary + C48 Story Card (16-26h)
+- Design grade: A (17th consecutive A/A-)
+- L0: 101/101 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
+- Sprint 13a: 3 commits, ~10-16h
+- Features delivered: C33 Glossary (99 terms, tooltips in key metrics) + C48 Story Card (expander removed, always visible)
+- Architecture: 🟢 HEALTHY — 30 service modules, 0 god modules, 100% Streamlit-free
 - Sprint 13b: C36 Revenue Tree + C46 Moat Analysis (26-38h)
 
 ## Sprint Plans (Summary)
 | Sprint | Items | Status |
 |--------|-------|--------|
 | Sprint 3-12 | Various | ✅ Complete |
-| Sprint 13a | C33 Glossary + C48 Story Card | 📋 Planned (16-26h) |
-| Sprint 13b | C46 Moat Analysis + C36 Revenue Tree (already on separate pages) | 📋 Planned (26-38h) |
+| Sprint 13a | C33 Glossary + C48 Story Card | ✅ Complete |
+| Sprint 13b | C46 Moat Analysis + C36 Revenue Tree | 📋 Planned (26-38h) |
 | Sprint 14+ | C47 Education Academy + C40 Mode Toggle + User Validation + C113-C115/C118 | 📋 Deferred |
 
 ## Key Rules
@@ -29,7 +28,32 @@
 - Content creation must be budgeted at 40% of effort for education features
 - Priority resolution: vision alignment > retention impact > technical risk
 
-## 🔧 Development Section (Sprint 12 — 2026-06-15)
+## 🔧 Development Section (Sprint 13a — 2026-06-13)
+
+Sprint 13a dev completed. 3 commits delivered.
+
+**D-070 Fix — C48 Story Card expander removed (commit `...`):**
+- Removed `st.expander("📌 30 秒認識這家公司", expanded=True)` wrapper from `_render_story_card()` in `_summary.py`
+- Story card now renders directly on the page — always visible, no click required
+- Also fixed D-068: replaced inline HTML health score `<div>` with `_summary_card("整體健康度", ...)` call
+- This was the #1 P1 Sprint 13a prerequisite from Review Round 26
+
+**C33 Glossary Service (3 commits):**
+- `glossary_service.py` — new service module with `get_glossary_term()`, `get_all_terms()`, `search_terms()`
+- `glossary.yaml` — 99 financial terms across 24 categories (獲利能力, 估值, 股利, 成長, 財務健康, 現金流, 市場, 市場趨勢, 市場參與者, 股東權益, 公司財務, 公司結構, 公司資訊, 分析方法, 技術分析, 選擇權/期貨, 風險指標, 投資工具, 投資策略, 投資行為, 總經, 財務報表, 財報項目)
+- Each term has: `name`, `plain`, `example`, `analogy`, `category`
+- `_glossary_tooltip()` component added to `_router_base.py` — renders ℹ️ popover with term definition
+- Integrated into `_financial.py` key metrics: tooltips on 本益比, 毛利率, 營收年增率, ROE, 殖利率, 淨值比
+
+**Key Findings:**
+- Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free, 30 service modules (was 29)
+- L0: 101/101 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
+- D-074 (filelock) verified as already resolved — all 149 tests pass
+- C48 Story Card is now always visible above-fold (no expander), directly supporting ten-second test principle
+
+**New debt identified during Sprint 13a:** None.
+
+## 🔧 Development Section (Sprint 12 — 2026-06-15) [ARCHIVED]
 
 Sprint 12 dev completed. 3 commits delivered.
 
@@ -74,7 +98,7 @@ Sprint 11 dev completed. 5 commits delivered: C117 + C116 + R3 + D-067 + D-071.
 All verifications pass: L0 95/95, L1 18/18, Tests 149/149.
 Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free.
 
-## 💡 Discussion Section (Round 21 — 2026-06-16)
+## 💡 Discussion Section (Round 21 — 2026-06-16) [ARCHIVED]
 **Topic**: Sprint 12 Scope Validation + Post-Sprint 12 Roadmap
 **Challenger**: ✅ CONFIRMED with 4 revisions
 **Key Changes**: C40 deferred to Sprint 14; C48 Story Card added to Sprint 13a; C36/C38 relocation prerequisite; D02 architecture spike in Sprint 12
@@ -131,7 +155,8 @@ Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free.
 - D-069: Document or consolidate `_helpers.py` card components
 
 ## Next Cycle
-✅ Review Round 26 COMPLETE → Sprint 13a (C33 Glossary + C48 Story Card) → 🔧 Development
+✅ Sprint 13a COMPLETE → Sprint 13b (C46 Moat Analysis + C36 Revenue Tree) → 🔧 Development
+OR → 💡 Discussion Round 27 (Sprint 13b scope validation)
 
 ## Archive (Previous Rounds)
 - Round 24 Review: docs/state/review_report_r24.md | Sprint 10 verified, Sprint 11 planned
