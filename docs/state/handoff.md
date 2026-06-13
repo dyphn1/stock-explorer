@@ -1,24 +1,24 @@
 # Handoff – Development
 ## Summary
-- **Topic**: Development (🔧) — Sprint 13a
-- **Date**: 2026-06-13 (Sprint 13a Dev completed)
-- **Sprint Status**: Sprint 13a ✅ COMPLETE → Sprint 13b planned
+- **Topic**: Development (🔧) — Sprint 13b
+- **Date**: 2026-06-18 (Sprint 13b Dev completed)
+- **Sprint Status**: Sprint 13b ✅ COMPLETE → Sprint 14 next
 
 ## Key Metrics
-- Design grade: A (17th consecutive A/A-)
-- L0: 101/101 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
-- Sprint 13a: 3 commits, ~10-16h
-- Features delivered: C33 Glossary (99 terms, tooltips in key metrics) + C48 Story Card (expander removed, always visible)
-- Architecture: 🟢 HEALTHY — 30 service modules, 0 god modules, 100% Streamlit-free
-- Sprint 13b: C36 Revenue Tree + C46 Moat Analysis (26-38h)
+- Design grade: A (18th consecutive A/A-) — to be confirmed in Round 29
+- L0: 103/103 ✅ | L1: 20/20 ✅
+- Sprint 13b: 3 commits, ~26-38h budget
+- Features delivered: D-079 tooltip merge + C36 Revenue Tree V2 (treemap toggle, concentration warning, trend mini-chart) + C46 Moat Analysis (5-dimension scoring, C124 moat type merged, evidence-first)
+- Architecture: 🟢 HEALTHY — 31 service modules, 0 god modules, 100% Streamlit-free
+- Sprint 14: C47 Education Academy + C40 Mode Toggle + C123/C125/C126
 
 ## Sprint Plans (Summary)
 | Sprint | Items | Status |
 |--------|-------|--------|
 | Sprint 3-12 | Various | ✅ Complete |
 | Sprint 13a | C33 Glossary + C48 Story Card | ✅ Complete |
-| Sprint 13b | C46 Moat Analysis + C36 Revenue Tree | 📋 Planned (26-38h) |
-| Sprint 14+ | C47 Education Academy + C40 Mode Toggle + User Validation + C113-C115/C118 | 📋 Deferred |
+| Sprint 13b | D-079 + C36 Revenue Tree V2 + C46 Moat Analysis | ✅ Complete |
+| Sprint 14 | C47 Education Academy + C40 Mode Toggle + C123/C125/C126 | 📋 Planned |
 
 ## Key Rules
 - Content cap: 100 items max across all features
@@ -53,7 +53,55 @@ Sprint 13a dev completed. 3 commits delivered.
 
 **New debt identified during Sprint 13a:** None.
 
-## 🔧 Development Section (Sprint 12 — 2026-06-15) [ARCHIVED]
+## 🔧 Development Section (Sprint 13b — 2026-06-18)
+
+Sprint 13b dev completed. 3 commits delivered.
+
+**D-079 Fix — Dual tooltip pattern merged (commit `b51c13b`):**
+- Removed `_glossary_tooltip()` calls from `_render_key_metrics()` in `_financial.py` — both glossary popover and metric education popover were showing on the same metrics
+- Enhanced `_render_metric_popover()` to accept `glossary_service` parameter and show glossary `plain` text + `analogy` at the top of the popover, followed by metric education content
+- Single interaction now: one ❓ button per metric → glossary definition → explanation → analogy → direction → historical context
+- All 6 metric call sites updated; zero inline HTML introduced
+
+**C36 Revenue Tree V2 (commit `4bb9c87`):**
+- `create_revenue_treemap()` added to `chart.py` — plotly `go.Treemap` with color-coded cells, percentage labels, custom hover text, theme-aware transparent background
+- `revenue_tree.py` enhanced:
+  - Pie chart as default view; `st.toggle("🔬 切換樹狀圖", value=False)` switches to treemap
+  - Concentration warning: if any single revenue source > 60%, `_info_card("⚠️ 營收集中風險", ...)` is shown
+  - Trend mini-chart: 12-month revenue sparkline below the pie/treemap using `create_revenue_trend_chart` at height=200px
+  - Glossary tooltips retained on revenue breakdown items
+- Business Card integration: new `"🌳 营收結構樹"` expander in detailed mode renders `_render_revenue_tree()` inline
+- Concentration threshold: 60% (per Round 28 Designer spec)
+
+**C46 Moat Analysis + C124 Moat Type Classification merged (commit `52f42a1`):**
+- `moat_analyzer.py` — new 310-line service module, zero Streamlit imports:
+  - `get_moat_summary()` → loads YAML data or falls back to template scoring
+  - `compute_moat_dimensions()` → 5-dimension scoring: 品牌力, 成本優勢, 網路效應, 轉換成本, 規模經濟
+  - `_classify_moat_type()` → classifies into 品牌/成本/網路效應/轉換成本/規模經濟護城河 or 無明顯護城河
+  - Template scoring for non-curated stocks using available financial metrics
+- `moat_data.yaml` — curated data for 20 top TW stocks (2330, 2317, 2454, 2308, 2881, 1101, 2002, 1301, 2357, 2382, 1303, 1216, 2006, 2886, 2891, 1326, 2882, 2379, 3008, 2395):
+  - Each stock: moat_type, moat_score (0-100), 5 dimension scores, 4-6 evidence bullets
+  - Evidence is factual, specific, historical (historian positioning — no predictions)
+- `_moat.py` — new view section:
+  - Moat type badge via `_info_card("護城河類型", ..., "🏰")`
+  - Moat score via `_summary_card("護城河強度", ..., "🏰")`
+  - 5 dimension mini-cards with 🟢/🟡/🔴 color coding (columns layout)
+  - Evidence list via `_info_card("歷史證據", ..., "📋")`
+  - Zero inline HTML — all shared components
+- Business Card integration: new `"🏰 護城河分析"` expander in detailed mode
+- C124 Moat Type Classification merged directly (not deferred to Sprint 14)
+
+**Key Findings:**
+- Architecture: 🟢 HEALTHY — 31 service modules (was 30), 0 god modules, 100% Streamlit-free
+- L0: 103/103 ✅ | L1: 20/20 ✅
+- D-079 resolved — single tooltip interaction per metric
+- C36 Revenue Tree V2 on Business Card page (detailed mode only, progressive disclosure)
+- C46 Moat Analysis evidence-first design — no stock-picking drift risk
+- C124 Moat Type Classification merged into C46 as Challenger required
+
+**New debt identified during Sprint 13b:** None.
+
+## 🔧 Development Section (Sprint 13a — 2026-06-13) [ARCHIVED]
 
 Sprint 12 dev completed. 3 commits delivered.
 
@@ -222,8 +270,7 @@ Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free.
 - Add moat analysis page spec
 
 ## Next Cycle
-✅ Round 28 Review COMPLETE → Sprint 13b (C36 Revenue Tree + C46 Moat Analysis with C124 merged) → 🔧 Development
-OR → 💡 Discussion Round 29 (Sprint 14 scope: C47 Education Academy + C40 Mode Toggle + C123/C125/C126)
+✅ Sprint 13b COMPLETE → 🔍 Review Round 29 (Sprint 13b Post-Mortem) OR 💡 Discussion Round 29 (Sprint 14 scope: C47 Education Academy + C40 Mode Toggle + C123/C125/C126)
 
 ## Archive (Previous Rounds)
 - Round 24 Review: docs/state/review_report_r24.md | Sprint 10 verified, Sprint 11 planned
