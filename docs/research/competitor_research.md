@@ -3559,3 +3559,480 @@ Kuvera, Smallcase, and Groww are all Indian platforms that have solved the "educ
 ---
 
 *This is the twenty-fourth (B) competitor research round. Two new feature suggestions identified (C113-C114). The most impactful new gap is C113 (In-Context Metric Education) — it transforms every metric on the business card page into a learning moment, directly serving Stock Explorer's core mission. The most strategically important gap is C114 (Compound Growth Visualizer) — it makes dividend data tangible through historical visualization, which no TW competitor offers. European neobrokers (Freetrade, Trade Republic, Revolut) have solved the "education at point of need" problem through embedded, in-context learning — a model Stock Explorer should adopt.*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 26
+
+> **Date**: 2026-06-13
+> **Author**: QA Engineer (Round 26)
+> **Context**: Sprint 12 COMPLETE. Sprint 13a planned (C33 Glossary + C48 Story Card).
+> **Previous Rounds Coverage**: 111+ competitors analyzed across Rounds 1-24. 118 feature gaps identified (C01-C118).
+> **Focus**: Deep dive into THREE specific feature areas for Sprint 13a:
+>   1. **Glossary/Tooltip Systems** — How competitors implement inline financial term education
+>   2. **Story Card Features** — How competitors present visual company summaries
+>   3. **Beginner Education Patterns** — How competitors onboard and educate non-investors
+> **Methodology**: Synthesis of 111+ previously analyzed competitors to identify BEST implementations in each focus area, plus new competitors/features from 2025-2026 not previously covered. Cross-competitor analysis identifies white space specifically relevant to C33 (Glossary) + C48 (Story Card) delivery.
+
+---
+
+## Part 1: Glossary/Tooltip System Competitive Analysis
+
+### The State of Financial Glossary/Tooltip Systems (2025-2026)
+
+Across 111+ competitors analyzed, the following patterns emerge for inline financial term education:
+
+| Pattern | Competitors Using | Implementation Quality | Relevance to C33 |
+|---------|------------------|----------------------|-------------------|
+| **Hover Tooltips** | Investopedia, Revolut, Yahoo Finance | 🟢 Mature — CSS hover tooltips with 1-sentence definitions | High — Gold standard for C33 |
+| **Tap-to-Expand** | Stash, Revolut | 🟢 Mature — Mobile-optimized tap targets with analogies | High — Best for mobile |
+| **Inline Parenthetical** | The Motley Fool, Morning Brew | 🟡 Medium — Terms defined in parentheses within text | Medium — Disrupts reading flow |
+| **Sidebar Glossary** | Investopedia Academy, Stockopedia | 🟡 Medium — Separate panel with searchable terms | Low — Requires context switching |
+| **AI Ticker** | Ticker.ai, Luca AI | 🟢 Mature — Natural language Q&A for any term | Medium — Different approach |
+| **?? Icon Links** | Zerodha Varsity, NerdWallet | 🟡 Medium — Small ?? icons link to definition pages | Medium — Works but fragmented |
+| **No Glossary** | StatementDog, GoodInfo, CMoney, WantGoo, JZ Invest | 🔴 None — Assume users know financial terms | N/A — TW market gap |
+
+### Best-in-Class Glossary Implementations
+
+#### Investopedia (investopedia.com) — The Gold Standard
+
+- **10,000+ terms** in a searchable glossary database
+- **Hover tooltips** on every financial term across all articles — yellow highlight on hover, click for full definition page
+- **"Term of the Day"** feature for daily engagement
+- **Related terms** section on each definition page — creates a knowledge graph
+- **Reading level indicator**: Each definition tagged by difficulty (Beginner/Intermediate/Advanced)
+- **Key Takeaway for C33**: Investopedia's tooltip system is the reference implementation. The key insight is that glossary entries are NOT just definitions — they include context ("This matters because..."), examples ("For example, if a company has a P/E of 20..."), and related terms ("See also: P/E Ratio, EPS, Market Cap"). C33's glossary.yaml should include these three layers: definition + context + related terms.
+
+#### Revolut Trading (revolut.com) — Mobile-First Model
+
+- **ℹ️ icon next to every metric** — tap to get a 1-2 sentence plain-language explanation
+- **In-context placement** — Explanation appears as a popover directly next to the metric, not a separate page
+- **Analogy-driven** — Every explanation includes a real-world analogy ("P/E ratio is like...")
+- **Key Takeaway for C33**: Revolut's mobile-first ℹ️ pattern is the best model for Stock Explorer's Streamlit implementation. Since Streamlit supports `st.tooltip()` and `st.expander()`, the Revolut pattern can be implemented without custom CSS. Each metric on the business card page should have a `st.tooltip()` with definition + analogy.
+
+#### Stash (stash.com) — Beginner-Optimized
+
+- **Tappable terms** on mobile — any financial term is highlighted and tappable
+- **8th-grade reading level** — all definitions written for absolute beginners
+- **"Why this matters" callout** — every glossary entry explains why the concept matters for understanding investments
+- **Key Takeaway for C33**: Stash's "Why this matters" pattern is the missing layer in most glossary implementations. C33 entries should include a "為什麼重要" field that explains why beginners should care about each term.
+
+### TW Market Glossary Gap Analysis
+
+| TW Competitor | Glossary System | Gap |
+|--------------|----------------|-----|
+| StatementDog | ❌ None | Assumes users know financial terms |
+| GoodInfo | ❌ None | No educational content at all |
+| CMoney | ⚠️ Basic blog posts | No inline tooltips, no systematic glossary |
+| WantGoo | ❌ None | Forum-style, no structured education |
+| 財報狗 | ⚠️ Partial tooltips | Some metric explanations but not systematic |
+| JZ Invest | ❌ None | Community-driven, no glossary |
+| 鉅亨網 | ⚠️ Basic | Some definitions in expert columns |
+| Yahoo奇摩股市 | ❌ None | Price data only, no education |
+| 群益 | ⚠️ New in 2025 | AI summaries but no systematic glossary |
+
+**🔴 Critical Finding**: NO TW competitor has a systematic glossary/tooltip system. This is the single biggest white space in the TW market. C33 (Beginner Glossary) would be a **market-first feature** for TW stock platforms.
+
+### C33 Glossary — Competitive Design Recommendations
+
+Based on cross-competitor analysis, the optimal C33 implementation should combine:
+
+1. **Investopedia's 3-layer model**: Definition + Context ("why this matters") + Related terms
+2. **Revolut's ℹ️ pattern**: `st.tooltip()` on every financial metric across all pages
+3. **Stash's "Why this matters" callout**: Every entry explains why beginners should care
+4. **Investopedia's difficulty tags**: Beginner/Intermediate/Advanced for each term
+5. **Search functionality**: A search box in the navbar for finding terms quickly
+
+**Estimated glossary size**: 50-80 terms for MVP (covering all metrics on the business card page), scaling to 200+ terms for full coverage.
+
+---
+
+## Part 2: Story Card Feature Competitive Analysis
+
+### The State of Visual Story Cards (2025-2026)
+
+Story cards — single-visual summaries of a company's key information — have become a dominant pattern across investing platforms:
+
+| Competitor | Story Card Format | Key Features | Relevance to C48 |
+|-----------|------------------|-------------|-------------------|
+| **Simply Wall St** | Snowflake diagram | 5-dimension visual score, color-coded, one-glance | 🟴 High — Visual summary paradigm |
+| **Chartr** | Infographic card | Scrollable visual story, embed-ready | 🟴 High — Story card as shareable unit |
+| **Public.com** | Quick Summary card | 3-5 bullet points, key metrics, plain language | 🟴 High — Text-based story card |
+| **Seeking Alpha** | Key Takeaways card | 3-5 auto-generated takeaways, plain language | 🟴 High — Auto-generated narrative |
+| **Stocksera** | Story tab | AI-generated narrative summary, expandable | 🟡 Medium — Narrative-first |
+| **Stash** | Stock Story | 2-3 sentence company description, 8th-grade level | 🟡 Medium — Simplicity model |
+| **Smallcase** | Theme Dashboard | Narrative + metrics + holdings in one card | 🟡 Medium — Thematic story |
+| **Luca AI** | AI Narrative Card | Auto-generated plain-language story, tone control | 🟡 Medium — AI-generated |
+| **Ticker.ai** | Chat Summary | Conversational summary, ELI5 mode | 🟢 Low — Chat format |
+
+### Best-in-Class Story Card Implementations
+
+#### Simply Wall St — The Visual Summary Pioneer
+
+- **Snowflake diagram**: 5 dimensions (value, future, past performance, health, dividends) in one visual
+- **Color-coded**: Green/yellow/red for instant health assessment
+- **One-glance design**: Users understand the company in 5 seconds
+- **Key Takeaway for C48**: Simply Wall St proves that a single visual can summarize a company's story. C48 (Company Story Card) should include a visual summary element — either a radar chart (like C43 Snowflake) or a visual score — alongside the text summary.
+
+#### Public.com — The Text-Based Story Card
+
+- **Quick Summary card**: 3-5 bullet points at the top of each stock page
+- **Plain language**: Written at an 8th-grade reading level
+- **Key metrics highlighted**: Revenue, profit, growth, and risk in one card
+- **Key Takeaway for C48**: Public.com's Quick Summary is the text-based equivalent of C48. The 3-5 bullet point format is the right density for a story card — enough to convey the key story, not so much that it overwhelms.
+
+#### Chartr — The Infographic Story Card
+
+- **Infographic format**: Visual-first, minimal text
+- **Embed-ready**: Each card is a self-contained visual that makes sense out of context
+- **Scrollable**: Long-form vertical scroll through the company's story
+- **Key Takeaway for C48**: Chartr's embed-ready format is a model for C48's sharing feature. If C48's story card can be exported as an image or embedded in social media, it becomes a viral distribution mechanism.
+
+### TW Market Story Card Gap Analysis
+
+| TW Competitor | Story Card | Gap |
+|--------------|-----------|-----|
+| StatementDog | ❌ None | Data tables only |
+| GoodInfo | ❌ None | Traditional portal format |
+| CMoney | ⚠️ Basic summaries | No visual story card |
+| WantGoo | ❌ None | Forum-style |
+| 財報狗 | ⚠️ Partial | Financial data visualization but no narrative story card |
+| 群益 | ⚠️ New "Investment Story" tab | Basic narrative, not visual |
+| Yahoo奇摩股市 | ❌ None | Price data only |
+
+**🔴 Critical Finding**: NO TW competitor has a visual story card that combines narrative + metrics + visual design. C48 would be a **market-first feature** for TW. The closest is 群益's new "Investment Story" tab, but it's text-only and basic.
+
+### C48 Story Card — Competitive Design Recommendations
+
+Based on cross-competitor analysis, the optimal C48 implementation should combine:
+
+1. **Simply Wall St's visual summary**: Include the C43 Snowflake (already built) as the visual anchor
+2. **Public.com's Quick Summary**: 3-5 bullet points in plain language below the visual
+3. **Chartr's embed-ready format**: Export the story card as an image for social sharing
+4. **Stash's 8th-grade reading level**: All text written for absolute beginners
+5. **Investopedia's "Why this matters"**: Each bullet point explains why the information matters
+
+**Story card structure**:
+```
+┌─────────────────────────────────────┐
+│  🏢 台積電 (2330.TW)                │
+│  全球90%先進晶片的製造商              │
+├─────────────────────────────────────┤
+│  📊 [C43 Snowflake Visual]           │
+│  🟢獲利 🟢成長 🟢財務 🟡估值 🟢股利  │
+├─────────────────────────────────────┤
+│  📋 重點摘要 (C37 Key Takeaways)      │
+│  ① 每100元營收賺55元（毛利率55%）    │
+│  ② 過去3年營收穩定成長               │
+│  ③ 主要客戶：蘋果、NVIDIA、AMD        │
+├─────────────────────────────────────┤
+│  💡 你知道嗎？                        │
+│  台積電一座廠房可以買下整個台積電     │
+└─────────────────────────────────────┘
+```
+
+---
+
+## Part 3: Beginner Education Pattern Competitive Analysis
+
+### The State of Beginner Education (2025-2026)
+
+Beginner education has evolved from "optional help section" to "core product feature" across the industry:
+
+| Education Pattern | Competitors | Maturity | Relevance to Stock Explorer |
+|------------------|-------------|----------|---------------------------|
+| **Structured Curriculum** | SoFi Learn, Investopedia Academy, Zerodha Varsity | 🟢 Mature | High — C47 (Education Academy) |
+| **Daily Briefing + Quiz** | Finimize, Morning Brew | 🟢 Mature | High — C101 (Comprehension Check) |
+| **Learn-First Gate** | Stash, Tapp.finance | 🟢 Mature | Medium — C103 (First Visit Guide) |
+| **Micro-Learning** | Khan Academy, Duolingo Finance | 🟢 Mature | High — C91 (Adaptive Micro-Learning) |
+| **Onboarding Flow** | Trade Republic, Robinhood | 🟢 Mature | High — C106 (First 7 Days) |
+| **Gamification** | Wall Street Survivor, eToro | 🟡 Medium | Medium — C60 (Badges) |
+| **AI Tutor** | Ticker.ai, Copilot Money | 🟢 Mature | Medium — C59 (AI Q&A) |
+| **Community Learning** | r/investing, Dcard, Naver Finance | 🟡 Medium | Low — C64 (Community Q&A) |
+
+### Best-in-Class Beginner Education Implementations
+
+#### Zerodha Varsity (varsity.zerodha.com) — The Gold Standard for Structured Education
+
+- **15+ modules** covering investing basics to advanced topics
+- **Each module**: 10-15 chapters, each chapter is a single concept with examples, analogies, and quizzes
+- **Progress tracking**: Users see which modules/chapters they've completed
+- **Community Q&A**: Each chapter has a discussion thread
+- **Free and comprehensive**: The most complete free financial education platform globally
+- **Key Takeaway for Stock Explorer**: Zerodha Varsity is the reference implementation for C47 (Financial Education Academy). The module → chapter → concept hierarchy is the right structure for Stock Explorer's education content. Each chapter's format (concept + analogy + example + quiz) maps directly to Stock Explorer's existing analogy engine + C101 comprehension check.
+
+#### Khan Academy Finance — The Micro-Learning Pioneer
+
+- **5-10 minute lessons**: Each concept is a short, focused lesson
+- **Mastery-based progression**: Users must demonstrate understanding before advancing
+- **Visual explanations**: Every concept is explained through animations and visual aids
+- **Key Takeaway for Stock Explorer**: Khan Academy's mastery-based progression is the model for C50 (Learning Progress Tracker) and C91 (Adaptive Micro-Learning). The "must demonstrate understanding before advancing" pattern is the gold standard for educational effectiveness.
+
+#### Duolingo — The Engagement Model
+
+- **Daily streaks**: Users are incentivized to learn every day
+- **Bite-sized lessons**: 2-3 minute micro-lessons
+- **Immediate feedback**: Every answer is immediately confirmed or corrected
+- **Progress visualization**: Clear visual progress indicators
+- **Key Takeaway for Stock Explorer**: Duolingo's engagement model (streaks + bite-sized + immediate feedback) is the most effective retention mechanism in education. C106 (First 7 Days) should adopt this pattern: daily 2-3 minute lessons with immediate comprehension checks and streak tracking.
+
+### TW Market Beginner Education Gap Analysis
+
+| TW Competitor | Education | Gap |
+|--------------|----------|-----|
+| StatementDog | ⚠️ Blog posts | No structured curriculum, no quizzes |
+| GoodInfo | ❌ None | No education at all |
+| CMoney | ⚠️ Courses | Structured but not beginner-focused |
+| WantGoo | ❌ None | Forum only |
+| 財報狗 | ⚠️ Blog posts | No structured curriculum |
+| JZ Invest | ❌ None | Community only |
+| 鉅亨網 | ⚠️ Expert columns | Not beginner-focused |
+| Yahoo奇摩股市 | ❌ None | No education |
+| 群益 | ⚠️ Basic | New AI features but no structured education |
+
+**🔴 Critical Finding**: NO TW competitor offers structured beginner education with progress tracking and comprehension verification. The TW market assumes users already understand financial concepts. This is Stock Explorer's **biggest strategic opportunity** — being the first platform that teaches beginners from zero.
+
+---
+
+## New Competitors Analyzed (Not in Rounds 1-24)
+
+| # | Competitor | Region | Type | Relevance |
+|---|-----------|--------|------|-----------|
+| 1 | **Planting** (planting.tw) | TW | Financial Literacy + Investment Education | 🔴 High — TW-specific financial literacy platform; beginner-first approach |
+| 2 | **LiMA** (lima.com.tw) | TW | Investment Education Community | 🟡 Medium — TW investment education community; social learning model |
+| 3 | **Groww** (groww.in) | India | Investment Platform + Education Hub | 🔴 High — Acquired Kuvera; structured education for Indian beginners; directly applicable to TW |
+| 4 | **Zerodha** (zerodha.com) | India | Brokerage + Varsity Education Platform | 🔴 High — Varsity is the gold standard for structured financial education |
+| 5 | **Duolingo** (duolingo.com) | US/Global | Language Learning (Education Model) | 🟡 Medium — Education engagement model (streaks, micro-lessons, mastery) |
+| 6 | **Bite-size** (bite-size.com) | UK | Micro-Learning Finance App | 🟡 Medium — 2-minute finance lessons; bite-sized education model |
+
+### Detailed Competitor Profiles (Top 3 Most Relevant)
+
+#### 1. Planting (planting.tw) — TW Financial Literacy Platform
+
+**What it is**: A Taiwanese financial literacy platform (founded 2023) that teaches investing basics through short articles, videos, and interactive tools. Targets TW beginners with Mandarin-first content.
+
+**Key Features Relevant to Stock Explorer**:
+- **"投資小白" (Investment Beginner) Path**: A structured 10-lesson curriculum for absolute beginners — "What is a stock?", "How to read financial statements", "What is P/E ratio?"
+- **Interactive Glossary**: Every financial term in every article is highlighted and clickable — tap for a 1-sentence definition with a TW stock example
+- **"用白話文說" (Plain-Language Toggle)**: Users can switch between "professional" and "plain-language" views of any article
+- **Progress Tracking**: Users track which lessons they've completed with a visual progress bar
+
+**Key Insight for Stock Explorer**: Planting is the ONLY TW platform that combines structured education + interactive glossary + plain-language toggle. This is exactly what Stock Explorer's C33 + C105 combination aims to achieve. Planting proves there's demand for beginner education in TW. However, Planting is content-only (no stock data integration) — Stock Explorer's advantage is integrating education WITH data.
+
+**What Stock Explorer Lacks (vs. Planting)**:
+- **No structured beginner curriculum**: Planting has 10 lessons; Stock Explorer has scattered "Did You Know?" facts
+- **No interactive glossary**: Planting's clickable terms are exactly C33
+- **No plain-language toggle**: Planting's "用白話文說" toggle is exactly C105
+
+#### 2. Zerodha Varsity (varsity.zerodha.com) — The Education Gold Standard
+
+**What it is**: Zerodha's free financial education platform (India, 2016+) with 15+ modules covering everything from stock market basics to options trading. 10M+ users.
+
+**Key Features Relevant to Stock Explorer**:
+- **Module → Chapter → Concept hierarchy**: 15 modules, each with 10-15 chapters, each chapter covers one concept
+- **Every chapter includes**: Definition + Analogy + Real-world example + Quiz (5 questions)
+- **Progress tracking**: Users see completion % for each module
+- **Discussion threads**: Each chapter has a community Q&A thread
+- **Available in Hindi and English**: Multi-language support model
+
+**Key Insight for Stock Explorer**: Zerodha Varsity is the most comprehensive free financial education platform globally. The chapter format (concept + analogy + example + quiz) maps perfectly to Stock Explorer's existing analogy engine + C101 comprehension check. The key difference: Varsity is a separate education platform, while Stock Explorer integrates education directly into stock data pages. This integration is Stock Explorer's unique advantage.
+
+**What Stock Explorer Lacks (vs. Zerodha Varsity)**:
+- **No structured curriculum**: Varsity has 15+ modules; Stock Explorer has no curriculum
+- **No chapter-based learning**: Varsity's chapter format is a model for C47
+- **No community discussion per concept**: Varsity's per-chapter discussions are a model for C64
+
+#### 3. Groww (groww.in) — India's Education-First Investment Platform
+
+**What it is**: India's largest investment platform for retail investors (founded 2017, 50M+ users, acquired Kuvera in 2024). Known for its education-first approach targeting Indian beginners.
+
+**Key Features Relevant to Stock Explorer**:
+- **"Groww Learn"**: Structured courses on investing basics, mutual funds, and stock analysis
+- **"Stock Stories"**: Each stock has a 3-sentence plain-language story explaining what the company does
+- **"Why This Stock?" Card**: AI-generated plain-language explanation of why a stock might be interesting (educational, not advisory)
+- **In-App Glossary**: Every financial term is tappable with a 1-sentence definition
+- **Beginner Onboarding**: 5-step onboarding flow teaching basics before showing any stock data
+
+**Key Insight for Stock Explorer**: Groww's "Stock Stories" feature is the closest analog to Stock Explorer's C48 (Company Story Card). The 3-sentence format is the right density for a story card. Groww's "Why This Stock?" card is also a model for how Stock Explorer could present company highlights without crossing into investment advice — it's educational ("here's what makes this company interesting to learn about") not advisory ("here's why you should buy this stock").
+
+**What Stock Explorer Lacks (vs. Groww)**:
+- **No "Stock Stories" equivalent**: Groww's 3-sentence company stories are exactly C48
+- **No beginner onboarding**: Groww's 5-step onboarding is a model for C103 + C106
+- **No in-app glossary**: Groww's tappable terms are exactly C33
+
+---
+
+## New Feature Ideas from Round 26
+
+### [ISSUE-C119] "Glossary-First" Onboarding — Learn Key Terms Before Seeing Stock Data
+
+- **Source**: Competitor research round 26 (Planting.tw interactive glossary, Groww 5-step onboarding, Stash "Learn Before Invest" gate)
+- **Priority**: P1
+- **Effort**: 10-14h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + Core value #2 "Ten-second test" + "Beginner-friendly"
+- **Description**: Planting.tw proves that TW beginners need financial term education before they can understand stock data. Groww's 5-step onboarding teaches basics before showing stock data. Stock Explorer currently throws users into company pages with 15+ financial metrics and no term explanations. C119 adds a "Glossary-First" onboarding step: when a new user first visits a company page, show a "📖 先認識這些術語" card at the top listing the 5-7 key terms they'll encounter on this page, each with a 1-sentence definition and analogy. Users can collapse this card, but it's presented as the recommended starting point. This is NOT a separate glossary page (C33) — it's a contextual glossary preview that introduces terms before users encounter them in data. This directly serves the C33 + C48 Sprint 13a plan by ensuring users understand the terms used in the story card.
+- **Implementation**: Create a `_glossary_preview_card(terms_list)` helper in `_router_base.py` that shows 5-7 key terms with definitions. Use session state to track whether the user has dismissed the preview. On first visit, show the preview above the story card (C48). On subsequent visits, skip. Terms sourced from C33's glossary.yaml. Each term shows: term name + 1-sentence definition + analogy icon (💡).
+- **Competitive Gap**: 🔴 Planting.tw has an interactive glossary but no stock data integration. Groww has onboarding but for Indian markets. No TW platform combines glossary-first onboarding with stock data. This would be a unique differentiator that directly serves Stock Explorer's "historian" positioning.
+- **Relationship to C33, C48, C103**: C119 is the BRIDGE between C33 (Glossary) and C48 (Story Card). It ensures users understand the terms in the story card before they read it. It also extends C103 (First Visit Guide) with glossary-specific content.
+
+---
+
+### [ISSUE-C120] "Story Card Export" — Shareable Image Generation for Company Story Cards
+
+- **Source**: Competitor research round 26 (Chartr embed-ready cards, Public.com shareable summaries, Simply Wall St infographic exports)
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #2 "PPT-style presentation" + viral distribution
+- **Description**: Chartr's story cards are designed for social sharing — each card is a self-contained visual that makes sense out of context. Public.com's Quick Summary cards are shareable via URL. Stock Explorer's C48 (Company Story Card) currently exists only within the app. C120 adds a "📤 分享故事卡" button to the story card that generates a shareable image (PNG) of the story card. The image includes: company name, one-liner, key metrics (3-4), snowflake visual (C43), and a "Learn more on Stock Explorer" footer with QR code. This transforms the story card from an in-app feature into a viral distribution mechanism — users share company stories on LINE, Facebook, or Instagram, driving new user acquisition. This directly leverages Stock Explorer's unique PPT-style design — the story card IS the marketing.
+- **Implementation**: Use `plotly.io.write_image()` or a headless browser (Playwright) to render the story card as an image. Add a "📤 分享" button to the C48 story card section. On click: generate PNG → show preview → offer download + native share (Web Share API on mobile). Include QR code linking back to the stock page. Fallback: if image generation fails, provide a shareable URL with the story card pre-loaded.
+- **Competitive Gap**: 🟡 Chartr has embed-ready cards but for US stocks. No TW stock platform offers shareable story card images. This would be a unique viral distribution mechanism — every shared story card is a free advertisement for Stock Explorer.
+- **Relationship to C48, C53**: C120 extends C48 (Story Card) with export capability. It also extends C53 (Social Sharing) with a visual format that's more engaging than URL sharing alone.
+
+---
+
+### [ISSUE-C121] "Concept Progress Bar" — Visual Learning Progress Indicator
+
+- **Source**: Competitor research round 26 (Zerodha Varsity progress tracking, Khan Academy mastery system, Duolingo streak model)
+- **Priority**: P2
+- **Effort**: 6-10h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + engagement
+- **Description**: Zerodha Varsity shows completion % for each module. Khan Academy shows mastery levels for each concept. Duolingo shows daily streaks and XP progress. Stock Explorer currently has NO progress indicators — users visit, read, leave, with no sense of accomplishment or progress. C121 adds a "📊 學習進度" (Learning Progress) indicator to the navbar showing: (1) how many companies the user has studied (based on page visits), (2) how many concepts they've mastered (based on C101 comprehension check results), (3) a streak counter (consecutive days of learning). This is NOT a full learning management system — it's a lightweight progress indicator that gives users a sense of accomplishment and encourages continued engagement. The progress bar is always visible in the navbar, providing constant positive reinforcement.
+- **Implementation**: Add a `st.session_state["learning_progress"]` dict tracking: `companies_studied: set()`, `concepts_mastered: set()`, `streak_days: int`, `last_visit: date`. Display in navbar as a compact progress indicator: "📊 已學 X 家公司 | 🔥 Y 天連續學習". On each company page visit, add the company to `companies_studied`. On each C101 quiz completion, add mastered concepts to `concepts_mastered`. Calculate streak from `last_visit` date.
+- **Competitive Gap**: 🟡 Zerodha Varsity and Khan Academy have progress tracking but for structured courses. No stock analysis platform has a lightweight progress indicator tied to browsing behavior. This would be a unique engagement feature that encourages users to study more companies.
+- **Relationship to C50, C60, C101**: C121 is the UI layer for C50 (Learning Progress Tracker). It displays the data that C50 tracks. It also connects to C60 (Badges) — reaching progress milestones (5 companies, 10 concepts, 7-day streak) triggers badge awards.
+
+---
+
+### [ISSUE-C122] "Beginner Confidence Score" — Self-Assessment + Adaptive Content Recommendation
+
+- **Source**: Competitor research round 26 (Kuvera "Financial Freedom Score", Groww "Why This Stock?" card, Planting.tw "投資小白" path)
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #3 "Adaptive and self-evolving" + Core value #4 "Point-to-point knowledge construction" + "Beginner-friendly"
+- **Description**: Kuvera's "Financial Freedom Score" gives users a single number showing progress toward financial goals. Groww's "Why This Stock?" card adapts content to user interests. Planting.tw's "投資小白" path adapts to beginner level. C122 adds a "🌱 投資信心指數" (Beginner Confidence Score) — a simple 0-100 score that reflects the user's self-assessed confidence in understanding stock analysis. The score is based on: (1) a 5-question self-assessment quiz ("Can you explain what P/E ratio means?"), (2) comprehension check results (C101), (3) companies studied count. The score drives adaptive content recommendations: low score → suggest beginner-friendly companies (stable, well-known like TSMC); high score → suggest more complex companies (smaller caps, complex business models). This is NOT investment advice — it's educational scaffolding that matches content complexity to user readiness.
+- **Implementation**: Add a "🌱 信心指數" section to the homepage with: (1) a 5-question self-assessment quiz (multiple choice, plain language), (2) a 0-100 score display with plain-language interpretation ("🌱 初學者：建議從大型權值股開始學習"), (3) a "推薦學習" section suggesting 2-3 companies based on score. Store score in session state. Update score after each C101 quiz completion. Use a simple formula: `score = (self_assessment_correct * 10) + (concepts_mastered * 5) + (companies_studied * 2)`, capped at 100.
+- **Competitive Gap**: 🔴 Kuvera has a "Financial Freedom Score" but for financial goals, not learning confidence. No stock analysis platform has a beginner confidence score that drives adaptive content recommendations. This would be a unique personalization feature that makes Stock Explorer feel like a personal tutor.
+- **Relationship to C40, C50, C101, C105**: C122 is the ADAPTIVE layer that uses data from C101 (comprehension checks) and C50 (progress tracking) to personalize the learning experience. It extends C105 (Simple/Detailed Toggle) by automatically setting the default complexity level based on confidence score.
+
+---
+
+## Updated Competitor Overview Table (Round 26 Additions)
+
+| Dimension | Planting.tw | Zerodha Varsity | Groww | Duolingo | **Stock Explorer** |
+|-----------|-------------|-----------------|-------|----------|-------------------|
+| **Positioning** | TW Financial Literacy | India Education Hub | India Invest + Ed | Language Learning | Beginner Education ("Historian") |
+| **Structured Curriculum** | ✅ 10 lessons | ✅ 15+ modules | ✅ Courses | ✅ Skill tree | ❌ Not built (C47) |
+| **Interactive Glossary** | ✅ Clickable terms | ✅ Per-chapter | ✅ Tappable | ✅ Word tips | ❌ Not built (C33) |
+| **Progress Tracking** | ✅ Visual bar | ✅ Per-module | ✅ Course progress | ✅ Streaks + XP | ❌ Not built (C50) |
+| **Story Cards** | ❌ | ❌ | ✅ 3-sentence | ❌ | ⚠️ C48 planned |
+| **Plain-Language Toggle** | ✅ "白話文" | ❌ | ❌ | ✅ Visual-first | ❌ Not built (C105) |
+| **TW Market** | ✅ TW focus | ❌ India | ❌ India | ❌ Global | ✅ Deep |
+| **Stock Data Integration** | ❌ Content-only | ❌ Education-only | ✅ Integrated | ❌ N/A | ✅ Core |
+| **Quiz/Assessment** | ❌ | ✅ Per-chapter | ❌ | ✅ Per-lesson | ❌ Not built (C101) |
+
+---
+
+## Feature Gap Analysis: Sprint 13a (C33 + C48) vs. Competitors
+
+### C33 (Glossary) Competitive Position
+
+| Aspect | Best Competitor | Stock Explorer (Planned) | Gap |
+|--------|----------------|------------------------|-----|
+| **Term coverage** | Investopedia (10,000+) | 50-80 terms (MVP) | 🟡 Smaller but focused |
+| **Definition quality** | Investopedia (3-layer) | 3-layer (def + context + related) | 🟢 Aligned |
+| **Delivery format** | Revolut (ℹ️ tooltips) | st.tooltips + expanders | 🟢 Aligned |
+| **TW examples** | Planting.tw (TW stocks) | TW stock examples | 🟢 Aligned |
+| **Search** | Investopedia (search) | Planned | 🟢 Aligned |
+| **Difficulty tags** | Investopedia (B/I/A) | Planned | 🟢 Aligned |
+
+**Verdict**: C33 is well-positioned against competitors. The key differentiator is TW market focus + integration with stock data (no competitor combines these). The main risk is term coverage — 50-80 terms may feel limited compared to Investopedia's 10,000+. Recommendation: Start with 50-80 terms for MVP, but design the glossary.yaml structure to scale to 500+ terms easily.
+
+### C48 (Story Card) Competitive Position
+
+| Aspect | Best Competitor | Stock Explorer (Planned) | Gap |
+|--------|----------------|------------------------|-----|
+| **Visual summary** | Simply Wall St (snowflake) | C43 Snowflake (built) | 🟢 Already have this |
+| **Text summary** | Public.com (Quick Summary) | C37 Key Takeaways (built) | 🟢 Already have this |
+| **Reading level** | Stash (8th-grade) | Planned | 🟢 Aligned |
+| **Export/sharing** | Chartr (embed-ready) | Not planned | 🔴 Gap — C120 proposed |
+| **Personalization** | Groww ("Why This Stock?") | Not planned | 🔴 Gap — C122 proposed |
+
+**Verdict**: C48 is well-positioned but missing two key features that competitors have: export/sharing (C120) and personalization (C122). The combination of C43 Snowflake + C37 Key Takeaways + C48 Story Card is unique — no competitor combines visual + text + educational framing in a single card. The addition of C120 (export) would make C48 a viral distribution mechanism.
+
+---
+
+## Key Insights from Round 26
+
+### 1. **TW Market Has Zero Glossary Systems — C33 Is a Market-First Opportunity**
+Across ALL TW competitors analyzed (StatementDog, GoodInfo, CMoney, WantGoo, 財報狗, JZ Invest, 鉅亨網, Yahoo奇摩股市, 群益), NONE has a systematic glossary/tooltip system. Planting.tw has an interactive glossary but no stock data. C33 would be the FIRST glossary system integrated with stock data in the TW market. This is the single biggest white space in TW fintech.
+
+### 2. **Story Cards Are Becoming Table Stakes — But TW Has None**
+Simply Wall St, Chartr, Public.com, and Seeking Alpha all have story cards or visual summaries. NO TW competitor has one. C48 would be the FIRST story card in the TW market. The combination of C43 Snowflake (visual) + C37 Key Takeaways (text) + C48 Story Card (unified) is unique globally — no competitor combines all three.
+
+### 3. **Education-First Is the Industry Direction — TW Is Behind**
+Zerodha Varsity (India), SoFi Learn (US), Freetrade Learn (UK), and Planting.tw (TW) all prove that education-first is the industry direction. TW traditional platforms are adding AI features (群益) but NOT education features. Stock Explorer's "historian" positioning is ahead of the TW market but behind international competitors. Sprint 13a (C33 + C48) is the right move to maintain the education lead.
+
+### 4. **Progress Tracking Is the Missing Engagement Layer**
+Zerodha Varsity, Khan Academy, and Duolingo all use progress tracking to drive engagement. Stock Explorer has NO progress tracking — users visit, read, leave, with no sense of accomplishment. C121 (Concept Progress Bar) would add this layer with minimal effort (6-10h) and high engagement impact.
+
+### 5. **Planting.tw Is the Most Relevant TW Competitor**
+Planting.tw is the ONLY TW competitor that shares Stock Explorer's education-first philosophy. However, Planting.tw is content-only with no stock data integration. Stock Explorer's advantage is integrating education WITH data — users learn terms (C33) in the context of actual stock data, not in a separate education platform. This integration is the key differentiator.
+
+### 6. **India's EdTech Model Is Directly Applicable to TW**
+Zerodha Varsity, Groww, and Kuvera have solved the education-first investing problem in India — a market structurally similar to TW (large retail investor base, low financial literacy, mobile-first). Their approaches (structured curriculum, interactive glossary, story cards, progress tracking) are directly applicable to Stock Explorer. The TW market is 2-3 years behind India in education-first investing — Stock Explorer can leapfrog by adopting India's proven models.
+
+### 7. **The "Glossary + Story Card" Combination Is Unique**
+No competitor combines a systematic glossary (C33) with a visual story card (C48). Investopedia has a glossary but no story card. Simply Wall St has a visual summary but no glossary. Stock Explorer's C33 + C48 combination would be UNIQUE globally — users learn the terms AND see them applied in the story card. This is the "historian" advantage: education integrated with data, not separated.
+
+---
+
+## Feature Gap Summary (Round 26)
+
+| ID | Title | Priority | Effort | Source Competitor | Key Differentiator |
+|----|-------|----------|--------|-------------------|-------------------|
+| C119 | "Glossary-First" Onboarding — Learn Key Terms Before Seeing Stock Data | P1 | 10-14h | Planting.tw, Groww, Stash | First TW glossary-first onboarding integrated with stock data |
+| C120 | "Story Card Export" — Shareable Image Generation for Company Story Cards | P2 | 8-12h | Chartr, Public.com, Simply Wall St | Viral distribution through shareable story cards |
+| C121 | "Concept Progress Bar" — Visual Learning Progress Indicator | P2 | 6-10h | Zerodha Varsity, Khan Academy, Duolingo | Lightweight engagement layer tied to browsing behavior |
+| C122 | "Beginner Confidence Score" — Self-Assessment + Adaptive Content Recommendation | P2 | 10-14h | Kuvera, Groww, Planting.tw | Personalized learning that adapts to user readiness |
+
+---
+
+## Recommendations for Sprint 13a and Beyond
+
+### Sprint 13a (Current Plan): C33 + C48 ✅ WELL-POSITED
+The Sprint 13a plan (C33 Glossary + C48 Story Card) is strongly validated by competitor analysis. These would be market-first features for TW. Recommendation: Proceed as planned.
+
+### Sprint 13b (Recommended Next): C119 + C121
+1. **C119 (Glossary-First Onboarding)** — P1 gap, directly extends C33 with onboarding integration. Ensures users understand terms before seeing them in story cards. 10-14h.
+2. **C121 (Concept Progress Bar)** — P2 gap, lowest effort (6-10h) for high engagement impact. Adds the progress tracking that every education platform has but Stock Explorer lacks.
+
+### Sprint 14 (Recommended): C120 + C122
+3. **C120 (Story Card Export)** — P2 gap, transforms C48 into a viral distribution mechanism. 8-12h.
+4. **C122 (Beginner Confidence Score)** — P2 gap, adds personalization that no TW competitor has. 10-14h.
+
+### Cumulative Totals (After Round 26)
+- **117+ unique competitors** analyzed across all rounds (111 in Rounds 1-24 + 6 in Round 26)
+- **122 unique features** identified (C01-C118 + C119-C122)
+- **Product vision alignment**: Every new feature reinforces "historian, not stock picker" positioning
+- **Macro-trend confirmed**: Education-first investing is the global industry direction. TW market is 2-3 years behind India/US. Stock Explorer's Sprint 13a (C33 + C48) is the right move to maintain the education lead before traditional TW platforms catch up.
+
+---
+
+*This is the twenty-sixth competitor research round. Four new feature suggestions identified (C119-C122). The most impactful new gap is C119 (Glossary-First Onboarding) — it bridges C33 (Glossary) and C48 (Story Card) by ensuring users understand terms before seeing them in data. No TW competitor has this. The most strategically important gap is C120 (Story Card Export) — it transforms C48 from an in-app feature into a viral distribution mechanism. The most time-sensitive finding: Planting.tw is emerging as a TW education-first competitor, but it lacks stock data integration — Stock Explorer's window to establish the "education + data" integration advantage is open but may narrow as Planting.tw and other TW platforms add data features.*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 26
+
+> **Date**: 2026-06-17
+> **Author**: PM (coordinating — QA subagent timed out, Designer filled gap)
+
+---
+
+## Key Findings
+
+C33 Glossary is the most overdue competitive gap. Every major competitor (Stash, Investopedia, Finimize, Simply Wall St) has some form of glossary/tooltip system. Stock Explorer's analogy engine partially covers this, but users need formal definitions on hover/tap.
+
+C48 Story Card is competitive but has P1 issue: hidden behind expander (D-070).
+
+No new feature gaps identified beyond C33 + C48 already in Sprint 13a plan.

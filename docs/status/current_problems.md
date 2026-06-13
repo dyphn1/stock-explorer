@@ -1,7 +1,7 @@
 # Stock Explorer — Current Problems
 
-> **Last Updated**: 2026-06-13
-> **Source**: Design Review Round 20 (2026-06-13, Sprint 7)
+> **Last Updated**: 2026-06-17
+> **Source**: Design Review Round 26 (2026-06-17, after Sprint 12 Completion)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
@@ -180,6 +180,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Lines**: `business_card.py` lines 522-532
 - **Proposed Fix**: Either (a) create a `_peer_card()` component in `_router_base.py` with standard card styling + button, or (b) use `_info_card()` with the peer name/industry as content and the button below.
 - **Effort**: 0.5-1h
+- **Status**: ✅ RESOLVED in Sprint 12 — peer cards already use `_info_card()`. Commit: 658bd3f.
 
 ### D-036: C44 Risk Dimension Cards Use Non-Standard Background
 - **Severity**: P2
@@ -189,6 +190,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Lines**: `business_card.py` line 72
 - **Proposed Fix**: Change to `background:#F8F9FA` and rely on the `border-left:4px solid {color}` for risk level indication. The color-coded border already communicates risk level effectively.
 - **Effort**: <0.5h (one-line change)
+- **Status**: ✅ RESOLVED in Sprint 12 — `background:#FFF8F0` → `background:#F8F9FA` in `_render_risk_dimension()` in `_helpers.py` line 86. Commit: 658bd3f.
 
 ### D-037: `_白话_card` Uses Non-Standard Background Color
 - **Severity**: P2
@@ -208,6 +210,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Lines**: `business_card.py` lines 505-512
 - **Proposed Fix**: Move the peer stock fetching to `get_stock_data()` in `_router_base.py` (add a `"peers"` key to the data dict), or accept peers as a parameter.
 - **Effort**: 1-2h
+- **Status**: ✅ RESOLVED in Sprint 12 — `_render_compare_stories()` and `_render_read_next()` now accept `all_info=None` parameter instead of calling `client.get_stock_info()` internally. `_render_business_card()` fetches `all_info` once and passes it. Commit: 658bd3f.
 
 ### D-039: No Standardized Section Header Pattern
 - **Severity**: P2
@@ -263,6 +266,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `src/pages/business_card/_sections.py` line 549
 - **Proposed Fix**: Replace with `_section_title("📖 推薦閱讀")`.
 - **Effort**: <0.5h (one-line change)
+- **Status**: ✅ RESOLVED in Sprint 12 — already uses `_section_title("📖 推薦閱讀")`. Commit: 658bd3f.
 
 ### D-045: C51 Sector Grid and Top Movers Use Inline HTML with Non-Standard Styling
 - **Severity**: P2
@@ -290,6 +294,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `src/pages/business_card/_sections.py` line 832
 - **Proposed Fix**: Replace with `_section_title("🔗 分享這張名片")`.
 - **Effort**: <0.5h (one-line change)
+- **Status**: ✅ RESOLVED in Sprint 12 — already uses `_section_title("🔗 分享這張名片")`. Commit: 658bd3f.
 
 ### D-048: C53-1 Share Button Uses st.html() with Non-Functional JS
 - **Severity**: P2
@@ -371,6 +376,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `src/pages/event_dashboard.py` lines 110-115
 - **Proposed Fix**: Replace with `st.caption()` or create `_key_concept(text)` helper in `_router_base.py`.
 - **Effort**: <0.5h
+- **Status**: ✅ RESOLVED in Sprint 12 — already uses `st.caption()`. Commit: 658bd3f.
 
 ### D-065: Disclaimer Text Uses Inline HTML (D-003 Regression)
 - **Severity**: P2
@@ -380,6 +386,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `src/pages/event_dashboard.py` lines 133-137
 - **Proposed Fix**: Replace with `st.caption()` or call `_historian_disclaimer("event")`.
 - **Effort**: <0.5h
+- **Status**: ✅ RESOLVED in Sprint 12 — already uses `st.caption()`. Commit: 658bd3f.
 
 ### D-066: Adaptive Banner Uses Inline HTML (Pre-existing)
 - **Severity**: P2
@@ -389,6 +396,7 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `src/pages/event_dashboard.py` lines 193-204
 - **Proposed Fix**: Replace with `_info_card(title=..., content=..., icon="🎯")`.
 - **Effort**: <0.5h
+- **Status**: ✅ RESOLVED in Sprint 12 — already uses `_info_card()`. Commit: 658bd3f.
 
 ---
 
@@ -412,20 +420,28 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 || D-034 | C3 Metric Value Tooltips Missing from Hover and Cards | P1 | 2026-06-12 | Enhanced `create_health_snowflake()` with optional `metric_values` param. Hover now shows raw metric values as bullet points. Dimension cards display values in blue text. `_get_health_metric_values()` helper added to `_helpers.py`. Commit: 4de8b8e. |
 || D-004 | No Design System Documentation | P1 | 2026-06-19 | `docs/design/design_system.md` now exists at expected path (copied from `docs/domain/design_system.md` in Sprint 4). |
 || D-021 | C43 Missing Per-Dimension Plain-Language Explanations | P1 | 2026-06-19 | Resolved via D-034 fix — metric values now shown in both hover template and dimension cards with raw numbers and plain-language explanations. |
+|| D-035 | C41 Peer Cards Use Inline HTML | P2 | 2026-06-15 | Already resolved — peer cards use `_info_card()`. Verified in Sprint 12. Commit: 658bd3f. |
+|| D-036 | C44 Risk Dimension Cards Non-Standard Background | P2 | 2026-06-15 | `background:#FFF8F0` → `background:#F8F9FA` in `_render_risk_dimension()`. Commit: 658bd3f. |
+|| D-038 | C41 Calls API in View Layer | P2 | 2026-06-15 | Moved `client.get_stock_info()` out of view layer to router. Commit: 658bd3f. |
+|| D-044 | C41 Read Next Header Doesn't Use _section_title() | P2 | 2026-06-15 | Already resolved — uses `_section_title("📖 推薦閱讀")`. Verified in Sprint 12. Commit: 658bd3f. |
+|| D-047 | C53-1 Share Section Header Doesn't Use _section_title() | P2 | 2026-06-15 | Already resolved — uses `_section_title("🔗 分享這張名片")`. Verified in Sprint 12. Commit: 658bd3f. |
+|| D-064 | Key Concept Line Uses Inline HTML | P2 | 2026-06-15 | Already resolved — uses `st.caption()`. Verified in Sprint 12. Commit: 658bd3f. |
+|| D-065 | Disclaimer Text Uses Inline HTML | P2 | 2026-06-15 | Already resolved — uses `st.caption()`. Verified in Sprint 12. Commit: 658bd3f. |
+|| D-066 | Adaptive Banner Uses Inline HTML | P2 | 2026-06-15 | Already resolved — uses `_info_card()`. Verified in Sprint 12. Commit: 658bd3f. |
 
 ---
 
 ## Statistics
 
-- **Total Issues**: 48
+- **Total Issues**: 59
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 35 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-038, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-057, D-058, D-059, D-062, D-063, D-064, D-065, D-066)
-- **Resolved**: 19
+- **P2 (Optimization)**: 29 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-057, D-058, D-059, D-062, D-063, D-068, D-069, D-070)
+- **Resolved**: 27
 
 ---
 
-*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 10 feature implementation.*
+*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 13a feature implementation.*
 
 ---
 
@@ -909,6 +925,240 @@ Sprint 8 successfully closed the inline HTML enforcement gap. The design system 
 ---
 
 *This section was added by the Design Reviewer in Round 21 (2026-06-13). Next update: After Sprint 9 feature implementation.*
+
+# Round 26 Design Assessment (2026-06-17, after Sprint 12 Completion)
+
+> **Reviewer**: Design Reviewer
+> **Scope**: Sprint 12 verification (Info Hierarchy, User Feedback, 8 debt fixes), competitor comparison, Sprint 13a design prerequisites
+> **Sprint 12 Changes Verified**: Info Hierarchy (expander pattern, C36/C38 relocation), User Feedback (binary 👍/👎), 8 quick debt fixes (D-035/036/038/044/047/064/065/066)
+
+---
+
+## 1. Design Grade Assessment
+
+### Recommendation: **A** (maintained, 17th consecutive A/A-)
+
+**Justification:**
+
+Sprint 12 delivered three high-quality changes that directly strengthen the PPT-style design philosophy:
+
+**Positive changes verified:**
+
+1. **Info Hierarchy (commit `fc4bafd`)**: The above-fold / progressive disclosure model is now fully realized. Business Card page shows only C48 Story Card → C37 Takeaways → C39 Deltas → C43 Health (or simple overview) above the fold. All other sections (one-liner, news, key metrics, dividend, revenue, valuation, risk, expert, historical) are wrapped in `st.expander(expanded=False)`. C36 Revenue Tree and C38 Compare Stories relocated to standalone pages (`revenue_tree.py` 73 lines, `compare_stories.py` 137 lines). This is the single biggest UX improvement since C105 — the page went from 18+ visible sections to 4 above-fold + clean expanders. D-005 (page overload risk) is now fully resolved.
+
+2. **User Feedback (commit `1495c7e`)**: Binary 👍/👎 buttons at page bottom. Clean implementation: `st.columns([1, 1, 6])` layout, session-state dedup, `st.toast()` confirmation, JSONL storage via `feedback_service.py`. Zero Streamlit dependency in service layer. The 👍/👎 pattern is minimalist and non-intrusive — doesn't disrupt the PPT-style flow. After feedback is given, shows "✅ 感謝你的回饋！" caption. Good UX.
+
+3. **8 Quick Debt Fixes (commit `658bd3f`)**: All verified — D-035 (peer cards → `_info_card()`), D-036 (risk dimension background → `#F8F9FA`), D-038 (API call moved out of view layer), D-044/047 (section headers use `_section_title()`), D-064/065/066 (inline HTML → `st.caption()` / `_info_card()`). Zero inline HTML in `event_dashboard.py` and `comprehension_check.py`.
+
+**Remaining concerns (not grade-blocking):**
+
+- **D-068 (NEW)**: `_render_story_card()` line 152 uses `unsafe_allow_html=True` for the health score indicator — a 7-line inline HTML block that should use a shared component. This is the only remaining inline HTML in the `_summary.py` section file.
+- **D-069 (NEW)**: `_helpers.py` has 4 `unsafe_allow_html=True` usages in `_render_risk_dimension()` (line 94), `_study_card()` (line 145), `_expert_card()` (line 158), `_scenario_card()` (line 171). These are pre-existing from Sprint 5 (D-041) and are consistent card-style inline HTML, but they bypass `_router_base.py` shared components.
+- **D-051**: `etf_browser.py` still has inline HTML for colored change values (lines 167, 427, 431). Pre-existing, not a Sprint 12 regression.
+- **D-052**: `_subsidiary_card()` still uses non-standard `background:white` styling. Established pattern, documented in Round 21.
+
+**Net assessment**: Sprint 12 significantly improved the Business Card page's information architecture. The expander pattern is now the standard for secondary content. The feedback feature is well-designed and non-intrusive. The 8 debt fixes continue the trend of eliminating inline HTML regressions. The grade is maintained at **A** for the 17th consecutive review.
+
+**Grade trajectory**: A (R21) → A (R22) → A- (R23) → A (R24) → A (R25) → **A (R26, maintained)**
+
+---
+
+## 2. Competitor Design Comparison (Focus: C33 Glossary & C48 Story Card)
+
+### Selected Competitors for C33/C48 Comparison
+
+| # | Competitor | Relevance | Key Design Insight |
+|---|-----------|-----------|-------------------|
+| 1 | **Stash** | 🔴 Highest | Tappable glossary — every financial term has a 1-sentence tooltip; "Learn Before Invest" gate |
+| 2 | **Investopedia** | 🔴 Highest | 10,000+ term glossary; each term has definition + related terms + article link |
+| 3 | **Simply Wall St** | 🔴 High | Snowflake analysis with hover tooltips; progressive disclosure via "Read More" |
+| 4 | **Finimize** | 🟡 Medium | ELI5 toggle; glossary terms highlighted inline with dotted underline |
+| 5 | **Public.com** | 🟡 Medium | Story cards per stock; key takeaways with emoji icons; social learning |
+
+### Glossary/Tooltip UI Patterns (for C33)
+
+| Pattern | Stock Explorer Current | Competitor Best Practice | Recommendation |
+|---------|----------------------|------------------------|----------------|
+| **Inline term highlighting** | ❌ None — terms are shown as-is | Finimize: dotted underline on terms, tap to see tooltip | Implement C33 as `st.tooltip()` on metric labels or hover-triggered `st.caption()` |
+| **Dedicated glossary panel** | ❌ None | Stash: bottom sheet with search | Consider a sidebar "辭典" panel for C33 Phase 2 |
+| **Metric value tooltips** | ✅ Partial — hover on snowflake shows values | Simply Wall St: hover on any metric shows definition + formula | Extend to all `_白话_card()` labels — add `❓` icon with tooltip |
+| **Contextual help** | ✅ Analogy text serves as explanation | Investopedia: "What does this mean?" expand on every metric | Already partially solved by analogy engine. C33 adds formal definitions |
+
+### Story Card / Summary Card Designs (for C48)
+
+Stock Explorer's C48 Story Card (implemented in `_summary.py`) compares well:
+
+| Dimension | Stock Explorer C48 | Competitors |
+|-----------|-------------------|-------------|
+| **Hero card at top** | ✅ `st.expander("📌 30 秒認識這家公司", expanded=True)` with metrics | Atom Finance: hero card with key metrics; Dhan: company header card |
+| **Key metrics row** | ✅ 3 `_白话_card()` in `st.columns(3)` | Simply Wall St: 4-metric grid with icons |
+| **Health indicator** | ✅ Color-coded health score (🟢/🟡/🔴) | Simply Wall St: snowflake (similar to C43) |
+| **Did You Know fact** | ✅ Rotating fact via `get_company_facts()` | Finimize: rotating "Did you know?" in daily briefing |
+| **One-liner** | ✅ `_info_card("一句話定位", ...)` | Public.com: company tagline |
+
+**Key insight**: C48 is well-positioned vs competitors. The main gap is that the story card is inside an `st.expander` — it should be the most prominent element on the page, not hidden behind an expandable container. Consider making it always expanded (no expander wrapper) or using a larger visual treatment.
+
+### PPT-Style vs Competitor Approaches
+
+Stock Explorer's PPT-style (one key point per page, charts > 60% of area, max 200 chars text) remains **unique** among all 90+ competitors analyzed. The closest competitor is Simply Wall St's infographic approach, but they still show more content per page. The expander pattern from Sprint 12 strengthens this differentiation by hiding secondary content behind progressive disclosure.
+
+---
+
+## 3. Sprint 13a Design Prerequisites
+
+### C33: Beginner Glossary / Term Tooltip System
+
+**Design Spec — Inline Tooltip Pattern (Stash/Investimize Model)**:
+
+```
+┌─────────────────────────────────────────────────┐
+│  📊 關鍵數字與配息                                │
+│                                                 │
+│  ┌──────────────┐  ┌──────────────┐            │
+│  │ 本益比 (PER)  │  │ 毛利率        │            │
+│  │ 15.3         │  │ 66.2%        │            │
+│  │ ❓ 每1股...   │  │ ❓ 每100元... │            │
+│  └──────────────┘  └──────────────┘            │
+│                                                 │
+│  ── On hover/click ──                           │
+│  ┌───────────────────────────────────────────┐  │
+│  │ 📖 本益比 (PER)                            │  │
+│  │ 股價 ÷ 每股盈餘。衡量你願意為每1元獲利     │  │
+│  │ 付多少價格。PER 15 = 你願意付15元買1元     │  │
+│  │ 的獲利。                                   │  │
+│  │ [了解更多 →]                               │  │
+│  └───────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────┘
+```
+
+**Components needed**:
+1. `_glossary_tooltip(term: str, definition: str, icon: str = "❓")` — renders a term label with a small ❓ icon that shows a tooltip on hover. Use `st.markdown()` with HTML `<span title="...">` or a custom tooltip component.
+2. `_glossary_panel()` — optional sidebar panel showing all terms for the current page. Triggered by a "📖 辭典" button in the sidebar.
+3. Glossary data source: `data/glossary.yaml` — structured term definitions with term, definition, related_terms, analogy.
+
+**UI Pattern Decision**: For Streamlit, the best approach is:
+- **Phase 1**: Add `st.tooltip()` or HTML `title` attribute to metric labels in `_白话_card()`. Show term name + 1-sentence definition on hover.
+- **Phase 2**: Add a "📖 辭典" expandable section at the bottom of each page with all terms used on that page.
+
+**Interaction**: Hover (desktop) or tap (mobile) on a term shows a tooltip with the definition. No page navigation required. Tooltip disappears after 2 seconds or on mouse leave.
+
+**Layout**: Inline with existing card components. The ❓ icon appears next to the metric label in `_白话_card()`. No new card type needed — this is an enhancement to existing `_白话_card()`.
+
+### C48: Company Story Card (Enhancement)
+
+C48 is already implemented in `_render_story_card()` (lines 38-157 of `_summary.py`). Sprint 13a should focus on **enhancement** rather than new implementation:
+
+**Current state**: Story card is inside `st.expander("📌 30 秒認識這家公司", expanded=True)` — this is a PPT-style violation (hiding the most important content behind an expander).
+
+**Design Spec for Enhancement**:
+
+```
+┌─────────────────────────────────────────────────┐
+│  📌 30 秒認識這家公司                            │
+│  ┌───────────────────────────────────────────┐  │
+│  │  TSMC `2330`                              │  │
+│  │  半導體製造業                                │  │
+│  │                                           │  │
+│  │  💡 一句話定位                             │  │
+│  │  全球最大的晶圓代工製造商，為蘋果、        │  │
+│  │  輝達等客戶生產晶片。                      │  │
+│  │                                           │  │
+│  │  ┌──────────┬──────────┬──────────┐      │  │
+│  │  │ 最近月營收 │ 本益比    │ 毛利率    │      │  │
+│  │  │ 2,832 億  │ 15.3     │ 66.2%    │      │  │
+│  │  │ 每100元.. │ 每1股..  │ 每100元.. │      │  │
+│  │  └──────────┴──────────┴──────────┘      │  │
+│  │                                           │  │
+│  │  🏥 整體健康度: 85/100 🟢 健康             │  │
+│  │                                           │  │
+│  │  🤔 你知道嗎？                            │  │
+│  │  台積電佔台股加權指數權重約 30%...         │  │
+│  └───────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────┘
+```
+
+**Key changes for Sprint 13a**:
+1. **Remove the `st.expander` wrapper** — the story card should be always visible as the first content element (after the toggle). This is the single most important C48 design fix.
+2. **Replace inline HTML health indicator** (line 152) with a shared `_health_score_card()` component in `_router_base.py`.
+3. **Add C33 tooltips** to the 3 key metrics in the story card — each metric label should have a ❓ icon with glossary definition.
+
+**Information hierarchy** (C48 card internal):
+1. Company name + industry (largest text)
+2. One-liner positioning (`_info_card`)
+3. 3 key metrics (`_白话_card` in 3 columns) — with C33 tooltips
+4. Health score indicator (compact, centered)
+5. "Did You Know?" fact (`_info_card`)
+
+---
+
+## 4. New Design Issues
+
+### D-068: Story Card Health Indicator Uses Inline HTML (P2)
+- **Severity**: P2
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 26
+- **Description**: `_render_story_card()` in `_summary.py` (lines 144-153) uses `unsafe_allow_html=True` for the health score indicator — a 7-line inline HTML block with `background:#F8F9FA;border-radius:10px`. This is the only remaining inline HTML in the `_summary.py` section file. It should use a shared component from `_router_base.py`.
+- **Affected Files**: `src/pages/business_card/_sections/_summary.py` lines 144-153
+- **Proposed Fix**: Create `_health_score_card(score, label)` in `_router_base.py` with standardized card styling. Replace the inline HTML block.
+- **Effort**: 0.5h
+
+### D-069: _helpers.py Card Components Bypass _router_base.py (P2)
+- **Severity**: P2
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 26
+- **Description**: `_helpers.py` has 4 card-rendering functions (`_render_risk_dimension`, `_study_card`, `_expert_card`, `_scenario_card`) that use inline HTML with `unsafe_allow_html=True` instead of calling shared components from `_router_base.py`. While these are consistent in style (all use `#F8F9FA` background, `border-radius:12px`, `border-left:4px solid`), they create a parallel set of card components that aren't documented in the design system. `_render_risk_dimension()` is particularly notable since it's used in the business card page's risk section.
+- **Affected Files**: `src/pages/business_card/_helpers.py` lines 85-95, 136-172
+- **Proposed Fix**: Either (a) replace these with calls to `_info_card()` / `_summary_card()` from `_router_base.py`, or (b) move them to `_router_base.py` and document in the design system as specialized card variants.
+- **Effort**: 1-2h
+
+### D-070: C48 Story Card Hidden Behind Expander (P1)
+- **Severity**: P1
+- **Added**: 2026-06-17
+- **Source**: Design Review Round 26
+- **Description**: The C48 Story Card is wrapped in `st.expander("📌 30 秒認識這家公司", expanded=True)` (line 127 of `_summary.py`). While `expanded=True` means it's visible by default, the expander UI adds visual chrome (the ▼ arrow, the collapsible frame) that contradicts the PPT-style principle. The story card is the most important content element on the Business Card page — it should be rendered as a prominent, always-visible hero section, not hidden inside a collapsible container. This also affects the ten-second test: a novice seeing an expander might not realize they should click it.
+- **Affected Files**: `src/pages/business_card/_sections/_summary.py` line 127
+- **Proposed Fix**: Remove the `st.expander` wrapper. Render the story card content directly as a prominent section with a `_section_title("📌 30 秒認識這家公司")` header. Use a `_summary_card()` or a new `_hero_card()` component for the container.
+- **Effort**: 1h
+- **Related**: This is the most important C48 design fix for Sprint 13a.
+
+### Verification of Sprint 12 Debt Fixes:
+
+| ID | Description | Status | Notes |
+|----|------------|--------|-------|
+| D-035 | C41 Peer Cards inline HTML | ✅ RESOLVED | Already uses `_info_card()`. Verified. |
+| D-036 | C44 Risk Dimension non-standard bg | ✅ RESOLVED | `background:#F8F9FA` confirmed. |
+| D-038 | C41 API in view layer | ✅ RESOLVED | `all_info` param pattern confirmed. |
+| D-044 | Read Next header | ✅ RESOLVED | Uses `_section_title()`. |
+| D-047 | Share section header | ✅ RESOLVED | Uses `_section_title()`. |
+| D-064 | Key Concept inline HTML | ✅ RESOLVED | Uses `st.caption()`. |
+| D-065 | Disclaimer inline HTML | ✅ RESOLVED | Uses `st.caption()`. |
+| D-066 | Adaptive Banner inline HTML | ✅ RESOLVED | Uses `_info_card()`. |
+
+---
+
+## 5. Summary of Round 26 Findings
+
+### Design Grade: **A** (maintained, 17th consecutive)
+
+Sprint 12's Info Hierarchy is a landmark UX improvement — the Business Card page now truly follows the PPT-style "one key point per page" principle with 4 above-fold sections and clean progressive disclosure. The feedback feature is well-designed. 8 debt fixes continue the inline HTML elimination trend.
+
+### Competitor Key Takeaways
+1. **Glossary tooltips are table stakes** — Stash, Investopedia, Finimize all have them. C33 is overdue.
+2. **C48 Story Card is competitive** but should be always visible (not in expander).
+3. **PPT-style + progressive disclosure** is now a stronger differentiator than ever — competitors show more content per page.
+
+### Sprint 13a Design Specs Delivered
+- C33 Glossary: Inline tooltip pattern, `_glossary_tooltip()` component, `data/glossary.yaml` data source
+- C48 Enhancement: Remove expander wrapper, replace inline HTML health indicator, add C33 tooltips to metrics
+
+### New Design Issues: 3
+- D-068: Story card health indicator inline HTML (P2)
+- D-069: _helpers.py card components bypass _router_base.py (P2)
+- D-070: C48 story card hidden behind expander (P1) — **most important fix for Sprint 13a**
+
+---
+
+*This section was added by the Design Reviewer in Round 26 (2026-06-17). Next update: After Sprint 13a feature implementation.*
 
 # Round 24 Design Assessment (2026-06-15, after Sprint 10 Completion)
 
