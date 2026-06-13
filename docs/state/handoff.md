@@ -26,7 +26,7 @@
 - **Commits**: `ca49d2c`, `5e7fde8`, `84142f5`
 
 ## Next Cycle
-🔧 Development Round 36 Complete → 🔍 Review Round 36 → Sprint 17 (C07 Full Thresholds + C134 Change Explanations + C29 Explain Any Metric + C14 Full Radar)
+🔧 Development Round 36 Complete → 💡 Discussion Round 36 Complete → 🔧 Development Round 37 (Sprint 17: C14 + C134 + C07) → 🔍 Review Round 37
 
 ---
 
@@ -178,6 +178,12 @@
 **Challenger**: ✅ CONFIRMED with 5 revisions
 **Key Decisions**: C28 MVP (events + case studies), C07 settings skeleton started, D5 LLM abstraction layer built, data seeded, empty state handling, C134 deferred to Sprint 17
 **Full details**: docs/state/handoff_discuss_r35.md
+
+## 💡 Discussion Section (Round 36 — 2026-06-14)
+**Topic**: Sprint 17 Planning & Scope Validation — C14 Full Radar + C134 Change Explanations + C07 Wire Thresholds
+**Challenger**: ✅ CONFIRMED with 6 revisions
+**Key Decisions**: C14 → C134 → C07 execution order (reversed from initial); C07 de-scoped (no volume detection); C14 spec required before implementation; C39 regression tests before C134 refactoring; settings accessibility spike before C07; C29 deferred to Sprint 18; 22-30h base + 6h buffer
+**Full details**: docs/state/handoff_discuss_r36.md
 
 ## Archive
 See git history for previous rounds and development sections.
