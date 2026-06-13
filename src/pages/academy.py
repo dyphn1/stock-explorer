@@ -239,7 +239,9 @@ def _render_academy(client: FinMindClient):
     st.markdown("")
 
     # Progress bar
-    progress = get_progress()
+    if "academy_progress" not in st.session_state:
+        st.session_state["academy_progress"] = {}
+    progress = get_progress(st.session_state["academy_progress"])
     completion_rate = get_completion_rate(progress)
     all_lessons = get_all_lessons()
     total_lessons = len(all_lessons)

@@ -160,20 +160,19 @@ def check_answer(lesson_id: str, question_id: str, selected_key: str) -> dict[st
 
 # -- Progress tracking -------------------------------------------
 
-def get_progress() -> dict[str, Any]:
-    """Get the current academy progress from st.session_state.
+def get_progress(progress_dict: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Get the current academy progress.
+
+    Args:
+        progress_dict: The academy_progress dict (from st.session_state).
+                       If None, returns an empty dict (safe for non-Streamlit contexts).
 
     Returns:
         Dict mapping lesson_id -> {"completed": bool, "score": float, "completed_at": str}.
     """
-    try:
-        import streamlit as st
-        if "academy_progress" not in st.session_state:
-            st.session_state["academy_progress"] = {}
-        return st.session_state["academy_progress"]
-    except Exception:
-        logger.warning("Streamlit not available; returning empty progress dict.")
+    if progress_dict is None:
         return {}
+    return progress_dict
 
 
 def mark_lesson_complete(progress_dict: dict[str, Any], lesson_id: str, score: float) -> None:
