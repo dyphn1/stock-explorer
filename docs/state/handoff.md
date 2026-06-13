@@ -146,7 +146,13 @@ Sprint 11 dev completed. 5 commits delivered: C117 + C116 + R3 + D-067 + D-071.
 All verifications pass: L0 95/95, L1 18/18, Tests 149/149.
 Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free.
 
-## 💡 Discussion Section (Round 27 — 2026-06-18)
+## 💡 Discussion Section (Round 29 — 2026-06-18)
+**Topic**: Sprint 14 Scope Validation — C40 Mode Toggle + C126 Moat Comparison + C47 Education Academy + C125 stretch
+**Challenger**: ✅ CONFIRMED with 7 revisions
+**Key Decisions**: C40→C126→C47 execution order; 5 complete lessons (min 3) with ten-second test quality gate; C125 stretch goal; session_state disclaimer; D-005 remediation via C40; C123 deferred (data blocker)
+**Full details**: docs/state/handoff_discuss_r29.md
+
+## 💡 Discussion Section (Round 27 — 2026-06-18) [ARCHIVED]
 **Topic**: Sprint 13b Scope Validation — C46 Moat Analysis + C36 Revenue Tree
 **Challenger**: ✅ CONFIRMED with 2 revisions
 **Key Decisions**: Full scope both features; C36 first then C46; Day 2 go/no-go gate; scoring rubric required before curation; pie chart default for C36
@@ -270,7 +276,7 @@ Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free.
 - Add moat analysis page spec
 
 ## Next Cycle
-✅ Sprint 13b COMPLETE → 🔍 Review Round 29 (Sprint 13b Post-Mortem) OR 💡 Discussion Round 29 (Sprint 14 scope: C47 Education Academy + C40 Mode Toggle + C123/C125/C126)
+✅ Discussion Round 29 COMPLETE → 🔧 Development Sprint 14 (C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy + C125 stretch) → 🔍 Review Round 30
 
 ## Archive (Previous Rounds)
 - Round 24 Review: docs/state/review_report_r24.md | Sprint 10 verified, Sprint 11 planned
