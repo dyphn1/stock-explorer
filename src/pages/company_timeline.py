@@ -94,12 +94,7 @@ def render_company_timeline(data: dict, client):
         chronological = list(reversed(events))
 
         # 顯示事件計數
-        st.markdown(
-            f"<div style='color:#7F8C8D;font-size:0.85rem;'>"
-            f"從過去一年中找到 <b>{len(events)}</b> 個事件"
-            f"</div>",
-            unsafe_allow_html=True,
-        )
+        st.caption(f"從過去一年中找到 **{len(events)}** 個事件")
         st.markdown("")
 
         for event in chronological:
