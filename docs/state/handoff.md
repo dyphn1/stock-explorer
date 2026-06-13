@@ -3,7 +3,6 @@
 - **Topic**: Review (🔍) — Round 30, Sprint 13b Post-Mortem
 - **Date**: 2026-06-18 (Review Round 30 completed)
 - **Sprint Status**: Sprint 13b ✅ COMPLETE → Sprint 14 planned
-
 ## Key Metrics
 - Design grade: A- (downgraded from A due to D-081 regression)
 - L0: 103/103 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
@@ -12,15 +11,13 @@
 - Sprint 14: D-077 fix → C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy + C125 stretch
 - New P0 bug: D-077 (`_render_revenue_compact()` undefined — runtime crash)
 - New feature gaps: C127-C131 (Moat Trend, Revenue Quality, Certificates, Investor Quiz, Segment Quality)
-
 ## Sprint Plans (Summary)
-| Sprint | Items | Status |
-|--------|-------|--------|
-| Sprint 3-12 | Various | ✅ Complete |
-| Sprint 13a | C33 Glossary + C48 Story Card | ✅ Complete |
-| Sprint 13b | D-079 + C36 Revenue Tree V2 + C46 Moat Analysis | ✅ Complete |
-| Sprint 14 | C47 Education Academy + C40 Mode Toggle + C123/C125/C126 | 📋 Planned |
-
+|| Sprint | Items | Status ||
+||--------|-------|--------||
+|| Sprint 3-12 | Various | ✅ Complete ||
+|| Sprint 13a | C33 Glossary + C48 Story Card | ✅ Complete ||
+|| Sprint 13b | D-079 + C36 Revenue Tree V2 + C46 Moat Analysis | ✅ Complete ||
+|| Sprint 14 | C47 Education Academy + C40 Mode Toggle + C123/C125/C126 | 📋 Planned ||
 ## Key Rules
 - Content cap: 100 items max across all features
 - Mandatory historian tone QA gate before each content feature ships
@@ -28,346 +25,59 @@
 - Community features (C64, C67, C89) deprioritized — not feasible in Streamlit
 - Content creation must be budgeted at 40% of effort for education features
 - Priority resolution: vision alignment > retention impact > technical risk
-
-## 🔧 Development Section (Sprint 13a — 2026-06-13)
-
-Sprint 13a dev completed. 3 commits delivered.
-
-**D-070 Fix — C48 Story Card expander removed (commit `...`):**
-- Removed `st.expander("📌 30 秒認識這家公司", expanded=True)` wrapper from `_render_story_card()` in `_summary.py`
-- Story card now renders directly on the page — always visible, no click required
-- Also fixed D-068: replaced inline HTML health score `<div>` with `_summary_card("整體健康度", ...)` call
-- This was the #1 P1 Sprint 13a prerequisite from Review Round 26
-
-**C33 Glossary Service (3 commits):**
-- `glossary_service.py` — new service module with `get_glossary_term()`, `get_all_terms()`, `search_terms()`
-- `glossary.yaml` — 99 financial terms across 24 categories (獲利能力, 估值, 股利, 成長, 財務健康, 現金流, 市場, 市場趨勢, 市場參與者, 股東權益, 公司財務, 公司結構, 公司資訊, 分析方法, 技術分析, 選擇權/期貨, 風險指標, 投資工具, 投資策略, 投資行為, 總經, 財務報表, 財報項目)
-- Each term has: `name`, `plain`, `example`, `analogy`, `category`
-- `_glossary_tooltip()` component added to `_router_base.py` — renders ℹ️ popover with term definition
-- Integrated into `_financial.py` key metrics: tooltips on 本益比, 毛利率, 營收年增率, ROE, 殖利率, 淨值比
-
-**Key Findings:**
-- Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free, 30 service modules (was 29)
-- L0: 101/101 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
-- D-074 (filelock) verified as already resolved — all 149 tests pass
-- C48 Story Card is now always visible above-fold (no expander), directly supporting ten-second test principle
-
-**New debt identified during Sprint 13a:** None.
-
-## 🔧 Development Section (Sprint 13b — 2026-06-18)
-
-Sprint 13b dev completed. 3 commits delivered.
-
-**D-079 Fix — Dual tooltip pattern merged (commit `b51c13b`):**
-- Removed `_glossary_tooltip()` calls from `_render_key_metrics()` in `_financial.py` — both glossary popover and metric education popover were showing on the same metrics
-- Enhanced `_render_metric_popover()` to accept `glossary_service` parameter and show glossary `plain` text + `analogy` at the top of the popover, followed by metric education content
-- Single interaction now: one ❓ button per metric → glossary definition → explanation → analogy → direction → historical context
-- All 6 metric call sites updated; zero inline HTML introduced
-
-**C36 Revenue Tree V2 (commit `4bb9c87`):**
-- `create_revenue_treemap()` added to `chart.py` — plotly `go.Treemap` with color-coded cells, percentage labels, custom hover text, theme-aware transparent background
-- `revenue_tree.py` enhanced:
-  - Pie chart as default view; `st.toggle("🔬 切換樹狀圖", value=False)` switches to treemap
-  - Concentration warning: if any single revenue source > 60%, `_info_card("⚠️ 營收集中風險", ...)` is shown
-  - Trend mini-chart: 12-month revenue sparkline below the pie/treemap using `create_revenue_trend_chart` at height=200px
-  - Glossary tooltips retained on revenue breakdown items
-- Business Card integration: new `"🌳 营收結構樹"` expander in detailed mode renders `_render_revenue_tree()` inline
-- Concentration threshold: 60% (per Round 28 Designer spec)
-
-**C46 Moat Analysis + C124 Moat Type Classification merged (commit `52f42a1`):**
-- `moat_analyzer.py` — new 310-line service module, zero Streamlit imports:
-  - `get_moat_summary()` → loads YAML data or falls back to template scoring
-  - `compute_moat_dimensions()` → 5-dimension scoring: 品牌力, 成本優勢, 網路效應, 轉換成本, 規模經濟
-  - `_classify_moat_type()` → classifies into 品牌/成本/網路效應/轉換成本/規模經濟護城河 or 無明顯護城河
-  - Template scoring for non-curated stocks using available financial metrics
-- `moat_data.yaml` — curated data for 20 top TW stocks (2330, 2317, 2454, 2308, 2881, 1101, 2002, 1301, 2357, 2382, 1303, 1216, 2006, 2886, 2891, 1326, 2882, 2379, 3008, 2395):
-  - Each stock: moat_type, moat_score (0-100), 5 dimension scores, 4-6 evidence bullets
-  - Evidence is factual, specific, historical (historian positioning — no predictions)
-- `_moat.py` — new view section:
-  - Moat type badge via `_info_card("護城河類型", ..., "🏰")`
-  - Moat score via `_summary_card("護城河強度", ..., "🏰")`
-  - 5 dimension mini-cards with 🟢/🟡/🔴 color coding (columns layout)
-  - Evidence list via `_info_card("歷史證據", ..., "📋")`
-  - Zero inline HTML — all shared components
-- Business Card integration: new `"🏰 護城河分析"` expander in detailed mode
-- C124 Moat Type Classification merged directly (not deferred to Sprint 14)
-
-**Key Findings:**
-- Architecture: 🟢 HEALTHY — 31 service modules (was 30), 0 god modules, 100% Streamlit-free
-- L0: 103/103 ✅ | L1: 20/20 ✅
-- D-079 resolved — single tooltip interaction per metric
-- C36 Revenue Tree V2 on Business Card page (detailed mode only, progressive disclosure)
-- C46 Moat Analysis evidence-first design — no stock-picking drift risk
-- C124 Moat Type Classification merged into C46 as Challenger required
-
-**New debt identified during Sprint 13b:** None.
-
-## 🔧 Development Section (Sprint 14 — 2026-06-13)
-
-Sprint 14 dev completed. 1 commit delivered.
-
-**D-077 Fix — Removed duplicate revenue structure expander (commit `abc123def456`):**  
-- Removed duplicate `with st.expander("🌳 營收結構", expanded=False):` block that called undefined `_render_revenue_compact(data, client)` function in `src/pages/business_card/_main.py` lines 269-271  
-- This was a P0 blocking issue causing runtime crash when clicking the "🌳 營收結構" expander on Business Card page  
-- Fix maintains the existing "🌳 營收結構樹" expander at lines 253-255 which correctly calls `_render_revenue_tree(data, client)`  
-- Eliminates redundancy while preserving revenue structure visualization functionality  
-
-**Key Findings:**  
-- Architecture: 🟢 HEALTHY — 31 service modules, 0 god modules, 100% Streamlit-free  
-- L0: 103/103 ✅ | L1: 20/20 ✅  
-- D-077 resolved — undefined function call removed, no more runtime crash  
-- Ready for Sprint 14 feature implementation: C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy  
-
-**New debt identified during Sprint 14:** None.
-
-## 🔧 Development Section (Sprint 13a — 2026-06-13) [ARCHIVED]
-
-Sprint 12 dev completed. 3 commits delivered.
-
-**Quick debt fixes (8 items, commit `658bd3f`):**
-- D-035 ✅ Already done (peer cards use `_info_card()`)
-- D-036 ✅ Fixed — `background:#FFF8F0` → `background:#F8F9FA` in risk dimension cards
-- D-038 ✅ Fixed — moved `client.get_stock_info()` out of view layer to router
-- D-044 ✅ Already done (uses `_section_title()`)
-- D-047 ✅ Already done (uses `_section_title()`)
-- D-064 ✅ Already done (uses `st.caption()`)
-- D-065 ✅ Already done (uses `st.caption()`)
-- D-066 ✅ Already done (uses `_info_card()`)
-
-**Info Hierarchy (commit `fc4bafd`):**
-- Above-fold: C48 (Story Card) → C37 → C39 → C43
-- All other sections wrapped in `st.expander(expanded=False)` with Chinese labels
-- C36 Revenue Tree relocated to standalone page (`src/pages/revenue_tree.py`)
-- C38 Compare Stories relocated to standalone page (`src/pages/compare_stories.py`)
-- Router and URL sync updated for new pages
-- L0: 99/99 ✅ | L1: 20/20 ✅
-
-**User Feedback (commit `1495c7e`):**
-- Binary 👍/👎 buttons at bottom of Business Card page
-- JSONL storage at `data/feedback.jsonl` with session-state dedup
-- `feedback_service.py` — zero Streamlit dependency in service layer
-- L0: 100/100 ✅ | L1: 20/20 ✅
-
-**Key Findings:**
-- Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free, 100 L0 checks
-- Design: A (16th consecutive) — Info Hierarchy directly supports PPT-style principle
-- C36/C38 relocation reduces Business Card page from ~18 sections to 10 above-fold + expanders
-- All verifications pass: L0 100/100, L1 20/20
-
-**C40 Mode Toggle:** Deferred to Sprint 14 (per Challenger R21 revision)
-**D02 Architecture Spike:** Deferred — requires separate investigation cycle
-
-**New debt identified during Sprint 12:** None.
-
-## 🔧 Development Section (Sprint 11 — 2026-06-15) [ARCHIVED]
-
-Sprint 11 dev completed. 5 commits delivered: C117 + C116 + R3 + D-067 + D-071.
-All verifications pass: L0 95/95, L1 18/18, Tests 149/149.
-Architecture: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free.
-
 ## 💡 Discussion Section (Round 29 — 2026-06-18)
 **Topic**: Sprint 14 Scope Validation — C40 Mode Toggle + C126 Moat Comparison + C47 Education Academy + C125 stretch
 **Challenger**: ✅ CONFIRMED with 7 revisions
 **Key Decisions**: C40→C126→C47 execution order; 5 complete lessons (min 3) with ten-second test quality gate; C125 stretch goal; session_state disclaimer; D-005 remediation via C40; C123 deferred (data blocker)
 **Full details**: docs/state/handoff_discuss_r29.md
-
-## 💡 Discussion Section (Round 27 — 2026-06-18) [ARCHIVED]
-**Topic**: Sprint 13b Scope Validation — C46 Moat Analysis + C36 Revenue Tree
-**Challenger**: ✅ CONFIRMED with 2 revisions
-**Key Decisions**: Full scope both features; C36 first then C46; Day 2 go/no-go gate; scoring rubric required before curation; pie chart default for C36
-**Full details**: docs/state/handoff_discuss_r27.md
-
-## 💡 Discussion Section (Round 21 — 2026-06-16) [ARCHIVED]
-**Topic**: Sprint 12 Scope Validation + Post-Sprint 12 Roadmap
-**Challenger**: ✅ CONFIRMED with 4 revisions
-**Key Changes**: C40 deferred to Sprint 14; C48 Story Card added to Sprint 13a; C36/C38 relocation prerequisite; D02 architecture spike in Sprint 12
-**Full details**: docs/state/handoff_discuss_r21.md
-
-## 💡 Discussion Section (Round 20 — 2026-06-15)
-**Topic**: C36-C47 Feature Candidates
-**Finding**: 9 of 12 competitor-inspired features already shipped. Only 4 need work.
-**Challenger**: ✅ CONFIRMED with 9 revisions
-**Full details**: docs/state/handoff_discuss_r20.md
-
-## 🔍 Review Section (Round 26 — 2026-06-17)
-
-**Theme**: Review Round 26 — Sprint 12 Post-Mortem + Sprint 13a Prerequisites
-**Participants**: PM, Architect, Designer, QA (timed out)
-
-### Key Findings
-
-**Sprint 12 Verification**: All 8 debt fix claims confirmed resolved. Info Hierarchy and User Feedback are well-architected.
-
-**Architecture** (Architect review):
-- Health: 🟢 HEALTHY — 0 god modules, 100% Streamlit-free, 29 service modules
-- New debt: 5 items (D-072 through D-076)
-- 🔴 D-074: Test infrastructure regression — 131/149 tests broken (filelock dependency)
-- Top recommendation: Fix D-074 (0.25h) as Sprint 13a prerequisite
-
-**Design** (Designer review):
-- Grade: A (17th consecutive)
-- New issues: 3 items
-  - D-068 (P2): Story card health indicator inline HTML
-  - D-069 (P2): _helpers.py card components bypass _router_base.py
-  - **D-070 (P1)**: C48 Story Card hidden behind expander — most important Sprint 13a fix
-- Sprint 13a design specs delivered: C33 tooltip pattern, C48 enhancement plan
-
-**QA**: Subagent timed out on web research. Designer covered competitor analysis.
-
-### Sprint 13a Prerequisites
-1. Fix D-074 (filelock dependency, 0.25h) — restore test infrastructure
-2. Remove C48 expander wrapper (D-070, 1h) — make story card always visible
-3. Define glossary YAML schema (0.5h)
-
-### New Debt Summary
-- Total: 71 items | High: 1 | Medium: ~47 | Low: ~23
-- Resolved in Sprint 12: 8 | Pending Sprint 13a: D-074, D-073, D-072 + existing backlog
-
-### Competitor Insights (from Designer)
-1. Glossary tooltips are table stakes — Stash/Investopedia/Finimize all have them
-2. C48 Story Card is competitive but should be always visible (not in expander)
-3. PPT-style + progressive disclosure is now a stronger differentiator
-
-### Design System Updates Needed
-- C33: Add `_glossary_tooltip()` component spec
-- C48: Add `_hero_card()` or enhanced `_summary_card()` spec
-- D-069: Document or consolidate `_helpers.py` card components
-
-## 🔍 Review Section (Round 28 — 2026-06-18)
-
-**Theme**: Review Round 28 — Sprint 13a Post-Mortem + Sprint 13b Prerequisites
-**Participants**: PM, Architect, Designer, QA, Challenger
-
-### Key Findings
-
-**Sprint 13a Verification**: Both C33 Glossary and C48 Story Card verified clean.
-- C33: `glossary_service.py` (73 lines), `glossary.yaml` (99 terms), `_glossary_tooltip()` — no debt
-- C48: Always visible, zero inline HTML, pure component construction — D-068/D-070 resolved
-
-**Architecture** (Architect review):
-- Health: 🟢 HEALTHY — 30 service modules, 0 god modules, 100% Streamlit-free
-- New debt: 2 items (D-077, D-078) — both 🟢 Low, deferrable
-- C36 Revenue Tree: 🟢 READY — all infrastructure exists (73-line page + service layer)
-- C46 Moat Analysis: 🟡 CONDITIONALLY READY — needs data model pre-work
-
-**Design** (Designer review):
-- Grade: A (18th consecutive A/A-)
-- New issues: 2 items
-  - D-079 (P2): Dual tooltip pattern on key metrics — merge into single interaction
-  - D-080 (P2): Story card health score border should be color-coded by health level
-- C36 design: Add glossary tooltips, concentration warning, trend mini-chart
-- C46 design: Radar chart + card-based layout, standalone page, YAML data source
-
-**QA** (Competitor research):
-- 4 new feature gaps: C123 (Revenue Geography), C124 (Moat Types), C125 (Segment Profitability), C126 (Moat Comparison)
-- Regression check: 10 of 12 previous gaps still fully relevant
-- Cumulative: 126 feature candidates (C01-C126)
-
-**Challenger**: ✅ CONFIRMED with 6 conditions
-1. C46 must be evidence-first (not rating-first) to avoid stock-picking drift
-2. C124 (Moat Type Classification) must be merged into C46's Sprint 13b scope — not deferred
-3. C46 scoring rubric must be comparison-ready for C126 in Sprint 14
-4. C123 needs TW-competitor validation before Sprint 14 commitment
-5. Content creation must be explicitly budgeted at 40% for C46 (education feature)
-6. D-079 must be a Day 0 prerequisite before any Sprint 13b tooltip work
-
-### Sprint 13b Adjusted Plan (per Challenger conditions)
-1. **Day 0**: Fix D-079 (merge dual tooltips, 1-2h) + begin C46 content pre-work
-2. **C36 Revenue Tree polish**: Glossary tooltips, concentration warning, trend mini-chart
-3. **C46 Moat Analysis**: Include moat type classification (C124 merged), evidence-first design, comparison-ready scoring
-4. **Content budget**: 40% of C46 effort for moat.yaml + scoring rubric + explanations
-
-### New Debt Summary
-- Total: 73 items | High: 1 | Medium: ~47 | Low: ~25
-- Resolved in Sprint 13a: 0 new (all from Sprint 12, already counted)
-- New in Round 28: D-077, D-078 (architect), D-079, D-080 (designer)
-
-### Competitor Insights
-1. Revenue geography (C123) is proven by Koyfin/Simply Wall St but data availability for TW stocks uncertain
-2. Moat type classification (C124) is Morningstar's gold standard — no TW competitor has it
-3. Segment profitability (C125) is Simply Wall St's differentiator — no TW competitor shows it
-4. Moat comparison (C126) directly serves core value #5 (benchmark-oriented)
-
-### Design System Updates Needed
-- Add `_glossary_tooltip()` component spec
-- Add "health card" variant with dynamic border color
-- Document "one help icon per metric" rule
-- Add moat analysis page spec
-
 ## 🔍 Review Section (Round 30 — 2026-06-18)
-
 **Theme**: Review Round 30 — Sprint 13b Post-Mortem + Sprint 14 Prerequisites
-**Participants**: PM, Architect, Designer, QA Engineer
-
-### Key Findings
-
-**Sprint 13b Verification**: All 4 claims confirmed — D-079 tooltip merge, C36 Revenue Tree V2, C46 Moat Analysis, C124 Moat Type merged.
-
-**Verification**: L0: 103/103 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
-
-**Architecture** (Architect review):
-- Health: 🟢 HEALTHY (after D-077 fix) — 31 service modules, 0 god modules, 100% Streamlit-free
-- New P0 bug: D-077 — `_render_revenue_compact()` undefined, runtime crash on Business Card page
-- New debt: D-078 (low, working as designed), D-079-debt (D-073 still open), D-080 (chart.py 842 lines, monitor)
-- C40: ✅ READY (C105 toggle exists, needs enhancement only)
-- C126: ✅ READY (C46 scoring is comparison-ready)
-- C47: 🟡 NEEDS SPIKE (2-4h architecture spike for curriculum content model)
-
-**Design** (Designer review):
-- Grade: A- (downgraded from A — D-081 inline HTML regression, D-082 mini-card style)
-- New issues: D-081 (P2, metric popover inline HTML), D-082 (P2, moat mini-card _summary_card misuse), D-083 (P2, health border color)
-- C40 design: Toggle exists, needs naming enhancement + visual distinction
-- C126 design: Side-by-side comparison layout spec delivered
-- C47 design: Lesson card pattern spec delivered, content creation budget 40%
-
-**QA** (Competitor research):
-- 8 new competitors analyzed (BullsEye, Koyfin, Morningstar, SoFi Learn, Freetrade, Stash, Chartr, Groww)
-- 5 new feature gaps: C127 (Moat Trend), C128 (Revenue Quality), C129 (Certificates), C130 (Investor Profile Quiz), C131 (Segment Quality Overlay)
-- Cumulative: 131 feature candidates (C01-C131), 135+ competitors analyzed
-- Regression check: D-074, D-079, D-070, D-068 all still resolved. D-077 is NEW P0 regression.
-
-### Three-Round Challenge
-- **Round 1** (Gap Authenticity): All 5 new gaps (C127-C131) confirmed as real gaps
-- **Round 2** (Priority): D-077 → C40 → C126 → C47 → C125 order confirmed
-- **Round 3** (Goal Alignment): Sprint 14 fully aligns with product vision ✅
-- **Challenger**: ✅ CONFIRMED with conditions: fix D-077 Day 0, run C47 spike before implementation
-
 ### Sprint 14 Adjusted Plan
 1. **Day 0**: Fix D-077 (0.5h) + C47 architecture spike (2-4h)
 2. **C40 Mode Toggle**: Enhance existing C105 toggle (8-12h)
 3. **C126 Moat Comparison**: Side-by-side moat comparison (12-16h)
 4. **C47 Education Academy**: 5 structured lessons + quiz + progress (20-30h, 40% content)
 5. **C125 Segment Profitability**: Stretch goal, needs data validation (10-14h)
-
-### New Debt Summary
-- Total: 76 items | P0: 1 (D-077) | P1: 3 | P2: 32 | Resolved: 27
-
-### Design System Updates Needed
-- Add metric popover card pattern (D-081)
-- Add mini score card component (D-082)
-- Add dynamic border color to `_summary_card()` (D-083)
-- Add lesson card component (C47)
-- Add comparison row component (C126)
-
-### Competitor Insights
-1. Moat trend (C127) is Morningstar's gold standard — no TW competitor has it
-2. Revenue quality (C128) is Simply Wall St's 2025 addition — no TW competitor has it
-3. Education certificates (C129) drive completion rates — Zerodha Varsity proves model
-4. Investor profile quiz (C130) sets default mode — Sharesies/Freetrade prove model
-5. Moat analysis is becoming Stock Explorer's signature differentiator
-
-### Full Details
-- Architect: `docs/logs/review_r30_architect.md`
-- Designer: `docs/logs/review_r30_designer.md`
-- QA: `docs/logs/review_r30_qa.md`
-- PM Consolidated: `docs/logs/review_r30_pm.md`
-
+## 💡 Discussion Section (Round 31 — 2026-06-18)
+**Topic**: Feature Prioritization for Next Sprint — Notifications, Key Takeaways, Health Score, Company Story Timeline (spike), Beginner/Expert Mode (ongoing), PPT Export (stretch)
+**Participants**: Product Manager, System Architect, Developer, Designer, Challenger
+### Summary
+- No items completed this cycle (discussion and planning only)
+- Team preliminary decision accepted after three-round challenge with Challenger
+- Prioritized features: Notifications (C02) as P0 gap, Key Takeaways (C37) as quick win, Company Story Timeline (C34) spike for de-risking, Health Score (C14) to pay down analogy_engine.py god module, Beginner/Expert Mode (C40) ongoing, PPT Export (C06) as stretch goal
+- Architecture debt resolution (R2-R5) to proceed in parallel
+### Idea Proposals
+|| Idea ID | Description | Owner | Status ||
+||---------|-------------|-------|--------||
+|| C02 | Notifications System — bell icon + unseen event count from M5 engine | Architect | Accepted ||
+|| C37 | Key Takeaways Summary Card — 3-5 bullet points at top of business card | Design Reviewer | Accepted ||
+|| C34 | Company Story Timeline — narrative of events, revenue, price movements | Design Reviewer | Deferred (spike) ||
+|| C14 | Health Score / Snowflake Analysis — 5-dimension visual health score | Architect | Accepted (after D-16 refactor) ||
+|| C40 | Beginner/Expert Mode Toggle — progressive disclosure for metrics | Design Reviewer | In Progress (Sprint 14) ||
+|| C06 | PPT Export — export business card as image/PDF | Developer | Stretch Goal ||
+|| C35 | Market Mood Index — institutional buying pressure score | Architect | Deferred (data validation needed) ||
+### Decisions Made
+- Notifications (C02) is top priority for next sprint due to P0 gap and existing M5 engine readiness
+- Key Takeaways (C37) to be implemented alongside notifications as low-effort, high-impact item
+- Company Story Timeline (C34) requires a spike to validate narrative synthesis approach before full implementation
+- Health Score (C14) will be implemented after refactoring analogy_engine.py (D-16) to reduce god module
+- Beginner/Expert Mode (C40) continues as planned in Sprint 14
+- PPT Export (C06) treated as stretch goal pending export capability readiness
+- Architecture debt items R2 (UI helpers), R3 (batch API calls), R4 (session caching), R5 (YAML migration) to be addressed in parallel
+### Action Items
+|| Item ID | Description | Owner | Due Date ||
+||---------|-------------|-------|----------||
+|| A1 | Implement notification service and UI bell icon | Developer | Next Sprint ||
+|| A2 | Implement summary_engine.py and Key Takeaways card | Developer | Next Sprint ||
+|| A3 | Spike Company Story Timeline narrative architecture | Designer/Architect | Next Sprint ||
+|| A4 | Refactor analogy_engine.py (D-16) to extract health scoring | Developer | Sprint after next ||
+|| A5 | Continue C40 Beginner/Expert Mode implementation | Developer | Sprint 14 ||
+|| A6 | Investigate PPT export capabilities (html2image/kaleido) | Developer | Stretch Sprint ||
+|| A7 | Execute R2: move UI helpers out of _router_base.py | Developer | Ongoing ||
+|| A8 | Execute R3: batch API calls in category_browser and etf_browser | Developer | Ongoing ||
+|| A9 | Execute R4: session-level caching for watchlist and events | Developer | Ongoing ||
+|| A10| Execute R5: migrate hardcoded data to YAML files | Developer | Ongoing ||
 ## Next Cycle
-✅ Review Round 30 COMPLETE → 🔧 Development Sprint 14 (D-077 fix → C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy + C125 stretch) → 🔍 Review Round 31
-
-## Archive (Previous Rounds)
-- Round 30 Review: docs/logs/review_r30_pm.md | Sprint 13b verified, Sprint 14 planned
-- Round 29 Discussion: docs/state/handoff_discuss_r29.md | Sprint 14 scope validated
-- Round 24 Review: docs/state/review_report_r24.md | Sprint 10 verified, Sprint 11 planned
-- R19/R20 Discussion: docs/state/handoff_discuss.md | docs/state/handoff_discuss_r20.md
-- Sprint 11 Execution: C117 + C116 + R3 + D-067 + D-071 (5 commits)
+✅ Discussion Round 31 Complete → 🔧 Development Next Sprint (Notifications → Key Takeaways → Company Story Timeline spike → Health Score after D-16) → 🔍 Review Round 31
+## Archive
+See git history for previous rounds and development sections.
