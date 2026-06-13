@@ -38,13 +38,7 @@ def _render_metric_popover(label: str, value: str, analogy: str, metric_name: st
     # Render the card with an inline help button
     col_card, col_help = st.columns([5, 1])
     with col_card:
-        st.markdown(f"""
-        <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
-            <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
-            <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{value}</div>
-            <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{analogy}</div>
-        </div>
-        """, unsafe_allow_html=True)
+        _白话_card(label, value, analogy)
     with col_help:
         if st.button("❓", key=popover_key, help="點擊了解這個指標"):
             # Use session_state to track which popover is open

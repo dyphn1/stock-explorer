@@ -1,7 +1,7 @@
 """Business card section: Moat Analysis (C46 + C124)."""
 import streamlit as st
 from src.services.moat_analyzer import get_moat_summary
-from src.pages._router_base import _info_card, _summary_card
+from src.pages._router_base import _info_card, _summary_card, _mini_score_card
 
 
 def _score_color(score):
@@ -46,7 +46,7 @@ def _render_moat(data: dict, client) -> None:
         score_val = dims.get(dim_name, 0)
         color_emoji = _score_color(score_val)
         with cols[i]:
-            _summary_card(f"{color_emoji} {dim_name}", f"{score_val:.0f} 分", "")
+            _mini_score_card(f"{color_emoji} {dim_name}", score_val)
 
     # Evidence list
     evidence = summary.get("evidence", [])

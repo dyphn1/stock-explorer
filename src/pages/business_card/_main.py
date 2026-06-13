@@ -289,6 +289,12 @@ def _render_business_card(data: dict, client):
                 navigate_to(page="同業比較故事", stock_id=stock_id)
             st.caption("與同業的敘事比較分析")
 
+        col_c, col_d = st.columns(2)
+        with col_c:
+            if st.button("🏰 護城河比較", key="nav_moat_comparison", use_container_width=True):
+                navigate_to(page="護城河比較", stock_id=stock_id)
+            st.caption("與同業的護城河深度比較")
+
     # ── Footer sections (always shown) ──
     _render_feedback_section(data)
     _render_share_section(data, client)

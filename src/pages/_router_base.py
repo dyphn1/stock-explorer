@@ -94,11 +94,34 @@ def _白话_card(label: str, value: str, analogy: str = ""):
     </div>
     """, unsafe_allow_html=True)
 
-def _summary_card(title: str, content: str, icon: str = "📋"):
+def _summary_card(title: str, content: str, icon: str = "📋", border_color: str = "#F39C12"):
     st.markdown(f"""
-    <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid #F39C12;margin:0.5rem 0;">
+    <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid {border_color};margin:0.5rem 0;">
         <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
         <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;line-height:1.6;">{content}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def _mini_score_card(label: str, score: float) -> None:
+    """Render a mini score card with score-based border color.
+
+    Args:
+        label: Display label (e.g. dimension name or company name).
+        score: Numeric score (0-100). Determines border color:
+            green (#27AE60) >= 70, amber (#F39C12) >= 40, red (#E74C3C) < 40.
+    """
+    if score >= 70:
+        score_color = "#27AE60"
+    elif score >= 40:
+        score_color = "#F39C12"
+    else:
+        score_color = "#E74C3C"
+
+    st.markdown(f"""
+    <div style="background:#F8F9FA;border-radius:8px;padding:0.5rem;border-left:4px solid {score_color};text-align:center;">
+        <div style="font-size:0.75rem;color:#7F8C8D;">{label}</div>
+        <div style="font-size:1.2rem;font-weight:700;color:#2C3E50;">{score:.0f}</div>
     </div>
     """, unsafe_allow_html=True)
 
