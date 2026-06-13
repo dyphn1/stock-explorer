@@ -15,7 +15,8 @@ from src.services.analogy_engine import (
 )
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.metric_education import get_metric_explanation, get_top_metrics_for_education
-from src.pages._router_base import _白话_card, _info_card
+from src.pages._router_base import _白话_card, _info_card, _glossary_tooltip
+from src.services import glossary_service
 
 
 def _render_metric_popover(label: str, value: str, analogy: str, metric_name: str, metric_value: float, stock_id: str) -> None:
@@ -69,12 +70,14 @@ def _render_key_metrics(data: dict, client) -> None:
     with col1:
         if latest_per_pbr and latest_per_pbr.get("PER"):
             per = latest_per_pbr["PER"]
+            _glossary_tooltip("本益比", glossary_service)
             _render_metric_popover(
                 "本益比 (PER)", f"{per:.1f}", get_per_analogy(per),
                 "PER", per, stock_id,
             )
         elif extra_metrics.get("gross_margin"):
             gm = extra_metrics["gross_margin"]
+            _glossary_tooltip("毛利率", glossary_service)
             _render_metric_popover(
                 "毛利率", f"{gm:.1f}%", get_gross_margin_analogy(gm),
                 "gross_margin", gm, stock_id,
@@ -85,6 +88,8 @@ def _render_key_metrics(data: dict, client) -> None:
             rev = monthly_revenue.iloc[-1]["revenue"] / 1e8
             yoy = extra_metrics.get("revenue_yoy")
             yoy_analogy = get_yoy_analogy(yoy) if yoy is not None else ""
+            if yoy is not None:
+                _glossary_tooltip("營收年增率", glossary_service)
             _render_metric_popover(
                 "最近月營收", f"{rev:,.0f} 億",
                 get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""),
@@ -92,6 +97,7 @@ def _render_key_metrics(data: dict, client) -> None:
             )
         elif extra_metrics.get("roe"):
             roe = extra_metrics["roe"]
+            _glossary_tooltip("ROE", glossary_service)
             _render_metric_popover(
                 "ROE", f"{roe:.1f}%", get_roe_analogy(roe),
                 "ROE", roe, stock_id,
@@ -100,12 +106,14 @@ def _render_key_metrics(data: dict, client) -> None:
     with col3:
         if latest_per_pbr and latest_per_pbr.get("dividend_yield"):
             dy = latest_per_pbr["dividend_yield"]
+            _glossary_tooltip("殖利率", glossary_service)
             _render_metric_popover(
                 "殖利率", f"{dy:.2f}%", get_dividend_analogy(dy),
                 "dividend_yield", dy, stock_id,
             )
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
+            _glossary_tooltip("淨值比", glossary_service)
             _render_metric_popover(
                 "淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr),
                 "PBR", pbr, stock_id,
