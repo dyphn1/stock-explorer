@@ -56,6 +56,7 @@ from src.pages.business_card._sections import (
 from src.pages.business_card._study_log import _render_study_log
 from src.pages.business_card._expert_analysis import _render_expert_analysis
 from src.pages.business_card._historical_scenarios import _render_historical_scenarios
+from src.pages.business_card._sections._moat import _render_moat
 from src.services.feedback_service import record_feedback, get_feedback_count
 
 
