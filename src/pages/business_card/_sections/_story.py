@@ -190,3 +190,13 @@ def _render_read_next(data: dict, client, all_info=None) -> None:
         ]
         for _fact in _remaining_facts[:2]:
             _info_card("💡 你知道嗎？", _fact, "🤔")
+
+    # ── C28: Story Timeline nav button ──────────────────────
+    st.markdown("**🔬 更多分析**")
+    if st.button(
+        "📅 完整故事時間軸",
+        key=f"nav_story_timeline_{stock_id}",
+        use_container_width=True,
+    ):
+        navigate_to(page="完整故事時間軸", stock_id=stock_id)
+    st.caption("查看公司完整的故事時間軸，包含事件、案例研究與歷史里程碑")
