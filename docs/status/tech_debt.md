@@ -680,20 +680,8 @@ Sprint 9 plan: C98 (Event Interpretation Engine) + C101 (Comprehension Check Qui
 ### 2. New Architecture Debt from Sprint 10
 
 #### D-067: `company_timeline.py` has 1 remaining `unsafe_allow_html=True` usage
-- **Effort**: 0.1h (single replacement)
-- **Severity**: 🟢 Low
-- **Description**: `company_timeline.py` lines 97-102 use `unsafe_allow_html=True` to render a styled event count div with bold text. This is the only remaining instance of inline HTML in the page aside from `timeline_controls.py`.
-```python
-st.markdown(
-    f"<div style='color:#7F8C8D;font-size:0.85rem;'>"
-    f"從過去一年中找到 <b>{len(events)}</b> 個事件"
-    f"</div>",
-    unsafe_allow_html=True,
-)
-```
-- **Impact**: Single inline HTML usage. Minor inconsistency now that M5 fix (D-064-066) established the pattern of using pure Streamlit components.
-- **Recommended Action**: Replace with `st.caption(f"從過去一年中找到 **{len(events)}** 個事件")` — uses markdown bold instead of `<b>` tags.
-- **Priority**: 🟢 Quick fix, do during Sprint 11.
+- **Status**: ✅ **RESOLVED** — Sprint 11. Replaced inline HTML with `st.caption()` + markdown bold. Commit: 92217da.
+- **Resolution**: `st.caption(f"從過去一年中找到 **{len(events)}** 個事件")` — zero inline HTML remains.
 
 #### D-068: `comprehension_check.py` uses `st.error()` for wrong quiz answers (minor inconsistency)
 - **Effort**: 0.1h
