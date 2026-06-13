@@ -28,14 +28,7 @@ def render_timeline_selector(key_prefix: str = "") -> str:
 
     current = st.session_state[state_key]
 
-    st.markdown(
-        """
-        <div style="display:flex;align-items:center;gap:0.5rem;margin:0.5rem 0 1rem 0;">
-            <span style="font-size:0.9rem;color:#5D6D7E;font-weight:600;">📅 時間範圍：</span>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.markdown("📅 **時間範圍：**")
 
     cols = st.columns(4)
     options = ["1Y", "3Y", "5Y", "ALL"]
