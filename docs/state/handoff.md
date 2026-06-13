@@ -2,13 +2,13 @@
 ## Summary
 - **Topic**: Discussion (💡) — Post-Sprint 10 Feature Directions
 - **Date**: 2026-06-13 (Round 19 Discussion completed)
-- **Sprint Status**: Sprint 9 ✅ COMPLETE → Sprint 10 in progress (C34 + C105 + M5 remediation + D-061)
+- **Sprint Status**: Sprint 10 ✅ COMPLETE → Sprint 11 planned (D16 + D24 + R3 + C51 + C53)
 
 ## Key Metrics
-- Design grade: A (11th consecutive A/A-)
-- L0: 89/89 ✅ | L1: 8/18 (10 pre-existing event-alert failures unchanged, zero new failures)
-- Sprint 9: Education Layer (C98 + C101 + C103 Lite) + D-057 prerequisite
-- Features delivered: 4 (D-057, C103 Lite, C101, C98)
+- Design grade: A (13th consecutive A/A-)
+- L0: 91/91 ✅ | L1: 18/18 ✅ (ALL pre-existing event-alert failures resolved)
+- Sprint 10: C34 + C105 + M5 remediation + D-061 + D-062 + D-063 + D-064 + D-065 + D-066
+- Features delivered: 2 (C34, C105) + 5 debt items + M5 fix
 
 ## Sprint Plans (Summary)
 | Sprint | Items | Status |
@@ -20,12 +20,12 @@
 | Sprint 7 | C84 + D3 + D6 + D7 + D-044 | ✅ Complete |
 | Sprint 8 | D-048 + D6 + D-055 + D-050 + D8/D9/D10 | ✅ Complete |
 | Sprint 9 | D-057 + C103 Lite + C101 + C98 | ✅ Complete |
-| Sprint 10 | C34 + C105 + M5 remediation + D-061 | 📋 In Progress |
+| Sprint 10 | C34 + C105 + M5 remediation + D-061 | ✅ Complete |
 | Sprint 11 | D16 + D24 + R3 + C51 + C53 | 📋 Planned |
-| Sprint 12 | C58 + C42 + C56 + C43-verify | 📋 Planned |
-| Sprint 13 | C48 + C68 + C84 | 📋 Planned |
-| Sprint 14 | C50 + C60 + C52 + C104 + C66 | 📋 Planned |
-| Sprint 15+ | D5 (LLM layer) → C86, C100, C59 | 📋 Deferred |
+| Sprint 12 | C37/C39/C43/C45 QA + Info Hierarchy + C40 + User Feedback | 📋 Planned (26-38h) |
+| Sprint 13 | C36 Revenue Tree + C46 Moat Analysis + C47 Content Kickoff | 📋 Planned (30-40h) |
+| Sprint 14 | C47 Part 2 + C40 Polish + User Validation | 📋 Planned (20-28h) |
+| Sprint 15+ | C36 Phase 2 + C46 Phase 2 + C47 Phase 3 | 📋 Deferred |
 
 ## Key Rules
 - Content cap: 100 items max across all features
@@ -38,37 +38,73 @@
 
 ## 🔧 Development Section
 
+### Sprint 10 Execution (2026-06-13) — COMPLETE ✅
+7 commits. L0: 91/91 ✅ | L1: 18/18 ✅ | Tests: 149/149 ✅
+
+| Item | Commit | Hours | Type |
+|------|--------|-------|------|
+| D-061: Test infrastructure | `9745524` | 3.5h | Debt |
+| D-063: Remove unused import | `dfc454d` | <0.1h | Debt |
+| D-064-066: Fix inline HTML | `dfc454d` | 1.5h | Debt |
+| D-062: Quiz engine extraction | `b510a65` | 2h | Debt |
+| M5 remediation: Event alerts fix | `a0e9145` | 10h | Debt |
+| C34: Company Story Timeline | `cdc7033` | 16h | Feature |
+| C105: Simple/Detailed Toggle | `4ae2145` | 12h | Feature |
+| **TOTAL** | | **~45h** | |
+
+**M5 fix detail:** Replaced `st.error()`/`st.warning()` with `_summary_card()`/`_info_card()` in `_render_event_alerts()`. L1 went from 8/18 to 18/18 — all 10 pre-existing event-alert failures eliminated.
+
 ### Sprint 9 Execution (2026-06-13) — COMPLETE ✅
-All Sprint 9 items delivered. 4 commits, all L0/L1 verified.
-
-**D-057 (Day 1 Prerequisite) — _section_title() Consolidation (commit: `24ef84e`):**
-- Removed duplicate `_section_title(icon, title)` from `business_card/_helpers.py`
-- All 21 call sites across 9 files updated to `_router_base._section_title(f"{icon} {title}")`
-- Effort: ~3h
-
-**C103 Lite — First Visit Guide (commit: `44e0aca`):**
-- New `src/pages/first_visit_guide.py` — 2-card dismissible primer
-- Card 1: "你將學到什麼" | Card 2: "關於股識" (historian disclaimer)
-- "我知道了 ✓" dismiss button, session-level persistence
-- Registered in router as "新手導覽"
-- Effort: ~8h
-
-**C101 — Comprehension Check Quiz (commit: `830314e`):**
-- New `config/comprehension_quiz.yaml` (5 questions) + `comprehension_quiz_service.py` + `comprehension_check.py`
-- Questions: ROE, PER, gross margin, historian positioning, revenue vs profitability
-- Registered in router as "理解力測驗"
-- Effort: ~10h
-
-**C98 — Event Interpretation Engine (commit: `52a889c`):**
-- New `config/event_interpretation_templates.yaml` (6 event types) + `event_interpretation_service.py`
-- Modified `event_dashboard.py`: interpretation card replaces summary, "🔍 為什麼？" drill-down
-- Template-only approach (LLM deferred to Sprint 10)
-- Effort: ~16h
-
-**Metrics:** L0: 89/89 ✅ | L1: 8/18 (10 pre-existing, zero new)
+4 commits. D-057 + C103 Lite + C101 + C98. L0: 89/89 ✅ | L1: 8/18 (10 pre-existing, zero new).
+Full details: docs/decisions/000-project-history-m0-to-m5.md
 
 ### Sprint 8 Execution (2026-06-13) — COMPLETE ✅
 7 of 7 debt items. 3 code changes (D-048 YAML migration, D-055 sector_heatmap inline HTML, D-056 _section_title guard), 4 already done. L0: 85/85 ✅
+
+## 💡 Discussion Section (Round 20 — 2026-06-15)
+
+**Topic**: C36-C47 Feature Candidates — What needs building vs. what's already done?
+
+**Key Finding**: 9 of 12 competitor-inspired features already shipped (C37-C45). Only 4 need work: C36 (new), C40 (partial), C46 (new), C47 (new).
+
+**Challenger Verdict**: ✅ CONFIRMED with 9 revisions
+
+**9 Challenger Revisions**:
+1. Sprint 12 hours ↑ to 26-38h (info hierarchy + C40 correction + user feedback)
+2. C40 hours revised 6-10h → 10-16h (cross-section coupling)
+3. Architecture debt gate: D16/D24 must complete before C40
+4. Sprint 13 includes C47 content creation kickoff
+5. Sprint 14 includes user validation
+6. User validation: 5 beginner testers per sprint
+7. Content creation needs clear owner + timeline + review
+8. C36 fallback: degrade to pie chart if data unavailable
+9. Beginner mode architecture defined in Sprint 12
+
+**Team Final Decision — 3 Revised Directions:**
+
+**Direction A: Ten-Second Company Page (Sprint 12, 26-38h)**
+- QA/polish C37/C39/C43/C45 with "story first" QA gate
+- Business Card page information hierarchy redesign
+- C40 navbar toggle (10-16h, was 6-10h)
+- User feedback collection mechanism
+- Gate: D16/D24 architecture debt must be complete
+
+**Direction B: Historian's Deep Dive (Sprint 13, 30-40h)**
+- C36 Revenue Tree (12-16h) + fallback to pie chart
+- C46 Moat Analysis (14-18h) + template-based fallback
+- C47 content creation kickoff (8-12h)
+- Gate: C36 data source validation Week 1
+
+**Direction C: Education Platform (Sprint 14, 20-28h)**
+- C47 Part 2 (remaining lessons + quiz)
+- C40 polish and edge cases
+- User validation (5 beginner testers)
+
+**Full details**: docs/state/handoff_discuss_r20.md
+**Analysis**: docs/analysis/feasibility_c36_c47.md | docs/design/design_review_c36_c47.md | docs/design/developer_c36_c47_analysis.md
+**Challenge log**: docs/design/challenge_log_c36_c47.md
+
+---
 
 ## 💡 Discussion Section (Round 19 — 2026-06-13)
 
@@ -120,70 +156,9 @@ All Sprint 9 items delivered. 4 commits, all L0/L1 verified.
 **Developer estimates**: docs/design/developer_discussion_r19.md
 
 ## Next Cycle
-🔧 Development → Sprint 10 (C34 + C105 + M5 remediation + D-061) → 🔍 Review Round 23 → Sprint 11
+🔍 Review Round 24 → Sprint 12 (Polish + C40 + User Feedback)
 
 ## 🔍 Review Section (Round 22 — 2026-06-13)
-
-**Theme**: Review (🔍) — Sprint 9 Post-Implementation + Sprint 10 Planning
-**Participants**: PM, Architect, Designer, QA Engineer, Challenger
-**Challenger Verdict**: ⚠️ REVISED — 4 conditions applied
-
-### Key Metrics (Unchanged)
-- Design grade: A (12th consecutive A/A-)
-- L0: 89/89 ✅ | L1: 8/18 (10 pre-existing event-alert failures, zero new regressions)
-
-### Sprint 9 Verification
-- D-057 (_section_title consolidation): ✅ Genuinely resolved (21 call sites)
-- C103 Lite (First Visit Guide): ✅ Exemplary — zero inline HTML, uses shared components
-- C101 (Comprehension Quiz): ⚠️ Mostly clean — D-062 quiz duplication, 16 lines inline HTML
-- C98 (Event Interpretation): ✅ Clean — template-only approach, YAML-driven, zero Streamlit imports in service
-
-### New Architecture Debt (Sprint 9)
-- D-062: Quiz engine duplication (Medium, 1-2h)
-- D-063: Unused import in first_visit_guide.py (Low, <0.1h)
-- D-064: Session state proliferation (Medium, document in main.py)
-- D-065: comprehension_check.py inline HTML (Low, 0.5h)
-
-### New Design Issues (Sprint 9)
-- D-062: Quiz result cards inline HTML (P2)
-- D-063: Quiz score logic in view layer (P2)
-- D-064: Key concept line inline HTML (P2)
-- D-065: Disclaimer text inline HTML (P2)
-- D-066: Adaptive banner inline HTML (P2, pre-existing)
-
-### Competitor Research (Round 22)
-- **10 new competitors**: Acorns, Betterment, Wealthfront, Cake, Tiger Brokers, Spiking, Busyu, Swifty, Plum, Wombat
-- **6 new feature gaps** (C107-C112): 3 resurrected, 1 premature, 1 compound, 1 new
-- **Tiger Brokers** is the most direct competitive threat — expanding into TW with "Stock Stories" and "Tiger Academy"
-- **Spiking** validates C98's event interpretation approach
-
-### Sprint 10 Scope (Challenger-Approved with 4 Revisions)
-| Order | Item | Hours | Type |
-|-------|------|-------|------|
-| 1 | D-061: Test infrastructure | 3-4h | Debt |
-| 2 | D-062: Quiz engine extraction | 1-2h | Debt |
-| 3 | D-063: Remove unused import | <0.1h | Debt |
-| 4 | M5 remediation | 8-12h | Debt |
-| 5 | C34: Company Story Timeline | 14-18h | Feature |
-| 6 | C105: Simple/Detailed Toggle | 10-14h | Feature |
-| 7 | D-064+D-065+D-066: Fix inline HTML | 1-2h | Debt |
-| **TOTAL** | | **37-52h** | |
-
-### Challenger Conditions
-1. M5 fix before C34 live data integration
-2. D-061 before D-062 (tests before refactoring)
-3. C107-C112 explicitly excluded from Sprint 10 scope
-4. Design grade A condition includes all 4 inline HTML items (D-062, D-064, D-065, D-066)
-
-### Architecture Health: 🟢 HEALTHY
-- 24 service modules (87.5% under 300 lines, 83% zero Streamlit imports)
-- 35 page modules, largest is 437 lines
-- 0 god modules, 4-layer architecture holding
-- 2 new YAML files (event_interpretation_templates.yaml, comprehension_quiz.yaml)
-
-### Full Review docs
-- Review report: docs/state/review_report.md
-- Challenge log: docs/state/challenge_log_r22.md
-- Architect analysis: docs/design/architect_review_r22.md
-- Designer analysis: docs/design/designer_review_r22.md
-- Competitor research: docs/research/competitor_research_r22.md
+Sprint 9 verified clean. Sprint 10 scope approved with 4 Challenger conditions (all met).
+Full review: docs/state/review_report.md | Challenge log: docs/state/challenge_log_r22.md
+Key: Tiger Brokers = top competitor threat. Architecture health: 🟢 HEALTHY.
