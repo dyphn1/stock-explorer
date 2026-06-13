@@ -14,7 +14,44 @@ from src.services.analogy_engine import (
     get_pbr_analogy,
 )
 from src.services.dividend_analyzer import extract_dividend_summary
+from src.services.metric_education import get_metric_explanation, get_top_metrics_for_education
 from src.pages._router_base import _白话_card, _info_card
+
+
+def _render_metric_popover(label: str, value: str, analogy: str, metric_name: str, metric_value: float, stock_id: str) -> None:
+    """Render a 白话_card with a ❓ help button that opens a popover with metric education."""
+    # Unique key for this popover button
+    popover_key = f"metric_popover_{metric_name}_{stock_id}"
+
+    # Render the card with an inline help button
+    col_card, col_help = st.columns([5, 1])
+    with col_card:
+        st.markdown(f"""
+        <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
+            <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
+            <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{value}</div>
+            <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{analogy}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with col_help:
+        if st.button("❓", key=popover_key, help="點擊了解這個指標"):
+            # Use session_state to track which popover is open
+            st.session_state[f"_open_popover_{popover_key}"] = True
+
+    # Show popover content via expander (works in all Streamlit versions)
+    if st.session_state.get(f"_open_popover_{popover_key}", False):
+        edu = get_metric_explanation(metric_name, metric_value, stock_id)
+        with st.expander(f"📖 {edu['display_name']} 是什麼？", expanded=True):
+            st.markdown(f"**數值：{metric_value:.2f} {edu['unit']}**")
+            st.markdown("---")
+            st.markdown(f"**💡 白話解釋**\n\n{edu['explanation']}")
+            st.markdown(f"**🏠 生活比喻**\n\n{edu['analogy']}")
+            direction = "⬆️ 越高越好" if edu["is_higher_better"] else "⬇️ 越低越好"
+            st.markdown(f"**📊 方向**\n\n{direction}")
+            st.markdown(f"**📚 進階背景**\n\n{edu['historical_context']}")
+            if st.button("✕ 關閉", key=f"close_{popover_key}"):
+                st.session_state[f"_open_popover_{popover_key}"] = False
+                st.rerun()
 
 
 def _render_key_metrics(data: dict, client) -> None:
@@ -23,6 +60,7 @@ def _render_key_metrics(data: dict, client) -> None:
     extra_metrics = data["extra_metrics"]
     monthly_revenue = data["monthly_revenue"]
     industry = data["industry"]
+    stock_id = data["stock_id"]
 
     # 關鍵數字三連卡
     st.markdown("### 📊 關鍵數字")
@@ -31,30 +69,70 @@ def _render_key_metrics(data: dict, client) -> None:
     with col1:
         if latest_per_pbr and latest_per_pbr.get("PER"):
             per = latest_per_pbr["PER"]
-            _白话_card("本益比 (PER)", f"{per:.1f}", get_per_analogy(per))
+            _render_metric_popover(
+                "本益比 (PER)", f"{per:.1f}", get_per_analogy(per),
+                "PER", per, stock_id,
+            )
         elif extra_metrics.get("gross_margin"):
             gm = extra_metrics["gross_margin"]
-            _白话_card("毛利率", f"{gm:.1f}%", get_gross_margin_analogy(gm))
+            _render_metric_popover(
+                "毛利率", f"{gm:.1f}%", get_gross_margin_analogy(gm),
+                "gross_margin", gm, stock_id,
+            )
 
     with col2:
         if len(monthly_revenue) > 0:
             rev = monthly_revenue.iloc[-1]["revenue"] / 1e8
             yoy = extra_metrics.get("revenue_yoy")
             yoy_analogy = get_yoy_analogy(yoy) if yoy is not None else ""
-            _白话_card("最近月營收", f"{rev:,.0f} 億", get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""))
+            _render_metric_popover(
+                "最近月營收", f"{rev:,.0f} 億",
+                get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""),
+                "revenue_yoy", yoy if yoy is not None else 0.0, stock_id,
+            )
         elif extra_metrics.get("roe"):
             roe = extra_metrics["roe"]
-            _白话_card("ROE", f"{roe:.1f}%", get_roe_analogy(roe))
+            _render_metric_popover(
+                "ROE", f"{roe:.1f}%", get_roe_analogy(roe),
+                "ROE", roe, stock_id,
+            )
 
     with col3:
         if latest_per_pbr and latest_per_pbr.get("dividend_yield"):
             dy = latest_per_pbr["dividend_yield"]
-            _白话_card("殖利率", f"{dy:.2f}%", get_dividend_analogy(dy))
+            _render_metric_popover(
+                "殖利率", f"{dy:.2f}%", get_dividend_analogy(dy),
+                "dividend_yield", dy, stock_id,
+            )
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
-            _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr))
+            _render_metric_popover(
+                "淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr),
+                "PBR", pbr, stock_id,
+            )
 
     st.markdown("---")
+
+    # ── 📚 學更多：Metric Education Expander ──
+    top_metrics = get_top_metrics_for_education(data)
+    if top_metrics:
+        with st.expander("📚 學更多：關鍵指標白話教室", expanded=False):
+            st.markdown("*點擊每個指標的 ❓ 按鈕，了解它的意思和背後的故事*")
+            st.markdown("")
+            for item in top_metrics:
+                edu = item["explanation"]
+                direction_icon = "⬆️ 越高越好" if edu["is_higher_better"] else "⬇️ 越低越好"
+                direction_color = "#27AE60" if edu["is_higher_better"] else "#E74C3C"
+
+                _info_card(
+                    f"{edu['display_name']} — {item['value']:.2f} {edu['unit']}",
+                    f"**💡 {edu['explanation']}**\n\n"
+                    f"**🏠 比喻：** {edu['analogy']}\n\n"
+                    f"<span style='color:{direction_color};font-weight:600;'>{direction_icon}</span>\n\n"
+                    f"*{edu['historical_context']}*",
+                    "📖",
+                )
+                st.markdown("")
 
 
 def _render_dividend(data: dict, client) -> None:
