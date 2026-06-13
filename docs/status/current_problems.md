@@ -345,6 +345,51 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Proposed Fix**: Document `_count_label()` as a "muted label" component type in the design system. Consider whether this should be a full component with standardized margins/padding matching other components.
 - **Effort**: 0.5h
 
+### D-062: Quiz Result Detail Cards Use Inline HTML (D-003 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 22
+- **Description**: The per-question result cards in `comprehension_check.py` (lines 151-166) use `unsafe_allow_html=True` with manually constructed HTML divs showing ✅/❌ status, question text, and explanation. This is a new "quiz result card" type that should be a shared component in `_router_base.py`. The card uses `border-left:4px solid #27AE60` (correct) or `#E74C3C` (incorrect) which matches the design system's positive/negative colors, but the implementation is duplicated inline rather than using a component.
+- **Affected Files**: `src/pages/comprehension_check.py` lines 151-166
+- **Proposed Fix**: Create `_quiz_result_card(is_correct, question_text, explanation)` in `_router_base.py`. Add to design system as "quiz result card" variant.
+- **Effort**: 0.5-1h
+
+### D-063: Quiz Score Color Logic in View Layer
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 22
+- **Description**: The score color/emoji/title/desc logic (percentage → color mapping) is hardcoded in `comprehension_check.py` lines 110-124. If this pattern is reused in future quiz features, it will be duplicated. The color thresholds (80%/60%) should be consistent across all quiz instances.
+- **Affected Files**: `src/pages/comprehension_check.py` lines 110-124
+- **Proposed Fix**: Move to a helper `_get_score_style(percentage)` returning `(color, emoji, title, desc)` dict.
+- **Effort**: <0.5h
+
+### D-064: Key Concept Line Uses Inline HTML (D-003 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 22
+- **Description**: The "💡 核心概念" line in `event_dashboard.py` (lines 110-115) uses inline HTML (`font-size:0.85rem;color:#5D6D7E`). This is a muted text style that should use `st.caption()` or a shared `_key_concept()` helper instead of inline HTML.
+- **Affected Files**: `src/pages/event_dashboard.py` lines 110-115
+- **Proposed Fix**: Replace with `st.caption()` or create `_key_concept(text)` helper in `_router_base.py`.
+- **Effort**: <0.5h
+
+### D-065: Disclaimer Text Uses Inline HTML (D-003 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 22
+- **Description**: The historian disclaimer in `event_dashboard.py` (lines 133-137) uses inline HTML (`font-size:0.8rem;color:#95A5A6`). This is the same disclaimer pattern as `_historian_disclaimer()` in `_helpers.py` which uses `st.caption()`. The inline HTML creates inconsistency.
+- **Affected Files**: `src/pages/event_dashboard.py` lines 133-137
+- **Proposed Fix**: Replace with `st.caption()` or call `_historian_disclaimer("event")`.
+- **Effort**: <0.5h
+
+### D-066: Adaptive Banner Uses Inline HTML (Pre-existing)
+- **Severity**: P2
+- **Added**: 2026-06-13
+- **Source**: Design Review Round 22
+- **Description**: The adaptive analysis framework banner in `event_dashboard.py` (lines 193-204) uses inline HTML with `background:#EBF5FB` and `border-left:4px solid #3498DB`. This is functionally identical to `_info_card()` but implemented as inline HTML. Pre-existing — not introduced by Sprint 9.
+- **Affected Files**: `src/pages/event_dashboard.py` lines 193-204
+- **Proposed Fix**: Replace with `_info_card(title=..., content=..., icon="🎯")`.
+- **Effort**: <0.5h
+
 ---
 
 ## Resolved Issues
@@ -372,15 +417,15 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## Statistics
 
-- **Total Issues**: 43
+- **Total Issues**: 48
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 30 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-038, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-057, D-058, D-059)
+- **P2 (Optimization)**: 35 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-035, D-036, D-038, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-057, D-058, D-059, D-062, D-063, D-064, D-065, D-066)
 - **Resolved**: 19
 
 ---
 
-*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 8 feature implementation.*
+*This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 10 feature implementation.*
 
 ---
 

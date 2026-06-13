@@ -51,5 +51,11 @@ C67: "Community-Curated Stock Stories" — User-Generated Narrative Layer | P2 |
 ||||C102: "Market Narrative Feed" — Social-Media-Style AI-Generated Daily Market Story Stream | P1 | 16-22h | Story first + Adaptive + Ten-second test | source: competitor research round 20
 |||||C103: "Learn First Gate" — Soft Educational Onboarding Before Viewing Stock Data | P2 | 10-14h | Story first + Point-to-point + Ten-second test + Beginner-friendly | source: competitor research round 20
 |||||C104: "Post-Narrative Comprehension Check" — Contextual Quiz Cards After Each Section (Finimize Model) | P2 | 8-12h | Point-to-point + Ten-second test + Historian | source: competitor research round 21
-|||||C105: "Simple/Detailed Content Depth Toggle" — ELI5 Mode Switch for Beginner/Intermediate Users | P2 | 10-14h | Ten-second test + Beginner-friendly + Historian | source: competitor research round 21
-|||||C106: "First 7 Days" — Beginner Onboarding Curriculum with Daily Micro-Lessons Using TW Stock Examples | P2 | 16-22h | Story first + Point-to-point + Beginner-friendly + Historian | source: competitor research round 21
+||||||C105: "Simple/Detailed Content Depth Toggle" — ELI5 Mode Switch for Beginner/Intermediate Users | P2 | 10-14h | Ten-second test + Beginner-friendly + Historian | source: competitor research round 21
+||||||C106: "First 7 Days" — Beginner Onboarding Curriculum with Daily Micro-Lessons Using TW Stock Examples | P2 | 16-22h | Story first + Point-to-point + Beginner-friendly + Historian | source: competitor research round 21
+|||||||C107: "Why Is This Stock Moving?" Inline AI Explanations — Spiking + Busyu Model | P1 | 12-16h | Story first + Adaptive + Historian | source: competitor research round 22
+|||||||C108: "Insider Trading Context Layer" — Plain-Language Historical Analysis of Insider Activity | P2 | 10-14h | Story first + Benchmark-oriented + Historian | source: competitor research round 22
+|||||||C109: "Compare Timelines" — Side-by-Side Company Story Comparison (Cake Model) | P2 | 14-18h | Benchmark-oriented + Story first + Historian | source: competitor research round 22
+|||||||C110: "Earnings Story" — Post-Earnings Plain-Language Narrative Connecting Earnings History | P1 | 14-18h | Story first + Adaptive + Benchmark-oriented + Ten-second test | source: competitor research round 22
+|||||||C111: "Badge & Achievement System" — Gamified Learning Milestones for Engagement | P2 | 8-12h | Point-to-point + Engagement + Ten-second test | source: competitor research round 22
+|||||||C112: "Investment Diary" — Personal Reflection Journal with Historian Education Lens | P2 | 10-14h | Story first + Historian + Point-to-point | source: competitor research round 22

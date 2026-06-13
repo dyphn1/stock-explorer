@@ -120,4 +120,70 @@ All Sprint 9 items delivered. 4 commits, all L0/L1 verified.
 **Developer estimates**: docs/design/developer_discussion_r19.md
 
 ## Next Cycle
-🔍 Review Round 22 → Sprint 10 (C34 Company Story Timeline + C105 Simple/Detailed Toggle + M5 remediation + D-061 test infra)
+🔧 Development → Sprint 10 (C34 + C105 + M5 remediation + D-061) → 🔍 Review Round 23 → Sprint 11
+
+## 🔍 Review Section (Round 22 — 2026-06-13)
+
+**Theme**: Review (🔍) — Sprint 9 Post-Implementation + Sprint 10 Planning
+**Participants**: PM, Architect, Designer, QA Engineer, Challenger
+**Challenger Verdict**: ⚠️ REVISED — 4 conditions applied
+
+### Key Metrics (Unchanged)
+- Design grade: A (12th consecutive A/A-)
+- L0: 89/89 ✅ | L1: 8/18 (10 pre-existing event-alert failures, zero new regressions)
+
+### Sprint 9 Verification
+- D-057 (_section_title consolidation): ✅ Genuinely resolved (21 call sites)
+- C103 Lite (First Visit Guide): ✅ Exemplary — zero inline HTML, uses shared components
+- C101 (Comprehension Quiz): ⚠️ Mostly clean — D-062 quiz duplication, 16 lines inline HTML
+- C98 (Event Interpretation): ✅ Clean — template-only approach, YAML-driven, zero Streamlit imports in service
+
+### New Architecture Debt (Sprint 9)
+- D-062: Quiz engine duplication (Medium, 1-2h)
+- D-063: Unused import in first_visit_guide.py (Low, <0.1h)
+- D-064: Session state proliferation (Medium, document in main.py)
+- D-065: comprehension_check.py inline HTML (Low, 0.5h)
+
+### New Design Issues (Sprint 9)
+- D-062: Quiz result cards inline HTML (P2)
+- D-063: Quiz score logic in view layer (P2)
+- D-064: Key concept line inline HTML (P2)
+- D-065: Disclaimer text inline HTML (P2)
+- D-066: Adaptive banner inline HTML (P2, pre-existing)
+
+### Competitor Research (Round 22)
+- **10 new competitors**: Acorns, Betterment, Wealthfront, Cake, Tiger Brokers, Spiking, Busyu, Swifty, Plum, Wombat
+- **6 new feature gaps** (C107-C112): 3 resurrected, 1 premature, 1 compound, 1 new
+- **Tiger Brokers** is the most direct competitive threat — expanding into TW with "Stock Stories" and "Tiger Academy"
+- **Spiking** validates C98's event interpretation approach
+
+### Sprint 10 Scope (Challenger-Approved with 4 Revisions)
+| Order | Item | Hours | Type |
+|-------|------|-------|------|
+| 1 | D-061: Test infrastructure | 3-4h | Debt |
+| 2 | D-062: Quiz engine extraction | 1-2h | Debt |
+| 3 | D-063: Remove unused import | <0.1h | Debt |
+| 4 | M5 remediation | 8-12h | Debt |
+| 5 | C34: Company Story Timeline | 14-18h | Feature |
+| 6 | C105: Simple/Detailed Toggle | 10-14h | Feature |
+| 7 | D-064+D-065+D-066: Fix inline HTML | 1-2h | Debt |
+| **TOTAL** | | **37-52h** | |
+
+### Challenger Conditions
+1. M5 fix before C34 live data integration
+2. D-061 before D-062 (tests before refactoring)
+3. C107-C112 explicitly excluded from Sprint 10 scope
+4. Design grade A condition includes all 4 inline HTML items (D-062, D-064, D-065, D-066)
+
+### Architecture Health: 🟢 HEALTHY
+- 24 service modules (87.5% under 300 lines, 83% zero Streamlit imports)
+- 35 page modules, largest is 437 lines
+- 0 god modules, 4-layer architecture holding
+- 2 new YAML files (event_interpretation_templates.yaml, comprehension_quiz.yaml)
+
+### Full Review docs
+- Review report: docs/state/review_report.md
+- Challenge log: docs/state/challenge_log_r22.md
+- Architect analysis: docs/design/architect_review_r22.md
+- Designer analysis: docs/design/designer_review_r22.md
+- Competitor research: docs/research/competitor_research_r22.md
