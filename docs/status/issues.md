@@ -1,12 +1,15 @@
+C14: Company Health Score Badge + Narrative (merged with C135) | P1 | 4-6h | ✅ Sprint 16a — enhanced simple mode with get_health_summary() narrative
+C132: "Risk Level Simplification" — 1-5 Scale with Plain-Language Descriptions | P1 | 6-10h | ✅ Sprint 16a — risk_simplifier.py created, wired to simple mode
+C41: "Read Next" — Peer Stock Recommendations Phase A | P2 | 2-3h | ✅ Sprint 16a — _render_read_next() wired into _main.py
+C28: Company Story Timeline spike | P1 | 3-5h | ✅ Sprint 16a — spike analysis complete, Option A recommended, GO for Sprint 16b
 C01: Ex-dividend countdown + badge
-C28: Company Story Timeline spike
 C42: Stock Screener / Discovery Engine | P1 | 16-24h | Point-to-point knowledge construction + beginner-friendly discovery
-C43: Company Snowflake Health Visualization | P1 | 12-16h | Story first + Ten-second test + Benchmark-oriented analysis
-C44: "What Could Go Wrong" Risk Analysis Section | P2 | 10-14h | Story first + Historian positioning (explain, don't predict)
-C45: Valuation Band Chart (Historical P/E Range) | P2 | 8-10h | Story first + Benchmark-oriented analysis
-C46: Moat Analysis — Competitive Advantage Assessment | P2 | 12-16h | Story first + Benchmark-oriented analysis + Historian positioning
-C47: Financial Education Academy / Structured Learning Path | P2 | 20-30h | Point-to-point knowledge construction + Ten-second test + Story first
-C48: "Company Story Card" — 30-Second Visual Summary | P2 | 8-12h | Story first + Ten-second test | source: competitor research round 11
+C43: Company Snowflake Health Visualization | P1 | 12-16h | ✅ Already implemented — health_scoring.py + _health.py section + snowflake chart
+C44: "What Could Go Wrong" Risk Analysis Section | P2 | 10-14h | ✅ Already implemented — _render_risk() in _health.py
+C45: Valuation Band Chart (Historical P/E Range) | P2 | 8-10h | ✅ Already implemented — chart_stock.py + _financial.py section
+C46: Moat Analysis — Competitive Advantage Assessment | P2 | 12-16h | ✅ Already implemented — _moat.py section
+C47: Financial Education Academy / Structured Learning Path | P2 | 20-30h | ✅ Already implemented — academy.py + lesson_service.py + 5 YAMLs
+C48: "Company Story Card" — 30-Second Visual Summary | P2 | 8-12h | ✅ Already implemented — _render_story_card() in _summary.py
 C49: "Daily Market Pulse" — Automated Market Summary | P2 | 10-14h | Adaptive + Beginner-friendly | source: competitor research round 11
 C50: "Learning Progress Tracker" — Concept Mastery System | P2 | 12-16h | Point-to-point knowledge construction + Ten-second test | source: competitor research round 11
 C51: "Sector Heatmap" — Visual Market Overview | P2 | 8-12h | Benchmark-oriented analysis + Beginner-friendly | source: competitor research round 11

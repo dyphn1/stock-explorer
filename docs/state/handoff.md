@@ -1,8 +1,37 @@
-# Handoff – Review
+# Handoff – Development
+## Summary
+- **Topic**: Development (🔧) — Round 35, Sprint 16a
+- **Date**: 2026-06-14 (Development Round 35 completed)
+- **Sprint Status**: Sprint 16a ✅ COMPLETE → Sprint 16b conditional
+
+## Completed Items
+| Issue ID | Description | Owner | Result | Commit |
+|----------|-------------|-------|--------|--------|
+| C14+C135 | Health Score Badge + Narrative — enhanced simple mode with `get_health_summary()` narrative | Developer | ✅ `_render_simple_overview()` now shows full health narrative via `_info_card()` | `8051cb8` |
+| C132 | Risk Simplification 1-5 Scale | Developer | ✅ Created `risk_simplifier.py` with `get_risk_level()`; added to simple mode via `_summary_card()` | `8051cb8` |
+| C41 | Read Next Phase A wire-up | Developer | ✅ `_render_read_next()` imported and called in `_main.py` above-fold after deltas | `8051cb8` |
+| C28 | Story Timeline Spike | Architect | ✅ Analysis complete — Option A (event-layered pipeline) recommended; go/no-go criteria defined | docs/design/architect_timeline_spike_r35.md |
+
+## C28 Spike Results
+- **Verdict**: ✅ GO — Timeline is feasible with existing data
+- **Architecture**: Option A — compose-and-enrich pipeline merging events.yaml + case_studies.yaml + milestones
+- **Key gaps**: sparse event history (1 week), no milestone data, undated company facts
+- **Go/No-Go for Sprint 16b**: (1) ≥5 entries per stock for 90-day lookback, (2) all entries dated, (3) interpretation coverage, (4) dedup works, (5) <200ms response
+
+## Verification
+- **L0**: 110 passed (2 pre-existing failures in quiz_service.py — unrelated)
+- **L1**: 20/20 ✅
+
+## Next Cycle
+🔧 Development Round 35 Complete → 🔍 Review Round 35 → Sprint 16b (C28 Full if spike passes OR C02+C07 if spike fails)
+
+---
+
+# Handoff – Review (Archive)
 ## Summary
 - **Topic**: Review (🔍) — Round 34, Sprint 15 Post-Mortem
 - **Date**: 2026-06-14 (Review Round 34 completed)
-- **Sprint Status**: Sprint 15 ✅ COMPLETE → Sprint 16 planned
+- **Sprint Status**: Sprint 15 ✅ COMPLETE → Sprint 16a ✅ COMPLETE → Sprint 16b planned
 ## Key Metrics
 - Design grade: A (upgraded from A- — C126/C47/C101 demonstrate strong design discipline)
 - L0: 106/106 ✅ | L1: 20/20 ✅ | Tests: 165+/165+ ✅
