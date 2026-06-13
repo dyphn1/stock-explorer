@@ -40,17 +40,12 @@ def _render_metric_popover(label: str, value: str, analogy: str, metric_name: st
     with col_card:
         _白话_card(label, value, analogy)
     with col_help:
-        if st.button("❓", key=popover_key, help="點擊了解這個指標"):
-            # Use session_state to track which popover is open
-            st.session_state[f"_open_popover_{popover_key}"] = True
+        with st.popover("❓", key=popover_key, help="點擊了解這個指標"):
+            edu = get_metric_explanation(metric_name, metric_value, stock_id)
+            glossary_key = _METRIC_GLOSSARY_MAP.get(metric_name)
+            glossary_term = glossary_service.get_glossary_term(glossary_key) if glossary_key else None
 
-    # Show popover content via expander (works in all Streamlit versions)
-    if st.session_state.get(f"_open_popover_{popover_key}", False):
-        edu = get_metric_explanation(metric_name, metric_value, stock_id)
-        glossary_key = _METRIC_GLOSSARY_MAP.get(metric_name)
-        glossary_term = glossary_service.get_glossary_term(glossary_key) if glossary_key else None
-
-        with st.expander(f"📖 {edu['display_name']} 是什麼？", expanded=True):
+            st.markdown(f"### 📖 {edu['display_name']} 是什麼？")
             st.markdown(f"**數值：{metric_value:.2f} {edu['unit']}**")
             st.markdown("---")
 
@@ -68,9 +63,6 @@ def _render_metric_popover(label: str, value: str, analogy: str, metric_name: st
             direction = "⬆️ 越高越好" if edu["is_higher_better"] else "⬇️ 越低越好"
             st.markdown(f"**📊 方向**\n\n{direction}")
             st.markdown(f"**📚 進階背景**\n\n{edu['historical_context']}")
-            if st.button("✕ 關閉", key=f"close_{popover_key}"):
-                st.session_state[f"_open_popover_{popover_key}"] = False
-                st.rerun()
 
 
 def _render_key_metrics(data: dict, client) -> None:
