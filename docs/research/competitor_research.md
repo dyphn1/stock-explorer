@@ -4036,3 +4036,448 @@ C33 Glossary is the most overdue competitive gap. Every major competitor (Stash,
 C48 Story Card is competitive but has P1 issue: hidden behind expander (D-070).
 
 No new feature gaps identified beyond C33 + C48 already in Sprint 13a plan.
+
+---
+
+# Stock Explorer Competitor Research Report — Round 27
+
+> **Date**: 2026-06-14
+> **Author**: QA Engineer (Round 27)
+> **Purpose**: Research new competitors not covered in Rounds 1-26, focusing on uncovered fintech education platforms, social investing tools, and visual-first financial content
+
+---
+
+## New Competitors Analyzed (Not in Rounds 1-26)
+
+| Competitor | Type | Region | Relevance to Stock Explorer |
+|---|---|---|---|
+| **Gotrade** | Commission-free investing + Learn & Earn | Singapore/Global | 🟡 Medium — "Learn & Earn" education model with bite-sized lessons; beginner-first onboarding |
+| **Ellevest** | Goal-based investing + financial education | US | 🟡 Medium — life-goal framing of financial data; "Women & Wealth" education content |
+| **StockTwits** | Social investing + sentiment tracking | US/Global | 🟡 Medium — cashtag ($TICKER) social feed; crowd-sourced stock sentiment |
+| **Acorns** | Micro-investing + financial literacy | US | 🟡 Medium — "Acorns Learn" curriculum + "Money Matters" daily education |
+| **Datawallet** | AI personal finance + narrative insights | US | 🟡 Medium — AI explains every transaction in plain language; narrative spending stories |
+| **Visual Capitalist** | Visual-first financial content | US/Global | 🟡 Medium — infographic-driven financial education; data storytelling |
+| **Spiking** | AI stock explanation + social feed | Singapore | 🔴 High — "Why Stock Moved" AI explanations; social market feed with narrative |
+
+---
+
+## Detailed Competitor Profiles
+
+### 1. Gotrade (gotrade.io)
+
+**Positioning**: "Investing for everyone" — commission-free investing with education built in
+**Target Users**: Singapore and global beginner investors who want to learn while investing
+
+**Key Features**:
+- **"Learn & Earn" Program**: Users watch 2-3 minute educational videos about stocks and investing, then earn small stock rewards (fractional shares) for completing quizzes — gamified education with real financial incentive
+- **"Gotrade Academy"**: Structured courses on investing fundamentals — "What is a stock?", "How to read a balance sheet", "What is diversification?" — each with visual illustrations and quizzes
+- **"Stock Stories"**: Each stock has a 1-paragraph narrative summary — "What does this company do? How does it make money? What's its competitive advantage?" — written at an 8th-grade reading level
+- **"Risk Level" Simplification**: Every stock has a simple 1-5 risk level indicator — beginners don't need to understand complex risk metrics
+- **"Fractional Shares from $1"**: Makes investing accessible — beginners can buy a piece of TSMC for $1, lowering the barrier to entry
+- **"Social Feed"**: Users share their investment journey and learn from others — community-driven education
+
+**UX/Design Approach**:
+- Mobile-first, swipe-based interface
+- Card-based layout with one concept per card
+- Bright, friendly colors — not intimidating
+- Progress indicators for learning modules
+
+**Unique Capabilities**:
+- **"Learn & Earn" with real stock rewards**: Unique gamification — users earn actual fractional shares for learning
+- **"Stock Stories" at 8th-grade level**: Simplified narrative summaries for every stock
+- **"Risk Level" 1-5 scale**: Simplified risk communication
+
+**Comparison with Stock Explorer**:
+
+| Feature | Gotrade | Stock Explorer |
+|---|---|---|
+| Learn & Earn | ✅ Real stock rewards | ❌ Not built |
+| Stock Stories | ✅ 8th-grade level | ⚠️ Analogy engine (more sophisticated) |
+| Risk Level | ✅ 1-5 scale | ❌ Multi-dimension (C44 pending) |
+| Fractional Shares | ✅ From $1 | ❌ Not applicable |
+| Social Feed | ✅ Community | ❌ Not built |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ❌ Singapore focus | ✅ Deep coverage |
+| Education Depth | ⚠️ Bite-sized | ✅ Deep (academy model) |
+
+**Key Insight for Stock Explorer**: Gotrade's "Learn & Earn" model is a gamification mechanism that Stock Explorer could adapt — instead of earning stock, users earn "knowledge badges" or "concept mastery" points. The "Risk Level" 1-5 scale is a simpler version of our C44 (Risk Analysis) — validates the concept of simplified risk communication. The "Stock Stories" at 8th-grade reading level is a model for our C105 (Simple/Detailed Toggle) — proves that simplified narratives are expected by beginners.
+
+---
+
+### 2. Ellevest (ellevest.com)
+
+**Positioning**: "Investing for women" — goal-based investing with financial education
+**Target Users**: Women investors who want to connect investing to life goals
+
+**Key Features**:
+- **"Goal-Based Investing"**: Users define life goals (retirement, home purchase, education, business) — every investment decision is framed as progress toward a goal
+- **"Women & Wealth" Education Hub**: Structured courses on investing fundamentals designed for women — addresses the gender gap in financial literacy
+- **"Financial Advisor AI"**: AI-powered financial advisor that explains investment concepts in plain language — "Here's how much you need to save for retirement"
+- **"Salary Gap Calculator"**: Shows how the gender pay gap affects long-term wealth — unique educational tool
+- **"Portfolio with Purpose"**: ESG/socially responsible investing options with plain-language explanations of impact
+- **"Community"**: Private community for women investors — peer learning and support
+
+**UX/Design Approach**:
+- Warm, approachable design — not the typical "Wall Street" aesthetic
+- Goal-centric UI — every screen shows progress toward a goal
+- Conversational tone — "Let's talk about your future"
+- Privacy-focused — women-only community
+
+**Unique Capabilities**:
+- **Goal-based framing**: Every financial data point is connected to a life goal
+- **Gender-specific education**: Addresses the unique financial challenges women face
+- **Salary gap calculator**: Unique educational tool connecting social issues to personal finance
+
+**Comparison with Stock Explorer**:
+
+| Feature | Ellevest | Stock Explorer |
+|---|---|---|
+| Goal-Based Framing | ✅ Life goals | ❌ Not built (C114 pending) |
+| Gender-Specific Ed | ✅ Women-focused | ❌ Not applicable |
+| Salary Gap Calculator | ✅ Unique tool | ❌ Not applicable |
+| AI Financial Advisor | ✅ Conversational | ❌ Not built (C59 pending) |
+| Community | ✅ Women-only | ❌ Not built |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ❌ US focus | ✅ Deep coverage |
+| Company Analysis | ⚠️ Portfolio-focused | ✅ Deep (business card) |
+
+**Key Insight for Stock Explorer**: Ellevest's "Goal-Based Framing" is the most advanced version of what our C114 (Financial Goal Narrative) proposes — connecting every piece of financial data to a life goal. The "Salary Gap Calculator" is a unique educational tool that connects social issues to personal finance — Stock Explorer could create similar "contextual calculators" (e.g., "How does TSMC's revenue growth affect Taiwan's GDP?"). The gender-specific education model is not directly applicable, but the principle of "audience-specific education" is — Stock Explorer could create "beginner-specific," "student-specific," or "retiree-specific" education tracks.
+
+---
+
+### 3. StockTwits (stocktwits.com)
+
+**Positioning**: "The voice of the market" — social investing platform with real-time sentiment
+**Target Users**: Retail investors who want to understand market sentiment and crowd opinion
+
+**Key Features**:
+- **"Cashtag" $TICKER Format**: Every stock is tagged with $TICKER (e.g., $TSMC) — creates a social feed for each stock — users follow stocks like they follow people
+- **"Sentiment Indicator"**: Real-time bullish/bearish sentiment for each stock — visual gauge showing what the crowd thinks
+- **"Trending Stocks"**: Real-time trending based on social volume — which stocks are being talked about most
+- **"Ideas Feed"**: Users share investment ideas with charts and analysis — crowdsourced stock analysis
+- **"Earnings Calendar"**: Social feed around earnings — what people are saying before/after earnings
+- **"Direct Messaging"**: Users can message each other — peer-to-peer learning
+- **"Watchlist Social"**: See what stocks your friends are watching — social discovery
+
+**UX/Design Approach**:
+- Twitter-like feed format — familiar to social media users
+- Real-time updates — live sentiment and trending
+- Visual sentiment indicators — green/red for bullish/bearish
+- Mobile-first with push notifications
+
+**Unique Capabilities**:
+- **Cashtag system**: Unique social tagging for stocks — creates a social layer for every stock
+- **Real-time sentiment**: Crowd-sourced market sentiment — "What does the crowd think?"
+- **Social discovery**: Find stocks through friends' watchlists and discussions
+
+**Comparison with Stock Explorer**:
+
+| Feature | StockTwits | Stock Explorer |
+|---|---|---|
+| Cashtag Social Feed | ✅ $TICKER format | ❌ Not built |
+| Sentiment Indicator | ✅ Real-time | ❌ Not built |
+| Trending Stocks | ✅ Social volume | ❌ Not built |
+| Ideas Feed | ✅ Crowdsourced | ❌ Not built |
+| Earnings Social | ✅ Pre/post earnings | ❌ Not built |
+| Direct Messaging | ✅ Peer-to-peer | ❌ Not built |
+| Plain-language | ⚠️ User-generated | ✅ Core feature |
+| TW Market | ❌ US/Global focus | ✅ Deep coverage |
+| Structured Analysis | ❌ Crowdsourced | ✅ Systematic |
+
+**Key Insight for Stock Explorer**: StockTwits' "Sentiment Indicator" is a unique feature that Stock Explorer doesn't have — real-time crowd sentiment for each stock. While Stock Explorer's "historian" positioning deliberately avoids social sentiment (it's about understanding companies, not following the crowd), a simplified "market mood" indicator (similar to C35 from Round 7) could complement the structured analysis. The "cashtag" concept is a social discovery mechanism — Stock Explorer could add a "social layer" where users see what other beginners are learning about (without the noise of trading tips).
+
+---
+
+### 4. Acorns (acorns.com)
+
+**Positioning**: "Invest your spare change" — micro-investing with financial literacy
+**Target Users**: US beginners who want to start investing with small amounts
+
+**Key Features**:
+- **"Acorns Learn"**: Structured financial education curriculum with 100+ articles and videos — organized by topic (investing basics, retirement, taxes, budgeting) — progress tracking and completion badges
+- **"Money Matters"**: Daily financial education content — short articles, tips, and quizzes delivered via email/app — creates daily engagement loop
+- **"Acorns Early"**: Investment accounts for children — financial education for families
+- **"Found Money"**: Cashback rewards when shopping with partner brands — automatically invested — makes investing passive
+- **"Grow Magazine"**: Long-form financial education content — articles, interviews, and guides
+- **"Retirement Calculator"**: Interactive tool showing how small investments grow over time — visual compound growth demonstration
+
+**UX/Design Approach**:
+- Minimalist, friendly design — round shapes, green color palette
+- "Set it and forget it" — automated investing reduces decision fatigue
+- Progress indicators for learning modules
+- Mobile-first with push notifications
+
+**Unique Capabilities**:
+- **"Acorns Learn" curriculum**: Structured financial education with progress tracking — similar to our C47 (Education Academy) + C50 (Learning Progress Tracker)
+- **"Money Matters" daily content**: Daily engagement loop — similar to our C49 (Daily Market Pulse) + C63 (Audio Market Story)
+- **"Found Money" passive investing**: Makes investing effortless — unique acquisition mechanism
+
+**Comparison with Stock Explorer**:
+
+| Feature | Acorns | Stock Explorer |
+|---|---|---|
+| Acorns Learn | ✅ Structured curriculum | ⚠️ C47 pending |
+| Money Matters | ✅ Daily content | ❌ Not built (C49 pending) |
+| Progress Tracking | ✅ Completion badges | ❌ Not built (C50 pending) |
+| Found Money | ✅ Cashback investing | ❌ Not applicable |
+| Retirement Calculator | ✅ Interactive | ❌ Not built (C118 pending) |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ❌ US focus | ✅ Deep coverage |
+| Company Analysis | ⚠️ Portfolio-focused | ✅ Deep (business card) |
+
+**Key Insight for Stock Explorer**: Acorns' "Acorns Learn" + "Money Matters" combination is the closest model to Stock Explorer's planned C47 (Education Academy) + C49 (Daily Market Pulse) + C50 (Learning Progress Tracker). The "Money Matters" daily content is a lighter version of our C63 (Audio Market Story) — proves that daily financial education content drives engagement. The "Retirement Calculator" is a model for our C118 (Compound Growth Visualizer) — interactive tools that make financial concepts tangible.
+
+---
+
+### 5. Datawallet (datawallet.com)
+
+**Positioning**: "AI that explains your money" — narrative personal finance
+**Target Users**: US consumers who want to understand their spending and financial life
+
+**Key Features**:
+- **"Money Stories"**: AI generates narrative explanations for every financial event — "Your grocery bill increased by $50 this month because of inflation in the dairy category" — plain-language, data-driven stories
+- **"Spending Insights"**: AI categorizes and explains spending patterns — "You spend 30% more on dining out than similar users in your area"
+- **"Financial Health Score"**: Single 0-100 score with plain-language explanation — "Your financial health is 72/100 — you're doing well on saving but could improve on budgeting"
+- **"Goal Narratives"**: AI explains how financial changes affect goals — "Your investment gains this month brought your retirement goal 2 weeks closer"
+- **"Change Explanations"**: Every significant change in financial data is explained — "Your net worth increased by $3,200 because of investment gains ($2,800) and debt reduction ($400)"
+
+**UX/Design Approach**:
+- Narrative-first — every data point has a story
+- Conversational AI chat interface
+- Visual annotations on charts
+- Proactive insights — AI reaches out when something changes
+
+**Unique Capabilities**:
+- **"Money Stories"**: AI-generated narrative for every financial event — unique in personal finance
+- **"Change Explanations"**: Explains WHY numbers changed — not just what changed
+- **"Goal Narratives"**: Connects financial data to life goals with narrative
+
+**Comparison with Stock Explorer**:
+
+| Feature | Datawallet | Stock Explorer |
+|---|---|---|
+| Money Stories | ✅ AI narratives | ❌ Not built (C98 pending) |
+| Change Explanations | ✅ Why numbers changed | ❌ Not built (C98 pending) |
+| Financial Health Score | ✅ 0-100 with narrative | ❌ Not built (C43 pending) |
+| Goal Narratives | ✅ Goal connection | ❌ Not built (C114 pending) |
+| AI Chat | ✅ Conversational | ❌ Not built (C59 pending) |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ❌ US focus | ✅ Deep coverage |
+| Company Analysis | ❌ Personal finance | ✅ Deep (business card) |
+
+**Key Insight for Stock Explorer**: Datawallet's "Money Stories" and "Change Explanations" are the most advanced versions of what our C98 (Event Interpretation Engine) proposes — AI-generated narrative explanations for every financial data point. The "Financial Health Score" is a model for our C43 (Snowflake Health) — a single 0-100 score with plain-language explanation. The "Goal Narratives" feature is a more advanced version of our C114 (Financial Goal Narrative) — connecting financial data to life goals with AI-generated narrative.
+
+---
+
+### 6. Visual Capitalist (visualcapitalist.com)
+
+**Positioning**: "Visualizing the world's data" — infographic-driven financial education
+**Target Users**: Visual learners who understand data through charts and infographics
+
+**Key Features**:
+- **"Infographic Library"**: 1000+ infographics on financial topics — each one tells a data story through visual design — "The World's Biggest Companies by Revenue" (visual ranking)
+- **"Data Stories"**: Long-form visual articles — scroll through a data narrative with charts, maps, and animations — "The History of TSMC's Revenue Growth" (visual timeline)
+- **"Market Visualizations"**: Visual market overviews — sector heatmaps, geographic revenue maps, supply chain diagrams
+- **"Animated Charts"**: Charts that animate to show change over time — "How Taiwan's Stock Market Grew 2000-2025"
+- **"Visual Comparisons"**: Side-by-side visual comparisons — "TSMC vs Samsung: Who Makes More Chips?" (visual comparison)
+- **"Infographic Creator"**: Users can create their own infographics from data — user-generated visual content
+
+**UX/Design Approach**:
+- Visual-first — every concept is explained with a custom visual
+- Scroll-based narrative — data unfolds as you scroll
+- High production quality — professional design
+- Shareable — infographics designed for social media
+
+**Unique Capabilities**:
+- **Infographic-driven education**: Every financial concept is explained through custom visual design
+- **Animated data stories**: Charts that animate to show change over time
+- **Visual comparisons**: Side-by-side visual comparisons of companies/metrics
+
+**Comparison with Stock Explorer**:
+
+| Feature | Visual Capitalist | Stock Explorer |
+|---|---|---|
+| Infographic Library | ✅ 1000+ visuals | ❌ Not built |
+| Data Stories | ✅ Scroll-based | ⚠️ PPT-style cards |
+| Market Visualizations | ✅ Heatmaps, maps | ⚠️ Basic charts |
+| Animated Charts | ✅ Time animation | ❌ Static charts |
+| Visual Comparisons | ✅ Side-by-side | ⚠️ Peer comparison |
+| Infographic Creator | ✅ User-generated | ❌ Not built |
+| Plain-language | ⚠️ Visual-first | ✅ Core feature |
+| TW Market | ❌ Global focus | ✅ Deep coverage |
+| Company Analysis | ⚠️ Visual overview | ✅ Deep (business card) |
+
+**Key Insight for Stock Explorer**: Visual Capitalist's "Data Stories" are a more advanced version of our C82 (Animated Data Story) — scroll-based visual narratives that show data change over time. The "Infographic Creator" is a unique feature that lets users create their own visual content — Stock Explorer could add a "Create Your Own Company Card" feature where users customize the business card with their own annotations and share it. The "Visual Comparisons" feature is a more engaging version of our peer comparison — visual side-by-side comparisons that make differences immediately obvious.
+
+---
+
+### 7. Spiking (spiking.com)
+
+**Positioning**: "AI that explains why stocks move" — social investing with AI explanations
+**Target Users**: Singapore and Asian retail investors who want to understand stock movements
+
+**Key Features**:
+- **"Why Stock Moved" AI**: AI generates plain-language explanations for every stock movement — "TSMC dropped 3% today because of concerns about iPhone demand after Apple's earnings" — combines news, social sentiment, and market data into narrative
+- **"Social Market Feed"**: Real-time social feed of stock discussions — users share insights, news, and analysis — similar to StockTwits but with AI curation
+- **"AI Earnings Preview"**: AI generates pre-earnings analysis — "Here's what to watch in TSMC's upcoming earnings" — plain-language summary of key metrics to monitor
+- **"Insider Trading Tracker"**: Tracks insider trading activity with plain-language explanations — "The CEO bought 10,000 shares last week — historically, this has been a positive signal"
+- **"Smart Alerts"**: AI-powered alerts that explain WHY something happened — not just "TSMC dropped 3%" but "TSMC dropped 3% because of X, Y, Z"
+- **"Community Insights"**: AI-curated community insights — filters noise and highlights the most relevant analysis
+
+**UX/Design Approach**:
+- Mobile-first with real-time updates
+- AI-generated narrative at the center
+- Social feed with AI curation
+- Push notifications for smart alerts
+
+**Unique Capabilities**:
+- **"Why Stock Moved" AI**: Unique AI explanation for every stock movement — most advanced version of our C98 (Event Interpretation Engine)
+- **AI Earnings Preview**: Pre-earnings plain-language analysis — similar to our C110 (Earnings Story)
+- **Smart Alerts with explanations**: Alerts that explain WHY — not just WHAT
+
+**Comparison with Stock Explorer**:
+
+| Feature | Spiking | Stock Explorer |
+|---|---|---|
+| Why Stock Moved AI | ✅ Full AI narrative | ❌ Not built (C98 pending) |
+| Social Market Feed | ✅ AI-curated | ❌ Not built |
+| AI Earnings Preview | ✅ Pre-earnings | ❌ Not built (C110 pending) |
+| Insider Trading Tracker | ✅ With explanations | ❌ Not built (C108 pending) |
+| Smart Alerts | ✅ With explanations | ❌ Not built (C02 pending) |
+| Community Insights | ✅ AI-curated | ❌ Not built |
+| Plain-language | ✅ Core feature | ✅ Core feature |
+| TW Market | ❌ Singapore focus | ✅ Deep coverage |
+| Structured Analysis | ⚠️ Social-driven | ✅ Systematic |
+
+**Key Insight for Stock Explorer**: Spiking is the most directly relevant uncovered competitor — it's the closest to what Stock Explorer's C98 (Event Interpretation Engine) + C107 (Inline AI Explanations) + C110 (Earnings Story) combination aims to be. The "Why Stock Moved" AI is the most advanced version of event interpretation — it combines news, social sentiment, and market data into a single narrative. The "Smart Alerts with explanations" is a model for our C02 (Notifications) — alerts that don't just notify but explain. The "AI Earnings Preview" is a model for our C110 — pre-earnings plain-language analysis.
+
+---
+
+## Updated Competitor Overview Table (Round 27 Additions)
+
+| Dimension | Gotrade | Ellevest | StockTwits | Acorns | Datawallet | Visual Capitalist | Spiking | **Stock Explorer** |
+|---|---|---|---|---|---|---|---|---|
+| **Positioning** | Investing for All | Investing for Women | Social Market Voice | Micro-Investing | AI Money Stories | Visual Data Stories | AI Stock Explanations | Beginner Education ("Historian") |
+| **Education** | ✅ Learn & Earn | ✅ Women & Wealth | ❌ | ✅ Acorns Learn | ⚠️ Money Stories | ✅ Infographics | ⚠️ AI explanations | ✅ Core |
+| **Goal Framing** | ⚠️ Basic | ✅ Life goals | ❌ | ⚠️ Retirement | ✅ Goal narratives | ❌ | ❌ | ❌ MISSING (C114) |
+| **Social Features** | ✅ Social feed | ✅ Community | ✅ Cashtag | ❌ | ❌ | ⚠️ Shareable | ✅ Social feed | ❌ MISSING |
+| **AI Explanations** | ❌ | ⚠️ Advisor | ❌ | ❌ | ✅ Money Stories | ❌ | ✅ Why Stock Moved | ❌ MISSING (C98) |
+| **Sentiment** | ❌ | ❌ | ✅ Real-time | ❌ | ❌ | ❌ | ⚠️ Social | ❌ MISSING |
+| **Progress Tracking** | ✅ Badges | ❌ | ❌ | ✅ Completion | ❌ | ❌ | ❌ | ❌ MISSING (C50) |
+| **Notifications** | ✅ Push | ✅ Push | ✅ Push | ✅ Push | ✅ Proactive | ❌ | ✅ Smart Alerts | ❌ MISSING (C02) |
+| **Visual Design** | ✅ Card-based | ✅ Warm | ✅ Feed | ✅ Minimalist | ✅ Narrative | ✅ Infographic | ✅ Mobile | ✅ PPT-style |
+| **TW Market** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ Deep coverage |
+| **Plain-language** | ✅ Core | ✅ Core | ⚠️ User-gen | ✅ Core | ✅ Core | ⚠️ Visual | ✅ Core | ✅ Core |
+
+---
+
+## New Feature Ideas from Round 27
+
+### [ISSUE-C132] "Risk Level Simplification" — 1-5 Scale with Plain-Language Descriptions
+
+- **Source**: Competitor research round 27 (Gotrade 1-5 risk scale, Ellevest goal-based risk, Acorns simplified risk)
+- **Priority**: P1
+- **Effort**: 6-10h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + Beginner-friendly
+- **Description**: Gotrade uses a simple 1-5 risk level for every stock — beginners immediately understand "this is a level 3 risk (moderate)." Stock Explorer's C44 (Risk Analysis) proposes a multi-dimension risk analysis that may overwhelm beginners. C132 adds a simplified "風險等級" (Risk Level) indicator at the top of each business card page: a single 1-5 scale with plain-language descriptions (1=低風險: 像定存一樣穩定, 5=高風險: 像坐雲霄飛車). This doesn't replace the detailed C44 analysis — it provides a quick overview for beginners, with a "了解更多" link to the full analysis.
+- **Implementation**: Add a "風險等級 3/5" badge at the top of the business card page with a tooltip showing the plain-language description. Calculate from volatility, beta, and financial health metrics already available in FinMind data.
+- **Competitive Gap**: 🟡 Gotrade proves simplified risk communication is expected by beginners. No TW competitor has a 1-5 risk scale with plain-language descriptions. This is the simplest risk communication feature that directly serves the "ten-second test."
+
+### [ISSUE-C133] "Daily Financial Education Content" — "Money Matters" Style Micro-Lessons
+
+- **Source**: Competitor research round 27 (Acorns "Money Matters" daily content, Gotrade "Learn & Earn" bite-sized lessons, Finimize daily briefing)
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #3 "Adaptive and self-evolving" + Core value #4 "Point-to-point knowledge construction"
+- **Description**: Acorns' "Money Matters" delivers daily financial education content — short articles, tips, and quizzes. Gotrade's "Learn & Earn" delivers bite-sized lessons with stock rewards. Stock Explorer has no daily engagement mechanism — users only return when they want to look up a specific stock. C133 adds a "📚 今日學習" (Today's Learning) section to the homepage with one daily micro-lesson (2-3 minutes) about a financial concept using a real TW stock example. Each lesson includes: (1) one concept explanation, (2) one real TW stock example, (3) one quiz question. Creates a daily retention loop.
+- **Implementation**: Create a `data/daily_lessons.yaml` with 365 pre-written micro-lessons (one per day). Each lesson has: concept name, plain-language explanation, TW stock example, quiz question with 3 options. Display one per day on the homepage with a "next lesson tomorrow" indicator.
+- **Competitive Gap**: 🔴 Acorns and Gotrade prove daily financial education drives engagement. No TW stock platform offers daily micro-lessons. This would be a unique daily retention mechanism.
+
+### [ISSUE-C134] "AI-Generated Change Explanations" — "Why Did This Number Change?" Contextual Narratives
+
+- **Source**: Competitor research round 27 (Datawallet "Change Explanations", Spiking "Why Stock Moved", Copilot Money "Money Insights")
+- **Priority**: P1
+- **Effort**: 12-16h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #3 "Adaptive and self-evolving" + "Historian" positioning
+- **Description**: Datawallet explains every financial change with narrative — "Your grocery bill increased by $50 because of inflation in dairy." Spiking explains every stock movement with AI — "TSMC dropped 3% because of iPhone demand concerns." Stock Explorer currently shows metrics as static numbers — if gross margin dropped from 55% to 52%, the user sees the number but not WHY. C134 adds a "📝 為什麼變了?" (Why Did It Change?) button next to every metric that has changed significantly (>5%) compared to the previous period. Clicking it reveals a plain-language explanation: "毛利率從55%降到52%，主要是因為晶片價格競爭加劇，加上新製程的良率還在提升中。" This transforms static data into educational narrative.
+- **Implementation**: Add a change detection layer that compares current metrics vs previous period. For changes >5%, show a "📝 為什麼變了?" button. Explanations generated from templates keyed to metric type and direction of change. Data source: existing FinMind data pipeline.
+- **Competitive Gap**: 🔴 Datawallet and Spiking prove that "change explanations" are expected by users. No TW stock platform explains metric changes in plain language. This is the most impactful educational feature Stock Explorer could add — it transforms every data point into a learning moment.
+
+### [ISSUE-C135] "Financial Health Score with Narrative" — Explainable 0-100 Score
+
+- **Source**: Competitor research round 27 (Datawallet "Financial Health Score", Acorns "Financial Health", Simply Wall St snowflake, Kabutan Score)
+- **Priority**: P1
+- **Effort**: 10-14h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #5 "Benchmark-oriented analysis" + "Ten-second test"
+- **Description**: Datawallet gives users a single 0-100 financial health score with plain-language explanation. Kabutan gives a 0-100 stock score with narrative. Simply Wall St gives a snowflake visual. Stock Explorer's C43 (Snowflake Health Visualization) is planned but not built. C135 creates a simplified "健康分數" (Health Score) — a single 0-100 number with a plain-language explanation: "台積電健康分數: 85/100 — 業務穩定、毛利率高、現金流充足，但估值偏高。" The score is calculated from 5 dimensions (profitability, growth, financial health, valuation, momentum) each scored 0-20. Each dimension has a plain-language explanation on hover/click.
+- **Implementation**: Calculate 5 dimension scores from FinMind data. Display as a composite 0-100 score with a gauge chart. Each dimension shown as a bar with plain-language label. Click to expand detailed explanation. Reuse existing C43 snowflake infrastructure.
+- **Competitive Gap**: 🟡 Datawallet and Kabutan prove that a single health score with narrative is expected. Simply Wall St's snowflake is visual but lacks narrative. Stock Explorer's combination of visual score + plain-language narrative would be unique in TW market.
+
+### [ISSUE-C136] "Goal-Based Learning Path" — Connecting Stock Analysis to Life Goals
+
+- **Source**: Competitor research round 27 (Ellevest "Goal-Based Investing", Datawallet "Goal Narratives", Kuvera "Goal-Based Education")
+- **Priority**: P2
+- **Effort**: 14-20h
+- **Alignment**: Core value #1 "Story first, data second" + Core value #4 "Point-to-point knowledge construction" + "Historian" positioning
+- **Description**: Ellevest frames every investment as progress toward a life goal. Datawallet explains financial changes in terms of goal progress. Stock Explorer currently presents company data without any connection to the user's life goals. C136 adds a "🎯 我的學習目標" (My Learning Goals) feature where users define 1-3 learning goals: "Understand TSMC well enough to explain it to a friend," "Learn how to read financial statements," "Understand what makes a stock a good investment." The system then recommends a learning path — which companies to study, which concepts to learn, which quizzes to take — all connected to the user's goals. This transforms Stock Explorer from a "look up any company" tool into a "learn what you need to achieve your goals" platform.
+- **Implementation**: Add a goal-setting flow during onboarding (or from settings page). Users select 1-3 goals from a predefined list. System generates a recommended learning path: which companies to study (based on goals), which concepts to learn (based on C47 academy), which quizzes to take (based on C101). Track progress toward each goal.
+- **Competitive Gap**: 🔴 Ellevest proves goal-based framing drives engagement. No stock analysis platform connects company-level data to personal learning goals. This would be a unique differentiator for Stock Explorer — transforming data into personal education.
+
+### [ISSUE-C137] "Visual Comparison Cards" — Infographic-Style Side-by-Side Company Comparison
+
+- **Source**: Competitor research round 27 (Visual Capitalist "Visual Comparisons", Public.com side-by-side, Simply Wall St snowflake comparison)
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #5 "Benchmark-oriented analysis" + Core value #2 "PPT-style presentation"
+- **Description**: Visual Capitalist creates visual comparisons — "TSMC vs Samsung: Who Makes More Chips?" — with custom infographics that make differences immediately obvious. Stock Explorer has peer comparison (quantitative metrics side-by-side) but no visual comparison format. C137 adds a "Visual Comparison" mode to the peer comparison page — instead of a table of numbers, users see a visual card with: (1) company logos side-by-side, (2) key metrics as visual bars (revenue bar chart, margin comparison, growth rate), (3) plain-language summary ("台積電的營收是聯電的3倍，但增長率較低"). This makes comparison intuitive and shareable.
+- **Implementation**: Add a "視覺比較" (Visual Comparison) tab to the peer comparison page. Use Plotly to create visual comparison charts (bar charts for metrics, radar chart for multi-dimension comparison). Include a plain-language summary generated from templates. Reuse existing peer comparison data.
+- **Competitive Gap**: 🟡 Visual Capitalist proves visual comparisons are more engaging than tables. No TW competitor has infographic-style company comparisons. This would make Stock Explorer's existing peer comparison feature more beginner-friendly and shareable.
+
+### [ISSUE-C138] "Smart Notifications with Explanations" — AI-Enhanced Alerts That Explain Why
+
+- **Source**: Competitor research round 27 (Spiking "Smart Alerts", Datawallet "Proactive Insights", Acorns "Push Notifications")
+- **Priority**: P1
+- **Effort**: 10-14h
+- **Alignment**: Core value #3 "Adaptive and self-evolving" + Core value #1 "Story first, data second" + "Historian" positioning
+- **Description**: Spiking's smart alerts don't just notify — they explain WHY something happened. "TSMC dropped 3% today because of iPhone demand concerns" is more useful than "TSMC dropped 3%." Stock Explorer's C02 (Notifications) is planned but basic — price alerts and event notifications. C138 enhances notifications with AI-generated explanations: every notification includes a plain-language explanation of WHY the event matters. "📉 台積電營收公布: 月營收較上月下降8% — 這是正常的季節性波動，因為農曆春節期間工廠停工。過去10年平均降幅為10%，這次8%其實比平均好。" This transforms notifications from data alerts into educational moments.
+- **Implementation**: Extend C02 notification system with explanation templates. For each event type (earnings, revenue, price movement, institutional investor change), create a template that explains the event in plain language with historical context. Use existing M5 event detection + FinMind data for historical comparisons.
+- **Competitive Gap**: 🔴 Spiking proves that notifications with explanations are expected by users. No TW stock platform provides AI-enhanced alerts with historical context. This would make Stock Explorer's notifications uniquely educational — every alert is a learning opportunity.
+
+---
+
+## Summary
+
+### New Competitors Researched: 7
+(Gotrade, Ellevest, StockTwits, Acorns, Datawallet, Visual Capitalist, Spiking)
+
+### New Feature Gaps Identified: 7
+
+| ID | Title | Priority | Effort | Source Competitor | Key Differentiator |
+|----|-------|----------|--------|-------------------|-------------------|
+| C132 | Risk Level Simplification (1-5 Scale) | P1 | 6-10h | Gotrade, Ellevest, Acorns | Simplified risk communication for beginners |
+| C133 | Daily Financial Education Micro-Lessons | P2 | 10-14h | Acorns, Gotrade, Finimize | Daily retention loop with TW stock examples |
+| C134 | AI-Generated Change Explanations | P1 | 12-16h | Datawallet, Spiking, Copilot Money | Transforms every metric change into learning |
+| C135 | Financial Health Score with Narrative | P1 | 10-14h | Datawallet, Kabutan, Simply Wall St | Explainable 0-100 score with plain language |
+| C136 | Goal-Based Learning Path | P2 | 14-20h | Ellevest, Datawallet, Kuvera | Connects stock analysis to personal learning goals |
+| C137 | Visual Comparison Cards | P2 | 8-12h | Visual Capitalist, Public.com | Infographic-style side-by-side comparison |
+| C138 | Smart Notifications with Explanations | P1 | 10-14h | Spiking, Datawallet, Acorns | AI-enhanced alerts that explain WHY |
+
+### Key Insights from Round 27
+
+1. **"Change Explanations" Are the New Baseline**: Datawallet, Spiking, and Copilot Money all explain WHY numbers changed — not just what changed. This is becoming the expected way to present financial data. Stock Explorer's C134 (AI-Generated Change Explanations) is the most critical new gap — it transforms every data point into a learning moment.
+
+2. **Simplified Risk Communication Is Table Stakes**: Gotrade's 1-5 risk scale, Ellevest's goal-based risk, and Acorns' simplified risk all prove that beginners need a simple risk indicator. Stock Explorer's C132 (Risk Level Simplification) is the simplest P1 feature — 6-10h effort for high beginner impact.
+
+3. **Daily Education Content Drives Retention**: Acorns' "Money Matters," Gotrade's "Learn & Earn," and Finimize's daily briefing all create daily reasons to return. Stock Explorer's C133 (Daily Micro-Lessons) would be a unique retention mechanism in the TW market.
+
+4. **Goal-Based Framing Is the Next Frontier**: Ellevest, Datawallet, and Kuvera all connect financial data to personal life goals. Stock Explorer's C136 (Goal-Based Learning Path) would be a unique differentiator — transforming data into personal education.
+
+5. **Spiking Is the Most Directly Relevant Uncovered Competitor**: Spiking's "Why Stock Moved" AI is the closest to what Stock Explorer's C98 + C107 + C110 combination aims to be. The key differentiator: Spiking is social-driven (crowd sentiment), Stock Explorer is historian-driven (historical context). Both explain stock movements but from different angles.
+
+6. **Visual Capitalist Validates the Visual-First Approach**: Visual Capitalist's infographic-driven education is a more advanced version of Stock Explorer's PPT-style cards. The "Infographic Creator" concept — letting users create and share their own visual content — is a unique engagement mechanism that Stock Explorer could adapt.
+
+7. **The "Notifications + Explanations" Combination Is Unique**: No competitor combines notifications (C02) with AI-generated explanations (C138). Spiking comes closest but focuses on stock movements, not fundamental metric changes. Stock Explorer's C138 would be unique — every notification is an educational moment with historical context.
+
+---
+
+*This is the twenty-seventh competitor research round. Seven new feature suggestions identified (C132-C138). The most impactful new gap is C134 (AI-Generated Change Explanations) — Datawallet and Spiking prove that explaining WHY numbers changed is becoming the baseline expectation for financial platforms. The most strategically important gap is C138 (Smart Notifications with Explanations) — it combines C02 (Notifications) with AI narrative generation, creating a unique educational notification system. The most time-sensitive finding: Spiking is the most directly relevant uncovered competitor — its "Why Stock Moved" AI validates Stock Explorer's C98 + C107 direction but also shows that the TW market is moving toward AI-generated explanations faster than expected.*

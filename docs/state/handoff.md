@@ -1,23 +1,25 @@
 # Handoff – Review
 ## Summary
-- **Topic**: Review (🔍) — Round 30, Sprint 13b Post-Mortem
-- **Date**: 2026-06-18 (Review Round 30 completed)
-- **Sprint Status**: Sprint 13b ✅ COMPLETE → Sprint 14 planned
+- **Topic**: Review (🔍) — Round 34, Sprint 15 Post-Mortem
+- **Date**: 2026-06-14 (Review Round 34 completed)
+- **Sprint Status**: Sprint 15 ✅ COMPLETE → Sprint 16 planned
 ## Key Metrics
-- Design grade: A- (downgraded from A due to D-081 regression)
-- L0: 103/103 ✅ | L1: 20/20 ✅ | Tests: 149/149 ✅
-- Architecture: 🟢 HEALTHY — 31 service modules, 0 god modules, 100% Streamlit-free
-- Sprint 13b: 3 features delivered (D-079 + C36 Revenue Tree V2 + C46 Moat Analysis with C124 merged)
-- Sprint 14: D-077 fix → C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy + C125 stretch
-- New P0 bug: D-077 (`_render_revenue_compact()` undefined — runtime crash)
-- New feature gaps: C127-C131 (Moat Trend, Revenue Quality, Certificates, Investor Quiz, Segment Quality)
+- Design grade: A (upgraded from A- — C126/C47/C101 demonstrate strong design discipline)
+- L0: 106/106 ✅ | L1: 20/20 ✅ | Tests: 165+/165+ ✅
+- Architecture: 🟢 HEALTHY — 38 service modules, 0 god modules, 100% Streamlit-free
+- Sprint 15: 10 debt items resolved (D-072, D-073, D-074, D-077, D-084, D-086, D-088, D-090, chart.py split, CI enforcement)
+- Sprint 16: C14 Health Score + C45 Valuation Band + C28 Story Timeline Spike + C41 Read Next Phase A (from Round 33 plan)
+- New feature gaps: C132-C138 (Risk Simplification, Micro-Lessons, Change Explanations, Health Score Narrative, Goal-Based Learning, Visual Comparison, Smart Notifications)
+- Inline HTML: 11 instances remaining (down from 27 in Round 26) — CI enforcement prevents new instances
 ## Sprint Plans (Summary)
-|| Sprint | Items | Status ||
-||--------|-------|--------||
-|| Sprint 3-12 | Various | ✅ Complete ||
-|| Sprint 13a | C33 Glossary + C48 Story Card | ✅ Complete ||
-|| Sprint 13b | D-079 + C36 Revenue Tree V2 + C46 Moat Analysis | ✅ Complete ||
-|| Sprint 14 | C47 Education Academy + C40 Mode Toggle + C123/C125/C126 | 📋 Planned ||
+||| Sprint | Items | Status ||
+|||--------|-------|--------||
+||| Sprint 3-12 | Various | ✅ Complete ||
+||| Sprint 13a | C33 Glossary + C48 Story Card | ✅ Complete ||
+||| Sprint 13b | D-079 + C36 Revenue Tree V2 + C46 Moat Analysis | ✅ Complete ||
+||| Sprint 14 | C47 Education Academy + C40 Mode Toggle + C126 Moat Comparison | ✅ Complete ||
+||| Sprint 15 | D-090 + CI + chart.py split + D-084/D-086/D-088 | ✅ Complete ||
+||| Sprint 16 | C14 Health Score + C45 Valuation Band + C28 Spike + C41 Phase A | 📋 Planned ||
 ## Key Rules
 - Content cap: 100 items max across all features
 - Mandatory historian tone QA gate before each content feature ships
@@ -25,6 +27,7 @@
 - Community features (C64, C67, C89) deprioritized — not feasible in Streamlit
 - Content creation must be budgeted at 40% of effort for education features
 - Priority resolution: vision alignment > retention impact > technical risk
+- CI enforcement: no-inline-html check must pass before every commit (since Sprint 15)
 ## 💡 Discussion Section (Round 29 — 2026-06-18)
 **Topic**: Sprint 14 Scope Validation — C40 Mode Toggle + C126 Moat Comparison + C47 Education Academy + C125 stretch
 **Challenger**: ✅ CONFIRMED with 7 revisions
@@ -77,8 +80,19 @@
 || A8 | Execute R3: batch API calls in category_browser and etf_browser | Developer | Ongoing ||
 || A9 | Execute R4: session-level caching for watchlist and events | Developer | Ongoing ||
 || A10| Execute R5: migrate hardcoded data to YAML files | Developer | Ongoing ||
-## Next Cycle
-✅ Discussion Round 31 Complete → 🔧 Development Next Sprint (Notifications → Key Takeaways → Company Story Timeline spike → Health Score after D-16) → 🔍 Review Round 31
+## 💡 Discussion Section (Round 33 — 2026-06-14)
+**Topic**: Post-Sprint 15 Feature Planning — C14 Health Score + C45 Valuation Band + C28 Story Timeline Spike + C41 Read Next + C02 Notifications (conditional)
+**Participants**: Product Manager, System Architect, Developer, Designer, Challenger
+**Challenger**: ✅ CONFIRMED with 5 revisions
+
+### Key Decisions
+- **Sprint 16a (12-18h)**: C14 Health Score Badge + C45 Valuation Band + C28 Story Timeline Spike + C41 Read Next Phase A
+- **Sprint 16b (conditional)**: C28 Full (26-36h) if spike passes, OR C02 Notifications + C07 Custom Thresholds (18-28h) if spike fails
+- **Sprint 17 (20-29h)**: C29 Explain Any Metric + C41 Phase B + C14 Full Radar
+- **Critical discovery**: Backlog is stale — C37, C39, C36, C38, C16 already implemented
+- **Strategic trade-off**: C02 Notifications deferred 1-2 sprints for unique differentiators
+
+**Full details**: docs/state/handoff_discuss_r33.md
 
 ## 🔍 Review Section (Round 32 — 2026-06-13)
 **Theme**: Review Round 32 — Sprint 14 Post-Mortem + Sprint 15 Prerequisites
@@ -127,12 +141,8 @@
 - Grading criteria: distinguish "god module" from "large coherent module"
 - CI check: automated enforcement for unsafe_allow_html
 
-### Next Cycle
-🔍 Review Round 32 Complete → 🔧 Development Round 33 (Sprint 15: D6 YAML → chart.py split → CI check → C101) → 🔍 Review Round 33
 ## Archive
 See git history for previous rounds and development sections.
-
-## 🔧 Development Section (Round 32 — 2026-06-13)
 
 ### Summary
 - **Date**: 2026-06-13
@@ -177,3 +187,92 @@ See git history for previous rounds and development sections.
 
 ### Next Cycle
 🔧 Development Round 32 Complete → 🔍 Review Round 32 → Sprint 15 Planning (C125 Segment Profitability + C40 Mode Toggle refinement + architecture debt R2-R5)
+
+---
+
+## 🔍 Review Section (Round 34 — 2026-06-14)
+**Theme**: Review Round 34 — Sprint 15 Post-Mortem + Sprint 16 Prerequisites
+
+### Competitor Research (Round 10)
+**New Competitors Researched**: 7 (Gotrade, Ellevest, StockTwits, Acorns, Datawallet, Visual Capitalist, Spiking)
+**New Feature Gaps Identified**: 7 (C132-C138)
+
+| ID | Feature | Priority | Effort | Source |
+|----|---------|----------|--------|--------|
+| C132 | Risk Level Simplification (1-5 Scale) | P1 | 6-10h | Gotrade |
+| C133 | Daily Financial Education Micro-Lessons | P2 | 10-14h | Acorns |
+| C134 | AI-Generated Change Explanations | P1 | 12-16h | Datawallet/Spiking |
+| C135 | Financial Health Score with Narrative | P1 | 10-14h | Spiking |
+| C136 | Goal-Based Learning Path | P2 | 14-20h | Ellevest |
+| C137 | Visual Comparison Cards | P2 | 8-12h | Visual Capitalist |
+| C138 | Smart Notifications with Explanations | P1 | 10-14h | Spiking |
+
+**Key Insights**:
+- "Change Explanations" are the new baseline — Datawallet, Spiking, and Copilot Money all explain WHY numbers changed
+- Spiking is the most directly relevant uncovered competitor — its "Why Stock Moved" AI validates C98 + C107 direction
+- Simplified risk communication is table stakes — Gotrade's 1-5 scale proves beginners need simple risk indicators
+
+### Architecture Debt Review
+**Items Verified Resolved**: 10 (D-072, D-073, D-074, D-077, D-084, D-086, D-088, D-090, chart.py split, CI enforcement)
+**New Debt Items**: 7 (D-091 through D-098, all Low severity except D-097 Medium)
+**Architecture Grade**: 🟢 HEALTHY — 38 service modules, 0 god modules, 100% Streamlit-free, 165+ tests
+
+**Top 3 Architecture Recommendations for Sprint 16**:
+1. Verify test coverage on Day 1 (0.25h)
+2. Plan C14 Health Score chart integration — recommend new `chart_health.py` module (0.5h planning)
+3. Build LLM abstraction layer before C98 (2-3h)
+
+### Design Review
+**Design Grade**: A (upgraded from A-)
+**New P2 Issues**: D-091 (glossary tooltip not wired), D-092 (academy lesson list), D-093 (moat comparison sequential fetch), D-094 (dividend table inline HTML escalated), D-095 (quiz results)
+**Consolidations**: D-052+D-053 documented, D-062+D-063 consolidated, D-043→D-094 escalated
+**Notable**: C126 moat comparison page is the best-designed new page since C105
+
+### Sprint 16 Readiness
+**Verdict**: ✅ READY — No blockers. All prerequisites met.
+**Plan** (from Round 33 Discussion):
+1. **Sprint 16a (12-18h)**: C14 Health Score Badge + C45 Valuation Band + C28 Story Timeline Spike + C41 Read Next Phase A
+2. **Sprint 16b (conditional)**: C28 Full (26-36h) if spike passes, OR C02 Notifications + C07 Custom Thresholds (18-28h) if spike fails
+
+---
+
+## 🔥 Challenge Section (Round 34 — 2026-06-14)
+
+### Round 1: Gap Authenticity Challenge
+**Challenge**: Are C132-C138 really gaps? Stock Explorer already has C43 (Health Score), C37 (Key Takeaways), C02 (Notifications planned). Don't C135 (Health Score Narrative) and C138 (Smart Notifications) duplicate existing planned work?
+
+**Response**:
+- C135 (Health Score Narrative) is a refinement of C43 — instead of just showing a score, it adds a plain-language narrative layer. This is a P1 gap because Robinhood and Spiking both have narrative health scores, and our C43 currently only shows the score without explanation. Valid gap.
+- C138 (Smart Notifications with Explanations) vs C02 (Notifications): C02 is the notification delivery mechanism (bell icon, unseen count). C138 is the content quality — notifications that explain WHY something happened. These are complementary, not duplicative. Valid gap.
+- C134 (AI-Generated Change Explanations) is genuinely new — no existing feature explains WHY a metric changed. This is a unique differentiator. Valid P1 gap.
+- C132 (Risk Simplification 1-5 Scale) — our current risk display uses color-coded cards but no simple scale. Valid P2 gap.
+- C133, C136, C137 are P2 nice-to-haves. Acceptable but not urgent.
+
+**Verdict**: 5 of 7 gaps confirmed authentic. C133 and C136 are lower priority but valid.
+
+### Round 2: Priority Challenge
+**Challenge**: Sprint 16 plans C14 + C45 + C28 + C41 (from Round 33). The review adds 4 new P1 items (C132, C134, C135, C138). Should any of these displace the planned Sprint 16 work?
+
+**Response**:
+- C135 (Health Score Narrative) should be merged with C14 (Health Score) implementation. They're the same feature at different maturity levels. C14 should include narrative from the start.
+- C134 (Change Explanations) is architecturally dependent on the LLM layer (D5). Cannot be done in Sprint 16 without first building the abstraction. Defer to Sprint 17.
+- C132 (Risk Simplification) is a quick win (6-10h) that could fit in Sprint 16a alongside C14.
+- C138 (Smart Notifications) depends on C02 (Notifications) which is already planned for Sprint 16b (conditional). Merge the explanation feature into C02.
+
+**Revised Sprint 16 Plan**:
+- **Sprint 16a**: C14 Health Score with Narrative (= C135 merged) + C132 Risk Simplification + C45 Valuation Band + C28 Spike
+- **Sprint 16b**: C02 Notifications with Explanations (= C138 merged) + C41 Phase A, OR C28 Full
+
+### Round 3: Goal Alignment Challenge
+**Challenge**: The product vision says "Historian, not a stock picker." Do C134 (Change Explanations) and C138 (Smart Notifications) align with this? Change explanations could be seen as predictive ("this stock moved because..."), which borders on investment advice.
+
+**Response**:
+- C134 (Change Explanations) can be framed as historical: "過去這週營收成長了15%，主要是因為..." (explaining what already happened). This is historian-aligned. The key is using past-tense, factual language — not predicting future changes.
+- C138 (Smart Notifications) should also be historian-framed:_notify users of past events with context, not forward-looking alerts. "台積電昨天公布了財報，重點是..." not "台積電即將大漲".
+- Both features need the historian tone QA gate (already a key rule). This is manageable risk.
+
+**Final Verdict**: ✅ **CONFIRMED** with 4 revisions:
+1. C135 merged into C14 (Health Score with Narrative from day 1)
+2. C132 (Risk Simplification) added to Sprint 16a
+3. C138 merged into C02 (Notifications with Explanations)
+4. C134 deferred to Sprint 17 (requires LLM abstraction layer first)

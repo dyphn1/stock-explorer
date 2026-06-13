@@ -1,7 +1,7 @@
 # Stock Explorer — Current Problems
 
-> **Last Updated**: 2026-06-18
-> **Source**: Design Review Round 30 (2026-06-18, after Sprint 13b Completion)
+> **Last Updated**: 2026-06-14
+> **Source**: Design Review Round 34 (2026-06-14, after C126/C47/C101 feature review)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
@@ -34,24 +34,25 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Effort**: 2-3h
 - **Status**: ✅ **PARTIALLY FIXED in Sprint 7 (D3)** — `group_structure.py` now uses `_subsidiary_card()` and `_info_card()` with zero inline HTML. `_subsidiary_card()` and `_count_label()` added to `_router_base.py`. **Remaining**: `watchlist_page.py`, `etf_detail.py`, `business_card.py` C41/C44 inline HTML still present. **New regressions**: `market_event_case_study.py` (D-049, D-050) and `etf_browser.py` (D-051) introduced new inline HTML in Sprint 7. Net effect: group_structure fixed, but new pages added inline HTML. Overall inline HTML count: roughly unchanged.
 
-### D-004: No Design System Documentation
-- **Severity**: P1
+### D-004: Design System Documentation Not Maintained (DOWNGRADED TO P2)
+- **Severity**: P2 (downgraded from P1 in Round 34)
 - **Added**: 2026-06-14
 - **Source**: Design Review Round 9
-- **Description**: `docs/design/design_system.md` does NOT exist at the expected path. Color values, card styles, spacing, and typography are defined inline across multiple files. New features have no design system to follow, leading to inconsistencies.
-- **Affected Files**: All pages and services
-- **Proposed Fix**: Create `docs/design/design_system.md` documenting: color palette, card styles, typography, spacing system, Zone A/B/C rules, PPT-style principles. Note: A design system exists at `docs/domain/design_system.md` — should be copied/linked to the expected path.
-- **Effort**: 1h (copy existing doc to expected path)
+- **Description**: `docs/design/design_system.md` exists at the expected path but is not maintained alongside actual components. New components (`_mini_score_card`, `_glossary_tooltip`, `_health_score_card`) are added to `_router_base.py` without design system updates. The doc needs a maintenance pass to reflect the current component library.
+- **Affected Files**: `docs/design/design_system.md`, all pages and services
+- **Proposed Fix**: Update `docs/design/design_system.md` to include: `_mini_score_card` (compact score card variant), `_glossary_tooltip` (popover tooltip component), `_health_score_card` (planned), "entity card" variant (`_subsidiary_card` with white background), "muted label" variant (`_count_label`). Add a maintenance note: "Update this doc when adding new components to `_router_base.py`."
+- **Effort**: 1h (update existing doc)
+- **Status**: ✅ PARTIALLY RESOLVED — doc exists at expected path. Remaining: needs maintenance update for new components.
 
-### D-005: Business Card Page Overload Risk
-- **Severity**: P1
+### D-005: Business Card Page Overload Risk (MITIGATED)
+- **Severity**: P1 (mitigated to P2 in Round 34 — kept as P1 for tracking)
 - **Added**: 2026-06-14
 - **Source**: Design Review Round 9
-- **Description**: The Business Card page already had 9 sections. Sprint 2 added C37, C39, C43, and C45, bringing the total to 13+ sections. C41 adds a "推薦閱讀" section. C44 adds a risk section (mitigated by `st.expander`). This risks violating the "one key point per page" PPT-style principle and pushing content far below the fold.
+- **Description**: The Business Card page already had 9 sections. Sprint 2 added C37, C39, C43, and C45, bringing the total to 13+ sections. C41 adds a "推薦閱讀" section. C44 adds a risk section (mitigated by `st.expander`). **Round 34 update**: C105 toggle + Sprint 12 expander pattern significantly mitigated this. The page shows 4 above-fold sections by default. Users who disable the toggle still see all sections, but the default experience is now clean.
 - **Affected Pages**: `business_card.py`
 - **Proposed Fix**: Follow the "one new card per page per sprint" principle. Use progressive disclosure (expandable sections) for less critical content. Consider a "beginner mode by default" approach instead of showing everything. Reorder sections per Round 11 recommendations (summary → snowflake → deltas → details).
-- **Related Features**: C37, C39, C41, C36, C43, C45, C44
-- **Status**: C44's expander helps mitigate. C41 adds length. Net effect: stable but concerning.
+- **Related Features**: C37, C39, C41, C36, C43, C45, C44, C105
+- **Status**: ✅ MITIGATED in Sprint 12 — C105 toggle + expander pattern reduces above-fold sections from 18+ to 4. Severity reduced to P2 in practice.
 
 ### D-006: Mobile Responsiveness Gaps
 - **Severity**: P1
@@ -534,11 +535,11 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## Statistics
 
-- **Total Issues**: 85
+- **Total Issues**: 90
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 37 (D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-039, D-040, D-041, D-042, D-043, D-045, D-048, D-049, D-050, D-051, D-052, D-053, D-062, D-063, D-068, D-069, D-070, D-084, D-085, D-086, D-087, D-088, D-089, D-090)
-- **Resolved**: 30
+- **P2 (Optimization)**: 42 (D-004, D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-039, D-040, D-041, D-042, D-045, D-048, D-049, D-051, D-052, D-053, D-062, D-063, D-067, D-068, D-069, D-070, D-084, D-085, D-086, D-087, D-088, D-089, D-090, D-091, D-092, D-093, D-094, D-095)
+- **Resolved/Consolidated**: 33
 
 ---
 
@@ -1281,3 +1282,202 @@ The only new minor issue is `company_timeline.py` line 101 using `unsafe_allow_h
 
 ### Grade Trajectory
 A (R21) → A (R22) → A- (R23) → **A (R24, maintained)**
+
+# Round 34 Design Assessment (2026-06-14, Design Review)
+
+> **Reviewer**: Design Reviewer
+> **Scope**: Competitor UX pattern audit, recent feature design debt (C126 moat comparison, C47 academy, C101 quiz), P1/P2 consolidation
+> **Current Design Grade**: A-
+
+---
+
+## 1. Design Grade Assessment
+
+### Recommendation: **A- → A** (upgrade)
+
+**Justification:**
+
+Round 34 reviews the design debt from three recent features (C126 moat comparison, C47 academy, C101 quiz) and finds that all three use shared components from `_router_base.py` correctly. The moat comparison page (`moat_comparison.py`) is a model citizen — it uses `_section_title()`, `_info_card()`, `_summary_card()`, and `_mini_score_card()` with zero inline HTML. The academy page (`academy.py`) uses `_info_card()`, `_section_title()`, and `_白话_card()` consistently. The quiz score logic was already centralized in `_get_score_style()` (D-086 resolved).
+
+**Positive findings:**
+1. **C126 Moat Comparison** (commit `724921c`): Clean component usage. All 5 section headers use `_section_title()`. Peer overview uses `_info_card()`. Score comparison uses `_summary_card()`. Dimension comparison uses `_mini_score_card()`. Moat type and evidence use `_info_card()`. Zero inline HTML. This is the best-designed new page since C105.
+2. **C47 Academy**: Uses `_info_card()` for callouts, `_section_title()` for section headers, `_白话_card()` for quiz score display. The `_get_score_style()` helper centralizes the color/emoji logic. Zero inline HTML in the page file.
+3. **D-084/D-086/D-088 resolved**: Confirmed — moat comparison headers use `_section_title()`, academy quiz score uses centralized helper, financial.py inline HTML eliminated.
+
+**Remaining P1 issues (4):**
+- D-003: Inconsistent card styling — `_helpers.py` still has 4 card functions with inline HTML (`_study_card`, `_expert_card`, `_scenario_card`, `_render_risk_dimension`). These are consistent in style but bypass `_router_base.py`.
+- D-004: No design system documentation — `docs/design/design_system.md` exists but is not maintained alongside the actual components.
+- D-005: Business Card page overload — mitigated by C105 toggle and Sprint 12 expander pattern, but still a concern for users who disable the toggle.
+- D-006: Mobile responsiveness — unchanged, Streamlit limitation.
+
+**Net assessment**: The recent features (C126, C47, C101) demonstrate strong design discipline — all use shared components, zero inline HTML regressions. The grade upgrades from A- to **A** based on consistent component adoption in recent features.
+
+**Grade trajectory**: A (R21) → A (R22) → A- (R23) → A (R24) → A (R26) → **A (R34, upgraded)**
+
+---
+
+## 2. Competitor UX Pattern Audit (Round 34 Focus)
+
+### Key Competitor Patterns Not Yet Implemented
+
+| Pattern | Competitors | Our Status | Priority |
+|---------|-------------|------------|----------|
+| **Quiz after story** | Finimize, SoFi | ✅ C101 implemented | — |
+| **Key takeaways card** | Seeking Alpha, Public.com | ✅ C37 implemented | — |
+| **Beginner/Expert toggle** | Finimize, Sharesies | ✅ C105 implemented | — |
+| **Glossary tooltips** | Stash, Investopedia | ⚠️ `_glossary_tooltip()` exists in `_router_base.py` but not wired to any page | P2 |
+| **Company story timeline** | Stocksera, Public.com | ⚠️ C34 implemented as event list, not narrative | P2 |
+| **Revenue tree** | Public.com, Koyfin | ⚠️ C36 pie chart only, no hierarchical tree | P2 |
+| **What changed recently** | Koyfin, Finary | ✅ C39 implemented | — |
+| **Read next recommendations** | Motley Fool, Seeking Alpha | ✅ C41 implemented | — |
+| **First visit guide** | Stash, Finimize | ✅ C103 implemented | — |
+| **Progress bar on learning** | Duolingo, SoFi | ⚠️ Academy has `st.progress()` but no streak/gamification | P2 |
+
+### Most Impactful Missing Pattern: Glossary Tooltips
+
+The `_glossary_tooltip()` component already exists in `_router_base.py` (lines 189-210) but is **not wired to any page**. This is the single biggest gap between our implementation and competitor best practices. Stash and Investopedia both have tappable glossary terms on every financial metric. Our `_glossary_tooltip()` component is built but unused — it needs to be integrated into `_白话_card()` as an optional parameter.
+
+**Recommendation**: Wire `_glossary_tooltip()` into `_白话_card()` as an optional `glossary_key` parameter. When provided, a small ℹ️ icon appears next to the metric label. Clicking it shows a popover with the term definition. This is a 1-2h effort that directly addresses the "beginner-friendly" positioning.
+
+---
+
+## 3. P2 Consolidation Opportunities
+
+### 3.1 D-052 + D-053: _subsidiary_card and _count_label → Document in Design System
+
+Both components are stable and widely used. Rather than "fixing" them, they should be documented in the design system as approved variants:
+- `_subsidiary_card()`: "Entity card" variant — white background, flex layout, used for subsidiary/group structure display
+- `_count_label()`: "Muted label" variant — used below card grids for "共 X 個" display
+
+**Action**: Mark as ✅ DOCUMENTED (not resolved — they're working as intended, just need design system documentation).
+
+### 3.2 D-062 + D-063: Quiz Result Cards → Consolidated by D-086
+
+D-062 (quiz result cards use inline HTML) and D-063 (quiz score color logic in view layer) are both addressed:
+- D-062: The `comprehension_check.py` quiz result cards use `st.success()`/`st.error()` + `st.info()` instead of inline HTML cards. This is acceptable for feedback display.
+- D-063: The academy quiz now uses `_get_score_style()` helper (D-086 resolved).
+
+**Action**: Mark D-062 and D-063 as ✅ CONSOLIDATED — the pattern is now consistent between `comprehension_check.py` and `academy.py`.
+
+### 3.3 D-089: _financial.py Growing → Monitor
+
+`_financial.py` is 343 lines with 6 render functions. The dividend function (113 lines with inline HTML table) is the biggest concern. The threshold for splitting (400 lines) hasn't been reached yet.
+
+**Action**: Keep as P2, update threshold to 350 lines for proactive splitting.
+
+---
+
+## 4. New Design Issues (Round 34)
+
+### D-091: _glossary_tooltip() Component Built But Not Wired to Any Page
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 34
+- **Description**: `_glossary_tooltip()` in `_router_base.py` (lines 189-210) is a fully-built component that renders a clickable ℹ️ icon with a popover containing term definition, example, and analogy. However, it is **not imported or called by any page**. The glossary data source (`glossary.yaml`) exists but is unused. This is a significant gap vs competitors (Investopedia 10K+ terms, Stash tappable glossary). The component was built in anticipation of C33 but never integrated.
+- **Affected Files**: `src/pages/_router_base.py` (component exists), no pages import it
+- **Proposed Fix**: Wire `_glossary_tooltip()` into `_白话_card()` as an optional `glossary_key` parameter. When provided, render the ℹ️ icon next to the label. Also add a `glossary_service` parameter to `_render_key_metrics()` and `_render_story_card()` to pass through.
+- **Effort**: 1-2h
+- **Competitor Benchmark**: Investopedia (10K+ term glossary), Stash (tappable glossary on every term)
+
+### D-092: Academy Lesson List Uses Raw st.markdown Instead of Card Components
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 34
+- **Description**: The lesson list in `_render_academy()` (lines 281-320 of `academy.py`) renders each lesson as raw `st.markdown()` with `###` headers, `st.caption()`, and `st.markdown("- ...")` for objectives. This creates a flat, text-heavy list that doesn't match the card-based PPT-style design. Each lesson should be a card with the title, metadata, objectives, and action button — consistent with how other list views work in the app (e.g., watchlist cards, ETF cards).
+- **Affected Files**: `src/pages/academy.py` lines 281-320
+- **Proposed Fix**: Create a `_lesson_card(lesson, progress)` helper in `_router_base.py` or `academy.py` that renders each lesson as a card with: icon + title + metadata row + objectives list + action button. Use `_info_card()` as the container and add the button below.
+- **Effort**: 1-2h
+- **Competitor Benchmark**: Duolingo (card-based lesson list), Coursera (course cards with metadata)
+
+### D-093: Moat Comparison Page Fetches Data for All Peers Sequentially
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 34
+- **Description**: `_render_moat_comparison_page()` in `moat_comparison.py` (lines 94-110) fetches `get_stock_data()` for each peer sequentially in a `for` loop. With 3 peers, this means 3 sequential API calls (each with 10 sub-tasks). Combined with the primary stock's data already loaded, this creates a total of 40 API calls. The page should use `ThreadPoolExecutor` (like `get_stock_data()` does internally) to parallelize peer data fetching. This is both a performance issue and a design issue — users see a long loading spinner while peers are fetched one by one.
+- **Affected Files**: `src/pages/moat_comparison.py` lines 94-110
+- **Proposed Fix**: Use `ThreadPoolExecutor` to fetch peer data in parallel. Show skeleton placeholders (`_info_card("...", "載入中...")`) for peers while loading. This matches the pattern already used in `get_stock_data()`.
+- **Effort**: 1-2h
+- **Note**: This is primarily a performance issue but affects perceived UX quality.
+
+### D-094: _financial.py Dividend Table Inline HTML Exceeds D-043 Scope
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 34 (escalation of D-043)
+- **Description**: D-043 flagged the dividend history table in `_financial.py` (lines 220-256) as using inline HTML instead of `st.dataframe()`. In Round 34, this is re-escalated because the table has grown to 36 lines of HTML generation code (building `<table>`, `<tr>`, `<td>` tags manually with inline styles). The table includes badge rendering (🟢/🟡/🔴 for dividend quality) which is difficult to replicate in `st.dataframe()`. However, the current approach is fragile and hard to maintain.
+- **Affected Files**: `src/pages/business_card/_sections/_financial.py` lines 220-256
+- **Proposed Fix**: Two options: (a) Use `st.dataframe()` with a custom column config for badges (render emoji in a separate column), or (b) Extract the table to a `_dividend_table()` helper in `_router_base.py` with documented "data table" variant styling. Option (b) is preferred since the badge rendering is core to the UX.
+- **Effort**: 1-2h
+- **Status**: Escalated from D-043 (Round 16) — the table has grown more complex since then
+
+### D-095: Academy Quiz Results Use st.success/st.error Instead of Card Components
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 34
+- **Description**: The quiz result display in `_render_quiz()` (lines 204-214 of `academy.py`) uses `st.success()` / `st.error()` for per-question results and `st.info()` for explanations. While functional, this creates a visual mismatch with the rest of the page which uses card-based components. The `st.success()` / `st.error()` boxes use Streamlit's default green/red background which doesn't match the design system's `#27AE60` / `#E74C3C` colors with `border-left` pattern. The per-question results also lack the question number and status icon (✅/❌) that would make them scannable.
+- **Affected Files**: `src/pages/academy.py` lines 204-214
+- **Proposed Fix**: Create a `_quiz_result_card(is_correct, question_text, explanation)` helper that renders a compact result card with: status icon (✅/❌) + question number + question text + explanation. Use `border-left:4px solid #27AE60` (correct) or `#E74C3C` (incorrect) for visual consistency with the design system.
+- **Effort**: 0.5-1h
+- **Note**: This is a lower priority than D-092 (lesson list cards) but both should be done together for consistency.
+
+---
+
+## 5. Existing Issue Status Updates
+
+### D-003: Inconsistent Card Styling → PARTIALLY FIXED (updated)
+- **Update**: Recent features (C126, C47) use shared components correctly. Remaining inline HTML is in `_helpers.py` (4 functions: `_study_card`, `_expert_card`, `_scenario_card`, `_render_risk_dimension`). These are consistent in style but bypass `_router_base.py`. Severity remains P1 but scope is narrowing.
+
+### D-004: No Design System Documentation → PARTIALLY FIXED (updated)
+- **Update**: `docs/design/design_system.md` exists but is not maintained alongside actual components. The design system needs updates for `_mini_score_card`, `_glossary_tooltip`, and the "entity card" variant (`_subsidiary_card`). Severity reduced to P2 — the doc exists but needs maintenance.
+
+### D-005: Business Card Page Overload → MITIGATED (updated)
+- **Update**: C105 toggle + Sprint 12 expander pattern significantly mitigated this. The page shows 4 above-fold sections by default. Severity reduced to P2 — the risk is managed by the toggle.
+
+### D-006: Mobile Responsiveness → UNCHANGED
+- **Update**: No change. Still a P1 due to Streamlit limitations.
+
+### D-043: Dividend History Table Inline HTML → ESCALATED (updated)
+- **Update**: Escalated to D-094 in Round 34. The table has grown more complex (36 lines of HTML generation). Needs a dedicated `_dividend_table()` helper.
+
+### D-062/D-063: Quiz Result Cards → CONSOLIDATED (updated)
+- **Update**: Both issues are addressed by the `_get_score_style()` helper (D-086) and the use of `st.success()`/`st.error()` for feedback. The pattern is now consistent. Mark as ✅ CONSOLIDATED.
+
+### D-089: _financial.py Growing → MONITOR (updated)
+- **Update**: File is 343 lines. Threshold for splitting lowered to 350 lines. Monitor for next review.
+
+---
+
+## 6. Summary of Round 34 Findings
+
+### Design Grade: **A** (upgraded from A-)
+
+Recent features (C126 moat comparison, C47 academy, C101 quiz) demonstrate strong design discipline — all use shared components from `_router_base.py` with zero inline HTML regressions. The moat comparison page is the best-designed new page since C105.
+
+### Competitor Key Takeaways
+1. **Glossary tooltips are the #1 missing pattern** — `_glossary_tooltip()` is built but not wired to any page (D-091)
+2. **Card-based lesson lists are standard** — Duolingo, Coursera all use cards for lesson lists (D-092)
+3. **Parallel data loading is expected** — moat comparison fetches peers sequentially (D-093)
+
+### New Design Issues: 5
+| ID | Title | Severity | Effort |
+|----|-------|----------|--------|
+| D-091 | _glossary_tooltip() built but not wired | P2 | 1-2h |
+| D-092 | Academy lesson list uses raw markdown | P2 | 1-2h |
+| D-093 | Moat comparison sequential peer fetch | P2 | 1-2h |
+| D-094 | Dividend table inline HTML escalated | P2 | 1-2h |
+| D-095 | Quiz results use st.success instead of cards | P2 | 0.5-1h |
+
+### Consolidated Issues: 3
+- D-052 + D-053: _subsidiary_card and _count_label → ✅ DOCUMENTED
+- D-062 + D-063: Quiz result cards → ✅ CONSOLIDATED
+- D-043: Dividend table → ESCALATED to D-094
+
+### Updated Statistics
+- **Total Issues**: 90
+- **P0 (Blocking)**: 0
+- **P1 (Important)**: 3 (D-003, D-005, D-006 — D-004 downgraded to P2)
+- **P2 (Optimization)**: 42 (net +5 new, -3 consolidated, +1 escalated, -1 downgraded)
+- **Resolved/Consolidated**: 33
+
+---
+
+*This section was added by the Design Reviewer in Round 34 (2026-06-14). Next update: After next sprint feature implementation.*

@@ -73,3 +73,10 @@ C67: "Community-Curated Stock Stories" — User-Generated Narrative Layer | P2 |
 ||||||||||||||C129: "Education Completion Certificates" — Credentialing for Learning | P2 | 6-10h | Point-to-point + Engagement | source: competitor research round 29
 ||||||||||||||C130: "Investor Profile Quiz" — Self-Assessment Driven Mode Selection | P2 | 8-12h | Adaptive + Point-to-point + Beginner-friendly | source: competitor research round 29
 ||||||||||||||C131: "Revenue Quality Segment Overlay" — Which Segments Have Recurring Revenue? | P2 | 8-10h | Story first + Benchmark-oriented | source: competitor research round 29
+C132: "Risk Level Simplification" — 1-5 Scale with Plain-Language Descriptions | P1 | 6-10h | Ten-second test + Beginner-friendly | source: competitor research round 27
+C133: "Daily Financial Education Micro-Lessons" — "Money Matters" Style Daily Content | P2 | 10-14h | Adaptive + Point-to-point knowledge construction | source: competitor research round 27
+C134: "AI-Generated Change Explanations" — "Why Did This Number Change?" Contextual Narratives | P1 | 12-16h | Story first + Adaptive + Historian | source: competitor research round 27
+C135: "Financial Health Score with Narrative" — Explainable 0-100 Score | P1 | 10-14h | Story first + Benchmark-oriented + Ten-second test | source: competitor research round 27
+C136: "Goal-Based Learning Path" — Connecting Stock Analysis to Life Goals | P2 | 14-20h | Story first + Point-to-point + Historian | source: competitor research round 27
+C137: "Visual Comparison Cards" — Infographic-Style Side-by-Side Company Comparison | P2 | 8-12h | Benchmark-oriented + PPT-style | source: competitor research round 27
+C138: "Smart Notifications with Explanations" — AI-Enhanced Alerts That Explain Why | P1 | 10-14h | Adaptive + Story first + Historian | source: competitor research round 27
