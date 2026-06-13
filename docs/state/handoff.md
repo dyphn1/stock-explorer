@@ -170,6 +170,12 @@
 - Grading criteria: distinguish "god module" from "large coherent module"
 - CI check: automated enforcement for unsafe_allow_html
 
+## 💡 Discussion Section (Round 35 — 2026-06-14)
+**Topic**: Sprint 16b Planning — C28 Story Timeline + C07 Custom Thresholds + LLM Layer
+**Challenger**: ✅ CONFIRMED with 5 revisions
+**Key Decisions**: C28 MVP (events + case studies), C07 settings skeleton started, D5 LLM abstraction layer built, data seeded, empty state handling, C134 deferred to Sprint 17
+**Full details**: docs/state/handoff_discuss_r35.md
+
 ## Archive
 See git history for previous rounds and development sections.
 
