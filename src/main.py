@@ -37,6 +37,11 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
+    
+    /* 確保側邊欄收合時，展開按鈕不會被 header 的隱藏給蓋住 */
+    header [data-testid="stExpandSidebarButton"] {
+        visibility: visible;
+    }
 
     /* 主容器 */
     .main .block-container {
@@ -90,13 +95,6 @@ st.markdown("""
         }
     }
 
-    /* Sidebar: ensure collapse toggle is always visible and clickable */
-    section[data-testid="stSidebar"] {
-        overflow-x: visible !important;
-    }
-    section[data-testid="stSidebar"] > div:first-child {
-        overflow-x: visible !important;
-    }
     /* Style the collapse toggle button */
     button[kind="header"] {
         z-index: 999 !important;
@@ -124,6 +122,18 @@ st.markdown("""
 _hide_nav_js = """
 <script>
 (function() {
+    // 清除 Streamlit 記住的側邊欄狀態，強制每次載入都展開
+    try {
+        var keysToRemove = [];
+        for (var i = 0; i < window.parent.localStorage.length; i++) {
+            var key = window.parent.localStorage.key(i);
+            if (key && key.toLowerCase().includes('sidebar')) {
+                keysToRemove.push(key);
+            }
+        }
+        keysToRemove.forEach(k => window.parent.localStorage.removeItem(k));
+    } catch (e) {}
+
     function hideNav() {
         var nav = document.querySelector('section[data-testid="stSidebarNav"]');
         if (nav) {
