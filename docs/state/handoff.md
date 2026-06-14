@@ -1,15 +1,23 @@
 # Handoff – Development
 ## Summary
-- **Topic**: Development (🔧) — Round 36, Sprint 16b
-- **Date**: 2026-06-14 (Development Round 36 completed)
-- **Sprint Status**: Sprint 16a ✅ COMPLETE → Sprint 16b ✅ COMPLETE → Sprint 17 planned
+- **Topic**: Development (🔧) — Round 38, Sprint 17
+- **Date**: 2026-06-14 (Development Round 38 completed)
+- **Sprint Status**: Sprint 16a ✅ COMPLETE → Sprint 16b ✅ COMPLETE → Sprint 17 ✅ COMPLETE → Sprint 18 planned
 
 ## Completed Items
 | Issue ID | Description | Owner | Result | Commit |
 |----------|-------------|-------|--------|--------|
-| C28 | Story Timeline MVP — compose-and-enrich pipeline (events + case studies + milestones) | Developer | ✅ `timeline_service.py` created with `get_timeline()` pipeline; `company_milestones.yaml` for 10 TW stocks; `story_timeline.py` page with severity-coded timeline cards, dedup, empty state; nav button in story section | `ca49d2c` |
+| D-101 | `explain_delta()` regression tests | Developer | ✅ 54 tests in `tests/services/test_delta_engine.py` covering all metric types × directions × magnitudes, boundary values, generic fallback, stock_name prefix, compute_recent_deltas filtering | `61ef6a3` |
+| C14 | Full Radar — benchmark overlay + story card | Developer | ✅ `create_health_snowflake()` now accepts `benchmark_scores` (dashed gray ghost line); `_fetch_benchmark_health_scores()` in `_health.py`; story card shows "健康度 X vs 同業平均 Y" in `_summary.py`; graceful skip when no benchmark data | `90c1691` |
+| C134 | Change Explanations — delta_engine → D5 | Developer | ✅ Created `src/services/delta_explanation_provider.py` (`DeltaExplanationProvider` implementing `ExplanationProvider` protocol, composes `TemplateExplanationProvider`); refactored `explain_delta()` to delegate via `ExplanationRequest`; all 54 D-101 regression tests pass; zh-TW templates | `0b56b32` |
+| C07 | Wire Thresholds — price/revenue to adaptive_engine | Developer | ✅ Created `src/services/settings_service.py` (pure Python, no Streamlit); `detect_revenue_event()` now accepts `threshold` param; `run_auto_detection()` passes both thresholds; router reads from `st.session_state` via `get_threshold()`; settings page uses `_section_title()`, visual feedback boxes | `360201a` |
+
+### Sprint 16b Archive
+| Issue ID | Description | Owner | Result | Commit |
+|----------|-------------|-------|--------|--------|
+| C28 | Story Timeline MVP — compose-and-enrich pipeline (events + case studies + milestones) | Developer | ✅ `timeline_service.py` created with `get_timeline()` pipeline; `company_milestones.yaml` for 10 TW stocks; `story_timeline.py` page with severity-coded timeline cards, dedup, empty state | `ca49d2c` |
 | D5 | LLM Abstraction Layer | Developer | ✅ `src/services/llm/` package: `ExplanationProvider` protocol, `ExplanationRequest`/`ExplanationResponse` dataclasses, `TemplateExplanationProvider` with 10 metric templates, `get_explanation_provider()` factory | `5e7fde8` |
-| C07 | Custom Thresholds Settings Skeleton | Developer | ✅ `settings.py` page with 3 risk threshold sliders (price/volume/revenue), session_state persistence, reset-to-defaults button, validation; registered in router + url_sync | `84142f5` |
+| C07-skel | Custom Thresholds Settings Skeleton | Developer | ✅ `settings.py` page with 3 risk threshold sliders (price/volume/revenue), session_state persistence, reset-to-defaults button | `84142f5` |
 | C14+C135 | Health Score Badge + Narrative (Sprint 16a) | Developer | ✅ Enhanced simple mode with `get_health_summary()` narrative | `8051cb8` |
 | C132 | Risk Simplification 1-5 Scale (Sprint 16a) | Developer | ✅ `risk_simplifier.py` with `get_risk_level()` | `8051cb8` |
 | C41 | Read Next Phase A wire-up (Sprint 16a) | Developer | ✅ `_render_read_next()` wired into `_main.py` | `8051cb8` |
@@ -17,16 +25,19 @@
 ## Architecture Decisions
 - **Timeline Service**: Pure Python compose-and-enrich pipeline merging 3 data sources (events.yaml + case_studies.yaml + company_milestones.yaml). Deduplicates same-day same-type events with count badges. All local YAML — no API calls, <200ms.
 - **LLM Abstraction**: Protocol-based design (`ExplanationProvider`) with `runtime_checkable` for structural subtyping. Template fallback covers 10 financial metrics. Future `LLMProvider` can implement same interface without changing callers.
-- **Settings**: Skeleton only — 3 sliders + session_state persistence. Full threshold UI deferred to Sprint 17.
+- **Settings**: Wired to adaptive_engine via `settings_service.py` pure-Python accessor. Volume detection de-scoped (greenfield). Session state bridge at router layer.
+- **C14 Benchmark Overlay**: Ghost line pattern on Plotly radar chart. Benchmark data fetched via `client` API same pattern as primary stock. Graceful degradation when no benchmark available.
+- **C134 DeltaExplanationProvider**: Composition over inheritance — wraps `TemplateExplanationProvider`, maps delta metrics to template keys, preserves exact output strings for backward compatibility. All 54 regression tests pass.
 - **Page Registration**: Both `story_timeline.py` and `settings.py` registered in router with URL sync.
 
 ## Verification
-- **L0**: 110 passed (2 pre-existing failures in quiz_service.py — unrelated)
+- **L0**: 118 passed (2 pre-existing failures in quiz_service.py — unrelated)
 - **L1**: 20/20 ✅
-- **Commits**: `ca49d2c`, `5e7fde8`, `84142f5`
+- **Tests**: 165+ ✅ (54 new D-101 tests + existing)
+- **Commits**: `61ef6a3`, `90c1691`, `0b56b32`, `360201a`
 
 ## Next Cycle
-🔧 Development Round 36 Complete → 💡 Discussion Round 36 Complete → 🔧 Development Round 37 (Sprint 17: C14 + C134 + C07) → 🔍 Review Round 37 → 🔧 Development Round 38 (Sprint 17 execution)
+🔧 Development Round 38 Complete (Sprint 17) → 💡 Discussion Round 38 → 🔍 Review Round 38 → 🔧 Development Round 39 (Sprint 18: C139 + C141 + C143)
 
 ---
 
@@ -95,10 +106,30 @@ The `src/services/llm/` package eliminates the last high-severity debt item, P0 
 ### Sprint 17 Readiness Assessment
 | Prerequisite | Status | Action |
 |-------------|--------|--------|
-| D-101 (explain_delta tests) | 🔴 **MUST DO DAY 1** | Before C134 refactoring |
-| C14 Full Radar | ✅ Ready | Spec first (1.5h), then implement |
-| C134 Change Explanations | ⚠️ Needs D-101 first | Tests → DeltaExplanationProvider → wire |
-| C07 Wire Thresholds | ⚠️ Needs 1h spike | Confirm Streamlit boundary before wiring |
+| D-101 (explain_delta tests) | ✅ **RESOLVED** | 54 tests written and passing |
+| C14 Full Radar | ✅ **COMPLETE** | `90c1691` |
+| C134 Change Explanations | ✅ **COMPLETE** | `0b56b32` |
+| C07 Wire Thresholds | ✅ **COMPLETE** | `360201a` |
+
+### D-101 — ✅ RESOLVED
+The `tests/services/test_delta_engine.py` test suite (54 tests) covers all delta explanation paths. Written as prerequisite for C134 refactoring, confirmed all tests pass before and after refactor.
+
+### New Debt Items (D-103 through D-106)
+| ID | Description | Severity | Effort |
+|----|-------------|----------|--------|
+| D-103 | `delta_explanation_provider` untested | Low | 1-1.5h (absorbed by C18 testing) |
+| D-104 | `settings_service` untested | Low | 0.5-1h |
+| D-105 | `INDUSTRY_BENCHMARKS` dict hardcoded in 2 files | Low | Consolidate in Sprint 18 |
+| D-106 | `_fetch_benchmark_health_scores` duplicated in `_health.py` and `_summary.py` | Medium | 1-2h (extract to service in Sprint 18) |
+
+### Sprint 18 Readiness Assessment
+| Prerequisite | Status | Action |
+|-------------|--------|--------|
+| D-106 (benchmark helper extraction) | 🟡 Recommended | During Sprint 18 |
+| C139 "Explain This Number" | ✅ Ready | Wires D5 `TemplateExplanationProvider` to metric UI |
+| C141 Source Badge | ✅ Ready | Small, can bundle with C139 |
+| C143 Implication Sentence | ✅ Ready | Delta card enhancement, post-C134 |
+| Content prep for C140 | 🟡 Start now | Pre-write 10 case studies (40% rule) |
 
 ---
 
@@ -216,27 +247,42 @@ The `src/services/llm/` package eliminates the last high-severity debt item, P0 
 
 ---
 
-## 7. Sprint 17 Final Confirmed Plan
+## 7. Sprint 17 Final Confirmed Plan — ✅ COMPLETE
 
-### Execution Order: C14 → C134 → C07 (confirmed by Challenger)
+### Execution Order: C14 → C134 → C07 (confirmed by Challenger) — ALL DONE
 
-| Phase | Item | Effort | Prerequisites | Deliverables |
-|-------|------|--------|---------------|--------------|
-| **Day 1** | D-101 tests + C07 spike | 3-3.5h | None | Regression test suite + architecture confirmation |
-| **Day 1-2** | C14 spec writing | 1.5h | None | Written spec document |
-| **Day 2-4** | C14 Full Radar implementation | 6-10h | Spec complete | Benchmark overlay, story card integration, edge cases |
-| **Day 4-7** | C134 Change Explanations | 10-13h | D-101 tests | DeltaExplanationProvider, zh-TW templates, integration |
-| **Day 7-9** | C07 Wire Thresholds | 5-7h | Spike complete | 2 sliders wired, visual feedback, progressive disclosure |
-| **Buffer** | Testing, QA, polish | 6h | All features | L0/L1 verification, regression testing |
+| Phase | Item | Effort | Status | Commit |
+|-------|------|--------|--------|--------|
+| **Day 1** | D-101 tests + C07 spike | 3-3.5h | ✅ Done | `61ef6a3` |
+| **Day 1-2** | C14 spec + implementation | 6-10h | ✅ Done | `90c1691` |
+| **Day 4-7** | C134 Change Explanations | 10-13h | ✅ Done | `0b56b32` |
+| **Day 7-9** | C07 Wire Thresholds | 5-7h | ✅ Done | `360201a` |
 
-**Total: 28-36h effective (22-30h base + 6h buffer)**
+**Total: 28-36h effective — COMPLETE**
+
+### All Action Items Status
+| Item ID | Description | Status |
+|---------|-------------|--------|
+| R37-DEV1 | Write C39 regression tests (D-101) | ✅ Complete — 54 tests |
+| R37-DEV4 | Create `settings_service.py` | ✅ Complete |
+| R37-DES1 | Fix D-096: _section_title() in settings | ✅ Complete |
+| R37-FEAT1 | Implement C14 Full Radar | ✅ Complete |
+| R37-FEAT2 | Implement C134 Change Explanations | ✅ Complete |
+| R37-FEAT3 | Implement C07 Wire Thresholds | ✅ Complete |
+| R37-TECH1 | Bundle D-101 into C134 | ✅ Complete |
 
 ---
 
 ## Next Cycle
-🔍 Review Round 37 Complete → 🔧 Development Round 38 (Sprint 17: C14 + C134 + C07) → 🔍 Review Round 38
+🔧 Development Round 38 Complete (Sprint 17: C14 + C134 + C07 + D-101) → 💡 Discussion Round 38 (Sprint 18: C139 + C141 + C143) → 🔍 Review Round 38
 
 Reference `docs/state/handoff_review.md` for detailed review artifacts.
+Reference `docs/research/review37_developer_estimates.md` for full cost analysis.
+Reference `docs/research/competitor_research.md` (Round 11 section) for competitor details.
+
+---
+
+# Handoff – Review (Archive)
 Reference `docs/research/review37_developer_estimates.md` for full cost analysis.
 Reference `docs/research/competitor_research.md` (Round 11 section) for competitor details.
 
