@@ -85,6 +85,51 @@ def _section_title(title: str):
         st.markdown(f"### 📊 {title}")
 
 
+def _explain_button(
+    metric_name: str,
+    metric_value: str,
+    delta: str = "",
+    context: dict | None = None,
+    key_prefix: str = "",
+    source_label: str = "📊 系統估算",
+) -> None:
+    """Render a 💡 button that opens a popover with a plain-language metric explanation.
+
+    Uses TemplateExplanationProvider from the D5 LLM abstraction layer.
+    Shows source badge via st.caption() (C141).
+
+    Args:
+        metric_name: The metric name (e.g. "月營收", "ROE")
+        metric_value: The metric value as display string
+        delta: Optional delta string (e.g. "+5.2%", "-3.1%")
+        context: Optional dict with additional context (industry, direction, etc.)
+        key_prefix: Unique prefix for the popover button key
+        source_label: Source badge text shown via st.caption() at bottom of popover
+    """
+    from src.services.metric_explainer import get_metric_explanation_for_popover
+
+    popover_key = f"explain_{key_prefix}_{metric_name}"
+    try:
+        explanation = get_metric_explanation_for_popover(
+            metric_name=metric_name,
+            metric_value=metric_value,
+            delta=delta,
+            context=context or {},
+        )
+        with st.popover("💡", key=popover_key, help=f"解釋「{metric_name}」"):
+            st.markdown(f"**{explanation['display_name']}**")
+            st.markdown(f"_{explanation['value_text']}_")
+            st.markdown("---")
+            st.markdown(explanation["explanation_text"])
+            st.caption(source_label)
+    except Exception:
+        with st.popover("💡", key=popover_key, help=f"解釋「{metric_name}」"):
+            st.markdown(f"**{metric_name}**")
+            st.markdown(f"_{metric_value}_")
+            st.info("暫時無法產生解釋，請稍後再試。")
+            st.caption(source_label)
+
+
 def _白话_card(label: str, value: str, analogy: str = ""):
     st.markdown(f"""
     <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">

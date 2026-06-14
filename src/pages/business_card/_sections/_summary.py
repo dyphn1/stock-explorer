@@ -27,7 +27,7 @@ from src.services.watchlist import (
     create_list,
     list_names,
 )
-from src.pages._router_base import _白话_card, _info_card, _summary_card
+from src.pages._router_base import _白话_card, _info_card, _summary_card, _explain_button
 from src.pages.business_card._helpers import (
     get_health_dimension_explanation,
     _get_health_metric_values,
@@ -162,12 +162,18 @@ def _render_story_card(data: dict, client) -> None:
     # One-liner
     _info_card("一句話定位", one_liner, "💡")
 
-    # Key metrics row — use _白话_card for each
+    # Key metrics row — use _白话_card for each + 💡 explain button
     if top_metrics:
         cols = st.columns(len(top_metrics))
         for col, (label, value, analogy) in zip(cols, top_metrics):
             with col:
                 _白话_card(label, value, analogy)
+                _explain_button(
+                    metric_name=label,
+                    metric_value=value,
+                    key_prefix=f"story_{stock_id}",
+                    source_label="📊 FinMind" if "營收" in label else "📊 系統估算",
+                )
 
     # Health score
     if overall_health is not None:

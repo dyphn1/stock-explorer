@@ -3,7 +3,7 @@ import streamlit as st
 from src.services.chart import create_health_snowflake
 from src.services.health_scoring import compute_health_scores, get_health_summary
 from src.services.risk_analyzer import assess_risk
-from src.pages._router_base import _info_card
+from src.pages._router_base import _info_card, _explain_button
 from src.pages.business_card._helpers import (
     get_health_dimension_explanation,
     _render_risk_dimension,
@@ -229,6 +229,12 @@ def _render_health(data: dict, client) -> None:
                     </div>
                     """,
                     unsafe_allow_html=True,
+                )
+                _explain_button(
+                    metric_name=dim_name,
+                    metric_value=f"{score:.0f} 分",
+                    key_prefix=f"health_{stock_id}",
+                    source_label="📊 系統估算",
                 )
 
         # 白話健康摘要

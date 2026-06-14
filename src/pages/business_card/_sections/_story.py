@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 from src.services.delta_engine import compute_recent_deltas
 from src.services.company_facts import get_company_facts
-from src.pages._router_base import _info_card, _section_title
+from src.pages._router_base import _info_card, _section_title, _explain_button
 from src.pages.url_sync import navigate_to
 from src.services.compare_stories import generate_compare_stories
 
@@ -13,6 +13,7 @@ def _render_deltas(data: dict, client) -> None:
     extra_metrics = data["extra_metrics"]
     monthly_revenue = data["monthly_revenue"]
     latest_per_pbr = data["latest_per_pbr"]
+    stock_id = data["stock_id"]
 
     # 🔄 最近有什麼變化 (C39: Recent Deltas)
     deltas = compute_recent_deltas(
@@ -33,6 +34,18 @@ def _render_deltas(data: dict, client) -> None:
             )
         delta_text = "\\n\\n".join(delta_lines)
         _info_card("最近有什麼變化", delta_text, "🔄")
+
+        # C139: 💡 explain buttons for each delta metric
+        for d in deltas:
+            sign = "+" if d["change_pct"] >= 0 else ""
+            _explain_button(
+                metric_name=d["metric_name"],
+                metric_value=d["current_value"],
+                delta=f"{sign}{d['change_pct']:.1f}%",
+                key_prefix=f"delta_{stock_id}",
+                context={"direction": d["direction"]},
+                source_label="📊 FinMind",
+            )
     else:
         _info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")
 
