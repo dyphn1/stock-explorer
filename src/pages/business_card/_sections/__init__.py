@@ -27,6 +27,9 @@ from src.pages.business_card._sections._detail import (
     _render_share_section,
     _render_footer,
 )
+from src.pages.business_card._sections._historical_pattern import (
+    _render_historical_pattern,
+)
 
 __all__ = [
     "_render_header",
@@ -46,4 +49,5 @@ __all__ = [
     "_render_read_next",
     "_render_share_section",
     "_render_footer",
+    "_render_historical_pattern",
 ]

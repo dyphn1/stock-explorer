@@ -54,6 +54,7 @@ from src.pages.business_card._sections import (
     _render_news,
     _render_share_section,
     _render_footer,
+    _render_historical_pattern,
 )
 from src.pages.business_card._study_log import _render_study_log
 from src.pages.business_card._expert_analysis import _render_expert_analysis
@@ -272,6 +273,9 @@ def _render_business_card(data: dict, client):
 
         with st.expander("🔍 歷史情境", expanded=False):
             _render_historical_scenarios(data, client)
+
+        with st.expander("📊 歷史模式", expanded=False):
+            _render_historical_pattern(data, client)
 
 
 
