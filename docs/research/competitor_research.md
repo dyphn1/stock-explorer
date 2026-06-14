@@ -5748,3 +5748,63 @@ Moomoo's API Skills is US-focused. No TW platform offers natural language stock 
 ---
 
 *This is the fourteenth competitor research round (Review Round 39, Continued). Six new competitors analyzed. Eight new feature suggestions identified (C162-C169). The most impactful new gaps are C162 (AI Strategy Agent) and C167 (AI Screener Explanations) — these would extend Stock Explorer's historian positioning into "agentic investing" territory that Moomoo just launched in April 2026. The most time-sensitive finding: Moomoo's API Skills launch makes AI-powered natural language screening a competitive necessity, not a nice-to-have. Stock Explorer must accelerate C162 to maintain the explanation lead in the TW market.*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 41 (Summary)
+
+> **Date**: 2026-06-14
+> **Author**: QA Engineer (Round 41)
+> **Full Report**: `docs/research/review41_qa.md`
+> **Context**: Sprint 20 in progress — C167 complete, C163 + C40 pending
+
+## New Competitors Analyzed: 6
+
+| Competitor | Type | Region | Relevance |
+|---|---|---|---|
+| **Screenful** | AI NL stock screener | US/Global | 🔴 High — NL-first screening validates C167 direction |
+| **Tickertape** | Screener + education | India/Global | 🔴 High — embedded education + community screens |
+| **Tijori Finance** | AI financial analysis | India/Global | 🟡 Medium — document analysis + explain everything |
+| **Alphaspread** | Visual DCF + analysis | US/Global | 🔴 High — visual valuation + scenario analysis |
+| **Gurufocus** | Value investing + education | US/Global | 🟡 Medium — metric education gold standard + guru tracking |
+| **Koyfin** | Modern data + AI narratives | US/Global | 🟡 Medium — AI narratives + NL Q&A |
+
+## New Feature Gaps Identified: 11 (C175-C185)
+
+| ID | Feature | Priority | Effort | Source |
+|----|---------|----------|--------|--------|
+| C175 | NL-First Screening (search-box UI) | P1 | 12-16h | Screenful |
+| C176 | Screener + Education Integration | P1 | 10-14h | Tickertape |
+| C177 | Community Screens (share strategies) | P2 | 12-16h | Tickertape |
+| C178 | Document Analysis (upload reports) | P2 | 16-22h | Tijori Finance |
+| C179 | Explain This on Every Element | P1 | 8-12h | Tijori Finance |
+| C180 | Visual Margin of Safety | P2 | 10-14h | Alphaspread, Gurufocus |
+| C181 | Scenario Analysis (best/base/worst) | P2 | 14-18h | Alphaspread |
+| C182 | Guru Holdings Tracker (TW funds) | P2 | 10-14h | Gurufocus |
+| C183 | Financial Terms Deep Dive | P1 | 8-12h | Gurufocus |
+| C184 | Natural Language Q&A | P1 | 16-20h | Koyfin, Screenful |
+| C185 | Warning Signs (auto red flags) | P1 | 10-14h | Gurufocus |
+
+## Key Insights
+1. **NL interface is table stakes** — Screenful, Tijori, Koyfin all use NL as primary interface; C167's filter-based UI needs evolution (C175)
+2. **Screener + Education integration is white space** — Tickertape proves the model; no TW competitor has it (C176)
+3. **Document analysis is unique** — Only Tijori has it; powerful for TW market with complex Chinese reports (C178)
+4. **"Explain This" should cover everything** — Not just metrics but charts, trends, portfolios (C179)
+5. **Visual valuation can be educational** — Margin of Safety + Scenario Analysis as learning tools (C180, C181)
+6. **Community screens are untapped** — Share screening strategies as social learning (C177)
+7. **TW institutional tracking is opportunity** — Adapt guru tracking for TW funds (C182)
+8. **Automated warning signs extend risk education** — Red flags with plain-language explanations (C185)
+
+## Cumulative Totals (After Round 41)
+
+| Metric | Count |
+|--------|-------|
+| **Total competitors analyzed** | 127+ |
+| **Total feature gaps identified** | 185 (C01-C185) |
+| **New gaps in Round 41** | 11 (C175-C185) |
+| **P1 gaps remaining** | 18+ |
+| **Product vision alignment** | 100% reinforce "historian, not stock picker" |
+
+---
+
+*This is the forty-first competitor research round. Six new competitors analyzed. Eleven new feature gaps identified (C175-C185). The most critical new gap is C175 (NL-First Screening) — Screenful proves that natural language as the primary screening interface is the expected UX. Full details in `docs/research/review41_qa.md`.*
