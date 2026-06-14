@@ -1374,3 +1374,164 @@ Sprint 17 plan: **C14 Full Radar** (4-8h) + **C134 Change Explanations** (12-14h
 *Reviewer: System Architect*
 *Next review: Sprint 17 mid-point or Sprint 18 kickoff*
 *Architecture Health: 🟢 HEALTHY*
+
+---
+
+## Round 46 — Architecture Debt Review (2026-06-15, Post-Sprint 20)
+
+> **Context**: Sprint 20 COMPLETE (C167 + D-123 tone fix). Sprint 21 next (C170 + C188 + D-125/126/127).
+> **Reviewer**: System Architect
+> **Scope**: Full architecture health assessment, verify Sprint 20 debt claims, identify new debt, prepare Sprint 21 readiness.
+> **Key Metrics**: 47 service modules | 1 god module (chart_stock.py 818 lines) | L0/L1 passing | 319+ tests
+
+---
+
+### 1. Sprint 20 Debt Verification
+
+| Item | Sprint 20 Claim | Round 46 Verdict | Evidence |
+|------|----------------|-------------------|----------|
+| **D-121** (YAML screener) | ✅ Resolved | ✅ **CONFIRMED RESOLVED** | `screener_explanation_provider.py` loads from `src/data/screener_templates.yaml` via `_load_templates_from_yaml()`. 349 lines, YAML-driven. |
+| **D-123** (tone QA) | ✅ Resolved | ✅ **CONFIRMED RESOLVED** | Verified in Round 44. 319 tests passing, 0 failures. |
+| **C167** (AI Screener) | ✅ Complete | ✅ **VERIFIED** | `ScreenerExplanationProvider` implements `ExplanationProvider` protocol. Zero Streamlit imports. Historian tone enforced. |
+
+**Sprint 20 Summary**: All claimed items are **genuinely resolved**.
+
+---
+
+### 2. New Architecture Debt from Sprint 20 / Round 46 Assessment
+
+#### D-125: `chart_stock.py` exceeded 800-line threshold (818 lines)
+- **Effort**: 2-3h (split into focused sub-modules)
+- **Severity**: 🟡 **MEDIUM**
+- **Description**: `chart_stock.py` is 818 lines, exceeding the 800-line god-module threshold. It contains ~12 chart functions for single-stock visuals (revenue, price, institutional, health snowflake, valuation, etc.). This is the largest file in the codebase.
+- **Impact**: Finding a specific function requires scrolling through 818 lines. Adding C170/C194 glossary-related charts will push it further.
+- **Recommended Action**: Split into `chart_stock_financial.py` (revenue, price, institutional), `chart_stock_health.py` (health snowflake, radar), and `chart_stock_valuation.py` (valuation band). The `chart.py` re-export shim already exists.
+- **Priority**: 🟡 Do before Sprint 21 if C170/C194 add chart functions.
+
+#### D-126: `INDUSTRY_BENCHMARKS` dict duplicated in `_summary.py` and `_health.py`
+- **Effort**: 0.5h (extract to shared location)
+- **Severity**: 🟡 **MEDIUM**
+- **Description**: The identical 25-entry `INDUSTRY_BENCHMARKS` dict (mapping industry → (stock_id, stock_name)) is defined in both `_summary.py` (line 38) and `_health.py` (line 14). Both files have the same 25 industry entries. This is a DRY violation.
+- **Impact**: Adding a new industry benchmark requires updating two files. Risk of divergence.
+- **Recommended Action**: Move `INDUSTRY_BENCHMARKS` to `_router_base.py` (as a shared constant) or a dedicated `src/services/benchmarks.py`. Both files import from `_router_base` already.
+- **Priority**: 🟡 Quick fix, do before Sprint 21.
+
+#### D-127: `_summary.py` is 464 lines — largest section file, approaching threshold
+- **Effort**: 1-2h (split when it exceeds 500 lines)
+- **Severity**: 🟢 **LOW** (escalating to Medium at 500+ lines)
+- **Description**: `_summary.py` (464 lines) contains 5 rendering functions: `_render_story_card()` (240 lines with inline benchmark comparison), `_render_header()`, `_render_takeaways()`, `_render_one_liner()`, `_render_news()`. The `_render_story_card()` function alone is 240 lines.
+- **Impact**: At 464 lines, the file is at 93% of the 500-line threshold. C170 (Tappable Glossary) will add ~30-40 lines of glossary wrappers, pushing it past 500.
+- **Recommended Action**: Split into `_summary_hero.py` (story_card + header) and `_summary_secondary.py` (takeaways, one-liner, news).
+- **Priority**: 🟢 Monitor, split if C170 pushes it past 500 lines.
+
+#### D-128: `ScreenerExplanationProvider` YAML loading — verified resolved
+- **Effort**: Already resolved
+- **Severity**: ✅ **RESOLVED**
+- **Description**: `screener_explanation_provider.py` (349 lines) loads all templates from `src/data/screener_templates.yaml`. D-121 is confirmed resolved.
+- **Priority**: ✅ No action needed.
+
+#### D-130: `_detail.py` `st.html()` JS approach still fragile (D-046 legacy)
+- **Effort**: 1-2h (replace with pure Streamlit)
+- **Severity**: 🟢 **LOW**
+- **Description**: `_detail.py` `_render_share_section()` (105 lines) uses `st.html()` to inject JavaScript for clipboard copy. The JS references `document.getElementById('share-url-input')` but `st.text_input()` does NOT render with this ID. Fragile and depends on internal Streamlit DOM structure.
+- **Impact**: Copy-to-clipboard button may silently fail on some Streamlit versions.
+- **Recommended Action**: Replace with `st.text_input(disabled=True)` + `st.button("📋 複製")` with `st.toast()` feedback.
+- **Priority**: 🟢 Defer to Sprint 22 — functional but fragile.
+
+---
+
+### 3. Architecture Health Metrics
+
+#### Service Layer (`src/services/`)
+| Metric | Value | Change since Round 37 |
+|--------|-------|----------------------|
+| **Total service modules** | 47 (excl. `__init__.py`) | +5 |
+| **Largest service** | `chart_stock.py` — 818 lines | +40 (was 778) |
+| **2nd largest** | `adaptive_engine.py` — 622 lines | No change |
+| **3rd largest** | `risk_analyzer.py` — 567 lines | No change |
+| **Services under 300 lines** | 42 of 47 (89%) | Maintained |
+| **Services with zero Streamlit imports** | 47 of 47 (100%) | Maintained |
+
+#### Page Layer (`src/pages/`)
+| Metric | Value | Change since Round 37 |
+|--------|-------|----------------------|
+| **Total page modules** | ~50 (incl. sub-modules) | +6 |
+| **Largest page** | `etf_browser.py` — 437 lines | No change |
+| **2nd largest** | `peer_comparison.py` — 421 lines | No change |
+
+#### Overall Codebase
+| Metric | Value | Change since Round 37 |
+|--------|-------|----------------------|
+| **Largest file overall** | `chart_stock.py` — 818 lines | +40 (was 778) |
+| **God modules (>800 lines)** | 1 (`chart_stock.py` at 818) | +1 (was 0) |
+| **Modules >600 lines** | 2 (chart_stock.py 818, adaptive_engine.py 622) | No change |
+| **Test count** | 319+ | +154 (from 165+) |
+
+#### 4-Layer Architecture Assessment
+| Layer | Status | Notes |
+|-------|--------|-------|
+| **Data** (`src/data/`) | ✅ Clean | `finmind_client.py`, `batch_api.py`. YAML data under `src/data/`. |
+| **Service** (`src/services/`) | ⚠️ Scaling | 47 modules in flat directory. Only `llm/` is a sub-package. 100% Streamlit-free. No circular imports. |
+| **Page** (`src/pages/`) | ✅ Clean | ~50 modules, largest is 437 lines. `business_card/` properly sub-modularized. |
+| **Presentation** (inline) | ⚠️ Stable | 15 `unsafe_allow_html=True` instances (10 in `_router_base.py`, 4 in `_helpers.py`, 1 in `_financial.py`). CI enforcement prevents new instances. |
+
+**Architecture Health Grade**: **B+ HEALTHY** — The 4-layer architecture is solid but `chart_stock.py` exceeded the 800-line god-module threshold. This is the first god module since D16 was resolved in Sprint 4. Service layer scaling (47 modules) is becoming unwieldy. Zero high-severity debt items remain.
+
+---
+
+### 4. Sprint 21 Readiness Assessment
+
+Sprint 21 plan: **C170 Tappable Glossary** + **C188 Why Did This Move?** + **D-125/D-126/D-127**
+
+| Prerequisite | Status | Action Required |
+|-------------|--------|-----------------|
+| **D-125** (chart_stock.py split) | 🟡 NOT STARTED | Do before C170/C194 chart work (2-3h) |
+| **D-126** (INDUSTRY_BENCHMARKS dedup) | 🟡 NOT STARTED | Quick 0.5h fix, Day 1 |
+| **D-127** (_summary.py split) | 🟢 DEFERRABLE | Monitor, split if C170 pushes past 500 |
+| **D5** (LLM layer) | ✅ RESOLVED | Sprint 16b |
+| **D6** (YAML remaining) | 🟢 DEFERRABLE | 3 hardcoded blocks remain |
+
+**Verdict**: Sprint 21 is **ready with one prerequisite**: D-126 (benchmark dedup, 0.5h) should be done Day 1. D-125 (chart split) should be done before C170 chart work begins. C170 and C188 have no architectural blockers.
+
+---
+
+### 5. Top 3 Recommendations for Sprint 21
+
+#### 1. 🟡 Split `chart_stock.py` (818 lines) — D-125 — PREREQUISITE
+- **Effort**: 2-3h
+- **Why**: First god module since D16 was resolved. 818 lines exceeds the 800-line threshold.
+- **What**: Split into `chart_stock_financial.py`, `chart_stock_health.py`, `chart_stock_valuation.py`. Keep `chart.py` re-export shim.
+- **When**: **Day 1 of Sprint 21**, before C170 chart work.
+- **Risk if deferred**: C170/C194 may add chart functions that push it past 900 lines.
+
+#### 2. 🟡 Extract `INDUSTRY_BENCHMARKS` to shared location — D-126 — Day 1 quick fix
+- **Effort**: 0.5h
+- **Why**: 25-line dict duplicated in 2 files. Adding new industries requires updating 2 files.
+- **What**: Move to `_router_base.py` or `src/services/benchmarks.py`.
+- **When**: **Day 1 of Sprint 21**.
+
+#### 3. 🟢 Monitor `_summary.py` growth — D-127
+- **Effort**: Monitor now, act at 500+ lines
+- **Why**: At 464 lines, C170 will push it past 500.
+- **What**: Split into `_summary_hero.py` and `_summary_secondary.py` if it exceeds 500 lines.
+- **When**: During or after C170 implementation.
+
+---
+
+### 6. Updated Debt Summary
+
+| Category | Count | Change |
+|----------|-------|--------|
+| **Total Debt Items** | 91 | +5 (D-125 through D-130, but D-128 and D-129 are resolved) |
+| **High Severity** | 0 | No change (D5 resolved in Sprint 16b) |
+| **Medium Severity** | ~50 | +2 (D-125, D-126) |
+| **Low Severity** | ~41 | +3 (D-127, D-128, D-130) |
+| **Resolved in Sprint 20** | 2 (D-121, D-123) | +2 |
+| **Pending Sprint 21** | D-125 (chart split), D-126 (benchmark dedup), D-127 (_summary.py size), plus D6, D11, D12, D14, D15, D18, D19, D22, D23, D27, D28, D31, D32, D33, D37, D38, D-049, D-051 |
+
+---
+
+*Section added: 2026-06-15 (Round 46)*
+*Reviewer: System Architect*
+*Next review: Sprint 21 mid-point or Sprint 22 kickoff*
+*Architecture Health: B+ HEALTHY (with structural concerns)*

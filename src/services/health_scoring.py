@@ -5,6 +5,9 @@
 
 from src.services.financial_metrics import extract_quarterly_eps
 
+import yaml
+from pathlib import Path
+
 
 def _score_roe(roe: float) -> float:
     """ROE 評分：≥20→100, ≥15→80, ≥10→60, ≥5→40, ≥0→20, <0→0"""
