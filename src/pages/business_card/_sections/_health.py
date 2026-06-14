@@ -3,7 +3,7 @@ import streamlit as st
 from src.services.chart import create_health_snowflake
 from src.services.health_scoring import compute_health_scores, get_health_summary
 from src.services.risk_analyzer import assess_risk
-from src.pages._router_base import _info_card, _explain_button
+from src.pages._router_base import _info_card, _explain_button, _mini_score_card
 from src.pages.business_card._helpers import (
     get_health_dimension_explanation,
     _render_risk_dimension,
@@ -215,21 +215,13 @@ def _render_health(data: dict, client) -> None:
                     indicator = "🟡"
                 else:
                     indicator = "🔴"
-                metric_html = ""
+                _mini_score_card(f"{indicator} {dim_name}", score)
+                explanation = get_health_dimension_explanation(dim_name, score)
+                if explanation:
+                    st.caption(explanation)
                 if dim_name in metric_values and metric_values[dim_name]:
                     metric_text = " · ".join(metric_values[dim_name])
-                    metric_html = f'<div style="font-size:0.7rem;color:#3498DB;margin-top:0.2rem;">{metric_text}</div>'
-                st.markdown(
-                    f"""
-                    <div style="text-align:center;padding:0.5rem;background:#F8F9FA;border-radius:10px;margin:0.2rem 0;">
-                        <div style="font-size:0.8rem;color:#7F8C8D;">{indicator} {dim_name}</div>
-                        <div style="font-size:1.4rem;font-weight:700;color:#2C3E50;">{score:.0f}</div>
-                        <div style="font-size:0.7rem;color:#7F8C8D;margin-top:0.2rem;">{get_health_dimension_explanation(dim_name, score)}</div>
-                        {metric_html}
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+                    st.caption(metric_text)
                 _explain_button(
                     metric_name=dim_name,
                     metric_value=f"{score:.0f} 分",
@@ -255,11 +247,7 @@ def _render_risk(data: dict, client) -> None:
     if has_risk_dims:
         with st.expander("⚠️ 風險分析 — 什麼可能出問題？", expanded=False):
             if risk.get("summary_text"):
-                st.markdown(
-                    f"""<div style="color:#7F8C8D;font-size:0.9rem;margin-bottom:0.8rem;">
-                    {risk["summary_text"]}</div>""",
-                    unsafe_allow_html=True,
-                )
+                st.caption(risk["summary_text"])
             for dim_key in ("customer_concentration", "financial_health", "event_based"):
                 dim = risk.get(dim_key)
                 if dim is None:
