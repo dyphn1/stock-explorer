@@ -17,7 +17,7 @@ from src.services.llm.base import ExplanationProvider, ExplanationRequest, Expla
 from src.services.llm.template_provider import TemplateExplanationProvider
 
 # ── Historian tone disclaimer ──────────────────────────────────────
-_DISCLAIMER = "篩選結果僅供學習參考，不構成投資建議"
+_DISCLAIMER = "篩選結果僅供學習參考，不構成投資諮詢"
 
 # ── Screener-specific explanation templates ────────────────────────
 # Each filter type maps to a set of explanation templates keyed by
@@ -279,7 +279,7 @@ def _build_screener_implication(
         if active_filters:
             conditions = "、".join(active_filters)
             return "符合多項篩選條件的公司，可進一步比較其財務面與評價面"
-        return "篩選結果可作為進一步研究的起點，建議搭配基本面分析"
+        return "篩選結果可作為進一步研究的起點，可搭配基本面分析"
 
     return "篩選結果可作為進一步研究的起點"
 
