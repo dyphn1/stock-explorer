@@ -37,7 +37,21 @@
 - **Commits**: `61ef6a3`, `90c1691`, `0b56b32`, `360201a`
 
 ## Next Cycle
-🔧 Development Round 38 Complete (Sprint 17) → 💡 Discussion Round 38 → 🔍 Review Round 38 → 🔧 Development Round 39 (Sprint 18: C139 + C141 + C143)
+💡 Discussion Round 38 Complete (Sprint 18: C139 + C141 + C143 + D-097 + Tone QA) → 🔍 Review Round 38 → 🔧 Development Round 39 (Sprint 18 execution)
+
+---
+
+# 💡 Discussion Section (Round 38 — 2026-06-14)
+**Topic**: Sprint 18 Planning — C139 Explain This Number + C141 Source Badge + C143 Implication Sentence + D-097 + Tone QA
+**Challenger**: ✅ CONFIRMED with 6 conditions
+**Key Decisions**:
+- **Execution order**: D-097 (industry context) → C139 (Explain This Number) → C141 (Source Badge, bundled) → Tone QA automation → C143 (Implication Sentence)
+- **C139 scope**: Business card page only (5-7 metrics), NOT all 15+ metrics
+- **C143 design**: Implication sentence REPLACES existing explanation on delta cards (not supplements); existing explanation moves to 💡 popover
+- **Tone QA blocklist expanded**: 建議, 應該, 買, 賣, 推薦, 進場, 出場, 值得關注, 需要密切關注, 值得持續追蹤, 表現優於預期
+- **Sprint total**: 22-31h (revised from 20-28h after Challenger's math correction)
+- **Architecture**: Popover-first (Direction A), zero new infrastructure, backward-compatible `ExplanationResponse` extension
+**Full details**: docs/state/handoff_discuss_r38.md
 
 ---
 
