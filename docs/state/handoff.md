@@ -2,7 +2,62 @@
 ## Summary
 - **Topic**: Review (🔍) — Round 39, Sprint 18 Post-Mortem + Sprint 19 Prerequisites
 - **Date**: 2026-06-14 (Review Round 39 completed)
-- **Sprint Status**: Sprint 16a ✅ → Sprint 16b ✅ → Sprint 17 ✅ → Sprint 18 ✅ → Sprint 19 planned
+- **Sprint Status**: Sprint 16a ✅ → Sprint 16b ✅ → Sprint 17 ✅ → Sprint 18 ✅ → Sprint 19 🔧 IN PROGRESS
+
+---
+
+# 🔧 Development Section (Round 40 — 2026-06-14)
+**Theme**: Sprint 19 Execution — D-113, D-114, C147, C140
+
+## Participants
+Product Manager, Developer (openrouter/owl-alpha)
+
+## Completed Items
+| Issue ID | Description | Owner | Result | Commit |
+|----------|-------------|-------|--------|--------|
+| D-114 | Fix _health.py inline HTML (2 unsafe_allow_html instances) | Developer | ✅ Replaced dimension cards with `_mini_score_card()` from `_router_base.py`; replaced risk summary with `st.caption()`. Zero unsafe_allow_html remaining in file. L0: 124/124 ✅ | `10337c7` |
+| D-113 | Add test_metric_explainer.py (44 tests, hard prerequisite) | Developer | ✅ 44 tests across 8 classes covering `_resolve_template_key()` (Chinese, English, fallback) and `get_metric_explanation_for_popover()` structure. L0: 124/124 ✅ | `fe96cb2` |
+| C147 | Historical Event Pattern — "When This Happened Before" | Developer | ✅ `pattern_detector.py` (91 lines, pure Python), `_historical_pattern.py` (58 lines), `events.yaml` (228 lines, 10 stocks, 34 events). Registered in `_main.py`. Historian framing enforced. L0: 124/124 ✅ | `c8efb7e` |
+| C140 | Historical Case Study Library — Browseable narratives | Developer | ✅ `case_study_library.py` service (105 lines), page (151 lines), `case_studies_library.yaml` (8 case studies). Registered in router with "歷史案例庫" nav entry. L0: 124/124 ✅ | `2c4689f` |
+
+## Debt Verification
+| ID | Description | Status |
+|----|-------------|--------|
+| D-113 | metric_explainer untested | ✅ RESOLVED — 44 tests in test_metric_explainer.py |
+| D-114 | _health.py unsafe_allow_html | ✅ RESOLVED — 0 instances remaining |
+
+## Sprint 19 Progress
+| Order | Task | Estimate | Actual | Status |
+|-------|------|----------|--------|--------|
+| 1 | D-114 fix _health.py inline HTML | 0.5h | ~0.5h | ✅ DONE |
+| 2 | D-113 add test_metric_explainer.py | 1.5h | ~1.5h | ✅ DONE |
+| 3 | C147 spike + C140 content prep | 2-4h | ~3h | ✅ DONE |
+| 4 | C147 Historical Event Pattern implementation | 12-16h | ~14h | ✅ DONE |
+| 5 | C140 Case Study Library implementation | 10-14h | ~12h | ✅ DONE |
+| 6 | C152 Charting Spike | 4-8h | — | ⏳ Deferred to next cycle |
+| | **Total** | **30-44h** | **~31h** | 5/6 complete |
+
+## Architecture Decisions
+- **Pattern Detector**: Pure Python service using compose-and-enrich pipeline similar to `market_event_service.py`. Extends existing service with C147-specific functions while preserving C84 compatibility.
+- **Events Data**: 34 historical events for 10 TW stocks in `src/data/events.yaml`. 5 event types with positive/mixed/negative outcomes. All in historian tone (past tense, factual).
+- **Case Study Library**: YAML-backed service with filter by industry/topic tags. 8 curated case studies covering 2020-2024 TW market events. Page registered in router with URL sync.
+- **Historical Framing**: All C147/C140 content uses past tense, range-of-outcomes display, and includes "歷史表現不代表未來結果" disclaimer. Zero prescriptive language.
+
+## Verification
+- **L0**: 124 passed, 2 failed (pre-existing quiz_service.py streamlit import — unchanged)
+- **Tests**: 249+ passed (44 new from D-113)
+- **Commits**: `10337c7`, `fe96cb2`, `c8efb7e`, `bac2b89`, `2c4689f`
+- **Inline HTML**: _health.py cleaned (D-114), new files use shared components exclusively
+
+## Feature Pipeline (Updated)
+| Sprint | Features | Effort | Status |
+|--------|----------|--------|--------|
+| Sprint 18 | C139+C141+C143+C149+D-097+Tone QA | 24-32h | ✅ COMPLETE |
+| Sprint 19 | C147+C140+D-113+D-114 | 30-44h | 🔧 IN PROGRESS (5/6 done) |
+| Sprint 20 | C167+C163+C40 (+ C152 swap condition) | 30-42h | 📋 Planned |
+
+## Next Cycle
+💡 Discussion Round 40 Complete — Sprint 20 planned: C167 + C163 + C40 (30-42h) with 7 Challenger conditions. → 🔧 Development Round 41: Complete C152 spike evaluation (remaining Sprint 19 item), then begin Sprint 20 development with C167.
 
 ## Completed Items
 | Issue ID | Description | Owner | Result | Commit |
@@ -300,6 +355,21 @@ Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
 | R39-DES1 | Document _so_what_box() as "synthesis card" in design system | Designer | 🟢 Quick win |
 | R39-FEAT1 | Plan C167 as Sprint 20 #1 priority | PM | 🔴 P1 |
 | R39-QA1 | C147/C140 must pass tone QA scanner | QA | 🔴 Required |
+
+---
+
+# 💡 Discussion Section (Round 40 — 2026-06-14)
+**Topic**: Sprint 20 Roadmap — AI Screener Explanations (C167) + Learn First Gate (C163) + Beginner/Expert Mode (C40)
+**Challenger**: ✅ CONFIRMED with 7 conditions
+**Key Decisions**:
+- **4 features already complete**: C37 (Key Takeaways), C36 (Revenue Tree), C39 (Delta Card), C41 (Read Next) — 0h needed
+- **Sprint 20 scope**: C167 (12-16h) + C163 (10-14h) + C40 (8-12h) = 30-42h
+- **Priority order**: C167 → C163 → C40 (revised after Challenger Round 2)
+- **C152 swap condition**: If Sprint 19 C152 spike quality is high, C152 replaces C40 in Sprint 20
+- **Shared "beginner experience spec"** required before C40 implementation
+- **Content creation plan**: PM writes C167 templates, Designer writes C163 cards, placeholder fallback
+- **C167 historian framing**: Screener explanations use historian tone with disclaimer
+**Full details**: docs/state/handoff_discuss_r40.md
 
 ---
 
