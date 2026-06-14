@@ -122,7 +122,8 @@ def create_health_snowflake(
 
     fig.update_layout(
         title=dict(
-            text=f"{stock_name} 公司健康狀況",
+            text=f"{stock_name} 公司健康狀況"
+                 + " <sub style='font-size:0.7rem;color:#7F8C8D;'>💡 點擊各維度分數旁圖示查看名詞解釋</sub>",
             font=dict(size=18, color=theme["title"]),
             x=0.5,
         ),

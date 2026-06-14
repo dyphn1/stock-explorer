@@ -3,12 +3,13 @@ import streamlit as st
 from src.services.chart import create_health_snowflake
 from src.services.health_scoring import compute_health_scores, get_health_summary
 from src.services.risk_analyzer import assess_risk
-from src.pages._router_base import _info_card, _explain_button, _mini_score_card
+from src.pages._router_base import _info_card, _explain_button, _mini_score_card, _glossary_tooltip
 from src.pages.business_card._helpers import (
     get_health_dimension_explanation,
     _render_risk_dimension,
     _get_health_metric_values,
 )
+from src.services import glossary_service
 from src.services.benchmarks import (
     get_industry_benchmarks,
     fetch_benchmark_health_scores,
@@ -30,6 +31,9 @@ def _render_health(data: dict, client) -> None:
     stock_name = data["stock_name"]
     stock_id = data["stock_id"]
     industry = data["industry"]
+
+    # C170: beginner mode → more prominent glossary indicators
+    _is_beginner = st.session_state.get("simple_mode", False) or st.session_state.get("user_experience_level", "beginner") == "beginner"
 
     # 🏥 公司健康狀況 (C43: Health Snowflake)
     health_scores = compute_health_scores(
@@ -86,6 +90,10 @@ def _render_health(data: dict, client) -> None:
                     key_prefix=f"health_{stock_id}",
                     source_label="📊 系統估算",
                 )
+                # C170: Glossary tooltip for each health dimension
+                _gkey = glossary_service.resolve_term_key(dim_name)
+                if _gkey:
+                    _glossary_tooltip(_gkey, glossary_service, beginner=_is_beginner)
 
         # 白話健康摘要
         health_summary = get_health_summary(health_scores)

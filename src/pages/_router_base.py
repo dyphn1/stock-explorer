@@ -266,10 +266,17 @@ def _count_label(count: int, label: str):
     )
 
 
-def _glossary_tooltip(term_key: str, glossary_service):
+def _glossary_tooltip(term_key: str, glossary_service, *, beginner: bool = False):
     """Render a clickable ℹ️ tooltip that shows glossary definition.
 
     Uses st.popover to show plain-language explanation.
+
+    Args:
+        term_key: glossary.yaml key (resolved via glossary_service.resolve_term_key()
+            by the caller if needed).
+        glossary_service: The glossary service module.
+        beginner: If True (beginner mode), the indicator uses a brighter style
+            with a visible "tap to learn" cue instead of a subtle icon.
     """
     term = glossary_service.get_glossary_term(term_key)
     if term is None:
@@ -280,7 +287,11 @@ def _glossary_tooltip(term_key: str, glossary_service):
     example = term.get("example", "")
     analogy = term.get("analogy", "")
 
-    popover_label = f"ℹ️ {name}"
+    if beginner:
+        popover_label = f"💡 什麼是{name}？"
+    else:
+        popover_label = f"ℹ️ {name}"
+
     with st.popover(popover_label):
         st.markdown(f"**{name}**")
         st.markdown(f"_{plain}_")
@@ -288,6 +299,117 @@ def _glossary_tooltip(term_key: str, glossary_service):
             st.markdown(f"**例子：** {example}")
         if analogy:
             st.markdown(f"**比喻：** {analogy}")
+
+
+def _glossary_label(label: str, term_key: str, glossary_service, *, beginner: bool = False) -> None:
+    """Render a label with an inline glossary ℹ️ icon.
+
+    The label text is shown as a caption/small header and the icon opens a
+    popover with the glossary definition.  Useful for section headers and
+    metric labels that need a tappable definition.
+
+    Args:
+        label: Display text for the label.
+        term_key: glossary.yaml key to look up.
+        glossary_service: The glossary service module.
+        beginner: If True, shows a brighter "💡" instead of "ℹ️".
+    """
+    icon = "💡" if beginner else "ℹ️"
+    popover_key = f"glossary_label_{term_key}_{hash(label) & 0xFFFFFF}"
+    term = glossary_service.get_glossary_term(term_key)
+    if term is None:
+        st.caption(label)
+        return
+
+    col_l, col_i = st.columns([6, 1])
+    with col_l:
+        st.caption(label)
+    with col_i:
+        _glossary_tooltip(term_key, glossary_service, beginner=beginner)
+
+
+def _glossary_annotated_metric(
+    label: str,
+    value: str,
+    term_key: str,
+    glossary_service,
+    *,
+    beginner: bool = False,
+    delta: str | None = None,
+) -> None:
+    """Render a metric card with an inline glossary tooltip (C170 pattern).
+
+    Wraps the label + value in a bordered card and places a tappable ℹ️
+    icon that opens a popover with the glossary definition.
+
+    Replaces bare ``st.metric()`` or ``_白话_card()`` calls where the
+    metric term should be tappable.
+
+    Args:
+        label: Metric display label (e.g. "ROE", "本益比").
+        value: Formatted value string (e.g. "25.3%").
+        term_key: glossary.yaml key to look up.
+        glossary_service: The glossary service module.
+        beginner: If True, indicator is more prominent.
+        delta: Optional delta string for st.metric-style display.
+    """
+    term = glossary_service.get_glossary_term(term_key)
+    icon = "💡" if beginner else "ℹ️"
+    pop_key = f"glossary_metric_{term_key}_{hash(label) & 0xFFFFFF}"
+
+    border_color = "#3498DB" if beginner else "#ECF0F1"
+
+    # Build popover content
+    if term:
+        popover_label = f"{icon} 解釋「{label}」"
+        with st.popover(popover_label, key=pop_key, help=f"了解「{label}」是什麼"):
+            st.markdown(f"**{term.get('name', label)}**")
+            st.markdown(f"_{term.get('plain', '')}_")
+            if term.get("example"):
+                st.markdown(f"**例子：** {term['example']}")
+            if term.get("analogy"):
+                st.markdown(f"**比喻：** {term['analogy']}")
+            if beginner:
+                st.markdown("---")
+                st.caption("🌱 點擊任何 💡 圖示都能查看名詞解釋")
+    else:
+        # Fallback: just show the card without popover
+        pass
+
+    st.markdown(f"""
+    <div style="background:#F8F9FA;border-radius:10px;padding:0.8rem 1rem;
+         border-left:4px solid {border_color};margin:0.3rem 0;">
+        <div style="font-size:0.8rem;color:#7F8C8D;">{label}</div>
+        <div style="font-size:1.4rem;font-weight:700;color:#2C3E50;">{value}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def _glossary_help_text(label: str, term_key: str, glossary_service, *, beginner: bool = False) -> str:
+    """Return an HTML string with an inline ℹ️-style popover trigger for use in st.markdown.
+
+    This is a lightweight alternative for places where a full popover column
+    is not practical (e.g. inside chart subtitles, axis labels rendered viaPlotly).
+    Returns a string like "Label ℹ️" that the caller can pass to st.caption().
+
+    For actual interactive tooltips, prefer _glossary_tooltip() or
+    _glossary_annotated_metric().
+
+    Args:
+        label: Display text.
+        term_key: glossary.yaml key.
+        glossary_service: The glossary service module.
+        beginner: If True, uses "💡" icon.
+
+    Returns:
+        Plain label if no glossary entry, otherwise label + icon string.
+    """
+    term = glossary_service.get_glossary_term(term_key)
+    if term is None:
+        return label
+    icon = "💡" if beginner else "ℹ️"
+    # We return a caption string; the interactive popover is wired separately
+    return f"{label} {icon}"
 
 
 # ── M3: Timeline helpers ──────────────────────────────────

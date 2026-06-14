@@ -178,6 +178,7 @@ def create_valuation_band_chart(
         title_text = f"{stock_name} 估值區間（歷史 P/E 範圍）"
         if note:
             title_text += f" {note}"
+        title_text += " <sub style='font-size:0.7rem;color:#7F8C8D;'>💡 PER = 本益比</sub>"
 
         fig.update_layout(
             title=dict(

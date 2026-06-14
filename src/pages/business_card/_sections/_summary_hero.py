@@ -25,7 +25,8 @@ from src.services.watchlist import (
     create_list,
     list_names,
 )
-from src.pages._router_base import _白话_card, _info_card, _summary_card, _explain_button
+from src.pages._router_base import _白话_card, _info_card, _summary_card, _explain_button, _glossary_tooltip
+from src.services import glossary_service
 from src.services.benchmarks import (
     get_industry_benchmarks,
     fetch_benchmark_health_scores,
@@ -130,7 +131,9 @@ def _render_story_card(data: dict, client) -> None:
     # One-liner
     _info_card("一句話定位", one_liner, "💡")
 
-    # Key metrics row — use _白话_card for each + 💡 explain button
+    # Key metrics row — use _白话_card for each + 💡 explain button + glossary tooltip
+    # C170: beginner mode → more prominent glossary indicators
+    _is_beginner = st.session_state.get("simple_mode", False) or st.session_state.get("user_experience_level", "beginner") == "beginner"
     if top_metrics:
         cols = st.columns(len(top_metrics))
         for col, (label, value, analogy) in zip(cols, top_metrics):
@@ -142,6 +145,10 @@ def _render_story_card(data: dict, client) -> None:
                     key_prefix=f"story_{stock_id}",
                     source_label="📊 FinMind" if "營收" in label else "📊 系統估算",
                 )
+                # C170: Glossary tooltip — resolve display label to glossary key
+                _gkey = glossary_service.resolve_term_key(label.split(" (")[0].strip())
+                if _gkey:
+                    _glossary_tooltip(_gkey, glossary_service, beginner=_is_beginner)
 
     # Health score
     if overall_health is not None:

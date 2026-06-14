@@ -195,12 +195,15 @@ def _render_dividend(data: dict, client) -> None:
         col1, col2, col3 = st.columns(3)
         with col1:
             _白话_card("最近一季", f"{div_summary['latest_cash_div']:.2f} 元", "每股現金股利")
+            _glossary_tooltip("每股盈餘", glossary_service)
         with col2:
             annual_str = f"{div_summary['estimated_annual']:.2f} 元" if div_summary['estimated_annual'] else "—"
             _白话_card("預估全年", annual_str, "預估全年配息")
+            _glossary_tooltip("殖利率", glossary_service)
         with col3:
             yield_str = f"{div_summary['estimated_yield']:.2f}%" if div_summary['estimated_yield'] else "—"
             _白话_card("殖利率", yield_str, "年化股利／股價")
+            _glossary_tooltip("殖利率", glossary_service)
 
         # Expandable history table
         with st.expander("📋 展開查看歷史除權息紀錄", expanded=False):
@@ -298,6 +301,8 @@ def _render_revenue_trend(data: dict, client) -> None:
     if len(monthly_revenue) > 0:
         fig = create_revenue_trend_chart(monthly_revenue, f"{stock_name} 月營收趨勢")
         st.plotly_chart(fig, use_container_width=True)
+        # C170: Glossary tooltip for revenue
+        _glossary_tooltip("營業收入", glossary_service)
     else:
         st.info("暫無營收資料")
 
@@ -329,6 +334,9 @@ def _render_valuation(data: dict, client) -> None:
         # 白話解讀 — use interpretation returned by chart function
         if interp and interp.get("valuation_text"):
             _info_card("估值解讀", interp["valuation_text"], "💡")
+        # C170: Glossary tooltip for PER / PBR
+        _glossary_tooltip("本益比", glossary_service)
+        _glossary_tooltip("淨值比", glossary_service)
     else:
         st.info("暫無足夠資料計算估值區間")
 
