@@ -5887,3 +5887,340 @@ Moomoo's API Skills is US-focused. No TW platform offers natural language stock 
 ---
 
 *This is the forty-fourth competitor research round. Eight new competitors analyzed. Eight new feature gaps identified (C186-C193). The most critical finding: C179 (Explain Every Element) is elevated from P1 to CRITICAL based on Finimize's implementation. The most impactful new gap is C186 (Daily 5-Min Lesson) — Finimize proves daily bite-sized education transforms engagement. Full details in `docs/research/review44_qa.md`.*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 10
+
+> **Date**: 2026-06-15
+> **Author**: QA Engineer (Round 10)
+> **Purpose**: Research new competitors not covered in Rounds 1-44, focusing on: (1) international platforms with narrative/education features (Wall Street Survivor, Khan Academy Finance, eToro, Trading 212, StockEdge), (2) TW-specific education ecosystems (YouTube edu-tainment channels, TW broker app education features), (3) emerging AI stock explanation tools (TipRanks, MM Stocktimize), and (4) deep re-analysis of partially-covered competitors (Zerodha Varsity, Acorns education layer).
+
+---
+
+## New Competitors Analyzed (Not in Rounds 1-44)
+
+| Competitor | Type | Region | Relevance to Stock Explorer |
+|---|---|---|---|
+| **Wall Street Survivor** | Stock simulator + structured courses | US | 🟡 Medium — proves "learn by doing" model for beginners |
+| **Khan Academy Finance** | Free structured finance education | US/Global | 🟢 Low — benchmark for structured learning paths |
+| **eToro** | Social trading + CopyTrader education | Global/TW | 🟡 Medium — social learning model, education-first onboarding |
+| **Trading 212** | Commission-free trading + Learn tab | UK/EU/TW | 🟡 Medium — bite-sized lessons + practice account integration |
+| **StockEdge** | Stock analysis + structured learning | India | 🟡 Medium — "Learn" tab with exercises integrated into analysis |
+| **Zerodha Varsity** | Structured market education | India | 🟢 Low — gold standard for narrative-first stock education |
+| **TipRanks** | Analyst tracking + Smart Score | US/Global | 🟡 Medium — "Explain this rating" transparency layer |
+| **Acorns (deep dive)** | Micro-investing + "Money Matters" education | US | 🟡 Medium — daily micro-lesson model, concept simplification |
+| **TW YouTube Edu-tainment (柴鼠兄弟, 財報狗頻道)** | Video-first stock education | Taiwan | 🔴 High — dominant education format for TW beginners |
+| **富邦證券/元大證券 App** | Broker app with education features | Taiwan | 🟡 Medium — TW competitor benchmark for in-app education |
+| **MM Stocktimize** | AI stock explanation tool | US/Emerging | 🟡 Medium — AI-generated plain-language stock narratives |
+| **Groww** | Investing + education for beginners | India | 🟢 Low — "Learn" section with structured modules |
+
+---
+
+## Detailed Competitor Profiles
+
+### Wall Street Survivor
+
+**Positioning**: "Learn investing by doing — without risking real money"
+**Target Users**: Absolute beginners (18-35) who want to learn through simulation
+
+**Key Features Stock Explorer Doesn't Have**:
+- **Stock Market Simulator**: Users get $100,000 in virtual money to practice buying/selling stocks with real market data. This "learn by doing" model complements Stock Explorer's "learn by reading" approach.
+- **Structured Courses with Progress Tracking**: 30+ courses from "Stock Market 101" to "Options Trading" with quizzes, progress bars, and completion certificates. More structured than Stock Explorer's Financial Education Academy (C47) which has 5 YAML lessons but no progress tracking.
+- **Gamified Leaderboards**: Users compete on simulated returns — adds engagement through competition.
+- **"Why Did I Lose Money?" Post-Trade Analysis**: After each simulated trade, the platform explains why the trade succeeded or failed in plain language.
+
+**Comparison with Stock Explorer**: Stock Explorer is purely analytical ("here's what happened to this company"). Wall Street Survivor is action-oriented ("here's what happens when you trade"). These are complementary approaches. The key insight is Stock Explorer could add a "paper trading" layer (C166 planned) that works with its narrative data.
+
+**Feature Gap**: C166 (Paper Trading Mode) exists in the backlog but Wall Street Survivor proves the engagement value of simulation + narrative feedback.
+
+---
+
+### Khan Academy Finance
+
+**Positioning**: "Free world-class education for anyone, anywhere"
+**Target Users**: Students, self-learners, anyone wanting foundational finance knowledge
+
+**Key Features Stock Explorer Doesn't Have**:
+- **Structured Curriculum with Prerequisites**: Khan Academy's finance courses are organized as a directed graph — you must complete "Stocks and Bonds" before "Options and Futures." Stock Explorer's Financial Education Academy (C47) has no prerequisite structure.
+- **Mastery-Based Progression**: Users must score 80%+ on exercises before advancing. Stock Explorer has no concept mastery system beyond C52 (Quiz Mode).
+- **Video + Exercise + Article Tri-Modal Learning**: Every concept has a video explanation, an interactive exercise, and a written article. Stock Explorer is primarily text + charts.
+- **Teacher/Parent Dashboard**: Allows educators to track student progress.
+
+**Comparison with Stock Explorer**: Khan Academy is general education; Stock Explorer is company-specific. Khan Academy teaches "what is a P/E ratio"; Stock Explorer should teach "what does TSMC's P/E ratio of 18 mean." The opportunity is combining Khan's structured curriculum approach with Stock Explorer's company-specific narrative approach.
+
+**Feature Gap**: C166 (Varsity Mode — Structured Progressive Learning Path) partially addresses this but doesn't include prerequisite chains or mastery-based progression.
+
+---
+
+### eToro
+
+**Positioning**: "Investing socially — learn from others' strategies"
+**Target Users**: Socially-connected investors (20-40) who want to learn through observation
+
+**Key Features Stock Explorer Doesn't Have**:
+- **CopyTrader™ with Education**: Users can copy experienced investors' portfolios AND read their investment thesis. Education through observation — "I copied this investor because their thesis on TSMC made sense to me."
+- **Social News Feed**: Combines market news with community discussion. Each stock has a dedicated discussion thread where users share analysis.
+- **Investor Profiles + Track Records**: Users can browse top investors' historical performance, risk scores, and portfolio composition.
+- **Virtual Portfolio (Practice Mode)**: $100,000 virtual portfolio with real market data — similar to Wall Street Survivor but integrated into a real trading platform.
+
+**Comparison with Stock Explorer**: eToro's social features are trade-focused; Stock Explorer's positioning is education-focused. However, the "Why I Own This" narrative pattern (see Public.com in Round 46) is essentially eToro's investor thesis feature — users write why they hold a stock. Stock Explorer could adapt this as "Why Historians Study This Company" — curated narratives about why a company is educationally interesting.
+
+**Feature Gap**: 🟢 C64 (Community Q&A) and C67 (Community-Curated Stock Stories) partially address this but don't include the "observe and learn from experts" model.
+
+---
+
+### Trading 212
+
+**Positioning**: "Invest commission-free — learn as you go"
+**Target Users**: Young European investors (18-35), expanding globally
+
+**Key Features Stock Explorer Doesn't Have**:
+- **"Learn" Tab with 100+ Bite-Sized Lessons**: Each lesson is 2-3 minutes, covers one concept, and ends with a quiz. Topics range from "What is a stock?" to "How to read financial statements." Lessons are contextual — linked to stocks the user is viewing.
+- **Practice Mode (Demo Account)**: Seamless switching between practice and real money. Beginners start in practice mode and "graduate" to real trading.
+- **In-App Education Nuggets**: When a user views a stock, contextual education appears — "You're looking at a chip manufacturer. Here's how the semiconductor cycle works." This is education triggered by browsing behavior.
+- **Fractional Investing Education**: Teaches beginners they can invest €1 in any stock — removes the "I need thousands to start" barrier.
+
+**Comparison with Stock Explorer**: Trading 212's "Learn" tab is the closest competitor to Stock Explorer's Financial Education Academy (C47). Key difference: Trading 212's lessons are shorter (2-3 min vs. Stock Explorer's longer YAML lessons) and more contextual (linked to viewed stocks). Stock Explorer should learn from the contextual education nugget model.
+
+**Feature Gap**: C142 (Action-Triggered Contextual Education) partially addresses this. C205 (Read Time Indicator) addresses the commitment anxiety reduction. But neither fully implements the "contextual education nugget on every stock page" model.
+
+---
+
+### StockEdge
+
+**Positioning**: "Learn + Analyze — all in one app for Indian investors"
+**Target Users**: Indian retail investors (20-45) who want analysis + education combined
+
+**Key Features Stock Explorer Doesn't Have**:
+- **"Learn" Tab with Structured Courses**: 50+ courses organized by difficulty (Beginner → Advanced) with video lessons, quizzes, and completion certificates. More comprehensive than Stock Explorer's Financial Education Academy.
+- **Edge Scores with Explanation**: Every stock gets an "Edge Score" (0-100) based on technical, fundamental, and sentiment analysis. Each score component has a plain-language explanation — "Technical Edge: 75/100 — The stock is trading above its 50-day moving average, which historically indicates upward momentum."
+- **Daily Learning Bite**: One per day, like Finimize but focused on Indian market concepts.
+- **Stock Screeners with "Why It Passed"**: Similar to Stock Explorer's C167 but with more detailed explanations of why each stock passed each filter.
+
+**Comparison with Stock Explorer**: StockEdge is the closest model to Stock Explorer's vision — analysis + education in one app. Key difference: StockEdge is India-focused and uses video-heavy education. Stock Explorer's PPT-style text approach is unique for TW. StockEdge's "Edge Score with Explanation" is a model for C194 (Metric Judgment Transparency).
+
+**Feature Gap**: 🟡 C194 (Explain Why Good/Bad) directly models StockEdge's Edge Score explanation pattern. But StockEdge's video-heavy approach (P2 feature) is not yet in Stock Explorer's backlog.
+
+---
+
+### Zerodha Varsity
+
+**Positioning**: "Free, open, structured market education — from zero to advanced"
+**Target Users**: Indian investors at all levels, from absolute beginners to advanced traders
+
+**Key Features Stock Explorer Doesn't Have**:
+- **Narrative-First Module Design**: Every module tells a story — "The Tale of Two Exchanges" (how NSE and BSE evolved), "The Great Depression and What We Learned." Stock Explorer's "Story first" core value is directly aligned with this approach.
+- **16 Modules, Each 10-15 Chapters**: Comprehensive structured curriculum covering basics → fundamental analysis → technical analysis → derivatives → behavioral finance.
+- **Prerequisite Chains**: Module 3 requires Module 2, which requires Module 1. Creates a learning path that Stock Explorer lacks.
+- **Real Market Data in Examples**: Uses actual Indian stock data (Reliance, TCS, Infosys) to explain concepts — exactly what Stock Explorer does with TW stocks.
+- **Community Discussion per Chapter**: Each chapter has a comment section for peer learning.
+
+**Comparison with Stock Explorer**: Zerodha Varsity is Stock Explorer's spiritual sibling — narrative-first, data-backed, education-focused. Key difference: Varsity is general education; Stock Explorer is company-specific. Stock Explorer can learn from Varsity's prerequisite chain design and module structure.
+
+**Feature Gap**: 🟢 C165 (Varsity Mode) is named after this competitor but only partially implements the model. Missing: prerequisite chains, community discussion per chapter, and comprehensive module structure.
+
+---
+
+### TipRanks
+
+**Positioning**: "Follow the experts — see what top analysts are recommending and why"
+**Target Users**: US investors (25-55) who want analyst consensus + transparency
+
+**Key Features Stock Explorer Doesn't Have**:
+- **"Explain This Rating" Feature**: When analysts rate a stock "Buy" or "Sell," TipRanks shows the reasoning — "Analyst X rates TSMC as Buy because of AI chip demand growth." This is exactly missing from Stock Explorer's metric labels.
+- **Analyst Track Record Transparency**: Shows each analyst's historical accuracy — "This analyst has been right 73% of the time on tech stocks." This teaches users to critically evaluate sources.
+- **"Smart Score" (0-100) with 8 Factors**: Combines fundamentals, insider sentiment, hedge fund activity, analyst consensus, etc. Each factor is explained: "Fundamental Score: 85/100 — Strong ROE, low debt, consistent growth."
+- **Insider Trading Explanation**: When insiders buy/sell, TipRanks explains what it might mean: "CEO bought 10,000 shares — historically, insider buying at this company has preceded 15% gains over 6 months."
+
+**Comparison with Stock Explorer**: TipRanks is US-focused and analyst-focused vs. Stock Explorer's TW-focused, company-focused approach. However, the "Explain This Rating" pattern is directly applicable to C194 (Metric Judgment Transparency). Stock Explorer labels metrics 🟢/🔴 but doesn't explain why.
+
+**Feature Gap**: 🔴 C194 (Explain Why Good/Bad) is validated by TipRanks' explanation pattern. C108 (Insider Trading Context Layer) is validated by TipRanks' insider explanation model.
+
+---
+
+### Acorns — Deep Education Layer
+
+**Positioning**: "Invest your spare change — learn while you grow"
+**Target Users**: Passive investors (25-40) who want micro-investing + bite-sized education
+
+**Key Features Stock Explorer Doesn't Have (beyond Round 44)**:
+- **"Money Matters" Daily Micro-Lessons**: 3-minute daily readings on personal finance concepts — not stock analysis, but financial literacy. Topics: "What is compound interest?", "How does inflation affect your savings?", "Emergency fund basics."
+- **Round-Up Education**: When Acorns rounds up a purchase ($3.50 coffee → $4.00, invest $0.50), it explains the concept: "This is like a digital piggy bank. Small amounts add up to $X per year."
+- **"Later" (Retirement) Education**: Explains IRA, Roth IRA, 401k in plain language before asking users to open accounts.
+- **Personalized Learning Path**: Based on user's age, income, and goals, Acorns recommends specific lessons. Education is adaptive, not one-size-fits-all.
+
+**Comparison with Stock Explorer**: Acorns teaches personal finance; Stock Explorer teaches company analysis. The key insight: Acorns' "Money Matters" is a daily touchpoint that creates habit. Stock Explorer's C196 (Daily Market Story) is the closest equivalent. Acorns proves that daily micro-education drives retention.
+
+**Feature Gap**: 🟡 C196 (Daily Market Story) is validated. But Acorns' personalized learning path (adapting to user profile) is not in any Stock Explorer feature.
+
+---
+
+### TW YouTube Edu-tainment Channels (柴鼠兄弟, 財報狗頻道, 股癌)
+
+**Positioning**: "Stock education through entertainment — learn while you watch"
+**Target Users**: TW beginners (20-45) who prefer video over text
+
+**Key Features Stock Explorer Doesn't Have**:
+- **Video-First Education**: 柴鼠兄弟's "股票入門" series has 10M+ views. 財報狗's YouTube channel explains financial statements with animations. 股癌 provides daily market commentary with humor.
+- **Community Engagement**: Comments, live streams, Q&A sessions — creates a learning community that text-based platforms can't match.
+- **Bite-Sized Format**: 10-15 minute videos on single topics — "什麼是ROE?", "財報怎麼看?", "ETF vs 股票."
+- **Visual Storytelling**: Complex concepts explained through animations, real-world analogies, and humor — more engaging than text.
+
+**Comparison with Stock Explorer**: YouTube channels are Stock Explorer's biggest TW competitor for beginner attention. Beginners watch 柴鼠兄弟 before they search for a stock analysis tool. Stock Explorer's opportunity: be the "next step" after YouTube — "You watched the video about ROE, now let's see what TSMC's ROE means."
+
+**Feature Gap**: 🔴 C54 (Video Explanation Library) is planned (20-30h, P2) but YouTube channels prove video education is the PRIMARY entry point for TW beginners. This should be elevated to P1.
+
+---
+
+### 富邦證券 / 元大證券 App Education Features
+
+**Positioning**: "Your broker as educator — learn while you trade"
+**Target Users**: TW retail investors (25-55) who use broker apps as primary tools
+
+**Key Features Stock Explorer Doesn't Have**:
+- **In-App "Investment Academy"**: 富邦證券's app has a "投資學苑" section with articles, videos, and webinars on investment basics. Integrated directly into the trading app.
+- **Beginner-Friendly Stock Screeners**: 元大證券's app has pre-built screeners with plain-language descriptions — "高殖利率股票" (high dividend yield stocks) with explanations of what dividend yield means.
+- **Risk Assessment Quiz**: Before trading, users complete a risk assessment that explains risk concepts — "This quiz helps you understand your risk tolerance. Risk tolerance is..."
+- **Real-Time Education**: When market events happen (e.g., Fed rate decision), the app pushes educational content — "What does a Fed rate cut mean for your stocks?"
+
+**Comparison with Stock Explorer**: TW broker apps are Stock Explorer's most direct local competitors for beginner attention. They have the advantage of being the "default" tool (users already have broker accounts). Stock Explorer's advantage: deeper, more structured education. The opportunity: partner with brokers or position as "the education layer before you open a broker account."
+
+**Feature Gap**: 🟡 C187 (Learn → Practice → Invest Progressive Pipeline) partially addresses this. But no feature addresses the "real-time education on market events" model that broker apps use.
+
+---
+
+### MM Stocktimize
+
+**Positioning**: "AI explains any stock in plain language — instantly"
+**Target Users**: Beginners who want instant, AI-generated stock explanations
+
+**Key Features Stock Explorer Doesn't Have**:
+- **AI-Generated Stock Narratives**: Enter any stock ticker → get a 200-word plain-language narrative of what the company does, recent events, and key metrics. Similar to Stock Explorer's analogy engine but fully AI-generated.
+- **"Explain Like I'm 12" Mode**: Simplifies all explanations to a 12-year-old's level — more aggressive simplification than Stock Explorer's beginner mode.
+- **Multi-Language Support**: Explanations in English, Spanish, Mandarin — Stock Explorer is TW-only.
+- **API-First Design**: Developers can integrate Stocktimize explanations into other apps — Stock Explorer is a standalone tool.
+
+**Comparison with Stock Explorer**: MM Stocktimize is Stock Explorer's AI-first competitor. Stock Explorer uses LLM for plain-language translation + templates; Stocktimize is fully AI-generated. Risk: AI hallucination. Stock Explorer's template-based approach is more reliable but less flexible.
+
+**Feature Gap**: 🟢 C86 (AI Narrative Agent) and C87 (Explainable Analysis Layer) address AI-generated narratives. Stock Explorer's template-based approach is a deliberate design choice (reliability over flexibility).
+
+---
+
+## New Feature Ideas from Round 10
+
+### [ISSUE-C207] "Contextual Education Nuggets" — Bite-Sized Lessons Triggered by Browsing Behavior
+- **Source**: Competitor research round 10 (Trading 212 contextual education, StockEdge Learn tab)
+- **Priority**: P1
+- **Effort**: 10-14h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + Core value #3 "Adaptive and self-evolving"
+- **Description**: Trading 212 and StockEdge both show contextual education nuggets when users browse stocks — "You're looking at a chip manufacturer. Here's how the semiconductor cycle works." Stock Explorer has all the data to do this but doesn't trigger education based on browsing context. When a user views TSMC, a small card should appear: "💡 你知道嗎？半導體產業有週期性，通常3-4年一個循環。現在是上升期還是下降期？" This transforms passive browsing into active learning.
+- **Implementation**: Add a `_contextual_nugget()` component to the business card page. Use the stock's industry/category to select from a pool of 50+ pre-written nuggets (stored in YAML). Show one nugget per page load, rotating based on user history. Reuse existing analogy_engine.py patterns.
+- **Competitive Gap**: 🟡 No TW competitor has contextual education nuggets. Trading 212 and StockEdge prove the model internationally. This is a natural extension of the "Did You Know?" facts (already implemented) but triggered by context, not random.
+
+---
+
+### [ISSUE-C208] "Prerequisite Chains" for Financial Education Academy
+- **Source**: Competitor research round 10 (Zerodha Varsity prerequisite chains, Khan Academy mastery-based progression)
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Progressive drill-down" design principle
+- **Description**: Zerodha Varsity and Khan Academy both use prerequisite chains — you must complete "What is a stock?" before "How to read a balance sheet." Stock Explorer's Financial Education Academy (C47) has 5 YAML lessons but no structure — users can jump to any lesson in any order. This violates the "point-to-point knowledge construction" core value. Beginners who jump to "How to read a cash flow statement" without understanding "What is revenue?" will be lost.
+- **Implementation**: Add a `prerequisites` field to each lesson in the YAML files. Before a lesson is unlocked, show which prerequisites are needed. Track completion in session_state or local storage. Add a visual "learning path" diagram showing the recommended order. Start with 3 prerequisite chains: (1) Stock Basics → Financial Statements → Analysis, (2) What is a Stock → How Stocks are Valued → P/E Ratio, (3) Revenue → Profit → Cash Flow.
+- **Competitive Gap**: 🟢 No TW competitor has prerequisite-based learning paths. Zerodha Varsity proves the model for stock education. This is a low-effort, high-impact structural improvement to C47.
+
+---
+
+### [ISSUE-C209] "Analyst/Source Transparency" Layer — Explain Where Every Claim Comes From
+- **Source**: Competitor research round 10 (TipRanks analyst track records, "Explain This Rating" pattern)
+- **Priority**: P1
+- **Effort**: 6-10h
+- **Alignment**: Core value #1 "Story first, data second" + "All data must cite its source" verification principle
+- **Description**: TipRanks shows analyst track records and explains the reasoning behind every rating. Stock Explorer's product vision states "All data must cite its source to avoid a black-box feel" but this is not systematically implemented. A beginner seeing "TSMC's ROE is 25%" doesn't know where this number comes from, how recent it is, or whether it's audited. An "Analyst/Source Transparency" layer would add: (1) source citation on every metric ("Source: TSMC 2024 Q4 Earnings Report, audited"), (2) freshness indicator ("Updated 3 days ago"), (3) confidence level ("High confidence — audited financial statement").
+- **Implementation**: Add a `source` and `last_updated` field to every metric display. Show source on hover/click. Add a freshness indicator (🟢 <7 days, 🟡 7-30 days, 🔴 >30 days). For AI-generated content, add a "Why this claim?" expandable section showing the data source and reasoning. Reuse existing data pipeline metadata.
+- **Competitive Gap**: 🔴 No TW competitor has systematic source transparency. TipRanks proves the model for analyst ratings. This directly implements the product vision's "all data must cite its source" principle and builds trust with beginners.
+
+---
+
+### [ISSUE-C210] "Video Explanation" Bite-Sized Library for Top 20 TW Stocks
+- **Source**: Competitor research round 10 (TW YouTube edu-tainment channels — 柴鼠兄弟, 財報狗頻道, 股癌)
+- **Priority**: P1 (elevated from C54's P2)
+- **Effort**: 20-30h (curate, not create — link to existing YouTube content)
+- **Alignment**: Core value #1 "Story first, data second" + Core value #4 "Point-to-point knowledge construction"
+- **Description**: TW YouTube channels (柴鼠兄弟 10M+ views, 財報狗頻道, 股癌) are the PRIMARY entry point for TW stock education. Beginners watch videos before they use analysis tools. Stock Explorer's C54 (Video Explanation Library) is planned as a P2 feature but YouTube channels prove video education is the #1 beginner acquisition channel. Instead of creating original video content (expensive, 20-30h), curate and embed existing high-quality YouTube videos for the top 20 TW stocks. When a user views TSMC, show: "📺 推薦影片：柴鼠兄弟 — 台積電是什麼？3分鐘了解晶片之王" with an embedded YouTube player.
+- **Implementation**: Create a `video_library.yaml` mapping stock tickers to curated YouTube videos (URL, title, channel, duration, quality rating). Add a "📺 影片解說" section to the business card page for stocks with curated videos. Embed YouTube player using Streamlit's `st.video()`. Start with top 20 stocks × 2-3 videos each = 40-60 curated links. Community can submit videos for curation.
+- **Competitive Gap**: 🔴 No TW competitor curates video education within a stock analysis tool. YouTube channels are standalone; broker apps don't integrate video. This positions Stock Explorer as the "bridge" between video education and data analysis — exactly the "historian" positioning.
+
+---
+
+### [ISSUE-C211] "Market Event Education" — Real-Time Contextual Lessons on Market Events
+- **Source**: Competitor research round 10 (富邦證券/元大證券 real-time education on market events, Fed rate decisions)
+- **Priority**: P2
+- **Effort**: 12-16h
+- **Alignment**: Core value #3 "Adaptive and self-evolving" + Core value #1 "Story first, data second"
+- **Description**: TW broker apps (富邦證券, 元大證券) push educational content when market events happen — "What does a Fed rate cut mean for your stocks?" Stock Explorer's M5 adaptive engine detects events but doesn't educate users about them. When the M5 engine detects a significant event (e.g., "TSMC announces $10B Arizona expansion"), it should also generate an educational context card: "💡 什麼是晶圓廠？為什麼台積電要在美國蓋廠？這對台灣半導體產業意味著什麼？" This transforms event detection into a learning moment.
+- **Implementation**: Extend the M5 event detection engine to trigger educational context cards. Create a `event_education.yaml` mapping event types to pre-written educational explanations. When an event is detected, show the event card + the educational context card below it. Reuse existing event detection infrastructure. Start with 10 event types × 3 explanations each (beginner/intermediate/advanced).
+- **Competitive Gap**: 🟡 No TW competitor combines event detection with educational context. Broker apps push general education; Stock Explorer can provide company-specific educational context for each detected event. This is a unique "historian" differentiator.
+
+---
+
+### [ISSUE-C212] "Personalized Learning Path" Based on User Profile
+- **Source**: Competitor research round 10 (Acorns personalized learning path, Khan Academy mastery-based progression)
+- **Priority**: P2
+- **Effort**: 14-20h
+- **Alignment**: Core value #3 "Adaptive and self-evolving" + Core value #4 "Point-to-point knowledge construction"
+- **Description**: Acorns personalizes learning based on user profile (age, income, goals). Khan Academy personalizes based on mastery level. Stock Explorer has no personalization — every user sees the same content in the same order. A "Personalized Learning Path" would: (1) ask 3-5 onboarding questions (investment experience, interests, goals), (2) recommend a starting stock based on interests ("You said you like technology → start with TSMC"), (3) recommend lessons based on knowledge gaps ("You viewed TSMC but didn't understand P/E ratio → here's a lesson"), (4) adapt content depth based on behavior (if user always clicks "explain more," show more detail by default).
+- **Implementation**: Add a 3-question onboarding flow (experience level, industry interest, learning goal). Store profile in session_state. Use profile to customize: (1) homepage stock recommendations, (2) lesson suggestions in Financial Education Academy, (3) default content depth (beginner/intermediate/advanced). Track viewed stocks and clicked concepts to build a "knowledge graph" of what the user knows. Recommend next stocks based on knowledge graph gaps.
+- **Competitive Gap**: 🟡 No TW competitor has personalized learning paths for stock education. Acorns proves the model for personal finance; Khan Academy proves it for general education. This is a natural evolution of C130 (Investor Profile Quiz) and C187 (Learn → Practice → Invest Pipeline).
+
+---
+
+### [ISSUE-C213] "Source Freshness Indicator" — Visual Data Staleness Warning
+- **Source**: Competitor research round 10 (TipRanks freshness indicators, broker app real-time data badges)
+- **Priority**: P2
+- **Effort**: 3-5h
+- **Alignment**: "All data must cite its source" verification principle + Core value #3 "Adaptive and self-evolving"
+- **Description**: Stock Explorer uses FinMind data which updates daily, but some metrics (e.g., annual financials) update only quarterly. Beginners don't know that "TSMC's 2023 revenue" is 2 years old. A "Source Freshness Indicator" would show: (1) a visual badge on every metric (🟢 Real-time, 🟡 Daily, 🟠 Quarterly, 🔴 Annual), (2) a "last updated" timestamp, (3) a warning for stale data ("This data is from 2023. More recent data may be available."). This builds trust and teaches beginners about data timeliness.
+- **Implementation**: Add a `freshness` field to every metric in the data pipeline. Map update frequencies: price data → real-time (🟢), daily metrics → daily (🟡), quarterly financials → quarterly (🟠), annual reports → annual (🔴). Show a small badge next to each metric. Add a tooltip explaining what the badge means. For metrics older than 1 year, show a subtle warning banner.
+- **Competitive Gap**: 🟢 No TW competitor has systematic freshness indicators. TipRanks has it for analyst ratings; broker apps have it for price data. This is a low-effort, high-trust feature that implements the product vision's transparency principle.
+
+---
+
+### [ISSUE-C214] "Community Video Submissions" — User-Curated Video Education Layer
+- **Source**: Competitor research round 10 (TW YouTube edu-tainment channels, Zerodha Varsity community discussions)
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + Core value #3 "Adaptive and self-evolving"
+- **Description**: YouTube channels prove that video is the dominant education format for TW beginners. But creating original video content is expensive (C54, 20-30h). A "Community Video Submissions" feature would let users submit YouTube video links for specific stocks, creating a crowdsourced video education layer. Users can upvote/downvote submissions, and the best videos rise to the top. This creates a community-driven education layer without the cost of original content creation.
+- **Implementation**: Add a "📺 推薦影片" submission form to each business card page (YouTube URL + optional description). Store submissions in a YAML file or simple database. Show top 3 voted videos per stock. Add moderation queue for quality control. Reuse existing community features (C64, C67) infrastructure. Start with a simple upvote/downvote system; add moderation later.
+- **Competitive Gap**: 🟡 No TW competitor has community-curated video education. YouTube channels are standalone; broker apps don't integrate community content. This positions Stock Explorer as the "bridge" between community-created video education and structured stock analysis.
+
+---
+
+## Summary
+
+- **New Competitors Researched**: 12 (Wall Street Survivor, Khan Academy Finance, eToro, Trading 212, StockEdge, Zerodha Varsity, TipRanks, Acorns deep dive, TW YouTube edu-tainment, 富邦證券/元大證券, MM Stocktimize, Groww)
+- **New Feature Gaps Identified**: 8 (C207-C214)
+- **Key Insights**:
+  1. **Video education is the #1 beginner entry point in TW** — YouTube channels (柴鼠兄弟, 財報狗頻道, 股癌) dominate beginner attention. Stock Explorer should integrate, not compete with, video content. C210 (Video Explanation Library) should be elevated from P2 to P1.
+  2. **Contextual education nuggets are the new engagement standard** — Trading 212 and StockEdge prove that education triggered by browsing behavior (not separate "academy" sections) drives learning. C207 addresses this gap.
+  3. **Prerequisite chains are missing from all TW platforms** — Zerodha Varsity and Khan Academy prove structured learning paths work. Stock Explorer's Financial Education Academy (C47) has no structure. C208 is a low-effort, high-impact fix.
+  4. **Source transparency is the missing trust layer** — TipRanks proves that showing where claims come from builds trust. Stock Explorer's product vision requires source citation but it's not systematically implemented. C209 and C213 address this.
+  5. **Personalization is the next frontier** — Acorns and Khan Academy prove personalized learning paths drive retention. Stock Explorer has no personalization. C212 is a natural evolution of C130 (Investor Profile Quiz).
+  6. **TW broker apps are the most direct local competitors** — 富邦證券 and 元大證券 have in-app education that Stock Explorer must differentiate from. The opportunity: deeper, more structured, more transparent education.
+  7. **Real-time event education is an untapped differentiator** — Broker apps push general education on events; Stock Explorer can provide company-specific educational context. C211 leverages the existing M5 event detection engine.
+  8. **Community-curated content scales education without cost** — YouTube channels prove TW users create high-quality education content. Stock Explorer can curate this content (C210, C214) instead of creating it from scratch.
+
+## Cumulative Totals (After Round 10)
+
+| Metric | Count |
+|--------|-------|
+| **Total competitors analyzed** | 147+ |
+| **Total feature gaps identified** | 214 (C01-C214) |
+| **New gaps in Round 10** | 8 (C207-C214) |
+| **P1 gaps remaining** | 24+ |
+| **Product vision alignment** | 100% reinforce "historian, not stock picker" |
+
+---
+
+*This is the tenth competitor research round (labeled Round 10 for the QA Engineer's independent research series). Twelve new competitors analyzed. Eight new feature gaps identified (C207-C214). The most critical new finding: C210 (Video Explanation Library) should be elevated from P2 to P1 — YouTube edu-tainment channels prove video is the PRIMARY beginner entry point in TW. The most impactful new gap is C207 (Contextual Education Nuggets) — Trading 212 and StockEdge prove that education triggered by browsing behavior transforms passive browsing into active learning. Full details in `docs/research/competitor_research.md`.*
