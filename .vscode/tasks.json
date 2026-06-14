@@ -6,17 +6,20 @@
         {
             "label": "Ensure virtual environment",
             "type": "shell",
-            "command": "python -c \"import sys; print('Running in venv' if sys.prefix != sys.base_prefix else sys.exit(1))\"",
+            "command": "python3 -c \"import sys; print('Running in venv' if sys.prefix != sys.base_prefix else sys.exit(1))\"",
+            "windows": {
+                "command": "python -c \"import sys; print('Running in venv' if sys.prefix != sys.base_prefix else sys.exit(1))\""
+            },
             "detail": "Verify that the Python execution is inside a virtual environment before running Streamlit.",
             "problemMatcher": []
         },
         {
             "label": "Run Streamlit App",
             "type": "shell",
-            "command": "./.venv/Scripts/python",
-            "args": [
-                "run.py"
-            ],
+            "command": "bash scripts/run.sh",
+            "windows": {
+                "command": "bash scripts/run.sh"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true

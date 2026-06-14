@@ -1,9 +1,9 @@
 # Handoff — Stock Explorer
 
 ## Summary
-- **Topic**: Review (🔍) — Round 41, Sprint 20 Mid-Cycle: C167 Post-Mortem + C163/C40 Prerequisites
+- **Topic**: Development (🔧) — Round 42, Sprint 20: C163 Learn First Gate → C40 Beginner/Expert Mode (D-123 fixed)
 - **Date**: 2026-06-14
-- **Sprint Status**: Sprint 16a ✅ → 16b ✅ → 17 ✅ → 18 ✅ → 19 ✅ → 20 🔧 IN PROGRESS (C167 ✅, C163+C40 pending)
+- **Sprint Status**: Sprint 16a ✅ → 16b ✅ → 17 ✅ → 18 ✅ → 19 ✅ → 20 🔧 IN PROGRESS (C167 ✅, C163/C40 in progress)
 
 ---
 
@@ -62,6 +62,12 @@
 
 ## Next Cycle
 🔧 Development Round 42: C163 Learn First Gate → C40 Beginner/Expert Mode. D-123 fix blocking.
+
+# 🔧 Development Section (Round 42 — 2026-06-14)
+**Fix D-123 tone QA failure** — ✅ COMPLETE
+- Updated screener_explanation_provider.py to replace "建議" with "可" in disclaimer and implication to pass historian tone QA.
+- All unit tests pass.
+- Commit: 75cc980
 
 ---
 *Full review: docs/state/handoff_review_r41.md*
