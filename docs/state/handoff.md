@@ -1,8 +1,55 @@
-# Handoff – Review
+# Handoff – Development
 ## Summary
-- **Topic**: Review (🔍) — Round 40, Sprint 19 Post-Mortem + Sprint 20 Prerequisites
-- **Date**: 2026-06-14 (Review Round 40 completed)
-- **Sprint Status**: Sprint 16a ✅ → Sprint 16b ✅ → Sprint 17 ✅ → Sprint 18 ✅ → Sprint 19 ✅ → Sprint 20 📋 PLANNED
+- **Topic**: Development (🔧) — Round 41, Sprint 20 Day 1: C167 AI Screener Explanations
+- **Date**: 2026-06-14 (Development Round 41 completed)
+- **Sprint Status**: Sprint 16a ✅ → Sprint 16b ✅ → Sprint 17 ✅ → Sprint 18 ✅ → Sprint 19 ✅ → Sprint 20 🔧 IN PROGRESS (Day 1)
+
+---
+
+# 🔧 Development Section (Round 41 — 2026-06-14)
+**Theme**: Sprint 20 Day 1 — C167 AI Screener Explanations
+
+## Participants
+Product Manager, Developer (openrouter/owl-alpha)
+
+## Completed Items
+| Issue ID | Description | Owner | Result | Commit |
+|----------|-------------|-------|--------|--------|
+| C167 | AI Screener Explanations — Plain-language screener with historian-framed narratives | Developer | ✅ `ScreenerExplanationProvider` (357 lines) implementing `ExplanationProvider` protocol; `screener_templates.yaml` (45 lines); `stock_screener.py` updated with explanation cards; 27 unit tests. Historian tone enforced with mandatory disclaimer. L0: 125/125 (2 pre-existing quiz_service.py) ✅ | `7020d1c` |
+
+## Sprint 20 Progress
+| Order | Task | Estimate | Actual | Status |
+|-------|------|----------|--------|--------|
+| 1 | C167 AI Screener Explanations | 12-16h | ~14h | ✅ DONE |
+| 2 | C163 Learn First Gate | 10-14h | — | ⏳ Next |
+| 3 | C40 Beginner/Expert Mode Toggle | 8-12h | — | ⏳ Pending |
+| — | C152 swap evaluation | — | — | ⏳ Pending C152 spike quality review |
+
+## Architecture Decisions
+- **ScreenerExplanationProvider**: Follows exact pattern of DeltaExplanationProvider — composition with TemplateExplanationProvider, uses ExplanationRequest/ExplanationResponse protocol. Zero Streamlit imports.
+- **YAML-backed templates**: screener_templates.yaml contains thresholds and disclaimer text. Easy to extend with new presets.
+- **Historian tone**: All templates use past tense, factual language. Blocklist-verified (建議, 應該, 買, 賣, 推薦, 進場, 出場, etc.). Mandatory disclaimer on every explanation.
+- **No inline HTML**: Explanation cards use _summary_card from _router_base.py. Zero new inline HTML.
+
+## Verification
+- **L0**: 125 passed, 2 failed (pre-existing quiz_service.py streamlit import — unchanged)
+- **Unit tests**: 27/27 passed ✅
+- **Commit**: `7020d1c`
+
+## Feature Pipeline (Updated)
+| Sprint | Features | Effort | Status |
+|--------|----------|--------|--------|
+| Sprint 19 | C147+C140+D-113+D-114 | 30-44h | ✅ COMPLETE |
+| Sprint 20 | C167+C163+C40 (+ C152 swap condition) | 30-42h | 🔧 IN PROGRESS (1/3 done) |
+| Sprint 21 | C152 (if not swapped) + enhancements | TBD | 🔮 Future |
+
+## Next Cycle
+🔧 Development Round 42: Continue Sprint 20 with C163 Learn First Gate (10-14h), then C40 Beginner/Expert Mode Toggle (8-12h). D-120 benchmark duplication extraction recommended as infrastructure work before C40.
+
+---
+
+# 🔧 Development Section (Round 40 — 2026-06-14)
+**Theme**: Sprint 19 Execution — D-113, D-114, C147, C140
 
 ---
 
