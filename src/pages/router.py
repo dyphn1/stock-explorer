@@ -47,6 +47,7 @@ from src.services.adaptive_engine import (
 from src.services.watchlist import _is_etf as _is_etf_check
 from src.pages.investor_story_feed import render_investor_story_feed
 from src.pages.academy import _render_academy
+from src.pages.case_study_library import _render_case_study_library
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +61,7 @@ def get_client():
 
 def _render_navbar_minimal(current_page: str):
     """精簡導航列：僅分頁標籤（用於非股票頁面）"""
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "歷史案例庫", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較"]
     current_idx = pages.index(current_page) if current_page in pages else 0
 
     selected = st.radio(
@@ -141,6 +142,11 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         _render_navbar_minimal(page)
         with st.spinner("載入學習學院..."):
             _render_academy(client)
+        return
+    if page == "歷史案例庫":
+        _render_navbar_minimal(page)
+        with st.spinner("載入歷史案例庫..."):
+            _render_case_study_library(client)
         return
     if page == "股票探索":
         _render_navbar_minimal(page)
@@ -250,7 +256,7 @@ def _render_navbar(data: dict, current_page: str):
             st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
 
     # 分頁標籤
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "歷史案例庫", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較"]
     current_idx = pages.index(current_page) if current_page in pages else 0
 
     selected = st.radio(
