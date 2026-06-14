@@ -2,15 +2,18 @@
 
 This module is now a backward-compatible re-export shim.
 All functions have been split into sub-modules under _sections/:
-  _summary  — header, story_card, takeaways, one_liner, news
+  _summary_hero — header, story_card
+  _summary  — takeaways, one_liner, news
   _financial — key_metrics, dividend, revenue_breakdown, revenue_trend, valuation
   _health   — health, risk
   _story    — deltas, compare_stories, read_next
   _detail   — share_section, footer
 """
-from src.pages.business_card._sections._summary import (  # noqa: F401,F403
+from src.pages.business_card._sections._summary_hero import (  # noqa: F401,F403
     _render_header,
     _render_story_card,
+)
+from src.pages.business_card._sections._summary import (  # noqa: F401,F403
     _render_takeaways,
     _render_one_liner,
     _render_news,

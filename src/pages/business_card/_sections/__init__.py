@@ -1,8 +1,10 @@
 """Business card sections — split into sub-modules by concern."""
 
-from src.pages.business_card._sections._summary import (
+from src.pages.business_card._sections._summary_hero import (
     _render_header,
     _render_story_card,
+)
+from src.pages.business_card._sections._summary import (
     _render_takeaways,
     _render_one_liner,
     _render_news,
