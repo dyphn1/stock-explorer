@@ -1,8 +1,8 @@
 # Handoff – Review
 ## Summary
-- **Topic**: Review (🔍) — Round 39, Sprint 18 Post-Mortem + Sprint 19 Prerequisites
-- **Date**: 2026-06-14 (Review Round 39 completed)
-- **Sprint Status**: Sprint 16a ✅ → Sprint 16b ✅ → Sprint 17 ✅ → Sprint 18 ✅ → Sprint 19 🔧 IN PROGRESS
+- **Topic**: Review (🔍) — Round 40, Sprint 19 Post-Mortem + Sprint 20 Prerequisites
+- **Date**: 2026-06-14 (Review Round 40 completed)
+- **Sprint Status**: Sprint 16a ✅ → Sprint 16b ✅ → Sprint 17 ✅ → Sprint 18 ✅ → Sprint 19 ✅ → Sprint 20 📋 PLANNED
 
 ---
 
@@ -1048,3 +1048,135 @@ Full review artifacts:
 - docs/research/review39_design.md
 - docs/research/review39_qa.md
 - docs/research/review39_challenger.md
+
+---
+
+# 🔍 Review Section (Round 40 — 2026-06-14)
+**Theme**: Review Round 40 — Sprint 19 Post-Mortem + Sprint 20 Prerequisites
+
+## Participants
+Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
+
+## Key Metrics
+- **Architecture**: 🟢 HEALTHY — 44 service modules, 0 god modules, 91% under 300 lines, 100% Streamlit-free
+- **Design**: A (7th consecutive A since R34)
+- **L0**: 124/124 ✅ (2 pre-existing quiz_service.py) | **Tests**: 249+ passed
+- **Sprint 19 Cost**: 30-44h budget, ~31h actual (5/6 complete, C152 deferred)
+- **New Feature Gaps**: 6 (C170-C175), 1 P1 + 1 P2 + 4 nice-to-haves
+- **New Debt Items**: 4 (D-117 through D-120), 1 Medium + 3 Low
+- **Inline HTML**: 0 new regressions (D-114 confirmed clean)
+
+## Sprint 19 Debt Verification
+| ID | Description | Status |
+|----|-------------|--------|
+| D-113 | metric_explainer untested | ✅ RESOLVED — 44 tests in test_metric_explainer.py |
+| D-114 | _health.py unsafe_allow_html | ✅ RESOLVED — 0 instances remaining |
+
+## New Debt Items (D-117 through D-120)
+| ID | Description | Severity | Effort |
+|----|-------------|----------|--------|
+| D-117 | events.yaml survivorship bias (27/29 events positive) | Low | 2-3h content |
+| D-118 | case_study_library.yaml missing severity field | Low | 0.5h |
+| D-119 | pattern_detector.py redundant event_type field | Low | 0.25h (no action needed) |
+| D-120 | INDUSTRY_BENCHMARKS dict triplicated across 3 files | Medium | 1-2h |
+
+## New Feature Gaps (C170-C175)
+| ID | Feature | Priority | Effort | Source |
+|----|---------|----------|--------|--------|
+| C170 | Tappable Glossary (elevated from C33) | P1 | 6-10h | StockStory, FinChat, Finimize |
+| C171 | Valuation Band Chart (P/E historical range) | P2 | 8-10h | StockStory, 財報狗 |
+| C172 | Concept Comparison Tool | P2 | 10-14h | Magnify.money |
+| C173 | Visual Financial Calculators | P2 | 12-16h | Magnify.money |
+| C174 | Sector-Level Storytelling | P2 | 14-20h | Smallcase |
+| C175 | Learn First Soft Gate | — | — | DUPLICATE of C163, removed |
+
+## Gaps Closed by Sprint 19
+| Feature | Closed By | Competitors Who Had It |
+|---------|-----------|----------------------|
+| Historical Event Patterns | C147 | StockStory, Spiking |
+| Case Study Library | C140 | Morningstar, 財報狗 (partial) |
+| Metric Explanation Tests | D-113 | Enables C56 faster |
+| Inline HTML Enforcement | D-114 | Design system compliance |
+
+## Sprint 20 Readiness Assessment
+| Prerequisite | Status | Action |
+|-------------|--------|--------|
+| D-118 (severity field) | 🟢 Quick fix | Day 1 — 0.5h |
+| D-120 (INDUSTRY_BENCHMARKS YAML) | 🟢 Quick fix | Day 1 — 1-2h |
+| Shared "beginner experience spec" | 🔴 REQUIRED | Before C163/C40 implementation |
+| C163 replaces first_visit_guide.py | 🔴 REQUIRED | Consolidate, don't coexist |
+| C167 historian tone templates | 🟡 Recommended | PM writes during Sprint 19 remaining time |
+| L0/L1/Tests | ✅ PASSING | 249+ passed |
+| Architecture | 🟢 HEALTHY | No blockers |
+| Design | ✅ Grade A | No blockers |
+
+**Verdict**: ✅ READY with 2 prerequisites (beginner spec + C163 replaces C103)
+
+## 🔥 Three-Round Challenge (Round 40)
+**Challenger**: ✅ CONFIRMED with 5 conditions
+
+### Round 1: Gap Authenticity
+- C170 confirmed authentic P1 (4/5 new competitors have it)
+- C171 confirmed authentic P2
+- C172-C174 are nice-to-haves, not gaps
+- C175 is duplicate of C163 — removed
+- C167 confirmed authentic (screener exists, needs narrative layer)
+- C163 confirmed authentic (gate ≠ library, but must REPLACE C103)
+- D-120 confirmed worth doing as Day 1 infrastructure
+
+### Round 2: Priority
+- C170 as standalone 4th item: NOT realistic (36-52h exceeds budget)
+- C170 integrated into C40: Realistic (32-46h with integration savings)
+- C152 swap condition: VOID — spike deferred, no artifacts
+- D-118 + D-120: Day 1 infrastructure cleanup (1.5h total)
+
+### Round 3: Goal Alignment
+- C167 does NOT contradict historian positioning (requires tone management)
+- C163 does NOT create barriers if designed as soft gate with dismiss
+- C40 is NOT just a toggle — needs per-section design spec
+- Top 3 risks: (1) Content bottleneck, (2) C40/C163 integration, (3) C167 tone drift
+
+### 5 Challenger Conditions
+1. Remove C152 swap condition (void — spike deferred, no artifacts)
+2. Integrate C170 into C40 (not standalone 4th feature)
+3. Write shared "beginner experience spec" before C163/C40 implementation
+4. C163 must REPLACE first_visit_guide.py (not coexist)
+5. Do D-118 + D-120 as Day 1 infrastructure cleanup
+
+## Sprint 20 Final Plan (Post-Challenge)
+| Order | Task | Estimate |
+|-------|------|----------|
+| 1 | D-118 + D-120 infrastructure cleanup | 1.5h |
+| 2 | Shared "beginner experience spec" | 1-2h |
+| 3 | C167: AI Screener Explanations | 12-16h |
+| 4 | C163: Learn First Gate (replaces C103) | 10-14h |
+| 5 | C40: Beginner/Expert Mode (includes C170) | 10-16h |
+| | **Total** | **34.5-50.5h (midpoint: 42.5h)** |
+
+## Feature Pipeline (Updated)
+| Sprint | Features | Effort | Status |
+|--------|----------|--------|--------|
+| Sprint 19 | C147+C140+D-113+D-114 | 30-44h | ✅ COMPLETE |
+| Sprint 20 | C167+C163+C40(+C170) | 34.5-50.5h | 📋 Planned |
+| Sprint 21 | C152 (new spike) + C171 + C174 | TBD | 🔮 Future |
+
+## Action Items
+| Item ID | Description | Owner | Priority |
+|---------|-------------|-------|----------|
+| R40-DEV1 | D-118 + D-120 infrastructure cleanup | Developer | 🟢 Day 1 |
+| R40-DEV2 | Write shared "beginner experience spec" | PM + Designer | 🔴 Prerequisite |
+| R40-DEV3 | Implement C167 AI Screener Explanations | Developer | 🔴 P1 |
+| R40-DEV4 | Implement C163 Learn First Gate (replace C103) | Developer | 🔴 P1 |
+| R40-DEV5 | Implement C40 + C170 integrated | Developer | 🟡 P2 |
+| R40-DES1 | Document _so_what_box() in design system | Designer | 🟢 Quick win |
+| R40-QA1 | C167 templates must pass tone QA | QA | 🔴 Required |
+| R40-FEAT1 | Plan C152 new spike for Sprint 21 | PM/Architect | 🟡 P2 |
+
+## Next Cycle
+🔧 Development Round 41: Sprint 20 execution — C167 + C163 + C40 (+ C170 integrated). Beginner experience spec is hard prerequisite.
+
+Full review artifacts:
+- docs/research/review40_architect.md
+- docs/research/review40_design.md
+- docs/research/review40_qa.md
+- docs/research/review40_challenger.md

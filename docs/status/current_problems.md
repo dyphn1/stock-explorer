@@ -1,7 +1,7 @@
 # Stock Explorer — Current Problems
 
 > **Last Updated**: 2026-06-14
-> **Source**: Design Review Round 38 (2026-06-14, after C14/C134/C07 feature review)
+> **Source**: Design Review Round 40 (2026-06-14, after C147/C140/D-113/D-114 feature review)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
@@ -23,6 +23,42 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 - **Affected Files**: `src/pages/business_card/_sections/_summary.py` lines 183-288, `src/pages/business_card/_sections/_health.py` lines 46-163
 - **Proposed Fix**: Extract benchmark health score fetching into a shared service function (e.g., `health_scoring.get_benchmark_scores(client, industry, stock_id)`). Both `_health.py` and `_summary.py` call this function. This also resolves D-106 (architecture debt).
 - **Effort**: 1-2h
+
+### D-117: `_health.py` Uses Raw `st.markdown("### 🏥 公司健康狀況")` Instead of `_section_title()`
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 40
+- **Description**: `_render_health()` at line 184 uses `st.markdown("### 🏥 公司健康狀況")` instead of `_section_title("🏥 公司健康狀況")`. This is the only section header in `_health.py` and it bypasses the `_section_title()` helper's emoji auto-detection and consistent formatting. While the result looks identical, it creates an inconsistency with the rest of the codebase.
+- **Affected Files**: `src/pages/business_card/_sections/_health.py` line 184
+- **Proposed Fix**: Replace with `_section_title("🏥 公司健康狀況")`.
+- **Effort**: <0.25h
+
+### D-118: `_historical_pattern.py` Uses `_info_card()` with Empty Title
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 40
+- **Description**: The event match cards in `_render_historical_pattern()` (line 54) call `_info_card("", card_content, direction_emoji)` with an empty title string. This renders the card with an empty title div. While visually acceptable, it's a semantic misuse of `_info_card()` which expects a non-empty title.
+- **Affected Files**: `src/pages/business_card/_sections/_historical_pattern.py` line 54
+- **Proposed Fix**: Either (a) pass the match date as the title, or (b) create a dedicated `_event_match_card()` helper.
+- **Effort**: 0.25-0.5h
+
+### D-119: `_so_what_box()` Component Not Documented in Design System
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 40
+- **Description**: The `_so_what_box()` component in `_router_base.py` (lines 184-216) is a new "So What?" implication callout box introduced in Sprint 18 (C149). It uses a distinct visual style (`background:#F0F7FF`, `border-left:4px solid #2980B9`) that differs from all other card types. It is not documented in the design system.
+- **Affected Files**: `src/pages/_router_base.py` lines 184-216
+- **Proposed Fix**: Document in `docs/design/design_system.md` as a new "Implication Callout" card variant.
+- **Effort**: 0.25h
+
+### D-120: Benchmark Logic Duplication Escalation (from D-109)
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 40
+- **Description**: D-109 identified benchmark duplication. Round 40 confirms the duplication has grown — `_summary.py` now has 107 lines of benchmark logic (lines 188-294) vs `_health.py`'s 117 lines (46-163). Additionally, `INDUSTRY_BENCHMARKS` dict is triplicated across `_summary.py`, `_health.py`, and `peer_comparison.py`. Extraction to a shared service + YAML is now the recommended fix.
+- **Affected Files**: `_summary.py` lines 188-294, `_health.py` lines 46-163, `peer_comparison.py`
+- **Proposed Fix**: (1) Extract `INDUSTRY_BENCHMARKS` to `src/data/industry_benchmarks.yaml`. (2) Extract benchmark health score fetching to `health_scoring.get_benchmark_scores()`. Do as Day 1 Sprint 20 infrastructure.
+- **Effort**: 1.5-2.5h
 
 ---
 
