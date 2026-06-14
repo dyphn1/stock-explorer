@@ -54,5 +54,5 @@ def _render_historical_pattern(data: dict, client) -> None:
             _info_card("", card_content, direction_emoji)
 
     # 歷史免責聲明
-    st.caption("⚠️ 歷史表現不代表未來結果。本工具僅供認識公司使用，不構成任何投資建議。")
+    st.caption("⚠️ 歷史表現不代表未來結果。本工具僅供認識公司使用，不構成投資決策的依據。")
     st.markdown("---")

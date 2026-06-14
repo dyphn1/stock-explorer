@@ -88,7 +88,7 @@ def _render_case_study_library(client: FinMindClient) -> None:
     # Historian positioning
     _info_card(
         "我們的定位：歷史學家，不是投資顧問",
-        "這些案例研究是在解釋「發生了什麼事」和「為什麼」，不是在告訴你「該買什麼」。"
+        "「這些案例研究是在解釋「發生了什麼事」和「為什麼」，不是在提供投資操作建議。」"
         "投資決策每個人都不同，過去的經驗不代表未來的結果。",
         icon="📖",
     )

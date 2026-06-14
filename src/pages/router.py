@@ -38,6 +38,7 @@ from src.pages.market_event_case_study import _render_market_event_case_study
 from src.pages.stock_screener import _render_stock_screener
 from src.pages.notification_center import _render_notification_center
 from src.pages.first_visit_guide import _render_first_visit_guide
+from src.pages.learn_first_gate import _render_learn_first_gate
 from src.pages.company_timeline import render_company_timeline
 from src.pages.story_timeline import render_story_timeline_page
 from src.services.adaptive_engine import (
@@ -61,7 +62,7 @@ def get_client():
 
 def _render_navbar_minimal(current_page: str):
     """精簡導航列：僅分頁標籤（用於非股票頁面）"""
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "歷史案例庫", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "歷史案例庫", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較", "學習入門"]
     current_idx = pages.index(current_page) if current_page in pages else 0
 
     selected = st.radio(
@@ -152,6 +153,11 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         _render_navbar_minimal(page)
         with st.spinner("載入股票探索引擎..."):
             _render_stock_screener(client)
+        return
+    if page == "學習入門":
+        _render_navbar_minimal(page)
+        with st.spinner("載入學習入門..."):
+            _render_learn_first_gate(client)
         return
     if page == "新手導覽":
         _render_navbar_minimal(page)
@@ -256,7 +262,7 @@ def _render_navbar(data: dict, current_page: str):
             st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
 
     # 分頁標籤
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "歷史案例庫", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較"]
+    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "歷史案例庫", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較", "學習入門"]
     current_idx = pages.index(current_page) if current_page in pages else 0
 
     selected = st.radio(

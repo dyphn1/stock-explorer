@@ -13,69 +13,61 @@ Pure Python — no Streamlit imports.
 
 from __future__ import annotations
 
+import os
+
+import yaml
+
 from src.services.llm.base import ExplanationProvider, ExplanationRequest, ExplanationResponse
 from src.services.llm.template_provider import TemplateExplanationProvider
 
+
+# ── Config helpers ──────────────────────────────────────────────────
+
+def _config_dir() -> str:
+    """Return the absolute path to the src/data/ directory."""
+    return os.path.join(os.path.dirname(__file__), "..", "data")
+
+
+def _load_templates_from_yaml() -> dict:
+    """Load screener explanation templates from the YAML config file.
+
+    Returns a dict with the keys:
+        preset_explanations, custom_filter_explanations, thresholds, disclaimer.
+    """
+    yaml_path = os.path.join(_config_dir(), "screener_templates.yaml")
+    with open(yaml_path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+# ── Load templates from YAML ────────────────────────────────────────
+_yaml_data = _load_templates_from_yaml()
+
 # ── Historian tone disclaimer ──────────────────────────────────────
-_DISCLAIMER = "篩選結果僅供學習參考，不構成投資諮詢"
+_DISCLAIMER = _yaml_data.get("disclaimer", "篩選結果僅供學習參考，不構成投資諮詢")
 
 # ── Screener-specific explanation templates ────────────────────────
 # Each filter type maps to a set of explanation templates keyed by
 # the metric that triggered the match. Templates use historian tone:
 # past tense, factual, no prescriptive language.
+# Loaded from src/data/screener_templates.yaml (D-121).
 
-_DIVIDEND_TEMPLATES = {
-    "high_yield": (
-        "{stock_name} 殖利率為 {dividend_yield:.2f}%，"
-        "高於市場平均水準，顯示公司持續配發股利的能力"
-    ),
-    "stable": (
-        "{stock_name} 殖利率為 {dividend_yield:.2f}%，"
-        "波動幅度較小，屬相對穩定的收息標的"
-    ),
-}
+_preset_data = _yaml_data.get("preset_explanations", {})
+_custom_data = _yaml_data.get("custom_filter_explanations", {})
 
-_GROWTH_TEMPLATES = {
-    "strong": (
-        "{stock_name} 營收年增率達 {revenue_yoy:.1f}%，"
-        "顯示營收擴張速度優於同業平均水準"
-    ),
-    "moderate": (
-        "{stock_name} 營收年增率為 {revenue_yoy:.1f}%，"
-        "呈現溫和成長趨勢"
-    ),
-}
+_DIVIDEND_TEMPLATES: dict[str, str] = _preset_data.get("dividend", {})
+_GROWTH_TEMPLATES: dict[str, str] = _preset_data.get("growth", {})
+_VALUE_TEMPLATES: dict[str, str] = _preset_data.get("value", {})
 
-_VALUE_TEMPLATES = {
-    "deep_value": (
-        "{stock_name} 本益比為 {per:.1f}、淨值比為 {pbr:.2f}，"
-        "估值低於市場平均，市場對其評價相對保守"
-    ),
-    "moderate_value": (
-        "{stock_name} 本益比為 {per:.1f}、淨值比為 {pbr:.2f}，"
-        "估值處於合理範圍"
-    ),
-}
-
-_CUSTOM_FILTER_TEMPLATES = {
-    "revenue_positive": (
-        "{stock_name} 營收年增率為 {revenue_yoy:.1f}%，"
-        "營收較去年同期成長"
-    ),
-    "industry_match": (
-        "{stock_name} 屬於 {industry} 產業，符合所選產業分類"
-    ),
-    "per_range": (
-        "{stock_name} 本益比為 {per:.1f}，落在所選範圍內"
-    ),
-    "div_range": (
-        "{stock_name} 殖利率為 {dividend_yield:.2f}%，落在所選範圍內"
-    ),
+_CUSTOM_FILTER_TEMPLATES: dict[str, str] = {
+    "revenue_positive": _custom_data.get("revenue_positive", ""),
+    "industry_match": _custom_data.get("industry_match", ""),
+    "per_range": _custom_data.get("per_range", ""),
+    "div_range": _custom_data.get("div_range", ""),
 }
 
 # ── Fallback template ──────────────────────────────────────────────
-_FALLBACK_TEMPLATE = (
-    "{stock_name}（{stock_id}）符合所設篩選條件"
+_FALLBACK_TEMPLATE = _custom_data.get(
+    "fallback", "{stock_name}（{stock_id}）符合所設篩選條件"
 )
 
 

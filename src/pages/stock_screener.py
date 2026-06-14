@@ -10,7 +10,7 @@ import streamlit as st
 import pandas as pd
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
-from src.pages._router_base import _info_card, _summary_card, _section_title
+from src.pages._router_base import _info_card, _白话_card, _summary_card, _section_title
 from src.pages.business_card._helpers import _historian_disclaimer
 from src.services.stock_screener_service import (
     get_all_stocks_with_metrics,
@@ -100,60 +100,24 @@ def _render_beginner_mode(df: pd.DataFrame):
     preset = st.session_state.get("screener_preset", None)
 
     with col1:
-        is_selected = preset == "dividend"
-        border_color = "#27AE60" if is_selected else "#BDC3C7"
-        bg_color = "#E8F8F5" if is_selected else "#F8F9FA"
-        st.markdown(
-            f"""<div style="background:{bg_color};border-radius:12px;padding:1.2rem;
-            border:2px solid {border_color};text-align:center;cursor:pointer;">
-                <div style="font-size:2rem;">💰</div>
-                <div style="font-weight:600;color:#2C3E50;margin-top:0.5rem;">穩定收息</div>
-                <div style="font-size:0.8rem;color:#7F8C8D;margin-top:0.3rem;">
-                    殖利率 &gt; 3%<br>波動較小
-                </div>
-            </div>""",
-            unsafe_allow_html=True,
-        )
+        selected_marker = " ✅" if preset == "dividend" else ""
+        _info_card(f"💰 穩定收息{selected_marker}", "殖利率 > 3%，波動較小")
         if st.button("選擇", key="screener_preset_dividend", use_container_width=True):
             st.session_state["screener_preset"] = "dividend"
             preset = "dividend"
             st.rerun()
 
     with col2:
-        is_selected = preset == "growth"
-        border_color = "#3498DB" if is_selected else "#BDC3C7"
-        bg_color = "#EBF5FB" if is_selected else "#F8F9FA"
-        st.markdown(
-            f"""<div style="background:{bg_color};border-radius:12px;padding:1.2rem;
-            border:2px solid {border_color};text-align:center;cursor:pointer;">
-                <div style="font-size:2rem;">🚀</div>
-                <div style="font-weight:600;color:#2C3E50;margin-top:0.5rem;">成長潛力</div>
-                <div style="font-size:0.8rem;color:#7F8C8D;margin-top:0.3rem;">
-                    營收成長 &gt; 10%<br>具成長動能
-                </div>
-            </div>""",
-            unsafe_allow_html=True,
-        )
+        selected_marker = " ✅" if preset == "growth" else ""
+        _info_card(f"🚀 成長潛力{selected_marker}", "營收成長 > 10%，具成長動能")
         if st.button("選擇", key="screener_preset_growth", use_container_width=True):
             st.session_state["screener_preset"] = "growth"
             preset = "growth"
             st.rerun()
 
     with col3:
-        is_selected = preset == "value"
-        border_color = "#9B59B6" if is_selected else "#BDC3C7"
-        bg_color = "#F5EEF8" if is_selected else "#F8F9FA"
-        st.markdown(
-            f"""<div style="background:{bg_color};border-radius:12px;padding:1.2rem;
-            border:2px solid {border_color};text-align:center;cursor:pointer;">
-                <div style="font-size:2rem;">💎</div>
-                <div style="font-weight:600;color:#2C3E50;margin-top:0.5rem;">便宜估值</div>
-                <div style="font-size:0.8rem;color:#7F8C8D;margin-top:0.3rem;">
-                    PER &lt; 15<br>PBR &lt; 2
-                </div>
-            </div>""",
-            unsafe_allow_html=True,
-        )
+        selected_marker = " ✅" if preset == "value" else ""
+        _info_card(f"💎 便宜估值{selected_marker}", "PER < 15，PBR < 2")
         if st.button("選擇", key="screener_preset_value", use_container_width=True):
             st.session_state["screener_preset"] = "value"
             preset = "value"
@@ -276,22 +240,11 @@ def _render_results(filtered_df: pd.DataFrame, preset: str | None = None, filter
                     resp = _screener_provider.explain(req)
                     explanation = resp.text
 
-                st.markdown(
-                    f"""<div style="background:#F8F9FA;border-radius:12px;
-                    padding:1rem;border-left:4px solid #3498DB;
-                    margin-bottom:0.5rem;">
-                        <div style="font-size:0.75rem;color:#7F8C8D;">
-                            {r['stock_id']} ｜ {r['industry']}
-                        </div>
-                        <div style="font-weight:600;color:#2C3E50;font-size:1.1rem;">
-                            {r['stock_name']}
-                        </div>
-                        <div style="font-size:0.85rem;color:#27AE60;font-weight:600;
-                        margin-top:0.3rem;">
-                            {r['key_metric']}
-                        </div>
-                    </div>""",
-                    unsafe_allow_html=True,
+                _summary_card(
+                    f"{r['stock_name']}  {r['stock_id']} ｜ {r['industry']}",
+                    r["key_metric"],
+                    icon="📈",
+                    border_color="#3498DB",
                 )
                 # Show explanation if available
                 if explanation:

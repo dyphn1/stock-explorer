@@ -33,9 +33,10 @@ from src.services.watchlist import (
     create_list,
     list_names,
 )
-from src.pages._router_base import _白话_card, _info_card, _summary_card
+from src.pages._router_base import _白话_card, _info_card, _summary_card, _beginner_banner
 from src.pages.url_sync import navigate_to
 from src.pages.revenue_tree import _render_revenue_tree
+from src.services.experience_service import is_beginner_mode, set_experience_level
 
 from src.pages.business_card._sections import (
     _render_header,
@@ -201,16 +202,20 @@ def _render_business_card(data: dict, client):
     # ── Section dispatch (always shown) ──
     _render_header(data, client)
 
-    # ── C105: Simple/Detailed toggle ──
-    # Default to simple mode (beginner-friendly)
+    # ── C40: Beginner/Expert mode toggle (replaces C105 simple toggle) ──
     _toggle_col1, _toggle_col2 = st.columns([3, 1])
     with _toggle_col2:
-        simple_mode = st.toggle("簡易模式", value=True, key="simple_mode_toggle")
-    st.session_state["simple_mode"] = simple_mode
-    if simple_mode:
-        st.caption("🔰 簡易模式：只顯示重點摘要，適合新手快速瀏覽")
+        _current_is_beginner = is_beginner_mode(st.session_state)
+        beginner_mode = st.toggle("新手模式", value=_current_is_beginner, key="user_experience_level_toggle")
+    # Persist the toggle into the experience level session state
+    _new_level = "beginner" if beginner_mode else "expert"
+    set_experience_level(st.session_state, _new_level)
+    st.session_state["simple_mode"] = beginner_mode
+    if beginner_mode:
+        _beginner_banner("新手模式：只顯示重點摘要，適合快速瀏覽。隨時可切換回進階模式。")
+        st.caption("🌱 新手模式")
     else:
-        st.caption("📖 詳細模式：顯示完整數據與深度分析")
+        st.caption("🔬 進階模式：顯示完整數據與深度分析")
 
     # ══════════════════════════════════════════════════════════
     # ABOVE-FOLD: The 3 most important sections (C37, C39, C43)
@@ -227,7 +232,7 @@ def _render_business_card(data: dict, client):
     _render_read_next(data, client)
 
     # C43: Health Snowflake
-    if simple_mode:
+    if beginner_mode:
         # Simple mode: show compact health summary
         _render_simple_overview(data, client)
     else:
@@ -248,7 +253,7 @@ def _render_business_card(data: dict, client):
         _render_study_log(data, client)
 
     # ── Detailed mode: full data sections in expanders ──
-    if not simple_mode:
+    if not beginner_mode:
         # 關鍵數字 + 配息 + 營收組成 + 營收趨勢 + 估值
         with st.expander("📊 關鍵數字與配息", expanded=False):
             _render_key_metrics(data, client)

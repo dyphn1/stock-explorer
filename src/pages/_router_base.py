@@ -351,3 +351,50 @@ def filter_by_timeline(
         return df
 
     return filtered_df
+
+
+# ── C163: Shared lesson mode components ─────────────────────────────
+
+def _lesson_card(title: str, content: str, icon: str = "📖", visual_area: str | None = None) -> None:
+    """Full-width lesson card with visual area and navigation."""
+    visual_html = ""
+    if visual_area:
+        visual_html = f'<div style="background:#EBF5FB;border-radius:8px;padding:1rem;margin-bottom:0.8rem;font-size:0.9rem;">{visual_area}</div>'
+    st.markdown(
+        f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin-bottom:1rem;">
+            <div style="font-size:1.1rem;font-weight:600;color:#2C3E50;margin-bottom:0.5rem;">{icon} {title}</div>
+            {visual_html}
+            <div style="font-size:0.9rem;color:#5D6D7E;line-height:1.6;">{content}</div>
+        </div>""",
+        unsafe_allow_html=True,
+    )
+
+
+def _progress_dots(current: int, total: int, active_color: str = "#27AE60", inactive_color: str = "#BDC3C7") -> None:
+    """Lesson progress dot indicators."""
+    dots = []
+    for i in range(total):
+        color = active_color if i == current else inactive_color
+        size = "12px" if i == current else "10px"
+        dots.append(f'<span style="display:inline-block;width:{size};height:{size};border-radius:50%;background:{color};margin:0 4px;"></span>')
+    st.markdown(
+        f'<div style="text-align:center;padding:0.5rem 0;">{"".join(dots)}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def _beginner_banner(message: str, icon: str = "🌱") -> None:
+    """In-page banner for beginner mode."""
+    st.markdown(
+        f"""<div style="background:#E8F8F5;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid #27AE60;margin-bottom:1rem;">
+            <span style="font-size:1.1rem;">{icon}</span>
+            <span style="font-size:0.9rem;color:#27AE60;margin-left:0.5rem;">{message}</span>
+        </div>""",
+        unsafe_allow_html=True,
+    )
+
+
+def _advanced_content_expander(title: str, content: str, icon: str = "🔬") -> None:
+    """Collapsible section for advanced content."""
+    with st.expander(f"{icon} {title}", expanded=False):
+        st.markdown(content)
