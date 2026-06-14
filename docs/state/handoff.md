@@ -1,8 +1,13 @@
-# Handoff – Development
+# Handoff – Review
 ## Summary
-- **Topic**: Development (🔧) — Round 38, Sprint 17
-- **Date**: 2026-06-14 (Development Round 38 completed)
+- **Topic**: Review (🔍) — Round 38, Sprint 17 Post-Mortem + Sprint 18 Prerequisites
+- **Date**: 2026-06-14 (Review Round 38 completed)
 - **Sprint Status**: Sprint 16a ✅ COMPLETE → Sprint 16b ✅ COMPLETE → Sprint 17 ✅ COMPLETE → Sprint 18 planned
+
+## Completed Items
+| Issue ID | Description | Owner | Result | Commit |
+|----------|-------------|-------|--------|--------|
+| R38-REV | Review Round 38 — Full review cycle with 4 sub-agents + 3-round challenge | PM | ✅ Architecture 🟢, Design A, 7 new gaps (C147-C153), 5 new debt (D-107-D-111), Challenger ✅ CONFIRMED with 6 conditions | — |
 
 ## Completed Items
 | Issue ID | Description | Owner | Result | Commit |
@@ -38,6 +43,124 @@
 
 ## Next Cycle
 💡 Discussion Round 38 Complete (Sprint 18: C139 + C141 + C143 + D-097 + Tone QA) → 🔍 Review Round 38 → 🔧 Development Round 39 (Sprint 18 execution)
+
+---
+
+# 🔍 Review Section (Round 38 — 2026-06-14)
+**Theme**: Review Round 38 — Sprint 17 Post-Mortem + Sprint 18 Prerequisites
+
+## Participants
+Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
+
+## Key Metrics
+- **Architecture**: 🟢 HEALTHY — 44 service modules, 0 god modules, 91% under 300 lines, 98% Streamlit-free
+- **Design**: A (5th consecutive A since R34)
+- **L0**: 118/118 ✅ | **L1**: 20/20 ✅ | **Tests**: 72 collected (2 D-074 filelock errors persist)
+- **Sprint 18 Cost**: 24-32h (with C149 stretch goal, with Tone QA)
+- **New Feature Gaps**: 7 (C147-C153), 2 P1 + 5 P2
+- **New Debt Items**: 5 (D-107 through D-111), 2 Medium + 3 Low
+- **Inline HTML**: 11 instances remaining (stable, CI enforcement active)
+
+## Sprint 17 Debt Verification
+| ID | Description | Status |
+|----|-------------|--------|
+| D-103 | delta_explanation_provider untested | ⏳ Pending — 179-line module, zero coverage |
+| D-104 | settings_service untested | ⏳ Pending — 16-line module |
+| D-105 | INDUSTRY_BENCHMARKS hardcoded in 2 files | ⏳ Pending — identical 30-entry dict |
+| D-106 | _fetch_benchmark_health_scores duplicated | ⚠️ Partial — _summary.py has ~100 lines inline |
+
+## New Debt Items (D-107 through D-111)
+| ID | Description | Severity | Effort |
+|----|-------------|----------|--------|
+| D-107 | _summary.py inline benchmark logic duplicates _fetch_benchmark_health_scores() | Medium | 1-2h |
+| D-108 | adaptive_engine.py doesn't import settings_service — wiring is router-only | Medium | 0.5h |
+| D-109 | chart_stock.py grew to 818 lines | Low | Monitor |
+| D-110 | _health.py has 2 unsafe_allow_html=True instances | Low | 0.5h |
+| D-111 | Dead code in delta_explanation_provider.py line 169 | Low | 0.1h |
+
+## New Feature Gaps (C147-C153)
+| ID | Feature | Priority | Effort | Source |
+|----|---------|----------|--------|--------|
+| C147 | Historical Event Pattern — "When This Happened Before" | P1 | 14-18h | Spiking, Quiver Quantitative |
+| C148 | Metric Context (reframed from "Judgment Transparency") | P2 | 8-12h | Kavout, FinChat |
+| C149 | "So What?" Implication Box — bundles with C143 | P2 | +2-3h | Stockstory, Spiking |
+| C150 | Implication Sentence Framing A/B Test | P2 | 6-10h | Inderes, FinChat |
+| C151 | Select-to-Explain — Click Any Data Point | P2 | 14-18h | OpenBB, FinChat |
+| C152 | Multi-Factor Event Narratives | P1 | 16-20h | Public.com, Spiking |
+| C153 | Company Financial Story | P2 | 12-16h | Copilot Money, FinChat |
+
+## Sprint 18 Readiness Assessment
+| Prerequisite | Status | Action |
+|-------------|--------|--------|
+| D-074 (filelock fix) | 🔴 PERSISTENT | Fix Day 1 — 0.25h |
+| D-103 (DeltaExplanationProvider tests) | 🟡 Recommended | Early Sprint 18 — 1.5h |
+| Template tone audit | 🔴 BLOCKING for C143 | Before C143 dev — 1.5h |
+| L0/L1 | ✅ PASSING | 118/118 + 20/20 |
+| Architecture | 🟢 HEALTHY | No blockers |
+| Design | ✅ Grade A | No blockers |
+
+**Verdict**: ✅ READY with 3 prerequisites
+
+## 🔥 Three-Round Challenge (Round 38)
+**Challenger**: ✅ CONFIRMED with 6 conditions
+
+### Round 1: Gap Authenticity
+- C147 confirmed authentic (with 2h spike prerequisite)
+- C152 confirmed authentic (with progressive disclosure design)
+- C149 confirmed authentic (bundles with C143, not deferred)
+- C148 reframed as "Metric Context" (factual, not judgment)
+
+### Round 2: Priority
+- Sprint 18 scope confirmed (Tone QA Automation deferrable if tight)
+- C149 included as stretch goal
+- C143 before C147 confirmed
+- Tone blocklist needs context-aware implementation
+
+### Round 3: Goal Alignment
+- Sprint 18 features are building blocks toward narrative (C152/C153)
+- Tone QA must be 3-layer (keyword + pattern + human review)
+- C147 must use strict historical framing with range-of-outcomes
+- ExplanationResponse protocol should support chaining
+
+### 6 Challenger Conditions
+1. C147 requires 2h feasibility spike before committing
+2. C149 bundles with C143 as stretch goal
+3. C148 reframes as "Metric Context" (factual comparisons)
+4. Tone QA is 3-layer: keyword + pattern + human review
+5. C147 uses strict historical framing (range of outcomes, past tense, disclaimer)
+6. Tone QA Automation (2.5h) is deferrable to Sprint 19
+
+## Sprint 18 Final Plan (Post-Challenge)
+| Order | Task | Estimate |
+|-------|------|----------|
+| 1 | D-074 filelock fix | 0.25h |
+| 2 | D-103 DeltaExplanationProvider tests | 1.5h |
+| 3 | D-097 Industry context threading | 1.5h |
+| 4 | Template audit + rewrite | 1.5h |
+| 5 | C139 + C141 Explain This Number + Source Badge | 10-13h |
+| 6 | C143 + C149 Implication Sentence + "So What?" Box | 9-12h |
+| 7 | Tone QA Automation | 2.5h (deferrable) |
+| | **Total** | **24-32h** |
+
+## Feature Pipeline (Updated)
+| Sprint | Features | Effort |
+|--------|----------|--------|
+| Sprint 18 | C139 + C141 + C143 + C149 + D-097 + Tone QA | 24-32h |
+| Sprint 19 | C147 (with 2h spike) + C152 spike + C140 content | 34-42h |
+| Sprint 20 | C152 + C142 + C146 | 33-43h |
+
+## Action Items
+| Item ID | Description | Owner | Priority |
+|---------|-------------|-------|----------|
+| R38-DEV1 | Fix D-074 filelock regression | Developer | 🔴 Day 1 |
+| R38-DEV2 | Add DeltaExplanationProvider tests (D-103) | Developer | 🟡 Early |
+| R38-DEV3 | Audit + rewrite templates for tone blocklist | Developer | 🔴 Blocking |
+| R38-DEV4 | Implement C139 + C141 | Developer | 🔴 P1 |
+| R38-DEV5 | Implement C143 + C149 | Developer | 🔴 P1 |
+| R38-DEV6 | Implement Tone QA automation | Developer | 🟡 P2 |
+| R38-DES1 | Fix D-108: Extract _feedback_box() | Developer | 🟢 Quick win |
+| R38-FEAT1 | Plan C147 spike for Sprint 19 | PM/Architect | 🔴 P1 |
+| R38-QA1 | C143 must pass 3-layer tone QA | QA | 🔴 Required |
 
 ---
 

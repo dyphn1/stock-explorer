@@ -91,3 +91,10 @@ C143: Stewardship / Management Quality Assessment | P2 | 10-14h | Story first + 
 C144: Beginner Curated Watchlists | P2 | 6-10h | Beginner-friendly + Ten-second test | source: competitor research round 11
 C145: Knowledge Points & Reading Progress | P2 | 8-12h | Point-to-point knowledge construction + Engagement | source: competitor research round 11
 C146: Emoji-Based Sentiment Indicators | P2 | 4-6h | Ten-second test + Beginner-friendly | source: competitor research round 11
+C147: "Historical Event Pattern" — "When This Happened Before, Here's What Followed" | P1 | 14-18h | Story first + Historian positioning + Ten-second test | source: competitor research round 12
+C148: "Metric Judgment Transparency" — Explain Why Something Is Labeled Good/Bad | P2 | 8-12h | Point-to-point knowledge construction + Ten-second test + Benchmark-oriented | source: competitor research round 12
+C149: "So What?" Implication Box — Dedicated Visual Implication UI Pattern | P2 | 10-14h | Story first + Ten-second test + PPT-style | source: competitor research round 12
+C150: "Implication Sentence Framing A/B Test" — Multiple Historian Framings | P2 | 6-10h | Story first + Historian positioning + Ten-second test | source: competitor research round 12
+C151: "Select-to-Explain" — Click Any Data Point for AI Explanation | P2 | 14-18h | Point-to-point knowledge construction + Ten-second test + Adaptive | source: competitor research round 12
+C152: "Multi-Factor Event Narratives" — One Story, All Factors Combined | P1 | 16-20h | Story first + Historian positioning + Adaptive | source: competitor research round 12
+C153: "Company Financial Story" — One Narrative for All Metric Changes | P2 | 12-16h | Story first + Ten-second test + Historian positioning | source: competitor research round 12

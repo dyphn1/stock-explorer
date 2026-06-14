@@ -4644,3 +4644,422 @@ No new feature gaps identified beyond C33 + C48 already in Sprint 13a plan.
 ---
 
 *This is the eleventh competitor research round (Round 28 in file sequence). Eight new competitors analyzed, eight new feature suggestions identified (C139-C146). The most impactful new gap is C139 ("Explain This Number") — Magnify.money proves that one-click metric explanation is the ultimate ten-second test feature. The most strategically important gap is C140 (Historical Case Study Library) — it makes the "historian, not stock picker" positioning tangible with curated historical narratives. The lowest-effort win is C146 (Emoji-Based Sentiment Indicators) at 4-6h. The most TW-relevant finding: 股感知識庫 dominates education but lacks structured progression — Stock Explorer can own the "structured historian education" niche.*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 12
+
+> **Date**: 2026-06-14
+> **Author**: QA Engineer (Round 12)
+> **Purpose**: Identify new competitors and feature gaps not covered in Rounds 1-11, focusing on AI-powered explanation tools and implication features
+> **Context**: Sprint 18 (C139 Explain This Number + C141 Source Badge + C143 Implication Sentence + D-097 + Tone QA). 146 feature gaps already identified (C01-C146). This round targets AI-first financial explanation tools and the rapidly evolving "implication sentence" feature space.
+> **Methodology**: Analysis of 2025-2026 AI-first fintech landscape. Cross-competitor synthesis from 100+ previously analyzed tools. Deep-dive on AI-powered explanation UX patterns, implication framing, and the emerging "Retool/Cursor for Finance" category. Focus on identifying C147+ gaps not in existing backlog.
+
+---
+
+## Executive Summary
+
+The 2025-2026 fintech landscape has undergone a fundamental shift: **AI-powered explanation is no longer a nice-to-have — it is the expected baseline for any financial data platform.** Tools like FinChat, Ticker.ai, Kavout, and Public.com have normalized the pattern of "every data point has a plain-language explanation." Yahoo Finance has integrated AI-powered summaries. Copilot Money has proven that narrative explanations of financial changes drive engagement. Spiking has shown that "Why Stock Moved" AI stories are the killer feature for Asian retail investors.
+
+Stock Explorer's Sprint 18 (C139 + C143) positions it at the forefront of this trend in the TW market. However, this research round identifies **7 new feature gaps (C147-C153)** that would extend Stock Explorer's lead, particularly in: (1) implication sentence depth, (2) "historical outcome tracking" narratives, (3) multi-metric story synthesis, and (4) "money behind the number" educational framing.
+
+**Key Finding**: The most important new gap is **C147 ("What This Means for You" — Personalized Implication Layer)**. While C143 (Implication Sentence) generates factual observations about what happened, C147 connects those observations to the user's specific learning goals. No TW competitor does this. Copilot Money's "Net Worth Story" and Ellevest's "Goal-Based Framing" both prove this pattern drives engagement, but no stock analysis platform has applied it to educational contexts.
+
+---
+
+## New Competitors Analyzed (Not Deeply Profiled in Rounds 1-11)
+
+| # | Competitor | Region | Type | Relevance | Previously Profiled? |
+|---|-----------|--------|------|-----------|---------------------|
+| 1 | **FinChat.io** | US/Global | AI Stock Analysis + Plain-Language Explanations | 🔴 High — AI-generated stock narratives with implication sentences | 🟡 Mentioned in R20 (Luca AI comparison) but never standalone profile |
+| 2 | **Kavout** | US/China | AI-Powered Investment Insights | 🟡 Medium — "K Score" with plain-language AI explanations | ❌ NEW (not in any round) |
+| 3 | **Stockstory** | US | Story-First Stock Analysis | 🟡 Medium — every stock has a narrative story arc | ❌ NEW (not in any round) |
+| 4 | **Edgestock** | Taiwan | AI-Powered TW Stock Analysis | 🔴 High — TW-native AI explanation tool | ❌ NEW (not in any round) |
+| 5 | **口袋證券 (Pocket Securities)** | Taiwan | Mobile-First TW Stock App | 🟡 Medium — plain-language metric explanations | ⚠️ 口袋美股 profiled in R11; 口袋證券 is a DIFFERENT product |
+| 6 | **Inderes.fi** | Nordic | AI Stock Analysis + Narratives | 🟡 Medium — AI-generated implication sentences | ❌ NEW (not in any round) |
+| 7 | **OpenBB Terminal** | US/Global | Open-Source AI Financial Analysis | 🟡 Medium — "explain this chart" AI feature | ❌ NEW (not in any round) |
+
+---
+
+## Deep-Dive: AI-Powered Explanation Tools
+
+### 1. FinChat.io — AI Stock Analyst with Implication Sentences
+
+**URL**: https://finchat.io
+**Positioning**: "Your AI Stock Analyst" — conversational AI that answers stock questions with data-backed narratives
+**Target Users**: US and global retail investors who want ChatGPT-like interaction with real financial data
+
+**Key Features Relevant to Stock Explorer**:
+
+| Feature | Description | C143/C139 Relevance |
+|---------|-------------|---------------------|
+| **"AI Stock Summary"** | FinChat generates a 3-5 sentence narrative summary for every stock — "TSMC is a semiconductor foundry leader with strong margins. Revenue has grown 15% YoY. The stock trades at 18x P/E, slightly above its 5-year average. Key risks include geopolitical tensions and capex cycles." | 🔴 Directly relevant to C143 implication sentences |
+| **"Why Did This Move?"** | Users can ask "Why did NVDA drop today?" and FinChat generates a multi-factor explanation combining news, sector trends, and options flow | 🔴 Validates C98 Event Interpretation + C107 Inline AI Explanations |
+| **"Compare Stocks" AI** | Side-by-side comparison with narrative: "TSMC vs UMC: TSMC has better margins (55% vs 30%) because of its leading-edge technology. UMC trades at a lower valuation because it lags in process technology." | 🟡 Validates C57 Compare Concepts + C137 Comparison Cards |
+| **"Metric Explanation"** | Users can ask "What does P/E ratio mean?" and FinChat explains with a real stock example | 🔴 Directly relevant to C139 Explain This Number |
+| **"Investment Thesis" AI** | AI generates a plain-language investment thesis: "The bull case for TSMC is AI demand. The bear case is China risk. The base case is steady growth." | 🟡 Relevant to C143 implication framing but from a different angle |
+
+**What FinChat Does That Stock Explorer Doesn't**:
+- **Conversational Q&A about any metric**: FinChat lets users ask natural language questions about any metric — "Is TSMC's P/E high?" → AI explains with context and comparison. Stock Explorer's C139 is one-click explanation but not conversational.
+- **Implication sentences in every summary**: FinChat's AI summaries include forward-looking implications — "The stock trades above its 5-year average P/E, suggesting the market expects continued growth." This is the exact pattern C143 targets but with more sophistication.
+- **Multi-factor synthesis**: FinChat combines 3-5 data points into a single narrative — not just "gross margin was 55%" but "gross margin improved from 52% to 55%, which is above the industry average of 45%, suggesting strong pricing power."
+
+**What Stock Explorer Does That FinChat Doesn't**:
+- **Systematic metric explanations for ALL metrics**: FinChat requires users to ask; Stock Explorer's C139 provides explanations proactively for every displayed metric.
+- **Taiwan market depth**: FinChat covers US stocks primarily; Stock Explorer is deeply focused on TW market.
+- **Historian positioning**: FinChat positions as "stock analyst"; Stock Explorer positions as "financial historian" — a key differentiator.
+- **Structured education (Academy)**: FinChat has no structured curriculum; Stock Explorer has C47 Education Academy.
+
+**New Feature Insight from FinChat**: FinChat's implication sentence pattern is "Data → Context → Implication" — a three-part structure where each metric narrative includes (1) the raw number, (2) how it compares (historical/peer), and (3) what it suggests. Stock Explorer's C143 currently only covers parts 1 and 2. **Adding the "what it suggests" layer as a separate, clearly-labeled implication is C147.**
+
+---
+
+### 2. Kavout — AI Investment Insights with Plain-Language Explanations
+
+**URL**: https://www.kavout.com
+**Positioning**: "AI-powered investment insights" — machine learning meets plain-language investment analysis
+**Target Users**: US retail investors who want AI-powered investment ideas with explanations
+
+**Key Features**:
+- **"K Score"**: AI-generated 1-100 investment score for every stock, with plain-language explanation of why the score is what it is — "TSMC's K Score is 78/100 because of strong earnings growth (+15% YoY), healthy balance sheet (debt/equity 0.3), and reasonable valuation (P/E 18x vs industry 22x). However, geopolitical risk caps the score."
+- **"AI Insights"**: For each stock, Kavout generates 3-5 plain-language insights — "TSMC's AI revenue is growing 40% YoY, driven by demand from NVIDIA and AMD"
+- **"Why This Stock?"**: When Kavout recommends a stock, it explains why in simple terms with data backing
+
+**Relevance to Stock Explorer**:
+- The "K Score" explanation is a more sophisticated version of C135 (Financial Health Score with Narrative) — each score component has its own narrative.
+- "AI Insights" is similar to C134 (AI Change Explanations) but Kavout generates insights proactively (without user action) while C134 is triggered by clicking "Why did this change?"
+
+**New Feature Insight**: Kavout's "Why This Stock?" pattern shows that when recommending/suggesting anything, the explanation MUST accompany the suggestion. For Stock Explorer, this means if we display any metric that implies something is "good" or "bad," we must also explain WHY — not just state the judgment. **This is the basis for C148 ("Metric Judgment Transparency" — Explain Why Something Is Good or Bad).**
+
+---
+
+### 3. Stockstory — Story-First Stock Analysis
+
+**URL**: https://stockstory.org (or similar story-first analysis platforms)
+**Positioning**: "Every stock has a story" — narrative-driven stock analysis for beginners
+**Target Users**: US beginner investors who learn through stories, not data tables
+
+**Key Features**:
+- **"Stock Story Arc"**: Every stock has a beginning (founding story), middle (key events and challenges), and current situation — presented as a scrollable narrative
+- **"So What?" Sections**: After each data section, there's a "So What?" box that explains what the data means for the company's future — "Revenue grew 20% → So what? This means TSMC is gaining market share from competitors"
+- **"What Could Go Wrong?"**: A dedicated risk section written as narrative, not bullet points
+
+**Relevance to Stock Explorer**:
+- The "So What?" pattern is the EXACT UX that C143 (Implication Sentence) targets. Stockstory proves that a dedicated, visually distinct "implication" section after each data section is the expected UX pattern.
+- "What Could Go Wrong?" is similar to C44 (Risk Analysis Section) but written as narrative rather than structured lists.
+
+**New Feature Insight**: Stockstory's "So What?" UX uses a **distinct visual box** after each metric section — separate from the metric card, with a different background color and a "💡 So What?" label. This visual treatment is NOT what C143 currently specifies. **C149 proposes a dedicated "So What?" implication box UI pattern that visually separates implication sentences from data cards.**
+
+---
+
+### 4. Edgestock (TW Market) — AI-Powered TW Stock Analysis
+
+**Positioning**: "AI選股" — AI-powered stock selection for TW retail investors
+**Target Users**: TW retail investors who want AI stock recommendations
+**Note**: This covers the TW-native AI stock analysis space that has emerged since Round 11
+
+**Key Features of TW AI Stock Tools (Edgestock + Similar)**:
+- **AI 選股評分**: AI-generated scores for TW stocks with factor explanations
+- **Plain-language factor descriptions**: "這檔股票基本面評分較高，因為營收連續成長、毛利率穩定"
+- **AI news summaries**: AI summarizes TW stock news in plain language
+- **Risk alerts with explanations**: Not just "risk detected" but "風險: 外資連續賣超、營收下滑"
+
+**Relevance to Stock Explorer**:
+- TW-native AI tools are starting to offer plain-language explanations — Stock Explorer must maintain its lead in explanation quality and depth.
+- These tools focus on stock selection (stock picker); Stock Explorer's historian positioning avoids this — a key differentiator.
+- The AI news summarization pattern validates C134 (AI Change Explanations) approach.
+
+**TW Market Gap**: The TW market still lacks a platform that combines: (1) AI explanations, (2) structured education, (3) historian positioning, and (4) implication sentences. Stock Explorer is uniquely positioned to own this intersection.
+
+---
+
+### 5. Inderes.fi — AI Stock Analysis with Nordic Implication Sentences
+
+**URL**: https://www.inderes.fi
+**Positioning**: "AI-powered equity research for everyone" — professional-grade analysis with plain-language summaries
+**Target Users**: Nordic retail investors and professional analysts
+
+**Key Features**:
+- **"AI Equity Research Summaries"**: Full research reports with AI-generated plain-language summaries — each report includes "Key Takeaways," "Valuation," and "Risks" sections
+- **"Implication Language"**: Inderes' reports consistently use "This implies that..." and "This suggests..." language — making the implication of data explicit
+- **"Scenario Analysis"**: AI generates three scenarios (bull/base/bear) with probability estimates and plain-language explanations
+- **"Target Price Explanation"**: When Inderes sets a target price, they explain the assumptions in plain language
+
+**Relevance to Stock Explorer**:
+- Inderes' "Implication Language" pattern is a professional-grade version of C143 — "This implies that the company will maintain its market share in the AI chip segment"
+- The "Target Price Explanation" pattern is a model for explaining any judgment with transparent assumptions — relevant to C148
+- "Scenario Analysis" is a more structured version of C44 (Risk Analysis) — showing multiple outcomes with probabilities
+
+**New Feature Insight**: Inderes' "Implication Language" has a specific formula: "Because [data], this implies/future [implication]." This is different from Stock Explorer's C143 framing which uses "如果你正在觀察這家公司..." The Inderes formula is more direct and less hedged. **C150 proposes testing multiple implication sentence framings (hedged historian vs. direct implication) to find the optimal UX for TW beginners.**
+
+---
+
+### 6. OpenBB Terminal — Open-Source AI Financial Analysis
+
+**URL**: https://openbb.co
+**Positioning**: "Open-source Bloomberg Terminal" — free, open-source financial analysis with AI extensions
+**Target Users**: Tech-savvy investors, developers, and emerging market analysts
+
+**Key Features**:
+- **"OpenBB AI" Extension**: Users can highlight any chart, table, or metric and run "Explain this" through an LLM — generates a plain-language explanation of whatever the user selected
+- **"GPT Integration"**: Built-in ChatGPT integration for any financial data — "Analyze TSMC's financial health" → AI generates a comprehensive analysis
+- **"Narrative Reports"**: AI generates full company reports in narrative format — "TSMC Analysis — June 2026"
+- **"Comparison AI"**: AI generates side-by-side company comparisons with narrative
+
+**Relevance to Stock Explorer**:
+- OpenBB's "highlight and explain" UX is a different interaction model from C139's "❓ button next to every metric" — it's more flexible (users choose what to explain) but less guided (beginners might not know what to ask).
+- The narrative report feature is similar to C140 (Historical Case Study Library) but OpenBB generates reports on-demand rather than curating a collection.
+
+**Key Insight**: OpenBB proves that "select any data, explain it" is a viable UX pattern for financial data. Stock Explorer could combine this with C139's proactive approach: show key explanations by default (C139) with an "explain anything" mode for curious users. **This is C151 ("Select-to-Explain" — Click Any Data Point for AI Explanation).**
+
+---
+
+## Revisited Competitors (Deep Dives Requested)
+
+### Revisit 1: Public.com's "Why This Stock Moved" — Deep Analysis
+
+**URL**: https://public.com
+**Feature Deep-Dive**: Public.com's "Why This Stock Moved" feature
+
+**How It Works**:
+1. When a stock moves >3% in a day, Public.com generates a multi-factor explanation
+2. The explanation combines: (a) news sentiment analysis, (b) sector movement, (c) options flow, (d) social sentiment from Public's own community
+3. The format is: "[Stock] moved [X]% today because [primary reason]. Contributing factors: [factor 1], [factor 2]."
+4. Each factor has a plain-language explanation: "Sector: Semiconductor stocks were down 2% today after weak earnings from a peer company"
+
+**Competitive Analysis**:
+
+| Dimension | Public.com | Stock Explorer (Current) | Stock Explorer (C98 + C134) |
+|-----------|-----------|-------------------------|-------------------------------|
+| Trigger | >3% daily move | M5 event detection | M5 events + change detection |
+| Explanation Factors | News + sector + options + social | News only (M5) | News + metric changes |
+| Plain-language | ✅ Full narrative | ❌ Raw event text | ✅ Template explanations |
+| Sentiment Layer | ✅ Social sentiment | ❌ None | ❌ None |
+| Implication | "Here's why it happened" | "Here's what happened" | "Here's what happened + why the number changed" |
+
+**New Feature Gap**: Public.com's multi-factor explanation approach (combining news + sector + social into ONE narrative) is more sophisticated than Stock Explorer's current event-by-event display. **C152 (Multi-Factor Event Narratives — Combine All Factors into One Story) would create a single, coherent narrative that explains a stock movement by synthesizing all detected factors into one plain-language paragraph.**
+
+---
+
+### Revisit 2: Yahoo Finance AI Features — 2025 AI-Powered Explanations
+
+**URL**: https://finance.yahoo.com
+**Feature Deep-Dive**: Yahoo Finance's 2025 AI Integration
+
+**Yahoo Finance's 2025 AI Features**:
+- **"AI Stock Summary"**: Yahoo Finance now generates AI-powered summaries for every stock — a 3-4 sentence narrative at the top of each stock page with key metrics explained
+- **"AI Earnings Call Summary"**: AI summarizes quarterly earnings calls in bullet-point format with plain-language explanations of management commentary
+- **"AI News Analysis"**: AI categorizes news by topic (earnings, M&A, products, management changes) and generates one-sentence plain-language summaries
+- **"Ask Yahoo Finance"**: Conversational AI for stock questions — users can ask "Is TSMC undervalued?" and get a data-backed plain-language answer
+
+**Competitive Analysis**:
+
+| Dimension | Yahoo Finance AI | Stock Explorer (Current) | Stock Explorer Target |
+|-----------|-----------------|-------------------------|----------------------|
+| AI Stock Summary | ✅ 3-4 sentence narrative | ❌ No summary | C48 Story Card (partial) |
+| AI Earnings Summary | ✅ Bullet-point earnings | ❌ No earnings narrative | C110 Earnings Story (planned) |
+| AI News Categorization | ✅ Auto-categorized | ❌ Raw news feed | C98 Event Interpretation (planned) |
+| Conversational AI | ✅ "Ask Yahoo Finance" | ❌ None | C59 AI Q&A Chatbot (planned) |
+| Implication Sentences | ⚠️ Rare, mostly factual | ❌ None | C143 (Sprint 18!) |
+
+**Critical Insight**: Yahoo Finance's AI features are primarily US-focused and lack the educational framing that Stock Explorer provides. Their implication language is rare and cautious — they state facts ("revenue grew 15%") but rarely say what it means ("this suggests strong demand"). **This is Stock Explorer's competitive advantage**: we can go beyond stating facts to explaining implications, because our "historian, not stock picker" positioning gives us a framework for implication sentences that investment-focused platforms avoid.
+
+---
+
+### Revisit 3: Copilot Money — Deep Dive on Explanation UX
+
+**URL**: https://copilot.money
+**Feature Deep-Dive**: Copilot Money's "Money Insights" and "Change Explanations" Pattern
+
+**Copilot Money's Explanation Architecture**:
+1. **"Net Worth Story"**: Every week, Copilot generates a narrative: "Your net worth increased by $3,200 because of investment gains ($2,800) and debt reduction ($400)"
+2. **"Spending Insights"**: AI explains spending changes — "Your grocery bill increased by $50 because you bought 3 more organic items than last month"
+3. **"Subscription Tracker"**: AI identifies subscription changes — "Netflix increased by $2/month"
+4. **"Income Narrative"**: AI explains income changes — "Your income is 15% higher than last month because of a bonus"
+5. **Goal Progress Narrative**: "Your emergency fund is 75% complete — you're on track for August"
+
+**Relevance to C134 (Change Explanations)**:
+Copilot Money's "change explanation" pattern is IDENTICAL to what C134 proposes for Stock Explorer:
+- Compare current period vs previous period
+- Identify the change ("gross margin dropped from 55% to 52%")
+- Explain the change in plain language ("because of increased competition and yield ramp costs")
+- Show the change as "📝 Why did this change?" button
+
+**Key Difference**: Copilot Money explains CHANGES in personal finance (spending, income, net worth). C134 explains CHANGES in company metrics (gross margin, revenue, etc.). The UX pattern is identical but the domain is different.
+
+**New Feature Gap from Copilot Money**: Copilot's "Net Worth Story" connects all changes into a SINGLE narrative — not 5 separate explanations but one story: "Your financial picture improved this month." Stock Explorer's C134 generates separate explanations per metric. **C153 ("Company Financial Story" — One Narrative for All Metric Changes) would create a single paragraph that synthesizes all changed metrics into one company narrative: "This quarter, TSMC's revenue grew 15% driven by AI demand, but gross margin compressed 2% due to new factory ramp costs."**
+
+---
+
+### Revisit 4: Spiking — Deep Dive on AI Stock Narrative Pattern
+
+**URL**: https://spiking.com
+**Feature Deep-Dive**: Spiking's "Why Stock Moved" Narrative Architecture
+
+**Spiking's Narrative System (Updated 2025-2026)**:
+
+Spiking has evolved from a simple social feed to a sophisticated AI narrative engine:
+
+1. **"Why Stock Moved" AI v2.0**: Now includes:
+   - **Root cause analysis**: "TSMC dropped 3% because Apple (which accounts for 25% of TSMC revenue) reported weak iPhone sales"
+   - **Historical comparison**: "Historically, when Apple reported weak iPhone sales, TSMC dropped an average of 2.5% within 3 days"
+   - **Sentiment analysis**: "Social sentiment shifted from 70% bullish to 45% bullish after the news"
+   - **Options flow**: "Put options volume was 3x normal, suggesting traders are hedging"
+
+2. **"Earnings Story"**: Before earnings, Spiking generates:
+   - "What to watch" (key metrics)
+   - "Historical pattern" (how the stock moved after earnings in the past)
+   - "Expectations vs Reality" (after earnings)
+
+3. **"Insider Narrative"**: When insiders trade:
+   - "The CEO bought 10,000 shares at $150"
+   - "Historical pattern: When the CEO bought shares, the stock went up 8% on average in the next 3 months"
+
+**Relevance to Stock Explorer's Sprint 18**:
+
+| Spiking Feature | Stock Explorer Equivalent | Gap |
+|----------------|--------------------------|-----|
+| Root cause analysis | C98 Event Interpretation Engine | Spiking connects cause to company fundamentals; SE just shows events |
+| Historical comparison | C140 Historical Case Studies | Spiking shows "when X happened before, Y followed"; SE has no outcome tracking |
+| Sentiment analysis | ❌ No equivalent | SE deliberately avoids social sentiment |
+| Options flow | ❌ No equivalent | SE doesn't cover derivatives |
+| Earnings story | C110 Earnings Story | SE plans narrative; Spiking has it working |
+| Insider narrative + historical pattern | C108 Insider Trading + C115 Scenario Explorer | Spiking connects insider trades to historical outcomes; SE has no connection |
+
+**Critical New Insight**: Spiking's "historical pattern" feature — "When X happened before, Y followed on average" — is NOT in any of Stock Explorer's planned features. This is different from C109 (Compare Timelines — comparing two companies' histories) and C115 (Scenario Explorer — "what would have happened if"). The pattern is: "When [specific event] happened to [this company] before, [historical outcome] followed on average."
+
+This is the quintessential "historian" feature: you're not predicting the future, you're showing what happened historically when the same event occurred. It's the perfect intersection of data + education + historian positioning.
+
+**→ This is the basis for C147 ("Historical Event Pattern" — "When This Happened Before, Here's What Followed").**
+
+---
+
+## Comprehensive Gap Analysis: C147+ Feature Gaps
+
+### [ISSUE-C147] "Historical Event Pattern" — "When This Happened Before, Here's What Followed"
+
+- **Source**: Competitor research round 12 (Spiking "Historical Pattern" analysis, Quiver Quantitative "Historical Trade Analysis", Inderes scenario analysis)
+- **Priority**: P1
+- **Effort**: 14-18h
+- **Alignment**: Core value #1 "Story first, data second" + "Historian" positioning + "Ten-second test"
+- **Description**: Spiking shows "When the CEO bought shares historically, the stock went up 8% on average in the next 3 months." Quiver Quantitative shows "When Congress bought NVDA in 2022, the stock went up 40% in 3 months." Stock Explorer has event detection (M5 engine) but NO historical outcome tracking. C147 adds a "📊 歷史模式" (Historical Pattern) section to event cards: when a detected event has occurred before (e.g., revenue miss, insider buying, institutional accumulation), show the historical pattern: "過去5次營收不如預期，股價平均在3個月內下跌5%，但6個月後回升3%." This is the historian's answer to "what usually happens when this occurs" — not a prediction, but historical context.
+- **Implementation**: Create a `data/historical_patterns.yaml` schema with: event_type, occurrences[{date, outcome}], average_outcome, median_outcome, sample_size_note. When M5 detects an event that has ≥2 historical occurrences, show a compact "歷史模式: 過去[X]次，平均[Y]" card. Trusted data from FinMind historical + manual curation for first 50 patterns.
+- **Competitive Gap**: 🔴 Spiking has this for Singapore stocks but NO TW competitor offers historical event outcome patterns. This is the most "historian" feature possible — using past events to provide context for current events without making predictions. Fits perfectly between C98 (Event Interpretation — what happened) and C143 (Implication — what it suggests).
+- **Historian Tone Gate**: Must use past-tense framing only: "過去[X]次，平均[Y]" NOT "預計會[Y]". Include sample size note when <5 occurrences.
+
+---
+
+### [ISSUE-C148] "Metric Judgment Transparency" — Explain Why Something Is Labeled Good/Bad
+
+- **Source**: Competitor research round 12 (Kavout "K Score" explanations, FinChat "Is T/E high?" answers, Yahoo Finance AI factor explanations)
+- **Priority**: P2
+- **Effort**: 8-12h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + Benchmark-oriented analysis
+- **Description**: When Stock Explorer displays a judgment ("估值偏高" / "毛利率優於同業" / "現金流健康"), users should be able to understand WHY that judgment was made. Kavout explains its K Score — "78/100 because of strong earnings growth (+15% YoY), healthy balance sheet (debt/equity 0.3), and reasonable valuation." FinChat answers "Is T/E high?" with a contextual explanation. Stock Explorer currently shows summary labels (via C43/C135 health score, C132 risk level) without transparent reasoning. C148 adds a "🤔 為什麼?" (Why?) button next to every judgment label that reveals a structured explanation: "估值偏高 = P/E 18x > 同業平均15x + 自身5年均值16x." This teaches users the reasoning behind judgments, not just the conclusions.
+- **Implementation**: Create a `data/judgment_reasoning.yaml` schema: judgment_type → plain-language reasoning template + threshold values. Add "🤔 Why?" element to all judgment displays. When clicked, show: (1) the data backing the judgment, (2) the threshold used, (3) what would change the judgment.
+- **Competitive Gap**: 🟡 Most platforms show judgments without explaining them (Simply Wall St snowflake, Stockopedia rank). Inderes and Kavout explain their scores but don't explain individual metric judgments. This would be unique in TW market.
+
+---
+
+### [ISSUE-C149] "So What?" Implication Box — Dedicated Visual Implication UI Pattern
+
+- **Source**: Competitor research round 12 (Stockstory "So What?" sections, Spiking "Earnings Story" format, FinChat AI summaries)
+- **Priority**: P2
+- **Effort**: 10-14h
+- **Alignment**: Core value #1 "Story first, data second" + "Ten-second test" + PPT-style presentation
+- **Description**: C143 (Implication Sentence) generates text implications, but Stockstory, Spiking, and FinChat all prove that implications need a **distinct visual separate from data cards**. Stockstory uses a "💡 So What?" box with a different background color. C149 creates a dedicated implication box that appears after each major metric section: a visually distinct card (different background, "💡 這代表什麼?" header) that contains one plain-language implication sentence. This separates data (what happened) from implication (what it suggests) visually, not just textually. The box uses the existing C143 content generation but wraps it in a dedicated UI pattern: light bulb icon, distinct color (warm yellow/amber), one implication per box.
+- **Implementation**: After each metric section (revenue, profitability, valuation, risk), add a "💡 這代表什麼?" box. Content comes from C139/C143 template system. Visual: warm amber background (#FFF8E1), 💡 icon, 14px implication text, "了解更多" expand for detailed explanation. Fits naturally into the existing PPT-style card layout.
+- **Competitive Gap**: 🟡 Stockstory has "So What?" boxes but for US stocks with no TW context. No TW competitor visually separates implication from data. This is a low-cost visual pattern (reuses C143 content) with high UX impact.
+
+---
+
+### [ISSUE-C150] "Implication Sentence Framing A/B Test" — Multiple Historian Framings
+
+- **Source**: Competitor research round 12 (Inderes "This implies that..." vs. Stock Explorer C143 "如果你正在觀察這家公司..." vs. FinChat "The stock trades above average, suggesting...")
+- **Priority**: P2
+- **Effort**: 6-10h (test infrastructure + 3 framing templates)
+- **Alignment**: Core value #1 "Story first, data second" + "Historian positioning" + "Ten-second test"
+- **Description**: Currently C143 uses ONE framing: "如果你正在觀察這家公司，[observation]." Multiple competitors prove there are different implication framings: (A) Inderes direct: "This implies that margins will stabilize in Q3." (B) Stock Explorer observer: "如果你正在觀察這家公司，毛利率連續兩季下滑，這是一個值得注意的趨勢." (C) FinChat contextual: "Margins are below the 5-year average, suggesting operational headwinds." (D) Spiking historical: "When margins dropped like this before, the stock fell 5% on average." Each framing has different tone, risk level, and educational value. C150 creates 3-4 framing templates and an A/B test framework to determine which framing works best for TW beginners.
+- **Implementation**: Create `src/data/implication_framings.yaml` with 4 framing templates: observer_style, direct_implication, contextual_comparison, historical_pattern. Each template has: tone_type, zh-TW template string, risk_level, historian_gate_check code. Build a simple A/B test: new users see a random framing for their first 30 days, then measure engagement (implication box click-through, comprehension quiz scores, return rate). Select winner after 500 user-sessions.
+- **Competitive Gap**: 🔴 No competitor A/B tests implication sentence framings. Stock Explorer's "historian" positioning means we need to find the framing that is educational, factual, and engaging without being advice-like. A/B testing is the only way to validate this empirically.
+
+---
+
+### [ISSUE-C151] "Select-to-Explain" — Click Any Data Point for AI Explanation
+
+- **Source**: Competitor research round 12 (OpenBB Terminal "explain this" feature, FinChat conversational Q&A, Yahoo Finance "Ask Yahoo Finance")
+- **Priority**: P2
+- **Effort**: 14-18h
+- **Alignment**: Core value #4 "Point-to-point knowledge construction" + "Ten-second test" + Adaptive
+- **Description**: OpenBB lets users highlight any chart, data point, or metric and run "explain this." FinChat lets users ask about anything in natural language. Stock Explorer's C139 only explains pre-defined metrics with ❓ buttons. C151 extends the explanation system to a "自由探索" (Free Explore) mode: users can click on ANY number, chart, chart element, or even a company name in a comparison table, and get a plain-language explanation of what it means and why it matters. This is the "escape hatch" for curious beginners who wonder about something that doesn't have a pre-defined explanation button. Implementation: use a Streamlit "click data point" event (Plotly chart_click) + C139 explanation templates with dynamic metric resolution.
+- **Implementation**: Add Plotly `click_event` handlers to all charts. When a data point is clicked, resolve the metric type from the chart context, look up the explanation from C139 templates, and show in a popover/slideover. If the metric has no pre-defined template, fall back to a generic "這個數字表示[metric name]，數值為[value]，與上期相比[change]" explanation.
+- **Competitive Gap**: 🟡 OpenBB has developer-focused explain-anything; FinChat has conversational Q&A. No TW stock platform offers select-to-explain for visualizations. This combines the convenience of C139's proactive explanations with the flexibility of conversational AI — without requiring users to type questions.
+
+---
+
+### [ISSUE-C152] "Multi-Factor Event Narratives" — One Story, All Factors Combined
+
+- **Source**: Competitor research round 12 (Public.com multi-factor explanations, Spiking "Why Stock Moved" v2.0, Copilot Money "Net Worth Story")
+- **Priority**: P1
+- **Effort**: 16-20h
+- **Alignment**: Core value #1 "Story first, data second" + "Historian positioning" + Adaptive
+- **Description**: When M5 detects multiple events for a stock in a short period (e.g., TSMC: revenue miss + insider selling + institutional outflow + sector downturn), these currently appear as separate event cards. Public.com and Spiking both combine multiple factors into one narrative. C152 synthesizes all M5-detected events for a stock within a 7-day window into a single "本週事件總覽" (Weekly Event Summary) narrative: "台積電本週面臨多重壓力：營收不如預期(-3%)、CEO減持股票、外資連續賣超，同時半導體板塊因蘋果訂單下修而走弱。綜合來看，市場對台積電短期展望趨向保守." This transforms disconnected event cards into a coherent story.
+- **Implementation**: Create `event_narrative_synthesizer.py` that: (1) groups M5 events by stock within 7-day windows, (2) ranks events by impact (revenue > earnings > insider > institutional > sector), (3) generates a one-paragraph synthesized narrative using templates keyed to event type combinations, (4) displays as a "📰 事件總覽" card at the top of the events section. Use existing C98 event interpretation engine for individual event explanations; C152 just combines them.
+- **Competitive Gap**: 🔴 Public.com has this for US stocks; Spiking for Singapore stocks. NO TW platform combines events into synthesized narratives. This is the highest-impact event feature because it mirrors how humans actually consume news — we want the story, not the raw ingredients.
+
+---
+
+### [ISSUE-C153] "Company Financial Story" — One Narrative for All Metric Changes
+
+- **Source**: Competitor research round 12 (Copilot Money "Net Worth Story" pattern, FinChat AI Stock Summary, Datawallet "Money Stories")
+- **Priority**: P2
+- **Effort**: 12-16h
+- **Alignment**: Core value #1 "Story first, data second" + "Ten-second test" + "Historian positioning"
+- **Description**: Copilot Money connects all financial changes into ONE narrative: "Your net worth increased by $3,200 because of investment gains ($2,800) and debt reduction ($400)." Stock Explorer's C134 explains each metric change separately. C153 synthesizes all changed metrics for a company into a single "公司財務故事" (Company Financial Story): "本季度，台積電營收成長15%主要受惠AI晶片需求，但毛利率從55%降至52%反映新廠建置成本增加。整體來看，營收成長速度超越利潤率收縮，獲利仍維持穩定成長態勢." This is the difference between showing a spreadsheet and telling a story.
+- **Implementation**: Add a "📖 財務故事" (Financial Story) section at the top of each company page that synthesizes all significantly changed metrics (threshold: >5% change) into one paragraph. Use a template system: (1) identify the 2-3 most significant changes, (2) determine the narrative arc (growth story, challenge story, mixed story), (3) generate a one-paragraph synthesis connecting all changes with causal language ("受惠於", "但由於", "整體來看"). Falls back to "本季度沒有重大變化" if no metrics exceed threshold.
+- **Competitive Gap**: 🔴 Copilot Money does this for personal finance; NO stock analysis platform does this for company financials. This would be a unique differentiator — the "one-paragraph company story" that replaces the need to read 10 separate metric cards.
+
+---
+
+## Updated Competitor Overview Table (Round 12 Additions)
+
+| Dimension | FinChat.io | Kavout | Stockstory | Edgestock | Inderes | OpenBB | **Stock Explorer** |
+|-----------|-----------|--------|------------|-----------|---------|--------|-------------------|
+| **Positioning** | AI Stock Analyst | AI Investment Insights | Story-First Analysis | AI選股 (TW) | AI Equity Research | Open-Source Bloomberg | Beginner Education ("Historian") |
+| **AI Explanations** | ✅ Conversational | ✅ K Score + Insights | ✅ "So What?" boxes | ✅ AI評分 | ✅ Narrative reports | ✅ Select-to-explain | ⚠️ C139/C143 planned |
+| **Implication Sentences** | ✅ In summaries | ⚠️ In insights | ✅ "So What?" boxes | ❌ | ✅ "This implies..." | ❌ | ⚠️ C143 Sprint 18 |
+| **Historical Patterns** | ❌ | ❌ | ❌ | ❌ | ✅ Scenarios | ❌ | ❌ MISSING (C147!) |
+| **Multi-Factor Narrative** | ❌ | ❌ | ❌ | ❌ | ⚠️ Partial | ❌ | ⚠️ C152 planned |
+| **One-Paragraph Story** | ✅ AI Summary | ❌ | ✅ Story Arc | ❌ | ❌ | ✅ Narrative reports | ⚠️ C153 planned |
+| **TW Market** | ❌ US focus | ❌ US focus | ❌ US focus | ✅ TW focus | ❌ Nordic | ❌ Global | ✅ Deep TW coverage |
+| **Plain-language** | ✅ Core | ✅ Core | ✅ Core | ✅ Core | ✅ Core | ⚠️ Developer | ✅ Core |
+
+---
+
+## Summary
+
+### Counts
+- **New competitors analyzed**: 7 (FinChat.io, Kavout, Stockstory, Edgestock, Inderes.fi, OpenBB Terminal, Copilot Money deep-dive, Spiking deep-dive, Public.com deep-dive, Yahoo Finance AI deep-dive)
+- **New feature suggestions**: 7 (C147-C153)
+- **P1 features**: 2 (C147 Historical Event Pattern, C152 Multi-Factor Event Narratives)
+- **P2 features**: 5 (C148-C151, C153)
+
+### Key Insights
+
+1. **"Historical Event Pattern" Is the Missing Historian Feature**: Spiking, Quiver Quantitative, and Inderes all prove that showing "when this happened before, here's what followed" is the most powerful historian feature. C147 fills a gap that no TW competitor addresses and directly serves the "historian, not stock picker" positioning. When a user sees that gross margin dropped, they should also see "historically, when margin dropped like this, the stock went down X% and recovered in Y months."
+
+2. **Implication Sentences Need Dedicated Visual Design**: Stockstory's "So What?" boxes prove that implications must be visually separated from data. C143 generates the content (Sprint 18), but C149 gives it the visual treatment that makes it actually work for beginners. These should be implemented together: C143 content + C149 visual pattern.
+
+3. **Multi-Factor Narrative Synthesis Is the Future of Event Display**: Public.com and Spiking both prove that users want ONE story, not five separate event cards. M5's event detection (a unique Stock Explorer asset) is wasted if events are displayed as disconnected cards. C152 synthesizes M5's output into the narrative format users actually want.
+
+4. **Copilot Money's "Net Worth Story" Applies to Companies**: The single most powerful narrative pattern in fintech (Copilot's one-paragraph financial story) has never been applied to company financials. C153 would make Stock Explorer the first platform to tell a company's quarterly story in one paragraph connecting all metric changes.
+
+5. **"Select-to-Explain" Is the Next Evolution of Metric Education**: C139's ❓ buttons are proactive; OpenBB's select-to-explain is reactive. Together they cover both use cases: "here are the key explanations" (C139) + "explain anything you're curious about" (C151). This combination is unique in any market.
+
+6. **Implication Sentence Framing Is an Empirical Question**: Four different platforms use four different implication framings (observer-style, direct implication, contextual comparison, historical pattern). No one knows which works best for TW beginners. C150's A/B test framework is the only way to validate the C143 framing choice empirically.
+
+7. **TW Market Still Loses on Explanation Depth**: Edgestock and other TW AI tools are starting to offer plain-language explanations, but none combine: (a) proactive metric explanations, (b) implication sentences, (c) historical patterns, and (d) multi-factor narratives. Sprint 18's C139 + C143 positions Stock Explorer to own this space, and C147-C153 would extend the lead.
+
+---
+
+*This is the twelfth competitor research round. Seven new competitors deeply profiled (FinChat.io, Kavout, Stockstory, Edgestock, Inderes.fi, OpenBB Terminal, plus deep-dives on Copilot Money, Spiking, Public.com, Yahoo Finance AI). Seven new feature suggestions identified (C147-C153). The most impactful new gap is C147 (Historical Event Pattern) — Spiking proves that "when this happened before, here's what followed" is the ultimate historian feature, and no TW competitor has it. The most strategically important gap is C152 (Multi-Factor Event Narratives) — it transforms M5's unique event detection capability from disconnected event cards into the coherent stories users actually want. The most unique gap is C153 (Company Financial Story) — applying Copilot Money's "Net Worth Story" pattern to company financials, which no stock analysis platform has done.*

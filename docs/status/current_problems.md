@@ -1,10 +1,28 @@
 # Stock Explorer — Current Problems
 
 > **Last Updated**: 2026-06-14
-> **Source**: Design Review Round 34 (2026-06-14, after C126/C47/C101 feature review)
+> **Source**: Design Review Round 38 (2026-06-14, after C14/C134/C07 feature review)
 > **Maintainer**: Design Reviewer
 
 This file tracks all known design/UX problems in Stock Explorer, organized by severity.
+
+### D-108: Settings Page Visual Feedback Boxes Use Inline HTML (D-003 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 38
+- **Description**: The settings page (`settings.py`) has 2 visual feedback boxes (lines 101-108, 168-176) that use `unsafe_allow_html=True` with inline-styled divs (`background-color:#f0f2f6; border-radius:8px; padding:12px 16px; font-size:14px`). These are functionally identical to `_info_card()` but implemented as inline HTML. This is a D-003 regression — the developer duplicated the card style inline rather than using a shared component.
+- **Affected Files**: `src/pages/settings.py` lines 101-108, 168-176
+- **Proposed Fix**: Replace with `_info_card()` calls or create a `_feedback_box(message, icon="✅")` helper in `_router_base.py`. Alternatively, use `st.success()` / `st.info()` which Streamlit renders with consistent styling.
+- **Effort**: 0.5-1h
+
+### D-109: C14 Benchmark Logic Duplicated in _summary.py (D-003 Regression)
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 38
+- **Description**: `_render_story_card()` in `_summary.py` (lines 183-288) contains ~100 lines of inline benchmark data fetching and metric computation that is structurally identical to `_fetch_benchmark_health_scores()` in `_health.py` (lines 46-163). Both functions: (1) look up `INDUSTRY_BENCHMARKS` by industry, (2) fetch benchmark financial data via `client.get_*()`, (3) compute gross_margin, net_margin, revenue_yoy, debt_ratio, current_ratio, roe, (4) call `compute_health_scores()`. This is a D-003 regression (duplicated logic across files). The architect's review (D-107) identified the same issue from an architecture perspective.
+- **Affected Files**: `src/pages/business_card/_sections/_summary.py` lines 183-288, `src/pages/business_card/_sections/_health.py` lines 46-163
+- **Proposed Fix**: Extract benchmark health score fetching into a shared service function (e.g., `health_scoring.get_benchmark_scores(client, industry, stock_id)`). Both `_health.py` and `_summary.py` call this function. This also resolves D-106 (architecture debt).
+- **Effort**: 1-2h
 
 ---
 
@@ -535,10 +553,10 @@ This file tracks all known design/UX problems in Stock Explorer, organized by se
 
 ## Statistics
 
-- **Total Issues**: 90
+- **Total Issues**: 92
 - **P0 (Blocking)**: 0
 - **P1 (Important)**: 3 (D-003, D-005, D-006)
-- **P2 (Optimization)**: 42 (D-004, D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-039, D-040, D-041, D-042, D-045, D-048, D-049, D-051, D-052, D-053, D-062, D-063, D-067, D-068, D-069, D-070, D-084, D-085, D-086, D-087, D-088, D-089, D-090, D-091, D-092, D-093, D-094, D-095)
+- **P2 (Optimization)**: 44 (D-004, D-007, D-008, D-009, D-010, D-011, D-012, D-015, D-032, D-033, D-039, D-040, D-041, D-042, D-045, D-048, D-049, D-051, D-052, D-053, D-062, D-063, D-067, D-068, D-069, D-070, D-084, D-085, D-086, D-087, D-088, D-089, D-090, D-091, D-092, D-093, D-094, D-095, D-108, D-109)
 - **Resolved/Consolidated**: 33
 
 ---
