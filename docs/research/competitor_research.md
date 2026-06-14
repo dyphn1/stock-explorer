@@ -5808,3 +5808,82 @@ Moomoo's API Skills is US-focused. No TW platform offers natural language stock 
 ---
 
 *This is the forty-first competitor research round. Six new competitors analyzed. Eleven new feature gaps identified (C175-C185). The most critical new gap is C175 (NL-First Screening) — Screenful proves that natural language as the primary screening interface is the expected UX. Full details in `docs/research/review41_qa.md`.*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 44 (Summary)
+
+> **Date**: 2026-06-14
+> **Author**: QA Engineer (Round 44)
+> **Full Report**: `docs/research/review44_qa.md`
+> **Context**: Sprint 20 in progress — C167 complete, C163 + C40 pending
+> **Previous Rounds Coverage**: 127+ competitors analyzed across Rounds 1-41. 185 feature gaps identified (C01-C185).
+> **Purpose**: Research NEW competitors not covered in Rounds 1-41, validate existing P1 gaps (C175-C185), and identify new feature gaps focusing on: daily education content, progressive onboarding pipelines, event narration, and metric transparency.
+
+## New Competitors Analyzed: 8
+
+| Competitor | Type | Region | Relevance |
+|---|---|---|---|
+| **Public.com** (deep re-analysis) | Social-first investing + education | US/Global | 🔴 High — multi-factor event synthesis + NL explanations |
+| **Stash** (deep re-analysis) | Auto-invest + education | US | 🔴 High — "Learn → Invest" progressive onboarding |
+| **Finimize** (deep re-analysis) | Daily finance education | UK/Global | 🔴 High — daily 5-min lessons + ELI5 toggle + explain everything |
+| **Simply Wall St** (deep re-analysis) | Visual health + narrative | US/Global | 🟡 Medium — snowflake + future growth narrative |
+| **Invstr** | Gamified financial education | US/Global | 🟡 Medium — "Learn → Practice → Invest" pipeline |
+| **NerdWallet** | Personal finance + simple view | US | 🟡 Medium — complexity toggle + plain-language explanations |
+| **Cake Finance** | Timeline comparison + narrative | US/Global | 🟡 Medium — side-by-side company story comparison |
+| **StonkGrid** | Screening + social sharing | US/Global | 🟡 Medium — "Why It Passed" screening explanations |
+
+## New Feature Gaps Identified: 8 (C186-C193)
+
+| ID | Feature | Priority | Effort | Source |
+|----|---------|----------|--------|--------|
+| C186 | Daily 5-Min Finance Lesson | P1 | 10-14h | Finimize |
+| C187 | Learn → Practice → Invest Progressive Pipeline | P1 | 12-16h | Stash, Invstr |
+| C188 | "Why Did This Stock Move?" Inline AI Explanation | P1 | 10-14h | Public.com, Spiking |
+| C189 | Visual Health Timeline | P2 | 8-12h | Simply Wall St, StockEdge |
+| C190 | Metric Judgment Transparency | P2 | 6-10h | Inderes, Morningstar, Gurufocus |
+| C191 | Side-by-Side Company Story Comparison | P2 | 10-14h | Cake Finance, Alphaspread |
+| C192 | Screening Strategy Templates | P2 | 8-12h | Screenful, StonkGrid |
+| C193 | Financial Concept Mastery Check | P2 | 6-10h | Finimize, Invstr |
+
+## Additional New Feature Gaps (C194-C198) — QA Round 44 Deep Analysis
+
+| ID | Feature | Priority | Effort | Source | Differentiator |
+|----|---------|----------|--------|--------|---------------|
+| C194 | "Explain Why Good/Bad" Metric Judgment Callout | P1 | 6-10h | Inderes, Morningstar, Gurufocus | 🔴 No competitor explains reasoning behind labels — unique trust layer |
+| C195 | "First 7 Days" Staged Onboarding with Unlock | P1 | 12-16h | Stash, Invstr | 🔴 Extends C163 with progressive unlocking — no TW competitor has this |
+| C196 | "Daily Market Story" — 3-Minute Market Narrative | P1 | 10-14h | Finimize, Acorns | 🔴 Highest-ROI retention feature — no TW competitor has daily content |
+| C197 | "Health Score Trend" — Historical Health Timeline | P2 | 8-12h | Simply Wall St, StockEdge | 🟡 Natural evolution of C43 — shows health changes over time |
+| C198 | "Screening Strategy Templates v2" — Shareable Library | P2 | 8-12h | Screenful, StonkGrid | 🟡 Extends C167 presets into full template library with rationale |
+
+## Existing P1 Gap Validation
+
+| ID | Feature | Still Valid? | Key Evidence |
+|----|---------|-------------|-------------|
+| C175 | NL-First Screening | ✅ YES — MORE URGENT | Screenful + StonkGrid + Public.com all validate NL-first |
+| C176 | Screener + Education Integration | ✅ YES | Tickertape still gold standard; no TW competitor |
+| C179 | Explain Every Element | ✅ YES — ELEVATED to CRITICAL | Finimize proves this is table stakes |
+| C183 | Financial Terms Deep Dive | ✅ YES | Gurufocus gold standard; C56 should match |
+| C184 | NL Q&A | ✅ YES — MORE URGENT | Koyfin + Screenful + Public.com all have it |
+| C185 | Warning Signs | ✅ YES | Gurufocus proves model; no TW competitor |
+
+## Key Insights
+1. **Daily bite-sized education** (Finimize model) is the new engagement standard — transforms education from "visit the academy" to "learn daily"
+2. **Progressive pipeline onboarding** (Stash/Invstr) is the gold standard — staged unlocking beats single gate
+3. **"Why Did This Stock Move?"** is the #1 beginner question — Public.com proves NL event narration works
+4. **"Explain Every Element" is now table stakes** — Finimize has it on metrics, charts, trends, portfolios
+5. **Metric Judgment Transparency** is the missing trust layer — no competitor explains WHY something is labeled good/bad
+
+## Cumulative Totals (After Round 44)
+
+| Metric | Count |
+|--------|-------|
+| **Total competitors analyzed** | 135+ |
+| **Total feature gaps identified** | 198 (C01-C198) |
+| **New gaps in Round 44** | 13 (C186-C198) |
+| **P1 gaps remaining** | 22+ |
+| **Product vision alignment** | 100% reinforce "historian, not stock picker" |
+
+---
+
+*This is the forty-fourth competitor research round. Eight new competitors analyzed. Eight new feature gaps identified (C186-C193). The most critical finding: C179 (Explain Every Element) is elevated from P1 to CRITICAL based on Finimize's implementation. The most impactful new gap is C186 (Daily 5-Min Lesson) — Finimize proves daily bite-sized education transforms engagement. Full details in `docs/research/review44_qa.md`.*

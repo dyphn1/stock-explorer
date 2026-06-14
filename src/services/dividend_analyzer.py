@@ -189,13 +189,13 @@ def _generate_summary(
         parts = [f"每季約配息 {latest_cash_div} 元"]
         if estimated_yield:
             parts.append(f"預估年化殖利率約 {estimated_yield}%")
-        return f"過去 {n_years} 年，這家企業穩定" + "，".join(parts) + "，像固定發零用錢"
+        return f"過去 {n_years} 年，這家企業穩定" + "，".join(parts)
     elif frequency == "annual" and latest_cash_div:
         parts = [f"每年配息約 {latest_cash_div} 元"]
         if estimated_yield:
             parts.append(f"殖利率約 {estimated_yield}%")
         return f"過去 {n_years} 年，這家企業每年穩定" + "，".join(parts)
     elif frequency == "irregular":
-        return f"配息不穩定，有時發有時不發，像不固定的獎金。最近一次配息 {latest_cash_div or '—'} 元"
+        return f"配息不穩定，依當年度獲利情形決定。最近一次配息 {latest_cash_div or '—'} 元"
     else:
         return f"此公司近 {n_years} 年有配息紀錄"

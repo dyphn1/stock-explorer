@@ -13,7 +13,7 @@ def get_revenue_analogy(revenue_billion: float, industry: str) -> str:
     if revenue_billion >= 10000:
         return f"相當於台灣政府年度預算的 {revenue_billion/27000*100:.0f}%"
     elif revenue_billion >= 1000:
-        return f"大約是 {revenue_billion/1000:.1f} 個小目標（1000億）"
+        return f"約為 {revenue_billion/1000:.1f} 千億"
     elif revenue_billion >= 100:
         return f"每個月賺進 {revenue_billion/12:.0f} 億，相當於蓋 {revenue_billion/12/10:.0f} 棟台北 101"
     elif revenue_billion >= 10:

@@ -69,7 +69,7 @@ def _get_dividend_frequency_analogy(dividend_df: pd.DataFrame) -> str:
         avg_per_year = total / years if years > 0 else 0
 
         if avg_per_year >= 4:
-            return "📅 配息頻率：季配（一年配 4 次）— 就像每季領一次零用錢"
+            return "📅 配息頻率：季配（一年配 4 次）"
         elif avg_per_year >= 2:
             return "📅 配息頻率：半年配（一年配 2 次）— 就像半年領一次分紅"
         elif avg_per_year >= 1:

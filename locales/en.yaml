@@ -1,0 +1,216 @@
+# en.yaml — English
+# All UI display strings. Keys mirror zh-TW.yaml exactly.
+
+# ── App Global ──────────────────────────────────
+app:
+  title: "Stock Explorer"
+  subtitle: "Understanding a company starts here"
+  search_placeholder: "e.g., 2330 or TSMC"
+  search_label: "Search"
+  loading: "Loading..."
+
+# ── Page Names (sidebar + navbar) ──────────────
+page:
+  business_card: "Overview"
+  operation_checkup: "Operations"
+  financial_health: "Financial Health"
+  peer_comparison: "Peer Comparison"
+  group_structure: "Corporate Structure"
+  category_browser: "Browse by Category"
+  etf_section: "ETF Center"
+  watchlist: "Watchlist"
+  event_dashboard: "Event Dashboard"
+  notification_center: "Notifications"
+  investment_memo: "Investment Memo"
+  financial_wellness: "Financial Wellness"
+  stock_screener: "Stock Screener"
+  settings: "Settings"
+  sector_heatmap: "Sector Heatmap"
+  case_study: "Case Study"
+  comprehension_check: "Quiz"
+  academy: "Academy"
+  case_study_library: "Case Library"
+  first_visit_guide: "First Visit Guide"
+  story_timeline: "Story Timeline"
+  full_story_timeline: "Full Story Timeline"
+  daily_story: "Daily Story"
+  revenue_tree: "Revenue Structure"
+  compare_stories: "Peer Comparison Stories"
+  moat_comparison: "Moat Comparison"
+
+# ── Sidebar Elements ────────────────────────────
+sidebar:
+  hot_stocks: "🔥 Hot Stocks"
+  hot_etfs: "🏷️ Popular ETFs"
+  disclaimer: "⚠️ This tool is for educational purposes only and does not constitute investment advice.<br>Investing involves risk; please evaluate carefully."
+
+# ── Stock Info Labels ──────────────────────────
+stock:
+  code: "Code"
+  name: "Name"
+  industry: "Industry"
+  price: "Price"
+  change: "Change"
+  not_found: "Stock ID {sid} not found"
+  search_multiple: "Multiple stocks found:"
+  no_match: "No matching stocks found"
+
+# ── Financial Metric Names ──────────────────────
+metric:
+  revenue: "Revenue"
+  revenue_yoy: "YoY Revenue Growth"
+  revenue_monthly: "Monthly Revenue"
+  gross_margin: "Gross Margin"
+  operating_margin: "Operating Margin"
+  net_margin: "Net Margin"
+  roe: "Return on Equity (ROE)"
+  per: "Price-to-Earnings (PER)"
+  pbr: "Price-to-Book (PBR)"
+  dividend_yield: "Dividend Yield"
+  debt_ratio: "Debt Ratio"
+  current_ratio: "Current Ratio"
+  eps: "Earnings Per Share (EPS)"
+  total_assets: "Total Assets"
+  total_liabilities: "Total Liabilities"
+  total_equity: "Total Equity"
+  operating_cash_flow: "Operating Cash Flow"
+  investing_cash_flow: "Investing Cash Flow"
+  financing_cash_flow: "Financing Cash Flow"
+  fcf: "Free Cash Flow"
+
+# ── Dividend Related ──────────────────────────
+dividend:
+  status_paid: "✓ Paid"
+  status_pending: "⏳ Pending"
+  status_unpaid: "⏳ Pending"
+  frequency_quarterly: "Quarterly"
+  frequency_annual: "Annual"
+  frequency_irregular: "Irregular"
+  no_record: "No dividend record for this company"
+  no_record_recent: "No dividend payout in recent 5 years"
+  cash_dividend: "Cash Dividend"
+  stock_dividend: "Stock Dividend"
+  total_dividend: "Total Dividend"
+  ex_date_label: "Ex-Dividend Date"
+  pay_date_label: "Payment Date"
+  year: "Year"
+  historical_record: "Historical Dividend Record"
+  latest_quarter: "Latest Quarter"
+  estimated_annual: "Estimated Annual Dividend"
+  dividend_yield_label: "Dividend Yield"
+  summary: "Dividend Summary"
+  detail_expand: "📋 Expand to view historical dividend record"
+
+# ── Buttons & Actions ──────────────────────────
+action:
+  submit: "Submit"
+  retry: "Retry"
+  reset: "Reset"
+  save: "Save"
+  cancel: "Cancel"
+  back: "Back"
+  go_to_detail: "Go to Details"
+  review: "Review"
+  start: "Start"
+  share: "Share"
+  copy_link: "Copy Link"
+  next_page: "Next Page"
+  prev_page: "Previous Page"
+
+# ── Status Messages ────────────────────────────
+status:
+  loading: "Loading..."
+  loading_stock: "Loading stock data..."
+  loading_page: "Loading page..."
+  checking_events: "🔍 Checking recent events..."
+  rate_limited: "⚠️ API rate limit reached. Some data may be unavailable. Please try again later."
+  rate_limited_short: "⚠️ FinMind API temporarily limited. Data may be incomplete."
+  data_missing: "No data available"
+  no_revenue_data: "No revenue data"
+  no_price_data: "No price data"
+  no_institutional_data: "No institutional data"
+  no_peer_data: "No peer companies found in the same industry"
+
+# ── Timeline ────────────────────────────────────
+timeline:
+  label_1y: "1Y"
+  label_3y: "3Y"
+  label_5y: "5Y"
+  label_all: "All"
+  filter_failed: "⚠️ Timeline filter failed, showing all data"
+  no_data_in_range: "📌 No data in this range, showing all data"
+
+# ── Error Messages ──────────────────────────────
+error:
+  not_found: "Stock ID {sid} not found"
+  no_data: "Unable to fetch data"
+  no_answer: "Quiz answer not found, please restart"
+  no_course: "Course content not found"
+  no_list_name: "Please enter a list name"
+  list_exists: "List name already exists or creation failed"
+  remove_failed: "Removal failed"
+  settings_saved: "✅ Settings saved"
+  api_error: "❌ API Error: {message}"
+
+# ── Results / Feedback ─────────────────────────
+result:
+  score: "Correct Answers"
+  accuracy: "Accuracy"
+  excellent: "Excellent performance, top tier in the industry"
+  good: "Stable performance, room for improvement"
+  needs_attention: "Needs attention, may drag down overall performance"
+  correct: "✅ Correct"
+  wrong: "❌ Incorrect"
+
+# ── Comparison ─────────────────────────────────
+comparison:
+  vs: "vs."
+  industry_avg: "Industry Average"
+  rank: "Rank"
+  stronger: "Stronger than peers"
+  weaker: "Weaker than peers"
+  similar: "Comparable to peers"
+
+# ── Financial Statement Items ──────────────────
+financial_statement:
+  revenue: "Revenue"
+  gross_profit: "Gross Profit"
+  operating_income: "Operating Income"
+  net_income: "Net Income"
+  total_assets: "Total Assets"
+  total_liabilities: "Total Liabilities"
+  current_assets: "Current Assets"
+  current_liabilities: "Current Liabilities"
+  total_equity: "Total Equity"
+
+# ── Notification Center ───────────────────────
+notification:
+  title: "Notifications"
+  subtitle: "Track important events for your watched stocks"
+  mark_all_read: "All notifications marked as read"
+  no_notification: "No notifications"
+
+# ── Investment Memo ────────────────────────────
+memo:
+  title: "Investment Memo"
+  add: "Add Memo"
+  edit: "Edit Memo"
+  delete: "Delete Memo"
+  empty: "No memos yet"
+
+# ── Disclaimer ─────────────────────────────────
+disclaimer:
+  general: "⚠️ This tool is for educational purposes only. All data comes from public information and FinMind. Does not constitute investment advice. Investing involves risk; please evaluate carefully."
+  expert: "⚠️ Expert analysis is AI-assisted and for reference only. Does not constitute investment advice."
+  historical: "⚠️ Historical scenarios are hypothetical calculations for educational purposes only. Does not constitute investment advice. Past performance does not guarantee future results."
+  feedback_positive: "Thank you for your positive feedback! 👍"
+  feedback_negative: "Thank you for your feedback, we will keep improving! 👎"
+
+# ── Unit Labels ────────────────────────────────
+unit:
+  hundred_million: "B"
+  ten_thousand: "M"
+  yuan: "TWD"
+  percent: "%"
+  shares: "K"
+  thousand_shares: "10K"
