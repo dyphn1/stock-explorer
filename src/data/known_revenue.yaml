@@ -1,0 +1,112 @@
+# 已知公司營收組成 — 當 FinMind 無法提供細項時使用
+# 公開資訊，來自各公司財報
+"2330":
+  "3奈米":
+    value: 30
+    description: 最新製程，蘋果、高通等大客戶搶著用
+  "5奈米":
+    value: 25
+    description: 成熟先進製程，用於手機和電腦晶片
+  "7奈米":
+    value: 15
+    description: 用於中階手機和電玩晶片
+  "成熟製程":
+    value: 20
+    description: 28奈米以上，用於汽車、家電等
+  "其他":
+    value: 10
+    description: 封裝測試、光罩等周邊服務
+"2317":
+  "消費電子(iPhone)":
+    value: 50
+    description: 幫蘋果組裝 iPhone 等消費電子產品
+  "雲端伺服器":
+    value: 20
+    description: 幫品牌客戶製造雲端伺服器
+  "元件":
+    value: 15
+    description: 連接器、機殼等元件
+  "其他":
+    value: 15
+    description: 電動車、數位健康等新事業
+"2454":
+  "手機晶片":
+    value: 55
+    description: 智慧型手機 SoC 晶片，賣給各手機品牌
+  "智慧終端":
+    value: 25
+    description: 智慧電視、WiFi、藍牙等晶片
+  "電源管理":
+    value: 10
+    description: 各種電子產品的電源管理晶片
+  "其他":
+    value: 10
+    description: ASIC 客製化晶片等
+"2308":
+  "電源供應器":
+    value: 35
+    description: 從手機充電器到資料中心電源
+  "基礎設施":
+    value: 25
+    description: 電動車充電樁、通訊基礎建設
+  "自動化":
+    value: 20
+    description: 工業自動化設備和機器人
+  "風扇與散熱":
+    value: 10
+    description: 伺服器和電腦散熱風扇
+  "其他":
+    value: 10
+    description: 視訊顯示、網通設備等
+"2881":
+  "富邦人壽":
+    value: 45
+    description: 人壽保險業務，保費收入為主
+  "台北富邦銀行":
+    value: 30
+    description: 商業銀行存放款、信用卡業務
+  "富邦證券":
+    value: 15
+    description: 證券經紀、承銷業務
+  "其他":
+    value: 10
+    description: 富邦產險、富邦創投等
+"1101":
+  "水泥":
+    value: 50
+    description: 建築用水泥，蓋房子和公共工程的基本材料
+  "電力":
+    value: 20
+    description: 水泥廠的餘熱發電和綠能發電
+  "廢棄物處理":
+    value: 15
+    description: 幫工廠處理垃圾和廢棄物
+  "其他":
+    value: 15
+    description: 預拌混凝土、環保材料等
+"2002":
+  "條鋼":
+    value: 30
+    description: 鋼筋、型鋼等建築用鋼材
+  "熱軋":
+    value: 25
+    description: 熱軋鋼捲，用於汽車、家電
+  "冷軋":
+    value: 20
+    description: 冷軋鋼片，表面品質較佳
+  "其他":
+    value: 25
+    description: 棒線、電磁鋼片等特殊鋼材
+"1301":
+  "塑膠":
+    value: 40
+    description: PVC、PE 等塑膠原料
+  "石油化工":
+    value: 30
+    description: 乙烯、丙烯等化工原料
+  "纖維":
+    value: 15
+    description: 紡織纖維和布匹
+  "其他":
+    value: 15
+    description: 電子材料、醫療用品等

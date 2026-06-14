@@ -1480,4 +1480,238 @@ Recent features (C126 moat comparison, C47 academy, C101 quiz) demonstrate stron
 
 ---
 
-*This section was added by the Design Reviewer in Round 34 (2026-06-14). Next update: After next sprint feature implementation.*
+*This section was added by the Design Reviewer in Round 34 (2026-06-14). Next update: After Sprint 17 feature implementation.*
+
+---
+
+# Round 37 Design Assessment (2026-06-14, Post-Sprint 16b)
+
+> **Reviewer**: Design Reviewer
+> **Scope**: Sprint 16b design verification, competitor design comparison, Sprint 17 design prerequisites
+
+## 1. Design Grade Assessment
+
+### Recommendation: **A** (maintained)
+
+**Justification:**
+
+Sprint 16b delivered 6 features that overall maintain the A grade. The design quality is solid, with two standout features (C28 Story Timeline, D5 LLM Abstraction) that demonstrate good design discipline, and two features (C07 Settings, C132 Risk Simplifier) that are architecturally sound but raise minor design concerns.
+
+**Positive findings:**
+
+1. **C28 Story Timeline (commit `ca49d2c`)**: Excellent design discipline. Uses `_section_title()`, `_summary_card()`, and `_info_card()` from `_router_base.py` — zero inline HTML. Severity coding (`_SEVERITY_COLORS` dict mapping high→`#E74C3C`, medium→`#F39C12`, low→`#27AE68`) is consistent with the design system's existing color palette. Timeline entries use `_summary_card(border_color=...)` which leverages the D-083 fix from Sprint 14. The severity legend at the bottom is a nice touch. The empty state uses `_info_card()` correctly. This is the best-designed new page since C126 moat comparison.
+
+2. **D5 LLM Abstraction (commit `5e7fde8`)**: Protocol-based design (`ExplanationProvider` with `@runtime_checkable`) is architecturally sound. The `ExplanationRequest`/`ExplanationResponse` dataclasses are clean. The `TemplateExplanationProvider` covers 10 metric templates with direction-aware explanations (increase/decrease/neutral). The factory pattern (`get_explanation_provider()`) enables future LLM integration without changing callers. The templates pass the "ten-second test" — e.g., "月營收成長15%，表現優於預期，可能是需求回溫或新產品貢獻" is immediately understandable by a beginner. **Design concern**: The template explanations are somewhat generic ("可能是需求回溫或新產品貢獻") — they attribute changes to common causes without stock-specific context. This is acceptable for a template fallback but should be noted as a UX limitation when C134 wires it in.
+
+3. **C132 Risk Simplifier (Sprint 16a, commit `8051cb8`)**: The 1-5 scale with emoji mapping (1-2→🟢, 3→🟡, 4→🟠, 5→🔴) largely aligns with existing color patterns, though the addition of 🟠 (level 4) introduces a fourth severity color not previously used in the design system (which uses green/amber/red). The emoji progression is logical and intuitive. Descriptions are plain-language and pass the ten-second test.
+
+**Remaining concerns (not grade-blocking):**
+
+- **C07 Settings**: Uses raw `st.markdown("## ...")` for the page header instead of `_section_title()`. The section label uses `### 📈 📊 💰` markdown headers which are functional but don't use the `_section_title()` helper. However, this is a settings_infrastructure page where PPT-style is less critical — users expect form-like layouts on settings pages. The sliders with `key=` parameter properly sync to session_state, and the reset button with `st.rerun()` is the correct Streamlit pattern. The value labels (`_value_label_pricerange`, `_value_label_volume`) that show 🔴/🟡/🟢 sensitivity indicators are a **nice design touch** — this is exactly the kind of progressive disclosure that makes settings beginner-friendly.
+
+- **C07 missing feedback**: Settings sliders don't show live preview of what events would change. This is deferred to Sprint 17 (wiring), but it's worth noting as a design gap — users adjust sliders without knowing the impact until Sprint 17 wires them.
+
+- **D5 unused**: The `ExplanationProvider` has zero callers. This is expected (Sprint 17 C134 will wire it), but it means the "ten-second test" quality of LLM-generated explanations is unverified in production. The template explanations work, but the real test will come when C134 generates delta-specific explanations.
+
+**Net assessment**: Sprint 16b maintained design discipline. C28 Story Timeline is exemplary. C07 is functional infrastructure. D5 is architecturally sound but untested in production. The grade remains **A** — no regressions, no new inline HTML, and C28 demonstrates that the design system components are being used consistently.
+
+**Grade trajectory**: A (R21) → A (R22) → A- (R23) → A (R24) → A (R26) → A (R34) → **A (R37, maintained)**
+
+---
+
+## 2. Sprint 16b Design Verification
+
+| Feature | Shared Components Used? | Consistent Severity Colors? | Ten-Second Test? | Inline HTML? | Overall Assessment |
+|---------|------------------------|---------------------------|-----------------|--------------|-------------------|
+| **C28 Story Timeline** | ✅ `_section_title`, `_summary_card`, `_info_card` | ✅ high→`#E74C3C`, medium→`#F39C12`, low→`#27AE68` (matches design system) | ✅ Cards are scannable; legend explains severity | ✅ Zero inline HTML | ✅ **Excellent** |
+| **D5 LLM Abstraction** | N/A (backend service) | N/A | ✅ Template explanations pass (e.g., "月營收成長15%...") | ✅ Pure Python | ✅ **Sound** (awaiting C134 wiring) |
+| **C07 Settings Skeleton** | ⚠️ Raw `st.markdown("## ⚙️ 設定")` instead of `_section_title()` | N/A | ✅ Slider labels are clear; value indicators show sensitivity | ✅ Zero inline HTML | ✅ **Functional** (settings page, PPT-style less critical) |
+| **C132 Risk Simplifier** | N/A (backend service) | ⚠️ Introduces 🟠 for level 4 (new color, but fits the pattern) | ✅ "非常低風險" through "非常高的風險" is clear | ✅ Pure Python | ✅ **Good** |
+| **C14 Health Narrative** | N/A (backend enhancement) | N/A | ✅ `get_health_summary()` produces plain-language text | ✅ Pure Python | ✅ **Good** |
+| **C41 Read Next Phase A** | ✅ Uses existing `_render_read_next()` | N/A | ✅ "推薦閱讀" card is clear | ✅ Uses `_info_card` | ✅ **Good** |
+
+**Summary**: Zero inline HTML regressions. C28 is the design star. All backend services (D5, C132, C14) produce beginner-friendly output. C07 minor issue with non-standard headers but acceptable for infrastructure.
+
+---
+
+## 3. Competitor Design Patterns to Adopt
+
+### Sprint 17+ Opportunities
+
+Based on the current 4 competitors from the original briefing plus patterns observed in C07/C134/C14 design context:
+
+### 1. Finimize's "Confidence Meter" for Explanations
+- **What**: Finimize shows a small confidence indicator next to each AI explanation ("We're 85% sure this is due to..."). Beginners don't know whether to trust explanations.
+- **Stock Explorer context**: When C134 wires `TemplateExplanationProvider` to `explain delta()`, each explanation should include a subtle confidence indicator. The `ExplanationResponse.confidence` field (0.0-1.0) already exists in D5 but is always set to 1.0. 
+- **Adoption**: For Sprint 17 C134, render template-sourced explanations with a subtle "📊 系統估算" caption below the explanation text. When future LLM-sourced explanations arrive, show "🤖 AI 分析" instead. This builds trust transparency from day one.
+
+### 2. Simply Wall St's "Benchmark Ghost Layer" on Snowflake
+- **What**: Simply Wall St overlays a semi-transparent "industry average" polygon behind the stock's snowflake, so users see both their stock AND the benchmark in one glance. No tab switching.
+- **Stock Explorer context**: C14 Full Radar needs an industry #1 benchmark overlay. The current snowflake (`create_health_snowflake`) doesn't support overlay layers.
+- **Adoption**: For Sprint 17 C14, add a second trace to the Plotly snowflake figure with `fill='tonextx'` and opacity 0.15 in gray. Label it "🏭 產業標竿" with a legend entry. This should be toggleable (default: on) via a `st.toggle("顯示產業比較")`.
+
+### 3. Stash's "Glossary Gate" Before Technical Content
+- **What**: Stash shows a brief definition popover automatically the first time a user encounters a financial term, without requiring them to click. It's proactive education.
+- **Stock Explorer context**: `_glossary_tooltip()` exists but isn't wired to any page (D-091). The `TemplateExplanationProvider` templates explain changes but don't define the underlying terms.
+- **Adoption**: For Sprint 17 C134, when rendering delta explanations, auto-detect financial terms (PER, ROE, 毛利率, etc.) in the explanation text and wrap them with `_glossary_tooltip()` popovers. This is a light integration — the glossary component exists, it just needs to be called from the C134 rendering layer.
+
+### 4. Public.com's "What This Means for You" Callout
+- **What**: After each stock story or data point, Public.com adds a small "💡 What this means for you" box that translates data into personal relevance. Not investment advice — just context.
+- **Stock Explorer context**: The `explain_delta()` function produces factual explanations ("月營收成長15%") but doesn't add the "what this means" layer. The C132 risk descriptions ("這家公司風險很低，財務健康狀況良好") are a good start but could be more actionable.
+- **Adoption**: For Sprint 17 C134, add an optional `implication` field to `ExplanationResponse`. For template-based explanations, add a stock sentence: e.g., "如果你正在觀察這家公司，穩定的營收成長是一個正面的訊號。" (framed as observability, not advice). This passes the historian tone test.
+
+### 5. Finimize's "Progressive Disclosure for Settings"
+- **What**: Finimize's settings use accordion-style grouping: "Basic" thresholds are visible by default, "Advanced" thresholds are behind a "Show more" button. This prevents settings overwhelm.
+- **Stock Explorer context**: C07 currently shows 3 sliders flat. Sprint 17 will wire them. When more settings are added (industry thresholds, volume detection, notification frequency), the settings page will grow.
+- **Adoption**: For Sprint 17 C07 wiring, wrap the 3 existing sliders in a `st.expander("基本門檻設定", expanded=True)` and add a placeholder `st.expander("進階門檻設定", expanded=False)` for the planned Sprint 18+ additions. This provides a growth path without cluttering.
+
+---
+
+## 4. Sprint 17 Design Prerequisites
+
+### 4.1 C14 Full Radar — Benchmark Overlay Design Spec
+
+**Context**: C14 adds industry #1 benchmark data to the existing health snowflake and integrates the radar into the story card above-fold.
+
+**Benchmark Overlay on Snowflake**:
+```
+┌─────────────────────────────────────────────────┐
+│  🏥 健康評分 — 台積電 (2330)                      │
+│                                                 │
+│    獲利能力  ●━━━━━━━━━━●                       │
+│    ╱    ╲   ╱  ╲   ╱  ╲                        │
+│  財務結構 ●──── ──── ● 償債能力                   │
+│    ╲    ╱   ╲  ╱   ╲  ╱                        │
+│    營運效率  ●━━━━━━━━━━●                       │
+│         ╲    ╱                                  │
+│          成長潛力                              │
+│                                                 │
+│  ● 台積電 (85分)   ░░░ 產業標竿 — 日月光 (78分) │
+│                                                 │
+│  [顯示產業比較 ▼]  [產業排名: #2/15]              │
+└─────────────────────────────────────────────────┘
+```
+
+**Implementation notes**:
+- Use Plotly's `scatterpolar` with a second trace for benchmark (gray, `opacity=0.15`)
+- Industry #1 name should come from `data/industry_benchmarks.yaml` — hardcode for MVP
+- Toggle via `st.toggle("顯示產業比較", value=True)` — defaults to on so users see the benchmark immediately
+- Industry rank badge: `#2/15` shown as `st.caption()` below the snowflake, using the 🟢/🟡/🔴 color from C132 risk level
+- Use `_mini_score_card()` for the 5 dimension scores (already exists, D-082 resolved)
+
+**Story Card Integration**:
+- Move the health score from the story card's inline display to the snowflake chart
+- Story card should show: `_section_title("📌 30 秒認識這家公司")` → snowflake chart → key metrics → Did You Know
+- The snowflake replaces the current `_render_story_card()` health indicator section
+
+### 4.2 C134 Change Explanations — UX Pattern for `explain_delta()` Narratives
+
+**Context**: `explain_delta()` in `delta_engine.py` produces plain-language explanations like "月營收成長15%，表現優於預期，可能是需求回溫或新產品貢獻". C134 will refactor this to use `TemplateExplanationProvider` from D5.
+
+**UX Pattern — "Delta Card with Explanation"**:
+```
+┌─────────────────────────────────────────────────┐
+│  📈 最近有什麼變化                                │
+│                                                 │
+│  ┌───────────────────────────────────────────┐  │
+│  │  📊 月營收                                  │  │
+│  │  2,832 億 → 2,456 億 (+15.3%)             │  │
+│  │                                           │  │
+│  │  💬 台積電月營收成長 15%，表現優於預期，    │  │
+│  │     可能是需求回溫或新產品貢獻              │  │
+│  │                                           │  │
+│  │  📊 系統估算 · 基於近 30 日資料             │  │
+│  └───────────────────────────────────────────┘  │
+│                                                 │
+│  ┌───────────────────────────────────────────┐  │
+│  │  📊 股價（近 30 日均價）                    │  │
+│  │  850 元 → 780 元 (-8.2%)                  │  │
+│  │                                           │  │
+│  │  💬 台積電股價近 30 日小跌 8%，略有回檔     │  │
+│  │                                           │  │
+│  │  📊 系統估算 · 基於近 30 日資料             │  │
+│  └───────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────┘
+```
+
+**Design spec**:
+1. **Container**: Each delta is a card using `_info_card()` with the metric name as title
+2. **Layout**: `st.columns([2, 1])` — left: metric value + change %, right: explanation text
+3. **Change indicator**: Use colored emoji (🔴/🟢) + bold percentage, consistent with C39's existing color coding
+4. **Explanation text**: Rendered below the metric value in `st.caption()` style (smaller, muted)
+5. **Source badge**: "📊 系統估算" for template-sourced, "🤖 AI 分析" for future LLM-sourced — builds trust transparency
+6. **Glossary integration**: Auto-detect financial terms in explanations and wrap with `_glossary_tooltip()` (see Pattern #3 above)
+7. **Implication sentence**: Optional one-line "如果你正在觀察..." context (see Pattern #4 above)
+8. **Empty state**: When no deltas exceed threshold, show `_info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")` — this already exists from D-025
+
+**Refactoring requirements** (from `handoff_discuss_r36.md`):
+- Write C39 regression tests BEFORE refactoring `explain_delta()` (Action Item A3)
+- `explain_delta()` should delegate to `TemplateExplanationProvider.explain()` via `ExplanationRequest(metric_name, current_value, delta=change_pct)`
+- Keep `explain_delta()` as a convenience wrapper for backward compatibility
+
+### 4.3 C07 Wire Thresholds — Visual Feedback Design Spec
+
+**Context**: C07 settings page has 3 sliders (price/volume/revenue). Sprint 17 wires them to `adaptive_engine.py` parameters.
+
+**Design spec for wiring**:
+1. **Session state accessibility spike** (Action Item A2): Verify that `st.session_state["settings_price_threshold"]` is accessible from `adaptive_engine.py`. The engine runs in the service layer (no Streamlit imports), so values must be passed as parameters, not read from session_state directly.
+
+2. **Visual feedback when wired**:
+   - Add a `st.success("✅ 門檻設定已生效")` toast when the user changes a slider AND the value is successfully wired to the engine
+   - Show a small indicator next to each slider: "目前使用中" (green dot) when the setting is active, "未連線" (gray dot) when not yet wired
+   - This gives users confidence that their settings actually do something
+
+3. **Progressive disclosure** (see Pattern #5 above):
+   - Wrap 3 existing sliders in `st.expander("基本門檻設定", expanded=True)`
+   - Add placeholder `st.expander("進階門檻設定", expanded=False)` with `st.info("即將推出：產業別閾值、法人動向敏感度...")`
+
+4. **Reset button**: Already exists and works correctly. When wired, reset should also re-initialize the adaptive_engine's internal thresholds.
+
+---
+
+## 5. New Design Debt from Sprint 16b
+
+### D-096: C07 Settings Page Uses Raw st.markdown Headers Instead of _section_title()
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 37
+- **Description**: `settings.py` uses `st.markdown("## 風險閾值設定")` (line 65) and `st.markdown("### 📈 股價變動閾值")` (line 74) instead of `_section_title()`. While this is a settings/infrastructure page where PPT-style is less critical, it creates inconsistency with the rest of the app. The `_section_title()` helper provides emoji auto-detection and consistent formatting.
+- **Affected Files**: `src/pages/settings.py` lines 65, 74, 100, 123
+- **Proposed Fix**: Replace with `_section_title("⚙️ 設定")` and `_section_title("📈 股價變動閾值")` calls.
+- **Effort**: 0.25h
+- **Note**: Low priority — settings page is infrastructure, not user-facing content. But should be fixed when C07 is wired in Sprint 17.
+
+### D-097: D5 TemplateExplanationProvider Explanations Are Generic (No Stock-Specific Context)
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 37
+- **Description**: The `TemplateExplanationProvider` in `template_provider.py` produces explanations like "月營收成長15%，表現優於預期，可能是需求回溫或新產品貢獻". These are factually correct but generic — they don't reference the specific stock's industry, recent news, or unique situation. The `ExplanationRequest` has a `context` dict field that could carry stock-specific data, but `TemplateExplanationProvider.explain()` ignores it entirely. When C134 wires this to `explain_delta()`, users will see the same generic explanations for TSMC and a small-cap stock.
+- **Affected Files**: `src/services/llm/template_provider.py` line 101
+- **Proposed Fix**: Enhance `TemplateExplanationProvider.explain()` to use `request.context` when available. At minimum, use `context.get("industry")` to add industry-specific flavor: e.g., "月營收成長15%，在半導體產業中表現優於同業平均". This is a Sprint 17 prerequisite for C134.
+- **Effort**: 1-2h
+- **Competitor Benchmark**: Spiking's "Why Stock Moved" uses stock-specific context (recent news, sector performance) in every explanation.
+
+### D-098: C132 Risk Level 4 Uses 🟠 Not in Design System Color Palette
+- **Severity**: P2
+- **Added**: 2026-06-14
+- **Source**: Design Review Round 37
+- **Description**: The `risk_simplifier.py` uses 5 emoji/color levels: 🟢🟢🟡🟠🔴. The design system's established color palette uses only 3 severity colors: green (`#27AE60`), amber (`#F39C12`), red (`#E74C3C`). The addition of 🟠 (orange) for level 4 is logical in the progression but introduces a fourth color that doesn't appear anywhere else in the design system. This creates a minor inconsistency — users who've learned "green = good, amber = caution, red = danger" must now learn "orange = elevated risk" as a new category.
+- **Affected Files**: `src/services/risk_simplifier.py` line 77
+- **Proposed Fix**: Either (a) keep 🟠 but document it in the design system as the "elevated risk" color, or (b) simplify to 4 levels (🟢🟡🟡🔴) to stay within the existing 3-color palette. Option (a) is recommended since the 5-level granularity is more informative for users.
+- **Effort**: 0.5h (documentation update)
+
+---
+
+## Statistics
+
+- **Total Issues**: 93 (+3 new: D-096, D-097, D-098)
+- **P0 (Blocking)**: 0
+- **P1 (Important)**: 3 (D-003, D-005, D-006 — unchanged)
+- **P2 (Optimization)**: 45 (net +3 from Round 37)
+- **Resolved/Consolidated**: 33 (unchanged)
+- **New Issues This Round**: 3 (D-096, D-097, D-098 — all P2)
+- **Design Grade**: **A** (maintained, 4th consecutive A since R34)
+
+---
+
+*This section was added by the Design Reviewer in Round 37 (2026-06-14). Next update: After Sprint 17 feature implementation.*

@@ -4481,3 +4481,166 @@ No new feature gaps identified beyond C33 + C48 already in Sprint 13a plan.
 ---
 
 *This is the twenty-seventh competitor research round. Seven new feature suggestions identified (C132-C138). The most impactful new gap is C134 (AI-Generated Change Explanations) — Datawallet and Spiking prove that explaining WHY numbers changed is becoming the baseline expectation for financial platforms. The most strategically important gap is C138 (Smart Notifications with Explanations) — it combines C02 (Notifications) with AI narrative generation, creating a unique educational notification system. The most time-sensitive finding: Spiking is the most directly relevant uncovered competitor — its "Why Stock Moved" AI validates Stock Explorer's C98 + C107 direction but also shows that the TW market is moving toward AI-generated explanations faster than expected.*
+
+---
+
+# Stock Explorer Competitor Research Report — Round 11
+
+> **Date**: 2026-06-14
+> **Author**: QA Engineer (Round 11)
+> **Purpose**: Identify new competitors and feature gaps not covered in Rounds 1-10
+
+## New Competitors Analyzed (Not in Rounds 1-10)
+
+| # | Competitor | Type | Key Relevance to Stock Explorer |
+|---|-----------|------|--------------------------------|
+| 1 | **Finimize** | International / Daily Briefing | Daily financial newsletter with ultra-plain-language summaries; "Explain like I'm 5" approach to market events |
+| 2 | **SoFi Invest** | International / Education-First | Free investing with integrated education center; "Finance 101" modules tied to real portfolio actions |
+| 3 | **Tastytrade** | International / Narrative-Driven | Options/trading education through storytelling; "Market Measures" show uses historical narrative format |
+| 4 | **Morningstar Investor** | International / Fundamentals-First | "Moat Rating" methodology is the gold standard; narrative research reports with historical context |
+| 5 | **股感知識庫 (StockFeel)** | TW / Community Education | TW's largest investment knowledge platform; article-driven education with social validation |
+| 6 | **口袋美股 (Pocket US Stocks)** | TW / Mobile-First | Simplified US stock investing for TW users; plain-language stock cards with visual summaries |
+| 7 | **Magnify.money** | AI-Powered Explanation Engine | AI-generated plain-language explanations of financial statements; "Explain this number" UX pattern |
+| 8 | **Khan Academy Finance** | Education-First / Free | Free video-based finance education; progressive curriculum from basic to advanced concepts |
+
+### Detailed Competitor Profiles
+
+#### 1. Finimize
+- **Key Features**: Daily 3-minute market briefing, "Explain like I'm 5" event summaries, jargon-free language, emoji-based sentiment indicators
+- **UX Patterns**: Ultra-short-form content, conversational tone, push-notification-first design, "Today's Big Number" single-stat focus
+- **Feature Gaps (what they have, we don't)**:
+  - **Daily digest format**: One key market insight per day, perfectly sized for beginners
+  - **Emoji-based sentiment**: Visual emotional cues (📈🔥😰) that pass the ten-second test instantly
+  - **Conversational tone as default**: Every sentence written at a 6th-grade reading level
+
+#### 2. SoFi Invest
+- **Key Features**: Free stock/ETF investing, "Finance 101" education center, "Learn & Earn" modules tied to portfolio, career coaching integration
+- **UX Patterns**: Education modules triggered by user actions (e.g., buying a stock triggers a "What is an ETF?" lesson), progress tracking across learning modules
+- **Feature Gaps**:
+  - **Action-triggered education**: Learning content appears contextually when user performs related actions
+  - **Integrated portfolio + education**: Education is not a separate section but woven into the investing flow
+  - **Career-to-investment bridge**: Connects personal career decisions to investment strategy
+
+#### 3. Tastytrade
+- **Key Features**: "Market Measures" research show, historical trade analysis, narrative-driven options education, "The Numbers" segment format
+- **UX Patterns**: Storytelling format for complex topics, historical case studies as primary teaching tool, data presented through narrative arc (setup → analysis → conclusion)
+- **Feature Gaps**:
+  - **Historical case study format**: Uses real historical market events as teaching stories — directly aligns with Stock Explorer's "historian" positioning
+  - **Narrative arc data presentation**: Every data point is presented as part of a story (beginning, middle, end)
+  - **"What happened → Why → What it means" three-part structure**: Consistent explanation framework
+
+#### 4. Morningstar Investor
+- **Key Features**: Economic Moat Rating (Wide/Narrow/None), narrative research reports, "Stewardship Rating", historical performance context, fair value estimates
+- **UX Patterns**: Every stock report follows a consistent narrative structure (Business Overview → Moat → Financial Health → Valuation → Conclusion), letter-grade ratings
+- **Feature Gaps**:
+  - **Moat Rating methodology**: The industry-standard competitive advantage assessment — Stock Explorer's C46 Moat Analysis could learn from Morningstar's consistent framework
+  - **Narrative research reports**: Long-form written analysis that tells the company's story, not just data tables
+  - **Stewardship Rating**: Management quality assessment — a dimension Stock Explorer doesn't cover
+  - **Consistent report structure**: Users know exactly where to find what they need
+
+#### 5. 股感知識庫 (StockFeel)
+- **Key Features**: Largest TW investment knowledge platform, article-driven education, social validation (likes/comments), expert contributor system, categorized learning paths
+- **UX Patterns**: Article-first design with social engagement, expert badges, "knowledge points" gamification, mobile-optimized reading experience
+- **Feature Gaps**:
+  - **Social validation on educational content**: Users can see how many others found an article helpful
+  - **Expert contributor system**: Multiple voices with credibility indicators
+  - **Knowledge points gamification**: Reading articles earns points — lightweight engagement loop
+  - **Categorized learning paths**: Structured progression from beginner to advanced within TW market context
+
+#### 6. 口袋美股 (Pocket US Stocks)
+- **Key Features**: Simplified US stock investing for TW audience, visual stock cards, plain-language summaries, curated watchlists, beginner-friendly screening
+- **UX Patterns**: Card-based UI (one stock = one card), color-coded indicators, swipe-based navigation, "stock of the day" feature
+- **Feature Gaps**:
+  - **Card-based stock summary**: One stock = one visual card with 3-4 key metrics in plain language
+  - **Curated watchlists for beginners**: Pre-built lists like "Top 10 US Stocks for Beginners" or "Dividend Starter Pack"
+  - **Color-coded health indicators**: Green/yellow/red for instant visual assessment
+  - **"Stock of the Day"**: Single-stock daily focus for learning
+
+#### 7. Magnify.money
+- **Key Features**: AI-generated plain-language explanations of financial statements, "Explain this number" button on every metric, contextual definitions, trend narratives
+- **UX Patterns**: Every number has an "explain" button, AI-generated narratives update with data, progressive disclosure (simple → detailed), confidence indicators on AI explanations
+- **Feature Gaps**:
+  - **"Explain this number" UX pattern**: One-click explanation of any financial metric — the ultimate ten-second test feature
+  - **Progressive disclosure**: Simple explanation by default, "tell me more" for deeper detail — aligns with C105 Simple/Detailed toggle
+  - **Confidence indicators**: AI explanations include confidence levels — builds trust
+  - **Trend narratives**: AI generates "this number went up because..." narratives automatically
+
+#### 8. Khan Academy Finance
+- **Key Features**: Free video-based finance curriculum, progressive learning path (basic → advanced), practice exercises, mastery tracking, completely free
+- **UX Patterns**: Video + transcript + practice exercise per topic, mastery percentage per concept, "next lesson" progression, no paywall
+- **Feature Gaps**:
+  - **Progressive curriculum structure**: Concepts build on each other with clear prerequisites
+  - **Mastery percentage per concept**: Users see their understanding level for each financial concept
+  - **Practice exercises with instant feedback**: Active recall after watching — not just passive consumption
+  - **Completely free education**: No premium tier — education is the product, not the upsell
+
+## New Feature Ideas from Round 11
+
+| ID | Title | Priority | Effort | Source Competitor | Key Differentiator |
+|----|-------|----------|--------|-------------------|-------------------|
+| C139 | "Explain This Number" One-Click Metric Explainer | P1 | 8-12h | Magnify.money, Finimize | One-click plain-language explanation of any metric; ultimate ten-second test feature |
+| C140 | Historical Case Study Library | P1 | 14-20h | Tastytrade, Morningstar | Curated library of historical market events told as stories; "historian" positioning perfected |
+| C141 | Daily Market Digest — "Today's Big Number" | P2 | 10-14h | Finimize, 口袋美股 | Single daily insight with plain-language explanation; beginner retention loop |
+| C142 | Action-Triggered Contextual Education | P2 | 12-16h | SoFi, Khan Academy | Education modules appear contextually based on user actions; learning in the flow |
+| C143 | Stewardship / Management Quality Assessment | P2 | 10-14h | Morningstar | Management quality rating adds a dimension beyond financial health; "who's running this?" |
+| C144 | Beginner Curated Watchlists | P2 | 6-10h | 口袋美股, SoFi | Pre-built themed watchlists ("Dividend Starter Pack", "Top 10 Beginner Stocks"); reduces choice paralysis |
+| C145 | Knowledge Points & Reading Progress | P2 | 8-12h | 股感知識庫, Khan Academy | Lightweight gamification for educational content engagement; reading earns points |
+| C146 | Emoji-Based Sentiment Indicators | P2 | 4-6h | Finimize, 口袋美股 | Visual emotional cues (📈🔥😰) for instant market sentiment; passes ten-second test effortlessly |
+
+### Feature Detail: C139 — "Explain This Number" One-Click Metric Explainer
+
+**Source**: Magnify.money's "Explain this number" button pattern, Finimize's ultra-plain-language approach
+
+**Description**: Every financial metric in Stock Explorer gets a small "?" icon. Clicking it reveals a 2-3 sentence plain-language explanation of what the metric means, why it matters, and how to interpret the current value. This is the ultimate expression of the "ten-second test" — any number can be understood in under 10 seconds.
+
+**Alignment**: 
+- ✅ Ten-second test — core requirement
+- ✅ Beginner-friendly — removes jargon barrier
+- ✅ Point-to-point knowledge construction — each explanation links to related concepts
+- ✅ PPT-style — fits naturally into the card-based presentation
+
+**Effort**: 8-12h (UI pattern + LLM prompt template + integration with existing metric cards)
+
+### Feature Detail: C140 — Historical Case Study Library
+
+**Source**: Tastytrade's "Market Measures" historical case study format, Morningstar's narrative research reports
+
+**Description**: A curated library of 20-30 historical market events (e.g., "TSMC's 2018-2020 Growth Story", "The 2020 COVID Crash and Recovery", "Why 2330.TW Dropped 20% in 2022") told as structured narratives with data visualizations. Each case study follows a consistent format: Context → Event → Impact → Lessons Learned. This is the "historian, not stock picker" positioning made tangible.
+
+**Alignment**:
+- ✅ Historian positioning — core differentiator
+- ✅ Story first — narrative arc format
+- ✅ Beginner-friendly — real stories are more memorable than abstract concepts
+- ✅ PPT-style — each case study is a visual narrative
+
+**Effort**: 14-20h (content template + 5 initial case studies + navigation + LLM-assisted case study generation)
+
+## Summary
+
+### Counts
+- **New competitors analyzed**: 8 (Finimize, SoFi, Tastytrade, Morningstar Investor, 股感知識庫, 口袋美股, Magnify.money, Khan Academy Finance)
+- **New feature suggestions**: 8 (C139-C146)
+- **P1 features**: 2 (C139 Explain This Number, C140 Historical Case Study Library)
+- **P2 features**: 6 (C141-C146)
+
+### Key Insights
+
+1. **"Explain This Number" Is the Ultimate Ten-Second Test Feature**: Magnify.money's one-click explanation pattern is the purest expression of beginner-friendly design. Every number in Stock Explorer should be explainable in under 10 seconds. C139 is the highest-impact new gap — it transforms every metric from a potential confusion point into a learning moment.
+
+2. **Historical Case Studies Are the Perfect "Historian" Feature**: Tastytrade and Morningstar both prove that narrative-driven historical analysis is the most effective way to teach investing. Stock Explorer's "historian, not stock picker" positioning is uniquely suited to own this space — no TW competitor offers structured historical case studies. C140 is the most strategically important new gap.
+
+3. **Daily Digest Drives Retention**: Finimize's daily 3-minute briefing and 口袋美股's "Stock of the Day" both show that a single daily insight is the optimal retention mechanism for beginners. C141 would give users one reason to return every day.
+
+4. **Contextual Education Beats Separate Learning Centers**: SoFi's action-triggered education (e.g., buying a stock triggers a "What is an ETF?" lesson) is more effective than standalone courses. C142 would weave education into the existing user flow rather than requiring users to visit a separate academy section.
+
+5. **Management Quality Is an Underserved Dimension**: Morningstar's Stewardship Rating assesses management quality — a dimension that Stock Explorer's current health scoring (C14, C43) doesn't cover. C143 would add a "who's running this company?" layer to the analysis.
+
+6. **Curated Watchlists Reduce Beginner Paralysis**: 口袋美股's pre-built themed watchlists and SoFi's "Investment Packs" both address the #1 beginner problem: not knowing where to start. C144 would provide ready-made starting points.
+
+7. **Emoji-Based Sentiment Is a Low-Effort, High-Impact UX Pattern**: Finimize's emoji sentiment indicators (📈🔥😰) and 口袋美股's color-coded cards both prove that visual emotional cues pass the ten-second test effortlessly. C146 is the lowest-effort new feature (4-6h) with high beginner impact.
+
+8. **The TW Education Gap Is Real**: 股感知識庫 dominates TW investment education but is article-heavy and lacks structured progression. Khan Academy's curriculum structure + Stock Explorer's historian narrative = a unique educational offering for the TW market. C145 (Knowledge Points) bridges the gap between unstructured articles and structured courses.
+
+---
+
+*This is the eleventh competitor research round (Round 28 in file sequence). Eight new competitors analyzed, eight new feature suggestions identified (C139-C146). The most impactful new gap is C139 ("Explain This Number") — Magnify.money proves that one-click metric explanation is the ultimate ten-second test feature. The most strategically important gap is C140 (Historical Case Study Library) — it makes the "historian, not stock picker" positioning tangible with curated historical narratives. The lowest-effort win is C146 (Emoji-Based Sentiment Indicators) at 4-6h. The most TW-relevant finding: 股感知識庫 dominates education but lacks structured progression — Stock Explorer can own the "structured historian education" niche.*

@@ -1208,3 +1208,169 @@ Sprint 13a plan: **C33 Glossary** + **C48 Story Card** (16-26h)
 *Reviewer: System Architect (PM-coordinated)*
 *Next review: Sprint 16 mid-point or Sprint 17 kickoff*
 *Architecture Health: 🟢 HEALTHY*
+
+---
+
+## Round 37 — Architecture Debt Review (2026-06-14, Post-Sprint 16b)
+
+> **Context**: Sprint 16b COMPLETE (C28 + D5 + C07 + C14 enhanced + C132 + C41 Phase A).
+> **Reviewer**: System Architect
+> **Scope**: Verify Sprint 16b debt, assess Sprint 17 prerequisites, architecture health check.
+> **Key Metrics**: L0: 110/110 ✅ | L1: 20/20 ✅ | Tests: 165+/165+ ✅
+
+---
+
+### 1. Sprint 16b Debt Verification
+
+| Module | Lines | Streamlit Imports | Service Layer Clean? | Notes |
+|--------|-------|-------------------|---------------------|-------|
+| `timeline_service.py` | 299 | 0 | ✅ Pure Python | Compose-and-enrich pipeline, YAML-backed, graceful fallbacks |
+| `llm/base.py` | 44 | 0 | ✅ Protocol | `@runtime_checkable` Protocol + dataclasses, clean ABC |
+| `llm/template_provider.py` | 131 | 0 | ✅ Fallback | 10 metric templates (revenue, eps, pe_ratio, roe, debt_ratio, dividend_yield, gross_margin, operating_margin, net_margin + fallback) |
+| `llm/factory.py` | 24 | 0 | ✅ Factory | `get_explanation_provider()` returns TemplateExplanationProvider |
+| `risk_simplifier.py` | 119 | 0 | ✅ Pure Python | 1-5 scale, imports from risk_analyzer + health_scoring |
+| `story_timeline.py` (page) | 169 | Yes (page) | ✅ Uses shared | Imports `_section_title`, `_summary_card`, `_info_card` from `_router_base` |
+| `settings.py` (page) | 161 | Yes (page) | ⚠️ Minor deviation | Uses `st.title()` directly (not `_section_title`), no `data`/`client` params |
+
+**Sprint 16b Debt Verification Summary**: All 5 service modules are Streamlit-free. The `story_timeline.py` page correctly uses shared components from `_router_base`. The `settings.py` page is a minor deviation from the standard page pattern (no `data`/`client` params, uses `st.title()` instead of `_section_title`) but this is acceptable for a settings/skeleton page that doesn't depend on stock data.
+
+---
+
+### 2. New Architecture Debt from Sprint 16b
+
+#### D-099: `settings.py` doesn't follow standard page function signature
+- **Effort**: 0.25h (add `data` and `client` params for consistency)
+- **Severity**: 🟢 Low
+- **Description**: `render_settings_page()` takes no arguments. All other pages use `render_page(data: dict, client)`. While the settings page doesn't need stock data currently, the inconsistent signature will cause issues if the router expects a uniform interface, or if per-stock settings are added later.
+- **Impact**: Low. The page works as-is. The router registration handles this.
+- **Recommended Action**: Change signature to `render_settings_page(data: dict | None = None, client = None) -> None` for forward compatibility. Ignore the params in the skeleton.
+- **Priority**: 🟢 Do alongside C07 Wire Thresholds in Sprint 17.
+
+#### D-100: `TemplateExplanationProvider` has zero test coverage
+- **Effort**: 1-2h (add unit tests)
+- **Severity**: 🟢 Low (escalating to Medium when C134 uses it)
+- **Description**: The `TemplateExplanationProvider` (10 metric templates + fallback) has no unit tests. The existing test suite (165+ tests) covers `adaptive_engine`, `comprehension_quiz`, and business logic, but not the new LLM abstraction layer. When C134 (Change Explanations) uses this provider, untested template rendering could produce broken explanations.
+- **Impact**: Low now. Will escalate when C134 integrates the provider.
+- **Recommended Action**: Add `tests/services/test_template_explanation_provider.py` with tests for: each metric template (increase/decrease/neutral), fallback for unknown metrics, direction resolution edge cases.
+- **Priority**: 🟡 Do before or alongside C134 in Sprint 17.
+
+#### D-101: `explain_delta()` in `delta_engine.py` has zero test coverage — C134 refactoring risk
+- **Effort**: 1-2h (add tests before refactoring)
+- **Severity**: 🟡 **MEDIUM** — C134 prerequisite
+- **Description**: `delta_engine.explain_delta()` (164 lines) generates plain-language explanations for 3 metric types (月營收, 股價, 營收年增率) with 6 threshold brackets each. This function is the direct refactoring target for C134 (Change Explanations), which will migrate these rules into the `TemplateExplanationProvider` or a dedicated `DeltaExplanationProvider`. Without tests, refactoring risks silent behavior changes.
+- **Impact**: C134 cannot safely refactor untested code. A behavior-preserving refactoring requires a test baseline.
+- **Recommended Action**: Add `tests/services/test_delta_engine.py` with tests for: each metric type × direction × threshold bracket, edge cases (exactly at threshold, zero change, empty stock_name). Target: 20-30 tests that cover all branches.
+- **Priority**: 🟡 **Do before C134 refactoring** — ideally Day 1 of Sprint 17.
+
+#### D-102: `get_timeline()` has zero test coverage — compose-and-enrich pipeline is untested
+- **Effort**: 1-2h (add tests with mock YAML data)
+- **Severity**: 🟢 Low
+- **Description**: `timeline_service.get_timeline()` (299 lines) is a 6-step pipeline: fetch detected events, fetch case studies, fetch milestones, merge/sort, deduplicate, attach interpretations. No unit tests exist. The function uses try/except graceful fallbacks for each step, which is good defensive coding but untested.
+- **Impact**: Low. The pipeline is defensive (each step fails gracefully). But the deduplication logic and interpretation attachment are complex enough to warrant tests.
+- **Recommended Action**: Add `tests/services/test_timeline_service.py` with mock YAML data. Test: empty timeline, single-source timeline, deduplication of same-day events, interpretation fallback.
+- **Priority**: 🟢 Defer to Sprint 18. Not blocking for Sprint 17.
+
+---
+
+### 3. Architecture Health Metrics
+
+#### Service Layer (`src/services/`)
+| Metric | Value | Change since Round 34 |
+|--------|-------|----------------------|
+| **Total service modules** | 42 (excl. `__init__.py`, incl. llm/ sub-package as 4) | +4 (llm/base, llm/template_provider, llm/factory, timeline_service, risk_simplifier — net +5, but llm/__init__ already counted) |
+| **Largest service** | `chart_stock.py` — 778 lines | No change |
+| **2nd largest** | `adaptive_engine.py` — 622 lines | No change |
+| **3rd largest** | `risk_analyzer.py` — 567 lines | No change |
+| **Services under 300 lines** | 38 of 42 (90%) | Improved from 89% |
+| **Services with zero Streamlit imports** | 41 of 42 (98%) | Maintained — only `quiz_service.py` has Streamlit import (pre-existing) |
+| **New services since Round 34** | `timeline_service.py` (299 lines), `risk_simplifier.py` (119 lines), `llm/base.py` (44 lines), `llm/template_provider.py` (131 lines), `llm/factory.py` (24 lines) | +5 net |
+
+**Note on 100% Streamlit-free**: In Round 34, 38/38 services (100%) were Streamlit-free. The current count shows 41/42 (98%) — `quiz_service.py` has a pre-existing Streamlit import that was present before Sprint 16b. The Sprint 16b additions are all clean.
+
+#### Page Layer (`src/pages/`)
+| Metric | Value | Change since Round 34 |
+|--------|-------|----------------------|
+| **Total page modules** | ~44 (incl. sub-modules) | +2 (story_timeline, settings) |
+| **Largest page** | `etf_browser.py` — 437 lines | No change |
+| **2nd largest** | `peer_comparison.py` — 421 lines | No change |
+| **3rd largest** | `academy.py` — 367 lines | No change |
+
+#### Overall Codebase
+| Metric | Value | Change since Round 34 |
+|--------|-------|----------------------|
+| **Largest file overall** | `chart_stock.py` — 778 lines | No change |
+| **God modules (>800 lines)** | 0 ✅ | No change |
+| **Modules >600 lines** | 2 (chart_stock.py 778, adaptive_engine.py 622) | No change |
+| **Test count** | 165+ | No change (Sprint 16b didn't add tests) |
+| **YAML data files** | 13+ | +1 (`company_milestones.yaml`) |
+
+#### 4-Layer Architecture Assessment
+| Layer | Status | Notes |
+|-------|--------|-------|
+| **Data** (`src/data/`) | ✅ Clean | `finmind_client.py`, `batch_api.py`. YAML data under `src/data/`. New: `company_milestones.yaml`. |
+| **Service** (`src/services/`) | ✅ Clean | 42 modules, 90% under 300 lines. 98% Streamlit-free (only pre-existing `quiz_service.py`). New LLM package is a model abstraction layer. |
+| **Page** (`src/pages/`) | ✅ Clean | ~44 modules, largest is 437 lines. `story_timeline.py` uses shared components. `settings.py` is a minor pattern deviation. |
+| **Presentation** (inline) | ⚠️ **STABLE** | 11 `unsafe_allow_html=True` instances remaining (same as Round 34). CI enforcement prevents new instances. |
+
+**Architecture Health Grade**: 🟢 **HEALTHY** — Sprint 16b delivered features without compromising architecture. All new service modules are Streamlit-free. The LLM abstraction layer (D5) is now built and resolves a long-standing high-severity debt item. Zero god modules. Service layer boundaries are clean.
+
+---
+
+### 4. Sprint 17 Readiness Assessment
+
+Sprint 17 plan: **C14 Full Radar** (4-8h) + **C134 Change Explanations** (12-14h) + **C07 Wire Thresholds** (6-20h)
+
+| Feature | Prerequisite | Status | Action Required |
+|---------|-------------|--------|-----------------|
+| **C14 Full Radar** | `create_health_snowflake()` exists in `chart_stock.py` (line 485) | ✅ **READY** | No new chart infrastructure needed. The snowflake/radar chart function already exists with theme-aware styling. C14 needs: (1) call `create_health_snowflake()` from the health section, (2) add benchmark overlay (industry avg comparison), (3) wire `get_health_summary()` narrative below chart. **Recommendation**: Keep radar/snowflake in `chart_stock.py` (it's a single-stock chart). No need for `chart_health.py` unless benchmark overlay adds >100 lines. |
+| **C134 Change Explanations** | `TemplateExplanationProvider` exists; `explain_delta()` needs tests | ⚠️ **NEEDS PREP** | Refactoring path: (1) Add tests for `explain_delta()` (D-101, 1-2h), (2) Create `DeltaExplanationProvider` implementing `ExplanationProvider` protocol, (3) Migrate `explain_delta()` logic into the provider, (4) Replace direct `explain_delta()` calls with `get_explanation_provider().explain()`. The `TemplateExplanationProvider` already handles 10 metrics — C134 adds delta-specific templates. **Estimated refactoring: 4-6h of the 12-14h total.** |
+| **C07 Wire Thresholds** | Settings skeleton exists with 3 sliders + session_state | ⚠️ **NEEDS PREP** | Wiring complexity: (1) Settings currently uses `st.session_state` only (no persistence), (2) `adaptive_engine.py` has event detection with hardcoded thresholds, (3) Need to connect settings sliders → adaptive_engine threshold params. **Recommendation**: Create `settings_service.py` (100-150 lines) that: (a) loads/saves thresholds to `config/user_settings.yaml`, (b) provides `get_thresholds()` / `update_thresholds()` API, (c) `adaptive_engine.py` imports from it instead of using hardcoded values. **Wiring effort: 6-8h** (includes settings_service + YAML persistence + adaptive_engine integration). |
+
+**Sprint 17 Total Effort**: 22-32h (C14: 4-8h + C134: 12-14h + C07: 6-8h + prerequisites: 2-4h)
+
+---
+
+### 5. Top 3 Recommendations for Sprint 17
+
+#### 1. 🟡 Add tests for `explain_delta()` before C134 refactoring (D-101, 1-2h) — PREREQUISITE
+- **Effort**: 1-2h
+- **Why**: C134 will refactor `explain_delta()` into a `DeltaExplanationProvider` implementing the `ExplanationProvider` protocol. Without a test baseline, refactoring risks silent behavior changes across 18+ branches (3 metrics × 2 directions × 3 thresholds).
+- **What**: Add `tests/services/test_delta_engine.py` with 20-30 tests covering all branches.
+- **When**: **Day 1 of Sprint 17**, before any C134 coding.
+- **Risk if deferred**: C134 refactoring will be untested. Behavior changes in delta explanations could confuse users.
+
+#### 2. 🟡 Create `settings_service.py` for C07 threshold persistence (1-2h) — alongside C07
+- **Effort**: 1-2h
+- **Why**: C07 Wire Thresholds needs to persist user threshold preferences and make them available to `adaptive_engine.py`. Currently settings are session-only and thresholds are hardcoded in the engine.
+- **What**: Create `settings_service.py` (100-150 lines) with: `get_thresholds()` → loads from `config/user_settings.yaml` (or defaults), `update_thresholds()` → saves to YAML, `reset_to_defaults()`. `adaptive_engine.py` imports `get_thresholds()` instead of using hardcoded values.
+- **When**: **Alongside C07 implementation**, before wiring to adaptive_engine.
+- **Risk if deferred**: C07 will remain a UI skeleton with no backend integration. Settings changes won't affect event detection.
+
+#### 3. 🟢 Add tests for `TemplateExplanationProvider` (D-100, 1-2h) — alongside C134
+- **Effort**: 1-2h
+- **Why**: The `TemplateExplanationProvider` is the foundation for C134's `DeltaExplanationProvider`. Testing the base provider ensures the protocol contract is solid before extending it.
+- **What**: Add `tests/services/test_template_explanation_provider.py` with tests for all 10 metrics × 3 directions + fallback + edge cases.
+- **When**: **Alongside C134 implementation**, before building `DeltaExplanationProvider`.
+- **Risk if deferred**: Low. The provider is simple string formatting. But testing it before extension is good practice.
+
+---
+
+### 6. Updated Debt Summary
+
+| Category | Count | Change |
+|----------|-------|--------|
+| **Total Debt Items** | 86 | +4 (D-099 through D-102) |
+| **High Severity** | 0 | **-1** (D5 RESOLVED by Sprint 16b llm/ package) ✅ |
+| **Medium Severity** | ~49 | +1 (D-101 — delta_engine test gap for C134) |
+| **Low Severity** | ~37 | +3 (D-099, D-100, D-102) |
+| **Resolved in Sprint 16b** | 1 | D5 (LLM abstraction layer built as `src/services/llm/` package) |
+| **Pending Sprint 17** | D-101 (delta tests), D-100 (template provider tests), D-099 (settings signature), D-102 (timeline tests), D-091 (chart_stock.py size), D-094 (_financial.py size), D-098 (notification tests), D6 (YAML remaining), D11, D12, D14, D15, D18, D19, D22, D23, D25, D27, D28, D31, D32, D33, D37, D38, D-042, D-043, D-045, D-046, D-049, D-051, D-052, D-053, D-054, D-057, D-058, D-059, D-060 |
+
+**Key Change**: D5 (LLM abstraction layer) is **RESOLVED** — the `src/services/llm/` package with `ExplanationProvider` protocol, `TemplateExplanationProvider` (10 metric templates), and `get_explanation_provider()` factory is complete. This eliminates the last high-severity debt item and unblocks C134 (Change Explanations) and C98 (Event Interpretation Engine).
+
+---
+
+*Section added: 2026-06-14 (Round 37)*
+*Reviewer: System Architect*
+*Next review: Sprint 17 mid-point or Sprint 18 kickoff*
+*Architecture Health: 🟢 HEALTHY*

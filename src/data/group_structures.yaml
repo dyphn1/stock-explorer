@@ -1,0 +1,112 @@
+# 集團架構資料 — 公開資訊，來自各公司年報
+# 第一階段只處理持股 > 50% 或營收貢獻 > 10% 的子公司
+"2330":
+  parent_name: "台積電"
+  parent_desc: "全球最大晶圓代工廠"
+  subsidiaries:
+    - name: "台積電（中國）"
+      holding: 100
+      revenue_contrib: 10
+      business: "位於中國南京的晶圓廠，主要生產 16/28 奈米成熟製程"
+      relation: "全資子公司，服務中國客戶"
+    - name: "台積電（美國）"
+      holding: 100
+      revenue_contrib: 0
+      business: "位於美國亞利桑那州的晶圓廠，正在建設中"
+      relation: "全資子公司，服務美國客戶"
+    - name: "世界先進"
+      holding: 28
+      revenue_contrib: 5
+      business: "八吋晶圓代工，專注於特殊製程"
+      relation: "重要轉投資，提供差異化產能"
+    - name: "SSMC"
+      holding: 39
+      revenue_contrib: 3
+      business: "新加坡晶圓代工廠，與恩智浦合資"
+      relation: "合資公司，服務車用和物聯網市場"
+"2317":
+  parent_name: "鴻海"
+  parent_desc: "全球最大電子代工帝國"
+  subsidiaries:
+    - name: "工業富聯（FII）"
+      holding: 84
+      revenue_contrib: 40
+      business: "中國A股上市，專注於雲端伺服器和工業互聯網"
+      relation: "主要子公司，承接雲端伺服器訂單"
+    - name: "鴻騰精密"
+      holding: 72
+      revenue_contrib: 15
+      business: "連接器和線纜組件，用於手機和汽車"
+      relation: "重要子公司，供應內部和外部客戶"
+    - name: "夏普（Sharp）"
+      holding: 56
+      revenue_contrib: 20
+      business: "日本消費電子品牌，電視和家電"
+      relation: "策略收購，擴展品牌業務"
+    - name: "樺漢科技"
+      holding: 45
+      revenue_contrib: 5
+      business: "工業電腦和嵌入式系統"
+      relation: "轉投資，佈局工業物聯網"
+"2881":
+  parent_name: "富邦金控"
+  parent_desc: "台灣最大的金融控股集團之一"
+  subsidiaries:
+    - name: "富邦人壽"
+      holding: 100
+      revenue_contrib: 45
+      business: "人壽保險業務，保費收入為主"
+      relation: "全資子公司，金控主要獲利來源"
+    - name: "台北富邦銀行"
+      holding: 100
+      revenue_contrib: 30
+      business: "商業銀行存放款、信用卡業務"
+      relation: "全資子公司，金控核心業務"
+    - name: "富邦證券"
+      holding: 100
+      revenue_contrib: 15
+      business: "證券經紀、承銷業務"
+      relation: "全資子公司，證券業務平台"
+    - name: "富邦產險"
+      holding: 100
+      revenue_contrib: 8
+      business: "產物保險，車險和火險"
+      relation: "全資子公司，產險業務"
+"1301":
+  parent_name: "台塑"
+  parent_desc: "台灣最大的塑膠集團"
+  subsidiaries:
+    - name: "南亞塑膠"
+      holding: 37
+      revenue_contrib: 25
+      business: "塑膠二次加工和電子材料"
+      relation: "關係企業，塑膠加工和電子材料"
+    - name: "台塑石化"
+      holding: 29
+      revenue_contrib: 35
+      business: "煉油和石化原料生產"
+      relation: "關係企業，上游煉油事業"
+    - name: "台化"
+      holding: 36
+      revenue_contrib: 20
+      business: "紡織纖維和塑膠原料"
+      relation: "關係企業，紡織和石化原料"
+"1101":
+  parent_name: "台泥"
+  parent_desc: "台灣最老牌的水泥廠"
+  subsidiaries:
+    - name: "台泥國際"
+      holding: 57
+      revenue_contrib: 30
+      business: "中國水泥市場，廣東和廣西地區"
+      relation: "重要子公司，擴展中國市場"
+    - name: "和平電廠"
+      holding: 100
+      revenue_contrib: 15
+      business: "花蓮和平發電廠，燃煤發電"
+      relation: "全資子公司，能源事業"
+    - name: "達和環保"
+      holding: 100
+      revenue_contrib: 8
+      business: "廢棄物處理和環保服務"
+      relation: "全資子公司，環保事業"

@@ -1,0 +1,10 @@
+# Dividend Yield Quiz - C101 Comprehension Check for Business Card
+questions:
+  - id: dividend_yield_meaning
+    text: 股利殖利率（dividend yield）是什麼？
+    correct_key: c
+    options:
+      - [a, "公司每年派發的現金股利金額", "這是每股股利（DPS），不是殖利率。殖利率是股利除以股價的百分比。"]
+      - [b, "公司當年度的淨利潤", "這是淨利（Net Income），不是股利殖利率。"]
+      - [c, "每股股利除以每股股價的百分比", "正確！股利殖利率 = （每股現金股利 / 每股股價） × 100%。例如股價 50 元，每股股利 2 元，殖利率為 4%。"]
+      - [d, "公司股價的年 성장率", "這是股價成長率，不是股利殖利率。"]

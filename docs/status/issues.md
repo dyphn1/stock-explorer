@@ -83,3 +83,11 @@ C135: "Financial Health Score with Narrative" — Explainable 0-100 Score | P1 |
 C136: "Goal-Based Learning Path" — Connecting Stock Analysis to Life Goals | P2 | 14-20h | Story first + Point-to-point + Historian | source: competitor research round 27
 C137: "Visual Comparison Cards" — Infographic-Style Side-by-Side Company Comparison | P2 | 8-12h | Benchmark-oriented + PPT-style | source: competitor research round 27
 C138: "Smart Notifications with Explanations" — AI-Enhanced Alerts That Explain Why | P1 | 10-14h | Adaptive + Story first + Historian | source: competitor research round 27
+C139: "Explain This Number" One-Click Metric Explainer | P1 | 8-12h | Ten-second test + Beginner-friendly + Point-to-point | source: competitor research round 11
+C140: Historical Case Study Library | P1 | 14-20h | Historian + Story first + Beginner-friendly | source: competitor research round 11
+C141: Daily Market Digest — "Today's Big Number" | P2 | 10-14h | Adaptive + Beginner-friendly + Ten-second test | source: competitor research round 11
+C142: Action-Triggered Contextual Education | P2 | 12-16h | Point-to-point knowledge construction + Adaptive | source: competitor research round 11
+C143: Stewardship / Management Quality Assessment | P2 | 10-14h | Story first + Benchmark-oriented + Historian | source: competitor research round 11
+C144: Beginner Curated Watchlists | P2 | 6-10h | Beginner-friendly + Ten-second test | source: competitor research round 11
+C145: Knowledge Points & Reading Progress | P2 | 8-12h | Point-to-point knowledge construction + Engagement | source: competitor research round 11
+C146: Emoji-Based Sentiment Indicators | P2 | 4-6h | Ten-second test + Beginner-friendly | source: competitor research round 11

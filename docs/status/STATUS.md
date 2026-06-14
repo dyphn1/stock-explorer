@@ -1,28 +1,44 @@
 # Stock Explorer Status
 
-## Current Theme: Development Sprint 14 (D-077 fix → C40 Mode Toggle → C126 Moat Comparison → C47 Education Academy + C125 stretch)
-- **Status**: Development Sprint 14 COMPLETE — C126 + C47 + D-081/D-082/D-083 delivered
-- **Last Updated**: 2026-06-13
-- **Cycle Type**: Development cycle — C126 Moat Comparison + C47 Education Academy + P2 fixes
-- **Next Cycle**: 🔍 Review Round 32 → Sprint 15 planning
+## Current Theme: Review Round 35 (Sprint 15 Post-Mortem + Sprint 16 Prerequisites)
+- **Status**: Review Round 35 IN PROGRESS — Analyzing competitor research, design improvements, technical debt, and feature estimates
+- **Last Updated**: 2026-06-14
+- **Cycle Type**: Review cycle — Competitor research, design feedback, technical debt assessment, optimization & feature cost estimation
+- **Next Cycle**: 🔧 Development Sprint 16a (C14 Health Score + C132 Risk Simplification + C45 Valuation Band + C28 Story Timeline Spike)
 
-## 🔧 Development Log — Sprint 14 (2026-06-13)
-- **D-077** ✅ Fixed undefined `_render_revenue_compact()` function call by removing duplicate expander in `src/pages/business_card/_main.py` (commit `ecdadc8`)
-- **L0**: 103/103 ✅ | **L1**: 20/20 ✅ (All verifications pass)
-- **Sprint 14 Ready**: Architecture healthy, ready for C40 Mode Toggle implementation
+## 🔍 Review Log — Round 35 (2026-06-14)
+- **Competitor Research**: QA Engineer completed analysis of 12+ competitors, identified 18 high-potential feature opportunities, top priorities: C134 AI-Generated Change Explanations, C138 Smart Notifications with Explanations, C119 Glossary-First Onboarding, C98 AI Event Interpretation Engine
+- **Design Improvements**: Design Reviewer identified P1 issues D-003 (Inconsistent Card Styling), D-006 (Mobile Responsiveness Gaps), D-005 (Business Card Page Overload Risk); proposed fixes including shared component enforcement, progressive disclosure, mobile-responsive CSS, and design system updates
+- **Technical Debt**: System Architect assessed architecture as 🟢 HEALTHY; identified high-severity D5 (LLM integration layer blocker), medium-severity D6 (YAML migration) and D-074 (test infrastructure); recommendations to prioritize optimization before Sprint 16 feature work
+- **Optimization & Feature Estimates**: Developer provided cost estimates: Sprint 16a features 17-24h (C14, C132, C45, C28 Spike), Sprint 16b conditional paths (C28 Full 26-36h OR C02+C07 18-28h), technical debt optimization 10-14h
+- **L0**: 106/106 ✅ | **L1**: 20/20 ✅ | **Tests**: 165+ ✅ (All verifications pass)
+- **Review Complete**: Consolidated findings in docs/research/consolidated_review_report.md and docs/state/handoff_review.md
 
 ## Verification Log
-|| Date | Gate 1 (Import) | Gate 2 (Render) | Gate 3 (Smoke) | Notes ||
-||------|-----------------|-----------------|----------------|-------||
-|| 2026-06-13 21:10 | ✅ 103/103 (L0) | ✅ 20/20 (L1) | — | Fix D-077: removed duplicate revenue structure expander calling undefined function ||
+||| Date | Gate 1 (Import) | Gate 2 (Render) | Gate 3 (Smoke) | Notes ||
+|||------|-----------------|-----------------|----------------|-------||
+||| 2026-06-14 22:30 | ✅ 106/106 (L0) | ✅ 20/20 (L1) | ✅ 165/165 (L2) | Review Round 35 completed: competitor research, design improvements, technical debt assessment, feature estimation ||
 
-## 💡 Discussion Record - 2026-06-18
-- **Topic**: Feature Prioritization for Next Sprint — Notifications, Key Takeaways, Health Score, Company Story Timeline (spike), Beginner/Expert Mode (ongoing), PPT Export (stretch)
-- **QA Findings**: Notifications (C02) addresses P0 gap; all competitors have alerts, M5 engine underutilized. Key Takeaways (C37) directly improves ten-second test, low effort. Company Story Timeline (C34) is unique historian differentiator but requires narrative synthesis. Health Score (C14) provides benchmark-oriented visual health score, pays down analogy_engine.py god module. Beginner/Expert Mode (C40) ongoing. PPT Export (C06) stretch goal pending export capabilities.
-- **Architect Findings**: Notifications feasible via session_state and existing M5 engine, low architectural impact. Key Takeaways new service module follows existing patterns. Company Story Timeline requires spike for data fusion and narrative logic. Health Score leverages financial_metrics.py service (R1 complete) and will reduce analogy_engine.py god module (D-16). Beginner/Expert Mode uses session_state toggle. PPT Export depends on client-side export libraries.
-- **Designer Findings**: Notifications align with beginner-friendliness and proactive updates. Key Takeaways satisfies ten-second test with PPT-style card. Company Story Timeline embodies historian positioning with image-first narrative. Beginner/Expert Mode supports progressive disclosure. PPT Export leverages existing PPT‑style CSS. All proposals adhere to design system principles: zone separation, component specifications, interaction patterns, PPT style, ten‑second test, historian, beginner‑friendly.
-- **Challenger Challenges**: Three-round challenge conducted. Round 1 (feature direction): confirmed alignment with vision, no superior alternatives. Round 2 (priority): confirmed P0 notification gap first, then low‑effort high‑impact items, spike for higher‑effort narrative, health score after god‑module refactor. Round 3 (goal alignment): confirmed all core values addressed, no contradictions, risks mitigated via spikes and dependency ordering.
-- **Final Decision**: Implement Notifications (C02) and Key Takeaways (C37) in next sprint. Spike Company Story Timeline (C34) to validate approach. Implement Health Score (C14) after analogy_engine.py refactor (D-16). Continue Beginner/Expert Mode (C40) as planned in Sprint 14. Treat PPT Export (C06) as stretch goal. Proceed with architecture debt resolution (R2-R5) in parallel.
+## 💡 Discussion Record - 2026-06-14
+- **Topic**: Review Round 35 — Sprint 15 Post-Mortem + Sprint 16 Prerequisites
+- **QA Findings**: Competitor analysis confirms notifications (C02) as P0 gap (all competitors have it); AI-generated change explanations (C134) and smart notifications (C138) validated by Datawallet, Spiking, Copilot Money; glossary-first onboarding (C119) aligns with educational leaders like Planting.tw and Stash
+- **Architect Findings**: Architecture remains 🟢 HEALTHY with zero god modules, clean service layers (100% Streamlit-free), and well-modularized pages. Primary blockers: D5 LLM layer (required for C98/C134/C116), D6 YAML migration (enables content contributions), D-074 test infrastructure (prevents regression risk). Recommended optimization sequence: D6 → D5 → D-074 before Sprint 16 feature work
+- **Designer Findings**: P1 design issues identified: D-003 inconsistent card styling (watchlist_page.py, etf_detail.py, business_card.py C41/C44), D-006 mobile responsiveness (column stacking, touch targets, chart readability), D-005 business card overload (needs consistent progressive disclosure). Proposed plans: enforce shared component usage, implement mobile-responsive CSS, update design system, incorporate competitor-inspired features (Stock Screener C42, Snowflake Health C43, Risk Analysis C44, Valuation Band C45, Moat Analysis C46, Education Academy C47, Glossary C33, Beginner/Expert Toggle C40)
+- **Challenger Challenges**: Three-round challenge conducted on review findings:
+  - **Round 1 (Gap Authenticity)**: Confirmed C134, C138, C119, C98 as genuine gaps — competitors validate demand, align with historian positioning when framed as past-tense explanations
+  - **Round 2 (Priority)**: Confirmed technical debt optimization (D6, D5, D-074) as prerequisites; C134/C138 as P1 gaps due to competitor validation and M5 engine utilization; C119/C98 as high-strategic-value educational/narrative features
+  - **Round 3 (Goal Alignment)**: Confirmed all recommendations align with "Historian, not a stock picker" vision — focus on explanatory narratives, contextual learning, educational value rather than predictive/advisory features; historian tone QA gate mitigates risks
+- **Final Decision**: 
+  1. Prioritize technical debt optimization: Complete D6 YAML migration, create LLM abstraction layer, fix test infrastructure before Sprint 16 feature work
+  2. Execute Sprint 16a as planned: C14 Health Score + Narrative, C132 Risk Simplification, C45 Valuation Band, C28 Story Timeline Spike
+  3. Make Sprint 16b decision based on C28 spike validation against go/no-go criteria (≥5 entries/90-day lookback, all dated, interpretation coverage, dedup works, <200ms response)
+  4. Address P1 design issues D-003 and D-006 beginning in Sprint 16 to improve UX consistency
+  5. Update design system documentation (D-004) to reflect current component library
+
+## Pending Daniel Decision
+1. **Sprint 16b Scope Decision** — Based on C28 spike validation results: proceed with C28 Full Story Timeline (26-36h) if spike passes go/no-go criteria, OR implement C02 Notifications System (12-19h) + C07 Custom Event Thresholds (6-9h) if spike fails
+2. **Technical Debt Sequencing** — Confirm optimization priority: D6 YAML migration (3-4h) → D5 LLM abstraction layer (2-3h) → D-074 test infrastructure fix (0.25h) before Sprint 16 feature work
+3. **Design System Update** — Approve plan to update docs/design/design_system.md with current component library including _白话_card, _info_card, _summary_card, _subsidiary_card, _mini_score_card, _count_label, and planned components for upcoming features
 
 --
 *This STATUS.md was updated automatically during the Review Round 13 cron cycle.*

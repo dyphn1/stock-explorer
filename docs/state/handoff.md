@@ -26,7 +26,219 @@
 - **Commits**: `ca49d2c`, `5e7fde8`, `84142f5`
 
 ## Next Cycle
-🔧 Development Round 36 Complete → 💡 Discussion Round 36 Complete → 🔧 Development Round 37 (Sprint 17: C14 + C134 + C07) → 🔍 Review Round 37
+🔧 Development Round 36 Complete → 💡 Discussion Round 36 Complete → 🔧 Development Round 37 (Sprint 17: C14 + C134 + C07) → 🔍 Review Round 37 → 🔧 Development Round 38 (Sprint 17 execution)
+
+---
+
+# 🔍 Review Section (Round 37 — 2026-06-14)
+**Theme**: Review Round 37 — Sprint 16b Post-Mortem + Sprint 17 Prerequisites
+
+## Participants
+Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
+
+## Key Metrics
+- **Architecture**: 🟢 HEALTHY — 42 service modules, 0 god modules, 100% Streamlit-free, 90% under 300 lines
+- **Design**: A (maintained, 4th consecutive A since R34)
+- **L0**: 110/110 ✅ | **L1**: 20/20 ✅ | **Tests**: 165+ ✅
+- **Inline HTML**: 11 instances remaining (stable, CI enforcement active)
+- **Debt Items**: 86 total (1 High, ~48 Medium, ~37 Low)
+
+---
+
+## 1. Competitor Research Findings (Round 11)
+
+### New Competitors Analyzed: 8
+Finimize, SoFi, Tastytrade, Morningstar Investor, 股感知識庫, 口袋美股, Magnify.money, Khan Academy Finance
+
+### New Feature Gaps Identified: 8
+
+| ID | Feature | Priority | Effort | Source |
+|----|---------|----------|--------|--------|
+| C139 | "Explain This Number" — One-click metric explanation with D5 | P1 | 10-14h | Magnify.money |
+| C140 | Historical Case Study Library — Browseable curated narratives | P1 | 16-22h | Morningstar/财報狗 |
+| C141 | Confidence/Source Badge on Explanations | P2 | 3-4h | Public.com |
+| C142 | Glossary Gate on First Encounter — Proactive education | P2 | 8-12h | Stash |
+| C143 | Implication Sentence on Delta Cards | P2 | 4-6h | Public.com |
+| C144 | Beginner Curated Watchlists — Pre-built starter lists | P2 | 8-12h | SoFi |
+| C145 | Sector Rotation Narrative — Market-level momentum stories | P2 | 14-20h | Tastytrade |
+| C146 | Emoji-Based Sentiment Indicators — Visual severity badges | P2 | 3-5h | Finimize |
+
+### Key Insights
+1. **"Explain This Number" is the new baseline** — Magnify.money, Public.com, and Spiking all provide one-click metric explanations. C139 leverages D5 (built in Sprint 16b) for 10-14h instead of 20+.
+2. **Structured historian education is a white space** — 股感知識庫 has content but no structured progression. C140 Case Study Library directly owns this niche.
+3. **Trust transparency is expected** — Source badges (C141) and confidence indicators (Finimize pattern) are table stakes for explanation features.
+
+---
+
+## 2. Architecture Debt Review (Round 37)
+
+### Sprint 16b Debt Verification: All Clean ✅
+| Module | Lines | Streamlit-Free | Pattern | Verdict |
+|--------|-------|----------------|---------|---------|
+| `timeline_service.py` | 299 | ✅ | Compose-and-enrich pipeline | ✅ |
+| `src/services/llm/` (4 files) | 215 | ✅ | Protocol + dataclass + factory | ✅ |
+| `risk_simplifier.py` | 119 | ✅ | Pure Python 1-5 scale | ✅ |
+| `story_timeline.py` | 169 | ✅ | Shared components, zero inline HTML | ✅ |
+| `settings.py` | 161 | ✅ | Functional skeleton, minor deviation | ⚠️ |
+
+### D5 (LLM Abstraction) — ✅ RESOLVED
+The `src/services/llm/` package eliminates the last high-severity debt item, P0 since Sprint 9.
+
+### New Debt Items (D-099 through D-102)
+| ID | Description | Severity | Effort |
+|----|-------------|----------|--------|
+| D-099 | `settings.py` non-standard function naming | Low | 0.5h (fix during C07) |
+| D-100 | `TemplateExplanationProvider` untested | Low | 0h (absorbed by C134 testing) |
+| D-101 | `explain_delta()` untested — C134 refactoring risk | **Medium** | 2-2.5h (**Sprint 17 prerequisite**) |
+| D-102 | `get_timeline()` untested | Low | 1.5-2h (deferrable to Sprint 18) |
+
+### Sprint 17 Readiness Assessment
+| Prerequisite | Status | Action |
+|-------------|--------|--------|
+| D-101 (explain_delta tests) | 🔴 **MUST DO DAY 1** | Before C134 refactoring |
+| C14 Full Radar | ✅ Ready | Spec first (1.5h), then implement |
+| C134 Change Explanations | ⚠️ Needs D-101 first | Tests → DeltaExplanationProvider → wire |
+| C07 Wire Thresholds | ⚠️ Needs 1h spike | Confirm Streamlit boundary before wiring |
+
+---
+
+## 3. Design Review (Round 37)
+
+### Design Grade: **A** (maintained — 4th consecutive A since R34)
+
+### Sprint 16b Design Verification
+| Feature | Shared Components | Inline HTML | Ten-Second Test | Verdict |
+|---------|-------------------|-------------|-----------------|---------|
+| C28 Story Timeline | ✅ `_section_title`, `_summary_card`, `_info_card` | ✅ Zero | ✅ | **Excellent** |
+| D5 LLM Abstraction | N/A (backend) | ✅ Pure Python | ✅ Templates pass | **Sound** |
+| C07 Settings | ⚠️ Raw `st.markdown` headers | ✅ Zero | ✅ | **Functional** |
+| C132 Risk Simplifier | N/A (backend) | ✅ Pure Python | ✅ | **Good** |
+
+### New Design Debt: 3 items
+- **D-096** (P2): C07 uses raw `st.markdown` headers instead of `_section_title()` — fix during wiring (0.25h)
+- **D-097** (P2): D5 templates ignore `request.context` — generic explanations, need industry-specific flavor (1-2h)
+- **D-098** (P2): C132 introduces 🟠 not in design system palette — document as "elevated risk" color (0.5h)
+
+### 5 Competitor Design Patterns for Sprint 17
+1. **Finimize confidence meter** → Add "📊 系統估算" source badge to C134 delta cards
+2. **Simply Wall St benchmark ghost layer** → Industry #1 overlay on C14 snowflake (toggleable)
+3. **Stash glossary gate** → Wire `_glossary_tooltip()` into C134 explanation rendering
+4. **Public.com implication callout** → "如果你正在觀察..." sentence on delta cards
+5. **Finimize progressive disclosure** → Wrap C07 sliders in expanders for growth path
+
+---
+
+## 4. Developer Cost Estimates — Sprint 17 Validation
+
+### Sprint 17 Cost Validation
+| Item | PM Estimate | Dev Estimate | Verdict | Key Adjustment |
+|------|------------|--------------|---------|----------------|
+| C14 Full Radar | 4-8h | **6-10h** | Underestimated | Benchmark data plumbing + Plotly overlay complexity |
+| C134 Change Explanations | 12-14h | **10-13h** | Slightly over | zh-TW templates (+2-3h) offsets refactoring savings |
+| C07 Wire Thresholds | 6-8h | **5-7h** | Slightly over | Volume de-scoped saves 1h; needs revenue param |
+| **Total** | **22-30h** | **21-30h** | **Accurate** | Redistribution, not overall change |
+
+### New Feature Pipeline (C139-C146)
+| Sprint | Features | Effort | Rationale |
+|--------|----------|--------|-----------|
+| Sprint 18 | C139 + C141 + C143 | 17-23h | C139 exercises D5; C141/C143 small |
+| Sprint 19 | C140 (if content ready) | 16-22h | Content-dependent |
+| Sprint 20 | C142 + C146 | 11-17h | Lighter sprint |
+| Sprint 21+ | C145 | 14-20h | Needs data feasibility spike |
+| When convenient | C144 | 8-12h | Content + dev sprint |
+
+### Critical Risks
+1. **C14 — Circular dependency for benchmark data**: No existing infrastructure to fetch another stock's health scores. Fix: cache benchmark scores in YAML. Avoid live API calls.
+2. **C134 — zh-TW vs zh-CN template inconsistency**: D5 was written in zh-CN; product is zh-TW. Budget 2-3h for zh-TW template variants.
+3. **C07 — Streamlit boundary**: `adaptive_engine.py` must stay Streamlit-free. Threshold values must be injected at page layer. 1h spike required.
+
+---
+
+## 5. 🔥 Three-Round Challenge (Round 37)
+
+### Round 1: Gap Authenticity Challenge
+**Challenger**: Are C139-C148 really gaps? C139 ("Explain This Number") — we already have D5 `TemplateExplanationProvider` with 10 metric templates. Isn't C139 just wiring D5 to the UI rather than a new gap?
+
+**PM Response**: C139 is partially a gap. D5 provides the *backend* protocol and templates, but zero callers exist. C139 represents the *UI integration* — the "💡" button next to each metric, the metric→key mapping for 15+ displayed metrics, and the popover display. This is genuine UI work (10-14h) that has no existing implementation. However, we acknowledge D5 provides 30-40% of the infrastructure. Valid gap, but scope is "wire D5 to UI" not "build from scratch."
+
+**Challenger**: C140 (Case Study Library) — we already have `case_studies.yaml` and `market_event_service.py`. Is a new library page really 16-22h?
+
+**PM Response**: C140 is a different feature. Existing case studies are *stock-specific* event explanations. C140 is a *browseable, searchable, categorized collection* — a new page, new service (search/filter), new YAML schema (topic tags, industries), and most importantly, curated content following the historian tone QA gate. The 40% content rule applies: 6-8h of the 16-22h is content creation. Valid P1 gap.
+
+**Verdict**: ✅ All 8 gaps confirmed authentic. C139 and C140 are P1; C141-C146 are P2.
+
+### Round 2: Priority Challenge
+**Challenger**: Sprint 17 plans C14 + C134 + C07 (21-30h). C139 is P1 at 10-14h. Should C139 displace C07 in Sprint 17?
+
+**PM Response**: No. Sprint 17 has three interdependent items: C14 (benchmark overlay) and C134 (delta refactoring) both exercise the chart and delta infrastructure that Sprint 16b just delivered. C07 wiring completes the settings skeleton. C139, while P1, is architecturally independent — it wires D5 to the UI, which doesn't require C14/C134/C07 to be done first. C139 fits better in Sprint 18 when the Sprint 17 features are stable. Sprint 17 total (21-30h + 6h buffer) is already at capacity.
+
+**Challenger**: Is C134 (Change Explanations) really more important than C07 (Wire Thresholds)? The order is C14 → C134 → C07.
+
+**PM Response**: Yes. C134 is the only Sprint 17 item that exercises D5 — the LLM abstraction layer that zero callers currently use. Every sprint that D5 sits unused is a sprint where its design goes unvalidated. C07 is infrastructure wiring with lower UX impact (power-user feature). C14 first because it's the smallest (spec + chart overlay), then C134 because it validates D5, then C07 to complete the settings.
+
+**Verdict**: ✅ Priority order confirmed. Sprint 17 scope is correct.
+
+### Round 3: Goal Alignment Challenge
+**Challenger**: C139 explanations and C143 implication sentences could border on investment advice. "如果你正在觀察這家公司，穩定的營收成長是一個正面的訊號" sounds like guidance. And C145 (Sector Rotation Narrative) is about market timing — squarely in "stock picker" territory.
+
+**PM Response**: Valid concern for all three:
+- **C139**: The historian framing is "explain what this number means" not "what to do about it." Template explanations must use past tense, factual language. The ten-second test gate catches advice-like language. We'll add a specific QA filter: any sentence with "建議," "應該," or "買/賣" triggers rejection.
+- **C143**: The implication sentence has the highest advice risk. The approved historian framing is: "如果你正在觀察這家公司，[ factual observation about what happened ]." Not "is a good buy" but "營收連續三季成長，這是一個值得持續追蹤的趨勢." We'll require historian tone QA gate specifically for C143 content.
+- **C145**: This IS the riskiest feature. Sector rotation is often used for market timing. The historian framing must be: "過去三個月，資金從半導體流向金融股，這反映了..." (explaining what happened) NOT "現在應該布局金融股." C145 requires a written historian disclaimer and should NOT be implemented without a tone guidelines doc. We're deferring it to Sprint 21+ partly for this reason.
+
+**Verdict**: ✅ CONFIRMED with 3 conditions:
+1. C139/C143 must pass historian tone QA gate before shipping (existing rule, now explicitly applied)
+2. C145 requires written tone guidelines and disclaimer before implementation
+3. C143 implication sentences must use factual past-tense framing only
+
+---
+
+## 6. Consolidated Action Items
+
+| Item ID | Description | Owner | Due Date | Priority |
+|---------|-------------|-------|----------|----------|
+| R37-DEV1 | Write C39 regression tests for `explain_delta()` (D-101) | Developer | Day 1 Sprint 17 | 🔴 BLOCKING |
+| R37-DEV2 | 1h spike: verify Streamlit boundary for C07 settings wiring | Developer | Day 1 Sprint 7 | 🟡 Required |
+| R37-DEV3 | Produce written spec for C14 benchmark overlay + story card integration | Designer/Architect | Before C14 dev start | 🟡 Required |
+| R37-DEV4 | Create `settings_service.py` for threshold persistence | Developer | Alongside C07 | 🟡 Required |
+| R37-DEV5 | Create `chart_health.py` if C14 adds >100 lines to chart_stock.py | Developer | During C14 | 🟢 Recommended |
+| R37-DES1 | Fix D-096: Replace raw st.markdown headers in settings.py with _section_title() | Developer | During C07 wiring | 🟢 Quick win |
+| R37-DES2 | Fix D-097: Enhance TemplateExplanationProvider to use request.context for industry flavor | Developer | During C134 | 🟡 Recommended |
+| R37-DES3 | Fix D-098: Document 🟠 in design system as "elevated risk" color | Designer | Sprint 17 | 🟢 Quick win |
+| R37-FEAT1 | Implement C14 Full Radar (benchmark overlay + story card + edge cases) | Developer | Sprint 17 | 🔴 P1 |
+| R37-FEAT2 | Implement C134 Change Explanations (delta_engine → TemplateExplanationProvider) | Developer | Sprint 17 | 🔴 P1 |
+| R37-FEAT3 | Implement C07 Wire Thresholds (2 sliders → adaptive_engine, volume decorative) | Developer | Sprint 17 | 🟡 P2 |
+| R37-FEAT4 | Plan C139 + C141 + C143 for Sprint 18 | PM | Sprint 18 | 🔴 P1 |
+| R37-FEAT5 | Pre-write 10 case studies for C140 (content creation, 40% rule) | Designer/Developer | Sprint 19 | 🟡 P1 |
+| R37-QA1 | C139/C143 must pass historian tone QA gate before shipping | QA | Sprint 18/19 | 🔴 Required |
+| R37-QA2 | C145 requires written tone guidelines before implementation | PM/Designer | Before Sprint 21 | 🟡 Required |
+| R37-TECH1 | Bundle D-101 (explain_delta tests) into C134 — mandatory prerequisite | Developer | Sprint 17 | 🔴 BLOCKING |
+
+---
+
+## 7. Sprint 17 Final Confirmed Plan
+
+### Execution Order: C14 → C134 → C07 (confirmed by Challenger)
+
+| Phase | Item | Effort | Prerequisites | Deliverables |
+|-------|------|--------|---------------|--------------|
+| **Day 1** | D-101 tests + C07 spike | 3-3.5h | None | Regression test suite + architecture confirmation |
+| **Day 1-2** | C14 spec writing | 1.5h | None | Written spec document |
+| **Day 2-4** | C14 Full Radar implementation | 6-10h | Spec complete | Benchmark overlay, story card integration, edge cases |
+| **Day 4-7** | C134 Change Explanations | 10-13h | D-101 tests | DeltaExplanationProvider, zh-TW templates, integration |
+| **Day 7-9** | C07 Wire Thresholds | 5-7h | Spike complete | 2 sliders wired, visual feedback, progressive disclosure |
+| **Buffer** | Testing, QA, polish | 6h | All features | L0/L1 verification, regression testing |
+
+**Total: 28-36h effective (22-30h base + 6h buffer)**
+
+---
+
+## Next Cycle
+🔍 Review Round 37 Complete → 🔧 Development Round 38 (Sprint 17: C14 + C134 + C07) → 🔍 Review Round 38
+
+Reference `docs/state/handoff_review.md` for detailed review artifacts.
+Reference `docs/research/review37_developer_estimates.md` for full cost analysis.
+Reference `docs/research/competitor_research.md` (Round 11 section) for competitor details.
 
 ---
 

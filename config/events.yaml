@@ -153,3 +153,31 @@ events:
   summary: 重大事件：法說
   title: 鴻海法說會下午登場法人「喊買」調升目標價| 財經 - Newtalk新聞
   type: news_major
+- date: '2026-06-14'
+  detected_at: '2026-06-14T03:12:24'
+  severity: high
+  stock_id: '1101'
+  summary: 重大事件：財報
+  title: 【26Q1財報公告】台泥(1101) Q1 營收331.6815億元，創下近8季新低，季減17.95%、年衰退5.12%
+  type: news_major
+- date: '2026-06-14'
+  detected_at: '2026-06-14T03:12:24'
+  severity: medium
+  stock_id: '2317'
+  summary: 最近月營收 8594 億元，較去年同期增加 40%。表現亮眼，關注後續動能。
+  title: 營收 YoY 成長 40%
+  type: revenue_surge
+- date: '2026-06-14'
+  detected_at: '2026-06-14T03:12:24'
+  severity: high
+  stock_id: '2317'
+  summary: 重大事件：法說
+  title: 鴻海法說行情啟動 今漲逾半根衝260元大關戰前高 - Yahoo股市
+  type: news_major
+- date: '2026-06-14'
+  detected_at: '2026-06-14T03:12:24'
+  severity: high
+  stock_id: '2317'
+  summary: 重大事件：法說
+  title: 焦點股》鴻海：法說會釋樂觀展望 帶量大漲 - 自由財經
+  type: news_major
