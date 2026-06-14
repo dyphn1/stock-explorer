@@ -18,6 +18,10 @@ from src.services.stock_screener_service import (
     apply_custom_filter,
     format_screening_results,
 )
+from src.services.screener_explanation_provider import ScreenerExplanationProvider
+
+# ── Singleton provider ──────────────────────────────────────────────
+_screener_provider = ScreenerExplanationProvider()
 
 
 def _render_stock_screener(client: FinMindClient):
@@ -158,7 +162,7 @@ def _render_beginner_mode(df: pd.DataFrame):
     # Apply filter and show results
     if preset:
         filtered_df = apply_preset_filter(df, preset)
-        _render_results(filtered_df)
+        _render_results(filtered_df, preset=preset)
 
 
 def _render_advanced_mode(df: pd.DataFrame):
@@ -216,11 +220,11 @@ def _render_advanced_mode(df: pd.DataFrame):
         "revenue_growth": revenue_growth,
     }
     filtered_df = apply_custom_filter(df, filters)
-    _render_results(filtered_df)
+    _render_results(filtered_df, filters=filters)
 
 
-def _render_results(filtered_df: pd.DataFrame):
-    """Render screening results as card grid."""
+def _render_results(filtered_df: pd.DataFrame, preset: str | None = None, filters: dict | None = None):
+    """Render screening results as card grid with AI explanations."""
     st.markdown("---\n")
     _section_title(f"📋 篩選結果")
 
@@ -247,6 +251,31 @@ def _render_results(filtered_df: pd.DataFrame):
                 break
             r = results[idx]
             with cols[j]:
+                # Build explanation context from the row data
+                row_data = filtered_df[filtered_df["stock_id"] == r["stock_id"]]
+                explanation = ""
+                if not row_data.empty:
+                    row = row_data.iloc[0]
+                    context = {
+                        "stock_name": r["stock_name"],
+                        "stock_id": r["stock_id"],
+                        "preset": preset,
+                        "filters": filters,
+                        "per": row.get("per"),
+                        "pbr": row.get("pbr"),
+                        "dividend_yield": row.get("dividend_yield"),
+                        "revenue_yoy": row.get("revenue_yoy"),
+                        "industry": r.get("industry", ""),
+                    }
+                    from src.services.llm.base import ExplanationRequest
+                    req = ExplanationRequest(
+                        metric_name="screener",
+                        metric_value=r["key_metric"],
+                        context=context,
+                    )
+                    resp = _screener_provider.explain(req)
+                    explanation = resp.text
+
                 st.markdown(
                     f"""<div style="background:#F8F9FA;border-radius:12px;
                     padding:1rem;border-left:4px solid #3498DB;
@@ -264,6 +293,14 @@ def _render_results(filtered_df: pd.DataFrame):
                     </div>""",
                     unsafe_allow_html=True,
                 )
+                # Show explanation if available
+                if explanation:
+                    _summary_card(
+                        "篩選說明",
+                        explanation,
+                        icon="🔍",
+                        border_color="#3498DB",
+                    )
                 if st.button(
                     "查看",
                     key=f"screener_goto_{r['stock_id']}_{idx}",
