@@ -98,3 +98,19 @@ C150: "Implication Sentence Framing A/B Test" — Multiple Historian Framings | 
 C151: "Select-to-Explain" — Click Any Data Point for AI Explanation | P2 | 14-18h | Point-to-point knowledge construction + Ten-second test + Adaptive | source: competitor research round 12
 C152: "Multi-Factor Event Narratives" — One Story, All Factors Combined | P1 | 16-20h | Story first + Historian positioning + Adaptive | source: competitor research round 12
 C153: "Company Financial Story" — One Narrative for All Metric Changes | P2 | 12-16h | Story first + Ten-second test + Historian positioning | source: competitor research round 12
+C154: "Explain This Screening Result" — Implication Sentences for Screener Results | P1 | 12-16h | Point-to-point knowledge construction + Story first + Beginner-friendly | source: competitor research round 13 (review 39)
+C155: "Company Story Paragraph" — Always-On One-Paragraph Company Narrative | P2 | 10-14h | Story first + Ten-second test + Historian positioning | source: competitor research round 13 (review 39)
+C156: "Historical Pattern Card" — Visual Historical Outcome Display | P1 | 14-18h | Story first + Historian positioning + Ten-second test | source: competitor research round 13 (review 39)
+C157: "Implication Confidence Indicator" — Transparency About Certainty Level | P2 | 8-12h | Story first + Point-to-point knowledge construction + Historian positioning | source: competitor research round 13 (review 39)
+C158: "Multi-Event Narrative Synthesis" — Combine All Events Into One Story | P1 | 16-20h | Story first + Historian positioning + Adaptive | source: competitor research round 13 (review 39)
+C159: "Beginner Explanation Mode" — Automatic Simplification for First-Time Users | P2 | 8-12h | Point-to-point knowledge construction + Ten-second test + Beginner-friendly | source: competitor research round 13 (review 39)
+C160: "Historian's Notebook" — Personal Annotations Layer on Company Pages | P2 | 10-14h | Story first + Point-to-point knowledge construction + Historian positioning | source: competitor research round 13 (review 39)
+C161: "Explanation Depth Control" — User-Adjustable Explanation Complexity | P2 | 6-10h | Point-to-point knowledge construction + Ten-second test + Adaptive | source: competitor research round 13 (review 39)
+C162: "AI Strategy Agent" — Natural Language Stock Analysis Actions | P1 | 20-30h | Adaptive + Historian positioning | source: competitor research round 14 (review 39)
+C163: "Learn First Gate" — Educational Onboarding Before Data | P2 | 8-12h | Point-to-point knowledge construction + Ten-second test + Beginner-friendly | source: competitor research round 14 (review 39)
+C164: "Community Implications" — User-Generated Implication Sentences | P2 | 14-20h | Story first + Point-to-point knowledge construction + Adaptive | source: competitor research round 14 (review 39)
+C165: "Varsity Mode" — Structured Progressive Learning Path | P2 | 16-24h | Point-to-point knowledge construction + Ten-second test + Beginner-friendly | source: competitor research round 14 (review 39)
+C166: "Paper Trading Mode" — Simulated Portfolio with Real Data | P2 | 16-24h | Point-to-point knowledge construction + Beginner-friendly + Historian positioning | source: competitor research round 14 (review 39)
+C167: "AI Screener Explanations" — Plain-Language Stock Screener with Outcome Narratives | P1 | 14-18h | Story first + Point-to-point knowledge construction + Beginner-friendly | source: competitor research round 14 (review 39)
+C168: "Video Explanation Library" — Bite-Sized Video Education | P2 | 20-30h | Point-to-point knowledge construction + Ten-second test + Accessibility | source: competitor research round 14 (review 39)
+C169: "Robo-Advisory with Explanations" — AI Portfolio Recommendations with Plain-Language Reasoning | P2 | 18-24h | Story first + Historian positioning + Beginner-friendly | source: competitor research round 14 (review 39)

@@ -1,8 +1,8 @@
 # Handoff – Review
 ## Summary
-- **Topic**: Review (🔍) — Round 38, Sprint 17 Post-Mortem + Sprint 18 Prerequisites
-- **Date**: 2026-06-14 (Review Round 38 completed)
-- **Sprint Status**: Sprint 16a ✅ COMPLETE → Sprint 16b ✅ COMPLETE → Sprint 17 ✅ COMPLETE → Sprint 18 planned
+- **Topic**: Review (🔍) — Round 39, Sprint 18 Post-Mortem + Sprint 19 Prerequisites
+- **Date**: 2026-06-14 (Review Round 39 completed)
+- **Sprint Status**: Sprint 16a ✅ → Sprint 16b ✅ → Sprint 17 ✅ → Sprint 18 ✅ → Sprint 19 planned
 
 ## Completed Items
 | Issue ID | Description | Owner | Result | Commit |
@@ -161,6 +161,145 @@ Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
 | R38-DES1 | Fix D-108: Extract _feedback_box() | Developer | 🟢 Quick win |
 | R38-FEAT1 | Plan C147 spike for Sprint 19 | PM/Architect | 🔴 P1 |
 | R38-QA1 | C143 must pass 3-layer tone QA | QA | 🔴 Required |
+
+---
+
+# 🔍 Review Section (Round 39 — 2026-06-14)
+**Theme**: Review Round 39 — Sprint 18 Post-Mortem + Sprint 19 Prerequisites
+
+## Participants
+Product Manager, System Architect, Developer, Designer, QA Engineer, Challenger
+
+## Key Metrics
+- **Architecture**: 🟢 HEALTHY — 44 service modules, 0 god modules, 91% under 300 lines, 98% Streamlit-free
+- **Design**: A (6th consecutive A since R34)
+- **L0**: 2 pre-existing failures (quiz_service.py) | **Tests**: 249 passed, 0 failures
+- **Sprint 18 Cost**: 24-32h budget, ~27.6h actual
+- **New Feature Gaps**: 8 (C162-C169), 2 P1 + 6 P2
+- **New Debt Items**: 5 (D-112 through D-116), 2 Medium + 3 Low
+- **Inline HTML**: 23 page-level instances (+3 regression in _health.py)
+- **Gaps Closed by Sprint 18**: 5 (tap-to-explain, source badge, implication sentence, So What? box, tone QA)
+
+## Sprint 18 Debt Verification
+| ID | Description | Status |
+|----|-------------|--------|
+| D-097 | Tone blocklist violations in templates | ✅ RESOLVED — 3 violations fixed, AST scanner added |
+| D-100 | TemplateExplanationProvider untested | ✅ RESOLVED — covered by test_delta_explanation_provider.py |
+| D-101 | explain_delta() regression tests | ✅ RESOLVED — 54 tests in test_delta_engine.py |
+| D-103 | DeltaExplanationProvider untested | ✅ RESOLVED — 45 tests in test_delta_explanation_provider.py |
+
+## New Debt Items (D-112 through D-116)
+| ID | Description | Severity | Effort |
+|----|-------------|----------|--------|
+| D-112 | `_summary.py` grew to 464 lines (approaching 500 threshold) | Medium | Monitor, split if >490 |
+| D-113 | `metric_explainer.py` (86 lines) has zero test coverage | Medium | 1-2h (HARD PREREQ) |
+| D-114 | `_health.py` has 2 new `unsafe_allow_html` instances | Low | 0.5h Day 1 |
+| D-115 | `delta_explanation_provider.py` template data hardcoded (D6 anti-pattern) | Low | Monitor, act at 350+ |
+| D-116 | `_financial.py` 1 pre-existing `unsafe_allow_html` (dividend table) | Low | Defer to Sprint 20+ |
+
+## New Design Debt (D-112-D-116 from Design Review)
+| ID | Description | Severity | Effort |
+|----|-------------|----------|--------|
+| D-112 | `_so_what_box()` uses color not in design system (#F0F7FF/#2980B9) | P2 | 0.5h |
+| D-113 | Source badge 0.8rem vs design system 0.85rem | P2 | <0.25h |
+| D-114 | Popover content doesn't follow card visual hierarchy | P2 | 0.25h doc |
+| D-115 | Tone QA excludes 30+ files with pre-existing violations | P2 | 4-6h audit |
+| D-116 | `_so_what_box()` doesn't validate delta dict keys | P2 | 0.25h |
+
+## New Feature Gaps (C162-C169)
+| ID | Feature | Priority | Effort | Source |
+|----|---------|----------|--------|--------|
+| C162 | AI Strategy Agent — natural language historian agent | P1 | 20-30h | Moomoo API Skills |
+| C163 | Learn First Gate — educational onboarding before data | P2 | 8-12h | Webull Learn |
+| C164 | Community Implications — user-generated interpretations | P2 | 14-20h | TradingView Ideas |
+| C165 | Varsity Mode — structured progressive learning w/ certificates | P2 | 16-24h | Zerodha Varsity |
+| C166 | Paper Trading Mode — simulated portfolio with explanations | P2 | 16-24h | Webull, Moomoo |
+| C167 | AI Screener Explanations — narrative screening output | P1 | 14-18h | StockEdge, Moomoo |
+| C168 | Video Explanation Library — embedded bite-sized videos | P2 | 20-30h | Tastytrade |
+| C169 | Robo-Advisory with Explanations — historian-framed recommendations | P2 | 18-24h | Webull Advisors |
+
+## Gaps Closed by Sprint 18
+| Feature | Closed By | Competitors Who Had It |
+|---------|-----------|----------------------|
+| Tap-to-Explain Metrics | C139 | Revolut, Ticker.ai, Luca AI |
+| Source Transparency | C141 | Luca AI |
+| Implication Sentences | C143 | Stockstory, Spiking, Inderes |
+| "So What?" Visual Pattern | C149 | Stockstory, Bonsai |
+| Tone Consistency | D-097 + Tone QA | Finimize (partial) |
+
+## Sprint 19 Readiness Assessment
+| Prerequisite | Status | Action |
+|-------------|--------|--------|
+| D-113 (metric_explainer tests) | 🔴 HARD PREREQ | Before any feature merge |
+| D-114 (_health.py inline HTML) | 🟢 Quick fix | Day 1 — 0.5h |
+| D-112 (_summary.py monitor) | 🟡 Watch | Check before each merge |
+| C147 pattern_detector.py | ❌ Not built | Create as part of C147 |
+| C147 chart_pattern.py | ❌ Not built | Create as part of C147 (don't grow chart_stock.py) |
+| C140 search logic | ❌ Not built | Extend market_event_service.py |
+| C140 library page | ❌ Not built | Create case_study_library.py |
+| C152 spike | 🟢 Ready | Set mid-sprint decision deadline |
+| L0/L1/Tests | ✅ PASSING | 249/249 + 2 pre-existing L0 |
+| Architecture | 🟢 HEALTHY | No blockers |
+| Design | ✅ Grade A | No blockers |
+
+**Verdict**: ✅ READY with 1 hard prerequisite (D-113)
+
+## 🔥 Three-Round Challenge (Round 39)
+**Challenger**: ✅ CONFIRMED with 5 conditions
+
+### Round 1: Gap Authenticity
+- C162-C169: 6 of 8 authentic; C162 overlaps with C59 (AI Q&A Chatbot), C165 overlaps with C47 (Academy)
+- All 5 debt items (D-112-D-116) confirmed real, correctly scoped
+- Sprint 19 scope (C147+C140+C152) confirmed correct priority
+
+### Round 2: Priority
+- C162/C167 should NOT displace C147/C140 in Sprint 19
+- C167 queued as Sprint 20 #1 priority
+- D-113 must be hard prerequisite (no feature merges without test_metric_explainer.py)
+- D-115 (tone QA expansion) correctly deferred to Sprint 20
+
+### Round 3: Goal Alignment
+- Sprint 19 is most historian-aligned sprint to date (5/5)
+- C162 has vision contradiction: must be scoped as "historian agent" not "stock picker agent"
+- Top risk: _summary.py crossing 500 lines (HIGH probability)
+
+### 5 Challenger Conditions
+1. D-113 (test_metric_explainer.py) is a hard prerequisite — no feature merges without it
+2. C162/C59 boundary must be defined before Sprint 20 planning
+3. C167 must be Sprint 20's #1 priority
+4. _summary.py line count checked before each merge (split if >490)
+5. C152 spike must have a hard mid-sprint decision deadline
+
+## Sprint 19 Final Plan (Post-Challenge)
+| Order | Task | Estimate |
+|-------|------|----------|
+| 1 | D-114 fix _health.py inline HTML | 0.5h |
+| 2 | D-113 add test_metric_explainer.py | 1.5h |
+| 3 | C147 spike (2h feasibility) + C140 content prep | 2-4h |
+| 4 | C147 Historical Event Pattern implementation | 12-16h |
+| 5 | C140 Case Study Library implementation | 10-14h |
+| 6 | C152 Charting Spike | 4-8h |
+| | **Total** | **30-44h** |
+
+## Feature Pipeline (Updated)
+| Sprint | Features | Effort | Status |
+|--------|----------|--------|--------|
+| Sprint 18 | C139+C141+C143+C149+D-097+Tone QA | 24-32h | ✅ COMPLETE |
+| Sprint 19 | C147+C140+C152 spike+D-113+D-114 | 30-44h | 📋 Planned |
+| Sprint 20 | C167 (P1) + C163 + D-115 audit | 26-36h | 📋 Planned |
+
+## Action Items
+| Item ID | Description | Owner | Priority |
+|---------|-------------|-------|----------|
+| R39-DEV1 | Fix D-114: _health.py inline HTML | Developer | 🟢 Day 1 |
+| R39-DEV2 | Add test_metric_explainer.py (D-113) | Developer | 🔴 Hard Prereq |
+| R39-DEV3 | Create chart_pattern.py for C147 | Developer | 🟡 Day 1-2 |
+| R39-DEV4 | Implement C147 Historical Event Pattern | Developer | 🔴 P1 |
+| R39-DEV5 | Implement C140 Case Study Library | Developer | 🔴 P1 |
+| R39-DEV6 | C152 Charting Spike with hard deadline | Developer | 🟡 P2 |
+| R39-DES1 | Document _so_what_box() as "synthesis card" in design system | Designer | 🟢 Quick win |
+| R39-FEAT1 | Plan C167 as Sprint 20 #1 priority | PM | 🔴 P1 |
+| R39-QA1 | C147/C140 must pass tone QA scanner | QA | 🔴 Required |
 
 ---
 
@@ -828,4 +967,14 @@ Reference `docs/state/handoff_review.md` for detailed review artifacts. Next the
 1. C135 merged into C14 (Health Score with Narrative from day 1)
 2. C132 (Risk Simplification) added to Sprint 16a
 3. C138 merged into C02 (Notifications with Explanations)
-4. C134 deferred to Sprint 17 (requires LLM abstraction layer first)
+
+---
+
+## Next Cycle
+🔧 Development Round 40 (Sprint 19 execution: C147 + C140 + C152 spike + D-113 + D-114) → 💡 Discussion Round 40 (Sprint 20 planning: C167 P1) → 🔍 Review Round 40
+
+Full review artifacts:
+- docs/research/review39_architect.md
+- docs/research/review39_design.md
+- docs/research/review39_qa.md
+- docs/research/review39_challenger.md
