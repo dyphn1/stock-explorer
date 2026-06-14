@@ -7,6 +7,46 @@
 
 ---
 
+# 🔧 Development Section (Round 47 — 2026-06-15)
+**Sprint 21: D-125 + D-126 + D-127 + C170 + C188 + C204 + C205** — ✅ COMPLETE (commits db1bc13, 9cda6df, 93280a4, 858e0ff, 746e318, 07ec00a)
+
+## D-125 chart_stock.py Split
+- 818-line god module → 3 domain submodules + re-export shim
+- `chart_stock_financial.py` (~330), `chart_stock_health.py` (~140), `chart_stock_valuation.py` (~190)
+
+## D-126 INDUSTRY_BENCHMARKS Dedup
+- Created `benchmarks.py` (164 lines) with `get_industry_benchmarks()` + `fetch_benchmark_health_scores()`
+- Removed hardcoded dicts from 3 files (_summary, _health, peer_comparison)
+
+## D-127 _summary.py Split
+- 464 lines → `_summary_hero.py` (282) + `_summary.py` (89)
+- Re-export pattern maintains backward compatibility
+
+## C170 Tappable Glossary
+- Enhanced `_glossary_tooltip()` with beginner mode support
+- New helpers: `_glossary_label()`, `_glossary_annotated_metric()`, `_glossary_help_text()`
+- `resolve_term_key()` in service layer — handles metric names, English keys, dimension names
+- Wired into 4 section files + chart annotations
+
+## C188 Why Did This Move?
+- New `stock_movement_explainer.py` (~150 lines, Streamlit-free)
+- New `_why_moved.py` section (~100 lines)
+- `config/movement_explanation_templates.yaml` — 6 reason categories, historian-toned
+
+## C204 + C205 Stretch Goals
+- Confidence badges (🟢🟡🟠) on all explanation displays
+- Read time indicators ("X 分鐘閱讀") on content sections >50 chars
+- 8 section files updated
+
+## Verification
+- L0: 135 passed (2 pre-existing quiz_service.py failures)
+- L1: 20 failures (all pre-existing FinMind not installed)
+
+## Next Cycle
+🔧 Development Round 47: Sprint 22 — C201 (今日市場動態) + 3 pre-sprint conditions (regulatory review, performance budget, content prep). See Sprint 22 plan in handoff_discuss_r46.md.
+
+---
+
 # 🔧 Development Section (Round 45 — 2026-06-15)
 **C163 Learn First Gate + C40 Beginner/Expert Mode + Debt Fixes** — ✅ COMPLETE (commit bc94bf8)
 
