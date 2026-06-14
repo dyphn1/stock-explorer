@@ -1,7 +1,7 @@
 # Handoff — Stock Explorer
 
 ## Summary
-- **Topic**: 🔧 Development (Round 45 — 2026-06-15)
+- **Topic**: 💡 Discussion (Round 46 — 2026-06-15)
 - **Date**: 2026-06-15
 - **Sprint Status**: Sprint 16a ✅ → 16b ✅ → 17 ✅ → 18 ✅ → 19 ✅ → 20 ✅ COMPLETE (C167+C163+C40 shipped)
 
@@ -34,6 +34,43 @@
 
 ## Next Cycle
 🔧 Development Round 46: Sprint 21 — D-120 (pre-sprint) → C170 (Tappable Glossary) + C188 (Why Did This Move?) + D-125/D-126/D-127 tech debt. See Sprint 21 plan below.
+
+---
+
+# 💡 Discussion Section (Round 46 — 2026-06-15)
+
+## Final Team Decision — Feature Roadmap (Post-Challenge)
+
+| Sprint | Features | Hours |
+|--------|----------|-------|
+| Sprint 21 | C170 + C188 + D-125/126/127 + C204/C205 stretch | 27.5-40.5h + 7-11h |
+| Sprint 22 | C201 (今日市場動態, P1 MVP) | 12-16h |
+| Sprint 23 | C202 → C199 → C200 (MoSCoW) | 32-44h |
+| Sprint 24+ | C206 + C203 | 26-36h |
+
+## Key Decisions
+1. C201 renamed to "今日市場動態" (avoid naming collision with C202)
+2. C201 reframed as retrospective "yesterday's news" (not advice)
+3. C204+C205 moved to Sprint 21 stretch goals (from Sprint 22)
+4. Sprint 23 MoSCoW: C202 MUST → C199 SHOULD → C200 COULD
+5. C200 acknowledged as C74 enhancement (not new feature)
+6. Feature boundaries: C204 NOT on C201, C205 NOT double-applied to C201
+7. Regulatory review gate added before Sprint 22
+
+## Conditions (Pre-Sprint 22)
+1. Regulatory review of C201+C200+C206 aggregate impression
+2. C201 performance budget: 2s timeout + cache + mobile viewport test
+3. C201 content: 14-day template library + 10 fallback snippets
+
+## Documentation Created
+- `docs/architecture/discuss_r46_architect.md`
+- `docs/design/discuss_r46_designer.md`
+- `docs/status/discuss_r46_developer.md`
+- `docs/state/challenge_r46.md` (3-round challenge, 3 conditions)
+- `docs/state/handoff_discuss_r46.md` (full discussion record)
+
+## Challenger Verdict
+✅ ALIGNED — 3 conditions → All resolved
 
 ---
 
