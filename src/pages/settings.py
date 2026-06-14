@@ -1,10 +1,12 @@
 """
-設定頁 — C07 自訂事件閾值骨架
+設定頁 — C07 自訂事件閾值
 風險閾值設定：價格變動、成交量放大、營收變化
-完整自訂 UI 將於 Sprint 17 實作
+價格與營收閾值已串接自適應更新引擎（Sprint 17）。
 """
 
 import streamlit as st
+
+from src.pages._router_base import _section_title
 
 # ── Default threshold constants ──
 _DEFAULT_PRICE_THRESHOLD = 5.0       # percent
@@ -62,7 +64,7 @@ def render_settings_page() -> None:
     _init_defaults()
 
     # ── Risk Threshold Section ──
-    st.markdown("## 風險閾值設定")
+    _section_title("風險閾值設定")
     st.markdown(
         "調整以下閾值來控制事件偵測的敏感度。"
         "較低的閾值會觸發較多提醒，較高的閾值僅在重大變化時提醒。"
@@ -94,6 +96,17 @@ def render_settings_page() -> None:
         st.warning("⚠️ 設為 0% 將觸發所有價格變動事件。")
 
     st.caption(_value_label_pricerange(price_threshold))
+
+    # ── Visual feedback: price threshold ──
+    st.markdown(
+        f"<div style='background-color:#f0f2f6; border-radius:8px; padding:12px 16px; "
+        f"font-size:14px;'>"
+        f"✅ <b>目前有效閾值：{price_threshold:.1f}%</b> &nbsp;│&nbsp; "
+        f"當單日漲跌幅 ≥ {price_threshold:.1f}% 時觸發事件偵測"
+        f"</div>",
+        unsafe_allow_html=True,
+    )
+
     st.markdown("")
 
     # ── Volume spike threshold ──
@@ -117,6 +130,10 @@ def render_settings_page() -> None:
         st.session_state[_KEY_VOLUME] = 1.0
 
     st.caption(_value_label_volume(volume_threshold))
+
+    # ── Visual feedback: volume (de-scoped) ──
+    st.caption("🔜 成交量事件偵測尚未實作（volume detection de-scoped）")
+
     st.markdown("")
 
     # ── Revenue change threshold ──
@@ -148,6 +165,16 @@ def render_settings_page() -> None:
     else:
         st.caption("🟢 寬鬆 — 僅在劇烈變化時觸發")
 
+    # ── Visual feedback: revenue threshold ──
+    st.markdown(
+        f"<div style='background-color:#f0f2f6; border-radius:8px; padding:12px 16px; "
+        f"font-size:14px;'>"
+        f"✅ <b>目前有效閾值：{revenue_threshold:.1f}%</b> &nbsp;│&nbsp; "
+        f"當營收 YoY 變化 ≥ {revenue_threshold:.1f}% 時觸發事件偵測"
+        f"</div>",
+        unsafe_allow_html=True,
+    )
+
     st.markdown("---")
 
     # ── Reset button ──
@@ -157,5 +184,8 @@ def render_settings_page() -> None:
 
     st.markdown("")
 
-    # ── Info box: coming soon ──
-    st.info("🚧 更多自訂選項即將推出（Sprint 17）：產業別閾值、法人動向敏感度、訊息通知頻率等。")
+    # ── Info box ──
+    st.success(
+        "✅ 股價變動與營收變化閾值已串接自適應更新引擎。"
+        "更多自訂選項即將推出：產業別閾值、法人動向敏感度、訊息通知頻率等。"
+    )

@@ -166,8 +166,16 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
 
     # M5: 自動事件偵測（背景執行，不阻塞頁面）
     try:
+        from src.services.settings_service import get_threshold
+        _ss = st.session_state
+        _price_thresh = get_threshold(_ss, "settings_price_threshold")
+        _revenue_thresh = get_threshold(_ss, "settings_revenue_threshold")
         with st.spinner("🔍 檢查近期事件..."):
-            new_events = run_auto_detection(stock_id, data)
+            new_events = run_auto_detection(
+                stock_id, data,
+                price_threshold=_price_thresh,
+                revenue_threshold=_revenue_thresh,
+            )
 
         # M5: 自適應框架橫幅
         _render_adaptive_banner(data)

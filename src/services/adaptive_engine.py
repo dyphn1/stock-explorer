@@ -276,10 +276,10 @@ def get_all_recent_events(days: int = 30, limit: int = 50) -> list:
 
 # ── 事件偵測 ──────────────────────────────────────────────
 
-def detect_revenue_event(monthly_revenue: pd.DataFrame) -> Optional[dict]:
+def detect_revenue_event(monthly_revenue: pd.DataFrame, threshold: float = 30.0) -> Optional[dict]:
     """
     偵測營收異動事件
-    YoY 變化超過 ±30% 視為異常
+    YoY 變化超過 ±threshold% 視為異常（預設 30%）
     """
     if len(monthly_revenue) < 13:
         return None
@@ -298,7 +298,7 @@ def detect_revenue_event(monthly_revenue: pd.DataFrame) -> Optional[dict]:
         year_ago_rev = year_ago[rev_col]
         yoy_pct = ((latest_rev - year_ago_rev) / year_ago_rev) * 100
 
-        if abs(yoy_pct) < 30:
+        if abs(yoy_pct) < threshold:
             return None
 
         severity = "high" if abs(yoy_pct) >= 50 else "medium"
@@ -569,7 +569,7 @@ def check_data_freshness(stock_id: str, data: dict) -> dict:
 
 # ── 綜合事件偵測（自動執行並記錄）──────────────────────────
 
-def run_auto_detection(stock_id: str, data: dict) -> list:
+def run_auto_detection(stock_id: str, data: dict, price_threshold: float = 7.0, revenue_threshold: float = 30.0) -> list:
     """
     自動偵測該股票的所有事件，並記錄到 events.yaml
     回傳新偵測到的事件列表
@@ -579,7 +579,7 @@ def run_auto_detection(stock_id: str, data: dict) -> list:
     # 1. 營收異動偵測
     monthly_rev = data.get("monthly_revenue")
     if monthly_rev is not None:
-        rev_event = detect_revenue_event(monthly_rev)
+        rev_event = detect_revenue_event(monthly_rev, threshold=revenue_threshold)
         if rev_event:
             new_events.append({**rev_event, "date": datetime.now().strftime("%Y-%m-%d")})
 
@@ -592,7 +592,7 @@ def run_auto_detection(stock_id: str, data: dict) -> list:
     # 3. 股價異常偵測
     daily_price = data.get("daily_price")
     if daily_price is not None:
-        price_event = detect_price_abnormal(daily_price)
+        price_event = detect_price_abnormal(daily_price, threshold=price_threshold)
         if price_event:
             new_events.append({**price_event, "date": datetime.now().strftime("%Y-%m-%d")})
 

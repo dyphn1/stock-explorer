@@ -181,3 +181,52 @@ events:
   summary: 重大事件：法說
   title: 焦點股》鴻海：法說會釋樂觀展望 帶量大漲 - 自由財經
   type: news_major
+- date: '2026-06-14'
+  detected_at: '2026-06-14T09:21:37'
+  severity: high
+  stock_id: '2330'
+  summary: 收盤價 2310 元，較前一交易日漲 2.7%。單日波動劇烈，建議關注相關公告。
+  title: 股價單日漲 2.7%
+  type: price_abnormal
+- date: '2026-06-14'
+  detected_at: '2026-06-14T09:21:37'
+  severity: medium
+  stock_id: '2454'
+  summary: 最近月營收 474 億元，較去年同期增加 5%。表現亮眼，關注後續動能。
+  title: 營收 YoY 成長 5%
+  type: revenue_surge
+- date: '2026-06-14'
+  detected_at: '2026-06-14T09:21:37'
+  severity: high
+  stock_id: '2454'
+  summary: 收盤價 4180 元，較前一交易日漲 2.3%。單日波動劇烈，建議關注相關公告。
+  title: 股價單日漲 2.3%
+  type: price_abnormal
+- date: '2026-06-14'
+  detected_at: '2026-06-14T09:21:37'
+  severity: medium
+  stock_id: '1101'
+  summary: 最近月營收 126 億元，較去年同期減少 0%。需留意是否為短期因素影響。
+  title: 營收 YoY 衰退 0%
+  type: revenue_surge
+- date: '2026-06-14'
+  detected_at: '2026-06-14T09:21:37'
+  severity: high
+  stock_id: '1101'
+  summary: 收盤價 25 元，較前一交易日漲 1.2%。單日波動劇烈，建議關注相關公告。
+  title: 股價單日漲 1.2%
+  type: price_abnormal
+- date: '2026-06-14'
+  detected_at: '2026-06-14T09:21:37'
+  severity: high
+  stock_id: '2317'
+  summary: 收盤價 260 元，較前一交易日漲 0.8%。單日波動劇烈，建議關注相關公告。
+  title: 股價單日漲 0.8%
+  type: price_abnormal
+- date: '2026-06-14'
+  detected_at: '2026-06-14T09:21:38'
+  severity: high
+  stock_id: '0050'
+  summary: 收盤價 102 元，較前一交易日漲 2.1%。單日波動劇烈，建議關注相關公告。
+  title: 股價單日漲 2.1%
+  type: price_abnormal

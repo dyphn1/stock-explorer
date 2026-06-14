@@ -161,6 +161,8 @@ def get_pending_notifications(client, stock_ids: list) -> list:
                 continue
 
             # 執行自動偵測（會寫入 events.yaml）
+            # Note: notification_service has no access to session_state,
+            # so we use default thresholds here.
             run_auto_detection(stock_id, data)
         except Exception as exc:
             logger.warning("Notification detection failed for %s: %s", stock_id, exc)
