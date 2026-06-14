@@ -25,6 +25,30 @@
 - **Proposal**: C37 + C43 are "above the fold" ten-second answer. C44 is collapsible above the fold. C46 and C36 are in tabs. Everything else below the fold.
 - **Status**: ⏳ Pending Daniel — approve the "above the fold" definition?
 
+### 4. Dark/Light Theme Implementation (D-126)
+- **Context**: Design review identified missing dark/light theme implementation; settings page lacks theme toggle.
+- **Proposal**: Add theme preference in settings with CSS variables for colors, improving accessibility and user comfort.
+- **Estimated Effort**: 8-12h
+- **Status**: ⏳ Pending Daniel
+
+### 5. _infocard() Component for Visual-First Metrics (D-127)
+- **Context**: Missing _infocard() component for infographic-style visual cards that combine icons, mini-charts, and text.
+- **Proposal**: Create _infocard(icon, sparkline_data, label, value, analogy) component for visual-first metric presentation.
+- **Estimated Effort**: 6-9h
+- **Status**: ⏳ Pending Daniel
+
+### 6. _calculator_card() Component for Interactive Financial Tools (D-128)
+- **Context**: Missing _calculator_card() component for interactive financial modeling tools.
+- **Proposal**: Create _calculator_card() component with input fields and real-time output for simple financial modeling.
+- **Estimated Effort**: 8-12h
+- **Status**: ⏳ Pending Daniel
+
+### 7. _ai_explanation_card() Component for AI Explanations (D-129)
+- **Context**: Missing _ai_explanation_card() component for AI-driven move explanations with visual cues.
+- **Proposal**: Create _ai_explanation_card() component with visual indicator (e.g., robot icon) and AI-generated explanation.
+- **Estimated Effort**: 5-8h
+- **Status**: ⏳ Pending Daniel
+
 ## Resolved This Cycle (Round 10)
 
 | Item | Decision |
@@ -32,7 +56,6 @@
 | C42 priority | Confirmed P1 enabler for Sprint 4 (not P1 vision — C34 is vision P1) |
 | C44 scope | MVP: 3 risk dimensions, top 20 stocks, progressive disclosure |
 | C44 tone risk | Elevated to HIGH — tone review checkpoint required |
-| R1 priority | Upgraded to P0 — must do before/alongside C44 in Sprint 3 |
 | C34 scheduling | Explicitly scheduled for Sprint 5 (with C46 or C47 P1) |
 | C47 scope | Split into Phase 1 (5 lessons, 12h) + Phase 2 (post-plan) |
 | Sprint 3 contingency | If C44-MVP >14h, reduce to 2 risk dimensions |
@@ -48,4 +71,5 @@
 - **Status**: ⏳ Pending Daniel
 
 ---
+
 *This file is maintained by the PM. Items move to resolved when Daniel confirms.*
