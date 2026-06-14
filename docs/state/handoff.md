@@ -411,7 +411,75 @@ The `tests/services/test_delta_engine.py` test suite (54 tests) covers all delta
 ---
 
 ## Next Cycle
-🔧 Development Round 38 Complete (Sprint 17: C14 + C134 + C07 + D-101) → 💡 Discussion Round 38 (Sprint 18: C139 + C141 + C143) → 🔍 Review Round 38
+💡 Discussion Round 39 Complete (Sprint 19: C147 + C140 + C152 spike + D-112 + D-113) → 🔍 Review Round 39 → 🔧 Development Round 40 (Sprint 19 execution)
+
+---
+
+# 💡 Discussion Section (Round 39 — 2026-06-14)
+**Topic**: Sprint 19 Planning — C147 Historical Event Pattern + C140 Case Study Library + C152 spike + D-112 + D-113
+**Challenger**: ✅ CONFIRMED with 8 conditions
+**Direction**: A — "Pattern-First" (C147 + C140, C152 deferred to Sprint 20)
+**Key Decisions**:
+- **C147**: New `historical_pattern_service.py` + `historical_patterns.yaml`. Range-of-outcomes display in `st.expander()` below event cards. 2h feasibility spike on Day 1 with pre-defined decision tree.
+- **C140**: New "案例庫" navbar tab. `case_study_library.py` service + page. Ship with minimum 10 case studies. C140 schema extension is hard prerequisite for C147 service.
+- **C152**: 4-6h design spike on Day 1 (parallel with C147 spike). Must produce 4 artifacts. Full implementation deferred to Sprint 20.
+- **D-112**: Fix broken `market_event_service` import in `timeline_service.py` (Day 1 prerequisite).
+- **D-113**: Extend tone QA to scan YAML files. Blocklist +12 phrases. Budget 2-3h.
+- **Sprint 19 total**: 35-49h
+- **Execution**: C147 spike + C152 spike + D-112 fix all on Day 1 AM. Tone QA expansion before content creation.
+**Full details**: docs/state/handoff_discuss_r39.md
+
+---
+
+# 🔧 Development Section (Round 39 — 2026-06-14)
+**Theme**: Development Round 39 — Sprint 18 Execution
+
+## Participants
+Product Manager, Developer (openrouter/owl-alpha)
+
+## Completed Items
+| Issue ID | Description | Owner | Result | Commit |
+|----------|-------------|-------|--------|--------|
+| D-074 | filelock dependency fix — installed missing `filelock` package | Developer | ✅ `uv sync` resolved; 42 tests in test_adaptive_engine.py now pass | (no file changes) |
+| D-103 | DeltaExplanationProvider tests | Developer | ✅ 45 tests in `tests/services/test_delta_explanation_provider.py` — all metric types × directions × magnitudes, boundary values, stock_name prefix | `1b9e2e4` |
+| D-097 | Tone blocklist template audit + rewrite | Developer | ✅ 3 violations fixed in `delta_explanation_provider.py`: "值得關注後續動能"→"可持續觀察其變化", "表現優於預期"→"表現相對正面", "需要密切關注"→"可留意其趨勢"; 7 test expected strings updated | `d1d6155` |
+| C139 | Explain This Number — 💡 popover buttons | Developer | ✅ `_explain_button()` helper in `_router_base.py`; `metric_explainer.py` service; 💡 buttons on 5-7 business card metrics across _summary.py, _health.py, _story.py, _moat.py | `9c61365` |
+| C141 | Source Badge on explanations | Developer | ✅ Bundled into `_explain_button()` — `st.caption("📊 系統估算")` / `st.caption("📊 FinMind")` on all popovers | `9c61365` |
+| C143 | Implication Sentence on Delta Cards | Developer | ✅ `ExplanationResponse.implication` field added; 20 implication templates in `delta_explanation_provider.py`; `explain_delta_full()` in `delta_engine.py`; implication replaces explanation on delta cards | `882c367` |
+| C149 | "So What?" Implication Box | Developer | ✅ `_so_what_box()` helper in `_router_base.py`; renders "🧭 所以呢？" synthesized implication when 2+ deltas active | `882c367` |
+| Tone QA | Automated tone blocklist scanner | Developer | ✅ `tests/test_tone_qa.py` — AST-based scanner for all `.py` files under `src/services/` and `src/pages/`; `@pytest.mark.tone`; 0 violations | `c8474f6` |
+
+## Sprint 18 Final Status: ✅ COMPLETE
+
+## Architecture Decisions
+- **ExplanationResponse protocol extended**: `implication: str = ""` field added (backward-compatible default)
+- **Delta card redesign**: Implication sentence replaces explanation on card; original explanation moves to 💡 popover (C139 popover + C143 implication)
+- **Popover-first reuse**: `_explain_button()` helper in `_router_base.deletes` uses `st.popover()` with `TemplateExplanationProvider` — zero new infrastructure
+- **Tone QA CI gate**: `tests/test_tone_qa.py` scans all service/page strings for blocklist violations; runs as part of standard test suite
+
+## Verification
+- **L0**: 120 pass, 2 fail (pre-existing quiz_service.py streamlit imports — unchanged)
+- **L1**: 20/20 pre-existing FinMind-not-installed failures — unchanged
+- **Tests**: **249 passed** (0 failures, 0 regressions)
+- **Commits**: `1b9e2e4`, `d1d6155`, `9c61365`, `882c367`, `c8474f6`
+
+## Sprint 18 Cost Actual vs Estimate
+| Item | Estimated | Actual (committable) |
+|------|-----------|---------------------|
+| D-074 filelock fix | 0.25h | ~0.1h |
+| D-103 DeltaExplanationProvider tests | 1.5h | ~1.5h |
+| D-097 Template audit + rewrite | 1.5h | ~1.5h |
+| C139 + C141 Explain This Number + Source Badge | 10-13h | ~12h |
+| C143 + C149 Implication Sentence + So What? Box | 9-12h | ~10h |
+| Tone QA Automation | 2.5h | ~2.5h |
+| **Total** | **24-32h** | **~27.6h** |
+
+## Feature Pipeline (Updated)
+| Sprint | Features | Effort | Status |
+|--------|----------|--------|--------|
+| Sprint 18 | C139 + C141 + C143 + C149 + D-097 + Tone QA | 24-32h | ✅ COMPLETE |
+| Sprint 19 | C147 (with 2h spike) + C152 spike + C140 content | 34-42h | 📋 Planned |
+| Sprint 20 | C152 + C142 + C146 | 33-43h | 📋 Planned |
 
 Reference `docs/state/handoff_review.md` for detailed review artifacts.
 Reference `docs/research/review37_developer_estimates.md` for full cost analysis.
