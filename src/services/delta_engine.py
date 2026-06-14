@@ -3,6 +3,12 @@
 計算最近的重要變化並生成白話解釋
 """
 
+from src.services.delta_explanation_provider import DeltaExplanationProvider
+from src.services.llm.base import ExplanationRequest
+
+# Singleton provider instance — reusable across calls
+_delta_provider = DeltaExplanationProvider()
+
 
 def compute_recent_deltas(
     extra_metrics: dict,
@@ -96,6 +102,9 @@ def explain_delta(
 ) -> str:
     """為變化量生成白話解釋（C39）
 
+    Delegates to DeltaExplanationProvider which implements the
+    ExplanationProvider protocol (D5 LLM abstraction layer).
+
     Args:
         metric_name: 指標名稱
         change_pct: 變化百分比（含正負號）
@@ -106,59 +115,20 @@ def explain_delta(
     回傳中文（zh-TW）的解釋字串。
     """
     abs_pct = abs(change_pct)
-    name_prefix = f"{stock_name} " if stock_name else ""
+    delta_str = f"{abs_pct:+.1f}%"
 
-    # 根據指標類型和方向產生解釋
-    if metric_name == "月營收":
-        if direction == "up":
-            if abs_pct >= 50:
-                return f"{name_prefix}月營收暴增 {abs_pct:.0f}%，可能是大訂單入帳或旺季效應，值得關注後續動能"
-            elif abs_pct >= 30:
-                return f"{name_prefix}月營收成長 {abs_pct:.0f}%，表現優於預期，可能是需求回溫或新產品貢獻"
-            else:
-                return f"{name_prefix}月營收成長 {abs_pct:.0f}%，溫和成長中"
-        else:
-            if abs_pct >= 50:
-                return f"{name_prefix}月營收驟降 {abs_pct:.0f}%，可能是淡季或失去大客戶，需要密切關注"
-            elif abs_pct >= 30:
-                return f"{name_prefix}月營收衰退 {abs_pct:.0f}%，表現不如預期，可能是需求下滑或訂單遞延"
-            else:
-                return f"{name_prefix}月營收小跌 {abs_pct:.0f}%，略有衰退但仍在合理範圍"
+    request = ExplanationRequest(
+        metric_name=metric_name,
+        metric_value=f"{abs_pct:.1f}%",
+        delta=delta_str,
+        context={
+            "stock_name": stock_name,
+            "industry": industry,
+            "direction": direction,
+            "change_pct": change_pct,
+        },
+        language="zh-TW",
+    )
 
-    if metric_name == "股價（近 30 日均價）":
-        if direction == "up":
-            if abs_pct >= 30:
-                return f"{name_prefix}股價近 30 日大漲 {abs_pct:.0f}%，市場情緒樂觀，可能是基本面改善或利多消息推動"
-            elif abs_pct >= 20:
-                return f"{name_prefix}股價近 30 日上漲 {abs_pct:.0f}%，多頭趨勢明顯"
-            else:
-                return f"{name_prefix}股價近 30 日上漲 {abs_pct:.0f}%，穩步走揚"
-        else:
-            if abs_pct >= 30:
-                return f"{name_prefix}股價近 30 日大跌 {abs_pct:.0f}%，市場信心不足，可能是利空消息或基本面惡化"
-            elif abs_pct >= 20:
-                return f"{name_prefix}股價近 30 日下跌 {abs_pct:.0f}%，空頭趨勢明顯"
-            else:
-                return f"{name_prefix}股價近 30 日小跌 {abs_pct:.0f}%，略有回檔"
-
-    if metric_name == "營收年增率":
-        if direction == "up":
-            if abs_pct >= 50:
-                return f"{name_prefix}營收年增 {abs_pct:.0f}%，成長非常強勁，可能是新產品大賣或市場需求爆發"
-            elif abs_pct >= 20:
-                return f"{name_prefix}營收年增 {abs_pct:.0f}%，穩定成長，公司經營績效良好"
-            else:
-                return f"{name_prefix}營收年增 {abs_pct:.0f}%，溫和成長"
-        else:
-            if abs_pct >= 50:
-                return f"{name_prefix}營收年減 {abs_pct:.0f}%，大幅衰退，可能有結構性問題需要關注"
-            elif abs_pct >= 20:
-                return f"{name_prefix}營收年減 {abs_pct:.0f}%，比去年差，需留意原因"
-            else:
-                return f"{name_prefix}營收年減 {abs_pct:.0f}%，略有衰退"
-
-    # 通用解釋
-    if direction == "up":
-        return f"{name_prefix}{metric_name} 較前期成長 {abs_pct:.1f}%"
-    else:
-        return f"{name_prefix}{metric_name} 較前期衰退 {abs_pct:.1f}%"
+    response = _delta_provider.explain(request)
+    return response.text
