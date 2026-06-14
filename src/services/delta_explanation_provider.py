@@ -27,12 +27,12 @@ _METRIC_KEY_MAP: dict[str, str] = {
 
 _REVENUE_TEMPLATES = {
     "up": [
-        (50, "{stock_prefix}月營收暴增 {abs_pct:.0f}%，可能是大訂單入帳或旺季效應，值得關注後續動能"),
-        (30, "{stock_prefix}月營收成長 {abs_pct:.0f}%，表現優於預期，可能是需求回溫或新產品貢獻"),
+        (50, "{stock_prefix}月營收暴增 {abs_pct:.0f}%，可能是大訂單入帳或旺季效應，可持續觀察其變化"),
+        (30, "{stock_prefix}月營收成長 {abs_pct:.0f}%，表現相對正面，可能是需求回溫或新產品貢獻"),
         (0,  "{stock_prefix}月營收成長 {abs_pct:.0f}%，溫和成長中"),
     ],
     "down": [
-        (50, "{stock_prefix}月營收驟降 {abs_pct:.0f}%，可能是淡季或失去大客戶，需要密切關注"),
+        (50, "{stock_prefix}月營收驟降 {abs_pct:.0f}%，可能是淡季或失去大客戶，可留意其趨勢"),
         (30, "{stock_prefix}月營收衰退 {abs_pct:.0f}%，表現不如預期，可能是需求下滑或訂單遞延"),
         (0,  "{stock_prefix}月營收小跌 {abs_pct:.0f}%，略有衰退但仍在合理範圍"),
     ],

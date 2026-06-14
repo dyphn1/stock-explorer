@@ -26,12 +26,12 @@ class TestExplainDeltaRevenue:
     def test_revenue_up_moderate(self):
         """月營收成長 35% → moderate tier (≥30%, <50%)."""
         result = explain_delta("月營收", 35.0, "up")
-        assert result == "月營收成長 35%，表現優於預期，可能是需求回溫或新產品貢獻"
+        assert result == "月營收成長 35%，表現相對正面，可能是需求回溫或新產品貢獻"
 
     def test_revenue_up_extreme(self):
         """月營收成長 60% → extreme tier (≥50%)."""
         result = explain_delta("月營收", 60.0, "up")
-        assert result == "月營收暴增 60%，可能是大訂單入帳或旺季效應，值得關注後續動能"
+        assert result == "月營收暴增 60%，可能是大訂單入帳或旺季效應，可持續觀察其變化"
 
     def test_revenue_down_mild(self):
         """月營收衰退 5% → mild tier (else branch, <30%)."""
@@ -46,7 +46,7 @@ class TestExplainDeltaRevenue:
     def test_revenue_down_extreme(self):
         """月營收衰退 60% → extreme tier (≥50%)."""
         result = explain_delta("月營收", -60.0, "down")
-        assert result == "月營收驟降 60%，可能是淡季或失去大客戶，需要密切關注"
+        assert result == "月營收驟降 60%，可能是淡季或失去大客戶，可留意其趨勢"
 
 
 # ── explain_delta: 股價（近 30 日均價） ──────────────────────
@@ -130,12 +130,12 @@ class TestExplainDeltaBoundaries:
     def test_revenue_boundary_30_up(self):
         """月營收成長 exactly 30% → moderate tier (≥30%)."""
         result = explain_delta("月營收", 30.0, "up")
-        assert result == "月營收成長 30%，表現優於預期，可能是需求回溫或新產品貢獻"
+        assert result == "月營收成長 30%，表現相對正面，可能是需求回溫或新產品貢獻"
 
     def test_revenue_boundary_50_up(self):
         """月營收成長 exactly 50% → extreme tier (≥50%)."""
         result = explain_delta("月營收", 50.0, "up")
-        assert result == "月營收暴增 50%，可能是大訂單入帳或旺季效應，值得關注後續動能"
+        assert result == "月營收暴增 50%，可能是大訂單入帳或旺季效應，可持續觀察其變化"
 
     def test_revenue_boundary_30_down(self):
         """月營收衰退 exactly 30% → moderate tier (≥30%)."""
@@ -145,7 +145,7 @@ class TestExplainDeltaBoundaries:
     def test_revenue_boundary_50_down(self):
         """月營收衰退 exactly 50% → extreme tier (≥50%)."""
         result = explain_delta("月營收", -50.0, "down")
-        assert result == "月營收驟降 50%，可能是淡季或失去大客戶，需要密切關注"
+        assert result == "月營收驟降 50%，可能是淡季或失去大客戶，可留意其趨勢"
 
     # 股價 boundaries (thresholds: 20, 30)
     def test_price_boundary_20_up(self):
@@ -219,11 +219,11 @@ class TestExplainDeltaStockName:
 
     def test_revenue_up_with_stock_name(self):
         result = explain_delta("月營收", 35.0, "up", stock_name="台積電")
-        assert result == "台積電 月營收成長 35%，表現優於預期，可能是需求回溫或新產品貢獻"
+        assert result == "台積電 月營收成長 35%，表現相對正面，可能是需求回溫或新產品貢獻"
 
     def test_revenue_up_without_stock_name(self):
         result = explain_delta("月營收", 35.0, "up")
-        assert result == "月營收成長 35%，表現優於預期，可能是需求回溫或新產品貢獻"
+        assert result == "月營收成長 35%，表現相對正面，可能是需求回溫或新產品貢獻"
 
     def test_price_down_with_stock_name(self):
         result = explain_delta("股價（近 30 日均價）", -25.0, "down", stock_name="鴻海")
