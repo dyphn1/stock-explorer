@@ -5,7 +5,7 @@ with plain-language narratives. Only shown when movement is significant (>3%).
 """
 import streamlit as st
 from src.services.stock_movement_explainer import explain_movement
-from src.pages._router_base import _info_card, _summary_card, _section_title
+from src.pages._router_base import _info_card, _summary_card, _section_title, _confidence_badge, _section_title_with_read_time
 
 
 def _render_why_moved(data: dict, client) -> None:
@@ -85,7 +85,9 @@ def _render_why_moved(data: dict, client) -> None:
         return
 
     # ── Render the section ──
-    _section_title("🔍 為什麼這檔股票會動？")
+    # C205: section title with read time badge
+    movement_full_text = explanation.get("narrative", "") + " " + explanation.get("detail", "")
+    _section_title_with_read_time("🔍 為什麼這檔股票會動？", movement_full_text)
 
     # Direction emoji and magnitude
     direction_emoji = {
@@ -118,11 +120,17 @@ def _render_why_moved(data: dict, client) -> None:
         "#E74C3C" if explanation["direction"] == "down" else "#F39C12"
     )
     _summary_card("股價變動", movement_content, direction_emoji, border_color=border_color)
+    # C204: confidence badge
+    st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
     # Detail explanation
     if explanation.get("detail"):
         _info_card("詳細說明", explanation["detail"], "📖")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
     # Key concept callout
     if explanation.get("key_concept"):
         _info_card("📌 核心概念", explanation["key_concept"], "💡")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")

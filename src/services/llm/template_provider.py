@@ -111,8 +111,22 @@ class TemplateExplanationProvider:
         direction = _resolve_direction(request.delta)
 
         # Look up metric templates, fall back to generic
-        metric_templates = TEMPLATES.get(metric_key, _FALLBACK_TEMPLATES)
-        template_text = metric_templates.get(direction, _FALLBACK_TEMPLATES[direction])
+        if metric_key in TEMPLATES:
+            metric_templates = TEMPLATES[metric_key]
+            confidence = 0.9  # exact metric match
+        else:
+            metric_templates = _FALLBACK_TEMPLATES
+            confidence = 0.5  # fallback/generic template
+
+        template_text = metric_templates.get(direction)
+        if template_text is None:
+            # direction missing in the matched template set → use fallback direction
+            template_text = _FALLBACK_TEMPLATES[direction]
+            confidence = 0.5
+
+        # Check if metric_value is empty / missing-data sentinel
+        if not request.metric_value or request.metric_value.strip() in ("", "—", "N/A", "無資料", "暫無資料"):
+            confidence = 0.3  # missing data handled
 
         text = template_text.format(
             name=request.metric_name,
@@ -122,7 +136,7 @@ class TemplateExplanationProvider:
         return ExplanationResponse(
             text=text,
             source="template",
-            confidence=1.0,
+            confidence=confidence,
         )
 
     def is_available(self) -> bool:

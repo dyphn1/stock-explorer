@@ -2,6 +2,7 @@
 路由器共享工具函式
 """
 
+import math
 import pandas as pd
 import streamlit as st
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -83,6 +84,62 @@ def _section_title(title: str):
         st.markdown(f"### {title}")
     else:
         st.markdown(f"### 📊 {title}")
+
+
+def _confidence_badge(confidence: float) -> str:
+    """Return an emoji confidence badge based on the confidence score.
+
+    C204: Emoji-based confidence indicator for AI explanations.
+    Since all explanations are currently template-based, confidence reflects
+    data completeness, not AI certainty.
+
+    Args:
+        confidence: Float between 0.0 and 1.0.
+
+    Returns:
+        A string like "🟢 高度信心" with appropriate emoji and label.
+    """
+    if confidence >= 0.8:
+        return "🟢 高度信心"
+    elif confidence >= 0.5:
+        return "🟡 中度信心"
+    else:
+        return "🟠 參考性質"
+
+
+def _read_time(text: str) -> str:
+    """Estimate reading time for Chinese text.
+
+    C205: Read time indicator based on Chinese reading speed (~400-500 chars/min).
+
+    Args:
+        text: The content text to estimate reading time for.
+
+    Returns:
+        A string like "3 分鐘閱讀", minimum 1 minute.
+    """
+    char_count = len(text)
+    minutes = max(1, math.ceil(char_count / 450))
+    return f"{minutes} 分鐘閱讀"
+
+
+def _section_title_with_read_time(title: str, content: str) -> None:
+    """Render a section title with an inline read time badge.
+
+    C205: Only shows the read time badge when content has >50 characters.
+
+    Args:
+        title: Section title string.
+        content: The content text (used to calculate read time).
+    """
+    if not title:
+        return
+
+    if content and len(content.strip()) > 50:
+        badge = _read_time(content)
+        st.markdown(f"### {title} &nbsp;<span style='font-size:0.75rem;color:#7F8C8D;font-weight:400;vertical-align:middle;background:#F0F0F0;padding:2px 8px;border-radius:10px;'>⏱ {badge}</span>", unsafe_allow_html=True)
+    else:
+        _section_title(title)
 
 
 def _explain_button(

@@ -9,7 +9,7 @@ from src.services.analogy_engine import get_one_liner
 from src.services.key_takeaways import generate_key_takeaways
 from src.services.news_summarizer import summarize_news, get_news_impact_level
 from src.services.company_facts import get_company_facts
-from src.pages._router_base import _info_card, _summary_card
+from src.pages._router_base import _info_card, _summary_card, _confidence_badge
 
 # ── Re-export hero functions from _summary_hero for backward compatibility ──
 from src.pages.business_card._sections._summary_hero import (
@@ -41,6 +41,8 @@ def _render_takeaways(data: dict, client) -> None:
     if takeaways:
         takeaways_text = "\\n\\n".join(f"• {t}" for t in takeaways)
         _summary_card("重點摘要", takeaways_text, "📋")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
 
 def _render_one_liner(data: dict, client) -> None:
@@ -52,6 +54,8 @@ def _render_one_liner(data: dict, client) -> None:
     # 一句話定位
     one_liner = get_one_liner(stock_id, stock_name, industry)
     _info_card("一句話定位", one_liner, "💡")
+    # C204: confidence badge
+    st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
     # 💡 你知道嗎？ Company facts tip card
     facts = get_company_facts(stock_id)
@@ -64,6 +68,8 @@ def _render_one_liner(data: dict, client) -> None:
         st.session_state[fact_key] = (idx + 1) % len(facts)
         current_fact = facts[idx]
         _info_card("你知道嗎？", current_fact, "💡")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
 
 def _render_news(data: dict, client) -> None:

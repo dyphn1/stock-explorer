@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 from src.services.delta_engine import compute_recent_deltas
 from src.services.company_facts import get_company_facts
-from src.pages._router_base import _info_card, _section_title, _explain_button, _so_what_box
+from src.pages._router_base import _info_card, _section_title, _explain_button, _so_what_box, _confidence_badge
 from src.pages.url_sync import navigate_to
 from src.services.compare_stories import generate_compare_stories
 
@@ -36,6 +36,8 @@ def _render_deltas(data: dict, client) -> None:
             )
         delta_text = "\\n\\n".join(delta_lines)
         _info_card("最近有什麼變化", delta_text, "🔄")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
         # C139: 💡 explain buttons for each delta metric (show original explanation in popover)
         for d in deltas:
@@ -53,6 +55,8 @@ def _render_deltas(data: dict, client) -> None:
         _so_what_box(deltas)
     else:
         _info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
 
 def _render_compare_stories(data: dict, client, all_info=None) -> None:

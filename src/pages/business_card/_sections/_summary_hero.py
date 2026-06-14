@@ -25,7 +25,7 @@ from src.services.watchlist import (
     create_list,
     list_names,
 )
-from src.pages._router_base import _白话_card, _info_card, _summary_card, _explain_button, _glossary_tooltip
+from src.pages._router_base import _白话_card, _info_card, _summary_card, _explain_button, _glossary_tooltip, _confidence_badge, _section_title_with_read_time
 from src.services import glossary_service
 from src.services.benchmarks import (
     get_industry_benchmarks,
@@ -130,6 +130,8 @@ def _render_story_card(data: dict, client) -> None:
 
     # One-liner
     _info_card("一句話定位", one_liner, "💡")
+    # C204: confidence badge for the one-liner explanation
+    st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
     # Key metrics row — use _白话_card for each + 💡 explain button + glossary tooltip
     # C170: beginner mode → more prominent glossary indicators
@@ -159,6 +161,8 @@ def _render_story_card(data: dict, client) -> None:
         else:
             health_border = "#E74C3C"
         _summary_card("整體健康度", f"{overall_health:.0f}/100 {health_label}", "🏥", border_color=health_border)
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
     # ── C14: vs 同業 comparison ──
     if health_scores:
@@ -188,10 +192,14 @@ def _render_story_card(data: dict, client) -> None:
                         f"{vs_emoji} {vs_text}"
                     )
                     _info_card("vs 同業", vs_content, "🏭")
+                    # C204: confidence badge
+                    st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
     # Did You Know?
     if fact_text:
         _info_card("你知道嗎？", fact_text, "🤔")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
 
 def _render_header(data: dict, client) -> None:

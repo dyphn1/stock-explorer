@@ -3,7 +3,7 @@ import streamlit as st
 from src.services.chart import create_health_snowflake
 from src.services.health_scoring import compute_health_scores, get_health_summary
 from src.services.risk_analyzer import assess_risk
-from src.pages._router_base import _info_card, _explain_button, _mini_score_card, _glossary_tooltip
+from src.pages._router_base import _info_card, _explain_button, _mini_score_card, _glossary_tooltip, _confidence_badge, _section_title_with_read_time
 from src.pages.business_card._helpers import (
     get_health_dimension_explanation,
     _render_risk_dimension,
@@ -43,7 +43,9 @@ def _render_health(data: dict, client) -> None:
         monthly_revenue=monthly_revenue,
     )
     if health_scores:
-        st.markdown("### 🏥 公司健康狀況")
+        # C205: section title with read time badge
+        health_summary_text = get_health_summary(health_scores)
+        _section_title_with_read_time("🏥 公司健康狀況", health_summary_text)
 
         # ── Fetch benchmark overlay data ──
         benchmark_scores = None
@@ -96,8 +98,9 @@ def _render_health(data: dict, client) -> None:
                     _glossary_tooltip(_gkey, glossary_service, beginner=_is_beginner)
 
         # 白話健康摘要
-        health_summary = get_health_summary(health_scores)
-        _info_card("健康摘要", health_summary, "🏥")
+        _info_card("健康摘要", health_summary_text, "🏥")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
 
 def _render_risk(data: dict, client) -> None:

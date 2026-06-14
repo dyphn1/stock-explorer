@@ -15,7 +15,7 @@ from src.services.analogy_engine import (
 )
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.metric_education import get_metric_explanation, get_top_metrics_for_education
-from src.pages._router_base import _白话_card, _info_card, _glossary_tooltip
+from src.pages._router_base import _白话_card, _info_card, _glossary_tooltip, _confidence_badge, _section_title_with_read_time
 from src.services import glossary_service
 
 
@@ -144,6 +144,8 @@ def _render_key_metrics(data: dict, client) -> None:
                     "📖",
                 )
                 st.markdown("")
+            # C204: confidence badge for metric education
+            st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
 
 def _render_dividend(data: dict, client) -> None:
@@ -190,6 +192,8 @@ def _render_dividend(data: dict, client) -> None:
 
         # Plain-language headline (tip card style)
         _info_card("配息摘要", div_summary["plain_summary"], "💵")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
         # Three mini-cards
         col1, col2, col3 = st.columns(3)
@@ -260,6 +264,8 @@ def _render_dividend(data: dict, client) -> None:
     else:
         # Show a subtle note for stocks without dividends
         _info_card("配息摘要", div_summary["plain_summary"], "💡")
+        # C204: confidence badge
+        st.caption(f"{_confidence_badge(0.5)} · 信心指標反映資料完整度，非AI預測確定性")
 
     st.markdown("---")
 
@@ -271,11 +277,13 @@ def _render_revenue_breakdown(data: dict, client) -> None:
     stock_name = data["stock_name"]
     industry = data["industry"]
 
-    # 營收組成（圓餅圖 + 白話說明）
-    st.markdown("### 📊 營收組成")
-    st.markdown("*這家公司靠什麼賺錢？*")
-
     revenue_items = analyze_revenue_breakdown(financial, stock_id, industry)
+
+    # 營收組成（圓餅圖 + 白話說明）
+    # C205: section title with read time badge
+    revenue_desc = " ".join(item.get("description", "") for item in revenue_items)
+    _section_title_with_read_time("📊 營收組成", revenue_desc)
+    st.markdown("*這家公司靠什麼賺錢？*")
 
     col1, col2 = st.columns([3, 2])
     with col1:
@@ -317,7 +325,8 @@ def _render_valuation(data: dict, client) -> None:
     stock_name = data["stock_name"]
 
     # 估值區間圖（歷史 P/E 範圍）
-    st.markdown("### 📊 估值區間")
+    # C205: section title with read time badge
+    _section_title_with_read_time("📊 估值區間", "目前本益比在歷史上的位置")
     st.markdown("*目前本益比在歷史上的位置*")
 
     daily_price = data.get("daily_price")
@@ -334,6 +343,8 @@ def _render_valuation(data: dict, client) -> None:
         # 白話解讀 — use interpretation returned by chart function
         if interp and interp.get("valuation_text"):
             _info_card("估值解讀", interp["valuation_text"], "💡")
+            # C204: confidence badge
+            st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
         # C170: Glossary tooltip for PER / PBR
         _glossary_tooltip("本益比", glossary_service)
         _glossary_tooltip("淨值比", glossary_service)
