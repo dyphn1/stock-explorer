@@ -181,6 +181,41 @@ def _info_card(title: str, content: str, icon: str = "💡"):
     """, unsafe_allow_html=True)
 
 
+def _so_what_box(deltas: list[dict]) -> None:
+    """Render a 'So What?' implication box summarizing all deltas.
+
+    C149: A dedicated visual callout that answers 'What does this mean?'
+    Uses historian tone — factual past-tense observations only.
+    Only shown when there are 2+ active deltas.
+
+    Args:
+        deltas: List of delta dicts, each containing at least:
+            metric_name, direction, change_pct, implication
+    """
+    if len(deltas) < 2:
+        return
+
+    # Build a synthesized implication from all delta implications
+    parts: list[str] = []
+    for d in deltas:
+        implication = d.get("implication", "")
+        if implication:
+            parts.append(implication)
+
+    if not parts:
+        return
+
+    # Join with period + space for natural reading
+    synthesized = "；".join(parts)
+
+    st.markdown(f"""
+    <div style="background:#F0F7FF;border-radius:12px;padding:1.2rem;border-left:4px solid #2980B9;margin:0.8rem 0 0.5rem 0;">
+        <div style="font-weight:600;color:#2C3E50;">🧭 所以呢？</div>
+        <div style="font-size:0.9rem;color:#2C3E50;margin-top:0.4rem;line-height:1.7;">{synthesized}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
 def _subsidiary_card(name: str, hold_label: str, hold_color: str,
                      holding: int, revenue: int, business: str, relation: str):
     """Render a subsidiary card with holding badge, business description, and relation.

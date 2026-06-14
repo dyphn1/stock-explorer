@@ -70,6 +70,57 @@ _METRIC_TEMPLATES: dict[str, dict[str, list[tuple[int, str]]]] = {
     "營收年增率": _YOY_TEMPLATES,
 }
 
+# ── Implication templates (C143) ──────────────────────────────
+# Historian tone, factual past-tense observations.
+# All phrases verified against tone blocklist:
+#   建議, 應該, 買, 賣, 推薦, 进场, 出场, 值得關注, 需要密切關注, 值得持續追蹤, 表現優於預期
+# Safe alternatives used: 可留意, 可觀察, 可持續追蹤
+
+_IMPLICATION_TEMPLATES: dict[str, dict[str, list[tuple[int, str]]]] = {
+    "月營收": {
+        "up": [
+            (50, "此營收大幅成長，後續可持續觀察其變化"),
+            (30, "此營收正向表現，可留意其趨勢"),
+            (0, "此營收溫和成長，屬穩定表現"),
+        ],
+        "down": [
+            (50, "此營收大幅衰退，後續變化值得觀察"),
+            (30, "此營收表現偏弱，可持續追蹤原因"),
+            (0, "此營收小幅波動，仍在合理範圍"),
+        ],
+    },
+    "股價（近 30 日均價）": {
+        "up": [
+            (30, "此股價漲幅較大，可留意市場評價變化"),
+            (20, "此股價呈多頭走勢，可觀察後續動能"),
+            (0, "此股價穩步走揚，趨勢平穩"),
+        ],
+        "down": [
+            (30, "此股價跌幅較大，可持續觀察市場反應"),
+            (20, "此股價呈空頭走勢，可留意後續變化"),
+            (0, "此股價小幅回檔，屬正常波動"),
+        ],
+    },
+    "營收年增率": {
+        "up": [
+            (50, "此營收年增強勁，可留意後續季度表現"),
+            (20, "此營收穩定成長，可持續觀察趨勢"),
+            (0, "此營收溫和成長，表現平穩"),
+        ],
+        "down": [
+            (50, "此營收年減幅度較大，可持續追蹤"),
+            (20, "此營收較去年同期偏弱，可留意改善情況"),
+            (0, "此營收略有波動，仍在合理範圍"),
+        ],
+    },
+}
+
+# Generic fallback implications for unknown metrics
+_GENERIC_IMPLICATION_TEMPLATES: dict[str, str] = {
+    "up": "此指標較前期成長，可留意其後續變化",
+    "down": "此指標較前期衰減，可持續追蹤原因",
+}
+
 # ── Generic fallback templates ────────────────────────────────
 _GENERIC_TEMPLATES = {
     "up":   "{stock_prefix}{metric_name} 較前期成長 {abs_pct:.1f}%",
@@ -118,6 +169,38 @@ def _pick_template(
     )
 
 
+def _pick_implication(
+    metric_name: str,
+    direction: str,
+    abs_pct: float,
+) -> str:
+    """Pick the appropriate implication sentence for a delta (C143).
+
+    Uses tiered implication templates keyed on metric_name × direction.
+    Falls back to generic implication templates for unknown metric names.
+
+    All templates are historian-tone, factual past-tense observations
+    that pass the tone blocklist (verified at write time).
+
+    Args:
+        metric_name: The delta metric name (e.g. "月營收").
+        direction: "up" or "down".
+        abs_pct: Absolute percentage value.
+
+    Returns:
+        The implication sentence string (no stock prefix — generic third-person).
+    """
+    metric_implications = _IMPLICATION_TEMPLATES.get(metric_name)
+    if metric_implications is not None:
+        direction_templates = metric_implications[direction]
+        for threshold, template in direction_templates:
+            if abs_pct >= threshold:
+                return template
+
+    # Generic fallback
+    return _GENERIC_IMPLICATION_TEMPLATES[direction]
+
+
 class DeltaExplanationProvider:
     """ExplanationProvider for delta (change) metrics.
 
@@ -164,6 +247,13 @@ class DeltaExplanationProvider:
             stock_name=stock_name,
         )
 
+        # Generate implication sentence (C143)
+        implication = _pick_implication(
+            metric_name=request.metric_name,
+            direction=direction,
+            abs_pct=abs_pct,
+        )
+
         # Also use the template provider for composition (delegation)
         # — call it to verify it's available (protocol compliance)
         self._template_provider.is_available()
@@ -172,6 +262,7 @@ class DeltaExplanationProvider:
             text=text,
             source="delta_template",
             confidence=1.0,
+            implication=implication,
         )
 
     def is_available(self) -> bool:

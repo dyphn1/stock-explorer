@@ -29,6 +29,7 @@ class ExplanationResponse:
     text: str
     source: str  # "template" | "llm" | "fallback"
     confidence: float = 1.0
+    implication: str = ""  # C143: one-sentence "so what" implication (zh-TW, historian tone)
 
 
 @runtime_checkable

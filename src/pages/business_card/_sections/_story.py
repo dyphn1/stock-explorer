@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 from src.services.delta_engine import compute_recent_deltas
 from src.services.company_facts import get_company_facts
-from src.pages._router_base import _info_card, _section_title, _explain_button
+from src.pages._router_base import _info_card, _section_title, _explain_button, _so_what_box
 from src.pages.url_sync import navigate_to
 from src.services.compare_stories import generate_compare_stories
 
@@ -28,14 +28,16 @@ def _render_deltas(data: dict, client) -> None:
             emoji = "📈" if d["direction"] == "up" else "📉"
             sign = "+" if d["change_pct"] >= 0 else ""
             color = "#27AE60" if d["direction"] == "up" else "#E74C3C"
+            # C143: implication sentence replaces explanation on card
+            implication_text = d.get("implication", "")
             delta_lines.append(
                 f"{emoji} <span style=\\\"color:{color}\\\">**{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）</span><br>\\n"
-                f"　→ {d['explanation']}"
+                f"　→ {implication_text}"
             )
         delta_text = "\\n\\n".join(delta_lines)
         _info_card("最近有什麼變化", delta_text, "🔄")
 
-        # C139: 💡 explain buttons for each delta metric
+        # C139: 💡 explain buttons for each delta metric (show original explanation in popover)
         for d in deltas:
             sign = "+" if d["change_pct"] >= 0 else ""
             _explain_button(
@@ -46,6 +48,9 @@ def _render_deltas(data: dict, client) -> None:
                 context={"direction": d["direction"]},
                 source_label="📊 FinMind",
             )
+
+        # C149: So What? implication box — synthesize all deltas
+        _so_what_box(deltas)
     else:
         _info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")
 

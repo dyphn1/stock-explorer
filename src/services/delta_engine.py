@@ -82,13 +82,15 @@ def compute_recent_deltas(
 
     # 為每個 delta 產生白話解釋
     for delta in deltas:
-        delta["explanation"] = explain_delta(
+        explanation, implication = explain_delta_full(
             delta["metric_name"],
             delta["change_pct"],
             delta["direction"],
             "",  # stock_name 可選，留空使用通用描述
             "",
         )
+        delta["explanation"] = explanation
+        delta["implication"] = implication
 
     return deltas[:2]
 
@@ -132,3 +134,50 @@ def explain_delta(
 
     response = _delta_provider.explain(request)
     return response.text
+
+
+def explain_delta_full(
+    metric_name: str,
+    change_pct: float,
+    direction: str,
+    stock_name: str = "",
+    industry: str = "",
+) -> tuple[str, str]:
+    """為變化量生成白話解釋 + 暗示句（C143）
+
+    Like explain_delta() but returns a tuple of (explanation_text, implication_sentence).
+    The implication sentence is a short historian-tone "so what" observation
+    that replaces the explanation on delta cards (C143), while the explanation
+    moves to the 💡 popover.
+
+    Delegates to DeltaExplanationProvider which implements the
+    ExplanationProvider protocol.
+
+    Args:
+        metric_name: 指標名稱
+        change_pct: 變化百分比（含正負號）
+        direction: "up" 或 "down"
+        stock_name: 股票名稱（可選）
+        industry: 產業名稱（可選）
+
+    Returns:
+        Tuple of (explanation_text, implication_sentence), both zh-TW.
+    """
+    abs_pct = abs(change_pct)
+    delta_str = f"{abs_pct:+.1f}%"
+
+    request = ExplanationRequest(
+        metric_name=metric_name,
+        metric_value=f"{abs_pct:.1f}%",
+        delta=delta_str,
+        context={
+            "stock_name": stock_name,
+            "industry": industry,
+            "direction": direction,
+            "change_pct": change_pct,
+        },
+        language="zh-TW",
+    )
+
+    response = _delta_provider.explain(request)
+    return response.text, response.implication
