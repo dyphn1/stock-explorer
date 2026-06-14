@@ -1,0 +1,72 @@
+# Movement Explanation Templates (C188)
+# Templates for explaining "Why did this stock move?" in plain language.
+# Used by stock_movement_explainer.py for historian-toned movement narratives.
+# Categories: earnings, dividend, sector, institutional, news, technical
+
+up:
+  earnings:
+    short: "股價上漲 {pct}%，主要因為財報表現優於市場預期。"
+    detail: "營收或獲利數字優於分析師預期，市場重新評估了這家公司的價值。歷史告訴我們，財報驚喜往往帶動短期股價上揚，但長期仍需觀察基本面是否持續改善。"
+    key_concept: "財報驚喜帶動股價，但要看是否持續"
+  dividend:
+    short: "股價上漲 {pct}%，可能受到股利政策正向調整的影響。"
+    detail: "公司宣布增加股利或配息優於預期，反映了對未來現金流的信心。這類消息通常吸引收益型投資者進場，推升股價。"
+    key_concept: "股利增加代表公司對未來有信心"
+  sector:
+    short: "股價上漲 {pct}%，可能受到同產業族群連動上漲的影響。"
+    detail: "整個產業板塊因政策面、需求面或景氣循環而上漲，這檔股票也跟著受惠。需要注意的是，群體上涨時要個別檢視公司基本面。"
+    key_concept: "產業連動效應，要回到個別公司看"
+  institutional:
+    short: "股價上漲 {pct}%，可能受到法人買盤推動的影響。"
+    detail: "外資、投信或自營商等法人機構增加買入部位，反映了專業投資者對公司評價的轉變。但法人動向僅供參考，不一定是正確的方向。"
+    key_concept: "法人買盤推動，但僅供參考"
+  news:
+    short: "股價上漲 {pct}%，可能受到正面新聞的影響。"
+    detail: "近期出現的正面新聞改變了市場對這家公司的看法。歷史經驗顯示，新聞驅動的波動需要後續發展來確認是否具有持續性。"
+    key_concept: "新聞改變市場看法，需觀察後續"
+  technical:
+    short: "股價上漲 {pct}%，主要是技術性因素驅動。"
+    detail: "股價突破了先前的壓力區間或均線支撐，引發技術性買入。此類波動通常較短期，建議搭配基本面一起觀察。"
+    key_concept: "技術性波動較短期，要搭配基本面"
+  fallback:
+    short: "股價上漲 {pct}%，可能受到多個因素的綜合影響。"
+    detail: "股價上漲通常由多種因素同時推動，包含市場情緒、資金流向、基本面變化等。建議搭配其他資訊一起觀察，不要僅看單一因素。"
+    key_concept: "股價變動通常是多重因素綜合結果"
+
+down:
+  earnings:
+    short: "股價下跌 {pct}%，主要因為財報表現不如市場預期。"
+    detail: "營收或獲利數字低於分析師預期，市場因此修正了對這家公司的評價。歷史數據顯示，不如預期的財報往往引發短期賣壓。"
+    key_concept: "財報不如預期引發賣壓"
+  dividend:
+    short: "股價下跌 {pct}%，可能受到股利政策調整的影響。"
+    detail: "公司宣布減少股利或取消配息，可能被市場解讀為現金流或獲利能力的警訊。但也可能是公司保留資金用於未來投資，需進一步了解原因。"
+    key_concept: "減少股利可能是警訊或投資未來的決策"
+  sector:
+    short: "股價下跌 {pct}%，可能受到同產業族群連動下跌的影響。"
+    detail: "整個產業板块因政策變化、需求下滑或景氣走弱而下跌，這檔股票也跟著受到影響。群體下跌時要特別留意個別公司是否有自身問題。"
+    key_concept: "產業連動下跌，需留意個別風險"
+  institutional:
+    short: "股價下跌 {pct}%，可能受到法人賣出的影響。"
+    detail: "外資、投信等法人機構減少持股，反映了專業投資者對公司前景的看法轉變。但法人的操作也有可能是資金配置調整，不一定是看壞基本面。"
+    key_concept: "法人賣出可能反映看法轉變或資金調整"
+  news:
+    short: "股價下跌 {pct}%，可能受到負面新聞的影響。"
+    detail: "近期出現的負面新聞降低了市場對這家公司的信心。歷史告訴我們，新聞驅動的波動需要觀察後續發展是否會改變基本面。"
+    key_concept: "負面新聞影響信心，需觀察後續"
+  technical:
+    short: "股價下跌 {pct}%，主要是技術性因素驅動。"
+    detail: "股價跌破了先前的支撐區間或均線，引發技術性賣出。此類波動通常較短期，建議搭配基本面一起觀察。"
+    key_concept: "技術性下跌較短期，要搭配基本面"
+  fallback:
+    short: "股價下跌 {pct}%，可能受到多個因素的綜合影響。"
+    detail: "股價下跌通常由多種因素同時推動，包含市場情緒、資金流出、基本面變化等。建議搭配其他資訊一起觀察，不要僅看單一因素。"
+    key_concept: "股價變動通常是多重因素綜合結果"
+
+sideways:
+  short: "股價震盪 {pct}%，沒有明顯方向性走勢。"
+  detail: "股價在近期呈現小幅震盪，漲跌幅不大，市場對這家公司暫時沒有明確方向性看法。這可能是等待新資訊或方向的整理期。"
+  key_concept: "震盪期表示市場在等待方向性催化劑"
+
+major_threshold: 10.0
+significant_threshold: 3.0

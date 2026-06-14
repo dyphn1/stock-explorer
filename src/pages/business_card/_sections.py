@@ -1,4 +1,4 @@
-"""Business card section rendering functions — 14 sections (D24).
+"""Business card section rendering functions — 15 sections (D24+C188).
 
 This module is now a backward-compatible re-export shim.
 All functions have been split into sub-modules under _sections/:
@@ -7,6 +7,7 @@ All functions have been split into sub-modules under _sections/:
   _financial — key_metrics, dividend, revenue_breakdown, revenue_trend, valuation
   _health   — health, risk
   _story    — deltas, compare_stories, read_next
+  _why_moved — why_moved (C188)
   _detail   — share_section, footer
 """
 from src.pages.business_card._sections._summary_hero import (  # noqa: F401,F403
@@ -34,6 +35,9 @@ from src.pages.business_card._sections._story import (
     _render_compare_stories,
     _render_read_next,
 )
+from src.pages.business_card._sections._why_moved import (
+    _render_why_moved,
+)
 from src.pages.business_card._sections._detail import (
     _render_share_section,
     _render_footer,
@@ -55,6 +59,7 @@ __all__ = [
     "_render_compare_stories",
     "_render_news",
     "_render_read_next",
+    "_render_why_moved",
     "_render_share_section",
     "_render_footer",
 ]
