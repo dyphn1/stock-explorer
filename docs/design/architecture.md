@@ -807,4 +807,210 @@ The planned Sprint 4 sequence is: **D24 → R3 → C51 → C48 → C53-1**
 
 *Created: 2026-06-19*
 *Maintainer: System Architect*
-*Next review: After Sprint 4 kickoff (D24 + D16 complete)*
+
+---
+
+## Sprint 21 Technical Analysis
+
+> **Date**: 2026-06-14
+> **Author**: System Architect
+> **Context**: Sprint 20 in progress (C167 ✅ done, C163 + C40 pending). Sprint 21 planning for the sprint after Sprint 20.
+
+---
+
+### Problem Statement
+
+Sprint 21 faces a convergence of three forces:
+
+1. **A mature ExplanationProvider protocol** — C167 (ScreenerExplanationProvider) proved the protocol pattern works for screening contexts. The infrastructure is ready for more ambitious narrative features.
+2. **Mounting design debt around education** — D-012 (no glossary) and D-015 (no learning path) have been open since Round 9. C163 (Learn First Gate) will partially address onboarding but not inline education.
+3. **Competitor pressure on narrative features** — Round 9 confirmed that Simply Wall St, Stockopedia, and 財報狗 all have features that combine data with narrative context. Stock Explorer's "historian" positioning needs to evolve from "explains single metrics" to "tells multi-factor stories."
+
+The core question for Sprint 21: **Should we invest in narrative infrastructure (C152), educational infrastructure (C170), or visual/analytical features (C171-C174)?**
+
+---
+
+### Feature Direction 1: C152 Multi-Factor Event Narratives (P1, 16-20h)
+
+**Description**: Combine multiple events, metrics, and contextual factors into a single coherent narrative — "Here's what happened to TSMC this quarter, told as one story that connects revenue, events, and market conditions."
+
+**How C152 Interacts with the ExplanationProvider Protocol**:
+
+C152 is a natural extension of the existing protocol. The current architecture has:
+- `ExplanationProvider` protocol with `explain(ExplanationRequest) -> ExplanationResponse`
+- `TemplateExplanationProvider` for template-based explanations
+- `DeltaExplanationProvider` for change explanations (wraps TemplateExplanationProvider via composition)
+- `ScreenerExplanationProvider` for screening explanations (wraps TemplateExplanationProvider via composition)
+
+C152 would introduce a `NarrativeExplanationProvider` that:
+1. **Composes multiple existing providers** — delegates to `DeltaExplanationProvider` for metric changes, `TemplateExplanationProvider` for static context, and a new `EventNarrativeProvider` for event sequencing
+2. **Uses the same `ExplanationRequest`/`ExplanationResponse` protocol** — no new interface needed
+3. **Adds a `compose_narrative()` orchestration function** in the service layer that merges multiple `ExplanationResponse` objects into a single narrative with chronological ordering and causal linking
+4. **Requires a new `EventNarrativeProvider`** that reads from `events.yaml` (already exists from C147/C140) and generates plain-language event sequences
+
+**Pros**:
+- ✅ **Highest alignment with "historian" positioning** — this IS the historian product vision
+- ✅ **Leverages existing infrastructure** — ExplanationProvider protocol, events.yaml, analogy_engine, compose-and-enrich pipeline
+- ✅ **No new data sources needed** — all data already in the system
+- ✅ **Proven pattern** — C167 showed that new ExplanationProvider implementations are low-risk (~14h for ScreenerExplanationProvider)
+- ✅ **Competitive white space** — no TW competitor has multi-factor narrative synthesis
+- ✅ **C152 spike already deferred twice** — the feature has been validated through 3 rounds of competitor research
+
+**Cons**:
+- ⚠️ **Requires D-120 (benchmark extraction) as prerequisite** — narrative context needs industry benchmark data, and the triplicated `INDUSTRY_BENCHMARKS` dict will cause maintenance issues if not extracted first
+- ⚠️ **Requires D-16 (analogy_engine.py split) as prerequisite** — the narrative composer needs clean imports from analogy functions currently buried in the 850-line god module
+- ⚠️ **Risk of "narrative sprawl"** — without clear scope boundaries, C152 could try to narrate everything. Must be limited to 3-5 factors per narrative
+- ⚠️ **Tone QA complexity** — multi-factor narratives increase the risk of accidental prescriptive language. The 3-layer tone QA (keyword + pattern + human review) must be enforced
+- ⚠️ **16-20h is a wide range** — the upper end would consume most of Sprint 21's capacity
+
+**Effort Estimate**: 16-20h (narrative composer service + EventNarrativeProvider + page integration + tone QA)
+**Prerequisites**: D-120 (1.5-2.5h) + D-16 (2-3h) = 3.5-5.5h infrastructure before C152 starts
+
+---
+
+### Feature Direction 2: C170 Tappable Glossary + C163 Learn First Gate Bundle (P1, 12-18h)
+
+**Description**: Bundle C170 (Tappable Glossary, 6-10h) with C163 (Learn First Gate, 10-14h) into a single "beginner education infrastructure" sprint. C163 is already in Sprint 20, but if it slips to Sprint 21, C170 can be bundled with it since both target the same user journey: first-time users encountering financial terms.
+
+**Can C170 Be Bundled with C163?**
+
+**Yes, strongly recommended.** Here's why:
+
+1. **Shared data structure** — Both features need a `glossary.yaml` (or similar) with term → plain-language definition mappings. C163 needs "key concept cards" for the gate; C170 needs "inline tooltips" for the same terms. One YAML file serves both.
+
+2. **Shared service layer** — A new `glossary_service.py` can provide:
+   - `get_term_definition(term) -> str` — for C170 tooltips
+   - `get_key_concepts(stock_id) -> list[ConceptCard]` — for C163 gate cards
+   - `get_all_terms() -> dict` — for both features
+
+3. **Shared UI component** — A `_glossary_tooltip()` helper in `_router_base.py` (or `ui_components.py`) can be used by C170 for inline tooltips AND by C163 for concept card rendering.
+
+4. **Sequential user journey** — C163 (gate) is encountered BEFORE C170 (inline tooltips). A user who passes through the gate has already seen the key terms. C170 then reinforces those terms inline. This is a natural educational progression.
+
+5. **Combined effort fits Sprint 21** — C163 (10-14h) + C170 (6-10h) = 16-24h. With shared infrastructure, the overlap reduces this to approximately 12-18h.
+
+**Pros**:
+- ✅ **Highest beginner impact** — directly addresses the "ten-second test" for first-time users
+- ✅ **Shared infrastructure reduces total effort** — one YAML, one service, one UI component
+- ✅ **C170 is P1 and small (6-10h)** — can be added to C163 without blowing the sprint
+- ✅ **No prerequisites** — glossary is greenfield, no dependency on D-120 or D-16
+- ✅ **Competitive gap** — no TW competitor has systematic glossary tooltips (D-012 open since Round 9)
+- ✅ **Enables future features** — glossary infrastructure supports C172 (Concept Comparison) and C173 (Visual Calculators) in future sprints
+
+**Cons**:
+- ⚠️ **Requires C163 to slip from Sprint 20** — if C163 ships in Sprint 20, C170 alone (6-10h) may not fill Sprint 21
+- ⚠️ **Content creation bottleneck** — glossary needs 50-100 terms with plain-language definitions. This is PM/Designer work, not developer work
+- ⚠️ **Streamlit tooltip limitations** — Streamlit has no native tooltip component. Implementation requires `st.popover()` or custom HTML. The `_glossary_tooltip()` component needs careful UX design
+- ⚠️ **Risk of "glossary as band-aid"** — a glossary doesn't solve the deeper problem of financial literacy. It's infrastructure, not a feature users will rave about
+
+**Effort Estimate**: 12-18h (C163 + C170 with shared infrastructure)
+**Prerequisites**: None (greenfield)
+
+---
+
+### Feature Direction 3: C171 Valuation Band Chart + C172 Concept Comparison (P2, 14-20h)
+
+**Description**: Two P2 visual/analytical features that extend existing charting infrastructure. C171 (Valuation Band Chart, 8-10h) shows historical P/E or P/B ranges with plain-language interpretation. C172 (Concept Comparison Tool, 10-14h) allows side-by-side comparison of financial concepts (e.g., "ROE vs ROA" or "P/E vs P/B").
+
+**Note**: C45 (Valuation Band Chart) is already implemented per the issues.md file. C171 may be a re-scoping or enhancement of C45. This analysis assumes C171 is either not yet built or needs significant rework.
+
+**Pros**:
+- ✅ **Leverages existing chart.py infrastructure** — `create_valuation_band_chart()` already exists (C45). C171 may only need a plain-language interpretation layer
+- ✅ **C172 reuses glossary infrastructure** — if C170 is built in Sprint 21, C172 can reuse the glossary data for concept definitions
+- ✅ **Competitor-validated** — 財報狗 has P/E band charts; Magnify.money has concept comparison. Both are proven demand
+- ✅ **Low architectural risk** — both are presentation-layer features with thin service layers
+- ✅ **Good "filler" features** — if C152 or C163+C170 finish early, C171/C172 can fill remaining sprint capacity
+
+**Cons**:
+- ⚠️ **C45 overlap** — C45 (Valuation Band Chart) is listed as "✅ Already implemented" in issues.md. C171 may duplicate existing work
+- ⚠️ **Lower priority (P2)** — both are P2, meaning they're less critical than C152 (P1) or C170 (P1)
+- ⚠️ **C172 is conceptually complex** — comparing financial concepts side-by-side requires careful UX design to avoid confusion. "ROE vs ROA" is only meaningful if users understand both terms first
+- ⚠️ **No narrative value** — these are analytical features, not narrative features. They don't advance the "historian" positioning as directly as C152
+- ⚠️ **C172 depends on C170 glossary** — if C170 isn't built first, C172 needs its own concept definition data
+
+**Effort Estimate**: 14-20h (C171 8-10h + C172 10-14h, with some overlap)
+**Prerequisites**: C170 glossary (for C172 concept definitions)
+
+---
+
+### Feature Direction 4 (Wildcard): C174 Sector-Level Storytelling (P2, 14-20h)
+
+**Description**: Thematic sector narratives connecting multiple companies — "Here's the semiconductor industry's story" showing how TSMC, UMC, and MediaTek's stories intertwine. Identified in Round 9 as "the untapped frontier" and validated by Smallcase's thematic investing approach.
+
+**Pros**:
+- ✅ **Unique differentiator** — no TW competitor has sector-level storytelling
+- ✅ **Perfect "historian" evolution** — from "company historian" to "industry historian"
+- ✅ **Leverages existing data** — group_structure.py, peer_comparison.py, and events.yaml already have the data
+- ✅ **Smallcase validation** — proves demand for thematic sector narratives internationally
+
+**Cons**:
+- ⚠️ **Highest risk** — 14-20h with significant unknowns around data integration and narrative coherence
+- ⚠️ **Requires market_data.py (D25)** — sector-level features need a market data abstraction that doesn't exist yet
+- ⚠️ **Requires D-120 (benchmark extraction)** — sector narratives need industry benchmark context
+- ⚠️ **Content curation bottleneck** — sector stories need manual curation for quality
+- ⚠️ **May be too ambitious for Sprint 21** — better suited for Sprint 22+ when narrative infrastructure (C152) is mature
+
+**Effort Estimate**: 14-20h
+**Prerequisites**: D-120, D-25 (market_data.py), C152 (narrative infrastructure)
+
+---
+
+### Infrastructure Prerequisites
+
+#### D-120: Benchmark Logic Extraction (1.5-2.5h) — HARD PREREQUISITE
+
+**Status**: Escalated from D-109. The `INDUSTRY_BENCHMARKS` dict is triplicated across `_summary.py`, `_health.py`, and `peer_comparison.py`. Additionally, benchmark health score fetching logic is duplicated between `_summary.py` (107 lines) and `_health.py` (117 lines).
+
+**Recommended Fix**:
+1. Extract `INDUSTRY_BENCHMARKS` to `src/data/industry_benchmarks.yaml`
+2. Extract benchmark health score fetching to `health_scoring.get_benchmark_scores(client, industry, stock_id)` in a new or existing service module
+3. Update all 3 consumers to use the shared YAML + service function
+
+**Impact**: Unblocks C152 (needs benchmark context for narratives), C171 (needs benchmark data for valuation bands), and C174 (needs sector-level benchmarks). Also reduces maintenance burden for all future features that need industry comparison data.
+
+**Sequencing**: Must be done BEFORE any Sprint 21 feature that uses industry benchmarks. Ideally done as the last Sprint 20 task or the first Sprint 21 task.
+
+#### D-16: analogy_engine.py Split (2-3h) — SOFT PREREQUISITE
+
+**Status**: Open since Round 11. `analogy_engine.py` is 850 lines with 6 distinct responsibilities.
+
+**Impact on Sprint 21**: C152's `NarrativeExplanationProvider` needs clean imports from analogy functions. C170/C172 need glossary functions that may end up in a split-out module. D-16 is not a hard prerequisite (workarounds exist) but will cause increasing pain if deferred.
+
+**Recommendation**: Bundle D-16 with D-120 as Sprint 21 Day 1 infrastructure (total 3.5-5.5h).
+
+---
+
+### Recommendation
+
+**Primary Recommendation: Feature Direction 1 (C152) + D-120 infrastructure**
+
+**Rationale**:
+
+1. **C152 is the highest-value P1 feature** in the pipeline. It directly delivers on the "historian" product vision — the core differentiator that no TW competitor has.
+2. **The ExplanationProvider protocol is mature** — C167 proved the pattern. C152 is the next logical extension.
+3. **D-120 is overdue** — benchmark triplication has been open since Round 38 (D-109). Every sprint that defers it increases the maintenance burden.
+4. **Sprint 21 capacity**: D-120 (1.5-2.5h) + D-16 (2-3h) + C152 (16-20h) = 19.5-25.5h. This fits within a normal sprint capacity.
+
+**Contingency Plan**: If C152 spike quality is low (the spike was deferred from Sprint 19), fall back to **Feature Direction 2 (C170 + C163 bundle)**. C170 is P1, has no prerequisites, and can be completed in 6-10h, leaving room for C171 (8-10h) as a stretch goal.
+
+**Not Recommended for Sprint 21**:
+- **C174 (Sector-Level Storytelling)** — too ambitious without C152 narrative infrastructure. Plan for Sprint 22+.
+- **C173 (Visual Financial Calculators)** — P2, high effort (12-16h), and overlaps with existing calculator features. Defer to Sprint 22+.
+- **C172 (Concept Comparison)** — only if C170 is built first. Standalone C172 without glossary infrastructure is high-risk.
+
+**Sprint 21 Recommended Plan**:
+
+| Order | Task | Effort | Type |
+|-------|------|--------|------|
+| 1 | D-120 benchmark extraction | 1.5-2.5h | Infrastructure |
+| 2 | D-16 analogy_engine.py split | 2-3h | Infrastructure |
+| 3 | C152 Multi-Factor Event Narratives | 16-20h | Feature |
+| **Total** | | **19.5-25.5h** | |
+
+**Stretch Goal** (if C152 finishes early): C170 Tappable Glossary (6-10h) — greenfield, no prerequisites, high beginner impact.
+
+---
+
+*Created: 2026-06-14*
+*Maintainer: System Architect*
+*Next review: After Sprint 20 completion / Sprint 21 kickoff*

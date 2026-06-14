@@ -129,6 +129,256 @@
 
 ---
 
+## 2026-06-14 Theme: Sprint 21 Planning — Challenger Analysis
+
+> **Context**: Sprint 20 is in progress (C167 ✅ done, C163 + C40 pending). The PM has formed a "team preliminary decision" for Sprint 21: Option A (P1 Focus) with D-120 + C170 + C152 + C171(stretch). This challenge stress-tests that plan through 3 rounds of rigorous questioning.
+>
+> **Team Preliminary Decision (Option A: P1 Focus)**:
+> | Order | Task | Estimate | Running Total |
+> |-------|------|----------|---------------|
+> | 1 | D-120: Benchmark extraction (INDUSTRY_BENCHMARKS from 3 files → YAML + shared service) | 1.5-2.5h | 1.5-2.5h |
+> | 2 | C170: Tappable Glossary (inline metric definitions, reuses _glossary_tooltip from _router_base.py) | 8-12h | 9.5-14.5h |
+> | 3 | C152: Multi-Factor Event Narratives (NarrativeExplanationProvider extending ExplanationProvider protocol) | 18-24h | 27.5-38.5h |
+> | 4 | C171: Valuation Band Chart (stretch goal) | 10-14h | 37.5-52.5h |
+
+---
+
+### Round 1: Feature Direction Challenge
+
+#### Challenge 1.1 — Is C152 really ready for implementation?
+
+C152 has been deferred twice: first as a spike in Sprint 19 (deferred to Sprint 20), then as a swap condition in Sprint 20 (not triggered). Now it's the centerpiece of Sprint 21. The Developer flagged C152's scope creep as the **#1 risk** — multi-factor narrative is inherently open-ended. The Designer's own review rates C152 as "highest-risk feature for advice perception" with a **🔴 CRITICAL** severity on the advice-perception risk.
+
+The core question: **Does the team have a concrete, bounded definition of what "multi-factor narrative" means in practice?** The Designer's spec says "≥2 significant events within 30-day window" — but the Developer's estimate of 14-18h includes "designing ~10-15 multi-factor narrative templates in YAML (~4h)" and "the composition service that picks the right template based on event combination (~4h)." This is not spike work; this is full implementation of an open-ended template design problem.
+
+**Specific questions for the team:**
+1. How many multi-factor combinations will be supported in Sprint 21? Is there a hard cap (e.g., 8 combinations) or is it "as many as we can build"?
+2. What happens when the system encounters a combination that doesn't have a template? Is there a graceful degradation path?
+3. Has the team pre-written and tone-audited even ONE multi-factor narrative template? If not, how can the estimate be 18-24h?
+4. The Designer flagged "false causality" as a 🟡 MEDIUM risk — using "同時發生" (occurred simultaneously) framing instead of "因為...所以..." (because...therefore...). Has this framing been validated? Are there example templates that demonstrate this?
+
+**Recommended team response:** The team should commit to a **hard cap of 8 multi-factor narrative templates** for Sprint 21, covering the most common event combinations (revenue+price, revenue+institutional, product+price, etc.). All 8 templates must be pre-written and tone-audited BEFORE Sprint 21 coding begins. If templates aren't ready, C152 scope reduces to 5 templates and the effort drops to 12-15h.
+
+#### Challenge 1.2 — Is C170 truly P1, or is it infrastructure masquerading as a feature?
+
+C170 (Tappable Glossary) closes D-012 — the oldest P2 gap, open since Round 9. The Designer's analysis is honest: "Investopedia has 10,000+ term glossary. Stock Explorer's analogy engine provides explanations but only in card format, not as hover tooltips." The question is whether a 50-100 entry glossary can compete with Investopedia's 10K+ terms.
+
+But this question misses the point. C170 isn't trying to compete with Investopedia's encyclopedia — it's trying to provide **inline, contextual definitions** for the specific metrics shown on Stock Explorer pages. This is a fundamentally different use case. Investopedia requires you to leave the page; C170 brings the definition to you.
+
+**The real question is about scope and approach:**
+1. The estimate is 8-12h. The Developer's original estimate for C170 was 6-10h. Where did the extra 2-2h come from?
+2. The description says "reuses _glossary_tooltip from _router_base.py" — but looking at the codebase, `_glossary_tooltip` exists as a component. Does C170 need to build a new service layer, or is it primarily a UI integration task?
+3. How many terms will be in the glossary at launch? 50? 100? Is there a content creation plan?
+4. The Designer noted that C170 "enables C152" — narrative quality improves when terms are defined. If this is true, shouldn't C170 come BEFORE C152 in the sprint order?
+
+**Recommended team response:** The team should clarify that C170 is a **UI integration + content creation** task, not a new service. The 8-12h estimate should be broken down: 3-4h for UI integration (wrapping metric displays with tooltip components), 5-8h for content creation (writing 50-80 glossary entries). Content creation should start NOW (parallel with Sprint 20 C163/C40) so that C170 ships with substantive content, not an empty tooltip shell.
+
+#### Challenge 1.3 — Should D-120 really be bundled with Sprint 21?
+
+D-120 (benchmark extraction) has been open since Round 38 — that's **3 sprints** of deferral. The Architect's review says "Do in Sprint 20 alongside C163" — but Sprint 20 is now in progress with C163 and C40 as the remaining items. D-120 was not included in Sprint 20.
+
+The question: **Why is D-120 in Sprint 21 instead of being done as Sprint 20 infrastructure?** The Developer flagged "D-120 regression risk (extracting from 3 files)" — this is a known, bounded task that should have been done already. Every sprint it's deferred, the risk of the 3 duplicated dicts diverging increases.
+
+**Specific questions:**
+1. What is the concrete risk of extracting INDUSTRY_BENCHMARKS from 3 files? The Architect says 1-2h. The PM's estimate says 1.5-2.5h. Is there a technical reason this can't be done in 1.5h?
+2. If D-120 is truly a Day 1 prerequisite, why wasn't it done in Sprint 20? The team had 30-42h capacity and used it on C167+C163+C40. Was D-120 considered and rejected, or simply not considered?
+3. Does D-120 need to be done before C170 or C152? If not, why is it ordered first?
+
+**Recommended team response:** D-120 should be a **Day 0 prerequisite** — done before any Sprint 21 feature work begins. It should take 1.5-2.5h and is pure infrastructure. The team should commit to completing D-120 before C170 or C152 development starts. If D-120 reveals that the 3 dicts have diverged, the reconciliation work should be included in the 1.5-2.5h estimate.
+
+#### Challenge 1.4 — Are we overlooking C163/C40 carry-over risk?
+
+Sprint 20 has C163 (Learn First Gate, 10-14h) and C40 (Beginner/Expert Mode, 8-12h) pending. The Sprint 20 total is 30-42h, and C167 took ~14h, leaving 16-28h for C163+C40. This is tight but feasible.
+
+**The risk:** If C163 or C40 aren't completed in Sprint 20, they carry over into Sprint 21, displacing Sprint 21 features. The Developer flagged this explicitly: "C163/C40 carry-over risk from Sprint 20."
+
+**Specific questions:**
+1. What is the current status of C163 and C40? Are they on track for Sprint 20 completion?
+2. If C163 carries over, does it displace C170 or C152 in Sprint 21?
+3. If C40 carries over, does it displace C171 (stretch) or C152?
+4. Is there a contingency plan for Sprint 21 if both C163 and C40 carry over?
+
+**Recommended team response:** The team should define a **Sprint 20 cut-line rule** before Sprint 21 planning is finalized: if C163 is not done by Sprint 20 close, C170 is dropped from Sprint 21 and C163 takes its place. If C40 is not done, C171 (stretch) is dropped and C40 takes its place. C152 is non-negotiable as the Sprint 21 centerpiece.
+
+---
+
+### Round 2: Priority Challenge
+
+#### Challenge 2.1 — Should C170 come before C152?
+
+The current order is: D-120 → C170 → C152 → C171(stretch). But the Designer explicitly noted that C170 "enables C152" — narrative quality improves when terms are defined. The Developer's analysis confirms: C152's multi-factor narratives will reference financial metrics, and having inline glossary definitions will make those narratives more useful to beginners.
+
+**The argument for C170 before C152:**
+- Lower risk (8-12h vs 18-24h)
+- Enables C152's narrative quality
+- Closes D-012 (oldest P2 gap, open since Round 9)
+- Can be done in parallel with C152's template pre-work
+
+**The argument against:**
+- C152 is the strategic centerpiece; it should get the team's full attention first
+- C170 and C152 are independent; C152 doesn't technically depend on C170
+
+**Recommended team response:** The current order (C170 before C152) is **correct** but for the wrong reasons. It's not because C170 "enables" C152 technically — it's because C170 is lower risk and should be completed first to reduce the number of open workstreams when the team focuses on C152's complex template work. The team should explicitly state: **C170 is done first to clear the deck for C152 focus.**
+
+#### Challenge 2.2 — Is C171 the right stretch goal, or should C172 be prioritized?
+
+The PM chose C171 (Valuation Band Chart, 10-14h) as the stretch goal. But C172 (Concept Comparison Tool, 10-14h) has higher educational value — it directly serves the "point-to-point knowledge construction" core value. The Designer's analysis shows that Magnify.money's concept comparison is a key differentiator.
+
+**Comparing the two:**
+- C171 (Valuation Band Chart): Visual, single-stock, extends existing valuation infrastructure. Lower educational value — it shows "where is this stock's P/E historically" but doesn't teach concepts.
+- C172 (Concept Comparison): Educational, multi-concept, teaches relationships between financial concepts. Higher educational value — it teaches "what's the difference between ROE and ROA" with real TW stock examples.
+
+**The problem with C171 as stretch:** If the team has 10-14h of stretch capacity, spending it on a single-stock chart (C171) instead of an educational tool (C172) is a missed opportunity. The "historian" positioning is about education, not visualization for its own sake.
+
+**Recommended team response:** The team should **swap C171 for C172** as the stretch goal. C172 better serves the historian positioning and has higher educational value. If the team insists on C171, they should justify it with a specific user story: "As a beginner, I want to see where TSMC's P/E has been historically so I can understand if it's expensive relative to its own history."
+
+#### Challenge 2.3 — Is the Sprint 20 → Sprint 21 transition clean?
+
+The Sprint 21 plan assumes Sprint 20 completes cleanly with C167+C163+C40. But the Developer flagged "C163/C40 carry-over risk from Sprint 20." If either carries over, the Sprint 21 plan is disrupted.
+
+**Specific questions:**
+1. What is the definition of "done" for C163 and C40? Do they need to be fully tested and merged, or is "feature complete with known issues" acceptable?
+2. If C163 carries over, what is the Sprint 21 contingency plan?
+3. If C40 carries over, what is the Sprint 21 contingency plan?
+4. Is there a Sprint 20 retrospective before Sprint 21 planning is finalized?
+
+**Recommended team response:** The team should define **explicit Sprint 20 exit criteria** before Sprint 21 begins:
+- C163: "Done" = gate UI implemented, 3+ educational cards written, session state tracking working, L0 passing
+- C40: "Done" = toggle renamed, settings persistence working, 3+ sections with complexity variants, L0 passing
+- If either doesn't meet exit criteria, the incomplete feature carries over and displaces the lowest-priority Sprint 21 item (C171 stretch first, then C170).
+
+#### Challenge 2.4 — Why is D-120 ordered first instead of being a prerequisite?
+
+The PM's plan lists D-120 as "Day 1 prerequisite" but also as the first item in the sprint. This is contradictory — a prerequisite should be done before the sprint starts, not as the first item.
+
+**Recommended team response:** D-120 should be reclassified as a **Sprint 20 spillover task** or a **pre-Sprint 21 infrastructure task** that must be completed before any feature work begins. It should not consume Sprint 21 capacity. If it does, the effective Sprint 21 capacity for features is 27.5-38.5h minus 1.5-2.5h = 26-36h, which is below the proven 30-42h capacity.
+
+---
+
+### Round 3: Goal Alignment Challenge
+
+#### Challenge 3.1 — Does C152 truly serve beginners, or does it serve intermediate users?
+
+The product vision defines the target user as a **beginner** who needs explanations. But C152 (Multi-Factor Event Narratives) is a sophisticated feature that combines multiple events into a coherent story. The Designer's own analysis says: "This is the feature that transforms Stock Explorer from 'data display with explanations' to 'historian that tells stories.'"
+
+**The tension:** A beginner who doesn't understand individual events won't benefit from a narrative that combines those events. C152 assumes the user already understands what each event means — it just connects the dots. This is an **intermediate user** feature, not a beginner feature.
+
+**Specific questions:**
+1. Has the team validated that beginners want multi-factor narratives, or is this an assumption?
+2. What percentage of Stock Explorer users are beginners vs. intermediate? (If this data doesn't exist, how does the team know?)
+3. Is C152 the right feature for Sprint 21, or should the team focus on more beginner-centric features like C170 (glossary) and C172 (concept comparison)?
+4. The Designer's ten-second test for C152: "最近有幾件重要的事同時發生，我們可以繼續觀察。" — Can a true beginner restate this? Or do they need to understand what "重要的事" means first?
+
+**Recommended team response:** The team should acknowledge that C152 is an **intermediate feature** that builds on beginner infrastructure (C170 glossary, C163 onboarding). This is acceptable IF the beginner infrastructure is in place. The team should confirm: C170 (glossary) must be completed before or alongside C152, not after. If C170 is deferred, C152 should also be deferred.
+
+#### Challenge 3.2 — Does the "historian" positioning support narrative synthesis or only single-event explanation?
+
+The product vision says "explain what happened" — this is single-event explanation. C152 goes further: it **synthesizes** multiple events into a narrative. This is a different capability.
+
+**The question:** Does the "historian" positioning support synthesis, or does it only support explaining individual events? A historian who only explains individual events is a chronicler. A historian who synthesizes multiple events into a narrative is an analyst. These are different roles.
+
+**Specific questions:**
+1. Has the team explicitly decided that "historian" includes synthesis, or is this an assumption?
+2. If "historian" includes synthesis, what are the boundaries? Where does synthesis end and prediction begin?
+3. The Designer flagged "false causality" as a risk — combining events implies they're related. How does the team prevent synthesis from becoming causal analysis?
+4. Is there a competitor who does synthesis well without crossing into prediction? (Public.com's story cards are the closest, but they're AI-generated and less controlled.)
+
+**Recommended team response:** The team should define a **"historian synthesis boundary"** document that explicitly states:
+- Synthesis describes what happened (past tense)
+- Synthesis does not predict what will happen (no future tense)
+- Synthesis uses "同時發生" (occurred simultaneously) framing, not "因為...所以..." (because...therefore...) framing
+- Synthesis includes a mandatory historian disclaimer
+- All synthesis templates must pass tone QA before implementation
+
+This document should be written BEFORE C152 implementation begins.
+
+#### Challenge 3.3 — Are we building for the "ten-second test" or for feature completeness?
+
+The "ten-second test" is a core design principle: a beginner can restate the core concept within 10 seconds. The Sprint 21 plan includes:
+- D-120: Infrastructure (no direct user impact)
+- C170: Glossary (supports ten-second test by defining terms)
+- C152: Multi-factor narratives (may or may not support ten-second test — see Challenge 3.1)
+- C171: Valuation chart (visual, supports ten-second test IF the chart is simple enough)
+
+**The question:** Is the Sprint 21 plan optimized for the ten-second test, or is it optimized for feature completeness (checking off backlog items)?
+
+**Specific questions:**
+1. Which Sprint 21 features directly pass the ten-second test? (C170 yes, C152 uncertain, C171 maybe, D-120 no)
+2. If the goal is ten-second test compliance, should C172 (concept comparison) replace C171 (stretch)?
+3. Should the team conduct a ten-second test audit of the event dashboard BEFORE building C152, to ensure the foundation is solid?
+
+**Recommended team response:** The team should conduct a **ten-second test audit** of the event dashboard before C152 implementation. If users can't restate individual event explanations in 10 seconds, adding multi-factor narratives won't help. The audit should be done with 3-5 beginner users (or simulated by the team) and results documented.
+
+#### Challenge 3.4 — What does "Sprint 21 success" look like? How do we measure it?
+
+The Sprint 21 plan has no success metrics. It has feature descriptions and estimates, but no definition of "done" beyond "features are built."
+
+**Specific questions:**
+1. What is the minimum viable Sprint 21? (D-120 + C170 only? D-120 + C170 + C152?)
+2. What is the stretch Sprint 21? (All 4 items including C171?)
+3. How will the team measure C152's success? (User testing? Template coverage? Tone QA pass rate?)
+4. How will the team measure C170's success? (Number of glossary entries? Tooltip click-through rate?)
+5. Is there a post-Sprint 21 user research plan to validate that the features work for beginners?
+
+**Recommended team response:** The team should define **Sprint 21 success criteria** before development begins:
+- **Minimum success:** D-120 complete, C170 live with 50+ glossary entries, C152 spike validated with 5 pre-written templates
+- **Target success:** All of the above + C152 live with 8 multi-factor templates, all passing tone QA
+- **Stretch success:** All of the above + C171 live with plain-language interpretation
+- **Measurement:** L0 passing (125/125), tone QA pass rate (100% of new templates), ten-second test audit (C152 narrative restatable by beginners)
+
+---
+
+### Final Verdict
+
+✅ **CONFIRMED — with 8 binding conditions**
+
+The Sprint 21 plan (Option A: P1 Focus) is confirmed as a reasonable direction, but the team must address significant risks around C152 readiness, C163/C40 carry-over, and goal alignment. The plan is ambitious but achievable IF all 8 conditions are met.
+
+#### Binding Conditions
+
+1. **C152 template cap:** Maximum 8 multi-factor narrative templates in Sprint 21. All 8 must be pre-written and tone-audited BEFORE coding begins. If templates aren't ready by Sprint 21 Day 1, C152 scope reduces to 5 templates (12-15h).
+
+2. **C170 before C152:** C170 (Tappable Glossary) must be completed before C152 implementation begins. C170 content creation (50-80 glossary entries) starts NOW as a parallel workstream during Sprint 20.
+
+3. **D-120 as prerequisite:** D-120 (benchmark extraction) must be completed as a pre-Sprint 21 infrastructure task, not consuming Sprint 21 feature capacity. If D-120 reveals dict divergence, reconciliation is included in the 1.5-2.5h.
+
+4. **Sprint 20 cut-line rule:** Before Sprint 21 begins, define explicit Sprint 20 exit criteria for C163 and C40. If either carries over, it displaces the lowest-priority Sprint 21 item (C171 stretch first, then C170). C152 is non-negotiable.
+
+5. **C172 replaces C171 as stretch:** C172 (Concept Comparison) should replace C171 (Valuation Band Chart) as the stretch goal. C172 has higher educational value and better serves the historian positioning. If the team insists on C171, a specific beginner-facing user story must be provided.
+
+6. **Historian synthesis boundary document:** Before C152 implementation, write a "historian synthesis boundary" document that defines: past-tense only, "同時發生" framing (not "因為...所以..."), mandatory disclaimer, tone QA pre-audit requirement for all templates.
+
+7. **Ten-second test audit:** Conduct a ten-second test audit of the event dashboard BEFORE C152 implementation. If users can't restate individual event explanations in 10 seconds, fix the foundation before adding multi-factor narratives.
+
+8. **Sprint 21 success criteria:** Define minimum/target/stretch success criteria before development begins (see Challenge 3.4). Measure: L0 passing, tone QA pass rate, ten-second test audit results.
+
+#### Summary of Changes from Preliminary Decision
+
+| Aspect | Preliminary Decision | Post-Challenge Decision |
+|--------|---------------------|------------------------|
+| C152 scope | 18-24h, open-ended | **18-24h with hard cap of 8 templates, pre-audited** |
+| C170 timing | After D-120, before C152 | **Content creation starts NOW (parallel with Sprint 20)** |
+| D-120 positioning | Sprint 21 item #1 | **Pre-Sprint 21 prerequisite (0h sprint cost)** |
+| Stretch goal | C171 (Valuation Band) | **C172 (Concept Comparison) — higher educational value** |
+| Carry-over risk | Not addressed | **Explicit cut-line rule: C163/C40 carry-over displaces C171→C170** |
+| Success metrics | Not defined | **Minimum/target/stretch criteria with L0 + tone QA + ten-second test** |
+| Historian boundary | Not defined | **Synthesis boundary document required before C152 coding** |
+| Ten-second test | Not addressed | **Event dashboard audit before C152 implementation** |
+
+#### Alignment Basis
+
+After 3 rounds of challenge, the Sprint 21 plan is confirmed as directionally correct: C152 is the right centerpiece feature for defending the "historian" positioning against StockStory and Stockopedia AI. C170 is the right supporting feature (enables C152, closes oldest P2 gap). D-120 is the right infrastructure task (overdue, blocking future features).
+
+The key risks are: (a) C152 scope creep (mitigated by template cap + pre-audit), (b) C163/C40 carry-over (mitigated by cut-line rule), (c) beginner alignment (mitigated by ten-second test audit + C170 before C152), and (d) synthesis boundary (mitigated by historian boundary document).
+
+The plan is ambitious but achievable IF all 8 conditions are met. If conditions 1, 4, or 6 are not met, the plan should be reconsidered.
+
+---
+
+*This challenge record was created by the Challenger during the Sprint 21 planning cycle. 2026-06-14.*
+
+---
+
 ## 2026-06-18 Theme: Review — Round 28
 
 ### Round 1

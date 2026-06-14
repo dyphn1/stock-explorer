@@ -1227,3 +1227,129 @@ Full review artifacts:
 - docs/research/review40_design.md
 - docs/research/review40_qa.md
 - docs/research/review40_challenger.md
+
+---
+
+## Developer Estimates — Sprint 21
+
+> **Date**: 2026-06-14
+> **Author**: Developer (openrouter/owl-alpha)
+> **Sprint Capacity**: 30-42h (proven team capacity from Sprints 18-20)
+> **Context**: Sprint 20 in progress — C167 ✅ done, C163 + C40 pending. Sprint 21 candidates from feature pipeline + competitor research round 40.
+
+### Candidate Estimates
+
+| Feature | ID | Priority | Estimate | Complexity | Dependencies | Risks |
+|---------|----|----------|----------|------------|--------------|-------|
+| Multi-Factor Event Narratives | C152 | P1 | 18-24h | **High** | D-120 (benchmark extraction) recommended; C147 pattern_detector.py exists as reference | Scope creep (combining events is inherently open-ended); needs clear "max events per narrative" cap; compose-and-enrich pipeline may need extension for cross-event correlation |
+| Tappable Glossary | C170 | P1 | 8-12h | **Low** | None hard; benefits from C40 beginner/expert mode toggle (shared "beginner experience spec") | Low risk; well-understood pattern (glossary_tooltip already exists in _router_base.py); main cost is content creation (YAML glossary entries for all metrics) |
+| Valuation Band Chart | C171 | P2 | 10-14h | **Medium** | D-120 (benchmark extraction) — needs clean benchmark data access; chart.py extension for historical P/E band visualization | Chart complexity (historical band + current position + plain-language interpretation in one viz); needs YAML-backed interpretation thresholds; peer_comparison.py may need refactoring to share benchmark logic |
+| Concept Comparison Tool | C172 | P2 | 12-16h | **Medium** | metric_explainer.py (already tested via D-113); needs concept YAML data layer | Content-heavy (needs curated concept definitions); UI complexity for side-by-side layout; risk of scope creep if trying to cover too many concept pairs |
+| Visual Financial Calculators | C173 | P2 | 14-18h | **Medium-High** | None hard; pure frontend feature | Highest UI complexity (interactive real-time calculators in Streamlit); Streamlit's reactive model may require workarounds for real-time updates; needs careful state management; accessibility concerns |
+| Sector-Level Storytelling | C174 | P2 | 16-22h | **High** | C152 (shared narrative composition logic); sector_heatmap.py exists as starting point; needs sector-level data aggregation service | Highest content creation burden (thematic narratives per sector); depends on C152's narrative composition pattern; risk of overlapping with C152 scope; needs clear boundary: C152 = single stock multi-event, C174 = single sector multi-stock |
+
+### Infrastructure Prerequisites
+
+| Item | Effort | Justification |
+|------|--------|---------------|
+| **D-120: Benchmark extraction** | 1.5-2.5h | **Day 1 prerequisite** — INDUSTRY_BENCHMARKS dict is triplicated across 3 files (_summary.py, _health.py, peer_comparison.py). C152, C171, and C174 all need clean benchmark data access. Extract to `src/data/industry_benchmarks.yaml` + `health_scoring.get_benchmark_scores()` service. This is the single highest-leverage infrastructure item for Sprint 21. |
+| **Shared "beginner experience spec"** | 1-2h (PM/Designer) | Required before C170 (Tappable Glossary) and C172 (Concept Comparison) to ensure consistent beginner-mode behavior. C40 (Sprint 20) will define the toggle; Sprint 21 features must respect it. |
+
+### Bundling Opportunities
+
+1. **C152 + C174 (Narrative Bundle)**: C152 (single-stock multi-event narratives) and C174 (sector-level multi-stock narratives) share the same core composition pattern. Implement C152's `NarrativeComposer` service first, then C74 extends it with a sector aggregation layer. **Bundle savings: ~4-6h** by sharing the composition engine.
+
+2. **C170 + C172 (Education Bundle)**: C170 (Tappable Glossary) and C172 (Concept Comparison) both serve the "point-to-point knowledge construction" design principle and share the metric_explainer.py data layer. Glossary entries and concept definitions can live in the same YAML file. **Bundle savings: ~2-3h** by sharing content infrastructure.
+
+3. **C171 + D-120 (Benchmark Bundle)**: C171 (Valuation Band Chart) and D-120 (benchmark extraction) are naturally coupled — the chart needs the extracted benchmark service. Do D-120 first, then C171 immediately after. **No direct savings, but eliminates duplicate discovery.**
+
+### Recommended Sprint 21 Scope
+
+**Total Effort: 38-42h** (within proven 30-42h capacity, at upper bound)
+
+| Order | Task | Estimate | Running Total |
+|-------|------|----------|---------------|
+| 1 | **D-120**: Benchmark extraction (YAML + shared service) | 1.5-2.5h | 1.5-2.5h |
+| 2 | **C170**: Tappable Glossary | 8-12h | 9.5-14.5h |
+| 3 | **C171**: Valuation Band Chart | 10-14h | 19.5-28.5h |
+| 4 | **C172**: Concept Comparison Tool | 12-16h | 31.5-44.5h |
+| 5 | **C152**: Multi-Factor Event Narratives | 18-24h | 49.5-68.5h |
+
+**Wait — that's 49.5-68.5h. Let me recalculate with bundling:**
+
+#### Option A: P1 Focus (Recommended) — **34-42h**
+
+| Order | Task | Estimate | Running Total |
+|-------|------|----------|---------------|
+| 1 | **D-120**: Benchmark extraction | 1.5-2.5h | 1.5-2.5h |
+| 2 | **C170**: Tappable Glossary | 8-12h | 9.5-14.5h |
+| 3 | **C152**: Multi-Factor Event Narratives | 18-24h | 27.5-38.5h |
+| 4 | **C171**: Valuation Band Chart (stretch) | 10-14h | 37.5-52.5h |
+
+**Verdict**: D-120 + C170 + C152 = **27.5-38.5h** ✅ fits within 30-42h. C171 as stretch goal if ahead of schedule.
+
+#### Option B: Education Focus — **32-44h**
+
+| Order | Task | Estimate | Running Total |
+|-------|------|----------|---------------|
+| 1 | **D-120**: Benchmark extraction | 1.5-2.5h | 1.5-2.5h |
+| 2 | **C170**: Tappable Glossary | 8-12h | 9.5-14.5h |
+| 3 | **C172**: Concept Comparison Tool | 12-16h | 21.5-30.5h |
+| 4 | **C171**: Valuation Band Chart | 10-14h | 31.5-44.5h |
+
+**Verdict**: D-120 + C170 + C172 + C171 = **31.5-44.5h** ✅ fits within 30-42h (tight at upper bound). Defers C152 to Sprint 22.
+
+#### Option C: Narrative Focus — **36-48h (over capacity)**
+
+| Order | Task | Estimate | Running Total |
+|-------|------|----------|---------------|
+| 1 | **D-120**: Benchmark extraction | 1.5-2.5h | 1.5-2.5h |
+| 2 | **C152**: Multi-Factor Event Narratives | 18-24h | 19.5-26.5h |
+| 3 | **C174**: Sector-Level Storytelling (with C152 bundle savings) | 12-16h | 31.5-42.5h |
+
+**Verdict**: D-120 + C152 + C174 = **31.5-42.5h** ✅ fits within 30-42h (tight). High risk due to two High-complexity features. Defers all P2 education features.
+
+### Final Recommendation: Option A (P1 Focus)
+
+**D-120 + C170 + C152 = 27.5-38.5h** with C171 as stretch.
+
+**Rationale**:
+- **C152 is the highest-value P1 feature** in the pipeline — it's been deferred from Sprint 19 (spike) and Sprint 20 (swap condition). It directly addresses the "Story first" design principle and differentiates from competitors (Public.com, Spiking).
+- **C170 is low-risk, high-impact** — inline glossary is table stakes for beginner-friendly financial apps (Investopedia has 10K+ terms). The glossory_tooltip component already exists in _router_base.py, so this is primarily content + wiring.
+- **D-120 is non-negotiable infrastructure** — benchmark logic is triplicated across 3 files. Every future feature needing benchmark data (C171, C174, future features) benefits. 1.5-2.5h investment saves 3-5h per future feature.
+- **C171 as stretch** — if C152 finishes under estimate, C171 adds valuation visualization that competitors (StockStory, 財報狗) already have.
+
+### Key Risks
+
+1. **C152 scope creep**: Multi-factor narrative composition is inherently complex. Risk: trying to combine too many events or adding AI-generated narrative text. Mitigation: cap at 3 events per narrative, use template-based composition (not LLM), enforce historian tone via existing tone QA.
+
+2. **C152 ↔ C174 boundary confusion**: Both deal with "combining things into narratives" — C152 combines events for one stock, C174 combines stocks for one sector. Mitigation: clearly define interfaces in C152 that C174 can reuse. C152's `NarrativeComposer` should accept a generic "entity list" (events or stocks).
+
+3. **Streamlit limitations for C173**: If calculators (C173) are added as stretch, Streamlit's reactive model may require `st.session_state` workarounds for real-time calculator behavior. This is why C173 is NOT recommended for Sprint 21.
+
+4. **Content creation bottleneck**: C170 (glossary), C172 (concepts), and C174 (sector narratives) all require significant content creation. Mitigation: PM/Designer creates content in parallel during Sprint 20. Developer builds the content infrastructure (YAML schema, rendering) first.
+
+5. **D-120 regression risk**: Extracting benchmark logic from 3 files could break existing benchmark displays in _summary.py and _health.py. Mitigation: existing tests (D-101, D-113) provide regression safety net. Run full test suite after extraction.
+
+6. **Sprint 20 carry-over**: If C163 or C40 from Sprint 20 are not complete, they will consume Sprint 21 capacity. Mitigation: C163 (Learn First Gate) and C40 (Beginner/Expert Mode) should be completed in Sprint 20. If C40 slips, C170 (Tappable Glossary) may need to be deferred since it depends on the beginner experience spec that C40 defines.
+
+---
+
+# 💡 Discussion Section (Round 42 — 2026-06-14)
+**Topic**: Sprint 21 Planning — Multi-Factor Event Narratives (C152) + Tappable Glossary (C170) + Benchmark Extraction (D-120)
+**Challenger**: ✅ CONFIRMED with 8 binding conditions
+**Key Decisions**:
+- **Sprint 21 scope**: D-120 (pre-req) + C170 (8-12h) + C152 (18-24h) + C172 (stretch, 12-16h) = 38-52h core
+- **Priority order**: D-120 → C170 → C152 → C172 (stretch) — revised from preliminary C171 stretch
+- **C152 template cap**: Max 8 multi-factor narrative templates, all pre-audited before coding
+- **C170 content creation starts NOW** (parallel with Sprint 20 C163/C40)
+- **D-120 is pre-Sprint 21 prerequisite** (0h sprint cost), not Sprint 21 Day 1 item
+- **C172 replaces C171 as stretch goal** — higher educational value, better historian alignment
+- **Sprint 20 cut-line rule**: C163/C40 carry-over displaces C172→C170 (C152 non-negotiable)
+- **Historian synthesis boundary document** required before C152 coding
+- **Ten-second test audit** of event dashboard before C152 implementation
+- **Sprint 21 success criteria**: Minimum (D-120 + C170 + C152 spike), Target (C152 live w/ 8 templates), Stretch (+ C172)
+**Full details**: docs/CHALLENGE_LOG.md (Sprint 21 Planning section)
+**Architect analysis**: docs/design/architecture.md (Sprint 21 Technical Analysis section)
+**Designer review**: docs/design/design_review.md (Sprint 21 Design Direction section)
+**Developer estimates**: docs/state/handoff.md (Developer Estimates — Sprint 21 section)

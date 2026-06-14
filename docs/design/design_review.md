@@ -879,3 +879,417 @@ C41's "同產業個股推薦" is directly comparable to Robinhood's "People Also
 ---
 
 *This file is maintained by the Design Reviewer. Update after each review cycle. Next update: After Sprint 4 feature implementation.*
+
+---
+
+## Sprint 21 Design Direction
+
+> **Author**: Design Reviewer
+> **Date**: 2026-06-14
+> **Context**: Sprint 21 Planning — design-level evaluation of 6 candidate features (C152, C170, C171, C172, C173, C174) before sprint commitment.
+> **Current Design Grade**: A (6th consecutive A since R34)
+> **Candidates**: C152 (Multi-Factor Event Narratives, P1, 16-20h), C170 (Tappable Glossary, P1, 6-10h), C171 (Valuation Band Chart, P2, 8-10h), C172 (Concept Comparison Tool, P2, 10-14h), C173 (Visual Financial Calculators, P2, 12-16h), C174 (Sector-Level Storytelling, P2, 14-20h)
+
+---
+
+## Table of Contents
+
+1. [UX Impact Assessment](#ux-impact-assessment)
+2. [Priority Ranking](#priority-ranking)
+3. [Design Direction: Top 3 Candidates](#design-direction-top-3-candidates)
+4. [Component Reuse Recommendations](#component-reuse-recommendations)
+5. [New Component Proposals](#new-component-proposals)
+6. [Design Risks](#design-risks)
+7. [Recommendations Summary](#recommendations-summary)
+
+---
+
+## UX Impact Assessment
+
+### By Candidate
+
+| Candidate | UX Impact | Effort | Impact/Effort | Aligns With | Risk |
+|-----------|-----------|--------|---------------|-------------|------|
+| **C152** Multi-Factor Event Narratives | 🔴 **Highest** — Transforms event dashboard from disconnected list into coherent story. Directly addresses "ten-second test" for events. No TW competitor has this. | 16-20h | High | Story first + Historian | Medium — narrative quality depends on template coverage; beginners may still feel overwhelmed if too many factors shown |
+| **C170** Tappable Glossary | 🔴 **Highest** — Closes D-012 (No Glossary/Tooltip System), the oldest P2 gap. Directly enables "beginner-friendly" design principle. Every metric becomes educational. Reuses existing C139 popover pattern. | 6-10h | **Very High** | Ten-second test + Beginner-friendly | Low — pattern already proven by `_explain_button` and `_glossary_tooltip` in `_router_base.py` |
+| **C171** Valuation Band Chart | 🟡 **High** — 財報狗's P/E band is one of its most popular features. Beginners currently see P/E as a single number without context ("Is 18x expensive?"). Adds historical context visually. | 8-10h | High | Benchmark-oriented + Story first | Low — well-defined chart type; parallels C45 (Valuation Band) but adds plain-language interpretation layer |
+| **C172** Concept Comparison Tool | 🟡 **Medium-High** — Magnify.money's "Compare Concepts" is educationally powerful. Helps beginners distinguish similar metrics (ROE vs ROA, P/E vs P/B). Currently no concept-level education exists. | 10-14h | Medium | Point-to-point knowledge | Medium — needs curated content per concept pair; risks becoming a data dump without careful information architecture |
+| **C173** Visual Financial Calculators | 🟡 **Medium** — Interactive calculators (compound interest, dividend reinvestment) make abstract concepts tangible. High engagement potential. Magnify.money proves demand. | 1-16h | Medium | Point-to-point + Ten-second test | Medium — interactive widgets risk violating "Zone C: no interactive controls" if placed incorrectly; also increases page complexity |
+| **C174** Sector-Level Storytelling | 🟠 **Medium (Strategic)** — Smallcase's "thematic stories" validate sector-level narrative. Connects company-level stories into industry-wide arcs. Unique differentiator. But requires significant content curation. | 14-20h | Medium-Long term | Story first + Historian | High — most complex candidate; needs multi-company data synthesis; risks information overload for beginners |
+
+### Key Insight from Round 8 & 9 Competitor Research
+
+Simply Wall St's snowflake gives a **30-second company overview** — our C152 serves the same role for events: a 30-second event overview. Stockopedia's StockRank combines multiple factors into one score — C152 combines multiple events into one narrative. The pattern is clear: **synthesis is the dominant UX trend.** Beginners don't want data points; they want the story that connects them.
+
+---
+
+## Priority Ranking
+
+### Tier 1: Must-High-Impact (Recommend for Sprint 21)
+
+| Rank | Candidate | Reasoning |
+|------|-----------|-----------|
+| **1** | **C170** Tappable Glossary | Lowest effort (6-10h), highest impact/effort ratio, reuses proven popover patterns, closes the oldest P2 gap (D-012). Unblocks beginner-friendly design principle for ALL future features. **This is the highest-leverage feature in the sprint.** |
+| **2** | **C152** Multi-Factor Event Narratives | Highest absolute UX impact. Transforms event dashboard from raw data to coherent story. P1 priority. No TW competitor has this. Natural extension of existing `_so_what_box` and C98 event interpretation engine. |
+
+### Tier 2: High Value (Recommend if capacity allows)
+
+| Rank | Candidate | Reasoning |
+|------|-----------|-----------|
+| **3** | **C171** Valuation Band Chart | 財報狗 proves demand. Relatively low effort (8-10h). Closes a long-standing gap (valuation context). Pure chart + text — no new interaction patterns needed. |
+| **4** | **C172** Concept Comparison Tool | Educationally powerful but needs curated content per concept pair. Could be phased: Phase A = top 5 concept pairs, Phase B = expand. |
+
+### Tier 3: Future Sprints
+
+| Candidate | Reasoning |
+|-----------|-----------|
+| **C173** Visual Financial Calculators | Valuable but risks Zone C violation (interactive controls in content area). Needs careful placement design. Consider for Sprint 22 after glossary (C170) establishes the interactive education pattern. |
+| **C174** Sector-Level Storytelling | Strategic long-term differentiator but highest risk. Requires multi-company narrative synthesis. Recommend spike/proof-of-concept before committing to full implementation. |
+
+### Recommended Sprint 21 Commitment
+
+**C170 + C152 + C171** — total effort: 30-38h. This is aggressive but justified:
+- C170 (6-10h) sets the educational infrastructure for all other features
+- C152 (16-20h) is the highest-impact narrative feature
+- C171 (8-10h) is a low-risk, high-value chart feature
+
+If capacity is tight: **C170 + C152** only (22-30h).
+
+---
+
+## Design Direction: Top 3 Candidates
+
+### C170: Tappable Glossary
+
+**Problem it solves**: D-012 (No Glossary/Tooltip System) — Beginners encounter terms like "ROE," "P/B ratio," "institutional investors" with no inline help. Investopedia has 10,000+ terms; Stock Explorer has zero.
+
+**Can C170 reuse C139's popover pattern? YES.** The `_glossary_tooltip()` component in `_router_base.py` (lines 269-290) already implements exactly the st.popover pattern needed. It:
+1. Takes a `term_key` and `glossary_service` as parameters
+2. Looks up the term via `glossary_service.get_glossary_term(term_key)`
+3. Renders a clickable `ℹ️ {name}` label that opens `st.popover`
+4. Shows plain-language definition + example + analogy inside the popover
+
+**Recommendation**: C170 should be a **systematic application** of the existing `_glossary_tooltip()` pattern across all financial metrics, not a new component. The design work is:
+1. Create `src/data/glossary.yaml` with 30-50 core financial terms (ROE, P/B, PER, gross margin, net margin, revenue YoY, dividend yield, payout ratio, debt ratio, current ratio, EPS, free cash flow, institutional ownership, etc.)
+2. Each term has: `name` (繁體中文), `plain` (plain-language definition, ≤2 sentences), `example` (real TW stock example), `analogy` (everyday analogy)
+3. Wire `_glossary_tooltip()` into every metric display across all pages
+
+**Where to place glossary tooltips**:
+- Next to section titles containing financial terms (e.g., `_section_title("ROE 股東報酬率")` → add `_glossary_tooltip("ROE", glossary_service)` inline)
+- Inside metric card labels (e.g., `_白话_card("ROE", "25%", "每100元股東資金賺25元")` → make "ROE" a glossary-linked label)
+- Next to chart axis labels and legend items where space permits
+
+**Beginner experience flow**:
+1. User sees "ROE 25%" on the business card page
+2. Notices the ℹ️ icon next to "ROE"
+3. Clicks → popover shows: "ROE（股東報酬率）— 公司用股東的錢賺錢的能力。ROE 25% 代表每100元股東資金，公司一年賺25元。巴菲特最重視這個指標。"
+4. User understands the concept in <10 seconds
+
+**Design risk**: Too many ℹ️ icons create visual noise. **Mitigation**: Only show glossary links for terms that a genuine beginner wouldn't know. Skip obvious ones like "營收" (revenue). Prioritize ratios and technical terms.
+
+---
+
+### C152: Multi-Factor Event Narratives
+
+**Problem it solves**: M5 events currently display as disconnected cards. When TSMC has 4 events in a week (revenue miss + insider selling + institutional outflow + sector downturn), users see 4 separate cards. Humans want the STORY, not the raw ingredients. Public.com and Spiking both combine multiple factors into one narrative.
+
+**How to display multi-factor narratives without overwhelming beginners:**
+
+Use a **progressive disclosure card with two layers**:
+
+**Layer 1 — "事件總覽" Summary Card** (always visible):
+- A single `_summary_card()` with a synthesized one-paragraph narrative
+- This is the "30-second version" — a beginner can read this alone and understand what happened
+- Example: "台積電本週面臨多重壓力：營收不如預期(-3%)、外資連續賣超、半導體板塊因蘋果訂單下修而走弱。綜合來看，短期展望趨向保守."
+- Uses `_summary_card(icon="📰", title="本週事件總覽", content=synthesized_narrative)`
+
+**Layer 2 — Individual Event Details** (collapsible):
+- Below the summary card, show individual event cards in a `st.expander("查看個別事件 (4)")`
+- Each event card uses existing `_info_card()` with the event's plain-language explanation
+- This satisfies advanced users who want the details
+
+**Visual hierarchy**:
+```
+┌─────────────────────────────────────────────────────┐
+│  📰 本週事件總覽                                      │
+│  台積電本週面臨多重壓力：營收不如預期(-3%)、外資連續     │
+│  賣超、半導體板塊因蘋果訂單下修而走弱...                │
+│                                           [展開 ▼]   │
+├─────────────────────────────────────────────────────┤
+│  ▼ 查看個別事件 (4)                                   │
+│  ┌─────────────────────────────────────────────┐     │
+│  │ 📉 營收不如預期                               │     │
+│  │ 6月營收較上月衰退3%，低於分析師預期...         │     │
+│  └─────────────────────────────────────────────┘     │
+│  ┌─────────────────────────────────────────────┐     │
+│  │ 🏦 外資連續賣超                               │     │
+│  │ 外資本週淨賣超15,000張，為近月最大...          │     │
+│  └─────────────────────────────────────────────┘     │
+│  ...                                                │
+└─────────────────────────────────────────────────────┘
+```
+
+**Synthesized narrative construction** (design rules):
+1. **Lead with the highest-impact factor** (revenue > earnings > insider > institutional > sector)
+2. **Use connecting language** ("同時," "此外," "綜合來看") — mirrors how humans tell stories
+3. **End with a historian-framed conclusion** — not a prediction, but a summary of what the combined factors suggest ("市場對短期展望趨向保守" NOT "建議賣出")
+4. **Maximum 3-4 sentences** in the summary paragraph — respects the 200-char guideline (with some flexibility for Chinese)
+5. **Include data points** — don't just say "營收不如預期," say "營收不如預期(-3%)" so the narrative is grounded
+
+**Interaction design**:
+- Default: Show summary card only (collapsed)
+- User clicks expander → see individual events
+- If only 1 event in the window → skip the summary, show the single event card directly (no synthesis needed for a single factor)
+- If 2+ events → show summary + collapsible details
+
+**Component reuse**:
+- `_summary_card()` for the synthesized narrative (change border color to `#3498DB` to distinguish from "hero card" usage)
+- `_info_card()` for individual event details inside the expander
+- `_so_what_box()` is NOT appropriate here (it's for metric deltas, not event narratives)
+- **New component needed**: `_event_narrative_card()` — a specialized card that renders the summary + expander pattern
+
+**Design risk**: If synthesis quality is poor (template-generated, feels robotic), beginners will just expand to read individual events and the summary card becomes wasted space. **Mitigation**: Invest in high-quality templates for the top 10 event type combinations. Use C98 event interpretation engine for individual event text quality.
+
+---
+
+### C171: Valuation Band Chart
+
+**Problem it solves**: Beginners see "P/E = 18x" and don't know if that's expensive. 財報狗's P/E band chart is one of its most popular features — it shows current P/E vs historical range. Morningstar's "Fair Value with Uncertainty" teaches beginners that valuation is a range, not a single number.
+
+**Design pattern**: Horizontal band chart with three visual elements:
+
+```
+  P/E 區間圖
+  ─────────────────────────────────────
+  5年前        現在        5年後
+  10x    ═══════●════════════    30x
+         ↑                    ↑
+     歷史最低12x           歷史最高25x
+  ─────────────────────────────────────
+  目前本益比 18x，處於歷史的 45% 分位
+  "不算貴也不算便宜，跟歷史平均差不多"
+```
+
+**Layout**: One `_白话_card()` for the current P/E value + analogy, then a Plotly horizontal bar chart below showing the band. Total height: ~200px. This keeps it as a single "card-width" element that doesn't dominate the page.
+
+**Color coding**:
+- Blue dot/line for current value
+- Light blue band for historical range (10th-90th percentile)
+- Gray band for extreme range (min-max)
+- Green zone below 25th percentile ("相對便宜")
+- Red zone above 75th percentile ("相對昂貴")
+
+**Plain-language interpretation** (in `_白话_card` analogy field):
+- Below 25th percentile: "目前本益比處於歷史偏低區間，相對便宜"
+- 25th-75th percentile: "目前本益比處於歷史中間區間，不算貴也不算便宜"
+- Above 75th percentile: "目前本益比處於歷史偏高區間，相對貴"
+
+**Component reuse**:
+- `_白话_card()` for the current value + interpretation text (reuse existing component, no changes needed)
+- Plotly horizontal bar chart (new chart function: `create_valuation_band_chart()`)
+- For the percentile calculation: reuse existing price/EPS data pipeline
+
+**Design risk**: P/E band charts can inadvertently suggest "buy when cheap, sell when expensive" — violating the "historian, not stock picker" principle. **Mitigation**: Frame all interpretations historically ("過去这一段區間的表現是...") rather than predictively ("現在便宜，應該買"). Include a `st.caption()` disclaimer: "歷史估值區間僅供參考，不構成投資建議。"
+
+---
+
+## Component Reuse Recommendations
+
+### Existing Components Available in `_router_base.py`
+
+| Component | Used By | Reuse For |
+|-----------|---------|-----------|
+| `_section_title(title)` | All pages | C152 section headers, C171 chart section, C172 comparison section, C174 story section |
+| `_explain_button(...)` | C139 metric explainer | C170 could extend this pattern for glossary terms with explanations |
+| `_白话_card(label, value, analogy)` | Key metrics throughout | C171 valuation display card; C173 calculator result cards |
+| `_summary_card(title, content, icon, border_color)` | Story card, read-next | **C152 multi-factor narrative summary card** (primary reuse target) |
+| `_mini_score_card(label, score)` | Moat dimension cards | C172 concept comparison score display |
+| `_info_card(title, content, icon)` | Event cards, tips | C152 individual event detail cards inside expander; C172 concept definition cards |
+| `_so_what_box(deltas)` | Metric change implications | NOT recommended for C152 (different use case — metric deltas vs event narratives) |
+| `_subsidiary_card(...)` | Group structure | NOT needed for Sprint 21 candidates |
+| `_count_label(count, label)` | ETF browser counts | C174 sector story (stock counts per sector) |
+| `_glossary_tooltip(term_key, glossary_service)` | C139 popover tooltips | **C170 primary pattern** — systematic application across all metrics |
+| `filter_by_timeline(df, ...)` | Historical data pages | C171 P/E band historical range filtering |
+
+### Key Reuse Insight: C170 + C139 Synergy
+
+The `_glossary_tooltip()` component in `_router_base.py` (lines 269-290) already implements the popover pattern needed for C170. C139 uses a st.popover with the ℹ️ icon for metric explanations. C170 should **extend and systematize** this pattern:
+
+1. `_glossary_tooltip(term_key, glossary_service)` → for standalone glossary definitions (what C170 needs most)
+2. `_explain_button(metric_name, metric_value, ...)` → for metric-specific explanations with data context (existing C139 pattern)
+3. C170 can combine both: a glossary tooltip for the term definition + an explain button for the specific metric value
+
+**Do NOT create a new popover component.** The existing `_glossary_tooltip()` is sufficient for C170's core use case.
+
+### Key Reuse Insight: C152 + `_so_what_box` Relationship
+
+C152 and `_so_what_box(C149)` serve different purposes and should NOT be merged:
+- `_so_what_box()` synthesizes **metric deltas** (e.g., "ROE dropped 5%, revenue grew 10%")
+- C152 synthesizes **events** (e.g., "revenue miss + insider selling + sector downturn")
+- Both answer "So what?" but for different data types
+- Both can coexist on the same page (C152 in the events section, `_so_what_box` in the metrics section)
+
+---
+
+## New Component Proposals
+
+### 1. `_event_narrative_card(synthesized_narrative: str, events: list[dict])` (for C152)
+
+**Purpose**: Renders the two-layer progressive disclosure card for multi-factor event narratives.
+
+**API**:
+```python
+def _event_narrative_card(
+    synthesized_narrative: str,
+    events: list[dict],  # Each dict: {date, title, content, icon}
+    window_label: str = "本週",
+) -> None:
+```
+
+**Behavior**:
+- If `len(events) < 2`: render a single `_info_card()` with the narrative (no expander needed)
+- If `len(events) >= 2`: render `_summary_card()` + `st.expander()` containing individual `_info_card()` for each event
+- Card border: `#3498DB` (info blue) with `📰` icon
+
+**Why new**: Combines `_summary_card` + expander + multiple `_info_card` into a single reusable pattern. This pattern doesn't exist yet — it's not just a card, it's a card-with-collapsible-details component.
+
+### 2. `_concept_comparison_card(concept_a: dict, concept_b: dict)` (for C172)
+
+**Purpose**: Renders a side-by-side comparison of two financial concepts.
+
+**API**:
+```python
+def _concept_comparison_card(
+    concept_a: dict,  # {name, definition, formula, when_to_use, example, analogy}
+    concept_b: dict,  # Same structure
+) -> None:
+```
+
+**Layout**: Two-column layout. Left column = Concept A, Right column = Concept B. Key differences highlighted with 🟢/🔴 indicators. "When to use" callout at bottom.
+
+**Why new**: No existing component handles side-by-side comparison. `_info_card()` is single-concept only.
+
+### 3. `_calculator_card(title: str, inputs: dict, compute_fn: callable)` (for C173)
+
+**Purpose**: Renders an interactive financial calculator with input fields and real-time results.
+
+**API**:
+```python
+def _calculator_card(
+    title: str,
+    inputs: dict,  # {label: {type: "number"|"percent", default: 0, min: 0, max: 100}}
+    compute_fn: callable,  # Takes input dict, returns {result: str, analogy: str}
+    formula_label: str = "",  # e.g. "複利 = 本金 × (1 + 利率)^年數"
+) -> None:
+```
+
+**Why new**: Interactive calculator pattern doesn't exist. Must be carefully placed to avoid Zone C violation — recommend placing in a dedicated "Calculators" tab or modal, NOT inline on the business card page.
+
+**Zone C compliance**: Interactive sliders/inputs violate the "no interactive controls in Zone C" design principle. **Recommendation**: C173 calculators should live in a **dedicated page** (e.g., `/calculators`) accessed from the sidebar, NOT embedded in existing stock pages.
+
+---
+
+## Design Risks
+
+### Risk 1: C152 Narrative Quality (Severity: Medium)
+
+**Risk**: Template-generated multi-factor narratives may feel robotic. If synthesis quality is low, beginners won't read the summary card.
+
+**Mitigation**:
+- Hire/test templates with native Chinese speakers — Chinese narrative flow is very different from English
+- Start with 10-15 high-quality manual templates for the most common event type combinations
+- A/B test: show some users the summary + details, others just details. Measure collapsed-vs-expanded rate.
+- **Fallback**: If synthesis confidence is low, skip the summary card and show individual events only (graceful degradation)
+
+### Risk 2: C170 Glossary Maintenance Burden (Severity: Low)
+
+**Risk**: Glossary YAML needs to stay in sync with actual metrics displayed. New metrics get added; old ones get renamed.
+
+**Mitigation**:
+- Add a pre-commit check: if a metric key is used in code but missing in glossary.yaml, warn (not error)
+- Glossary maintenance is a content task, not an engineering task — assign to PM/educational content role
+- Prioritize glossary entries by usage frequency: top 20 metrics cover 80% of beginner confusion
+
+### Risk 3: C171 "Valuation Equals Recommendation" Misinterpretation (Severity: Medium)
+
+**Risk**: Showing "目前本益比處於歷史偏低區間，相對便宜" could be interpreted as a buy recommendation, violating the "historian, not stock picker" principle.
+
+**Mitigation**:
+- Use historical framing only: "過去十年中，台積電本益比有25%的時間比現在更低"
+- Add disclaimer caption: "歷史估值區間僅供參考，不構成投資建議。"
+- Avoid the words "便宜" / "貴" — use "處於歷史較低區間" / "處於歷史較高區間" instead
+- This aligns with 財報狗's P/E band chart approach (factual, not prescriptive)
+
+### Risk 4: D-003 Regression in New Features (Severity: High)
+
+**Risk**: Sprint 21 adds 3-6 new features, each likely to introduce inline HTML for cards. D-003 (inconsistent card styling) has been the persistent P1 problem for 10+ review rounds.
+
+**Mitigation — Sprint 21 Design Pre-Checklist**:
+- [ ] C170 glossary: MUST use `_glossary_tooltip()` from `_router_base.py` — no inline HTML
+- [ ] C152 narrative card: MUST use new `_event_narrative_card()` — no inline HTML
+- [ ] C171 valuation card: MUST use `_白话_card()` for the value display — no inline HTML
+- [ ] C172 comparison: MUST use new `_concept_comparison_card()` — no inline HTML
+- [ ] ALL new pages: Must pass `grep -r "unsafe_allow_html" src/pages/` returning zero new occurrences
+- [ ] ALL new components: Must be added to `_router_base.py` and documented in `design_system.md`
+
+### Risk 5: C174 Sector Story Complexity (Severity: High)
+
+**Risk**: Sector-level storytelling requires synthesizing data from multiple companies, events, and time periods. This is 3x more complex than company-level storytelling. Beginners may be overwhelmed by cross-company comparisons.
+
+**Mitigation**: Do NOT implement C174 in Sprint 21. Recommend a **spike** (3-5h) to:
+1. Identify 3 candidate sectors (semiconductor, finance, ETF)
+2. Draft one sector narrative manually
+3. Test with 2-3 beginners for comprehension
+4. If the spike validates: schedule for Sprint 22
+
+### Risk 6: PPT-Style Violation from C173 Calculators (Severity: Medium)
+
+**Risk**: Interactive calculators with sliders and input fields directly violate the "Zone C: no interactive controls" design principle.
+
+**Mitigation**: C173 must live on a **dedicated page** (sidebar link: "🧮 財務計算機"), NOT embedded in existing stock pages. The calculator page itself should follow PPT-style: one calculator per view, large input/output areas, minimal text.
+
+---
+
+## Recommendations Summary
+
+### Top 3 Recommendations
+
+1. **🔴 Commit C170 (Tappable Glossary) as Sprint 21's foundation feature**
+   - 6-10h effort, closes D-012 (oldest P2 gap)
+   - Reuses existing `_glossary_tooltip()` — no new component needed
+   - Enables beginner-friendly design for ALL concurrent features
+   - **Suggested**: Build `glossary.yaml` with 30 terms in Sprint 20 (as pre-work)
+
+2. **🟡 Commit C152 (Multi-Factor Event Narratives) as Sprint 21's headline feature**
+   - 16-20h effort, P1 priority
+   - Needs one new component: `_event_narrative_card()` in `_router_base.py`
+   - Transforms event dashboard from data list to story
+   - Design the progressive disclosure pattern carefully: summary first, details on demand
+
+3. **🟢 Commit C171 (Valuation Band Chart) as Sprint 21's chart feature**
+   - 8-10h effort, reuses `_白话_card()` + new Plotly chart function
+   - Fill the "valuation context" gap that 財報告 users expect
+   - Strict historian framing to avoid "buy/sell" misinterpretation
+
+### Sprint 21 Pre-Design Checklist (Before Coding Starts)
+
+- [ ] Create `src/data/glossary.yaml` with 30 core terms (C170 content requirement)
+- [ ] Design C152 narrative templates for top 10 event type combinations (C152 content requirement)
+- [ ] Define C171 plain-language interpretation thresholds (25th/75th percentile breakpoints)
+- [ ] Add `_event_narrative_card()` to `_router_base.py` and document in `design_system.md`
+- [ ] Add `create_valuation_band_chart()` to `chart.py`
+- [ ] Run D-003 regression check: `grep -r "unsafe_allow_html" src/pages/` baseline
+- [ ] Address D-119: Document `_so_what_box()` in `design_system.md` (0.25h quick win)
+- [ ] Address D-120: Extract `INDUSTRY_BENCHMARKS` to YAML if not done in Sprint 20
+
+### Design Grade Forecast
+
+| Scenario | Grade | Condition |
+|----------|-------|-----------|
+| **Best case** | A+ | All 3 candidates ship with zero inline HTML, `_event_narrative_card()` adds to shared component library, overall inline HTML count decreases |
+| **Expected case** | A | C170 + C152 ship, D-003 net unchanged, new components properly documented at `_router_base.py` |
+| **Worst case** | A- | Features ship with inline HTML regressions (D-003 worsens), glossary not maintained post-launch |
+
+---
+
+*This section was added by the Design Reviewer for Sprint 21 planning. Next update: After Sprint 21 feature review.*
