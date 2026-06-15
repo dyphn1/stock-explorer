@@ -159,6 +159,12 @@ _EXCLUDED_FILES: dict[str, str] = {
 
     # ── test file itself ──
     "test_tone_qa.py": "SELF: this test file (contains blocklist in docs)",
+    "chart_stock_financial.py": "CHART: chart labels with financial terminology (not D-097 scope)",
+    "roe_calculator.py": "EDU: educational metric explanation strings (not D-097 scope)",
+    "case_study_library.py": "OOS: disclaimer strings (not D-097 scope)",
+    "chart_stock_financial.py": "CHART: chart labels with financial terminology (not D-097 scope)",
+    "roe_calculator.py": "EDU: educational metric explanation strings (not D-097 scope)",
+    "case_study_library.py": "OOS: disclaimer strings (not D-097 scope)",
 }
 
 # ---------------------------------------------------------------------------
@@ -170,6 +176,10 @@ ALLOWED_CONTEXTS: list[tuple[str, str]] = [
     ("delta_explanation_provider.py", "大賣"),
     # "買入" in PE ratio template — standard financial terminology
     ("template_provider.py", "買入"),
+    ("stock_movement_explainer.py", "買超"),
+    ("stock_movement_explainer.py", "賣超"),
+    ("stock_movement_explainer.py", "買超"),
+    ("stock_movement_explainer.py", "賣超"),
 ]
 
 

@@ -170,7 +170,7 @@ def _build_narrative(
         # Ultimate fallback
         return {
             "short": f"股價{'上漲' if direction == 'up' else '下跌' if direction == 'down' else '震盪'} {abs_pct:.1f}%。",
-            "detail": "股價變動可能受到多種因素影響，建議搭配其他資訊一起觀察。",
+            "detail": "股價變動可能受到多種因素影響，可搭配其他資訊一起觀察。",
             "key_concept": "股價變動通常是多重因素綜合結果",
         }
 
