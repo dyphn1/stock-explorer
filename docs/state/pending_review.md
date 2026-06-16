@@ -1,74 +1,80 @@
 # Pending Review — Daniel Decisions
 
-> **Last Updated**: 2026-06-16
-> **Source**: Discussion Round 10 — Challenger required revisions
+> **Last Updated**: 2026-06-17
+> **Source**: Discussion Round 48 — Sprint 23 Planning
 
 ## Open Questions for Daniel
 
-### 1. C34 vs C46 Priority for Sprint 5
-- **Context**: Sprint 5 can fit C34 (Company Story Timeline, 16-24h) + one of C46 (Moat Analysis, 20-28h) or C47 Phase 1 (5 lessons, 12h). Not all three.
-- **C34 (Story Timeline)**: The purest expression of "historian" positioning. Round 7 identified it as "#1 thing competitors DON'T have." Depends on C38 (Sprint 3) data structures.
-- **C46 (Moat Analysis)**: No TW competitor has moat analysis. Morningstar's moat rating is iconic but US-only. Manual curation for top 20 stocks.
-- **C47 Phase 1 (Education Academy)**: 5 pilot lessons. Transforms product from tool to platform. Long-term differentiator.
-- **Recommendation**: C34 is the vision P1 — it should be the Sprint 5 primary feature. Choose C46 or C47 Phase 1 as secondary based on whether you want depth (moat) or breadth (education).
+### Sprint 23 Decisions (Round 48) — NEED CONFIRMATION
+
+#### 1. C200 Deferral Criteria — Auto-Defer Threshold
+- **Context**: Revised Sprint 23 estimate is 37-57h (+2-3h gate), significantly above original 31-47h.
+- **Proposal**: If C202 + C199 combined exceed 30h, C200 auto-deferred to Sprint 24.
+- **Rationale**: C200 is COULD priority. If MUST + SHOULD consume >30h, the sprint doesn't have capacity for COULD.
+- **Status**: ⏳ Pending Daniel — approve the 30h threshold?
+
+#### 2. Four-Safeguard Pattern for C199 — Design Approval
+- **Context**: C199 (Bear vs Bull Debate Cards) cannot start without the four-safeguard pattern designed.
+- **Proposal**: PM + Designer define the pattern before C199 development. Pattern includes:
+  1. Disclaimer at bottom
+  2. "自動產生" label on each card
+  3. Data-driven points only (no speculation)
+  4. Banned word list enforcement
+- **Status**: ⏳ Pending Daniel — any additional safeguards required?
+
+#### 3. i18n Strategy — Services Return Keys, Pages Call t()
+- **Context**: Standardizing i18n approach after discovering `story_arc_detector.py` returns raw Chinese.
+- **Proposal**: All service-layer modules return keys (e.g., `growth`, `decline`). Page-level code calls `t()`.
+- **Impact**: Requires refactoring `story_arc_detector.py` (211 lines).
+- **Status**: ⏳ Pending Daniel — approve this as the standard pattern?
+
+#### 4. story_arcs.yaml Scope Reduction
+- **Context**: `story_arcs.yaml` currently contains display strings (Chinese labels, descriptions) that duplicate locale file purpose.
+- **Proposal**: Move display strings to `locales/zh-TW.yaml` and `locales/en.yaml`. Keep only thresholds/colors in `story_arcs.yaml`.
+- **Status**: ⏳ Pending Daniel — approve the scope reduction?
+
+### Previously Open Items (Still Pending)
+
+#### 5. C34 vs C46 Priority for Sprint 5 (from Round 10)
+- **Context**: Sprint 5 can fit C34 (Company Story Timeline) + one of C46 (Moat Analysis) or C47 Phase 1.
+- **Recommendation**: C34 is the vision P1 — should be Sprint 5 primary feature.
 - **Status**: ⏳ Pending Daniel
 
-### 2. C47 Education Academy Phase 1 Scope
-- **Context**: C47 is 28-41h total. Challenger recommends splitting into phases.
-- **Option A**: Phase 1 = 5 pilot lessons (12h), Phase 2 = remaining lessons post-plan
-- **Option B**: Phase 1 = 10 lessons (20h), Phase 2 = remaining lessons post-plan
-- **Recommendation**: Option A (5 lessons) — validate quality before scaling
-- **Status**: ⏳ Pending Daniel
-
-### 3. Business Card Page Information Architecture
-- **Context**: The business card page now has 13 sections after Sprint 2. Adding C44 as a 14th requires progressive disclosure.
-- **Proposal**: C37 + C43 are "above the fold" ten-second answer. C44 is collapsible above the fold. C46 and C36 are in tabs. Everything else below the fold.
-- **Status**: ⏳ Pending Daniel — approve the "above the fold" definition?
-
-### 4. Dark/Light Theme Implementation (D-126)
-- **Context**: Design review identified missing dark/light theme implementation; settings page lacks theme toggle.
-- **Proposal**: Add theme preference in settings with CSS variables for colors, improving accessibility and user comfort.
+#### 6. Dark/Light Theme Implementation (D-126)
+- **Context**: Design review identified missing dark/light theme implementation.
+- **Proposal**: Add theme preference in settings with CSS variables.
 - **Estimated Effort**: 8-12h
 - **Status**: ⏳ Pending Daniel
 
-### 5. _infocard() Component for Visual-First Metrics (D-127)
-- **Context**: Missing _infocard() component for infographic-style visual cards that combine icons, mini-charts, and text.
-- **Proposal**: Create _infocard(icon, sparkline_data, label, value, analogy) component for visual-first metric presentation.
+#### 7. Missing Component: _infocard() for Visual-First Metrics (D-127)
+- **Context**: Missing _infocard() component for infographic-style visual cards.
+- **Proposal**: Create _infocard(icon, sparkline_data, label, value, analogy) component.
 - **Estimated Effort**: 6-9h
 - **Status**: ⏳ Pending Daniel
 
-### 6. _calculator_card() Component for Interactive Financial Tools (D-128)
-- **Context**: Missing _calculator_card() component for interactive financial modeling tools.
-- **Proposal**: Create _calculator_card() component with input fields and real-time output for simple financial modeling.
+#### 8. Missing Component: _calculator_card() for Interactive Tools (D-128)
+- **Context**: Missing _calculator_card() component for interactive financial modeling.
+- **Proposal**: Create _calculator_card() component with input fields and real-time output.
 - **Estimated Effort**: 8-12h
 - **Status**: ⏳ Pending Daniel
 
-### 7. _ai_explanation_card() Component for AI Explanations (D-129)
-- **Context**: Missing _ai_explanation_card() component for AI-driven move explanations with visual cues.
-- **Proposal**: Create _ai_explanation_card() component with visual indicator (e.g., robot icon) and AI-generated explanation.
+#### 9. Missing Component: _ai_explanation_card() for AI Explanations (D-129)
+- **Context**: Missing _ai_explanation_card() component for AI-driven explanations.
+- **Proposal**: Create _ai_explanation_card() component with visual indicator.
 - **Estimated Effort**: 5-8h
 - **Status**: ⏳ Pending Daniel
 
-## Resolved This Cycle (Round 10)
+## Resolved This Cycle (Round 48)
 
 | Item | Decision |
 |------|----------|
-| C42 priority | Confirmed P1 enabler for Sprint 4 (not P1 vision — C34 is vision P1) |
-| C44 scope | MVP: 3 risk dimensions, top 20 stocks, progressive disclosure |
-| C44 tone risk | Elevated to HIGH — tone review checkpoint required |
-| C34 scheduling | Explicitly scheduled for Sprint 5 (with C46 or C47 P1) |
-| C47 scope | Split into Phase 1 (5 lessons, 12h) + Phase 2 (post-plan) |
-| Sprint 3 contingency | If C44-MVP >14h, reduce to 2 risk dimensions |
-| R3 verification | Must verify before Sprint 4 (C42 dependency) |
-
-## Previous Pending Items (Still Open)
-
-### C42 Stock Screener vs C46 Moat Analysis Priority
-- **Context**: If Sprint 4 slips, which gets cut — screener or moat?
-- **C42 (Screener)**: P1 enabler, transforms product from lookup to discovery, 19-24h
-- **C46 (Moat)**: P2, manual curation bottleneck, 20-28h
-- **Recommendation**: Cut C46 if needed; C42 is strategically more important
-- **Status**: ⏳ Pending Daniel
+| Locale directory conflict | Keep `locales/`, delete `src/core/locales/` |
+| C202 i18n compliance | Refactor to return keys, page calls `t()` |
+| story_arcs.yaml scope | Config only, display strings to locale files |
+| C200 deferral criteria | C202 + C199 > 30h → auto-defer to Sprint 24 |
+| C199 pre-sprint dependency | Four-safeguard pattern must be designed before development |
+| C200 Week 1 gate | API caching + data completeness + historian framing |
+| Sprint 23 total estimate | 37-57h (+2-3h gate), up from 31-47h |
 
 ---
 

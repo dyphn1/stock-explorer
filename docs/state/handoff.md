@@ -1,62 +1,79 @@
 # Handoff — Stock Explorer
 
 ## Summary
-- **Topic**: 💡 Discussion (Round 47 — 2026-06-15)
-- **Date**: 2026-06-15
-- **Sprint Status**: Sprint 16a ✅ → 16b ✅ → 17 ✅ → 18 ✅ → 19 ✅ → 20 ✅ → 21 ✅ COMPLETE → Sprint 22 (C201) in progress
+- **Topic**: 💡 Discussion (Round 48 — 2026-06-17)
+- **Date**: 2026-06-17
+- **Sprint Status**: Sprint 22 (C201) in progress → Sprint 23 planned
 
 ---
 
-# 🔧 Development Section (Round 47 — 2026-06-15)
-**Sprint 22: C201 (今日市場動態)** — IN PROGRESS
+# 🔧 Development Section (Round 48 — 2026-06-17)
+**Sprint 23: C202 + C199 + C200** — PLANNED
 
-## C201 今日市場動態
-- Sprint 22 MVP: Template-based, on-demand generation, retrospective framing (\"yesterday's news\")
-- 3 pre-sprint conditions: regulatory review gate, 2s performance budget, 14-day template library
-- Kill switch: If 7-day retention doesn't improve by Sprint 23 review, deprioritize
+## Sprint 23 Plan
+| Priority | Feature | Effort | Risk | Gate |
+|----------|---------|--------|------|------|
+| MUST | C202 Story Arc Labels | 11-18h | Low | i18n wrapping + 3-stock quality check |
+| SHOULD | C199 Bear vs Bull Debate Cards | 14-22h | Medium | Tone QA gate (2 rev max) |
+| COULD | C200 What If Calculator | 12-17h (+2-3h gate) | Medium-High | Week 1: API caching + data completeness + historian framing |
+| **Total** | | **37-57h (+2-3h gate)** | | |
+
+## Pre-Sprint 23 Actions (Before Day 1)
+1. Delete `src/core/locales/` directory (dead code, incompatible schema)
+2. Add Sprint 23 i18n keys to `locales/zh-TW.yaml` and `locales/en.yaml`
+3. Refactor `story_arc_detector.py` to return keys instead of Chinese text
+4. Design four-safeguard advisor boundary pattern for C199 (PM + Designer)
 
 ## Next Cycle (Development)
-🔧 Development Round 48: Sprint 23 — C202 (Story Arc Labels) + C199 (Bear vs Bull Debate Cards) + C200 (What If Calculator). See Sprint 23 plan in docs/state/handoff_discuss_r47.md.
+🔧 Development Round 49: Sprint 23 execution — C202 i18n wrapping → C199 debate engine → C200 calculator (if gate passes).
 
 ---
 
-# 💡 Discussion Section (Round 47 — 2026-06-15)
+# 💡 Discussion Section (Round 48 — 2026-06-17)
 
 ## Final Team Decision — Sprint 23 Feature Plan (Post-Challenge)
 
-| Sprint | Features | Hours |
-|--------|----------|-------|
-| Sprint 23 | C202 (MUST) + C199 (SHOULD) + C200 (COULD) | 31-47h |
-| Sprint 24 | C200 (if deferred) + C201 follow-ups + C206 + C203 + C209 (pending eval) | TBD |
+### i18n Conflict Resolution
+- **Decision**: `locales/` (project root) is canonical. `src/core/locales/` deleted as dead code.
+- **Reason**: `i18n.py` points to `locales/`, all existing `t()` calls use its schema. The new directory has an incompatible schema and is orphaned.
+- **Action**: Add Sprint 23 keys (`story_arc.*`, `debate.*`, `scenario.*`) to both locale files.
+
+### i18n Strategy Standardization
+- **Decision**: Services return keys, pages call `t()`. Service-layer modules do NOT call `t()` directly.
+- **Impact**: `story_arc_detector.py` refactored to return arc type keys (`growth`, `decline`, `volatile`, `recovery`) instead of Chinese text.
+
+### story_arcs.yaml Scope
+- **Decision**: Config only (thresholds, colors). Display strings moved to locale YAML files.
+
+### C200 Deferral Criteria
+- **Decision**: If C202 + C199 combined exceed 30h, C200 auto-deferred to Sprint 24.
 
 ## Key Decisions
-1. C202 (Story Arc Labels) is Sprint 23 lead feature — lowest risk, highest vision alignment
-2. C199 (Bear vs Bull) proceeds with four-safeguard advisor boundary pattern and Tone QA gate
-3. C200 (What If Calculator) proceeds with Week 1 go/no-go gate (API caching + historian framing)
-4. C200 extends existing C74 `_historical_scenarios.py` (320 lines) — not greenfield
-5. C207-C214 from Round 10 research deferred to Round 48 Discussion evaluation
-6. All three features are independent of Sprint 21/22 work
-7. Rule-based arc detection (not LLM) for C202 — YAML-configurable thresholds
+1. C202 (Story Arc Labels) is Sprint 23 lead feature — service exists, needs i18n wrapping
+2. C199 (Bear vs Bull) proceeds with four-safeguard pattern as pre-sprint dependency
+3. C200 (What If Calculator) proceeds with Week 1 go/no-go gate (API caching + data completeness + historian framing)
+4. All three features are rules-based (no LLM)
+5. `locales/` is canonical — `src/core/locales/` deleted
+6. Services return keys, pages call `t()` — standard i18n pattern
+7. C200 deferral: C202 + C199 > 30h → auto-defer
 
 ## Conditions (Pre-Sprint 23)
-1. C199 Tone QA Gate: Content review must pass before C199 ships (2 revision max)
-2. C200 Week 1 Go/No-Go: FinMind API caching + historian framing validation
-3. C207-C214 Evaluation: Round 48 must evaluate C209 and C210 before Sprint 24 planning
+1. C199 Four-Safeguard Pattern: PM + Designer must define before C199 development begins
+2. C200 Week 1 Go/No-Go: FinMind API caching + data completeness + historian framing
+3. C207-C214 Evaluation: Round 49 must evaluate C209 and C210 before Sprint 24 planning
+4. Locale Cleanup: Delete `src/core/locales/` before Sprint 23 Day 1
 
 ## Documentation Created
-- `docs/architecture/discuss_r47_architect.md`
-- `docs/design/discuss_r47_designer.md`
-- `docs/status/discuss_r47_developer.md`
-- `docs/state/challenge_r47.md` (3-round challenge, 3 conditions)
-- `docs/state/handoff_discuss_r47.md` (full discussion record)
+- `docs/architecture/discuss_r48_architect.md`
+- `docs/state/challenge_r48.md`
+- `docs/state/handoff_discuss_r48.md`
 
 ## Challenger Verdict
-✅ ALIGNED — 3 conditions → All resolved
+⚠️ CONDITIONAL ALIGNED — 5 blocking questions resolved, 4 recommendations accepted
 
 ---
 
 # QA Verification (Cron Run)
 - Test suite: 458 passed
-- Design compliance: Found zone separation violation in business_card/_sections/_summary_hero.py (watchlist buttons in navbar). Matches D-001 in current_problems.md.
-- Previously fixed issue D-007 (heavy text) remains fixed.
-- Tone blocklist violations fixed in recent QA commit.
+- i18n tests: All passing (test_i18n.py, test_story_arc_detector.py)
+- Design compliance: D-001 (zone separation) still open in business_card/_sections/_summary_hero.py
