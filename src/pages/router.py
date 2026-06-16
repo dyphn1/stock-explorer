@@ -155,7 +155,7 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         return
     if page_key == "watchlist":
         _render_navbar_minimal(page_key)
-        with t.spinner(t("status.loading_page")):
+        with st.spinner(t("status.loading_page")):
             _render_watchlist_page(client)
         return
     if page_key == "event_dashboard":

@@ -5,12 +5,16 @@ Composes a scrollable timeline from detected events, case studies,
 and company milestones, enriched with historian-style interpretations.
 
 This page is accessible from the Business Card page via the "更多分析" expander.
+
+i18n: all user-facing strings use t() function. The story_arc_detector
+service returns i18n keys; this page resolves them via t().
 """
 
 from __future__ import annotations
 
 import streamlit as st
 
+from src.core.i18n import t
 from src.pages._router_base import _section_title, _summary_card, _info_card
 from src.services.timeline_service import get_timeline, TimelineEntry
 from src.services.story_arc_detector import detect_arcs, get_arc_legend, ArcLabel
@@ -34,27 +38,30 @@ def _severity_color(severity: str) -> str:
 def _render_arc_badge(arc: ArcLabel) -> None:
     """Render an arc label badge at a transition point."""
     emoji = arc.get("arc_emoji", "")
-    label = arc.get("arc_label", "")
-    desc = arc.get("arc_description", "")
+    arc_key = arc.get("arc_key", "")
+    desc_key = arc.get("arc_description_key", "")
     count = arc.get("event_count", 0)
     bucket_start = arc.get("bucket_start", "")
     bucket_end = arc.get("bucket_end", "")
 
+    # Resolve display text via i18n
+    label = t(f"story_arc.{arc_key}") if arc_key else ""
+    desc = t(desc_key) if desc_key else ""
+
     # Determine badge color based on arc type
     _arc_colors = {
-        "成長期": "#27AE68",
-        "調整期": "#E74C3C",
-        "震盪期": "#F39C12",
-        "復甦期": "#3498DB",
+        "growth": "#27AE68",
+        "decline": "#E74C3C",
+        "volatile": "#F39C12",
+        "recovery": "#3498DB",
     }
-    color = _arc_colors.get(label, "#3498DB")
+    color = _arc_colors.get(arc_key, "#3498DB")
 
-    # Use _info_card for arc badge display
     badge_title = f"{emoji} {label}"
     badge_content = (
         f"{desc}\n\n"
         f"📅 {bucket_start} ～ {bucket_end}\n\n"
-        f"📌 此區間共 **{count}** 個事件"
+        f"📌 {t('story_arc.badge_events', count=count)}"
     )
     _info_card(
         title=badge_title,
@@ -71,26 +78,26 @@ def _render_arc_badge(arc: ArcLabel) -> None:
 
 def _render_arc_legend() -> None:
     """Render arc legend section."""
-    _section_title("📊 故事弧線圖例")
+    _section_title(t("story_arc.legend_title"))
     legend = get_arc_legend()
     cols = st.columns(4)
     for i, item in enumerate(legend):
         with cols[i]:
-            label = item["label"]
+            label = t(item["label_key"])
+            desc = t(item["desc_key"])
             emoji = item["emoji"]
-            desc = item["description"]
             st.markdown(f"**{emoji} {label}**")
             st.caption(desc)
+
 
 def _render_timeline_card(entry: TimelineEntry, index: int) -> None:
     """Render a single timeline entry as a styled card.
 
     Uses _summary_card with severity-based border color.
-    Falls back to inline card rendering without unsafe_allow_html.
     """
-    date = entry.get("date", "未知日期")
+    date = entry.get("date", t("status.data_missing"))
     icon = entry.get("icon", "📌")
-    title = entry.get("title", "未命名事件")
+    title = entry.get("title", "")
     summary = entry.get("summary", "")
     interpretation = entry.get("interpretation", "")
     severity = entry.get("severity", "low")
@@ -106,22 +113,21 @@ def _render_timeline_card(entry: TimelineEntry, index: int) -> None:
         content_parts.append(f"💡 {interpretation}")
         content_parts.append("")
     if count and count > 1:
-        content_parts.append(f"📌 這一天共有 {count} 個相關事件")
+        content_parts.append(f"📌 {t('story_arc.badge_events', count=count)}")
         content_parts.append("")
 
-    # Source badge
-    source_labels = {
+    # Source badge — use i18n keys where available
+    _source_map = {
         "detected": "🔍 系統偵測",
         "case_study": "📚 案例研究",
         "milestone": "⭐ 公司里程碑",
     }
-    source_label = source_labels.get(source, "")
+    source_label = _source_map.get(source, "")
     if source_label:
         content_parts.append(f"*{source_label} · {date}*")
 
     content = "\n\n".join(content_parts)
 
-    # Use _summary_card with severity-based color
     _summary_card(
         title=f"{icon} {date}",
         content=content,
@@ -147,15 +153,20 @@ def render_story_timeline_page(data: dict, client) -> None:
 
     # Page header
     display_name = f"{stock_name} ({stock_id})" if stock_name else stock_id
-    _section_title(f"📅 故事時間軸 — {display_name}")
+    _section_title(f"📅 {t('page.story_timeline')} — {display_name}")
 
-    st.markdown("*公司完整的故事時間軸：營收異動、新聞事件、歷史轉折與案例研究*")
+    st.markdown(f"*{t('story_arc.section_subtitle')}*")
     st.markdown("")
 
     # ── Lookback selector ───────────────────────────────────
     col_sel, _ = st.columns([1, 3])
     with col_sel:
-        lookback_options = {"1 年": 365, "3 年": 1095, "5 年": 1825, "全部": 3650}
+        lookback_options = {
+            t("timeline.label_1y"): 365,
+            t("timeline.label_3y"): 1095,
+            t("timeline.label_5y"): 1825,
+            t("timeline.label_all"): 3650,
+        }
         selected_label = st.selectbox(
             "時間範圍",
             list(lookback_options.keys()),
@@ -167,11 +178,12 @@ def render_story_timeline_page(data: dict, client) -> None:
     st.markdown("")
 
     # ── Fetch timeline ──────────────────────────────────────
-    try:
-        entries = get_timeline(stock_id, lookback_days=lookback_days)
-    except Exception as exc:
-        st.error(f"載入時間軸時發生錯誤：{exc}")
-        return
+    with st.spinner(t("status.loading")):
+        try:
+            entries = get_timeline(stock_id, lookback_days=lookback_days)
+        except Exception as exc:
+            st.error(f"{t('error.no_data')}: {exc}")
+            return
 
     # ── Empty state ─────────────────────────────────────────
     if not entries:
@@ -183,7 +195,7 @@ def render_story_timeline_page(data: dict, client) -> None:
                 "• **系統自動偵測**：營收異動、新聞事件、股價異常\n\n"
                 "• **歷史案例研究**：與該公司相關的市場事件分析\n\n"
                 "• **公司里程碑**：成立、上市、重要產品發佈等歷史轉折\n\n"
-                "💡 嘗試擴大時間範圍，或瀏覽其他頁面觸發自動事件偵測。"
+                f"💡 嘗試擴大時間範圍，或瀏覽其他頁面觸發自動事件偵測。"
             ),
             icon="📭",
         )
@@ -196,16 +208,14 @@ def render_story_timeline_page(data: dict, client) -> None:
     # ── Arc detection ────────────────────────────────────────
     arcs = detect_arcs(entries)
     if arcs:
-        _section_title("📈 故事弧線")
-        st.markdown("*自動偵測公司故事的主要階段，幫助理解長期趨勢與轉折*")
+        _section_title(t("story_arc.section_title"))
+        st.markdown(f"*{t('story_arc.section_subtitle')}*")
         st.markdown("")
         for arc in arcs:
             _render_arc_badge(arc)
         st.markdown("---")
 
     # ── Timeline display ────────────────────────────────────
-    # Use a horizontal scroll container via columns
-    # For better UX, show entries in reverse chronological order (newest first)
     for idx, entry in enumerate(entries):
         _render_timeline_card(entry, idx)
         if idx < len(entries) - 1:
@@ -230,7 +240,4 @@ def render_story_timeline_page(data: dict, client) -> None:
 
     # ── Historian disclaimer ────────────────────────────────
     st.markdown("---")
-    st.caption(
-        "⚠️ 以上時間軸由系統自動整理，事件解讀僅供參考。"
-        "不構成任何投資建議。投資有風險，入市需謹慎。"
-    )
+    st.caption(t("disclaimer.historical"))

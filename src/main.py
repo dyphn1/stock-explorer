@@ -14,7 +14,6 @@ if _project_root not in sys.path:
 import streamlit as st
 from src.services.validation import validate_stock_id
 from src.pages.router import load_and_render_page
-from src.core.i18n import t, set_lang, get_available_locales
 
 # ── 頁面設定 ──────────────────────────────────────────
 st.set_page_config(
@@ -167,10 +166,6 @@ def get_client():
 
 client = get_client()
 
-# Initialize language
-if "lang" not in st.session_state:
-    st.session_state["lang"] = "zh-TW"
-
 # ── 側邊欄 ──────────────────────────────────────────────
 
 def _render_sidebar_hot_stocks(client):
@@ -204,14 +199,14 @@ def _render_sidebar_hot_etfs(client):
 
 def _render_sidebar(client):
     """Main sidebar rendering function."""
-    st.markdown(f"## {t("sidebar.title")}")
-    st.markdown(f"*{t("app.subtitle")}*")
+    st.markdown("## 🔍 股識")
+    st.markdown("*認識一家公司，從這裡開始*")
     st.markdown("---")
 
     # Search box
     search_input = st.text_input(
-        t("app.search_label"),
-        placeholder=t("app.search_placeholder"),
+        "搜尋股票",
+        placeholder="例如：2330 或 台積電",
         label_visibility="collapsed",
         key="sidebar_search",
     )
@@ -219,60 +214,48 @@ def _render_sidebar(client):
     # Rate limit banner
     _rate_status = get_rate_limit_status()
     if _rate_status["is_limited"]:
-        st.warning(t("status.rate_limited_short"))
+        st.warning("⚠️ FinMind API 暫時受限，資料可能不完整。請稍後再試。")
 
     st.markdown("---")
 
     # Primary navigation
-    st.markdown(f"### {t("sidebar.navigation_header")}")
+    st.markdown("### 頁面導航")
     nav_items = [
-        ("📊", t("page.business_card"), "sidebar_nav_home"),
-        ("🗺️", t("page.sector_heatmap"), "sidebar_nav_sector"),
-        ("📈", t("page.category_browser"), "sidebar_nav_category"),
-        ("🏷️", t("page.etf_section"), "sidebar_nav_etf"),
-        ("📋", t("page.watchlist"), "sidebar_nav_watchlist"),
-        ("🔔", t("page.event_dashboard"), "sidebar_nav_events"),
-        ("🔔", t("page.notification_center"), "sidebar_nav_notifications"),
-        ("📝", t("page.investment_memo"), "sidebar_nav_memo"),
-        ("💰", t("page.financial_wellness"), "sidebar_nav_wellness"),
-        ("🔎", t("page.stock_screener"), "sidebar_nav_screener"),
+        ("📊", "名片", "sidebar_nav_home"),
+        ("🗺️", "產業熱力圖", "sidebar_nav_sector"),
+        ("📈", "分類瀏覽", "sidebar_nav_category"),
+        ("🏷️", "ETF 專區", "sidebar_nav_etf"),
+        ("📋", "我的關注", "sidebar_nav_watchlist"),
+        ("🔔", "事件儀表板", "sidebar_nav_events"),
+        ("🔔", "通知中心", "sidebar_nav_notifications"),
+        ("📝", "投資備忘錄", "sidebar_nav_memo"),
+        ("💰", "理財健康檢查", "sidebar_nav_wellness"),
+        ("🔎", "股票探索", "sidebar_nav_screener"),
     ]
+    for icon, label, key in nav_items:
         if st.button(f"{icon} {label}", key=key, use_container_width=True):
             navigate_to(page=label)
 
     st.markdown("---")
 
     # Hot stocks (collapsible)
-    with st.expander(t("sidebar.hot_stocks"), expanded=False):
+    with st.expander("🔥 熱門股票", expanded=False):
         _render_sidebar_hot_stocks(client)
 
     # Hot ETFs (collapsible)
-    with st.expander(t("sidebar.hot_etfs"), expanded=False):
+    with st.expander("🏷️ 熱門 ETF", expanded=False):
         _render_sidebar_hot_etfs(client)
 
     st.markdown("---")
-    st.markdown("---")
-    st.markdown(f"### {t("sidebar.language_header")}")
-    lang_options = get_available_locales()
-    lang_labels = [opt["label"] for opt in lang_options]
-    lang_codes = [opt["code"] for opt in lang_options]
-    current_lang = st.session_state.get("lang", "zh-TW")
-    try:
-        current_index = lang_codes.index(current_lang)
-    except ValueError:
-        current_index = 0
-    selected_label = st.radio("", lang_labels, index=current_index, label_visibility="collapsed")
-    selected_lang = lang_codes[lang_labels.index(selected_label)]
-    if selected_lang != st.session_state.get("lang"):
-        set_lang(selected_lang)
-        st.rerun()
 
     # Disclaimer
-    st.markdown(f'''
+    st.markdown("""
     <div class="disclaimer">
-    ⚠️ {t('disclaimer.general')}
+    ⚠️ 本工具僅供認識公司使用，<br>
+    不構成任何投資建議。<br>
+    投資有風險，請自行評估。
     </div>
-    ''', unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
     return search_input
 
@@ -303,12 +286,12 @@ if search_input and search_input.strip():
         elif len(matches) > 1:
             # 多筆符合，讓使用者選擇
             options = [f"{row['stock_id']} {row['stock_name']}" for _, row in matches.iterrows()]
-            selected = st.sidebar.selectbox(t("stock.search_multiple"), options, key="search_select")
+            selected = st.sidebar.selectbox("找到多筆符合的股票：", options, key="search_select")
             if selected:
                 stock_id = selected.split()[0]
         else:
             # 沒有符合
-            st.sidebar.error(t("error.search_no_results"))
+            st.sidebar.error("找不到符合的股票")
 else:
     stock_id = st.session_state.get("stock_id", None)
 
@@ -316,7 +299,13 @@ if not stock_id:
     # 歡迎頁面
     st.markdown("""
     <div style="text-align:center;padding:4rem 2rem;">
-        <h1>{t("welcome.title")}</h1>
-        <p style="font-size:1.3rem;color:#7F8C8D;margin-top:1rem;">{t("app.subtitle")}</p>
-        <p style="font-size:1rem;color:#95A5A6;margin-top:2rem;">{t("welcome.description")}</p>
+        <h1>📊 股識</h1>
+        <p style="font-size:1.3rem;color:#7F8C8D;margin-top:1rem;">認識一家公司，從這裡開始</p>
+        <p style="font-size:1rem;color:#95A5A6;margin-top:2rem;">
+            在左側輸入股票代號或名稱，開始認識一家公司
+        </p>
     </div>
+    """, unsafe_allow_html=True)
+else:
+    # 使用路由器載入並渲染頁面
+    load_and_render_page(client, stock_id)

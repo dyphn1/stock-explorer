@@ -10,6 +10,10 @@ Each bucket is classified into one of four arc labels based on
 severity-weighted event scores. Arc labels are only emitted at
 transition points (where classification changes between consecutive
 buckets), not on every entry.
+
+i18n strategy: this service returns arc type keys (e.g. "growth")
+and description keys (e.g. "story_arc.growth_description").
+The page layer calls t() to resolve them.
 """
 from __future__ import annotations
 
@@ -25,12 +29,12 @@ logger = logging.getLogger(__name__)
 
 _SEVERITY_SCORES = {"high": 3, "medium": 2, "low": 1}
 
-# ── Arc label constants ────────────────────────────────────
+# ── Arc type constants (i18n keys, NOT display text) ──────
 
-ARC_GROWTH = "成長期"
-ARC_DECLINE = "調整期"
-ARC_VOLATILE = "震盪期"
-ARC_RECOVERY = "復甦期"
+ARC_GROWTH = "growth"
+ARC_DECLINE = "decline"
+ARC_VOLATILE = "volatile"
+ARC_RECOVERY = "recovery"
 
 _ARC_EMOJI = {
     ARC_GROWTH: "📈",
@@ -39,21 +43,21 @@ _ARC_EMOJI = {
     ARC_RECOVERY: "🌱",
 }
 
-_ARC_DESCRIPTIONS = {
-    ARC_GROWTH: "過去6個月營收與市場評價偏向正面，整體趨勢向上",
-    ARC_DECLINE: "過去6個月面臨較多負面事件，市場信心有所回落",
-    ARC_VOLATILE: "過去6個月正負事件交織，市場看法分歧",
-    ARC_RECOVERY: "調整後出現正面訊號，市場情緒逐步回暖",
+_ARC_DESCRIPTION_KEYS = {
+    ARC_GROWTH: "story_arc.growth_description",
+    ARC_DECLINE: "story_arc.decline_description",
+    ARC_VOLATILE: "story_arc.volatile_description",
+    ARC_RECOVERY: "story_arc.recovery_description",
 }
 
 
 class ArcLabel(TypedDict):
     """A detected story arc label for a time bucket."""
-    arc_label: str
+    arc_key: str              # i18n key: "growth", "decline", "volatile", "recovery"
     arc_emoji: str
-    arc_description: str
-    bucket_start: str       # "YYYY-MM" start of bucket
-    bucket_end: str         # "YYYY-MM" end of bucket
+    arc_description_key: str  # i18n key for description text
+    bucket_start: str         # "YYYY-MM" start of bucket
+    bucket_end: str           # "YYYY-MM" end of bucket
     event_count: int
     score: float
 
@@ -104,13 +108,13 @@ def _score_bucket(entries: list[TimelineEntry]) -> float:
 
 
 def _classify_bucket(score: float, event_count: int, min_events: int = 3) -> str:
-    """Classify a bucket into an arc label.
+    """Classify a bucket into an arc type key.
 
     Thresholds designed to require meaningful signal:
-    - score >= 4  → strong positive → 成長期
-    - score <= -4 → strong negative → 調整期
-    - score >= 1  → mild positive  → 復甦期 (recovery)
-    - otherwise    → mixed          → 震盪期
+    - score >= 4  → strong positive → growth
+    - score <= -4 → strong negative → decline
+    - score >= 1  → mild positive  → recovery
+    - otherwise    → mixed          → volatile
     """
     if event_count < min_events:
         return ""  # insufficient data → no label
@@ -134,9 +138,12 @@ def detect_arcs(
 
     Groups entries into non-overlapping 6-month buckets, computes
     a severity-weighted score for each bucket, and classifies
-    each into one of four arc labels. Only returns labels for
+    each into one of four arc types. Only returns labels for
     buckets with >= min_events entries, and only at transition
     points (where the label differs from the previous bucket).
+
+    Returns arc type keys (e.g. "growth") — the page layer
+    must call t("story_arc.{key}") for display text.
 
     Args:
         entries: TimelineEntry list (e.g. from get_timeline()).
@@ -183,9 +190,9 @@ def detect_arcs(
             bucket_start = f"{year_half[0]}-{'01' if year_half[1] == '01' else '07'}-01"
             bucket_end = f"{year_half[0]}-{'06-30' if year_half[1] == '01' else '12-31'}"
             arcs.append(ArcLabel(
-                arc_label=label,
+                arc_key=label,
                 arc_emoji=_ARC_EMOJI.get(label, ""),
-                arc_description=_ARC_DESCRIPTIONS.get(label, ""),
+                arc_description_key=_ARC_DESCRIPTION_KEYS.get(label, ""),
                 bucket_start=bucket_start,
                 bucket_end=bucket_end,
                 event_count=n,
@@ -202,10 +209,14 @@ def detect_arcs(
 
 
 def get_arc_legend() -> list[dict]:
-    """Return arc legend data for UI rendering."""
+    """Return arc legend data for UI rendering.
+
+    Returns list of dicts with i18n keys — page layer calls t()
+    to resolve display text.
+    """
     return [
-        {"label": ARC_GROWTH, "emoji": "📈", "description": _ARC_DESCRIPTIONS[ARC_GROWTH]},
-        {"label": ARC_DECLINE, "emoji": "📉", "description": _ARC_DESCRIPTIONS[ARC_DECLINE]},
-        {"label": ARC_VOLATILE, "emoji": "🔄", "description": _ARC_DESCRIPTIONS[ARC_VOLATILE]},
-        {"label": ARC_RECOVERY, "emoji": "🌱", "description": _ARC_DESCRIPTIONS[ARC_RECOVERY]},
+        {"key": ARC_GROWTH, "emoji": "📈", "label_key": "story_arc.growth", "desc_key": "story_arc.growth_description"},
+        {"key": ARC_DECLINE, "emoji": "📉", "label_key": "story_arc.decline", "desc_key": "story_arc.decline_description"},
+        {"key": ARC_VOLATILE, "emoji": "🔄", "label_key": "story_arc.volatile", "desc_key": "story_arc.volatile_description"},
+        {"key": ARC_RECOVERY, "emoji": "🌱", "label_key": "story_arc.recovery", "desc_key": "story_arc.recovery_description"},
     ]
