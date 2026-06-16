@@ -39,9 +39,11 @@ page:
   compare_stories: "同業比較故事"
   moat_comparison: "護城河比較"
   debate_cards: "看多看空辯論"
+  learn_first_gate: "學習優先門"
 
 # ── Sidebar 元素 ────────────────────────────
 sidebar:
+  nav_label: "導覽"
   hot_stocks: "🔥 熱門股票"
   hot_etfs: "🏷️ 熱門 ETF"
   disclaimer: "⚠️ 本工具僅供認識公司使用，不構成任何投資建議。<br>投資有風險，請自行評估。"
@@ -265,6 +267,7 @@ debate:
   counter: "反駁論點"
   summary: "辯論摘要"
   no_data: "目前沒有足夠的辯論資料"
+  no_data_detail: "目前沒有足夠的資料來生成辯論論點。\n\n可能原因：\n\n• 同業比較資料不足\n• 財務指標資料不完整\n\n💡 請確認該股票有同業比較資料後再試。"
   auto_generated: "自動產生"
   # Metric display names
   metric_roe: "ROE"
@@ -348,6 +351,9 @@ scenario:
   # Error keys
   before_ipo: "所選日期早於公司上市日，無法計算。"
   future_date: "所選日期為未來日期，請選擇過去的日期。"
+  invalid_date: "日期格式無效，請輸入正確的日期。"
+  invalid_range: "日期範圍無效，開始日期必須早於結束日期。"
+  amount_too_small: "投資金額過小，請輸入至少 1,000 元。"
   no_data: "無法取得價格資料，請確認股票代號是否正確。"
   historical_title: "歷史情境"
   upcoming: "即將上線"

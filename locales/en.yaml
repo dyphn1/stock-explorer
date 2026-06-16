@@ -38,9 +38,11 @@ page:
   compare_stories: "Peer Comparison Stories"
   moat_comparison: "Moat Comparison"
   debate_cards: "Bear vs Bull Debate"
+  learn_first_gate: "Learn First Gate"
 
 # ── Sidebar Elements ────────────────────────────
 sidebar:
+  nav_label: "Navigation"
   hot_stocks: "🔥 Hot Stocks"
   hot_etfs: "🏷️ Popular ETFs"
   disclaimer: "⚠️ This tool is for educational purposes only and does not constitute investment advice.<br>Investing involves risk; please evaluate carefully."
@@ -256,6 +258,7 @@ debate:
   counter: "Counter-Argument"
   summary: "Debate Summary"
   no_data: "Not enough debate data available"
+  no_data_detail: "There is not enough data to generate debate arguments.\n\nPossible reasons:\n\n• Insufficient peer comparison data\n• Incomplete financial metric data\n\n💡 Please verify that the stock has peer comparison data and try again."
   auto_generated: "Auto-generated"
   # Metric display names
   metric_roe: "ROE"
@@ -338,7 +341,10 @@ scenario:
   custom_result_title: "{stock_name} ({stock_id}) — Custom Scenario"
   # Error keys
   before_ipo: "The selected date is before the company's IPO; cannot calculate."
-  future_date: "The selected date is in the past."
+  future_date: "The selected date is in the future. Please select a past date."
+  invalid_date: "Invalid date format. Please enter a valid date."
+  invalid_range: "Invalid date range. The start date must be before the end date."
+  amount_too_small: "Investment amount is too small. Please enter at least 1,000 TWD."
   no_data: "Unable to fetch price data. Please verify the stock ID."
   historical_title: "Historical Scenarios"
   upcoming: "Coming Soon"

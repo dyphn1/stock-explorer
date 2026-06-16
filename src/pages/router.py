@@ -47,7 +47,7 @@ from src.services.adaptive_engine import (
     check_data_freshness,
 )
 from src.core.i18n import t, set_lang, get_available_locales
-from src.services.watchlist import _is_etf_check as _is_etf_check
+from src.services.watchlist import _is_etf as _is_etf_check
 from src.pages.investor_story_feed import render_investor_story_feed
 from src.pages.academy import _render_academy
 from src.pages.case_study_library import _render_case_study_library

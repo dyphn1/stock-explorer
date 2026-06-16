@@ -154,13 +154,7 @@ def render_debate_cards_page(data: dict, client) -> None:
     if not points:
         _info_card(
             title=t("debate.no_data"),
-            content=(
-                "目前沒有足夠的資料來生成辯論論點。\n\n"
-                "可能原因：\n\n"
-                "• 同業比較資料不足\n"
-                "• 財務指標資料不完整\n\n"
-                "💡 請確認該股票有同業比較資料後再試。"
-            ),
+            content=t("debate.no_data_detail"),
             icon="📭",
         )
         # Disclaimer even for empty state
