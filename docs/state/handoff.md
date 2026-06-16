@@ -1,86 +1,128 @@
 # Handoff — Stock Explorer
 
 ## Summary
-- **Topic**: 🔍 Review PM Report — Sprint 23 Quality Review + Sprint 24 Readiness (2026-06-17)
+- **Topic**: 🚀 Sprint 24 Execution — C201 Daily Market Dashboard Implementation
 - **Date**: 2026-06-17
-- **Sprint Status**: Sprint 23 ✅ COMPLETE (with fixes applied) | Sprint 24 ✅ READY TO START
+- **Sprint Status**: Sprint 24 🏗️ IN PROGRESS — C201 implementation ready to start
 
 ---
 
-# 🔍 Review PM Report (2026-06-17)
-
-## Sprint 23 — Quality Review Results
-
-All three features reviewed. 2 blocking issues found and fixed, 3 minor issues documented.
-
-| Feature | Review Result | Issues Found | Fixes Applied |
-|---------|--------------|--------------|---------------|
-| C202 Story Arc Labels | ✅ PASS | Minor: `_bucket_label()` returns hardcoded Chinese (non-blocking) | None needed |
-| C199 Bear vs Bull Debate | ⚠️ FIXED | (1) Hardcoded Chinese empty-state in `debate_cards.py:157-163` (2) Banned words filter defined but not called in generation flow | Replaced with `t("debate.no_data_detail")` + added key to both locales |
-| C200 What If Calculator | ⚠️ FIXED | (1) 3 missing i18n keys: `invalid_date`, `invalid_range`, `amount_too_small` (2) `en.yaml:341` wrong text for `future_date` ("in the past" → "in the future") | Added all 3 keys to both locales + fixed English text |
-
-## Critical Infrastructure Fix
-
-**BLOCKER FIXED**: `router.py:50` had broken import `_is_etf_check` (function doesn't exist in watchlist.py). App was non-functional.
-- **Fix**: Changed to `_is_etf as _is_etf_check` (correct function name)
-- **Impact**: App can now start. This was introduced in commit 7bcbc00 (i18n refactoring).
-
-## Missing Locale Keys — FIXED
-
-Added missing i18n keys to both `locales/en.yaml` and `locales/zh-TW.yaml`:
-- `sidebar.nav_label` — "Navigation" / "導覽"
-- `page.learn_first_gate` — "Learn First Gate" / "學習優先門"
-- `debate.no_data_detail` — empty-state detail message
-- `scenario.invalid_date` — "Invalid date format..."
-- `scenario.invalid_range` — "Invalid date range..."
-- `scenario.amount_too_small` — "Investment amount is too small..."
-
-## C201 (今日市場動態) Status — CLARIFIED
-
-`investor_story_feed.py` is **C116** (每日故事 Feed), NOT C201. The `daily_story` page in router.py routes to C116 content. C201 (daily market dashboard with market-level narrative) is **NOT implemented** and remains a Sprint 24 candidate.
-
-## Test Health
-- **545 passed** in 3.33s — all tests green (unchanged after fixes)
-- No regressions introduced
-
-## Remaining Tech Debt (Non-blocking for Sprint 24)
-
-| Issue | Severity | Location |
-|-------|----------|----------|
-| `_historical_scenarios.py` curated scenario content (hardcoded Chinese) | 🟡 Medium | `src/pages/business_card/_historical_scenarios.py:14-291` |
-| `story_arc_detector.py:_bucket_label()` returns hardcoded Chinese | 🟢 Low | `src/services/story_arc_detector.py:82-87` |
-| `debate_engine.py` banned words filter not called in generation flow | 🟢 Low | `src/services/debate_engine.py:55-59` (defined but not invoked) |
-| `investor_story_feed.py` not i18n-wrapped (hardcoded Chinese) | 🟡 Medium | `src/pages/investor_story_feed.py` |
-| Design system compliance: 92 issues across 7 rounds (grade C+) | 🟡 Medium | `docs/state/current_problems.md` |
-
----
-
-# 🔧 Development Section — Sprint 24 Planning
+# 🚀 Sprint 24 Plan (2026-06-17)
 
 ## Sprint 24 Candidates
 
-| Priority | Feature | Effort | Risk |
-|----------|---------|--------|------|
-| MUST | C201 今日市場動態 (daily market dashboard) | 15-22h | Medium |
-| SHOULD | C203 Supply Chain Visual Map | 18-25h | High |
-| SHOULD | C209 Source Transparency Layer | 10-15h | Medium |
-| COULD | C206 Recurring Investment Education | 12-18h | Medium (regulatory) |
-| COULD | i18n tech debt cleanup (spinner strings, scenario content) | 6-10h | Low |
+| Priority | Feature | Effort | Risk | Status |
+|----------|---------|--------|------|--------|
+| MUST | C201 今日市場動態 (daily market dashboard) | 6-8h | Low | 🏗️ Ready to implement |
+| STRETCH | C206 Recurring Investment Education | 6-8h | Low | ⏳ Week 4 stretch |
+| DONE | C202 Story Arc Labels | 11-18h | Low | ✅ COMPLETE |
+| DONE | C199 Bear vs Bull Debate Cards | 14-22h | Medium | ✅ COMPLETE |
+| DONE | C200 What If Calculator | 12-17h | Medium-High | ✅ COMPLETE |
+| DONE | i18n tech debt cleanup | 6-10h | Low | ✅ COMPLETE |
 
-## Pre-Sprint 24 Conditions — ALL RESOLVED ✅
+## C201 Daily Market Dashboard — Ready for Implementation
 
-| Condition | Status |
-|-----------|--------|
-| Fix broken `_is_etf_check` import | ✅ DONE (this review) |
-| Add missing i18n keys | ✅ DONE (this review) |
-| Fix `scenario.future_date` wrong English text | ✅ DONE (this review) |
-| Replace hardcoded Chinese in `debate_cards.py` | ✅ DONE (this review) |
-| Verify all tests pass | ✅ DONE (545/545) |
+**Architecture design**: `docs/architecture/c201_daily_market.md` (714 lines)
+**Page key**: `daily_market`
 
-## Next Cycle (Development)
-🔧 Development Round 50: Sprint 24 execution — C201 daily market dashboard → C203 supply chain map → C209 source transparency.
+**Resolved design changes** (from Round 49):
+- Remove TAIEX placeholder — use avg change % as primary metric
+- Simplify volume to absolute total (億元), no 5-day comparison
+- Post-filter events by market-relevant types only (earnings, dividend, institutional, market_news)
+
+**Sections**:
+1. Market overview summary — plain-language paragraph (template-based)
+2. Market sentiment indicator — advance/decline ratio + volume
+3. Sector performance strip — top movers with explanations
+4. Top gainers/losers — Top 5 with context
+5. Key events summary — market-level events from M5 engine (filtered)
+6. Data freshness indicator
+
+**Data sources**: All free FinMind APIs via existing `market_data` service layer (~2-3 unique API calls)
+
+**Files to create/modify**:
+- NEW: `src/pages/daily_market.py`
+- MODIFY: `src/pages/router.py` (add route), `locales/en.yaml` + `locales/zh-TW.yaml` (~40 new keys)
+- MODIFY: `src/pages/url_sync.py` (add to VALID_PAGES)
+
+**Estimated effort**: 6-8 hours
+
+## Sprint 23 — COMPLETE ✅
+
+### Shipped Features
+
+| Feature | Files | Tests | Status |
+|---------|-------|-------|--------|
+| C202 Story Arc Labels | `story_arc_detector.py` (228 lines) | 327 lines | ✅ Complete |
+| C199 Bear vs Bull Debate Cards | `debate_engine.py` (196 lines), `debate_cards.py` (201 lines) | 388 lines | ✅ Complete |
+| C200 What If Calculator | `scenario_calculator.py` (374 lines) | 484 lines | ✅ Complete |
+
+### i18n Cleanup — COMPLETE ✅
+
+| File | Issue | Fix |
+|------|-------|-----|
+| `story_arc_detector.py` | `_bucket_label()` returned hardcoded Chinese | Now returns i18n keys |
+| `_historical_scenarios.py` | All scenario content hardcoded Chinese | Moved to locale files, uses `t()` |
+| `investor_story_feed.py` | All display strings hardcoded Chinese | Wrapped with `t()` calls |
+| `debate_engine.py` | Banned words filter defined but never called | Integrated into `debate_cards.py` rendering |
+| `src/core/locales/` | Dead code directory with incompatible schema | Deleted entirely |
+| `story_arcs.yaml` | Display strings in config file | Moved to locale YAML files |
+
+### Commits
+
+| Commit | Description |
+|--------|-------------|
+| `f29c511` | feat(sprint23): C199 debate engine + C200 scenario calculator + test fixes |
+| `d55452d` | refactor(i18n): Sprint 23 story_arc keys + detector i18n refactoring |
+| `cfded35` | feat(discussion): Round 48 Sprint 23 planning - i18n conflict resolution + challenge |
+| `7bcbc00` | feat(i18n): complete i18n integration across all pages and services |
+| `d27f58d` | refactor(i18n): clean up hardcoded Chinese in service and page layers |
+| `cfb342f` | fix(debate): integrate banned words filter into debate card rendering |
+
+## Test Health
+- **545 passed** in 3.65s — all tests green
+- No regressions introduced
+
+## Remaining Tech Debt (Non-blocking)
+
+| Issue | Severity | Location |
+|-------|----------|----------|
+| Design system compliance: 83 issues across 7 rounds (grade C+) | 🟡 Medium | `docs/state/current_problems.md` |
+| `validate_debate_text()` naming counterintuitive | 🟢 Low | `src/services/debate_engine.py` |
+| Timeline strings in `scenario:` namespace | 🟢 Low | `locales/*.yaml` |
+| Dead import in `_historical_scenarios.py` | 🟢 Low | `src/pages/business_card/_historical_scenarios.py` |
 
 ---
 
-*Created: 2026-06-17 by Review PM*
-*Commits: fix(router) broken import + fix(i18n) missing keys + fix(debate) hardcoded Chinese*
+# 📋 Development Section — Sprint 24 Execution
+
+## Next Steps (Development Round 52)
+
+1. **Implement C201 daily_market.py** — Follow the architecture design doc with Round 49 resolutions
+2. **Add router entry** — Add 'daily_market' to PAGE_KEYS and load_and_render_page
+3. **Add i18n keys** — ~40 keys under `daily_market:` section in both locale files
+4. **QA verification** — Test with real FinMind data
+5. **Design review** — Verify PPT-style compliance
+
+## Pre-Conditions — ALL RESOLVED ✅
+
+| Condition | Status |
+|-----------|--------|
+| Fix broken `_is_etf_check` import | ✅ DONE (Sprint 23 review) |
+| Add missing i18n keys | ✅ DONE (Sprint 23 review) |
+| Fix `scenario.future_date` wrong English text | ✅ DONE (Sprint 23 review) |
+| Replace hardcoded Chinese in `debate_cards.py` | ✅ DONE (Sprint 23 review) |
+| Verify all tests pass | ✅ DONE (545/545) |
+| i18n tech debt cleanup | ✅ DONE (this session) |
+| Delete `src/core/locales/` | ✅ DONE (Round 48) |
+| Refactor `story_arc_detector.py` to return keys | ✅ DONE (Round 48) |
+| Implement four-safeguard pattern for C199 | ✅ DONE (Round 48) |
+| Validate FinMind API data completeness | ✅ DONE (Round 48) |
+| Resolve C201 open questions (TAIEX, volume, events) | ✅ DONE (Round 49) |
+| C203/C209 evaluation and redesign | ✅ DONE (Round 49) |
+
+---
+
+*Created: 2026-06-17 by PM — Round 49 Discussion Complete*
+*Sprint 23: 3 features shipped, 998 lines of code, 1199 lines of tests, 545 total tests green*
+*Sprint 24: C201 ready for implementation*
