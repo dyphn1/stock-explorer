@@ -288,6 +288,8 @@ debate:
   current_ratio_bear: "Current Ratio {value}% is below peer average {peer_avg}%, suggesting room for improvement in short-term solvency"
   dividend_yield_bull: "Dividend Yield {value}% is above peer average {peer_avg}%, offering a relatively higher dividend return"
   dividend_yield_bear: "Dividend Yield {value}% is below peer average {peer_avg}%, offering a relatively lower dividend return"
+  # Banned words filter fallback
+  filtered: "This argument was filtered due to investment advice language"
 
 # ── What If Calculator (C200) ─────────────────
 scenario:

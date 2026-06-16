@@ -14,6 +14,7 @@ from src.pages._router_base import _section_title, _info_card
 from src.services.debate_engine import (
     generate_debate,
     get_debate_summary,
+    validate_debate_text,
     DebatePoint,
     DebateSummary,
 )
@@ -69,6 +70,11 @@ def _render_debate_card(point: DebatePoint, index: int, stock_id: str) -> None:
     # Resolve display text via i18n
     argument_text = t(argument_key, value=f"{value:.1f}", peer_avg=f"{peer_avg:.1f}" if peer_avg is not None else "N/A")
     metric_label = t(f"metric.{metric}") if metric else metric
+
+    # Banned words filter: if resolved text contains investment advice language,
+    # replace with a safe fallback instead of displaying it.
+    if validate_debate_text(argument_text):
+        argument_text = t("debate.filtered")
 
     # Color based on side
     if side == "bull":

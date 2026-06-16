@@ -297,6 +297,8 @@ debate:
   current_ratio_bear: "流動比率 {value}% 低於同業平均 {peer_avg}%，短期償能力有待加強"
   dividend_yield_bull: "殖利率 {value}% 高於同業平均 {peer_avg}%，股息報酬率相對較高"
   dividend_yield_bear: "殖利率 {value}% 低於同業平均 {peer_avg}%，股息報酬率相對較低"
+  # Banned words filter fallback
+  filtered: "此論點因涉及投資建議用語已過濾顯示"
 
 # ── 假設情境計算器 (C200) ────────────────────
 scenario:
