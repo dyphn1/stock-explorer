@@ -8,6 +8,7 @@ user's watchlist and browsing history.
 import streamlit as st
 import logging
 
+from src.core.i18n import t
 from src.pages.url_sync import navigate_to
 from src.pages._router_base import _summary_card, _info_card, _section_title
 from src.services.story_feed import (
@@ -36,13 +37,13 @@ def _why_matters(story: dict) -> str:
 
     if story_type == TYPE_EVENT:
         if stock_id:
-            return f"你關注的 {stock_id} 發生了「{title}」，可能影響持股決策。"
-        return f"市場發生「{title}」，值得留意整體影響。"
+            return t("investor_story.why_matters_event_stock", stock_id=stock_id, title=title)
+        return t("investor_story.why_matters_event", title=title)
     elif story_type == TYPE_SECTOR:
-        return "產業走勢會連動到你的持股表現，了解大局有助於判斷個股。"
+        return t("investor_story.why_matters_sector")
     elif story_type == TYPE_EDUCATION:
-        return "搞懂這個指標，未來看財報時你會更有感。"
-    return "每個故事都是理解市場的一步。"
+        return t("investor_story.why_matters_education")
+    return t("investor_story.why_matters_default")
 
 
 # ── Page renderer ──────────────────────────────────────────
@@ -57,14 +58,14 @@ def render_investor_story_feed(data: dict, client):
         3. "為何重要" section: one-liner per story
         4. Historian disclaimer at bottom
     """
-    st.markdown("## 📰 每日故事 Feed")
-    st.markdown("*根據你的關注清單，每天為你整理最值得知道的市場故事*")
+    st.markdown(f"## 📰 {t('investor_story.page_title')}")
+    st.markdown(f"*{t('investor_story.page_subtitle')}*")
     st.markdown("---")
 
     # ── Gather watchlist symbols ────────────────────────────
     from src.services.watchlist import load_watchlist
     try:
-        watchlist_entries = load_watchlist("預設清單")
+        watchlist_entries = load_watchlist(t("investor_story.default_watchlist"))
         watchlist_symbols = [e.get("stock_id", "") for e in watchlist_entries if e.get("stock_id")]
     except Exception as exc:
         logger.debug("story feed: failed to load watchlist: %s", exc)
@@ -91,10 +92,8 @@ def render_investor_story_feed(data: dict, client):
     # ── Render ──────────────────────────────────────────────
     if not all_stories:
         _info_card(
-            "今日無新故事 🌙",
-            "目前沒有偵測到你的關注股票有重大事件。\n\n"
-            "試著瀏覽幾支股票，或到「分類瀏覽」探索更多標的，"
-            "事件會在你瀏覽時被自動偵測並收錄到故事 Feed 中。",
+            t("investor_story.no_stories_title"),
+            t("investor_story.no_stories_detail"),
             icon="💡",
         )
         return
@@ -111,27 +110,27 @@ def render_investor_story_feed(data: dict, client):
         hero_content += f"\n\n> 💡 {hero_analogy}"
 
     _summary_card(
-        title=f"今日焦點：{hero.get('title', '市場動態')}",
+        title=f"{t('investor_story.hero_prefix')}{hero.get('title', t('investor_story.hero_default'))}",
         content=hero_content,
         icon="🔥",
     )
 
     # "為何重要" for hero
-    st.caption(f"**為何重要：** {_why_matters(hero)}")
+    st.caption(f"**{t('investor_story.why_matters_label')}** {_why_matters(hero)}")
     st.markdown("")
 
     # Hero stock link button
     hero_stock = hero.get("stock_id")
     if hero_stock:
-        if st.button(f"查看 {hero_stock} 名片", key="hero_view_btn"):
-            navigate_to(page="名片", stock_id=hero_stock)
+        if st.button(t("investor_story.view_card", stock_id=hero_stock), key="hero_view_btn"):
+            navigate_to(page=t("investor_story.card_page"), stock_id=hero_stock)
 
     st.markdown("---")
 
     # Remaining stories
     remaining = all_stories[1:]
     if remaining:
-        _section_title("更多故事")
+        _section_title(t("investor_story.more_stories"))
 
         for idx, story in enumerate(remaining):
             story_type = story.get("type", TYPE_EVENT)
@@ -149,24 +148,20 @@ def render_investor_story_feed(data: dict, client):
             _info_card(card_title, card_content, icon=emoji)
 
             # "Why this matters" one-liner
-            st.caption(f"**為何重要：** {_why_matters(story)}")
+            st.caption(f"**{t('investor_story.why_matters_label')}** {_why_matters(story)}")
 
             # Stock link button
             linked_stock = story.get("stock_id")
             if linked_stock:
                 if st.button(
-                    f"查看 {linked_stock} 名片",
+                    t("investor_story.view_card", stock_id=linked_stock),
                     key=f"story_view_{idx}_{linked_stock}",
                 ):
-                    navigate_to(page="名片", stock_id=linked_stock)
+                    navigate_to(page=t("investor_story.card_page"), stock_id=linked_stock)
 
             st.markdown("")
 
     st.markdown("---")
 
     # ── Historian disclaimer ────────────────────────────────
-    st.caption(
-        "📜 *免責聲明：本頁面提供之故事及分析基於系統自動偵測之市場事件與公開數據，"
-        "「歷史學家」敘事純屬教育用途，不構成任何投資建議。投資有風險，"
-        "入市需謹慎，請依個人判斷做出投資決策。*"
-    )
+    st.caption(t("investor_story.disclaimer"))

@@ -242,6 +242,8 @@ story_arc:
     recovery: "Recovery"
   no_arcs: "Not enough story arcs detected yet"
   event_count_label: "Events"
+  period_h1: "H1 {year}"
+  period_h2: "H2 {year}"
 
 # ── Bear vs Bull Debate Cards (C199) ──────────
 debate:
@@ -380,3 +382,106 @@ scenario:
   loading_notifications: "Checking notifications..."
   loading_marking: "Marking..."
   loading_notification_list: "Loading notifications..."
+
+# ── Historical Scenarios (C74) ──────────────────
+historical_scenario:
+  "2330":
+    s1:
+      title: "Scenario 1: Buying at the 2020 Pandemic Low"
+      content: "If you had bought TSMC at the pandemic panic low in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (excl. dividends)\n\n💡 This demonstrates the long-term value of buying quality assets during panic."
+    s2:
+      title: "Scenario 2: Buying at the 2022 High"
+      content: "If you had bought TSMC at the January 2022 high (around {buy_price} TWD), you would have faced the global semiconductor inventory correction, with the stock price falling to {low_price} TWD.\n\n📉 **Short-term drop: approx. {drop_pct}%**\n\n💡 Even good companies can face significant drawdowns if bought at a peak."
+    s3:
+      title: "Scenario 3: DCA Over 5 Years"
+      content: "If you had invested in TSMC via dollar-cost averaging every month starting from {start_year}, regardless of price fluctuations,\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 DCA effectively smooths out purchase costs and is suitable for long-term investors."
+  "2317":
+    s1:
+      title: "Scenario 1: Buying at the 2020 Pandemic Low"
+      content: "If you had bought Foxconn in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Foxconn's transformation story requires patience; long-term holding is needed to see results."
+    s2:
+      title: "Scenario 2: Buying at the 2017 High"
+      content: "If you had bought Foxconn at the 2017 high (around {buy_price} TWD), you would have faced slowing iPhone sales and a prolonged period of stagnation.\n\n📉 **{years}-year return: approx. {return_range}%** (incl. dividends)\n\n💡 Buying at a peak may require a much longer time to break even."
+    s3:
+      title: "Scenario 3: AI Server Theme Breakout"
+      content: "If you had bought Foxconn in early {buy_date} (around {buy_price} TWD) based on the AI server trend, the stock price is now approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%**\n\n💡 Identifying industry trends before they gain traction can yield excess returns."
+  "2454":
+    s1:
+      title: "Scenario 1: Buying at the 2021 High"
+      content: "If you had bought MediaTek at the 2021 high (around {buy_price} TWD), you would have faced a smartphone market downturn and inventory correction.\n\n📉 **Short-term drop: approx. {drop_pct}%**\n\n💡 Even growth stocks carry risks when bought at excessive valuations."
+    s2:
+      title: "Scenario 2: Buying at the 2023 Low"
+      content: "If you had bought MediaTek at the 2023 low (around {buy_price} TWD), benefiting from smartphone market recovery and AI PC themes,\n\n📈 **Return: approx. {return_range}%**\n\n💡 Buying quality companies at industry troughs can yield substantial returns."
+    s3:
+      title: "Scenario 3: DCA Over 3 Years"
+      content: "If you had invested in MediaTek via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 DCA is particularly effective on high-volatility tech stocks."
+  "2308":
+    s1:
+      title: "Scenario 1: Buying at the 2020 Pandemic Low"
+      content: "If you had bought Delta Electronics in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Delta's long-term growth in power management is irreplaceable."
+    s2:
+      title: "Scenario 2: AI Data Center Theme"
+      content: "If you had bought Delta Electronics in early {buy_date} (around {buy_price} TWD) based on AI data center power demand,\n\n📈 **Return: approx. {return_pct}%**\n\n💡 Capture opportunities in the AI infrastructure supply chain."
+    s3:
+      title: "Scenario 3: DCA Over 5 Years"
+      content: "If you had invested in Delta Electronics via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 Steady growth stocks are suitable for long-term DCA investing."
+  "2881":
+    s1:
+      title: "Scenario 1: Buying at the 2020 Pandemic Low"
+      content: "If you had bought Fubon Financial in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Buying financial stocks at lows can yield substantial long-term returns."
+    s2:
+      title: "Scenario 2: Benefiting from Rate Hike Cycle"
+      content: "If you had bought Fubon Financial before the rate hike cycle began in 2022 (around {buy_price} TWD), benefiting from widening interest rate spreads,\n\n📈 **Return: approx. {return_range}%**\n\n💡 Financial stocks typically perform well in a rising rate environment."
+    s3:
+      title: "Scenario 3: DCA Over 5 Years"
+      content: "If you had invested in Fubon Financial via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 Financial stocks offer stable dividends, suitable for dividend investors."
+  "2882":
+    s1:
+      title: "Scenario 1: Buying at the 2020 Pandemic Low"
+      content: "If you had bought Cathay Financial in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Life insurance stocks performed well after the low-interest-rate environment reversed."
+    s2:
+      title: "Scenario 2: IFRS 17 Adoption Challenge"
+      content: "If you had bought Cathay Financial in 2023 (around {buy_price} TWD), facing the uncertainty of IFRS 17 accounting standard adoption,\n\n📊 **Return: approx. {return_range}%**\n\n💡 Policy changes may cause short-term volatility, but long-term impact is limited."
+    s3:
+      title: "Scenario 3: DCA Over 5 Years"
+      content: "If you had invested in Cathay Financial via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 Financial stocks are suitable for long-term holding with stable dividends."
+  "1301":
+    s1:
+      title: "Scenario 1: Buying at the 2021 Peak"
+      content: "If you had bought Formosa Plastics at the 2021 petrochemical peak (around {buy_price} TWD), you would have faced a cyclical downturn and China overcapacity.\n\n📉 **Drop: approx. {drop_range}%**\n\n💡 Buying cyclical stocks at their peak carries extreme risk."
+    s2:
+      title: "Scenario 2: Buying at the 2020 Low"
+      content: "If you had bought Formosa Plastics in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📊 **Return: mainly from dividends, limited capital appreciation**\n\n💡 Traditional industry stocks have limited growth but stable dividends."
+    s3:
+      title: "Scenario 3: DCA Over 5 Years"
+      content: "If you had invested in Formosa Plastics via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%** (mainly from dividends)\n\n💡 Cyclical stocks are suitable for DCA accumulation at low points."
+  "2002":
+    s1:
+      title: "Scenario 1: 2021 Steel Cycle Peak"
+      content: "If you had bought China Steel at the 2021 steel cycle peak (around {buy_price} TWD), you would have faced declining demand and falling raw material prices.\n\n📉 **Drop: approx. {drop_range}%**\n\n💡 Steel stocks have clear cyclical patterns; chasing highs is risky."
+    s2:
+      title: "Scenario 2: Buying at the 2020 Low"
+      content: "If you had bought China Steel in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📊 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Buy at the cycle trough and wait for the next upturn."
+    s3:
+      title: "Scenario 3: DCA Over 5 Years"
+      content: "If you had invested in China Steel via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 Steel stocks are suitable for DCA during cycle lows."
+  "2382":
+    s1:
+      title: "Scenario 1: Buying at the 2020 Pandemic Low"
+      content: "If you had bought Quanta Computer in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 The AI server trend transformed Quanta from an NB contract manufacturer."
+    s2:
+      title: "Scenario 2: Before the 2023 AI Theme Breakout"
+      content: "If you had bought Quanta Computer in early {buy_date} (around {buy_price} TWD) based on the AI server trend,\n\n📈 **Return: approx. {return_pct}%**\n\n💡 Identifying industry trends before the breakout yields surprising returns."
+    s3:
+      title: "Scenario 3: DCA Over 5 Years"
+      content: "If you had invested in Quanta Computer via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 For successfully transformed companies, DCA can also generate excess returns."
+  "3045":
+    s1:
+      title: "Scenario 1: Buying at the 2017 High"
+      content: "If you had bought Largan Precision at the 2017 historical high (around {buy_price} TWD), you would have faced rising Chinese competitors and smartphone market saturation.\n\n📉 **Drop: approx. {drop_range}%**\n\n💡 Even companies with deep moats can face structural challenges."
+    s2:
+      title: "Scenario 2: Buying at the 2020 Low"
+      content: "If you had bought Largan Precision in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📉 **Drop: approx. {drop_pct}%**\n\n💡 Even buying at lows can result in losses if industry structure deteriorates."
+    s3:
+      title: "Scenario 3: DCA Over 5 Years"
+      content: "If you had invested in Largan Precision via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return: approx. {annual_return}%**\n\n💡 DCA cannot protect against structurally declining industries."

@@ -80,11 +80,17 @@ def _bucket_key(date_str: str) -> str:
 
 
 def _bucket_label(bucket_key: str) -> str:
-    """Human-readable bucket label like '2024 上半年' / '2024 下半年'."""
+    """Return i18n key for bucket label like 'story_arc.period_h1' / 'story_arc.period_h2'.
+
+    The page layer must call t() on the resolved key with a year kwarg.
+    """
     if not bucket_key:
         return ""
     year, half = bucket_key.split("-")
-    return f"{year} 上半年" if half == "01" else f"{year} 下半年"
+    if half == "01":
+        return f"story_arc.period_h1"
+    else:
+        return f"story_arc.period_h2"
 
 
 def _score_bucket(entries: list[TimelineEntry]) -> float:

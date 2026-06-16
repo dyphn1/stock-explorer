@@ -96,10 +96,10 @@ class TestBucketKey:
 
 class TestBucketLabel:
     def test_h1_label(self):
-        assert _bucket_label("2024-01") == "2024 上半年"
+        assert _bucket_label("2024-01") == "story_arc.period_h1"
 
     def test_h2_label(self):
-        assert _bucket_label("2024-07") == "2024 下半年"
+        assert _bucket_label("2024-07") == "story_arc.period_h2"
 
     def test_empty_returns_empty(self):
         assert _bucket_label("") == ""
