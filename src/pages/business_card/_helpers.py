@@ -112,13 +112,6 @@ def _section_header(icon: str, title: str, collapsed: bool = False):
 
 # ── D-040: Standardized Disclaimer Component ────────────────────
 
-_DISCLAIMER_TEXTS = {
-    "expert": "⚠️ 專家分析由 AI 輔助整理，僅供參考，不構成投資建議。",
-    "scenario": "⚠️ 歷史情境為假設性試算，僅供教育用途，不構成投資建議。過去績效不代表未來表現。",
-    "general": "⚠️ 本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。",
-}
-
-
 def _historian_disclaimer(disclaimer_type: str = "general"):
     """Render a standardized disclaimer caption.
 
@@ -127,8 +120,15 @@ def _historian_disclaimer(disclaimer_type: str = "general"):
         'scenario' — for historical scenario sections
         'general'  — default general disclaimer
     """
-    text = _DISCLAIMER_TEXTS.get(disclaimer_type, _DISCLAIMER_TEXTS["general"])
-    st.caption(text)
+    from src.core.i18n import t
+
+    _disclaimer_keys = {
+        "expert": "disclaimer.expert",
+        "scenario": "disclaimer.historical",
+        "general": "disclaimer.general",
+    }
+    key = _disclaimer_keys.get(disclaimer_type, "disclaimer.general")
+    st.caption(t(key))
 
 
 # ── D-041: Card Components for Sprint 5 ─────────────────────────

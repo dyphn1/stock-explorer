@@ -118,9 +118,9 @@ def _render_timeline_card(entry: TimelineEntry, index: int) -> None:
 
     # Source badge — use i18n keys where available
     _source_map = {
-        "detected": "🔍 系統偵測",
-        "case_study": "📚 案例研究",
-        "milestone": "⭐ 公司里程碑",
+        "detected": f"🔍 {t('scenario.source_detected')}",
+        "case_study": f"📚 {t('scenario.source_case_study')}",
+        "milestone": f"⭐ {t('scenario.source_milestone')}",
     }
     source_label = _source_map.get(source, "")
     if source_label:
@@ -168,7 +168,7 @@ def render_story_timeline_page(data: dict, client) -> None:
             t("timeline.label_all"): 3650,
         }
         selected_label = st.selectbox(
-            "時間範圍",
+            t("scenario.time_range"),
             list(lookback_options.keys()),
             index=0,
             key=f"timeline_lookback_{stock_id}",
@@ -188,21 +188,21 @@ def render_story_timeline_page(data: dict, client) -> None:
     # ── Empty state ─────────────────────────────────────────
     if not entries:
         _info_card(
-            title="目前沒有足夠的時間軸內容",
+            title=t("scenario.no_timeline_data"),
             content=(
-                f"系統尚未在「{selected_label}」範圍內找到 **{display_name}** 的相關事件。\n\n"
-                "時間軸資料來源包含：\n\n"
-                "• **系統自動偵測**：營收異動、新聞事件、股價異常\n\n"
-                "• **歷史案例研究**：與該公司相關的市場事件分析\n\n"
-                "• **公司里程碑**：成立、上市、重要產品發佈等歷史轉折\n\n"
-                f"💡 嘗試擴大時間範圍，或瀏覽其他頁面觸發自動事件偵測。"
+                f"{t('scenario.no_timeline_detail', range=selected_label, name=display_name)}\n\n"
+                f"{t('scenario.no_timeline_sources')}\n\n"
+                f"• **{t('scenario.no_timeline_auto')}**\n\n"
+                f"• **{t('scenario.no_timeline_case')}**\n\n"
+                f"• **{t('scenario.no_timeline_milestone')}**\n\n"
+                f"💡 {t('scenario.no_timeline_tip')}"
             ),
             icon="📭",
         )
         return
 
     # ── Timeline stats ──────────────────────────────────────
-    st.caption(f"共找到 **{len(entries)}** 個時間軸事件（{selected_label}）")
+    st.caption(t("scenario.timeline_count", count=len(entries), range=selected_label))
     st.markdown("---")
 
     # ── Arc detection ────────────────────────────────────────
@@ -224,14 +224,14 @@ def render_story_timeline_page(data: dict, client) -> None:
     st.markdown("---")
 
     # ── Severity legend ─────────────────────────────────────
-    _section_title("圖例說明")
+    _section_title(t("scenario.legend_title"))
     legend_cols = st.columns(3)
     with legend_cols[0]:
-        _info_card("🔴 重大事件", "严重程度高，需要密切關注", "⚠️")
+        _info_card(t("scenario.legend_major"), t("scenario.legend_major_desc"), "⚠️")
     with legend_cols[1]:
-        _info_card("🟡 重要事件", "中等嚴重程度，值得留意", "📌")
+        _info_card(t("scenario.legend_important"), t("scenario.legend_important_desc"), "📌")
     with legend_cols[2]:
-        _info_card("🟢 參考事件", "嚴重程度低，作為背景參考", "💡")
+        _info_card(t("scenario.legend_reference"), t("scenario.legend_reference_desc"), "💡")
 
     # ── Arc legend ───────────────────────────────────────────
     if arcs:

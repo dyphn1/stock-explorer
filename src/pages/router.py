@@ -41,6 +41,7 @@ from src.pages.first_visit_guide import _render_first_visit_guide
 from src.pages.learn_first_gate import _render_learn_first_gate
 from src.pages.company_timeline import render_company_timeline
 from src.pages.story_timeline import render_story_timeline_page
+from src.pages.debate_cards import render_debate_cards_page
 from src.services.adaptive_engine import (
     run_auto_detection,
     check_data_freshness,
@@ -79,6 +80,7 @@ PAGE_KEYS = [
     "revenue_tree",
     "compare_stories",
     "moat_comparison",
+    "debate_cards",
 ]
 
 logger = logging.getLogger(__name__)
@@ -301,6 +303,9 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
     elif page_key == "moat_comparison":
         with st.spinner(t("status.loading_page")):
             _render_moat_comparison_page(data, client)
+    elif page_key == "debate_cards":
+        with st.spinner(t("status.loading_page")):
+            render_debate_cards_page(data, client)
 
 
 def _render_navbar(data: dict, current_page_key: str):

@@ -1,0 +1,44 @@
+# Debate Templates — C199
+# Evidence argument templates per metric for Bear vs Bull debate cards.
+# These are reference templates — the actual display text comes from i18n locale files.
+# This file documents the metric keys and their bull/bear direction for the debate engine.
+
+roe:
+  direction: higher_is_bullish
+  unit: "%"
+  description: "股東權益報酬率"
+
+revenue_yoy:
+  direction: higher_is_bullish
+  unit: "%"
+  description: "營收年增率"
+
+gross_margin:
+  direction: higher_is_bullish
+  unit: "%"
+  description: "毛利率"
+
+operating_margin:
+  direction: higher_is_bullish
+  unit: "%"
+  description: "營業利益率"
+
+net_margin:
+  direction: higher_is_bullish
+  unit: "%"
+  description: "淨利率"
+
+debt_ratio:
+  direction: lower_is_bullish
+  unit: "%"
+  description: "負債比"
+
+current_ratio:
+  direction: higher_is_bullish
+  unit: ""
+  description: "流動比"
+
+dividend_yield:
+  direction: higher_is_bullish
+  unit: "%"
+  description: "殖利率"

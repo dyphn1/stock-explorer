@@ -162,9 +162,11 @@ _EXCLUDED_FILES: dict[str, str] = {
     "chart_stock_financial.py": "CHART: chart labels with financial terminology (not D-097 scope)",
     "roe_calculator.py": "EDU: educational metric explanation strings (not D-097 scope)",
     "case_study_library.py": "OOS: disclaimer strings (not D-097 scope)",
-    "chart_stock_financial.py": "CHART: chart labels with financial terminology (not D-097 scope)",
-    "roe_calculator.py": "EDU: educational metric explanation strings (not D-097 scope)",
-    "case_study_library.py": "OOS: disclaimer strings (not D-097 scope)",
+
+    # C199/C200: service-layer modules with i18n keys (not user-facing templates)
+    # Banned word list is reference data, not template strings
+    "debate_engine.py": "OOS: banned word list reference data (not D-097 template scope)",
+    "scenario_calculator.py": "OOS: i18n error keys and calculation logic (not D-097 template scope)",
 }
 
 # ---------------------------------------------------------------------------
