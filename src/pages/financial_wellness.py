@@ -10,6 +10,7 @@ import streamlit as st
 from src.data.finmind_client import FinMindClient
 from src.pages._router_base import _info_card, _summary_card, _section_title
 from src.pages.business_card._helpers import _historian_disclaimer
+from src.core.i18n import t
 from src.services.financial_wellness_service import (
     get_questions,
     calculate_score,
@@ -20,15 +21,15 @@ from src.services.financial_wellness_service import (
 
 def _render_financial_wellness(client: FinMindClient):
     """Financial Wellness Check main page — behavioral finance quiz."""
-    st.markdown("## 💰 理財健康檢查")
-    st.markdown("透過 10 個問題，了解你的理財習慣與風險承受度")
+    st.markdown(t("financial_wellness.title"))
+    st.markdown(t("financial_wellness.intro"))
     st.markdown("---\n")
 
     # ── Introduction ───────────────────────────────────────
     _summary_card(
-        "這不是投資建議",
-        "這個測驗的目的是幫助你反思自己的理財行為與態度，不能替代專業理財規劃。"
-        "請根據你「真實的情況」回答，而不是「理想的狀態」。",
+        t("financial_wellness.disclaimer.title"),
+        t("financial_wellness.disclaimer.desc1"),
+        t("financial_wellness.disclaimer.desc2"),
         icon="📋",
     )
 

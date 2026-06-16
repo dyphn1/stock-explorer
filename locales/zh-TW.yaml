@@ -153,6 +153,14 @@ error:
   settings_saved: "✅ 設定已儲存"
   api_error: "❌ API 錯誤：{message}"
 
+# ── 輸入驗證 ──────────────────────────────────
+validation:
+  error:
+    empty: "請輸入股票代號"
+    not_digit: "請輸入數字，您輸入的是「{input}」"
+    not_four_digit: "股票代號為 4 位數字，您輸入的是「{input}」（{length} 位）"
+    format: "格式錯誤，請輸入 4 位數字，您輸入的是「{input}」"
+
 # ── 結果/回饋 ─────────────────────────────────
 result:
   score: "答對題數"

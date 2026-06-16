@@ -1,0 +1,38 @@
+# Story Arc Label Templates — C202
+# Arc labels for auto-detected narrative arcs on company event timeline.
+#
+# Each arc has:
+#   label: Short display name
+#   emoji: Visual indicator
+#   description: Historian-toned explanation template
+#   thresholds: Detection parameters
+
+growth:
+  label: "成長期"
+  emoji: "�8"
+  description: "過去6個月營收與市場評價偏向正面，整體趨勢向上"
+  min_score: 4
+  color: "#27AE68"
+
+decline:
+  label: "調整期"
+  emoji: "📉"
+  description: "過去6個月面臨較多負面事件，市場信心有所回落"
+  min_score: -4
+  color: "#E74C3C"
+
+volatile:
+  label: "震盪期"
+  emoji: "🔄"
+  description: "過去6個月正負事件交織，市場看法分歧"
+  min_score: -1
+  max_score: 1
+  color: "#F39C12"
+
+recovery:
+  label: "復甦期"
+  emoji: "🌱"
+  description: "調整後出現正面訊號，市場情緒逐步回暖"
+  min_score: 1
+  max_score: 4
+  color: "#3498DB"

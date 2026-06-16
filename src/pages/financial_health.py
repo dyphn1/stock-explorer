@@ -19,6 +19,7 @@ from src.services.dividend_analyzer import extract_dividend_summary
 from src.pages._router_base import filter_by_timeline, _section_title, _白话_card, _info_card
 from src.services.financial_metrics import find_financial_value
 from src.pages.timeline_controls import render_timeline_selector
+from src.core.i18n import format_amount, format_percent
 
 
 def _render_financial_health(data: dict):
@@ -247,11 +248,13 @@ def _render_financial_health(data: dict):
         with col2:
             est_annual = div_summary["estimated_annual"]
             annual_str = f"{est_annual} 元" if est_annual else "—"
-            _白话_card("預估年化", annual_str,
-                       "預估全年配息")
+            est_label = "預估年化" if div_summary.get("is_estimated") else "年度配息"
+            hint = "預估全年配息（基於近年資料推算）" if div_summary.get("is_estimated") else "最近一年實際配息"
+            _白话_card(est_label, annual_str, hint)
         with col3:
             est_yield = div_summary["estimated_yield"]
-            _白话_card("預估殖利率", f"{est_yield}%" if est_yield else "—",
+            yield_label = "預估殖利率" if div_summary.get("is_estimated") else "殖利率"
+            _白话_card(yield_label, f"{est_yield}%" if est_yield else "—",
                        "年化股利／股價")
 
         freq_label = {

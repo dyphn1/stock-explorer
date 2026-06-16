@@ -45,135 +45,194 @@ from src.services.adaptive_engine import (
     run_auto_detection,
     check_data_freshness,
 )
-from src.services.watchlist import _is_etf as _is_etf_check
+from src.core.i18n import t, set_lang, get_available_locales
+from src.services.watchlist import _is_etf_check as _is_etf_check
 from src.pages.investor_story_feed import render_investor_story_feed
 from src.pages.academy import _render_academy
 from src.pages.case_study_library import _render_case_study_library
 
+# Page keys for i18n (must match keys in locale files under 'page:' section)
+PAGE_KEYS = [
+    "business_card",
+    "operation_checkup",
+    "financial_health",
+    "peer_comparison",
+    "group_structure",
+    "category_browser",
+    "etf_section",
+    "watchlist",
+    "event_dashboard",
+    "notification_center",
+    "investment_memo",
+    "financial_wellness",
+    "stock_screener",
+    "settings",
+    "sector_heatmap",
+    "case_study",
+    "comprehension_check",
+    "academy",
+    "case_study_library",
+    "first_visit_guide",
+    "story_timeline",
+    "full_story_timeline",
+    "daily_story",
+    "revenue_tree",
+    "compare_stories",
+    "moat_comparison",
+]
+
 logger = logging.getLogger(__name__)
 
 
+def _get_localized_page_labels():
+    """Return list of localized page labels in the same order as PAGE_KEYS."""
+    return [t(f"page.{key}") for key in PAGE_KEYS]
+
+
+def _get_label_to_key_map():
+    """Return mapping from localized label to page key."""
+    labels = _get_localized_page_labels()
+    return {label: key for key, label in zip(PAGE_KEYS, labels)}
+
+
 # ── 初始化 ────────────────────────────────────────────
+
 
 @st.cache_resource
 def get_client():
     return FinMindClient(cache_dir=".cache")
 
 
-def _render_navbar_minimal(current_page: str):
+def _render_navbar_minimal(current_page_key: str):
     """精簡導航列：僅分頁標籤（用於非股票頁面）"""
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "歷史案例庫", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較", "學習入門"]
-    current_idx = pages.index(current_page) if current_page in pages else 0
+    # Get localized labels for this language
+    page_labels = _get_localized_page_labels()
+    # Get current label from the page key
+    current_label = t(f"page.{current_page_key}")
+    # Find index of current label in the list (should always be found)
+    try:
+        current_idx = page_labels.index(current_label)
+    except ValueError:
+        # Fallback to first page if label not found (should not happen)
+        current_idx = 0
 
-    selected = st.radio(
-        "頁面導航",
-        pages,
+    selected_label = st.radio(
+        t("sidebar.nav_label"),
+        page_labels,
         index=current_idx,
         horizontal=True,
         label_visibility="collapsed",
         key="navbar_radio_minimal",
     )
 
-    if selected != current_page:
-        navigate_to(page=selected)
+    # Map selected label back to page key
+    label_to_key = _get_label_to_key_map()
+    selected_key = label_to_key.get(selected_label)
+    if selected_key is None:
+        # Should not happen
+        selected_key = "business_card"
 
-    st.markdown("---")
+    if selected_key != current_page_key:
+        navigate_to(page=selected_key)
+
+    st.markdown("--")
 
 
 def load_and_render_page(client: FinMindClient, stock_id: str):
     """根據 session_state['page'] 渲染對應頁面"""
-    page = st.session_state.get("page", "名片")
+    page_key = st.session_state.get("page_key", "business_card")
 
     # 不需要特定股票的頁面，獨立渲染
-    if page == "分類瀏覽":
-        _render_navbar_minimal(page)
-        with st.spinner("載入分類瀏覽..."):
+    if page_key == "category_browser":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_category_browser(client)
         return
-    if page == "ETF 專區":
-        _render_navbar_minimal(page)
-        with st.spinner("載入 ETF 專區..."):
+    if page_key == "etf_section":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_etf_browser(client)
         return
-    if page == "我的關注":
-        _render_navbar_minimal(page)
-        with st.spinner("載入我的關注..."):
+    if page_key == "watchlist":
+        _render_navbar_minimal(page_key)
+        with t.spinner(t("status.loading_page")):
             _render_watchlist_page(client)
         return
-    if page == "事件儀表板":
-        _render_navbar_minimal(page)
-        with st.spinner("載入事件儀表板..."):
+    if page_key == "event_dashboard":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_event_dashboard(client)
         return
-    if page == "通知中心":
-        _render_navbar_minimal(page)
-        with st.spinner("載入通知中心..."):
+    if page_key == "notification_center":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_notification_center(client)
         return
-    if page == "設定":
-        _render_navbar_minimal(page)
+    if page_key == "settings":
+        _render_navbar_minimal(page_key)
         render_settings_page()
         return
-    if page == "產業熱力圖":
-        _render_navbar_minimal(page)
-        with st.spinner("載入產業熱力圖..."):
+    if page_key == "sector_heatmap":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_sector_heatmap(client)
         return
-    if page == "投資備忘錄":
-        _render_navbar_minimal(page)
-        with st.spinner("載入投資備忘錄..."):
+    if page_key == "investment_memo":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_investment_memo(client)
         return
-    if page == "案例研究":
-        _render_navbar_minimal(page)
-        with st.spinner("載入案例研究..."):
+    if page_key == "case_study":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_market_event_case_study(client)
         return
-    if page == "理財健康檢查":
-        _render_navbar_minimal(page)
-        with st.spinner("載入理財健康檢查..."):
+    if page_key == "financial_wellness":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_financial_wellness(client)
         return
-    if page == "理解力測驗":
-        _render_navbar_minimal(page)
-        with st.spinner("載入理解力測驗..."):
+    if page_key == "comprehension_check":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_comprehension_check(client)
         return
-    if page == "學習學院":
-        _render_navbar_minimal(page)
-        with st.spinner("載入學習學院..."):
+    if page_key == "academy":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_academy(client)
         return
-    if page == "歷史案例庫":
-        _render_navbar_minimal(page)
-        with st.spinner("載入歷史案例庫..."):
+    if page_key == "case_study_library":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_case_study_library(client)
         return
-    if page == "股票探索":
-        _render_navbar_minimal(page)
-        with st.spinner("載入股票探索引擎..."):
+    if page_key == "stock_screener":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_stock_screener(client)
         return
-    if page == "學習入門":
-        _render_navbar_minimal(page)
-        with st.spinner("載入學習入門..."):
+    if page_key == "learn_first_gate":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_learn_first_gate(client)
         return
-    if page == "新手導覽":
-        _render_navbar_minimal(page)
-        with st.spinner("載入新手導覽..."):
+    if page_key == "first_visit_guide":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             _render_first_visit_guide(client)
         return
-    if page == "每日故事":
-        _render_navbar_minimal(page)
-        with st.spinner("載入每日故事..."):
+    if page_key == "daily_story":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
             render_investor_story_feed({}, client)
         return
 
-    with st.spinner("載入股票資料..."):
+    # 頁面需要特定股票資料
+    with st.spinner(t("status.loading_stock")):
         data = get_stock_data(client, stock_id)
     if data is None:
-        st.error(f"找不到股票代號 {stock_id}")
+        st.error(t("error.not_found", sid=stock_id))
         return
 
     # M5: 自動事件偵測（背景執行，不阻塞頁面）
@@ -182,7 +241,7 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         _ss = st.session_state
         _price_thresh = get_threshold(_ss, "settings_price_threshold")
         _revenue_thresh = get_threshold(_ss, "settings_revenue_threshold")
-        with st.spinner("🔍 檢查近期事件..."):
+        with st.spinner(t("status.checking_events")):
             new_events = run_auto_detection(
                 stock_id, data,
                 price_threshold=_price_thresh,
@@ -203,48 +262,48 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
 
     # ETF 導向 ETF 詳細頁
     if _is_etf_check(stock_id, data["stock_name"], data["industry"]):
-        _render_navbar(data, page)
-        with st.spinner("載入 ETF 詳細頁..."):
+        _render_navbar(data, page_key)
+        with st.spinner(t("status.loading_page")):
             _render_etf_detail(data, client)
         return
 
     # 渲染導航列
-    _render_navbar(data, page)
+    _render_navbar(data, page_key)
 
     # 分頁渲染
-    if page == "名片":
-        with st.spinner("載入名片頁..."):
+    if page_key == "business_card":
+        with st.spinner(t("status.loading_page")):
             _render_business_card(data, client)
-    elif page == "營運健檢":
-        with st.spinner("載入營運健檢..."):
+    elif page_key == "operation_checkup":
+        with st.spinner(t("status.loading_page")):
             _render_operation_checkup(data)
-    elif page == "財務體質":
-        with st.spinner("載入財務體質..."):
+    elif page_key == "financial_health":
+        with st.spinner(t("status.loading_page")):
             _render_financial_health(data)
-    elif page == "同業比較":
-        with st.spinner("載入同業比較..."):
+    elif page_key == "peer_comparison":
+        with st.spinner(t("status.loading_page")):
             _render_peer_comparison(data, client)
-    elif page == "集團架構":
-        with st.spinner("載入集團架構..."):
+    elif page_key == "group_structure":
+        with st.spinner(t("status.loading_page")):
             _render_group_structure(data)
-    elif page == "故事時間軸":
-        with st.spinner("載入故事時間軸..."):
+    elif page_key == "story_timeline":
+        with st.spinner(t("status.loading_page")):
             render_company_timeline(data, client)
-    elif page == "完整故事時間軸":
-        with st.spinner("載入完整故事時間軸..."):
+    elif page_key == "full_story_timeline":
+        with st.spinner(t("status.loading_page")):
             render_story_timeline_page(data, client)
-    elif page == "營收結構樹":
-        with st.spinner("載入營收結構..."):
+    elif page_key == "revenue_tree":
+        with st.spinner(t("status.loading_page")):
             _render_revenue_tree(data, client)
-    elif page == "同業比較故事":
-        with st.spinner("載入同業比較..."):
+    elif page_key == "compare_stories":
+        with st.spinner(t("status.loading_page")):
             _render_compare_stories_page(data, client)
-    elif page == "護城河比較":
-        with st.spinner("載入護城河比較..."):
+    elif page_key == "moat_comparison":
+        with st.spinner(t("status.loading_page")):
             _render_moat_comparison_page(data, client)
 
 
-def _render_navbar(data: dict, current_page: str):
+def _render_navbar(data: dict, current_page_key: str):
     """頂部導航列：公司名稱 + 價格 + 分頁標籤"""
     stock_name = data["stock_name"]
     stock_id = data["stock_id"]
@@ -262,19 +321,30 @@ def _render_navbar(data: dict, current_page: str):
             st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
 
     # 分頁標籤
-    pages = ["名片", "營運健檢", "財務體質", "同業比較", "集團架構", "分類瀏覽", "ETF 專區", "我的關注", "事件儀表板", "通知中心", "設定", "產業熱力圖", "投資備忘錄", "案例研究", "理財健康檢查", "理解力測驗", "學習學院", "歷史案例庫", "股票探索", "新手導覽", "故事時間軸", "完整故事時間軸", "每日故事", "營收結構樹", "同業比較故事", "護城河比較", "學習入門"]
-    current_idx = pages.index(current_page) if current_page in pages else 0
+    page_labels = _get_localized_page_labels()
+    # Get current label from the page key
+    current_label = t(f"page.{current_page_key}")
+    try:
+        current_idx = page_labels.index(current_label)
+    except ValueError:
+        current_idx = 0
 
-    selected = st.radio(
+    selected_label = st.radio(
         "頁面導航",
-        pages,
+        page_labels,
         index=current_idx,
         horizontal=True,
         label_visibility="collapsed",
         key="navbar_radio",
     )
 
-    if selected != current_page:
-        navigate_to(page=selected)
+    # Map selected label back to page key
+    label_to_key = _get_label_to_key_map()
+    selected_key = label_to_key.get(selected_label)
+    if selected_key is None:
+        selected_key = "business_card"
 
-    st.markdown("---")
+    if selected_key != current_page_key:
+        navigate_to(page=selected_key)
+
+    st.markdown("--")

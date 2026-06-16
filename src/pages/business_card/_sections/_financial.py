@@ -202,11 +202,13 @@ def _render_dividend(data: dict, client) -> None:
             _glossary_tooltip("每股盈餘", glossary_service)
         with col2:
             annual_str = f"{div_summary['estimated_annual']:.2f} 元" if div_summary['estimated_annual'] else "—"
-            _白话_card("預估全年", annual_str, "預估全年配息")
+            est_label = "預估全年" if div_summary.get("is_estimated") else "最近年度"
+            _白话_card(est_label, annual_str, "預估全年配息")
             _glossary_tooltip("殖利率", glossary_service)
         with col3:
             yield_str = f"{div_summary['estimated_yield']:.2f}%" if div_summary['estimated_yield'] else "—"
-            _白话_card("殖利率", yield_str, "年化股利／股價")
+            yield_label = "預估殖利率" if div_summary.get("is_estimated") else "殖利率"
+            _白话_card(yield_label, yield_str, "年化股利／股價")
             _glossary_tooltip("殖利率", glossary_service)
 
         # Expandable history table

@@ -37,6 +37,7 @@ from src.pages._router_base import _白话_card, _info_card, _summary_card, _beg
 from src.pages.url_sync import navigate_to
 from src.pages.revenue_tree import _render_revenue_tree
 from src.services.experience_service import is_beginner_mode, set_experience_level
+from src.core.i18n import t
 
 from src.pages.business_card._sections import (
     _render_header,
@@ -89,10 +90,10 @@ def _render_feedback_section(data: dict) -> None:
     stock_id = data["stock_id"]
 
     st.markdown("---")
-    st.markdown("#### 💬 這張名片對你有幫助嗎？")
+    st.markdown(t("business_card.feedback.title"))
 
     if _has_feedbacked(stock_id):
-        st.caption("✅ 感謝你的回饋！")
+        st.caption(t("business_card.feedback.thanks"))
         return
 
     col_up, col_down, _ = st.columns([1, 1, 6])
@@ -101,14 +102,14 @@ def _render_feedback_section(data: dict) -> None:
         if st.button("👍", key=f"feedback_up_{stock_id}", use_container_width=True):
             record_feedback(stock_id=stock_id, feedback_type="up")
             _mark_feedbacked(stock_id)
-            st.toast("感謝你的正面回饋！👍", icon="🎉")
+            st.toast(t("business_card.feedback.positive_toast"), icon="🎉")
             st.rerun()
 
     with col_down:
         if st.button("👎", key=f"feedback_down_{stock_id}", use_container_width=True):
             record_feedback(stock_id=stock_id, feedback_type="down")
             _mark_feedbacked(stock_id)
-            st.toast("感謝你的回饋，我們會持續改進！👎", icon="💪")
+            st.toast(t("business_card.feedback.negative_toast"), icon="💪")
             st.rerun()
 
 
@@ -134,28 +135,28 @@ def _render_simple_overview(data: dict, client) -> None:
     )
     if health_scores:
         health_summary = get_health_summary(health_scores)
-        _info_card("公司健康狀況", health_summary, "🏥")
+        _info_card(t("business_card.simple_mode.health_title"), health_summary, "🏥")
 
     # ── Risk level (C132: simplified 1-5 scale) ──
     risk_level = get_risk_level(data)
     risk_content = (
-        f"{risk_level['emoji']} **{risk_level['label']}**（等級 {risk_level['level']}/5）\n\n"
+        f"{risk_level['emoji']} **{risk_level['label']}**（{t('business_card.simple_mode.risk_level', level=risk_level['level'])}）\n\n"
         f"{risk_level['description']}"
     )
-    _summary_card("投資風險", risk_content, "⚠️")
+    _summary_card(t("business_card.simple_mode.risk_title"), risk_content, "⚠️")
 
     # ── Key financial snapshot ──
     snap_parts = []
     if latest_per_pbr and latest_per_pbr.get("PER") is not None:
-        snap_parts.append(f"本益比 {latest_per_pbr['PER']:.1f}")
+        snap_parts.append(t("business_card.simple_mode.per_label", value=f"{latest_per_pbr['PER']:.1f}"))
     if extra_metrics.get("gross_margin") is not None:
-        snap_parts.append(f"毛利率 {extra_metrics['gross_margin']:.1f}%")
+        snap_parts.append(t("business_card.simple_mode.gross_margin_label", value=f"{extra_metrics['gross_margin']:.1f}"))
     if latest_per_pbr and latest_per_pbr.get("dividend_yield") is not None:
-        snap_parts.append(f"殖利率 {latest_per_pbr['dividend_yield']:.2f}%")
+        snap_parts.append(t("business_card.simple_mode.dividend_yield_label", value=f"{latest_per_pbr['dividend_yield']:.2f}"))
     if extra_metrics.get("roe") is not None:
-        snap_parts.append(f"ROE {extra_metrics['roe']:.1f}%")
+        snap_parts.append(t("business_card.simple_mode.roe_label", value=f"{extra_metrics['roe']:.1f}"))
     if snap_parts:
-        _summary_card("關鍵財務數據", "｜".join(snap_parts), "💰")
+        _summary_card(t("business_card.simple_mode.key_financial_title"), "｜".join(snap_parts), "💰")
 
     # ── Dividend snapshot ──
     _current_price = None
@@ -164,22 +165,27 @@ def _render_simple_overview(data: dict, client) -> None:
         _current_price = float(_lp["close"])
     div_summary = extract_dividend_summary(dividend_data, current_price=_current_price)
     if div_summary["has_data"]:
-        div_line = f"最近一季配 {div_summary['latest_cash_div']:.2f} 元"
+        div_line = t("business_card.simple_mode.dividend_latest", value=f"{div_summary['latest_cash_div']:.2f}")
         if div_summary["estimated_yield"]:
-            div_line += f"｜年化殖利率約 {div_summary['estimated_yield']:.2f}%"
-        _summary_card("配息概況", div_line, "💵")
+            if div_summary.get("is_estimated"):
+                div_line += "｜" + t("business_card.simple_mode.dividend_yield_est", value=f"{div_summary['estimated_yield']:.2f}")
+            else:
+                div_line += "｜" + t("business_card.simple_mode.dividend_yield_actual", value=f"{div_summary['estimated_yield']:.2f}")
+        _summary_card(t("business_card.simple_mode.dividend_overview_title"), div_line, "💵")
     else:
-        _summary_card("配息概況", "這家目前沒有配發股利", "💡")
+        _summary_card(t("business_card.simple_mode.dividend_overview_title"), t("business_card.simple_mode.dividend_no_data"), "💡")
 
     # ── Revenue at a glance ──
     if len(monthly_revenue) > 0:
         rev = monthly_revenue.iloc[-1]["revenue"] / 1e8
         yoy = extra_metrics.get("revenue_yoy")
-        rev_line = f"最近月營收約 {rev:,.0f} 億"
+        rev_line = t("business_card.simple_mode.revenue_latest", value=f"{rev:,.0f}")
         if yoy is not None:
-            direction = "成長" if yoy >= 0 else "衰退"
-            rev_line += f"（較去年同期 {direction} {abs(yoy):.1f}%）"
-        _summary_card("營收概況", rev_line, "📈")
+            if yoy >= 0:
+                rev_line += t("business_card.simple_mode.revenue_yoy_growth", value=f"{abs(yoy):.1f}")
+            else:
+                rev_line += t("business_card.simple_mode.revenue_yoy_decline", value=f"{abs(yoy):.1f}")
+        _summary_card(t("business_card.simple_mode.revenue_overview_title"), rev_line, "📈")
 
 
 def _render_business_card(data: dict, client):
@@ -207,16 +213,16 @@ def _render_business_card(data: dict, client):
     _toggle_col1, _toggle_col2 = st.columns([3, 1])
     with _toggle_col2:
         _current_is_beginner = is_beginner_mode(st.session_state)
-        beginner_mode = st.toggle("新手模式", value=_current_is_beginner, key="user_experience_level_toggle")
+        beginner_mode = st.toggle(t("business_card.mode_toggle.beginner"), value=_current_is_beginner, key="user_experience_level_toggle")
     # Persist the toggle into the experience level session state
     _new_level = "beginner" if beginner_mode else "expert"
     set_experience_level(st.session_state, _new_level)
     st.session_state["simple_mode"] = beginner_mode
     if beginner_mode:
-        _beginner_banner("新手模式：只顯示重點摘要，適合快速瀏覽。隨時可切換回進階模式。")
-        st.caption("🌱 新手模式")
+        _beginner_banner(t("business_card.mode_toggle.beginner_banner"))
+        st.caption(t("business_card.mode_toggle.beginner_caption"))
     else:
-        st.caption("🔬 進階模式：顯示完整數據與深度分析")
+        st.caption(t("business_card.mode_toggle.expert_caption"))
 
     # ══════════════════════════════════════════════════════════
     # ABOVE-FOLD: The 3 most important sections (C37, C39, C43)
@@ -248,72 +254,72 @@ def _render_business_card(data: dict, client):
     # ══════════════════════════════════════════════════════════
 
     # ── 一句話定位 + 近期動態 ──
-    with st.expander("💡 一句話定位與近期動態", expanded=False):
+    with st.expander(t("business_card.expander.one_liner_news"), expanded=False):
         _render_one_liner(data, client)
         _render_news(data, client)
 
     # ── 學習日誌 ──
-    with st.expander("📚 學習日誌", expanded=False):
+    with st.expander(t("business_card.expander.study_log"), expanded=False):
         _render_study_log(data, client)
 
     # ── Detailed mode: full data sections in expanders ──
     if not beginner_mode:
         # 關鍵數字 + 配息 + 營收組成 + 營收趨勢 + 估值
-        with st.expander("📊 關鍵數字與配息", expanded=False):
+        with st.expander(t("business_card.expander.key_metrics_dividend"), expanded=False):
             _render_key_metrics(data, client)
             _render_dividend(data, client)
 
-        with st.expander("📈 營收組成與趨勢", expanded=False):
+        with st.expander(t("business_card.expander.revenue_breakdown_trend"), expanded=False):
             _render_revenue_breakdown(data, client)
             _render_revenue_trend(data, client)
 
-        with st.expander("🌳 營收結構樹", expanded=False):
-            st.markdown("*深入拆解這家公司靠什麼賺錢*")
+        with st.expander(t("business_card.expander.revenue_tree"), expanded=False):
+            st.markdown(t("business_card.expander.revenue_tree_desc"))
             _render_revenue_tree(data, client)
 
-        with st.expander("💎 估值區間", expanded=False):
+        with st.expander(t("business_card.expander.valuation"), expanded=False):
             _render_valuation(data, client)
 
-        with st.expander("⚠️ 風險分析", expanded=False):
+        with st.expander(t("business_card.expander.risk_analysis"), expanded=False):
             _render_risk(data, client)
 
-        with st.expander("🎓 專家分析", expanded=False):
+        with st.expander(t("business_card.expander.expert_analysis"), expanded=False):
             _render_expert_analysis(data, client)
 
-        with st.expander("🔍 歷史情境", expanded=False):
+        with st.expander(t("business_card.expander.historical_scenarios"), expanded=False):
             _render_historical_scenarios(data, client)
 
-        with st.expander("📊 歷史模式", expanded=False):
+        with st.expander(t("business_card.expander.historical_pattern"), expanded=False):
             _render_historical_pattern(data, client)
 
 
 
         # ── C46: Moat Analysis ──
-        with st.expander("🏰 護城河分析", expanded=False):
+        with st.expander(t("business_card.expander.moat_analysis"), expanded=False):
             _render_moat(data, client)
 
     # ══════════════════════════════════════════════════════════
     # 更多分析: Navigation to C36 (Revenue Tree) & C38 (Compare Stories)
     # ══════════════════════════════════════════════════════════
-    with st.expander("🔬 更多分析", expanded=False):
-        st.markdown("*想更深入了解這家公司？看看以下深度分析：*")
+    with st.expander(t("business_card.expander.more_analysis"), expanded=False):
+        st.markdown(t("business_card.expander.more_analysis_desc"))
         col_a, col_b = st.columns(2)
 
         with col_a:
-            if st.button("🌳 營收結構樹", key="nav_revenue_tree", use_container_width=True):
+            if st.button(t("business_card.expander.nav_revenue_tree"), key="nav_revenue_tree", use_container_width=True):
                 navigate_to(page="營收結構樹", stock_id=stock_id)
-            st.caption("深入拆解營收來源與產品組合")
+            st.caption(t("business_card.expander.nav_revenue_tree_caption"))
 
         with col_b:
-            if st.button("📖 同業比較故事", key="nav_compare_stories", use_container_width=True):
+            if st.button(t("business_card.expander.nav_compare_stories"), key="nav_compare_stories", use_container_width=True):
                 navigate_to(page="同業比較故事", stock_id=stock_id)
-            st.caption("與同業的敘事比較分析")
+            st.caption(t("business_card.expander.nav_compare_stories_caption"))
 
         col_c, col_d = st.columns(2)
         with col_c:
-            if st.button("🏰 護城河比較", key="nav_moat_comparison", use_container_width=True):
+            if st.button(t("business_card.expander.nav_moat_comparison"), key="nav_moat_comparison", use_container_width=True):
                 navigate_to(page="護城河比較", stock_id=stock_id)
-            st.caption("與同業的護城河深度比較")
+            st.caption(t("business_card.expander.nav_moat_comparison_caption"))
 
     # ── Footer sections (always shown) ──
     _render_feedback_section(data)

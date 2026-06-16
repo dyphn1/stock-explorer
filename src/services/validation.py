@@ -3,6 +3,8 @@ Input validation utilities for Stock Explorer.
 """
 import re
 
+from src.core.i18n import t
+
 
 def validate_stock_id(raw: str) -> tuple[bool, str]:
     """Validate a Taiwanese stock ID.
@@ -18,15 +20,15 @@ def validate_stock_id(raw: str) -> tuple[bool, str]:
     cleaned = raw.strip()
 
     if not cleaned:
-        return False, "請輸入股票代號"
+        return False, t("validation.error.empty")
 
     if not cleaned.isdigit():
-        return False, f"股票代號必須是數字，您輸入的是「{cleaned}」"
+        return False, t("validation.error.not_digit", input=cleaned)
 
     if len(cleaned) != 4:
-        return False, f"股票代號必須是 4 位數字，您輸入的是 {len(cleaned)} 位「{cleaned}」"
+        return False, t("validation.error.not_four_digit", input=cleaned, length=len(cleaned))
 
     if not re.match(r"^\d{4}$", cleaned):
-        return False, f"股票代號格式不正確：「{cleaned}」"
+        return False, t("validation.error.format", input=cleaned)
 
     return True, cleaned

@@ -106,7 +106,6 @@ def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -
         textposition="outside",
         hovertemplate="<b>%{label}</b><br>" +
                       "佔比: %{percent}<br>" +
-                      "金額: %{value:,.0f} 千元<br>" +
                       "<extra></extra>"
     )])
 

@@ -15,6 +15,7 @@ from src.services.analogy_engine import (
 from src.pages._router_base import _section_title, _info_card
 from src.services.financial_metrics import find_financial_value
 from src.services.benchmarks import get_industry_benchmarks
+from src.services.roe_calculator import calc_roe_ttm
 
 # Re-export INDUSTRY_BENCHMARKS for backward compatibility
 INDUSTRY_BENCHMARKS = get_industry_benchmarks()
@@ -201,16 +202,9 @@ def _get_benchmark_data(client, benchmark_id: str) -> dict:
 
         if bench_balance is not None and len(bench_balance) > 0:
             try:
-                latest_date = bench_balance["date"].max()
-                latest = bench_balance[bench_balance["date"] == latest_date]
-                total_assets = find_financial_value(latest, ["資產總計", "總資產", "Total Assets", "total_assets"])
-                total_equity = find_financial_value(latest, ["權益總計", "股東權益", "Total Equity", "total_equity"])
-                net_income = 0
-                if bench_financial is not None and len(bench_financial) > 0:
-                    fi_latest = bench_financial[bench_financial["date"] == bench_financial["date"].max()]
-                    net_income = find_financial_value(fi_latest, ["淨利", "本期淨利", "Net Income", "net_income"])
-                if net_income and total_equity and total_equity > 0:
-                    bench_metrics["roe"] = round(net_income * 4 / total_equity * 100, 1)
+                roe_result = calc_roe_ttm(bench_financial, bench_balance)
+                if roe_result is not None:
+                    bench_metrics["roe"] = roe_result["roe"]
             except Exception:
                 pass
 

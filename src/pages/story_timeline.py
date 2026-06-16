@@ -13,6 +13,7 @@ import streamlit as st
 
 from src.pages._router_base import _section_title, _summary_card, _info_card
 from src.services.timeline_service import get_timeline, TimelineEntry
+from src.services.story_arc_detector import detect_arcs, get_arc_legend, ArcLabel
 
 
 # ── Severity → border color ───────────────────────────────
@@ -28,7 +29,58 @@ def _severity_color(severity: str) -> str:
     return _SEVERITY_COLORS.get(severity, "#3498DB")
 
 
-# ── Timeline event card renderer ───────────────────────────
+# ── Arc badge renderer ─────────────────────────────────────
+
+def _render_arc_badge(arc: ArcLabel) -> None:
+    """Render an arc label badge at a transition point."""
+    emoji = arc.get("arc_emoji", "")
+    label = arc.get("arc_label", "")
+    desc = arc.get("arc_description", "")
+    count = arc.get("event_count", 0)
+    bucket_start = arc.get("bucket_start", "")
+    bucket_end = arc.get("bucket_end", "")
+
+    # Determine badge color based on arc type
+    _arc_colors = {
+        "成長期": "#27AE68",
+        "調整期": "#E74C3C",
+        "震盪期": "#F39C12",
+        "復甦期": "#3498DB",
+    }
+    color = _arc_colors.get(label, "#3498DB")
+
+    # Use _info_card for arc badge display
+    badge_title = f"{emoji} {label}"
+    badge_content = (
+        f"{desc}\n\n"
+        f"📅 {bucket_start} ～ {bucket_end}\n\n"
+        f"📌 此區間共 **{count}** 個事件"
+    )
+    _info_card(
+        title=badge_title,
+        content=badge_content,
+        icon="",
+    )
+    # Add a colored left border via markdown spacer
+    st.markdown(
+        f'<div style="border-left: 4px solid {color}; padding-left: 0.5em; margin: 0.5em 0;">'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def _render_arc_legend() -> None:
+    """Render arc legend section."""
+    _section_title("📊 故事弧線圖例")
+    legend = get_arc_legend()
+    cols = st.columns(4)
+    for i, item in enumerate(legend):
+        with cols[i]:
+            label = item["label"]
+            emoji = item["emoji"]
+            desc = item["description"]
+            st.markdown(f"**{emoji} {label}**")
+            st.caption(desc)
 
 def _render_timeline_card(entry: TimelineEntry, index: int) -> None:
     """Render a single timeline entry as a styled card.
@@ -141,6 +193,16 @@ def render_story_timeline_page(data: dict, client) -> None:
     st.caption(f"共找到 **{len(entries)}** 個時間軸事件（{selected_label}）")
     st.markdown("---")
 
+    # ── Arc detection ────────────────────────────────────────
+    arcs = detect_arcs(entries)
+    if arcs:
+        _section_title("📈 故事弧線")
+        st.markdown("*自動偵測公司故事的主要階段，幫助理解長期趨勢與轉折*")
+        st.markdown("")
+        for arc in arcs:
+            _render_arc_badge(arc)
+        st.markdown("---")
+
     # ── Timeline display ────────────────────────────────────
     # Use a horizontal scroll container via columns
     # For better UX, show entries in reverse chronological order (newest first)
@@ -160,6 +222,11 @@ def render_story_timeline_page(data: dict, client) -> None:
         _info_card("🟡 重要事件", "中等嚴重程度，值得留意", "📌")
     with legend_cols[2]:
         _info_card("🟢 參考事件", "嚴重程度低，作為背景參考", "💡")
+
+    # ── Arc legend ───────────────────────────────────────────
+    if arcs:
+        _render_arc_legend()
+        st.markdown("---")
 
     # ── Historian disclaimer ────────────────────────────────
     st.markdown("---")

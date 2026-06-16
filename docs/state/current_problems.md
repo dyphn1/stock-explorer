@@ -538,6 +538,12 @@ After reviewing the architecture, data flow, and UI implementation across three 
 | 4 | D-005: Fix `_section_title()` emoji logic | 15 min | Affects all section titles |
 | 5 | D-074: Standardize `#F8F9FA` background usage | 10 min | Affects `_白话_card()` globally |
 
+
+## QA Verification (Cron Job 2026-06-16)
+- Fixed failing unit test in i18n formatting (rounding behavior).
+- Removed duplicate entries in tone QA test exclusions.
+- All tests pass.
+
 ---
 
 *Last updated: 2026-06-13 by PM after Round 7 design review.*

@@ -129,7 +129,7 @@ def _render_story_card(data: dict, client) -> None:
     st.markdown(f"*{industry}*")
 
     # One-liner
-    _info_card("一句話定位", one_liner, "💡")
+    _info_card(t("business_card.summary_hero.one_liner_title"), one_liner, "💡")
     # C204: confidence badge for the one-liner explanation
     st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
@@ -191,13 +191,13 @@ def _render_story_card(data: dict, client) -> None:
                         f"健康度 **{overall_health:.0f} 分** vs {bench_name} **{bench_overall:.0f} 分**\n\n"
                         f"{vs_emoji} {vs_text}"
                     )
-                    _info_card("vs 同業", vs_content, "🏭")
+                    _info_card(t("business_card.summary_hero.vs_industry_title"), vs_content, "🏭")
                     # C204: confidence badge
                     st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
     # Did You Know?
     if fact_text:
-        _info_card("你知道嗎？", fact_text, "🤔")
+        _info_card(t("business_card.summary_hero.did_you_know_title"), fact_text, "🤔")
         # C204: confidence badge
         st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
 
@@ -225,15 +225,15 @@ def _render_header(data: dict, client) -> None:
         if watchlist_lists:
             # Stock is in at least one list
             st.markdown(f"**已加入清單：** {', '.join(watchlist_lists)}")
-            if st.button("❌ 取消關注 (全部清單)", key=f"unwatch_{stock_id}", use_container_width=True):
+            if st.button(t("business_card.watchlist.remove_all"), key=f"unwatch_{stock_id}", use_container_width=True):
                 if remove_from_all_lists(stock_id):
-                    st.toast("🗑️ 已從所有關注清單移除")
+                    st.toast(t("business_card.watchlist.removed"))
                 else:
-                    st.error("移除失敗")
+                    st.error(t("business_card.watchlist.remove_failed"))
                 st.rerun()
         else:
             # Stock is not in any list
-            if st.button("➕ 加入關注", key=f"watch_{stock_id}", use_container_width=True):
+            if st.button(t("business_card.watchlist.add_to"), key=f"watch_{stock_id}", use_container_width=True):
                 # Show popup to select list
                 st.session_state[f"show_watchlist_popup_{stock_id}"] = True
                 st.rerun()
@@ -256,7 +256,7 @@ def _render_header(data: dict, client) -> None:
                     if selected:
                         target_list = selected
                 else:
-                    st.info("目前沒有現有清單")
+                    st.info(t("business_card.watchlist.name_required"))
 
             with tab2:
                 new_name = st.text_input(
@@ -264,18 +264,18 @@ def _render_header(data: dict, client) -> None:
                     placeholder="請輸入新清單名稱",
                     key=f"new_name_{stock_id}",
                 )
-                if st.button("建立清單", key=f"create_btn_{stock_id}"):
+                if st.button(t("business_card.watchlist.create_button"), key=f"create_btn_{stock_id}"):
                     if new_name:
                         if create_list(new_name):
                             st.success(f"已建立清單：{new_name}")
                             target_list = new_name
                         else:
-                            st.error("建立失敗：名稱可能已存在")
+                            st.error(t("business_card.watchlist.create_failed"))
                     else:
-                        st.error("請輸入清單名稱")
+                        st.error(t("business_card.watchlist.name_required"))
 
             # Add stock button
-            if st.button("加入關注", key=f"add_stock_btn_{stock_id}", type="primary"):
+            if st.button(t("business_card.watchlist.add_button"), key=f"add_stock_btn_{stock_id}", type="primary"):
                 if target_list:
                     success = add_to_watchlist(
                         stock_id=stock_id,
@@ -290,8 +290,8 @@ def _render_header(data: dict, client) -> None:
                         st.toast(f"已加入關注清單：{target_list}")
                         st.rerun()
                     else:
-                        st.error("加入失敗：股票可能已在該清單中")
+                        st.error(t("business_card.watchlist.add_failed"))
                 else:
-                    st.error("請先選擇或建立清單")
+                    st.error(t("business_card.watchlist.select_required"))
 
     st.markdown("---")

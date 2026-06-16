@@ -8,7 +8,7 @@ import yaml
 import streamlit as st
 from pathlib import Path
 
-_LOCALE_DIR = Path(__file__).resolve().parent.parent / "locales"
+_LOCALE_DIR = Path(__file__).resolve().parent.parent.parent / "locales"
 
 _locale_cache: dict[str, dict] = {}
 
@@ -72,3 +72,30 @@ def set_lang(lang: str):
     """Set language and clear cache to trigger re-translation."""
     st.session_state["lang"] = lang
     _locale_cache.clear()
+
+
+def format_amount(value: float, unit_key: str = "unit.yuan") -> str:
+    """Format a number with appropriate unit (億/萬/元 or B/M/TWD).
+
+    Uses i18n unit labels from locale files.
+
+    Examples:
+        format_amount(1_500_000_000)       → "15.0 億"
+        format_amount(5_000_000)           → "500 萬"
+        format_amount(1234)                → "1,234 元"
+        format_amount(12.5, "unit.percent") → "12 %"
+    """
+    abs_val = abs(value)
+    sign = "-" if value < 0 else ""
+
+    if abs_val >= 1e8:
+        return f"{sign}{abs_val / 1e8:,.1f} {t('unit.hundred_million')}"
+    elif abs_val >= 1e4:
+        return f"{sign}{abs_val / 1e4:,.0f} {t('unit.ten_thousand')}"
+    else:
+        return f"{sign}{abs_val:,.0f} {t(unit_key)}"
+
+
+def format_percent(value: float, decimals: int = 2) -> str:
+    """Format a value as percentage with i18n label."""
+    return f"{value:,.{decimals}f}{t('unit.percent')}"
