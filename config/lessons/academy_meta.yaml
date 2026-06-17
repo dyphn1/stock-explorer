@@ -12,3 +12,5 @@ lessons:
     file: "lesson_04.yaml"
   - id: "lesson_05"
     file: "lesson_05.yaml"
+  - id: "lesson_06"
+    file: "lesson_06.yaml"
