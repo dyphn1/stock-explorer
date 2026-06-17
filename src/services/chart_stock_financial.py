@@ -14,7 +14,7 @@ import pandas as pd
 # light and dark Streamlit themes.  Semi-transparent values let
 # the background show through, creating natural adaptation.
 #
-# - Text / axis labels: #555555 — readable on white AND dark bg
+# - Text / axis labels: #7F8C8D — readable on white AND dark bg
 # - Grid lines: rgba(128,128,128,0.15) — subtle on both themes
 # - Muted / annotation text: #7F8C8D — mid-gray, works both ways
 # - Divider / connector: rgba(128,128,128,0.3) — subtle structural line
@@ -93,7 +93,7 @@ def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -
     theme = _get_chart_colors()
 
     # Design system colors — theme-aware, accessible palette
-    colors = ['#3498DB', '#27AE60', '#2C3E50', '#7F8C8D', '#1ABC9C', '#9B59B6', '#E67E22', '#2980B9']
+    colors = ['#3498DB', '#27AE60', '#E74C3C', '#2C3E50', '#7F8C8D', '#ECF0F1']
     # Cycle if more labels than colors
     colors = [colors[i % len(colors)] for i in range(len(labels))]
 
@@ -197,8 +197,7 @@ def create_revenue_treemap(revenue_items: list, title: str = "營收來源") -> 
         plotly go.Figure
     """
     # Use a pleasant color palette
-    colors = ["#3498DB", "#2ECC71", "#F39C12", "#E74C3C", "#9B59B6",
-              "#1ABC9C", "#E67E22", "#34495E", "#16A085", "#C0392B"]
+    colors = ["#3498DB", "#27AE60", "#E74C3C", "#2C3E50", "#7F8C8D", "#ECF0F1"]
 
     labels = [item["name"] for item in revenue_items]
     values = [item["value"] for item in revenue_items]

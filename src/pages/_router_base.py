@@ -73,14 +73,7 @@ def _section_title(title: str):
 
     first_char = title[0]
     code = ord(first_char)
-    if ( (0x1F300 <= code <= 0x1F5FF) or
-         (0x1F600 <= code <= 0x1F64F) or
-         (0x1F680 <= code <= 0x1F6FF) or
-         (0x1F900 <= code <= 0x1F9FF) or
-         (0x1FA70 <= code <= 0x1FAFF) or
-         (0x2600 <= code <= 0x26FF) or
-         (0x2700 <= code <= 0x27BF) or
-         (0x1F1E6 <= code <= 0x1F1FF) ):
+    if code >= 0x2300:
         st.markdown(f"### {title}")
     else:
         st.markdown(f"### 📊 {title}")
@@ -189,14 +182,14 @@ def _explain_button(
 
 def _白话_card(label: str, value: str, analogy: str = ""):
     st.markdown(f"""
-    <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.5rem 0;">
+    <div style="background:white;border-radius:12px;padding:1.2rem;border:1px solid #ECF0F1;border-left:4px solid #3498DB;margin:0.5rem 0;">
         <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
         <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{value}</div>
         <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{analogy}</div>
     </div>
     """, unsafe_allow_html=True)
 
-def _summary_card(title: str, content: str, icon: str = "📋", border_color: str = "#F39C12"):
+def _summary_card(title: str, content: str, icon: str = "📋", border_color: str = "#3498DB"):
     st.markdown(f"""
     <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid {border_color};margin:0.5rem 0;">
         <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
@@ -211,12 +204,12 @@ def _mini_score_card(label: str, score: float) -> None:
     Args:
         label: Display label (e.g. dimension name or company name).
         score: Numeric score (0-100). Determines border color:
-            green (#27AE60) >= 70, amber (#F39C12) >= 40, red (#E74C3C) < 40.
+            green (#27AE60) >= 70, blue (#3498DB) >= 40, red (#E74C3C) < 40.
     """
     if score >= 70:
         score_color = "#27AE60"
     elif score >= 40:
-        score_color = "#F39C12"
+        score_color = "#3498DB"
     else:
         score_color = "#E74C3C"
 
@@ -300,7 +293,7 @@ def _subsidiary_card(name: str, hold_label: str, hold_color: str,
                 <span style="font-size:0.85rem;color:#7F8C8D;margin-left:1rem;">營收貢獻 ~{revenue}%</span>
             </div>
         </div>
-        <div style="font-size:0.9rem;color:#5D6D7E;margin-top:0.8rem;line-height:1.6;">
+        <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.8rem;line-height:1.6;">
             <strong>在做什麼：</strong>{business}
         </div>
         <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;line-height:1.5;">
@@ -543,13 +536,13 @@ def _lesson_card(title: str, content: str, icon: str = "📖", visual_area: str 
         f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin-bottom:1rem;">
             <div style="font-size:1.1rem;font-weight:600;color:#2C3E50;margin-bottom:0.5rem;">{icon} {title}</div>
             {visual_html}
-            <div style="font-size:0.9rem;color:#5D6D7E;line-height:1.6;">{content}</div>
+            <div style="font-size:0.9rem;color:#7F8C8D;line-height:1.6;">{content}</div>
         </div>""",
         unsafe_allow_html=True,
     )
 
 
-def _progress_dots(current: int, total: int, active_color: str = "#27AE60", inactive_color: str = "#BDC3C7") -> None:
+def _progress_dots(current: int, total: int, active_color: str = "#27AE60", inactive_color: str = "#ECF0F1") -> None:
     """Lesson progress dot indicators."""
     dots = []
     for i in range(total):

@@ -38,7 +38,7 @@ def create_health_snowflake(
         if score >= 70:
             return "#27AE60"
         elif score >= 40:
-            return "#F39C12"
+            return "#3498DB"
         else:
             return "#E74C3C"
 
@@ -104,7 +104,7 @@ def create_health_snowflake(
     fig.add_trace(go.Scatterpolar(
         r=[40] * (len(categories) + 1),
         theta=categories + [categories[0]],
-        line=dict(color="#F39C12", width=1, dash="dot"),
+        line=dict(color="#3498DB", width=1, dash="dot"),
         name="及格線 (40)",
         hoverinfo="skip",
     ))

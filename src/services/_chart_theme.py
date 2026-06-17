@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 # light and dark Streamlit themes.  Semi-transparent values let
 # the background show through, creating natural adaptation.
 #
-# - Text / axis labels: #555555 — readable on white AND dark bg
+# - Text / axis labels: #7F8C8D — readable on white AND dark bg
 # - Grid lines: rgba(128,128,128,0.15) — subtle on both themes
 # - Muted / annotation text: #7F8C8D — mid-gray, works both ways
 # - Divider / connector: rgba(128,128,128,0.3) — subtle structural line
