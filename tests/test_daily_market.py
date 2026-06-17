@@ -54,10 +54,6 @@ class TestImportsAndStructure:
         from src.pages.daily_market import _render_daily_market
         assert callable(_render_daily_market)
 
-    def test_import_render_freshness(self):
-        from src.pages.daily_market import _render_freshness
-        assert callable(_render_freshness)
-
     def test_import_render_overview(self):
         from src.pages.daily_market import _render_overview
         assert callable(_render_overview)
@@ -82,7 +78,6 @@ class TestImportsAndStructure:
         import src.pages.daily_market as dm
         expected = [
             "_render_daily_market",
-            "_render_freshness",
             "_render_overview",
             "_render_sentiment",
             "_render_sector_strip",
@@ -212,38 +207,6 @@ class TestI18nKeys:
 
 class TestDataStructureHandling:
     """Test render functions with mock data — no Streamlit UI rendered."""
-
-    # ---- _render_freshness ----
-
-    def test_render_freshness_empty_summary(self):
-        """Empty summary_map should not crash."""
-        from src.pages.daily_market import _render_freshness
-        with patch("src.pages.daily_market.st") as mock_st:
-            _render_freshness({})
-            # Should call st.caption with freshness_unknown status
-            mock_st.caption.assert_called_once()
-
-    def test_render_freshness_with_data(self):
-        """Summary with today's date should show fresh status."""
-        from src.pages.daily_market import _render_freshness
-        from datetime import datetime
-        today = datetime.now().strftime("%Y-%m-%d")
-        summary = {
-            "2330": {"latest_price": f"{today}", "change": 1.5},
-        }
-        with patch("src.pages.daily_market.st") as mock_st:
-            _render_freshness(summary)
-            mock_st.caption.assert_called_once()
-
-    def test_render_freshness_stale_data(self):
-        """Summary with old date should show stale status."""
-        from src.pages.daily_market import _render_freshness
-        summary = {
-            "2330": {"latest_price": "2024-01-01", "change": 1.5},
-        }
-        with patch("src.pages.daily_market.st") as mock_st:
-            _render_freshness(summary)
-            mock_st.caption.assert_called_once()
 
     # ---- _render_sentiment ----
 
@@ -444,7 +407,6 @@ ALLOWED_CHINESE_CONTEXTS = [
     "_section_title_with_read_time",
     "_explain_button",
     "_render_mover_row",
-    "_render_freshness",
     "_render_overview",
     "_render_sentiment",
     "_render_sector_strip",

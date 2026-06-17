@@ -25,7 +25,6 @@ from src.pages.etf_detail import _render_etf_detail
 from src.pages.watchlist_page import _render_watchlist_page
 from src.pages.event_dashboard import (
     _render_event_dashboard,
-    _render_freshness_indicator,
     _render_adaptive_banner,
     _render_event_alerts,
 )
@@ -45,7 +44,6 @@ from src.pages.story_timeline import render_story_timeline_page
 from src.pages.debate_cards import render_debate_cards_page
 from src.services.adaptive_engine import (
     run_auto_detection,
-    check_data_freshness,
 )
 from src.core.i18n import t, set_lang, get_available_locales
 from src.services.watchlist import _is_etf as _is_etf_check
@@ -262,10 +260,6 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
 
         # M5: 事件提醒
         _render_event_alerts(stock_id)
-
-        # M5: 資料新鮮度指標
-        freshness = check_data_freshness(stock_id, data)
-        _render_freshness_indicator(freshness)
     except Exception as exc:
         logger.warning("M5 event detection/rendering failed for %s: %s", stock_id, exc)
 

@@ -5,7 +5,6 @@
 
 import streamlit as st
 import pandas as pd
-from datetime import datetime
 from src.pages.url_sync import navigate_to
 from src.services.adaptive_engine import (
     get_all_recent_events,
@@ -19,8 +18,7 @@ from src.services.event_interpretation_service import (
     get_interpretation,
     get_drilldown_interpretation,
 )
-from src.pages._router_base import _summary_card, _info_card, _source_section
-from src.core.i18n import t
+from src.pages._router_base import _summary_card, _info_card
 
 
 def _severity_badge(severity: str) -> str:
@@ -31,6 +29,18 @@ def _severity_badge(severity: str) -> str:
         "low": "🟢 參考",
     }
     return badges.get(severity, "⚪ 未知")
+
+
+def _freshness_badge(status: str) -> str:
+    """產生新鮮度標籤"""
+    badges = {
+        "fresh": "🟢 最新",
+        "stale": "🟡 較舊",
+        "very_stale": "🔴 過時",
+        "partial": "🟡 部分更新",
+        "unknown": "⚪ 未知",
+    }
+    return badges.get(status, "⚪ 未知")
 
 
 def _event_type_label(event_type: str) -> str:
@@ -143,13 +153,29 @@ def _render_event_dashboard(client):
     事件會在瀏覽股票頁面時自動偵測並記錄。
     """)
 
-    # ── Data Sources ──
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-    sources = [
-        {"label": t("event_dashboard.sources.events"), "api": t("event_dashboard.sources.local_db"), "time": now_str},
-        {"label": t("event_dashboard.sources.interpretation"), "api": t("event_dashboard.sources.templates"), "time": now_str},
-    ]
-    _source_section(sources, now_str)
+
+def _render_freshness_indicator(freshness: dict):
+    """在頁面頂部顯示資料新鮮度指標"""
+    overall = freshness.get("overall", "unknown")
+    needs_update = freshness.get("needs_update", False)
+
+    if needs_update:
+        _info_card(
+            title="⚠️ 資料新鮮度提醒",
+            content="部分資料可能較舊，建議重新載入以取得最新資訊。",
+            icon="📡",
+        )
+
+    # 可展開的詳情
+    items = freshness.get("items", [])
+    if items:
+        with st.expander("📡 資料新鮮度詳情", expanded=False):
+            for item in items:
+                badge = _freshness_badge(item["status"])
+                st.markdown(
+                    f"- **{item['label']}**：{item['date']} "
+                    f"（{item['days_old']} 天前）{badge}"
+                )
 
 
 def _render_adaptive_banner(data: dict):

@@ -33,7 +33,7 @@ from src.services.watchlist import (
     create_list,
     list_names,
 )
-from src.pages._router_base import _白话_card, _info_card, _summary_card, _beginner_banner
+from src.pages._router_base import _白话_card, _info_card, _summary_card, _beginner_banner, _source_section
 from src.pages.url_sync import navigate_to
 from src.pages.revenue_tree import _render_revenue_tree
 from src.services.experience_service import is_beginner_mode, set_experience_level
@@ -325,3 +325,14 @@ def _render_business_card(data: dict, client):
     _render_feedback_section(data)
     _render_share_section(data, client)
     _render_footer(data, client)
+
+    # ── Data Sources ──
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    sources = [
+        {"label": t("business_card.sources.price_valuation"), "api": "FinMind", "time": now_str},
+        {"label": t("business_card.sources.financial_revenue"), "api": "FinMind", "time": now_str},
+        {"label": t("business_card.sources.dividend"), "api": "FinMind", "time": now_str},
+        {"label": t("business_card.sources.news_institutional"), "api": "FinMind", "time": now_str},
+        {"label": t("business_card.sources.corporate"), "api": "FinMind", "time": now_str},
+    ]
+    _source_section(sources, now_str)

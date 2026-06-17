@@ -546,6 +546,32 @@ daily_market:
 
   disclaimer: "⚠️ This page is for educational purposes only and does not constitute investment advice."
 
+  sources:
+    stock_info: "Stock Info & Sector Classification"
+    price_summary: "Batch Price Summary"
+    sector_data: "Sector Aggregation"
+    events: "Market Events (Local)"
+    local_db: "Local Event Database"
+
+
+# ── Business Card Sources (C209) ──────────────────
+business_card:
+  sources:
+    price_valuation: "Price & Valuation Data"
+    financial_revenue: "Financial Statements & Revenue"
+    dividend: "Dividend Data"
+    news_institutional: "News & Institutional Investors"
+    corporate: "Corporate Data (Balance Sheet, Cash Flow)"
+
+
+# ── Event Dashboard Sources (C209) ──────────────
+event_dashboard:
+  sources:
+    events: "Event Records"
+    interpretation: "Event Interpretation Templates"
+    local_db: "Local Event Database"
+    templates: "Template Engine"
+
 
 # ── Source Section (C209) ──────────────────────
 source_section:

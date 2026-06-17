@@ -555,6 +555,30 @@ daily_market:
   flat_count: "⚪ 平盤 {flat_count}"
   ad_ratio_label: "漲跌比 {ratio}"
 
+  sources:
+    stock_info: "股票資料與產業分類"
+    price_summary: "批次股價摘要"
+    sector_data: "板塊數據"
+    events: "市場事件（本機）"
+    local_db: "本機事件資料庫"
+# ── 公司名片資料來源 (C209) ──────────────────────
+business_card:
+  sources:
+    price_valuation: "股價與估值資料"
+    financial_revenue: "財務報表與營收"
+    dividend: "股利資料"
+    news_institutional: "新聞與法人動向"
+    corporate: "公司資料（資產負債表、現金流量表）"
+
+
+# ── 事件儀表板資料來源 (C209) ──────────────────
+event_dashboard:
+  sources:
+    events: "事件紀錄"
+    interpretation: "事件解讀範本"
+    local_db: "本機事件資料庫"
+    templates: "範本引擎"
+
 
 # ── 資料來源區塊 (C209) ──────────────────────────
 source_section:

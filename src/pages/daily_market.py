@@ -6,7 +6,7 @@ Narrative-driven market overview: what happened in the Taiwan market today.
 import streamlit as st
 import numpy as np
 from datetime import datetime
-from src.pages._router_base import _白话_card, _info_card, _summary_card, _section_title
+from src.pages._router_base import _白话_card, _info_card, _summary_card, _section_title, _source_section
 from src.core.i18n import t
 from src.services.market_data import get_sector_grid_data
 from src.services.adaptive_engine import get_all_recent_events
@@ -36,7 +36,7 @@ def _render_daily_market(client):
         return
 
     # ── Data freshness ──
-    _render_freshness(summary_map)
+    last_updated = datetime.now().strftime("%Y-%m-%d %H:%M")
 
     # ── Section 1: Market Overview ──
     _render_overview(summary_map, sector_metrics)
@@ -61,31 +61,18 @@ def _render_daily_market(client):
     # ── Section 5: Key Events ──
     _render_key_events()
 
+    # ── Data Sources ──
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    sources = [
+        {"label": t("daily_market.sources.stock_info"), "api": "FinMind", "time": now_str},
+        {"label": t("daily_market.sources.price_summary"), "api": "FinMind", "time": now_str},
+        {"label": t("daily_market.sources.sector_data"), "api": "FinMind", "time": now_str},
+        {"label": t("daily_market.sources.events"), "api": t("daily_market.sources.local_db"), "time": now_str},
+    ]
+    _source_section(sources, last_updated)
+
     # ── Disclaimer ──
     st.caption(t("daily_market.disclaimer"))
-
-
-def _render_freshness(summary_map: dict):
-    """Show data freshness caption."""
-    # Find the most recent date across all stock summaries
-    latest_date = None
-    for s in summary_map.values():
-        price = s.get("latest_price")
-        if price:
-            d = str(price)[:10] if isinstance(price, str) else None
-            if d and (latest_date is None or d > latest_date):
-                latest_date = d
-
-    today = datetime.now().strftime("%Y-%m-%d")
-    if latest_date == today:
-        status = t("daily_market.freshness_fresh")
-    elif latest_date:
-        status = t("daily_market.freshness_stale")
-    else:
-        status = t("daily_market.freshness_unknown")
-
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-    st.caption(f"{status} ｜ {t('daily_market.last_updated', time=now_str)}")
 
 
 def _render_overview(summary_map: dict, sector_metrics: dict):
