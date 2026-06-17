@@ -27,11 +27,10 @@ Verify functional correctness, run automated test layers, perform visual QA, and
 
 ```
 1. `STATUS.md` - Current phase, recent commits, verification history
-2. `docs/status/issues.md` - Bugs to verify or reproduce
-3. `docs/status/current_problems.md` - Comprehensive problem analysis, if it exists
-4. `docs/status/tech_debt.md` - Tech debt items in scope
-5. `AGENTS.md` - Verification strategy and layer definitions
-6. The verification scripts: _verify_layer0.py, _verify_layer1.py, _verify_layer2.py
+2. `docs/state/current_problems.md` - Comprehensive problem analysis
+3. `docs/overview/05-roadmap.md` - Tech debt items and feature priorities
+4. `AGENTS.md` - Verification strategy and layer definitions
+5. The verification scripts: _verify_layer0.py, _verify_layer1.py, _verify_layer2.py
 ```
 
 ## What to Output

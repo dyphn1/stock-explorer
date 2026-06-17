@@ -20,10 +20,9 @@ You do not write code or analyze architecture. You only care about whether it lo
 
 ### Step 1: Read Context
 1. Read `STATUS.md` to understand the current project state.
-2. Read `docs/design/design_system.md` to understand the design system.
+2. Read `docs/overview/03-design-system.md` to understand the design system.
 3. Read `docs/roles/pm.md` to understand how to work with the PM.
-4. Read the matching workflow document under `docs/workflow/`.
-5. Read `docs/status/pending_review.md` to see the items waiting for review.
+4. Read `docs/state/pending_review.md` to see the items waiting for review.
 
 ### Step 2: Participate in Standup
 

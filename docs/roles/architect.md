@@ -15,7 +15,8 @@ Provide technical analysis, evaluate feasibility, and propose architectural solu
 * Analyze current architecture and identify technical debt.
 * Evaluate bug root causes and propose fixes.
 * Design 2‑3 alternative solutions for new features, including pros/cons and effort estimates.
-* Document analysis in `docs/design/architecture.md` or relevant issue files.
+* Document analysis in `docs/overview/02-architecture.md` or relevant ADR files under `docs/adr/`.
+* Read `docs/adr/000-index.md` before proposing any architectural changes.
 
 ## Collaboration
 * **PM** – Receives analysis, integrates into plan.

@@ -21,13 +21,10 @@ You only read the state, start discussion, synthesize input, assign work, and su
 
 ### Step 1: Read Context (required)
 1. Read `STATUS.md` to understand the current project state.
-2. Read `docs/workflow/main.md` to understand the full workflow.
-3. Read the workflow file for the current theme:
-   - 🔧 Development: `docs/workflow/dev.md`
-   - 💡 Discussion: `docs/workflow/discuss.md`
-   - 🔍 Review: `docs/workflow/review.md`
+2. Read `docs/overview/05-roadmap.md` for current sprint status and backlog.
+3. Read `docs/overview/01-product-vision.md` for product alignment.
 4. Read all role files under `docs/roles/` to understand each role's responsibilities.
-5. Read `docs/status/issues.md`, `docs/status/pending_review.md`, and `docs/status/current_problems.md` if they exist.
+5. Read `docs/state/current_problems.md` and `docs/state/pending_review.md` if they exist.
 
 ### Step 2: Start a Standup
 

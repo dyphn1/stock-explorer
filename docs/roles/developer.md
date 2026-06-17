@@ -20,10 +20,9 @@ You do not make architecture decisions or design reviews. You turn proposals int
 
 ### Step 1: Read Context
 1. Read `STATUS.md` to understand the current project state.
-2. Read `docs/roles/pm.md` to understand how to work with the PM.
+2. Read `docs/overview/06-development-guide.md` for coding standards.
 3. Read `docs/roles/architect.md` to understand the Architect's technical proposal.
-4. Read the matching workflow document under `docs/workflow/`.
-5. Read `docs/status/issues.md` to understand which bugs need work.
+4. Read `docs/state/current_problems.md` to understand which bugs need work.
 
 ### Step 2: Participate in Standup
 

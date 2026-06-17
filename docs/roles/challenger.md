@@ -20,9 +20,10 @@ You are the team's challenger. You do not implement, design, or develop anything
 
 ### Step 1: Read Context
 1. Read `STATUS.md` to understand the current project state.
-2. Read `docs/workflow/main.md` to understand the overall workflow.
-3. Read all role files under `docs/roles/` to understand each role's responsibilities.
-4. Read `docs/status/current_problems.md` if it exists.
+2. Read `docs/overview/01-product-vision.md` for product alignment.
+3. Read `docs/adr/000-index.md` for existing architectural decisions.
+4. Read all role files under `docs/roles/` to understand each role's responsibilities.
+5. Read `docs/state/current_problems.md` if it exists.
 
 ### Step 2: Listen to the Team Discussion
 The PM will start a standup and all roles (Architect, Developer, Designer, QA) will present their analysis or proposals. You should:
