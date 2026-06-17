@@ -40,6 +40,7 @@ page:
   moat_comparison: "護城河比較"
   debate_cards: "看多看空辯論"
   learn_first_gate: "學習優先門"
+  daily_market: "今日市場動態"
 
 # ── Sidebar 元素 ────────────────────────────
 sidebar:
@@ -269,7 +270,7 @@ debate:
   counter: "反駁論點"
   summary: "辯論摘要"
   no_data: "目前沒有足夠的辯論資料"
-  no_data_detail: "目前沒有足夠的資料來生成辯論論點。\n\n可能原因：\n\n• 同業比較資料不足\n• 財務指標資料不完整\n\n💡 請確認該股票有同業比較資料後再試。"
+  no_data_detail: "目前沒有足夠的資料來生成辯論論點。\\n\\n可能原因：\\n\\n• 同業比較資料不足\\n• 財務指標資料不完整\\n\\n💡 請確認該股票有同業比較資料後再試。"
   auto_generated: "自動產生"
   # Metric display names
   metric_roe: "ROE"
@@ -399,100 +400,157 @@ historical_scenario:
   "2330":
     s1:
       title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月疫情恐慌低點（約 {buy_price} 元）買入台積電，持有至今（{current_year} 年）股價約 {current_price} 元，\n\n📈 **報酬率：約 {return_pct}%**（不含股息）\n\n💡 這說明了「在恐慌中買入優質資產」的長期價值。"
+      content: "如果你在 2020 年 3 月疫情恐慌低點（約 {buy_price} 元）買入台積電，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（不含股息）\\n\\n💡 這說明了「在恐慌中買入優質資產」的長期價值。"
     s2:
       title: "情境二：2022 年高點買入"
-      content: "如果你在 2022 年 1 月高點（約 {buy_price} 元）買入台積電，隨後面臨全球半導體庫存修正，股價一度跌至 {low_price} 元。\n\n📉 **短期跌幅：約 {drop_pct}%**\n\n💡 即使是好公司，追高買入也可能面臨大幅回檔。"
+      content: "如果你在 2022 年 1 月高點（約 {buy_price} 元）買入台積電，隨後面臨全球半導體庫存修正，股價一度跌至 {low_price} 元。\\n\\n📉 **短期跌幅：約 {drop_pct}%**\\n\\n💡 即使是好公司，追高買入也可能面臨大幅回檔。"
     s3:
       title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入台積電，無論股價漲跌都持續買入，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡 定期定額能有效平滑買入成本，適合長期投資者。"
+      content: "如果你從 {start_year} 年起每月定期定額買入台積電，無論股價漲跌都持續買入，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 定期定額能有效平滑買入成本，適合長期投資者。"
   "2317":
     s1:
       title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入鴻海，持有至今（{current_year} 年）股價約 {current_price} 元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 鴻海的轉型故事需要耐心，長期持有才能看到成果。"
+      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入鴻海，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 鴻海的轉型故事需要耐心，長期持有才能看到成果。"
     s2:
       title: "情境二：2017 年高點買入"
-      content: "如果你在 2017 年高點（約 {buy_price} 元）買入鴻海，隨後面臨蘋果手機銷售放緩，股價長期低迷。\n\n📉 **{years} 年報酬：約 {return_range}%**（含股息）\n\n💡 買在高點可能需要更長的時間才能回本。"
+      content: "如果你在 2017 年高點（約 {buy_price} 元）買入鴻海，隨後面臨蘋果手機銷售放緩，股價長期低迷。\\n\\n📉 **{years} 年報酬：約 {return_range}%**（含股息）\\n\\n💡 買在高點可能需要更長的時間才能回本。"
     s3:
       title: "情境三：AI 伺服器題材爆發"
-      content: "如果你在 {buy_date}（約 {buy_price} 元）看好 AI 伺服器趨勢買入鴻海，至今股價約 {current_price} 元，\n\n📈 **報酬率：約 {return_pct}%**\n\n💡 掌握產業趨勢，在題材發酵前布局能獲得超額報酬。"
+      content: "如果你在 {buy_date}（約 {buy_price} 元）看好 AI 伺服器趨勢買入鴻海，至今股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**\\n\\n💡 掌握產業趨勢，在題材發酵前布局能獲得超額報酬。"
   "2454":
     s1:
       title: "情境一：2021 年高點買入"
-      content: "如果你在 2021 年高點（約 {buy_price} 元）買入聯發科，隨後面臨手機市場衰退與庫存修正。\n\n📉 **短期跌幅：約 {drop_pct}%**\n\n💡 即使是成長股，在估值過高時買入也有風險。"
+      content: "如果你在 2021 年高點（約 {buy_price} 元）買入聯發科，隨後面臨手機市場衰退與庫存修正。\\n\\n📉 **短期跌幅：約 {drop_pct}%**\\n\\n💡 即使是成長股，在估值過高時買入也有風險。"
     s2:
       title: "情境二：2023 年低點買入"
-      content: "如果你在 2023 年低點（約 {buy_price} 元）買入聯發科，受惠於手機市場復甦與 AI PC 題材，\n\n📈 **報酬率：約 {return_range}%**\n\n💡 在產業谷底買入優質公司，報酬可觀。"
+      content: "如果你在 2023 年低點（約 {buy_price} 元）買入聯發科，受惠於手機市場復甦與 AI PC 題材，\\n\\n📈 **報酬率：約 {return_range}%**\\n\\n💡 在產業谷底買入優質公司，報酬可觀。"
     s3:
       title: "情境三：定期定額 3 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入聯發科，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡 定期定額在高波動的科技股上特別有效。"
+      content: "如果你從 {start_year} 年起每月定期定額買入聯發科，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 定期定額在高波動的科技股上特別有效。"
   "2308":
     s1:
       title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入台達電，持有至今（{current_year} 年）股價約 {current_price} 元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 台達電的長期成長性在電源管理領域無可取代。"
+      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入台達電，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 台達電的長期成長性在電源管理領域無可取代。"
     s2:
       title: "情境二：AI 資料中心題材"
-      content: "如果你在 {buy_date}（約 {buy_price} 元）看好 AI 資料中心電源需求買入台達電，\n\n📈 **報酬率：約 {return_pct}%**\n\n💡 掌握 AI 基礎建設的供應鏈機會。"
+      content: "如果你在 {buy_date}（約 {buy_price} 元）看好 AI 資料中心電源需求買入台達電，\\n\\n📈 **報酬率：約 {return_pct}%**\\n\\n💡 掌握 AI 基礎建設的供應鏈機會。"
     s3:
       title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入台達電，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡 穩健成長股適合定期定額長期投資。"
+      content: "如果你從 {start_year} 年起每月定期定額買入台達電，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 穩健成長股適合定期定額長期投資。"
   "2881":
     s1:
       title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入富邦金，持有至今（{current_year} 年）股價約 {current_price} 元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 金融股在低點買入，長期報酬相當可觀。"
+      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入富邦金，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 金融股在低點買入，長期報酬相當可觀。"
     s2:
       title: "情境二：升息循環受惠"
-      content: "如果你在 2022 年升息循環開始前（約 {buy_price} 元）買入富邦金，受惠於利差擴大，\n\n📈 **報酬率：約 {return_range}%**\n\n💡 金融股在升息環境下通常表現較好。"
+      content: "如果你在 2022 年升息循環開始前（約 {buy_price} 元）買入富邦金，受惠於利差擴大，\\n\\n📈 **報酬率：約 {return_range}%**\\n\\n💡 金融股在升息環境下通常表現較好。"
     s3:
       title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入富邦金，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡 金融股配息穩定，適合存股族。"
+      content: "如果你從 {start_year} 年起每月定期定額買入富邦金，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 金融股配息穩定，適合存股族。"
   "2882":
     s1:
       title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入國泰金，持有至今（{current_year} 年）股價約 {current_price} 元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 壽險股在低利率環境反轉後表現亮眼。"
+      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入國泰金，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 壽險股在低利率環境反轉後表現亮眼。"
     s2:
       title: "情境二：IFRS 17 接軌挑戰"
-      content: "如果你在 2023 年（約 {buy_price} 元）買入國泰金，面臨 IFRS 17 會計準則接軌的不確定性，\n\n📊 **報酬率：約 {return_range}%**\n\n💡 政策變化可能帶來短期波動，但長期影響有限。"
+      content: "如果你在 2023 年（約 {buy_price} 元）買入國泰金，面臨 IFRS 17 會計準則接軌的不確定性，\\n\\n📊 **報酬率：約 {return_range}%**\\n\\n💡 政策變化可能帶來短期波動，但長期影響有限。"
     s3:
       title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入國泰金，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡 金融股適合長期持有，享受穩定配息。"
+      content: "如果你從 {start_year} 年起每月定期定額買入國泰金，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 金融股適合長期持有，享受穩定配息。"
   "1301":
     s1:
       title: "情境一：2021 年景氣高點買入"
-      content: "如果你在 2021 年石化景氣高點（約 {buy_price} 元）買入台塑，隨後面臨景氣反轉與中國產能過剩。\n\n📉 **跌幅：約 {drop_range}%**\n\n💡 景氣循環股在高點買入風險極大。"
+      content: "如果你在 2021 年石化景氣高點（約 {buy_price} 元）買入台塑，隨後面臨景氣反轉與中國產能過剩。\\n\\n📉 **跌幅：約 {drop_range}%**\\n\\n💡 景氣循環股在高點買入風險極大。"
     s2:
       title: "情境二：2020 年低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入台塑，持有至今（{current_year} 年）股價約 {current_price} 元，\n\n📊 **報酬：主要來自配息，資本增值有限**\n\n💡 傳統產業股的成長性有限，但配息穩定。"
+      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入台塑，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📊 **報酬：主要來自配息，資本增值有限**\\n\\n💡 傳統產業股的成長性有限，但配息穩定。"
     s3:
       title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入台塑，\n\n📊 **年化報酬率約 {annual_return}%**（主要來自股息）\n\n💡 景氣循環股適合在低點定期定額布局。"
+      content: "如果你從 {start_year} 年起每月定期定額買入台塑，\\n\\n📊 **年化報酬率約 {annual_return}%**（主要來自股息）\\n\\n💡 景氣循環股適合在低點定期定額布局。"
   "2002":
     s1:
       title: "情境一：2021 年鋼鐵景氣高點"
-      content: "如果你在 2021 年鋼鐵景氣高點（約 {buy_price} 元）買入中鋼，隨後面臨需求下滑與原物料價格回落。\n\n📉 **跌幅：約 {drop_range}%**\n\n💡 鋼鐵股景氣循環明顯，追高風險大。"
+      content: "如果你在 2021 年鋼鐵景氣高點（約 {buy_price} 元）買入中鋼，隨後面臨需求下滑與原物料價格回落。\\n\\n📉 **跌幅：約 {drop_range}%**\\n\\n💡 鋼鐵股景氣循環明顯，追高風險大。"
     s2:
       title: "情境二：2020 年低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入中鋼，持有至今（{current_year} 年）股價約 {current_price} 元，\n\n📊 **報酬：約 {return_pct}%**（含股息）\n\n💡 在景氣谷底買入，等待下一輪循環。"
+      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入中鋼，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📊 **報酬：約 {return_pct}%**（含股息）\\n\\n💡 在景氣谷底買入，等待下一輪循環。"
     s3:
       title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入中鋼，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡 鋼鐵股適合在景氣低點定期定額布局。"
+      content: "如果你從 {start_year} 年起每月定期定額買入中鋼，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 鋼鐵股適合在景氣低點定期定額布局。"
   "2382":
     s1:
       title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入廣達，持有至今（{current_year} 年）股價約 {current_price} 元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 AI 伺服器趨勢讓廣達從 NB 代工廠華麗轉身。"
+      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入廣達，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 AI 伺服器趨勢讓廣達從 NB 代工廠華麗轉身。"
     s2:
       title: "情境二：2023 年 AI 題材爆發前"
-      content: "如果你在 {buy_date}（約 {buy_price} 元）看好 AI 伺服器趨勢買入廣達，\n\n📈 **報酬率：約 {return_pct}%**\n\n💡 掌握產業趨勢，在爆發前布局報酬驚人。"
+      content: "如果你在 {buy_date}（約 {buy_price} 元）看好 AI 伺服器趨勢買入廣達，\\n\\n📈 **報酬率：約 {return_pct}%**\\n\\n💡 掌握產業趨勢，在爆發前布局報酬驚人。"
     s3:
       title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入廣達，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡 轉型成功的公司，定期定額也能獲得超額報酬。"
+      content: "如果你從 {start_year} 年起每月定期定額買入廣達，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 轉型成功的公司，定期定額也能獲得超額報酬。"
   "3045":
     s1:
       title: "情境一：2017 年高點買入"
-      content: "如果你在 2017 年歷史高點（約 {buy_price} 元）買入大立光，隨後面臨中國競爭對手崛起與手機市場飽和。\n\n📉 **跌幅：約 {drop_range}%**\n\n💡 即使是護城河極深的公司，也可能面臨結構性挑戰。"
+      content: "如果你在 2017 年歷史高點（約 {buy_price} 元）買入大立光，隨後面臨中國競爭對手崛起與手機市場飽和。\\n\\n📉 **跌幅：約 {drop_range}%**\\n\\n💡 即使是護城河極深的公司，也可能面臨結構性挑戰。"
     s2:
       title: "情境二：2020 年低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入大立光，持有至今（{current_year} 年）股價約 {current_price} 元，\n\n📉 **跌幅：約 {drop_pct}%**\n\n💡 即使是低點買入，若產業結構惡化仍可能虧損。"
+      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入大立光，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📉 **跌幅：約 {drop_pct}%**\\n\\n💡 即使是低點買入，若產業結構惡化仍可能虧損。"
     s3:
       title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入大立光，\n\n📊 **年化報酬：約 {annual_return}%**\n\n💡 定期定額無法避免結構性衰退的產業。"
+      content: "如果你從 {start_year} 年起每月定期定額買入大立光，\\n\\n📊 **年化報酬：約 {annual_return}%**\\n\\n💡 定期定額無法避免結構性衰退的產業。"
+
+# ── 今日市場動態 (C201) ──────────────────────────
+daily_market:
+  title: "今日市場動態"
+  subtitle: "今天台股發生了什麼事"
+  last_updated: "最後更新：{time}"
+  freshness_fresh: "🟢 即時"
+  freshness_stale: "🟡 延遲"
+  freshness_unknown: "⚪ 未知"
+
+  overview:
+    title: "📰 市場總覽"
+    template_bull: "今日台股走強，收在 {close:,.0f} 點，上漲 {abs_change:,.0f} 點（{pct_change:+.2f}%）。成交金額約 {volume:,.0f} 億元，{volume_comment}。{sector_summary}。"
+    template_bear: "今日台股走弱，收在 {close:,.0f} 點，下跌 {abs_change:,.0f} 點（{pct_change:+.2f}%）。成交金額約 {volume:,.0f} 億元，{volume_comment}。{sector_summary}。"
+    template_flat: "今日台股持平，收在 {close:,.0f} 點，小漲 {abs_change:,.0f} 點（{pct_change:+.2f}%）。成交金額約 {volume:,.0f} 億元，{volume_comment}。{sector_summary}。"
+    volume_above: "高於均量"
+    volume_below: "低於均量"
+    volume_normal: "與均量相當"
+    sector_lead_up: "以 {sector} 板塊漲幅最大（{pct:+.2f}%）"
+    sector_lead_down: "以 {sector} 板塊跌幅最大（{pct:+.2f}%）"
+
+  sentiment:
+    title: "🌡️ 市場情緒"
+    ad_ratio: "漲跌比"
+    ad_ratio_value: "{up}:{down}"
+    volume: "成交量"
+    volume_unit: "億元"
+    mood: "市場溫度"
+    mood_bullish: "🟢 偏多"
+    mood_neutral: "🟡 中性"
+    mood_bearish: "🔴 偏空"
+    up_count: "上漲家數"
+    down_count: "下跌家數"
+
+  sectors:
+    title: "🏭 板塊動態"
+    top_n: "前 {n} 板塊"
+
+  movers:
+    title: "🔥 漲跌幅排行"
+    gainers: "🟢 漲幅排行"
+    losers: "🔴 跌幅排行"
+    rank: "#{rank}"
+    price: "NT${price}"
+
+  events:
+    title: "📋 重要事件"
+    empty: "今日無重大市場事件"
+
+  disclaimer: "⚠️ 本頁面僅供認識市場使用，不構成任何投資建議。"
+  error_load_failed: "無法載入市場資料：{e}"
+  no_data: "目前無市場資料可顯示。"
+  no_sentiment_data: "無情緒指標資料。"
+  no_sector_data: "無板塊資料。"
+  no_mover_data: "無可比較的漲跌幅資料。"
+  flat_count: "⚪ 平盤 {flat_count}"
+  ad_ratio_label: "漲跌比 {ratio}"

@@ -39,6 +39,7 @@ page:
   moat_comparison: "Moat Comparison"
   debate_cards: "Bear vs Bull Debate"
   learn_first_gate: "Learn First Gate"
+  daily_market: "Daily Market"
 
 # ── Sidebar Elements ────────────────────────────
 sidebar:
@@ -487,3 +488,60 @@ historical_scenario:
     s3:
       title: "Scenario 3: DCA Over 5 Years"
       content: "If you had invested in Largan Precision via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return: approx. {annual_return}%**\n\n💡 DCA cannot protect against structurally declining industries."
+
+# ── Daily Market Dashboard (C201) ──────────────────
+daily_market:
+  title: "Daily Market"
+  subtitle: "What happened in the Taiwan market today"
+  last_updated: "Last updated: {time}"
+  freshness_fresh: "🟢 Live"
+  freshness_stale: "🟡 Delayed"
+  freshness_unknown: "⚪ Unknown"
+  error_load_failed: "Failed to load market error: {e}"
+  no_data: "No market data available."
+  no_sentiment_data: "No sentiment data available."
+  no_sector_data: "No sector data available."
+  no_mover_data: "No comparable price change data available."
+  flat_count: "⚪ Flat {flat_count}"
+  ad_ratio_label: "A/D Ratio {ratio}"
+
+  overview:
+    title: "📰 Market Overview"
+    template_bull: "The Taiwan market closed at {close:,.0f}, up {abs_change:,.0f} pts ({pct_change:+.2f}%). Trading volume was approximately {volume:,.0f} hundred million, {volume_comment}. {sector_summary}."
+    template_bear: "The Taiwan market closed at {close:,.0f}, down {abs_change:,.0f} pts ({pct_change:+.2f}%). Trading volume was approximately {volume:,.0f} hundred million, {volume_comment}. {sector_summary}."
+    template_flat: "The Taiwan market closed flat at {close:,.0f}, up slightly {abs_change:,.0f} pts ({pct_change:+.2f}%). Trading volume was approximately {volume:,.0f} hundred million, {volume_comment}. {sector_summary}."
+    volume_above: "above average"
+    volume_below: "below average"
+    volume_normal: "in line with average"
+    sector_lead_up: "{sector} led gains (+{pct:+.2f}%)"
+    sector_lead_down: "{sector} led losses ({pct:+.2f}%)"
+
+  sentiment:
+    title: "🌡️ Market Sentiment"
+    ad_ratio: "A/D Ratio"
+    ad_ratio_value: "{up}:{down}"
+    volume: "Volume"
+    volume_unit: "100M TWD"
+    mood: "Market Mood"
+    mood_bullish: "🟢 Bullish"
+    mood_neutral: "🟡 Neutral"
+    mood_bearish: "🔴 Bearish"
+    up_count: "Advancers"
+    down_count: "Decliners"
+
+  sectors:
+    title: "🏭 Sector Performance"
+    top_n: "Top {n} Sectors"
+
+  movers:
+    title: "🔥 Top Movers"
+    gainers: "🟢 Top Gainers"
+    losers: "🔴 Top Losers"
+    rank: "#{rank}"
+    price: "NT${price}"
+
+  events:
+    title: "📋 Key Events"
+    empty: "No major market events today"
+
+  disclaimer: "⚠️ This page is for educational purposes only and does not constitute investment advice."

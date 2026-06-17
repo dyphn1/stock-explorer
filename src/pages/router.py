@@ -30,6 +30,7 @@ from src.pages.event_dashboard import (
     _render_event_alerts,
 )
 from src.pages.sector_heatmap import _render_sector_heatmap
+from src.pages.daily_market import _render_daily_market
 from src.pages.settings import render_settings_page
 from src.pages.investment_memo import _render_investment_memo
 from src.pages.financial_wellness import _render_financial_wellness
@@ -69,6 +70,7 @@ PAGE_KEYS = [
     "stock_screener",
     "settings",
     "sector_heatmap",
+    "daily_market",
     "case_study",
     "comprehension_check",
     "academy",
@@ -178,6 +180,11 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         _render_navbar_minimal(page_key)
         with st.spinner(t("status.loading_page")):
             _render_sector_heatmap(client)
+        return
+    if page_key == "daily_market":
+        _render_navbar_minimal(page_key)
+        with st.spinner(t("status.loading_page")):
+            _render_daily_market(client)
         return
     if page_key == "investment_memo":
         _render_navbar_minimal(page_key)
