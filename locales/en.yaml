@@ -156,6 +156,14 @@ error:
   settings_saved: "✅ Settings saved"
   api_error: "❌ API Error: {message}"
 
+# ── Input Validation ──────────────────────────
+validation:
+  error:
+    empty: "Please enter a stock ID"
+    not_digit: "Please enter a number; you entered \"{input}\""
+    not_four_digit: "Stock ID must be 4 digits; you entered \"{input}\" ({length} digits)"
+    format: "Invalid format; please enter 4 digits, you entered \"{input}\""
+
 # ── Results / Feedback ─────────────────────────
 result:
   score: "Correct Answers"

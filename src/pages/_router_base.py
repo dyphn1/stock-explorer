@@ -73,6 +73,8 @@ def _section_title(title: str):
 
     first_char = title[0]
     code = ord(first_char)
+    # Don't prepend 📊 if title already starts with an emoji/symbol
+    # or if it starts with an ASCII letter (Latin titles)
     if code >= 0x2300 or (first_char.isalpha() and first_char.isascii()):
         st.markdown(f"### {title}")
     else:
