@@ -13,11 +13,11 @@ if _project_root not in sys.path:
 
 import streamlit as st
 from src.services.validation import validate_stock_id
-from src.pages.router import load_and_render_page
+from src.core.i18n import t\nfrom src.pages.router import load_and_render_page
 
 # ── 頁面設定 ──────────────────────────────────────────
 st.set_page_config(
-    page_title="股識 Stock Explorer",
+    page_title=t("app.title"),
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -198,7 +198,7 @@ def _render_sidebar_hot_etfs(client):
 
 def _render_sidebar(client):
     """Main sidebar rendering function."""
-    st.markdown("## 🔍 股識")
+    st.markdown(t("sidebar.search_header"))
     st.markdown("*認識一家公司，從這裡開始*")
     st.markdown("---")
 

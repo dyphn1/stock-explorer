@@ -1,591 +1,807 @@
-# en.yaml — English
-# All UI display strings. Keys mirror zh-TW.yaml exactly.
-
-# ── App Global ──────────────────────────────────
 app:
-  title: "Stock Explorer"
-  subtitle: "Understanding a company starts here"
-  search_placeholder: "e.g., 2330 or TSMC"
-  search_label: "Search"
-  loading: "Loading..."
-
-# ── Page Names (sidebar + navbar) ──────────────
+  title: Stock Explorer
+  subtitle: Understanding a company starts here
+  search_placeholder: e.g., 2330 or TSMC
+  search_label: Search
+  loading: Loading...
 page:
-  business_card: "Overview"
-  operation_checkup: "Operations"
-  financial_health: "Financial Health"
-  peer_comparison: "Peer Comparison"
-  group_structure: "Corporate Structure"
-  category_browser: "Browse by Category"
-  etf_section: "ETF Center"
-  watchlist: "Watchlist"
-  event_dashboard: "Event Dashboard"
-  notification_center: "Notifications"
-  investment_memo: "Investment Memo"
-  financial_wellness: "Financial Wellness"
-  stock_screener: "Stock Screener"
-  settings: "Settings"
-  sector_heatmap: "Sector Heatmap"
-  case_study: "Case Study"
-  comprehension_check: "Quiz"
-  academy: "Academy"
-  case_study_library: "Case Library"
-  first_visit_guide: "First Visit Guide"
-  story_timeline: "Story Timeline"
-  full_story_timeline: "Full Story Timeline"
-  daily_story: "Daily Story"
-  revenue_tree: "Revenue Structure"
-  compare_stories: "Peer Comparison Stories"
-  moat_comparison: "Moat Comparison"
-  debate_cards: "Bear vs Bull Debate"
-  learn_first_gate: "Learn First Gate"
-  daily_market: "Daily Market"
-
-# ── Sidebar Elements ────────────────────────────
+  business_card: Overview
+  operation_checkup: Operations
+  financial_health: Financial Health
+  peer_comparison: Peer Comparison
+  group_structure: Corporate Structure
+  category_browser: Browse by Category
+  etf_section: ETF Center
+  watchlist: Watchlist
+  event_dashboard: Event Dashboard
+  notification_center: Notifications
+  investment_memo: Investment Memo
+  financial_wellness: Financial Wellness
+  stock_screener: Stock Screener
+  settings: Settings
+  sector_heatmap: Sector Heatmap
+  case_study: Case Study
+  comprehension_check: Quiz
+  academy: Academy
+  case_study_library: Case Library
+  first_visit_guide: First Visit Guide
+  story_timeline: Story Timeline
+  full_story_timeline: Full Story Timeline
+  daily_story: Daily Story
+  revenue_tree: Revenue Structure
+  compare_stories: Peer Comparison Stories
+  moat_comparison: Moat Comparison
+  debate_cards: Bear vs Bull Debate
+  learn_first_gate: Learn First Gate
+  daily_market: Daily Market
 sidebar:
-  nav_label: "Navigation"
-  hot_stocks: "🔥 Hot Stocks"
-  hot_etfs: "🏷️ Popular ETFs"
-  disclaimer: "⚠️ This tool is for educational purposes only and does not constitute investment advice.<br>Investing involves risk; please evaluate carefully."
-
-# ── Stock Info Labels ──────────────────────────
+  nav_label: Navigation
+  hot_stocks: 🔥 Hot Stocks
+  hot_etfs: 🏷️ Popular ETFs
+  disclaimer: ⚠️ This tool is for educational purposes only and does not constitute
+    investment advice.<br>Investing involves risk; please evaluate carefully.
+  search_header: 🔍 Stock Explorer
 stock:
-  code: "Code"
-  name: "Name"
-  industry: "Industry"
-  price: "Price"
-  change: "Change"
-  not_found: "Stock ID {sid} not found"
-  search_multiple: "Multiple stocks found:"
-  no_match: "No matching stocks found"
-
-# ── Financial Metric Names ──────────────────────
+  code: Code
+  name: Name
+  industry: Industry
+  price: Price
+  change: Change
+  not_found: Stock ID {sid} not found
+  search_multiple: 'Multiple stocks found:'
+  no_match: No matching stocks found
 metric:
-  revenue: "Revenue"
-  revenue_yoy: "YoY Revenue Growth"
-  revenue_monthly: "Monthly Revenue"
-  gross_margin: "Gross Margin"
-  operating_margin: "Operating Margin"
-  net_margin: "Net Margin"
-  roe: "Return on Equity (ROE)"
-  per: "Price-to-Earnings (PER)"
-  pbr: "Price-to-Book (PBR)"
-  dividend_yield: "Dividend Yield"
-  debt_ratio: "Debt Ratio"
-  current_ratio: "Current Ratio"
-  eps: "Earnings Per Share (EPS)"
-  total_assets: "Total Assets"
-  total_liabilities: "Total Liabilities"
-  total_equity: "Total Equity"
-  operating_cash_flow: "Operating Cash Flow"
-  investing_cash_flow: "Investing Cash Flow"
-  financing_cash_flow: "Financing Cash Flow"
-  fcf: "Free Cash Flow"
-
-# ── Dividend Related ──────────────────────────
+  revenue: Revenue
+  revenue_yoy: YoY Revenue Growth
+  revenue_monthly: Monthly Revenue
+  gross_margin: Gross Margin
+  operating_margin: Operating Margin
+  net_margin: Net Margin
+  roe: Return on Equity (ROE)
+  per: Price-to-Earnings (PER)
+  pbr: Price-to-Book (PBR)
+  dividend_yield: Dividend Yield
+  debt_ratio: Debt Ratio
+  current_ratio: Current Ratio
+  eps: Earnings Per Share (EPS)
+  total_assets: Total Assets
+  total_liabilities: Total Liabilities
+  total_equity: Total Equity
+  operating_cash_flow: Operating Cash Flow
+  investing_cash_flow: Investing Cash Flow
+  financing_cash_flow: Financing Cash Flow
+  fcf: Free Cash Flow
 dividend:
-  status_paid: "✓ Paid"
-  status_pending: "⏳ Pending"
-  status_unpaid: "⏳ Pending"
-  frequency_quarterly: "Quarterly"
-  frequency_annual: "Annual"
-  frequency_irregular: "Irregular"
-  no_record: "No dividend record for this company"
-  no_record_recent: "No dividend payout in recent 5 years"
-  cash_dividend: "Cash Dividend"
-  stock_dividend: "Stock Dividend"
-  total_dividend: "Total Dividend"
-  ex_date_label: "Ex-Dividend Date"
-  pay_date_label: "Payment Date"
-  year: "Year"
-  historical_record: "Historical Dividend Record"
-  latest_quarter: "Latest Quarter"
-  estimated_annual: "Estimated Annual Dividend"
-  dividend_yield_label: "Dividend Yield"
-  summary: "Dividend Summary"
-  detail_expand: "📋 Expand to view historical dividend record"
-
-# ── Buttons & Actions ──────────────────────────
+  status_paid: ✓ Paid
+  status_pending: ⏳ Pending
+  status_unpaid: ⏳ Pending
+  frequency_quarterly: Quarterly
+  frequency_annual: Annual
+  frequency_irregular: Irregular
+  no_record: No dividend record for this company
+  no_record_recent: No dividend payout in recent 5 years
+  cash_dividend: Cash Dividend
+  stock_dividend: Stock Dividend
+  total_dividend: Total Dividend
+  ex_date_label: Ex-Dividend Date
+  pay_date_label: Payment Date
+  year: Year
+  historical_record: Historical Dividend Record
+  latest_quarter: Latest Quarter
+  estimated_annual: Estimated Annual Dividend
+  dividend_yield_label: Dividend Yield
+  summary: Dividend Summary
+  detail_expand: 📋 Expand to view historical dividend record
 action:
-  submit: "Submit"
-  retry: "Retry"
-  reset: "Reset"
-  save: "Save"
-  cancel: "Cancel"
-  back: "Back"
-  go_to_detail: "Go to Details"
-  review: "Review"
-  start: "Start"
-  share: "Share"
-  copy_link: "Copy Link"
-  next_page: "Next Page"
-  prev_page: "Previous Page"
-
-# ── Status Messages ────────────────────────────
+  submit: Submit
+  retry: Retry
+  reset: Reset
+  save: Save
+  cancel: Cancel
+  back: Back
+  go_to_detail: Go to Details
+  review: Review
+  start: Start
+  share: Share
+  copy_link: Copy Link
+  next_page: Next Page
+  prev_page: Previous Page
 status:
-  loading: "Loading..."
-  loading_stock: "Loading stock data..."
-  loading_page: "Loading page..."
-  checking_events: "🔍 Checking recent events..."
-  rate_limited: "⚠️ API rate limit reached. Some data may be unavailable. Please try again later."
-  rate_limited_short: "⚠️ FinMind API temporarily limited. Data may be incomplete."
-  data_missing: "No data available"
-  no_revenue_data: "No revenue data"
-  no_price_data: "No price data"
-  no_institutional_data: "No institutional data"
-  no_peer_data: "No peer companies found in the same industry"
-
-# ── Timeline ────────────────────────────────────
+  loading: Loading...
+  loading_stock: Loading stock data...
+  loading_page: Loading page...
+  checking_events: 🔍 Checking recent events...
+  rate_limited: ⚠️ API rate limit reached. Some data may be unavailable. Please try
+    again later.
+  rate_limited_short: ⚠️ FinMind API temporarily limited. Data may be incomplete.
+  data_missing: No data available
+  no_revenue_data: No revenue data
+  no_price_data: No price data
+  no_institutional_data: No institutional data
+  no_peer_data: No peer companies found in the same industry
 timeline:
-  label_1y: "1Y"
-  label_3y: "3Y"
-  label_5y: "5Y"
-  label_all: "All"
-  filter_failed: "⚠️ Timeline filter failed, showing all data"
-  no_data_in_range: "📌 No data in this range, showing all data"
-
-# ── Error Messages ──────────────────────────────
+  label_1y: 1Y
+  label_3y: 3Y
+  label_5y: 5Y
+  label_all: All
+  filter_failed: ⚠️ Timeline filter failed, showing all data
+  no_data_in_range: 📌 No data in this range, showing all data
 error:
-  not_found: "Stock ID {sid} not found"
-  no_data: "Unable to fetch data"
-  no_answer: "Quiz answer not found, please restart"
-  no_course: "Course content not found"
-  no_list_name: "Please enter a list name"
-  list_exists: "List name already exists or creation failed"
-  remove_failed: "Removal failed"
-  settings_saved: "✅ Settings saved"
-  api_error: "❌ API Error: {message}"
-
-# ── Input Validation ──────────────────────────
+  not_found: Stock ID {sid} not found
+  no_data: Unable to fetch data
+  no_answer: Quiz answer not found, please restart
+  no_course: Course content not found
+  no_list_name: Please enter a list name
+  list_exists: List name already exists or creation failed
+  remove_failed: Removal failed
+  settings_saved: ✅ Settings saved
+  api_error: '❌ API Error: {message}'
 validation:
   error:
-    empty: "Please enter a stock ID"
-    not_digit: "Please enter a number; you entered \"{input}\""
-    not_four_digit: "Stock ID must be 4 digits; you entered \"{input}\" ({length} digits)"
-    format: "Invalid format; please enter 4 digits, you entered \"{input}\""
-
-# ── Results / Feedback ─────────────────────────
+    empty: Please enter a stock ID
+    not_digit: Please enter a number; you entered "{input}"
+    not_four_digit: Stock ID must be 4 digits; you entered "{input}" ({length} digits)
+    format: Invalid format; please enter 4 digits, you entered "{input}"
 result:
-  score: "Correct Answers"
-  accuracy: "Accuracy"
-  excellent: "Excellent performance, top tier in the industry"
-  good: "Stable performance, room for improvement"
-  needs_attention: "Needs attention, may drag down overall performance"
-  correct: "✅ Correct"
-  wrong: "❌ Incorrect"
-
-# ── Comparison ─────────────────────────────────
+  score: Correct Answers
+  accuracy: Accuracy
+  excellent: Excellent performance, top tier in the industry
+  good: Stable performance, room for improvement
+  needs_attention: Needs attention, may drag down overall performance
+  correct: ✅ Correct
+  wrong: ❌ Incorrect
 comparison:
-  vs: "vs."
-  industry_avg: "Industry Average"
-  rank: "Rank"
-  stronger: "Stronger than peers"
-  weaker: "Weaker than peers"
-  similar: "Comparable to peers"
-
-# ── Financial Statement Items ──────────────────
+  vs: vs.
+  industry_avg: Industry Average
+  rank: Rank
+  stronger: Stronger than peers
+  weaker: Weaker than peers
+  similar: Comparable to peers
 financial_statement:
-  revenue: "Revenue"
-  gross_profit: "Gross Profit"
-  operating_income: "Operating Income"
-  net_income: "Net Income"
-  total_assets: "Total Assets"
-  total_liabilities: "Total Liabilities"
-  current_assets: "Current Assets"
-  current_liabilities: "Current Liabilities"
-  total_equity: "Total Equity"
-
-# ── Notification Center ───────────────────────
+  revenue: Revenue
+  gross_profit: Gross Profit
+  operating_income: Operating Income
+  net_income: Net Income
+  total_assets: Total Assets
+  total_liabilities: Total Liabilities
+  current_assets: Current Assets
+  current_liabilities: Current Liabilities
+  total_equity: Total Equity
 notification:
-  title: "Notifications"
-  subtitle: "Track important events for your watched stocks"
-  mark_all_read: "All notifications marked as read"
-  no_notification: "No notifications"
-
-# ── Investment Memo ────────────────────────────
+  title: Notifications
+  subtitle: Track important events for your watched stocks
+  mark_all_read: All notifications marked as read
+  no_notification: No notifications
 memo:
-  title: "Investment Memo"
-  add: "Add Memo"
-  edit: "Edit Memo"
-  delete: "Delete Memo"
-  empty: "No memos yet"
-
-# ── Disclaimer ─────────────────────────────────
+  title: Investment Memo
+  add: Add Memo
+  edit: Edit Memo
+  delete: Delete Memo
+  empty: No memos yet
 disclaimer:
-  general: "⚠️ This tool is for educational purposes only. All data comes from public information and FinMind. Does not constitute investment advice. Investing involves risk; please evaluate carefully."
-  expert: "⚠️ Expert analysis is AI-assisted and for reference only. Does not constitute investment advice."
-  historical: "⚠️ Historical scenarios are hypothetical calculations for educational purposes only. Does not constitute investment advice. Past performance does not guarantee future results."
-  feedback_positive: "Thank you for your positive feedback! 👍"
-  feedback_negative: "Thank you for your feedback, we will keep improving! 👎"
-
-# ── Unit Labels ────────────────────────────────
+  general: ⚠️ This tool is for educational purposes only. All data comes from public
+    information and FinMind. Does not constitute investment advice. Investing involves
+    risk; please evaluate carefully.
+  expert: ⚠️ Expert analysis is AI-assisted and for reference only. Does not constitute
+    investment advice.
+  historical: ⚠️ Historical scenarios are hypothetical calculations for educational
+    purposes only. Does not constitute investment advice. Past performance does not
+    guarantee future results.
+  feedback_positive: Thank you for your positive feedback! 👍
+  feedback_negative: Thank you for your feedback, we will keep improving! 👎
 unit:
-  hundred_million: "B"
-  ten_thousand: "M"
-  yuan: "TWD"
-  percent: "%"
-  shares: "K"
-  thousand_shares: "10K"
-
-# ── Story Arc Labels (C202) ────────────────────
+  hundred_million: B
+  ten_thousand: M
+  yuan: TWD
+  percent: '%'
+  shares: K
+  thousand_shares: 10K
 story_arc:
-  growth: "Growth"
-  decline: "Decline"
-  volatile: "Volatile"
-  recovery: "Recovery"
-  growth_description: "Revenue and market sentiment leaned positive over the past 6 months; overall trend is upward."
-  decline_description: "Faced more negative events over the past 6 months; market confidence has pulled back."
-  volatile_description: "Positive and negative events were intertwined over the past 6 months; market views are divided."
-  recovery_description: "Positive signals have emerged after adjustment; market sentiment is gradually warming."
-  title: "Story Arcs"
-  legend_title: "Story Arc Legend"
-  badge_label: "{emoji} {label}"
-  badge_period: "📅 {start} ～ {end}"
-  badge_events: "📌 **{count}** events in this period"
-  section_title: "📈 Story Arcs"
-  section_subtitle: "Auto-detected major phases of the company story, helping understand long-term trends and turning points"
+  growth: Growth
+  decline: Decline
+  volatile: Volatile
+  recovery: Recovery
+  growth_description: Revenue and market sentiment leaned positive over the past 6
+    months; overall trend is upward.
+  decline_description: Faced more negative events over the past 6 months; market confidence
+    has pulled back.
+  volatile_description: Positive and negative events were intertwined over the past
+    6 months; market views are divided.
+  recovery_description: Positive signals have emerged after adjustment; market sentiment
+    is gradually warming.
+  title: Story Arcs
+  legend_title: Story Arc Legend
+  badge_label: '{emoji} {label}'
+  badge_period: 📅 {start} ～ {end}
+  badge_events: 📌 **{count}** events in this period
+  section_title: 📈 Story Arcs
+  section_subtitle: Auto-detected major phases of the company story, helping understand
+    long-term trends and turning points
   legend:
-    growth: "Growth"
-    decline: "Decline"
-    volatile: "Volatile"
-    recovery: "Recovery"
-  no_arcs: "Not enough story arcs detected yet"
-  event_count_label: "Events"
-  period_h1: "H1 {year}"
-  period_h2: "H2 {year}"
-
-# ── Bear vs Bull Debate Cards (C199) ──────────
+    growth: Growth
+    decline: Decline
+    volatile: Volatile
+    recovery: Recovery
+  no_arcs: Not enough story arcs detected yet
+  event_count_label: Events
+  period_h1: H1 {year}
+  period_h2: H2 {year}
 debate:
-  title: "Bear vs Bull Debate"
-  bear_case: "Bear Case"
-  bull_case: "Bull Case"
-  verdict: "Overall Assessment"
-  disclaimer: "The debate content above is auto-organized by the system based on public data. For reference only; does not constitute investment advice."
-  bear_strong: "Bearish signals stronger"
-  bull_strong: "Bullish signals stronger"
-  neutral: "Bull-Bear Standoff"
-  confidence: "Confidence"
-  evidence: "Supporting Evidence"
-  counter: "Counter-Argument"
-  summary: "Debate Summary"
-  no_data: "Not enough debate data available"
-  no_data_detail: "There is not enough data to generate debate arguments.\n\nPossible reasons:\n\n• Insufficient peer comparison data\n• Incomplete financial metric data\n\n💡 Please verify that the stock has peer comparison data and try again."
-  auto_generated: "Auto-generated"
-  # Metric display names
-  metric_roe: "ROE"
-  metric_revenue_yoy: "Revenue YoY"
-  metric_gross_margin: "Gross Margin"
-  metric_operating_margin: "Operating Margin"
-  metric_net_margin: "Net Margin"
-  metric_debt_ratio: "Debt Ratio"
-  metric_current_ratio: "Current Ratio"
-  metric_dividend_yield: "Dividend Yield"
-  # Per-metric bull/bear argument templates
-  roe_bull: "ROE {value}% is above peer average {peer_avg}%, indicating better efficiency in using shareholder capital"
-  roe_bear: "ROE {value}% is below peer average {peer_avg}%, suggesting room for improvement in capital efficiency"
-  revenue_yoy_bull: "Revenue YoY {value}% outperforms peer average {peer_avg}%, indicating stronger growth momentum"
-  revenue_yoy_bear: "Revenue YoY {value}% underperforms peer average {peer_avg}%, suggesting weaker growth momentum"
-  gross_margin_bull: "Gross Margin {value}% is above peer average {peer_avg}%, indicating better pricing power or cost control"
-  gross_margin_bear: "Gross Margin {value}% is below peer average {peer_avg}%, suggesting weaker pricing power or cost control"
-  operating_margin_bull: "Operating Margin {value}% is above peer average {peer_avg}%, indicating better operational efficiency"
-  operating_margin_bear: "Operating Margin {value}% is below peer average {peer_avg}%, suggesting room for operational improvement"
-  net_margin_bull: "Net Margin {value}% is above peer average {peer_avg}%, indicating stronger overall profitability"
-  net_margin_bear: "Net Margin {value}% is below peer average {peer_avg}%, indicating relatively weaker profitability"
-  debt_ratio_bull: "Debt Ratio {value}% is below peer average {peer_avg}%, indicating a more solid financial structure"
-  debt_ratio_bear: "Debt Ratio {value}% is above peer average {peer_avg}%, indicating a relatively weaker financial structure"
-  current_ratio_bull: "Current Ratio {value}% is above peer average {peer_avg}%, indicating better short-term solvency"
-  current_ratio_bear: "Current Ratio {value}% is below peer average {peer_avg}%, suggesting room for improvement in short-term solvency"
-  dividend_yield_bull: "Dividend Yield {value}% is above peer average {peer_avg}%, offering a relatively higher dividend return"
-  dividend_yield_bear: "Dividend Yield {value}% is below peer average {peer_avg}%, offering a relatively lower dividend return"
-  # Banned words filter fallback
-  filtered: "This argument was filtered due to investment advice language"
+  title: Bear vs Bull Debate
+  bear_case: Bear Case
+  bull_case: Bull Case
+  verdict: Overall Assessment
+  disclaimer: The debate content above is auto-organized by the system based on public
+    data. For reference only; does not constitute investment advice.
+  bear_strong: Bearish signals stronger
+  bull_strong: Bullish signals stronger
+  neutral: Bull-Bear Standoff
+  confidence: Confidence
+  evidence: Supporting Evidence
+  counter: Counter-Argument
+  summary: Debate Summary
+  no_data: Not enough debate data available
+  no_data_detail: 'There is not enough data to generate debate arguments.
 
-# ── What If Calculator (C200) ─────────────────
+
+    Possible reasons:
+
+
+    • Insufficient peer comparison data
+
+    • Incomplete financial metric data
+
+
+    💡 Please verify that the stock has peer comparison data and try again.'
+  auto_generated: Auto-generated
+  metric_roe: ROE
+  metric_revenue_yoy: Revenue YoY
+  metric_gross_margin: Gross Margin
+  metric_operating_margin: Operating Margin
+  metric_net_margin: Net Margin
+  metric_debt_ratio: Debt Ratio
+  metric_current_ratio: Current Ratio
+  metric_dividend_yield: Dividend Yield
+  roe_bull: ROE {value}% is above peer average {peer_avg}%, indicating better efficiency
+    in using shareholder capital
+  roe_bear: ROE {value}% is below peer average {peer_avg}%, suggesting room for improvement
+    in capital efficiency
+  revenue_yoy_bull: Revenue YoY {value}% outperforms peer average {peer_avg}%, indicating
+    stronger growth momentum
+  revenue_yoy_bear: Revenue YoY {value}% underperforms peer average {peer_avg}%, suggesting
+    weaker growth momentum
+  gross_margin_bull: Gross Margin {value}% is above peer average {peer_avg}%, indicating
+    better pricing power or cost control
+  gross_margin_bear: Gross Margin {value}% is below peer average {peer_avg}%, suggesting
+    weaker pricing power or cost control
+  operating_margin_bull: Operating Margin {value}% is above peer average {peer_avg}%,
+    indicating better operational efficiency
+  operating_margin_bear: Operating Margin {value}% is below peer average {peer_avg}%,
+    suggesting room for operational improvement
+  net_margin_bull: Net Margin {value}% is above peer average {peer_avg}%, indicating
+    stronger overall profitability
+  net_margin_bear: Net Margin {value}% is below peer average {peer_avg}%, indicating
+    relatively weaker profitability
+  debt_ratio_bull: Debt Ratio {value}% is below peer average {peer_avg}%, indicating
+    a more solid financial structure
+  debt_ratio_bear: Debt Ratio {value}% is above peer average {peer_avg}%, indicating
+    a relatively weaker financial structure
+  current_ratio_bull: Current Ratio {value}% is above peer average {peer_avg}%, indicating
+    better short-term solvency
+  current_ratio_bear: Current Ratio {value}% is below peer average {peer_avg}%, suggesting
+    room for improvement in short-term solvency
+  dividend_yield_bull: Dividend Yield {value}% is above peer average {peer_avg}%,
+    offering a relatively higher dividend return
+  dividend_yield_bear: Dividend Yield {value}% is below peer average {peer_avg}%,
+    offering a relatively lower dividend return
+  filtered: This argument was filtered due to investment advice language
 scenario:
-  title: "What-If Calculator"
-  calculator_title: "What If...?"
-  input_label: "Enter Assumptions"
-  result_label: "Estimated Result"
-  historical_precedent: "Historical Precedent"
-  no_precedent: "No direct historical precedent"
-  disclaimer: "⚠️ The above calculations are hypothetical and for educational purposes only. Does not constitute investment advice. Past performance does not guarantee future results."
-  period: "Period"
-  return_label: "Return"
-  max_drawdown: "Max Drawdown"
-  recovery_time: "Recovery Time"
-  probability: "Probability"
-  similar_scenarios: "Similar Scenarios"
-  no_scenarios: "No similar scenarios found"
+  title: What-If Calculator
+  calculator_title: What If...?
+  input_label: Enter Assumptions
+  result_label: Estimated Result
+  historical_precedent: Historical Precedent
+  no_precedent: No direct historical precedent
+  disclaimer: ⚠️ The above calculations are hypothetical and for educational purposes
+    only. Does not constitute investment advice. Past performance does not guarantee
+    future results.
+  period: Period
+  return_label: Return
+  max_drawdown: Max Drawdown
+  recovery_time: Recovery Time
+  probability: Probability
+  similar_scenarios: Similar Scenarios
+  no_scenarios: No similar scenarios found
   input:
-    stock_price: "Stock Price"
-    pe_ratio: "P/E Ratio"
-    revenue_growth: "Revenue Growth"
-    margin_change: "Margin Change"
+    stock_price: Stock Price
+    pe_ratio: P/E Ratio
+    revenue_growth: Revenue Growth
+    margin_change: Margin Change
   output:
-    estimated_price: "Est. Price"
-    estimated_pe: "Est. P/E"
-    estimated_revenue: "Est. Revenue"
-  cta: "Adjust parameters and recalculate"
-  scenario_label: "Scenario {number}"
-  compare_scenarios: "Compare Scenarios"
-  add_scenario: "Add Scenario"
-  remove_scenario: "Remove Scenario"
-  # Custom calculator (C200)
-  custom_title: "Custom Scenario"
-  custom_caption: "Set your own investment scenario and see what history would have brought you."
-  custom_buy_date: "Buy Date"
-  custom_amount: "Investment Amount (TWD)"
-  custom_include_dividends: "Include Dividends"
-  custom_calculate: "Calculate"
-  custom_calculating: "Calculating..."
-  custom_cannot_calculate: "Cannot Calculate"
-  custom_error_prefix: "Error: "
-  custom_buy_date_label: "Buy Date:"
-  custom_buy_price_label: "Buy Price:"
-  custom_shares_label: "Shares Held:"
-  custom_end_date_label: "End Date:"
-  custom_end_price_label: "End Price:"
-  custom_total_return_label: "Total Return:"
-  custom_absolute_return_label: "Absolute Return:"
-  custom_annualized_return_label: "Annualized Return:"
-  custom_dividend_income_label: "Dividend Income:"
-  custom_max_drawdown_label: "Max Drawdown:"
-  custom_estimated_note: "⚠️ Some data is estimated; results are for reference only."
-  custom_result_title: "{stock_name} ({stock_id}) — Custom Scenario"
-  # Error keys
-  before_ipo: "The selected date is before the company's IPO; cannot calculate."
-  future_date: "The selected date is in the future. Please select a past date."
-  invalid_date: "Invalid date format. Please enter a valid date."
-  invalid_range: "Invalid date range. The start date must be before the end date."
-  amount_too_small: "Investment amount is too small. Please enter at least 1,000 TWD."
-  no_data: "Unable to fetch price data. Please verify the stock ID."
-  historical_title: "Historical Scenarios"
-  upcoming: "Coming Soon"
-  upcoming_analysis: "Historical scenario analysis coming soon!"
-  upcoming_detail: "We are preparing historical scenario analysis for this stock. Check out other available stocks in the meantime!"
-  source_detected: "System Detection"
-  source_case_study: "Case Study"
-  source_milestone: "Company Milestone"
-  no_timeline_data: "Not enough timeline content available"
-  no_timeline_detail: "The system has not found any events for **{name}** within the \"{range}\" range."
-  no_timeline_sources: "Timeline data sources include:"
-  no_timeline_auto: "Auto-detection: revenue anomalies, news events, stock price anomalies"
-  no_timeline_case: "Historical case studies: market event analysis related to this company"
-  no_timeline_milestone: "Company milestones: founding, listing, major product launches, etc."
-  no_timeline_tip: "Try expanding the time range, or browse other pages to trigger auto event detection."
-  timeline_count: "**{count}** timeline events found ({range})"
-  legend_title: "Legend"
-  legend_major: "Major Event"
-  legend_major_desc: "High severity, requires close attention"
-  legend_important: "Important Event"
-  legend_important_desc: "Medium severity, worth noting"
-  legend_reference: "Reference Event"
-  legend_reference_desc: "Low severity, for background reference"
-  time_range: "Time Range"
-  loading_stocks: "Loading stock data..."
-  loading_search: "Searching..."
-  loading_etf: "Loading ETF data..."
-  loading_etf_price: "Fetching ETF prices (first load may take longer; switching tabs will be faster)..."
-  loading_market: "Fetching market data..."
-  loading_benchmark: "Loading benchmark company {name} data..."
-  loading_benchmark_search: "Searching for industry benchmark..."
-  loading_latest_price: "Loading latest prices..."
-  loading_notifications: "Checking notifications..."
-  loading_marking: "Marking..."
-  loading_notification_list: "Loading notifications..."
-
-# ── Historical Scenarios (C74) ──────────────────
+    estimated_price: Est. Price
+    estimated_pe: Est. P/E
+    estimated_revenue: Est. Revenue
+  cta: Adjust parameters and recalculate
+  scenario_label: Scenario {number}
+  compare_scenarios: Compare Scenarios
+  add_scenario: Add Scenario
+  remove_scenario: Remove Scenario
+  custom_title: Custom Scenario
+  custom_caption: Set your own investment scenario and see what history would have
+    brought you.
+  custom_buy_date: Buy Date
+  custom_amount: Investment Amount (TWD)
+  custom_include_dividends: Include Dividends
+  custom_calculate: Calculate
+  custom_calculating: Calculating...
+  custom_cannot_calculate: Cannot Calculate
+  custom_error_prefix: 'Error: '
+  custom_buy_date_label: 'Buy Date:'
+  custom_buy_price_label: 'Buy Price:'
+  custom_shares_label: 'Shares Held:'
+  custom_end_date_label: 'End Date:'
+  custom_end_price_label: 'End Price:'
+  custom_total_return_label: 'Total Return:'
+  custom_absolute_return_label: 'Absolute Return:'
+  custom_annualized_return_label: 'Annualized Return:'
+  custom_dividend_income_label: 'Dividend Income:'
+  custom_max_drawdown_label: 'Max Drawdown:'
+  custom_estimated_note: ⚠️ Some data is estimated; results are for reference only.
+  custom_result_title: '{stock_name} ({stock_id}) — Custom Scenario'
+  before_ipo: The selected date is before the company's IPO; cannot calculate.
+  future_date: The selected date is in the future. Please select a past date.
+  invalid_date: Invalid date format. Please enter a valid date.
+  invalid_range: Invalid date range. The start date must be before the end date.
+  amount_too_small: Investment amount is too small. Please enter at least 1,000 TWD.
+  no_data: Unable to fetch price data. Please verify the stock ID.
+  historical_title: Historical Scenarios
+  upcoming: Coming Soon
+  upcoming_analysis: Historical scenario analysis coming soon!
+  upcoming_detail: We are preparing historical scenario analysis for this stock. Check
+    out other available stocks in the meantime!
+  source_detected: System Detection
+  source_case_study: Case Study
+  source_milestone: Company Milestone
+  no_timeline_data: Not enough timeline content available
+  no_timeline_detail: The system has not found any events for **{name}** within the
+    "{range}" range.
+  no_timeline_sources: 'Timeline data sources include:'
+  no_timeline_auto: 'Auto-detection: revenue anomalies, news events, stock price anomalies'
+  no_timeline_case: 'Historical case studies: market event analysis related to this
+    company'
+  no_timeline_milestone: 'Company milestones: founding, listing, major product launches,
+    etc.'
+  no_timeline_tip: Try expanding the time range, or browse other pages to trigger
+    auto event detection.
+  timeline_count: '**{count}** timeline events found ({range})'
+  legend_title: Legend
+  legend_major: Major Event
+  legend_major_desc: High severity, requires close attention
+  legend_important: Important Event
+  legend_important_desc: Medium severity, worth noting
+  legend_reference: Reference Event
+  legend_reference_desc: Low severity, for background reference
+  time_range: Time Range
+  loading_stocks: Loading stock data...
+  loading_search: Searching...
+  loading_etf: Loading ETF data...
+  loading_etf_price: Fetching ETF prices (first load may take longer; switching tabs
+    will be faster)...
+  loading_market: Fetching market data...
+  loading_benchmark: Loading benchmark company {name} data...
+  loading_benchmark_search: Searching for industry benchmark...
+  loading_latest_price: Loading latest prices...
+  loading_notifications: Checking notifications...
+  loading_marking: Marking...
+  loading_notification_list: Loading notifications...
 historical_scenario:
-  "2330":
+  '2330':
     s1:
-      title: "Scenario 1: Buying at the 2020 Pandemic Low"
-      content: "If you had bought TSMC at the pandemic panic low in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (excl. dividends)\n\n💡 This demonstrates the long-term value of buying quality assets during panic."
-    s2:
-      title: "Scenario 2: Buying at the 2022 High"
-      content: "If you had bought TSMC at the January 2022 high (around {buy_price} TWD), you would have faced the global semiconductor inventory correction, with the stock price falling to {low_price} TWD.\n\n📉 **Short-term drop: approx. {drop_pct}%**\n\n💡 Even good companies can face significant drawdowns if bought at a peak."
-    s3:
-      title: "Scenario 3: DCA Over 5 Years"
-      content: "If you had invested in TSMC via dollar-cost averaging every month starting from {start_year}, regardless of price fluctuations,\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 DCA effectively smooths out purchase costs and is suitable for long-term investors."
-  "2317":
-    s1:
-      title: "Scenario 1: Buying at the 2020 Pandemic Low"
-      content: "If you had bought Foxconn in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Foxconn's transformation story requires patience; long-term holding is needed to see results."
-    s2:
-      title: "Scenario 2: Buying at the 2017 High"
-      content: "If you had bought Foxconn at the 2017 high (around {buy_price} TWD), you would have faced slowing iPhone sales and a prolonged period of stagnation.\n\n📉 **{years}-year return: approx. {return_range}%** (incl. dividends)\n\n💡 Buying at a peak may require a much longer time to break even."
-    s3:
-      title: "Scenario 3: AI Server Theme Breakout"
-      content: "If you had bought Foxconn in early {buy_date} (around {buy_price} TWD) based on the AI server trend, the stock price is now approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%**\n\n💡 Identifying industry trends before they gain traction can yield excess returns."
-  "2454":
-    s1:
-      title: "Scenario 1: Buying at the 2021 High"
-      content: "If you had bought MediaTek at the 2021 high (around {buy_price} TWD), you would have faced a smartphone market downturn and inventory correction.\n\n📉 **Short-term drop: approx. {drop_pct}%**\n\n💡 Even growth stocks carry risks when bought at excessive valuations."
-    s2:
-      title: "Scenario 2: Buying at the 2023 Low"
-      content: "If you had bought MediaTek at the 2023 low (around {buy_price} TWD), benefiting from smartphone market recovery and AI PC themes,\n\n📈 **Return: approx. {return_range}%**\n\n💡 Buying quality companies at industry troughs can yield substantial returns."
-    s3:
-      title: "Scenario 3: DCA Over 3 Years"
-      content: "If you had invested in MediaTek via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 DCA is particularly effective on high-volatility tech stocks."
-  "2308":
-    s1:
-      title: "Scenario 1: Buying at the 2020 Pandemic Low"
-      content: "If you had bought Delta Electronics in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Delta's long-term growth in power management is irreplaceable."
-    s2:
-      title: "Scenario 2: AI Data Center Theme"
-      content: "If you had bought Delta Electronics in early {buy_date} (around {buy_price} TWD) based on AI data center power demand,\n\n📈 **Return: approx. {return_pct}%**\n\n💡 Capture opportunities in the AI infrastructure supply chain."
-    s3:
-      title: "Scenario 3: DCA Over 5 Years"
-      content: "If you had invested in Delta Electronics via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 Steady growth stocks are suitable for long-term DCA investing."
-  "2881":
-    s1:
-      title: "Scenario 1: Buying at the 2020 Pandemic Low"
-      content: "If you had bought Fubon Financial in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Buying financial stocks at lows can yield substantial long-term returns."
-    s2:
-      title: "Scenario 2: Benefiting from Rate Hike Cycle"
-      content: "If you had bought Fubon Financial before the rate hike cycle began in 2022 (around {buy_price} TWD), benefiting from widening interest rate spreads,\n\n📈 **Return: approx. {return_range}%**\n\n💡 Financial stocks typically perform well in a rising rate environment."
-    s3:
-      title: "Scenario 3: DCA Over 5 Years"
-      content: "If you had invested in Fubon Financial via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 Financial stocks offer stable dividends, suitable for dividend investors."
-  "2882":
-    s1:
-      title: "Scenario 1: Buying at the 2020 Pandemic Low"
-      content: "If you had bought Cathay Financial in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Life insurance stocks performed well after the low-interest-rate environment reversed."
-    s2:
-      title: "Scenario 2: IFRS 17 Adoption Challenge"
-      content: "If you had bought Cathay Financial in 2023 (around {buy_price} TWD), facing the uncertainty of IFRS 17 accounting standard adoption,\n\n📊 **Return: approx. {return_range}%**\n\n💡 Policy changes may cause short-term volatility, but long-term impact is limited."
-    s3:
-      title: "Scenario 3: DCA Over 5 Years"
-      content: "If you had invested in Cathay Financial via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 Financial stocks are suitable for long-term holding with stable dividends."
-  "1301":
-    s1:
-      title: "Scenario 1: Buying at the 2021 Peak"
-      content: "If you had bought Formosa Plastics at the 2021 petrochemical peak (around {buy_price} TWD), you would have faced a cyclical downturn and China overcapacity.\n\n📉 **Drop: approx. {drop_range}%**\n\n💡 Buying cyclical stocks at their peak carries extreme risk."
-    s2:
-      title: "Scenario 2: Buying at the 2020 Low"
-      content: "If you had bought Formosa Plastics in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📊 **Return: mainly from dividends, limited capital appreciation**\n\n💡 Traditional industry stocks have limited growth but stable dividends."
-    s3:
-      title: "Scenario 3: DCA Over 5 Years"
-      content: "If you had invested in Formosa Plastics via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%** (mainly from dividends)\n\n💡 Cyclical stocks are suitable for DCA accumulation at low points."
-  "2002":
-    s1:
-      title: "Scenario 1: 2021 Steel Cycle Peak"
-      content: "If you had bought China Steel at the 2021 steel cycle peak (around {buy_price} TWD), you would have faced declining demand and falling raw material prices.\n\n📉 **Drop: approx. {drop_range}%**\n\n💡 Steel stocks have clear cyclical patterns; chasing highs is risky."
-    s2:
-      title: "Scenario 2: Buying at the 2020 Low"
-      content: "If you had bought China Steel in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📊 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 Buy at the cycle trough and wait for the next upturn."
-    s3:
-      title: "Scenario 3: DCA Over 5 Years"
-      content: "If you had invested in China Steel via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 Steel stocks are suitable for DCA during cycle lows."
-  "2382":
-    s1:
-      title: "Scenario 1: Buying at the 2020 Pandemic Low"
-      content: "If you had bought Quanta Computer in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📈 **Return: approx. {return_pct}%** (incl. dividends)\n\n💡 The AI server trend transformed Quanta from an NB contract manufacturer."
-    s2:
-      title: "Scenario 2: Before the 2023 AI Theme Breakout"
-      content: "If you had bought Quanta Computer in early {buy_date} (around {buy_price} TWD) based on the AI server trend,\n\n📈 **Return: approx. {return_pct}%**\n\n💡 Identifying industry trends before the breakout yields surprising returns."
-    s3:
-      title: "Scenario 3: DCA Over 5 Years"
-      content: "If you had invested in Quanta Computer via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return approx. {annual_return}%**\n\n💡 For successfully transformed companies, DCA can also generate excess returns."
-  "3045":
-    s1:
-      title: "Scenario 1: Buying at the 2017 High"
-      content: "If you had bought Largan Precision at the 2017 historical high (around {buy_price} TWD), you would have faced rising Chinese competitors and smartphone market saturation.\n\n📉 **Drop: approx. {drop_range}%**\n\n💡 Even companies with deep moats can face structural challenges."
-    s2:
-      title: "Scenario 2: Buying at the 2020 Low"
-      content: "If you had bought Largan Precision in March 2020 (around {buy_price} TWD) and held until now ({current_year}), the stock price is approximately {current_price} TWD.\n\n📉 **Drop: approx. {drop_pct}%**\n\n💡 Even buying at lows can result in losses if industry structure deteriorates."
-    s3:
-      title: "Scenario 3: DCA Over 5 Years"
-      content: "If you had invested in Largan Precision via dollar-cost averaging every month starting from {start_year},\n\n📊 **Annualized return: approx. {annual_return}%**\n\n💡 DCA cannot protect against structurally declining industries."
+      title: 'Scenario 1: Buying at the 2020 Pandemic Low'
+      content: 'If you had bought TSMC at the pandemic panic low in March 2020 (around
+        {buy_price} TWD) and held until now ({current_year}), the stock price is approximately
+        {current_price} TWD.
 
-# ── Daily Market Dashboard (C201) ──────────────────
+
+        📈 **Return: approx. {return_pct}%** (excl. dividends)
+
+
+        💡 This demonstrates the long-term value of buying quality assets during panic.'
+    s2:
+      title: 'Scenario 2: Buying at the 2022 High'
+      content: 'If you had bought TSMC at the January 2022 high (around {buy_price}
+        TWD), you would have faced the global semiconductor inventory correction,
+        with the stock price falling to {low_price} TWD.
+
+
+        📉 **Short-term drop: approx. {drop_pct}%**
+
+
+        💡 Even good companies can face significant drawdowns if bought at a peak.'
+    s3:
+      title: 'Scenario 3: DCA Over 5 Years'
+      content: 'If you had invested in TSMC via dollar-cost averaging every month
+        starting from {start_year}, regardless of price fluctuations,
+
+
+        📊 **Annualized return approx. {annual_return}%**
+
+
+        💡 DCA effectively smooths out purchase costs and is suitable for long-term
+        investors.'
+  '2317':
+    s1:
+      title: 'Scenario 1: Buying at the 2020 Pandemic Low'
+      content: 'If you had bought Foxconn in March 2020 (around {buy_price} TWD) and
+        held until now ({current_year}), the stock price is approximately {current_price}
+        TWD.
+
+
+        📈 **Return: approx. {return_pct}%** (incl. dividends)
+
+
+        💡 Foxconn''s transformation story requires patience; long-term holding is
+        needed to see results.'
+    s2:
+      title: 'Scenario 2: Buying at the 2017 High'
+      content: 'If you had bought Foxconn at the 2017 high (around {buy_price} TWD),
+        you would have faced slowing iPhone sales and a prolonged period of stagnation.
+
+
+        📉 **{years}-year return: approx. {return_range}%** (incl. dividends)
+
+
+        💡 Buying at a peak may require a much longer time to break even.'
+    s3:
+      title: 'Scenario 3: AI Server Theme Breakout'
+      content: 'If you had bought Foxconn in early {buy_date} (around {buy_price}
+        TWD) based on the AI server trend, the stock price is now approximately {current_price}
+        TWD.
+
+
+        📈 **Return: approx. {return_pct}%**
+
+
+        💡 Identifying industry trends before they gain traction can yield excess returns.'
+  '2454':
+    s1:
+      title: 'Scenario 1: Buying at the 2021 High'
+      content: 'If you had bought MediaTek at the 2021 high (around {buy_price} TWD),
+        you would have faced a smartphone market downturn and inventory correction.
+
+
+        📉 **Short-term drop: approx. {drop_pct}%**
+
+
+        💡 Even growth stocks carry risks when bought at excessive valuations.'
+    s2:
+      title: 'Scenario 2: Buying at the 2023 Low'
+      content: 'If you had bought MediaTek at the 2023 low (around {buy_price} TWD),
+        benefiting from smartphone market recovery and AI PC themes,
+
+
+        📈 **Return: approx. {return_range}%**
+
+
+        💡 Buying quality companies at industry troughs can yield substantial returns.'
+    s3:
+      title: 'Scenario 3: DCA Over 3 Years'
+      content: 'If you had invested in MediaTek via dollar-cost averaging every month
+        starting from {start_year},
+
+
+        📊 **Annualized return approx. {annual_return}%**
+
+
+        💡 DCA is particularly effective on high-volatility tech stocks.'
+  '2308':
+    s1:
+      title: 'Scenario 1: Buying at the 2020 Pandemic Low'
+      content: 'If you had bought Delta Electronics in March 2020 (around {buy_price}
+        TWD) and held until now ({current_year}), the stock price is approximately
+        {current_price} TWD.
+
+
+        📈 **Return: approx. {return_pct}%** (incl. dividends)
+
+
+        💡 Delta''s long-term growth in power management is irreplaceable.'
+    s2:
+      title: 'Scenario 2: AI Data Center Theme'
+      content: 'If you had bought Delta Electronics in early {buy_date} (around {buy_price}
+        TWD) based on AI data center power demand,
+
+
+        📈 **Return: approx. {return_pct}%**
+
+
+        💡 Capture opportunities in the AI infrastructure supply chain.'
+    s3:
+      title: 'Scenario 3: DCA Over 5 Years'
+      content: 'If you had invested in Delta Electronics via dollar-cost averaging
+        every month starting from {start_year},
+
+
+        📊 **Annualized return approx. {annual_return}%**
+
+
+        💡 Steady growth stocks are suitable for long-term DCA investing.'
+  '2881':
+    s1:
+      title: 'Scenario 1: Buying at the 2020 Pandemic Low'
+      content: 'If you had bought Fubon Financial in March 2020 (around {buy_price}
+        TWD) and held until now ({current_year}), the stock price is approximately
+        {current_price} TWD.
+
+
+        📈 **Return: approx. {return_pct}%** (incl. dividends)
+
+
+        💡 Buying financial stocks at lows can yield substantial long-term returns.'
+    s2:
+      title: 'Scenario 2: Benefiting from Rate Hike Cycle'
+      content: 'If you had bought Fubon Financial before the rate hike cycle began
+        in 2022 (around {buy_price} TWD), benefiting from widening interest rate spreads,
+
+
+        📈 **Return: approx. {return_range}%**
+
+
+        💡 Financial stocks typically perform well in a rising rate environment.'
+    s3:
+      title: 'Scenario 3: DCA Over 5 Years'
+      content: 'If you had invested in Fubon Financial via dollar-cost averaging every
+        month starting from {start_year},
+
+
+        📊 **Annualized return approx. {annual_return}%**
+
+
+        💡 Financial stocks offer stable dividends, suitable for dividend investors.'
+  '2882':
+    s1:
+      title: 'Scenario 1: Buying at the 2020 Pandemic Low'
+      content: 'If you had bought Cathay Financial in March 2020 (around {buy_price}
+        TWD) and held until now ({current_year}), the stock price is approximately
+        {current_price} TWD.
+
+
+        📈 **Return: approx. {return_pct}%** (incl. dividends)
+
+
+        💡 Life insurance stocks performed well after the low-interest-rate environment
+        reversed.'
+    s2:
+      title: 'Scenario 2: IFRS 17 Adoption Challenge'
+      content: 'If you had bought Cathay Financial in 2023 (around {buy_price} TWD),
+        facing the uncertainty of IFRS 17 accounting standard adoption,
+
+
+        📊 **Return: approx. {return_range}%**
+
+
+        💡 Policy changes may cause short-term volatility, but long-term impact is
+        limited.'
+    s3:
+      title: 'Scenario 3: DCA Over 5 Years'
+      content: 'If you had invested in Cathay Financial via dollar-cost averaging
+        every month starting from {start_year},
+
+
+        📊 **Annualized return approx. {annual_return}%**
+
+
+        💡 Financial stocks are suitable for long-term holding with stable dividends.'
+  '1301':
+    s1:
+      title: 'Scenario 1: Buying at the 2021 Peak'
+      content: 'If you had bought Formosa Plastics at the 2021 petrochemical peak
+        (around {buy_price} TWD), you would have faced a cyclical downturn and China
+        overcapacity.
+
+
+        📉 **Drop: approx. {drop_range}%**
+
+
+        💡 Buying cyclical stocks at their peak carries extreme risk.'
+    s2:
+      title: 'Scenario 2: Buying at the 2020 Low'
+      content: 'If you had bought Formosa Plastics in March 2020 (around {buy_price}
+        TWD) and held until now ({current_year}), the stock price is approximately
+        {current_price} TWD.
+
+
+        📊 **Return: mainly from dividends, limited capital appreciation**
+
+
+        💡 Traditional industry stocks have limited growth but stable dividends.'
+    s3:
+      title: 'Scenario 3: DCA Over 5 Years'
+      content: 'If you had invested in Formosa Plastics via dollar-cost averaging
+        every month starting from {start_year},
+
+
+        📊 **Annualized return approx. {annual_return}%** (mainly from dividends)
+
+
+        💡 Cyclical stocks are suitable for DCA accumulation at low points.'
+  '2002':
+    s1:
+      title: 'Scenario 1: 2021 Steel Cycle Peak'
+      content: 'If you had bought China Steel at the 2021 steel cycle peak (around
+        {buy_price} TWD), you would have faced declining demand and falling raw material
+        prices.
+
+
+        📉 **Drop: approx. {drop_range}%**
+
+
+        💡 Steel stocks have clear cyclical patterns; chasing highs is risky.'
+    s2:
+      title: 'Scenario 2: Buying at the 2020 Low'
+      content: 'If you had bought China Steel in March 2020 (around {buy_price} TWD)
+        and held until now ({current_year}), the stock price is approximately {current_price}
+        TWD.
+
+
+        📊 **Return: approx. {return_pct}%** (incl. dividends)
+
+
+        💡 Buy at the cycle trough and wait for the next upturn.'
+    s3:
+      title: 'Scenario 3: DCA Over 5 Years'
+      content: 'If you had invested in China Steel via dollar-cost averaging every
+        month starting from {start_year},
+
+
+        📊 **Annualized return approx. {annual_return}%**
+
+
+        💡 Steel stocks are suitable for DCA during cycle lows.'
+  '2382':
+    s1:
+      title: 'Scenario 1: Buying at the 2020 Pandemic Low'
+      content: 'If you had bought Quanta Computer in March 2020 (around {buy_price}
+        TWD) and held until now ({current_year}), the stock price is approximately
+        {current_price} TWD.
+
+
+        📈 **Return: approx. {return_pct}%** (incl. dividends)
+
+
+        💡 The AI server trend transformed Quanta from an NB contract manufacturer.'
+    s2:
+      title: 'Scenario 2: Before the 2023 AI Theme Breakout'
+      content: 'If you had bought Quanta Computer in early {buy_date} (around {buy_price}
+        TWD) based on the AI server trend,
+
+
+        📈 **Return: approx. {return_pct}%**
+
+
+        💡 Identifying industry trends before the breakout yields surprising returns.'
+    s3:
+      title: 'Scenario 3: DCA Over 5 Years'
+      content: 'If you had invested in Quanta Computer via dollar-cost averaging every
+        month starting from {start_year},
+
+
+        📊 **Annualized return approx. {annual_return}%**
+
+
+        💡 For successfully transformed companies, DCA can also generate excess returns.'
+  '3045':
+    s1:
+      title: 'Scenario 1: Buying at the 2017 High'
+      content: 'If you had bought Largan Precision at the 2017 historical high (around
+        {buy_price} TWD), you would have faced rising Chinese competitors and smartphone
+        market saturation.
+
+
+        📉 **Drop: approx. {drop_range}%**
+
+
+        💡 Even companies with deep moats can face structural challenges.'
+    s2:
+      title: 'Scenario 2: Buying at the 2020 Low'
+      content: 'If you had bought Largan Precision in March 2020 (around {buy_price}
+        TWD) and held until now ({current_year}), the stock price is approximately
+        {current_price} TWD.
+
+
+        📉 **Drop: approx. {drop_pct}%**
+
+
+        💡 Even buying at lows can result in losses if industry structure deteriorates.'
+    s3:
+      title: 'Scenario 3: DCA Over 5 Years'
+      content: 'If you had invested in Largan Precision via dollar-cost averaging
+        every month starting from {start_year},
+
+
+        📊 **Annualized return: approx. {annual_return}%**
+
+
+        💡 DCA cannot protect against structurally declining industries.'
 daily_market:
-  title: "Daily Market"
-  subtitle: "What happened in the Taiwan market today"
-  last_updated: "Last updated: {time}"
-  freshness_fresh: "🟢 Live"
-  freshness_stale: "🟡 Delayed"
-  freshness_unknown: "⚪ Unknown"
-  error_load_failed: "Failed to load market error: {e}"
-  no_data: "No market data available."
-  no_sentiment_data: "No sentiment data available."
-  no_sector_data: "No sector data available."
-  no_mover_data: "No comparable price change data available."
-  flat_count: "⚪ Flat {flat_count}"
-  ad_ratio_label: "A/D Ratio {ratio}"
-
+  title: Daily Market
+  subtitle: What happened in the Taiwan market today
+  last_updated: 'Last updated: {time}'
+  freshness_fresh: 🟢 Live
+  freshness_stale: 🟡 Delayed
+  freshness_unknown: ⚪ Unknown
+  error_load_failed: 'Failed to load market error: {e}'
+  no_data: No market data available.
+  no_sentiment_data: No sentiment data available.
+  no_sector_data: No sector data available.
+  no_mover_data: No comparable price change data available.
+  flat_count: ⚪ Flat {flat_count}
+  ad_ratio_label: A/D Ratio {ratio}
   overview:
-    title: "📰 Market Overview"
-    template_bull: "The Taiwan market closed at {close:,.0f}, up {abs_change:,.0f} pts ({pct_change:+.2f}%). Trading volume was approximately {volume:,.0f} hundred million, {volume_comment}. {sector_summary}."
-    template_bear: "The Taiwan market closed at {close:,.0f}, down {abs_change:,.0f} pts ({pct_change:+.2f}%). Trading volume was approximately {volume:,.0f} hundred million, {volume_comment}. {sector_summary}."
-    template_flat: "The Taiwan market closed flat at {close:,.0f}, up slightly {abs_change:,.0f} pts ({pct_change:+.2f}%). Trading volume was approximately {volume:,.0f} hundred million, {volume_comment}. {sector_summary}."
-    volume_above: "above average"
-    volume_below: "below average"
-    volume_normal: "in line with average"
-    sector_lead_up: "{sector} led gains (+{pct:+.2f}%)"
-    sector_lead_down: "{sector} led losses ({pct:+.2f}%)"
-
+    title: 📰 Market Overview
+    template_bull: The Taiwan market closed at {close:,.0f}, up {abs_change:,.0f}
+      pts ({pct_change:+.2f}%). Trading volume was approximately {volume:,.0f} hundred
+      million, {volume_comment}. {sector_summary}.
+    template_bear: The Taiwan market closed at {close:,.0f}, down {abs_change:,.0f}
+      pts ({pct_change:+.2f}%). Trading volume was approximately {volume:,.0f} hundred
+      million, {volume_comment}. {sector_summary}.
+    template_flat: The Taiwan market closed flat at {close:,.0f}, up slightly {abs_change:,.0f}
+      pts ({pct_change:+.2f}%). Trading volume was approximately {volume:,.0f} hundred
+      million, {volume_comment}. {sector_summary}.
+    volume_above: above average
+    volume_below: below average
+    volume_normal: in line with average
+    sector_lead_up: '{sector} led gains (+{pct:+.2f}%)'
+    sector_lead_down: '{sector} led losses ({pct:+.2f}%)'
   sentiment:
-    title: "🌡️ Market Sentiment"
-    ad_ratio: "A/D Ratio"
-    ad_ratio_value: "{up}:{down}"
-    volume: "Volume"
-    volume_unit: "100M TWD"
-    mood: "Market Mood"
-    mood_bullish: "🟢 Bullish"
-    mood_neutral: "🟡 Neutral"
-    mood_bearish: "🔴 Bearish"
-    up_count: "Advancers"
-    down_count: "Decliners"
-
+    title: 🌡️ Market Sentiment
+    ad_ratio: A/D Ratio
+    ad_ratio_value: '{up}:{down}'
+    volume: Volume
+    volume_unit: 100M TWD
+    mood: Market Mood
+    mood_bullish: 🟢 Bullish
+    mood_neutral: 🟡 Neutral
+    mood_bearish: 🔴 Bearish
+    up_count: Advancers
+    down_count: Decliners
   sectors:
-    title: "🏭 Sector Performance"
-    top_n: "Top {n} Sectors"
-
+    title: 🏭 Sector Performance
+    top_n: Top {n} Sectors
   movers:
-    title: "🔥 Top Movers"
-    gainers: "🟢 Top Gainers"
-    losers: "🔴 Top Losers"
-    rank: "#{rank}"
-    price: "NT${price}"
-
+    title: 🔥 Top Movers
+    gainers: 🟢 Top Gainers
+    losers: 🔴 Top Losers
+    rank: '#{rank}'
+    price: NT${price}
   events:
-    title: "📋 Key Events"
-    empty: "No major market events today"
-
-  disclaimer: "⚠️ This page is for educational purposes only and does not constitute investment advice."
-
+    title: 📋 Key Events
+    empty: No major market events today
+  disclaimer: ⚠️ This page is for educational purposes only and does not constitute
+    investment advice.
   sources:
-    stock_info: "Stock Info & Sector Classification"
-    price_summary: "Batch Price Summary"
-    sector_data: "Sector Aggregation"
-    events: "Market Events (Local)"
-    local_db: "Local Event Database"
-
-
-# ── Business Card Sources (C209) ──────────────────
+    stock_info: Stock Info & Sector Classification
+    price_summary: Batch Price Summary
+    sector_data: Sector Aggregation
+    events: Market Events (Local)
+    local_db: Local Event Database
 business_card:
   sources:
-    price_valuation: "Price & Valuation Data"
-    financial_revenue: "Financial Statements & Revenue"
-    dividend: "Dividend Data"
-    news_institutional: "News & Institutional Investors"
-    corporate: "Corporate Data (Balance Sheet, Cash Flow)"
-
-
-# ── Event Dashboard Sources (C209) ──────────────
+    price_valuation: Price & Valuation Data
+    financial_revenue: Financial Statements & Revenue
+    dividend: Dividend Data
+    news_institutional: News & Institutional Investors
+    corporate: Corporate Data (Balance Sheet, Cash Flow)
 event_dashboard:
   sources:
-    events: "Event Records"
-    interpretation: "Event Interpretation Templates"
-    local_db: "Local Event Database"
-    templates: "Template Engine"
-
-
-# ── Source Section (C209) ──────────────────────
+    events: Event Records
+    interpretation: Event Interpretation Templates
+    local_db: Local Event Database
+    templates: Template Engine
 source_section:
-  title: "📡 Data Sources"
-  last_updated: "Last Updated"
+  title: 📡 Data Sources
+  last_updated: Last Updated
   fresh:
-    recent: "< 1 hour ago"
-    day: "< 24 hours ago"
-    stale: "> 24 hours ago" 
+    recent: < 1 hour ago
+    day: < 24 hours ago
+    stale: '> 24 hours ago'

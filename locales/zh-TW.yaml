@@ -1,590 +1,556 @@
-# zh-TW.yaml — 繁體中文
-# 本檔案包含所有 UI 顯示文字
-# 規則：用詞統一、專業、不口語化
-
-# ── App 全域 ──────────────────────────────────
 app:
-  title: "股識 Stock Explorer"
-  subtitle: "認識一家公司，從這裡開始"
-  search_placeholder: "例如：2330 或 台積電"
-  search_label: "搜尋股票"
-  loading: "載入中..."
-
-# ── 頁面名稱（sidebar + navbar）──────────────
+  title: 股識 Stock Explorer
+  subtitle: 認識一家公司，從這裡開始
+  search_placeholder: 例如：2330 或 台積電
+  search_label: 搜尋股票
+  loading: 載入中...
 page:
-  business_card: "名片"
-  operation_checkup: "營運健檢"
-  financial_health: "財務體質"
-  peer_comparison: "同業比較"
-  group_structure: "集團架構"
-  category_browser: "分類瀏覽"
-  etf_section: "ETF 專區"
-  watchlist: "我的關注"
-  event_dashboard: "事件儀表板"
-  notification_center: "通知中心"
-  investment_memo: "投資備忘錄"
-  financial_wellness: "理財健康檢查"
-  stock_screener: "股票探索"
-  settings: "設定"
-  sector_heatmap: "產業熱力圖"
-  case_study: "案例研究"
-  comprehension_check: "理解力測驗"
-  academy: "學習學院"
-  case_study_library: "歷史案例庫"
-  first_visit_guide: "新手導覽"
-  story_timeline: "故事時間軸"
-  full_story_timeline: "完整故事時間軸"
-  daily_story: "每日故事"
-  revenue_tree: "營收結構樹"
-  compare_stories: "同業比較故事"
-  moat_comparison: "護城河比較"
-  debate_cards: "看多看空辯論"
-  learn_first_gate: "學習優先門"
-  daily_market: "今日市場動態"
-
-# ── Sidebar 元素 ────────────────────────────
+  business_card: 名片
+  operation_checkup: 營運健檢
+  financial_health: 財務體質
+  peer_comparison: 同業比較
+  group_structure: 集團架構
+  category_browser: 分類瀏覽
+  etf_section: ETF 專區
+  watchlist: 我的關注
+  event_dashboard: 事件儀表板
+  notification_center: 通知中心
+  investment_memo: 投資備忘錄
+  financial_wellness: 理財健康檢查
+  stock_screener: 股票探索
+  settings: 設定
+  sector_heatmap: 產業熱力圖
+  case_study: 案例研究
+  comprehension_check: 理解力測驗
+  academy: 學習學院
+  case_study_library: 歷史案例庫
+  first_visit_guide: 新手導覽
+  story_timeline: 故事時間軸
+  full_story_timeline: 完整故事時間軸
+  daily_story: 每日故事
+  revenue_tree: 營收結構樹
+  compare_stories: 同業比較故事
+  moat_comparison: 護城河比較
+  debate_cards: 看多看空辯論
+  learn_first_gate: 學習優先門
+  daily_market: 今日市場動態
 sidebar:
-  nav_label: "導覽"
-  hot_stocks: "🔥 熱門股票"
-  hot_etfs: "🏷️ 熱門 ETF"
-  disclaimer: "⚠️ 本工具僅供認識公司使用，不構成任何投資建議。<br>投資有風險，請自行評估。"
-
-# ── 股票資訊標籤 ──────────────────────────────
+  nav_label: 導覽
+  hot_stocks: 🔥 熱門股票
+  hot_etfs: 🏷️ 熱門 ETF
+  disclaimer: ⚠️ 本工具僅供認識公司使用，不構成任何投資建議。<br>投資有風險，請自行評估。
+  search_header: 🔍 股識
 stock:
-  code: "代號"
-  name: "名稱"
-  industry: "產業"
-  price: "股價"
-  change: "漲跌"
-  not_found: "找不到股票代號 {sid}"
-  search_multiple: "找到多筆符合的股票："
-  no_match: "找不到符合的股票"
-
-# ── 財務指標名稱 ──────────────────────────────
+  code: 代號
+  name: 名稱
+  industry: 產業
+  price: 股價
+  change: 漲跌
+  not_found: 找不到股票代號 {sid}
+  search_multiple: 找到多筆符合的股票：
+  no_match: 找不到符合的股票
 metric:
-  revenue: "營業收入"
-  revenue_yoy: "營收年增率"
-  revenue_monthly: "月營收"
-  gross_margin: "毛利率"
-  operating_margin: "營業利益率"
-  net_margin: "淨利率"
-  roe: "股東權益報酬率 (ROE)"
-  per: "本益比 (PER)"
-  pbr: "淨值比 (PBR)"
-  dividend_yield: "殖利率"
-  debt_ratio: "負債比"
-  current_ratio: "流動比"
-  eps: "每股盈餘 (EPS)"
-  total_assets: "總資產"
-  total_liabilities: "總負債"
-  total_equity: "股東權益"
-  operating_cash_flow: "營業現金流"
-  investing_cash_flow: "投資現金流"
-  financing_cash_flow: "籌資現金流"
-  fcf: "自由現金流"
-
-# ── 股利相關 ──────────────────────────────────
+  revenue: 營業收入
+  revenue_yoy: 營收年增率
+  revenue_monthly: 月營收
+  gross_margin: 毛利率
+  operating_margin: 營業利益率
+  net_margin: 淨利率
+  roe: 股東權益報酬率 (ROE)
+  per: 本益比 (PER)
+  pbr: 淨值比 (PBR)
+  dividend_yield: 殖利率
+  debt_ratio: 負債比
+  current_ratio: 流動比
+  eps: 每股盈餘 (EPS)
+  total_assets: 總資產
+  total_liabilities: 總負債
+  total_equity: 股東權益
+  operating_cash_flow: 營業現金流
+  investing_cash_flow: 投資現金流
+  financing_cash_flow: 籌資現金流
+  fcf: 自由現金流
 dividend:
-  status_paid: "✓ 已發放"
-  status_pending: "⏳ 待發放"
-  status_unpaid: "⏳ 待發放"
-  frequency_quarterly: "季配"
-  frequency_annual: "年配"
-  frequency_irregular: "不規則"
-  no_record: "此公司暫無除權息紀錄"
-  no_record_recent: "此公司近五年無配息紀錄"
-  cash_dividend: "現金股利"
-  stock_dividend: "股票股利"
-  total_dividend: "合計股利"
-  ex_date_label: "除息日"
-  pay_date_label: "發放日"
-  year: "年度"
-  historical_record: "歷史除權息紀錄"
-  latest_quarter: "最近一季"
-  estimated_annual: "預估全年配息"
-  dividend_yield_label: "殖利率"
-  summary: "配息摘要"
-  detail_expand: "📋 展開查看歷史除權息紀錄"
-
-# ── 按鈕與操作 ────────────────────────────────
+  status_paid: ✓ 已發放
+  status_pending: ⏳ 待發放
+  status_unpaid: ⏳ 待發放
+  frequency_quarterly: 季配
+  frequency_annual: 年配
+  frequency_irregular: 不規則
+  no_record: 此公司暫無除權息紀錄
+  no_record_recent: 此公司近五年無配息紀錄
+  cash_dividend: 現金股利
+  stock_dividend: 股票股利
+  total_dividend: 合計股利
+  ex_date_label: 除息日
+  pay_date_label: 發放日
+  year: 年度
+  historical_record: 歷史除權息紀錄
+  latest_quarter: 最近一季
+  estimated_annual: 預估全年配息
+  dividend_yield_label: 殖利率
+  summary: 配息摘要
+  detail_expand: 📋 展開查看歷史除權息紀錄
 action:
-  submit: "提交答案"
-  retry: "重新測驗"
-  reset: "重設"
-  save: "儲存"
-  cancel: "取消"
-  back: "返回"
-  go_to_detail: "前往下一課"
-  review: "複習"
-  start: "開始"
-  share: "分享"
-  copy_link: "複製分享連結"
-  next_page: "下一頁"
-  prev_page: "上一頁"
-
-# ── 狀態訊息 ──────────────────────────────────
+  submit: 提交答案
+  retry: 重新測驗
+  reset: 重設
+  save: 儲存
+  cancel: 取消
+  back: 返回
+  go_to_detail: 前往下一課
+  review: 複習
+  start: 開始
+  share: 分享
+  copy_link: 複製分享連結
+  next_page: 下一頁
+  prev_page: 上一頁
 status:
-  loading: "載入中..."
-  loading_stock: "載入股票資料..."
-  loading_page: "載入頁面..."
-  checking_events: "🔍 檢查近期事件..."
-  rate_limited: "⚠️ API 速率限制已達上限，部分資料可能無法載入。請稍後再試。"
-  rate_limited_short: "⚠️ FinMind API 暫時受限，資料可能不完整。請稍後再試。"
-  data_missing: "暫無資料"
-  no_revenue_data: "暫無營收資料"
-  no_price_data: "暫無股價資料"
-  no_institutional_data: "暫無法人資料"
-  no_peer_data: "目前沒有找到同產業的同業可比較"
-
-# ── 時間軸 ────────────────────────────────────
+  loading: 載入中...
+  loading_stock: 載入股票資料...
+  loading_page: 載入頁面...
+  checking_events: 🔍 檢查近期事件...
+  rate_limited: ⚠️ API 速率限制已達上限，部分資料可能無法載入。請稍後再試。
+  rate_limited_short: ⚠️ FinMind API 暫時受限，資料可能不完整。請稍後再試。
+  data_missing: 暫無資料
+  no_revenue_data: 暫無營收資料
+  no_price_data: 暫無股價資料
+  no_institutional_data: 暫無法人資料
+  no_peer_data: 目前沒有找到同產業的同業可比較
 timeline:
-  label_1y: "1 年"
-  label_3y: "3 年"
-  label_5y: "5 年"
-  label_all: "全部"
-  filter_failed: "⚠️ 時間軸過濾失敗，已顯示全部資料"
-  no_data_in_range: "📌 此時間範圍內無資料，已切換至全部資料"
-
-# ── 錯誤訊息 ──────────────────────────────────
+  label_1y: 1 年
+  label_3y: 3 年
+  label_5y: 5 年
+  label_all: 全部
+  filter_failed: ⚠️ 時間軸過濾失敗，已顯示全部資料
+  no_data_in_range: 📌 此時間範圍內無資料，已切換至全部資料
 error:
-  not_found: "找不到股票代號 {sid}"
-  no_data: "無法取得資料"
-  no_answer: "找不到測驗答案，請重新開始"
-  no_course: "找不到課程內容"
-  no_list_name: "請輸入清單名稱"
-  list_exists: "清單名稱已存在或建立失敗"
-  remove_failed: "移除失敗"
-  settings_saved: "✅ 設定已儲存"
-  api_error: "❌ API 錯誤：{message}"
-
-# ── 輸入驗證 ──────────────────────────────────
+  not_found: 找不到股票代號 {sid}
+  no_data: 無法取得資料
+  no_answer: 找不到測驗答案，請重新開始
+  no_course: 找不到課程內容
+  no_list_name: 請輸入清單名稱
+  list_exists: 清單名稱已存在或建立失敗
+  remove_failed: 移除失敗
+  settings_saved: ✅ 設定已儲存
+  api_error: ❌ API 錯誤：{message}
 validation:
   error:
-    empty: "請輸入股票代號"
-    not_digit: "請輸入數字，您輸入的是「{input}」"
-    not_four_digit: "股票代號為 4 位數字，您輸入的是「{input}」（{length} 位）"
-    format: "格式錯誤，請輸入 4 位數字，您輸入的是「{input}」"
-
-# ── 結果/回饋 ─────────────────────────────────
+    empty: 請輸入股票代號
+    not_digit: 請輸入數字，您輸入的是「{input}」
+    not_four_digit: 股票代號為 4 位數字，您輸入的是「{input}」（{length} 位）
+    format: 格式錯誤，請輸入 4 位數字，您輸入的是「{input}」
 result:
-  score: "答對題數"
-  accuracy: "正確率"
-  excellent: "表現優異，在同產業中屬於前段班"
-  good: "表現穩定，有改善空間"
-  needs_attention: "需要留意，可能拖累整體表現"
-  correct: "✅ 答對"
-  wrong: "❌ 答錯"
-
-# ── 配對/比較 ─────────────────────────────────
+  score: 答對題數
+  accuracy: 正確率
+  excellent: 表現優異，在同產業中屬於前段班
+  good: 表現穩定，有改善空間
+  needs_attention: 需要留意，可能拖累整體表現
+  correct: ✅ 答對
+  wrong: ❌ 答錯
 comparison:
-  vs: "vs."
-  industry_avg: "同業平均"
-  rank: "排名"
-  stronger: "優於同業"
-  weaker: "落後同業"
-  similar: "與同業相當"
-
-# ── 財報科目 ──────────────────────────────────
+  vs: vs.
+  industry_avg: 同業平均
+  rank: 排名
+  stronger: 優於同業
+  weaker: 落後同業
+  similar: 與同業相當
 financial_statement:
-  revenue: "營業收入"
-  gross_profit: "營業毛利"
-  operating_income: "營業利益"
-  net_income: "淨利"
-  total_assets: "資產總計"
-  total_liabilities: "負債總計"
-  current_assets: "流動資產"
-  current_liabilities: "流動負債"
-  total_equity: "權益總計"
-
-# ── 通知中心 ─────────────────────────────────
+  revenue: 營業收入
+  gross_profit: 營業毛利
+  operating_income: 營業利益
+  net_income: 淨利
+  total_assets: 資產總計
+  total_liabilities: 負債總計
+  current_assets: 流動資產
+  current_liabilities: 流動負債
+  total_equity: 權益總計
 notification:
-  title: "通知中心"
-  subtitle: "追蹤你關注股票的重要事件與異動"
-  mark_all_read: "已將所有通知標記為已讀"
-  no_notification: "目前沒有通知"
-
-# ── 投資備忘錄 ────────────────────────────────
+  title: 通知中心
+  subtitle: 追蹤你關注股票的重要事件與異動
+  mark_all_read: 已將所有通知標記為已讀
+  no_notification: 目前沒有通知
 memo:
-  title: "投資備忘錄"
-  add: "新增備忘"
-  edit: "編輯備忘"
-  delete: "刪除備忘"
-  empty: "目前沒有任何備忘"
-
-# ── 免責聲明 ─────────────────────────────────
+  title: 投資備忘錄
+  add: 新增備忘
+  edit: 編輯備忘
+  delete: 刪除備忘
+  empty: 目前沒有任何備忘
 disclaimer:
-  general: "⚠️ 本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。"
-  expert: "⚠️ 專家分析由 AI 輔助整理，僅供參考，不構成投資建議。"
-  historical: "⚠️ 歷史情境為假設性試算，僅供教育用途，不構成投資建議。過去績效不代表未來表現。"
-  feedback_positive: "感謝你的正面回饋！👍"
-  feedback_negative: "感謝你的回饋，我們會持續改進！👎"
-
-# ── 單位標籤 ──────────────────────────────────
+  general: ⚠️ 本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。
+  expert: ⚠️ 專家分析由 AI 輔助整理，僅供參考，不構成投資建議。
+  historical: ⚠️ 歷史情境為假設性試算，僅供教育用途，不構成投資建議。過去績效不代表未來表現。
+  feedback_positive: 感謝你的正面回饋！👍
+  feedback_negative: 感謝你的回饋，我們會持續改進！👎
 unit:
-  hundred_million: "億"
-  ten_thousand: "萬"
-  yuan: "元"
-  percent: "%"
-  shares: "張"
-  thousand_shares: "萬張"
-
-# ── 故事弧線 (C202) ──────────────────────────
+  hundred_million: 億
+  ten_thousand: 萬
+  yuan: 元
+  percent: '%'
+  shares: 張
+  thousand_shares: 萬張
 story_arc:
-  growth: "成長期"
-  decline: "調整期"
-  volatile: "震盪期"
-  recovery: "復甦期"
-  growth_description: "過去6個月營收與市場評價偏向正面，整體趨勢向上"
-  decline_description: "過去6個月面臨較多負面事件，市場信心有所回落"
-  volatile_description: "過去6個月正負事件交織，市場看法分歧"
-  recovery_description: "調整後出現正面訊號，市場情緒逐步回暖"
-  title: "故事弧線"
-  legend_title: "故事弧線圖例"
-  badge_label: "{emoji} {label}"
-  badge_period: "📅 {start} ～ {end}"
-  badge_events: "📌 此區間共 **{count}** 個事件"
-  section_title: "📈 故事弧線"
-  section_subtitle: "自動偵測公司故事的主要階段，幫助理解長期趨勢與轉折"
+  growth: 成長期
+  decline: 調整期
+  volatile: 震盪期
+  recovery: 復甦期
+  growth_description: 過去6個月營收與市場評價偏向正面，整體趨勢向上
+  decline_description: 過去6個月面臨較多負面事件，市場信心有所回落
+  volatile_description: 過去6個月正負事件交織，市場看法分歧
+  recovery_description: 調整後出現正面訊號，市場情緒逐步回暖
+  title: 故事弧線
+  legend_title: 故事弧線圖例
+  badge_label: '{emoji} {label}'
+  badge_period: 📅 {start} ～ {end}
+  badge_events: 📌 此區間共 **{count}** 個事件
+  section_title: 📈 故事弧線
+  section_subtitle: 自動偵測公司故事的主要階段，幫助理解長期趨勢與轉折
   legend:
-    growth: "成長期"
-    decline: "調整期"
-    volatile: "震盪期"
-    recovery: "復甦期"
-  no_arcs: "尚未偵測到足夠的故事弧線"
-  event_count_label: "事件數"
-  period_h1: "{year} 上半年"
-  period_h2: "{year} 下半年"
-
-# ── 看多看空辯論卡 (C199) ────────────────────
+    growth: 成長期
+    decline: 調整期
+    volatile: 震盪期
+    recovery: 復甦期
+  no_arcs: 尚未偵測到足夠的故事弧線
+  event_count_label: 事件數
+  period_h1: '{year} 上半年'
+  period_h2: '{year} 下半年'
 debate:
-  title: "看多看空辯論"
-  bear_case: "看空論點"
-  bull_case: "多看論點"
-  verdict: "綜合判斷"
-  disclaimer: "以上辯論內容由系統根據公開資料自動整理，僅供參考，不構成投資建議。"
-  bear_strong: "看空訊號較強"
-  bull_strong: "多看訊號較強"
-  neutral: "多空勢均力佐"
-  confidence: "信心程度"
-  evidence: "佐證資料"
-  counter: "反駁論點"
-  summary: "辯論摘要"
-  no_data: "目前沒有足夠的辯論資料"
-  no_data_detail: "目前沒有足夠的資料來生成辯論論點。\\n\\n可能原因：\\n\\n• 同業比較資料不足\\n• 財務指標資料不完整\\n\\n💡 請確認該股票有同業比較資料後再試。"
-  auto_generated: "自動產生"
-  # Metric display names
-  metric_roe: "ROE"
-  metric_revenue_yoy: "營收年增率"
-  metric_gross_margin: "毛利率"
-  metric_operating_margin: "營業利益率"
-  metric_net_margin: "淨利率"
-  metric_debt_ratio: "負債比"
-  metric_current_ratio: "流動比率"
-  metric_dividend_yield: "殖利率"
-  # Per-metric bull/bear argument templates
-  roe_bull: "ROE {value}% 高於同業平均 {peer_avg}%，顯示公司運用股東資金的效率較佳"
-  roe_bear: "ROE {value}% 低於同業平均 {peer_avg}%，股東資金運用效率有待加強"
-  revenue_yoy_bull: "營收年增率 {value}% 優於同業平均 {peer_avg}%，顯示成長動能較強"
-  revenue_yoy_bear: "營收年增率 {value}% 低於同業平均 {peer_avg}%，成長動能相對疲弱"
-  gross_margin_bull: "毛利率 {value}% 高於同業平均 {peer_avg}%，產品定價能力或成本控制較佳"
-  gross_margin_bear: "毛利率 {value}% 低於同業平均 {peer_avg}%，產品定價能力或成本控制有待改善"
-  operating_margin_bull: "營業利益率 {value}% 高於同業平均 {peer_avg}%，營運效率較佳"
-  operating_margin_bear: "營業利益率 {value}% 低於同業平均 {peer_avg}%，營運效率有待提升"
-  net_margin_bull: "淨利率 {value}% 高於同業平均 {peer_avg}%，整體獲利能力較強"
-  net_margin_bear: "淨利率 {value}% 低於同業平均 {peer_avg}%，整體獲利能力相對較弱"
-  debt_ratio_bull: "負債比 {value}% 低於同業平均 {peer_avg}%，財務結構較為穩健"
-  debt_ratio_bear: "負債比 {value}% 高於同業平均 {peer_avg}%，財務結構相對較弱"
-  current_ratio_bull: "流動比率 {value}% 高於同業平均 {peer_avg}%，短期償能力較佳"
-  current_ratio_bear: "流動比率 {value}% 低於同業平均 {peer_avg}%，短期償能力有待加強"
-  dividend_yield_bull: "殖利率 {value}% 高於同業平均 {peer_avg}%，股息報酬率相對較高"
-  dividend_yield_bear: "殖利率 {value}% 低於同業平均 {peer_avg}%，股息報酬率相對較低"
-  # Banned words filter fallback
-  filtered: "此論點因涉及投資建議用語已過濾顯示"
-
-# ── 假設情境計算器 (C200) ────────────────────
+  title: 看多看空辯論
+  bear_case: 看空論點
+  bull_case: 多看論點
+  verdict: 綜合判斷
+  disclaimer: 以上辯論內容由系統根據公開資料自動整理，僅供參考，不構成投資建議。
+  bear_strong: 看空訊號較強
+  bull_strong: 多看訊號較強
+  neutral: 多空勢均力佐
+  confidence: 信心程度
+  evidence: 佐證資料
+  counter: 反駁論點
+  summary: 辯論摘要
+  no_data: 目前沒有足夠的辯論資料
+  no_data_detail: 目前沒有足夠的資料來生成辯論論點。\n\n可能原因：\n\n• 同業比較資料不足\n• 財務指標資料不完整\n\n💡 請確認該股票有同業比較資料後再試。
+  auto_generated: 自動產生
+  metric_roe: ROE
+  metric_revenue_yoy: 營收年增率
+  metric_gross_margin: 毛利率
+  metric_operating_margin: 營業利益率
+  metric_net_margin: 淨利率
+  metric_debt_ratio: 負債比
+  metric_current_ratio: 流動比率
+  metric_dividend_yield: 殖利率
+  roe_bull: ROE {value}% 高於同業平均 {peer_avg}%，顯示公司運用股東資金的效率較佳
+  roe_bear: ROE {value}% 低於同業平均 {peer_avg}%，股東資金運用效率有待加強
+  revenue_yoy_bull: 營收年增率 {value}% 優於同業平均 {peer_avg}%，顯示成長動能較強
+  revenue_yoy_bear: 營收年增率 {value}% 低於同業平均 {peer_avg}%，成長動能相對疲弱
+  gross_margin_bull: 毛利率 {value}% 高於同業平均 {peer_avg}%，產品定價能力或成本控制較佳
+  gross_margin_bear: 毛利率 {value}% 低於同業平均 {peer_avg}%，產品定價能力或成本控制有待改善
+  operating_margin_bull: 營業利益率 {value}% 高於同業平均 {peer_avg}%，營運效率較佳
+  operating_margin_bear: 營業利益率 {value}% 低於同業平均 {peer_avg}%，營運效率有待提升
+  net_margin_bull: 淨利率 {value}% 高於同業平均 {peer_avg}%，整體獲利能力較強
+  net_margin_bear: 淨利率 {value}% 低於同業平均 {peer_avg}%，整體獲利能力相對較弱
+  debt_ratio_bull: 負債比 {value}% 低於同業平均 {peer_avg}%，財務結構較為穩健
+  debt_ratio_bear: 負債比 {value}% 高於同業平均 {peer_avg}%，財務結構相對較弱
+  current_ratio_bull: 流動比率 {value}% 高於同業平均 {peer_avg}%，短期償能力較佳
+  current_ratio_bear: 流動比率 {value}% 低於同業平均 {peer_avg}%，短期償能力有待加強
+  dividend_yield_bull: 殖利率 {value}% 高於同業平均 {peer_avg}%，股息報酬率相對較高
+  dividend_yield_bear: 殖利率 {value}% 低於同業平均 {peer_avg}%，股息報酬率相對較低
+  filtered: 此論點因涉及投資建議用語已過濾顯示
 scenario:
-  title: "假設情境計算器"
-  calculator_title: "如果...會怎樣？"
-  input_label: "輸入假設條件"
-  result_label: "試算結果"
-  historical_precedent: "歷史前例"
-  no_precedent: "無直接歷史前例"
-  disclaimer: "⚠️ 以上試算為假設性計算，僅供教育用途，不構成投資建議。過去績效不代表未來表現。"
-  period: "期間"
-  return_label: "報酬率"
-  max_drawdown: "最大回撤"
-  recovery_time: "復原時間"
-  probability: "發生機率"
-  similar_scenarios: "類似情境"
-  no_scenarios: "找不到類似情境"
+  title: 假設情境計算器
+  calculator_title: 如果...會怎樣？
+  input_label: 輸入假設條件
+  result_label: 試算結果
+  historical_precedent: 歷史前例
+  no_precedent: 無直接歷史前例
+  disclaimer: ⚠️ 以上試算為假設性計算，僅供教育用途，不構成投資建議。過去績效不代表未來表現。
+  period: 期間
+  return_label: 報酬率
+  max_drawdown: 最大回撤
+  recovery_time: 復原時間
+  probability: 發生機率
+  similar_scenarios: 類似情境
+  no_scenarios: 找不到類似情境
   input:
-    stock_price: "股價"
-    pe_ratio: "本益比"
-    revenue_growth: "營收成長率"
-    margin_change: "毛利率變化"
+    stock_price: 股價
+    pe_ratio: 本益比
+    revenue_growth: 營收成長率
+    margin_change: 毛利率變化
   output:
-    estimated_price: "預估股價"
-    estimated_pe: "預估本益比"
-    estimated_revenue: "預估營收"
-  cta: "調整參數重新試算"
-  scenario_label: "情境 {number}"
-  compare_scenarios: "比較情境"
-  add_scenario: "新增情境"
-  remove_scenario: "移除情境"
-  # Custom calculator (C200)
-  custom_title: "自訂情境"
-  custom_caption: "自訂你的投資情境，看看歷史會帶給你什麼結果。"
-  custom_buy_date: "買入日期"
-  custom_amount: "投資金額 (TWD)"
-  custom_include_dividends: "包含股利"
-  custom_calculate: "計算"
-  custom_calculating: "計算中..."
-  custom_cannot_calculate: "無法計算"
-  custom_error_prefix: "錯誤："
-  custom_buy_date_label: "買入日期："
-  custom_buy_price_label: "買入價格："
-  custom_shares_label: "持有股數："
-  custom_end_date_label: "結束日期："
-  custom_end_price_label: "結束價格："
-  custom_total_return_label: "總報酬率："
-  custom_absolute_return_label: "絕對報酬："
-  custom_annualized_return_label: "年化報酬率："
-  custom_dividend_income_label: "股利收入："
-  custom_max_drawdown_label: "最大回撤："
-  custom_estimated_note: "⚠️ 部分資料為估計值，結果僅供參考。"
-  custom_result_title: "{stock_name} ({stock_id}) — 自訂情境試算"
-  # Error keys
-  before_ipo: "所選日期早於公司上市日，無法計算。"
-  future_date: "所選日期為未來日期，請選擇過去的日期。"
-  invalid_date: "日期格式無效，請輸入正確的日期。"
-  invalid_range: "日期範圍無效，開始日期必須早於結束日期。"
-  amount_too_small: "投資金額過小，請輸入至少 1,000 元。"
-  no_data: "無法取得價格資料，請確認股票代號是否正確。"
-  historical_title: "歷史情境"
-  upcoming: "即將上線"
-  upcoming_analysis: "歷史情境分析即將上線！"
-  upcoming_detail: "我們正在為您準備這檔股票的歷史情境分析，目前先來看看其他已上線的名牌吧！"
-  source_detected: "系統偵測"
-  source_case_study: "案例研究"
-  source_milestone: "公司里程碑"
-  no_timeline_data: "目前沒有足夠的時間軸內容"
-  no_timeline_detail: "系統尚未在「{range}」範圍內找到 **{name}** 的相關事件。"
-  no_timeline_sources: "時間軸資料來源包含："
-  no_timeline_auto: "系統自動偵測：營收異動、新聞事件、股價異常"
-  no_timeline_case: "歷史案例研究：與該公司相關的市場事件分析"
-  no_timeline_milestone: "公司里程碑：成立、上市、重要產品發佈等歷史轉折"
-  no_timeline_tip: "嘗試擴大時間範圍，或瀏覽其他頁面觸發自動事件偵測。"
-  timeline_count: "共找到 **{count}** 個時間軸事件（{range}）"
-  legend_title: "圖例說明"
-  legend_major: "重大事件"
-  legend_major_desc: "嚴重程度高，需要密切關注"
-  legend_important: "重要事件"
-  legend_important_desc: "中等嚴重程度，值得留意"
-  legend_reference: "參考事件"
-  legend_reference_desc: "嚴重程度低，作為背景參考"
-  time_range: "時間範圍"
-  loading_stocks: "載入股票資料中…"
-  loading_search: "搜尋中…"
-  loading_etf: "載入 ETF 資料中…"
-  loading_etf_price: "正在取得 ETF 價格（首次載入需時較長，之後切換頁籤將加速）…"
-  loading_market: "正在取得行情資料…"
-  loading_benchmark: "正在載入標竿公司 {name} 的資料..."
-  loading_benchmark_search: "正在尋找同業標竿..."
-  loading_latest_price: "載入最新價格…"
-  loading_notifications: "檢查通知..."
-  loading_marking: "標記中..."
-  loading_notification_list: "載入通知..."
-
-# ── 歷史情境 (C74) ──────────────────────────────
+    estimated_price: 預估股價
+    estimated_pe: 預估本益比
+    estimated_revenue: 預估營收
+  cta: 調整參數重新試算
+  scenario_label: 情境 {number}
+  compare_scenarios: 比較情境
+  add_scenario: 新增情境
+  remove_scenario: 移除情境
+  custom_title: 自訂情境
+  custom_caption: 自訂你的投資情境，看看歷史會帶給你什麼結果。
+  custom_buy_date: 買入日期
+  custom_amount: 投資金額 (TWD)
+  custom_include_dividends: 包含股利
+  custom_calculate: 計算
+  custom_calculating: 計算中...
+  custom_cannot_calculate: 無法計算
+  custom_error_prefix: 錯誤：
+  custom_buy_date_label: 買入日期：
+  custom_buy_price_label: 買入價格：
+  custom_shares_label: 持有股數：
+  custom_end_date_label: 結束日期：
+  custom_end_price_label: 結束價格：
+  custom_total_return_label: 總報酬率：
+  custom_absolute_return_label: 絕對報酬：
+  custom_annualized_return_label: 年化報酬率：
+  custom_dividend_income_label: 股利收入：
+  custom_max_drawdown_label: 最大回撤：
+  custom_estimated_note: ⚠️ 部分資料為估計值，結果僅供參考。
+  custom_result_title: '{stock_name} ({stock_id}) — 自訂情境試算'
+  before_ipo: 所選日期早於公司上市日，無法計算。
+  future_date: 所選日期為未來日期，請選擇過去的日期。
+  invalid_date: 日期格式無效，請輸入正確的日期。
+  invalid_range: 日期範圍無效，開始日期必須早於結束日期。
+  amount_too_small: 投資金額過小，請輸入至少 1,000 元。
+  no_data: 無法取得價格資料，請確認股票代號是否正確。
+  historical_title: 歷史情境
+  upcoming: 即將上線
+  upcoming_analysis: 歷史情境分析即將上線！
+  upcoming_detail: 我們正在為您準備這檔股票的歷史情境分析，目前先來看看其他已上線的名牌吧！
+  source_detected: 系統偵測
+  source_case_study: 案例研究
+  source_milestone: 公司里程碑
+  no_timeline_data: 目前沒有足夠的時間軸內容
+  no_timeline_detail: 系統尚未在「{range}」範圍內找到 **{name}** 的相關事件。
+  no_timeline_sources: 時間軸資料來源包含：
+  no_timeline_auto: 系統自動偵測：營收異動、新聞事件、股價異常
+  no_timeline_case: 歷史案例研究：與該公司相關的市場事件分析
+  no_timeline_milestone: 公司里程碑：成立、上市、重要產品發佈等歷史轉折
+  no_timeline_tip: 嘗試擴大時間範圍，或瀏覽其他頁面觸發自動事件偵測。
+  timeline_count: 共找到 **{count}** 個時間軸事件（{range}）
+  legend_title: 圖例說明
+  legend_major: 重大事件
+  legend_major_desc: 嚴重程度高，需要密切關注
+  legend_important: 重要事件
+  legend_important_desc: 中等嚴重程度，值得留意
+  legend_reference: 參考事件
+  legend_reference_desc: 嚴重程度低，作為背景參考
+  time_range: 時間範圍
+  loading_stocks: 載入股票資料中…
+  loading_search: 搜尋中…
+  loading_etf: 載入 ETF 資料中…
+  loading_etf_price: 正在取得 ETF 價格（首次載入需時較長，之後切換頁籤將加速）…
+  loading_market: 正在取得行情資料…
+  loading_benchmark: 正在載入標竿公司 {name} 的資料...
+  loading_benchmark_search: 正在尋找同業標竿...
+  loading_latest_price: 載入最新價格…
+  loading_notifications: 檢查通知...
+  loading_marking: 標記中...
+  loading_notification_list: 載入通知...
 historical_scenario:
-  "2330":
+  '2330':
     s1:
-      title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月疫情恐慌低點（約 {buy_price} 元）買入台積電，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（不含股息）\\n\\n💡 這說明了「在恐慌中買入優質資產」的長期價值。"
+      title: 情境一：2020 年疫情低點買入
+      content: 如果你在 2020 年 3 月疫情恐慌低點（約 {buy_price} 元）買入台積電，持有至今（{current_year} 年）股價約
+        {current_price} 元，\n\n📈 **報酬率：約 {return_pct}%**（不含股息）\n\n💡 這說明了「在恐慌中買入優質資產」的長期價值。
     s2:
-      title: "情境二：2022 年高點買入"
-      content: "如果你在 2022 年 1 月高點（約 {buy_price} 元）買入台積電，隨後面臨全球半導體庫存修正，股價一度跌至 {low_price} 元。\\n\\n📉 **短期跌幅：約 {drop_pct}%**\\n\\n💡 即使是好公司，追高買入也可能面臨大幅回檔。"
+      title: 情境二：2022 年高點買入
+      content: 如果你在 2022 年 1 月高點（約 {buy_price} 元）買入台積電，隨後面臨全球半導體庫存修正，股價一度跌至 {low_price}
+        元。\n\n📉 **短期跌幅：約 {drop_pct}%**\n\n💡 即使是好公司，追高買入也可能面臨大幅回檔。
     s3:
-      title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入台積電，無論股價漲跌都持續買入，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 定期定額能有效平滑買入成本，適合長期投資者。"
-  "2317":
+      title: 情境三：定期定額 5 年
+      content: 如果你從 {start_year} 年起每月定期定額買入台積電，無論股價漲跌都持續買入，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡
+        定期定額能有效平滑買入成本，適合長期投資者。
+  '2317':
     s1:
-      title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入鴻海，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 鴻海的轉型故事需要耐心，長期持有才能看到成果。"
+      title: 情境一：2020 年疫情低點買入
+      content: 如果你在 2020 年 3 月（約 {buy_price} 元）買入鴻海，持有至今（{current_year} 年）股價約 {current_price}
+        元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 鴻海的轉型故事需要耐心，長期持有才能看到成果。
     s2:
-      title: "情境二：2017 年高點買入"
-      content: "如果你在 2017 年高點（約 {buy_price} 元）買入鴻海，隨後面臨蘋果手機銷售放緩，股價長期低迷。\\n\\n📉 **{years} 年報酬：約 {return_range}%**（含股息）\\n\\n💡 買在高點可能需要更長的時間才能回本。"
+      title: 情境二：2017 年高點買入
+      content: 如果你在 2017 年高點（約 {buy_price} 元）買入鴻海，隨後面臨蘋果手機銷售放緩，股價長期低迷。\n\n📉 **{years}
+        年報酬：約 {return_range}%**（含股息）\n\n💡 買在高點可能需要更長的時間才能回本。
     s3:
-      title: "情境三：AI 伺服器題材爆發"
-      content: "如果你在 {buy_date}（約 {buy_price} 元）看好 AI 伺服器趨勢買入鴻海，至今股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**\\n\\n💡 掌握產業趨勢，在題材發酵前布局能獲得超額報酬。"
-  "2454":
+      title: 情境三：AI 伺服器題材爆發
+      content: 如果你在 {buy_date}（約 {buy_price} 元）看好 AI 伺服器趨勢買入鴻海，至今股價約 {current_price}
+        元，\n\n📈 **報酬率：約 {return_pct}%**\n\n💡 掌握產業趨勢，在題材發酵前布局能獲得超額報酬。
+  '2454':
     s1:
-      title: "情境一：2021 年高點買入"
-      content: "如果你在 2021 年高點（約 {buy_price} 元）買入聯發科，隨後面臨手機市場衰退與庫存修正。\\n\\n📉 **短期跌幅：約 {drop_pct}%**\\n\\n💡 即使是成長股，在估值過高時買入也有風險。"
+      title: 情境一：2021 年高點買入
+      content: 如果你在 2021 年高點（約 {buy_price} 元）買入聯發科，隨後面臨手機市場衰退與庫存修正。\n\n📉 **短期跌幅：約
+        {drop_pct}%**\n\n💡 即使是成長股，在估值過高時買入也有風險。
     s2:
-      title: "情境二：2023 年低點買入"
-      content: "如果你在 2023 年低點（約 {buy_price} 元）買入聯發科，受惠於手機市場復甦與 AI PC 題材，\\n\\n📈 **報酬率：約 {return_range}%**\\n\\n💡 在產業谷底買入優質公司，報酬可觀。"
+      title: 情境二：2023 年低點買入
+      content: 如果你在 2023 年低點（約 {buy_price} 元）買入聯發科，受惠於手機市場復甦與 AI PC 題材，\n\n📈 **報酬率：約
+        {return_range}%**\n\n💡 在產業谷底買入優質公司，報酬可觀。
     s3:
-      title: "情境三：定期定額 3 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入聯發科，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 定期定額在高波動的科技股上特別有效。"
-  "2308":
+      title: 情境三：定期定額 3 年
+      content: 如果你從 {start_year} 年起每月定期定額買入聯發科，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡
+        定期定額在高波動的科技股上特別有效。
+  '2308':
     s1:
-      title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入台達電，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 台達電的長期成長性在電源管理領域無可取代。"
+      title: 情境一：2020 年疫情低點買入
+      content: 如果你在 2020 年 3 月（約 {buy_price} 元）買入台達電，持有至今（{current_year} 年）股價約 {current_price}
+        元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 台達電的長期成長性在電源管理領域無可取代。
     s2:
-      title: "情境二：AI 資料中心題材"
-      content: "如果你在 {buy_date}（約 {buy_price} 元）看好 AI 資料中心電源需求買入台達電，\\n\\n📈 **報酬率：約 {return_pct}%**\\n\\n💡 掌握 AI 基礎建設的供應鏈機會。"
+      title: 情境二：AI 資料中心題材
+      content: 如果你在 {buy_date}（約 {buy_price} 元）看好 AI 資料中心電源需求買入台達電，\n\n📈 **報酬率：約 {return_pct}%**\n\n💡
+        掌握 AI 基礎建設的供應鏈機會。
     s3:
-      title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入台達電，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 穩健成長股適合定期定額長期投資。"
-  "2881":
+      title: 情境三：定期定額 5 年
+      content: 如果你從 {start_year} 年起每月定期定額買入台達電，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡
+        穩健成長股適合定期定額長期投資。
+  '2881':
     s1:
-      title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入富邦金，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 金融股在低點買入，長期報酬相當可觀。"
+      title: 情境一：2020 年疫情低點買入
+      content: 如果你在 2020 年 3 月（約 {buy_price} 元）買入富邦金，持有至今（{current_year} 年）股價約 {current_price}
+        元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 金融股在低點買入，長期報酬相當可觀。
     s2:
-      title: "情境二：升息循環受惠"
-      content: "如果你在 2022 年升息循環開始前（約 {buy_price} 元）買入富邦金，受惠於利差擴大，\\n\\n📈 **報酬率：約 {return_range}%**\\n\\n💡 金融股在升息環境下通常表現較好。"
+      title: 情境二：升息循環受惠
+      content: 如果你在 2022 年升息循環開始前（約 {buy_price} 元）買入富邦金，受惠於利差擴大，\n\n📈 **報酬率：約 {return_range}%**\n\n💡
+        金融股在升息環境下通常表現較好。
     s3:
-      title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入富邦金，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 金融股配息穩定，適合存股族。"
-  "2882":
+      title: 情境三：定期定額 5 年
+      content: 如果你從 {start_year} 年起每月定期定額買入富邦金，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡
+        金融股配息穩定，適合存股族。
+  '2882':
     s1:
-      title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入國泰金，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 壽險股在低利率環境反轉後表現亮眼。"
+      title: 情境一：2020 年疫情低點買入
+      content: 如果你在 2020 年 3 月（約 {buy_price} 元）買入國泰金，持有至今（{current_year} 年）股價約 {current_price}
+        元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 壽險股在低利率環境反轉後表現亮眼。
     s2:
-      title: "情境二：IFRS 17 接軌挑戰"
-      content: "如果你在 2023 年（約 {buy_price} 元）買入國泰金，面臨 IFRS 17 會計準則接軌的不確定性，\\n\\n📊 **報酬率：約 {return_range}%**\\n\\n💡 政策變化可能帶來短期波動，但長期影響有限。"
+      title: 情境二：IFRS 17 接軌挑戰
+      content: 如果你在 2023 年（約 {buy_price} 元）買入國泰金，面臨 IFRS 17 會計準則接軌的不確定性，\n\n📊 **報酬率：約
+        {return_range}%**\n\n💡 政策變化可能帶來短期波動，但長期影響有限。
     s3:
-      title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入國泰金，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 金融股適合長期持有，享受穩定配息。"
-  "1301":
+      title: 情境三：定期定額 5 年
+      content: 如果你從 {start_year} 年起每月定期定額買入國泰金，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡
+        金融股適合長期持有，享受穩定配息。
+  '1301':
     s1:
-      title: "情境一：2021 年景氣高點買入"
-      content: "如果你在 2021 年石化景氣高點（約 {buy_price} 元）買入台塑，隨後面臨景氣反轉與中國產能過剩。\\n\\n📉 **跌幅：約 {drop_range}%**\\n\\n💡 景氣循環股在高點買入風險極大。"
+      title: 情境一：2021 年景氣高點買入
+      content: 如果你在 2021 年石化景氣高點（約 {buy_price} 元）買入台塑，隨後面臨景氣反轉與中國產能過剩。\n\n📉 **跌幅：約
+        {drop_range}%**\n\n💡 景氣循環股在高點買入風險極大。
     s2:
-      title: "情境二：2020 年低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入台塑，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📊 **報酬：主要來自配息，資本增值有限**\\n\\n💡 傳統產業股的成長性有限，但配息穩定。"
+      title: 情境二：2020 年低點買入
+      content: 如果你在 2020 年 3 月（約 {buy_price} 元）買入台塑，持有至今（{current_year} 年）股價約 {current_price}
+        元，\n\n📊 **報酬：主要來自配息，資本增值有限**\n\n💡 傳統產業股的成長性有限，但配息穩定。
     s3:
-      title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入台塑，\\n\\n📊 **年化報酬率約 {annual_return}%**（主要來自股息）\\n\\n💡 景氣循環股適合在低點定期定額布局。"
-  "2002":
+      title: 情境三：定期定額 5 年
+      content: 如果你從 {start_year} 年起每月定期定額買入台塑，\n\n📊 **年化報酬率約 {annual_return}%**（主要來自股息）\n\n💡
+        景氣循環股適合在低點定期定額布局。
+  '2002':
     s1:
-      title: "情境一：2021 年鋼鐵景氣高點"
-      content: "如果你在 2021 年鋼鐵景氣高點（約 {buy_price} 元）買入中鋼，隨後面臨需求下滑與原物料價格回落。\\n\\n📉 **跌幅：約 {drop_range}%**\\n\\n💡 鋼鐵股景氣循環明顯，追高風險大。"
+      title: 情境一：2021 年鋼鐵景氣高點
+      content: 如果你在 2021 年鋼鐵景氣高點（約 {buy_price} 元）買入中鋼，隨後面臨需求下滑與原物料價格回落。\n\n📉 **跌幅：約
+        {drop_range}%**\n\n💡 鋼鐵股景氣循環明顯，追高風險大。
     s2:
-      title: "情境二：2020 年低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入中鋼，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📊 **報酬：約 {return_pct}%**（含股息）\\n\\n💡 在景氣谷底買入，等待下一輪循環。"
+      title: 情境二：2020 年低點買入
+      content: 如果你在 2020 年 3 月（約 {buy_price} 元）買入中鋼，持有至今（{current_year} 年）股價約 {current_price}
+        元，\n\n📊 **報酬：約 {return_pct}%**（含股息）\n\n💡 在景氣谷底買入，等待下一輪循環。
     s3:
-      title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入中鋼，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 鋼鐵股適合在景氣低點定期定額布局。"
-  "2382":
+      title: 情境三：定期定額 5 年
+      content: 如果你從 {start_year} 年起每月定期定額買入中鋼，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡
+        鋼鐵股適合在景氣低點定期定額布局。
+  '2382':
     s1:
-      title: "情境一：2020 年疫情低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入廣達，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📈 **報酬率：約 {return_pct}%**（含股息）\\n\\n💡 AI 伺服器趨勢讓廣達從 NB 代工廠華麗轉身。"
+      title: 情境一：2020 年疫情低點買入
+      content: 如果你在 2020 年 3 月（約 {buy_price} 元）買入廣達，持有至今（{current_year} 年）股價約 {current_price}
+        元，\n\n📈 **報酬率：約 {return_pct}%**（含股息）\n\n💡 AI 伺服器趨勢讓廣達從 NB 代工廠華麗轉身。
     s2:
-      title: "情境二：2023 年 AI 題材爆發前"
-      content: "如果你在 {buy_date}（約 {buy_price} 元）看好 AI 伺服器趨勢買入廣達，\\n\\n📈 **報酬率：約 {return_pct}%**\\n\\n💡 掌握產業趨勢，在爆發前布局報酬驚人。"
+      title: 情境二：2023 年 AI 題材爆發前
+      content: 如果你在 {buy_date}（約 {buy_price} 元）看好 AI 伺服器趨勢買入廣達，\n\n📈 **報酬率：約 {return_pct}%**\n\n💡
+        掌握產業趨勢，在爆發前布局報酬驚人。
     s3:
-      title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入廣達，\\n\\n📊 **年化報酬率約 {annual_return}%**\\n\\n💡 轉型成功的公司，定期定額也能獲得超額報酬。"
-  "3045":
+      title: 情境三：定期定額 5 年
+      content: 如果你從 {start_year} 年起每月定期定額買入廣達，\n\n📊 **年化報酬率約 {annual_return}%**\n\n💡
+        轉型成功的公司，定期定額也能獲得超額報酬。
+  '3045':
     s1:
-      title: "情境一：2017 年高點買入"
-      content: "如果你在 2017 年歷史高點（約 {buy_price} 元）買入大立光，隨後面臨中國競爭對手崛起與手機市場飽和。\\n\\n📉 **跌幅：約 {drop_range}%**\\n\\n💡 即使是護城河極深的公司，也可能面臨結構性挑戰。"
+      title: 情境一：2017 年高點買入
+      content: 如果你在 2017 年歷史高點（約 {buy_price} 元）買入大立光，隨後面臨中國競爭對手崛起與手機市場飽和。\n\n📉 **跌幅：約
+        {drop_range}%**\n\n💡 即使是護城河極深的公司，也可能面臨結構性挑戰。
     s2:
-      title: "情境二：2020 年低點買入"
-      content: "如果你在 2020 年 3 月（約 {buy_price} 元）買入大立光，持有至今（{current_year} 年）股價約 {current_price} 元，\\n\\n📉 **跌幅：約 {drop_pct}%**\\n\\n💡 即使是低點買入，若產業結構惡化仍可能虧損。"
+      title: 情境二：2020 年低點買入
+      content: 如果你在 2020 年 3 月（約 {buy_price} 元）買入大立光，持有至今（{current_year} 年）股價約 {current_price}
+        元，\n\n📉 **跌幅：約 {drop_pct}%**\n\n💡 即使是低點買入，若產業結構惡化仍可能虧損。
     s3:
-      title: "情境三：定期定額 5 年"
-      content: "如果你從 {start_year} 年起每月定期定額買入大立光，\\n\\n📊 **年化報酬：約 {annual_return}%**\\n\\n💡 定期定額無法避免結構性衰退的產業。"
-
-# ── 今日市場動態 (C201) ──────────────────────────
+      title: 情境三：定期定額 5 年
+      content: 如果你從 {start_year} 年起每月定期定額買入大立光，\n\n📊 **年化報酬：約 {annual_return}%**\n\n💡
+        定期定額無法避免結構性衰退的產業。
 daily_market:
-  title: "今日市場動態"
-  subtitle: "今天台股發生了什麼事"
-  last_updated: "最後更新：{time}"
-  freshness_fresh: "🟢 即時"
-  freshness_stale: "🟡 延遲"
-  freshness_unknown: "⚪ 未知"
-
+  title: 今日市場動態
+  subtitle: 今天台股發生了什麼事
+  last_updated: 最後更新：{time}
+  freshness_fresh: 🟢 即時
+  freshness_stale: 🟡 延遲
+  freshness_unknown: ⚪ 未知
   overview:
-    title: "📰 市場總覽"
-    template_bull: "今日台股走強，收在 {close:,.0f} 點，上漲 {abs_change:,.0f} 點（{pct_change:+.2f}%）。成交金額約 {volume:,.0f} 億元，{volume_comment}。{sector_summary}。"
-    template_bear: "今日台股走弱，收在 {close:,.0f} 點，下跌 {abs_change:,.0f} 點（{pct_change:+.2f}%）。成交金額約 {volume:,.0f} 億元，{volume_comment}。{sector_summary}。"
-    template_flat: "今日台股持平，收在 {close:,.0f} 點，小漲 {abs_change:,.0f} 點（{pct_change:+.2f}%）。成交金額約 {volume:,.0f} 億元，{volume_comment}。{sector_summary}。"
-    volume_above: "高於均量"
-    volume_below: "低於均量"
-    volume_normal: "與均量相當"
-    sector_lead_up: "以 {sector} 板塊漲幅最大（{pct:+.2f}%）"
-    sector_lead_down: "以 {sector} 板塊跌幅最大（{pct:+.2f}%）"
-
+    title: 📰 市場總覽
+    template_bull: 今日台股走強，收在 {close:,.0f} 點，上漲 {abs_change:,.0f} 點（{pct_change:+.2f}%）。成交金額約
+      {volume:,.0f} 億元，{volume_comment}。{sector_summary}。
+    template_bear: 今日台股走弱，收在 {close:,.0f} 點，下跌 {abs_change:,.0f} 點（{pct_change:+.2f}%）。成交金額約
+      {volume:,.0f} 億元，{volume_comment}。{sector_summary}。
+    template_flat: 今日台股持平，收在 {close:,.0f} 點，小漲 {abs_change:,.0f} 點（{pct_change:+.2f}%）。成交金額約
+      {volume:,.0f} 億元，{volume_comment}。{sector_summary}。
+    volume_above: 高於均量
+    volume_below: 低於均量
+    volume_normal: 與均量相當
+    sector_lead_up: 以 {sector} 板塊漲幅最大（{pct:+.2f}%）
+    sector_lead_down: 以 {sector} 板塊跌幅最大（{pct:+.2f}%）
   sentiment:
-    title: "🌡️ 市場情緒"
-    ad_ratio: "漲跌比"
-    ad_ratio_value: "{up}:{down}"
-    volume: "成交量"
-    volume_unit: "億元"
-    mood: "市場溫度"
-    mood_bullish: "🟢 偏多"
-    mood_neutral: "🟡 中性"
-    mood_bearish: "🔴 偏空"
-    up_count: "上漲家數"
-    down_count: "下跌家數"
-
+    title: 🌡️ 市場情緒
+    ad_ratio: 漲跌比
+    ad_ratio_value: '{up}:{down}'
+    volume: 成交量
+    volume_unit: 億元
+    mood: 市場溫度
+    mood_bullish: 🟢 偏多
+    mood_neutral: 🟡 中性
+    mood_bearish: 🔴 偏空
+    up_count: 上漲家數
+    down_count: 下跌家數
   sectors:
-    title: "🏭 板塊動態"
-    top_n: "前 {n} 板塊"
-
+    title: 🏭 板塊動態
+    top_n: 前 {n} 板塊
   movers:
-    title: "🔥 漲跌幅排行"
-    gainers: "🟢 漲幅排行"
-    losers: "🔴 跌幅排行"
-    rank: "#{rank}"
-    price: "NT${price}"
-
+    title: 🔥 漲跌幅排行
+    gainers: 🟢 漲幅排行
+    losers: 🔴 跌幅排行
+    rank: '#{rank}'
+    price: NT${price}
   events:
-    title: "📋 重要事件"
-    empty: "今日無重大市場事件"
-
-  disclaimer: "⚠️ 本頁面僅供認識市場使用，不構成任何投資建議。"
-  error_load_failed: "無法載入市場資料：{e}"
-  no_data: "目前無市場資料可顯示。"
-  no_sentiment_data: "無情緒指標資料。"
-  no_sector_data: "無板塊資料。"
-  no_mover_data: "無可比較的漲跌幅資料。"
-  flat_count: "⚪ 平盤 {flat_count}"
-  ad_ratio_label: "漲跌比 {ratio}"
-
+    title: 📋 重要事件
+    empty: 今日無重大市場事件
+  disclaimer: ⚠️ 本頁面僅供認識市場使用，不構成任何投資建議。
+  error_load_failed: 無法載入市場資料：{e}
+  no_data: 目前無市場資料可顯示。
+  no_sentiment_data: 無情緒指標資料。
+  no_sector_data: 無板塊資料。
+  no_mover_data: 無可比較的漲跌幅資料。
+  flat_count: ⚪ 平盤 {flat_count}
+  ad_ratio_label: 漲跌比 {ratio}
   sources:
-    stock_info: "股票資料與產業分類"
-    price_summary: "批次股價摘要"
-    sector_data: "板塊數據"
-    events: "市場事件（本機）"
-    local_db: "本機事件資料庫"
-# ── 公司名片資料來源 (C209) ──────────────────────
+    stock_info: 股票資料與產業分類
+    price_summary: 批次股價摘要
+    sector_data: 板塊數據
+    events: 市場事件（本機）
+    local_db: 本機事件資料庫
 business_card:
   sources:
-    price_valuation: "股價與估值資料"
-    financial_revenue: "財務報表與營收"
-    dividend: "股利資料"
-    news_institutional: "新聞與法人動向"
-    corporate: "公司資料（資產負債表、現金流量表）"
-
-
-# ── 事件儀表板資料來源 (C209) ──────────────────
+    price_valuation: 股價與估值資料
+    financial_revenue: 財務報表與營收
+    dividend: 股利資料
+    news_institutional: 新聞與法人動向
+    corporate: 公司資料（資產負債表、現金流量表）
 event_dashboard:
   sources:
-    events: "事件紀錄"
-    interpretation: "事件解讀範本"
-    local_db: "本機事件資料庫"
-    templates: "範本引擎"
-
-
-# ── 資料來源區塊 (C209) ──────────────────────────
+    events: 事件紀錄
+    interpretation: 事件解讀範本
+    local_db: 本機事件資料庫
+    templates: 範本引擎
 source_section:
-  title: "📡 資料來源"
-  last_updated: "最後更新"
+  title: 📡 資料來源
+  last_updated: 最後更新
   fresh:
-    recent: "1 小時內"
-    day: "24 小時內"
-    stale: "超過 24 小時"
+    recent: 1 小時內
+    day: 24 小時內
+    stale: 超過 24 小時
