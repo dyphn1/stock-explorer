@@ -563,3 +563,57 @@ def _advanced_content_expander(title: str, content: str, icon: str = "🔬") -> 
     """Collapsible section for advanced content."""
     with st.expander(f"{icon} {title}", expanded=False):
         st.markdown(content)
+
+
+def _source_section(
+    sources: list[dict],
+    last_updated: str,
+    *,
+    freshness_indicator: bool = True,
+) -> None:
+    """Render a collapsible source transparency section.
+
+    C209: Collapsible Source Transparency — shows data source provenance
+    in a standardized collapsible format with optional freshness indicator.
+
+    Args:
+        sources: List of source dicts, each with keys:
+            "label" (str): Display label, e.g. "價格資料"
+            "api" (str): API source name, e.g. "FinMind"
+            "time" (str): Fetch time, e.g. "09:30"
+        last_updated: Timestamp string, e.g. "2026-06-17 10:00"
+        freshness_indicator: If True, shows a colored freshness dot based on
+            the last_updated timestamp (<1h green, <24h yellow, >24h red).
+    """
+    from src.core.i18n import t
+
+    title = t("source_section.title")
+    with st.expander(title, expanded=False):
+        if sources:
+            for src in sources:
+                label = src.get("label", "")
+                api = src.get("api", "")
+                time = src.get("time", "")
+                st.caption(f"**{label}**: {api} ({time})")
+        else:
+            st.caption(t("status.data_missing"))
+
+        # Freshness indicator
+        if freshness_indicator and last_updated:
+            try:
+                updated_dt = datetime.strptime(last_updated, "%Y-%m-%d %H:%M")
+                delta = datetime.now() - updated_dt
+                if delta < timedelta(hours=1):
+                    dot = "🟢"
+                    fresh_label = t("source_section.fresh.recent")
+                elif delta < timedelta(hours=24):
+                    dot = "🟡"
+                    fresh_label = t("source_section.fresh.day")
+                else:
+                    dot = "🔴"
+                    fresh_label = t("source_section.fresh.stale")
+                st.caption(f"{dot} {t('source_section.last_updated')}: {last_updated} ({fresh_label})")
+            except (ValueError, TypeError):
+                st.caption(f"{t('source_section.last_updated')}: {last_updated}")
+        else:
+            st.caption(f"{t('source_section.last_updated')}: {last_updated}")

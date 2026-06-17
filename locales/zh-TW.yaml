@@ -554,3 +554,13 @@ daily_market:
   no_mover_data: "無可比較的漲跌幅資料。"
   flat_count: "⚪ 平盤 {flat_count}"
   ad_ratio_label: "漲跌比 {ratio}"
+
+
+# ── 資料來源區塊 (C209) ──────────────────────────
+source_section:
+  title: "📡 資料來源"
+  last_updated: "最後更新"
+  fresh:
+    recent: "1 小時內"
+    day: "24 小時內"
+    stale: "超過 24 小時"

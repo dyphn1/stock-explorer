@@ -545,3 +545,13 @@ daily_market:
     empty: "No major market events today"
 
   disclaimer: "⚠️ This page is for educational purposes only and does not constitute investment advice."
+
+
+# ── Source Section (C209) ──────────────────────
+source_section:
+  title: "📡 Data Sources"
+  last_updated: "Last Updated"
+  fresh:
+    recent: "< 1 hour ago"
+    day: "< 24 hours ago"
+    stale: "> 24 hours ago" 
