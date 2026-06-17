@@ -75,8 +75,8 @@ def _check_banned(text: str) -> bool:
     """Return True if text contains banned words."""
     return any(word in text for word in _BANNED_WORDS)
 
-def validate_debate_text(text: str) -> bool:
-    """Validate debate text for banned words."""
+def contains_banned_words(text: str) -> bool:
+    """Return True if text contains banned words."""
     return _check_banned(text)
 
 

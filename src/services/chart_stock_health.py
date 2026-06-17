@@ -73,7 +73,7 @@ def create_health_snowflake(
                 r=bv_closed,
                 theta=bc_closed,
                 fill="none",
-                line=dict(color="#BDC3C7", width=2, dash="dash"),
+                line=dict(color="#ECF0F1", width=2, dash="dash"),
                 name=benchmark_label,
                 text=[
                     f"<b>{benchmark_label} — {c}: {v:.0f}分</b>"

@@ -14,7 +14,7 @@ from src.pages._router_base import _section_title, _info_card
 from src.services.debate_engine import (
     generate_debate,
     get_debate_summary,
-    validate_debate_text,
+    contains_banned_words,
     DebatePoint,
     DebateSummary,
 )
@@ -73,7 +73,7 @@ def _render_debate_card(point: DebatePoint, index: int, stock_id: str) -> None:
 
     # Banned words filter: if resolved text contains investment advice language,
     # replace with a safe fallback instead of displaying it.
-    if validate_debate_text(argument_text):
+    if contains_banned_words(argument_text):
         argument_text = t("debate.filtered")
 
     # Color based on side

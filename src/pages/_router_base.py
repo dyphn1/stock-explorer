@@ -73,7 +73,7 @@ def _section_title(title: str):
 
     first_char = title[0]
     code = ord(first_char)
-    if code >= 0x2300:
+    if code >= 0x2300 or (first_char.isalpha() and first_char.isascii()):
         st.markdown(f"### {title}")
     else:
         st.markdown(f"### 📊 {title}")
@@ -259,7 +259,7 @@ def _so_what_box(deltas: list[dict]) -> None:
     synthesized = "；".join(parts)
 
     st.markdown(f"""
-    <div style="background:#F0F7FF;border-radius:12px;padding:1.2rem;border-left:4px solid #2980B9;margin:0.8rem 0 0.5rem 0;">
+    <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.8rem 0 0.5rem 0;">
         <div style="font-weight:600;color:#2C3E50;">🧭 所以呢？</div>
         <div style="font-size:0.9rem;color:#2C3E50;margin-top:0.4rem;line-height:1.7;">{synthesized}</div>
     </div>
@@ -471,13 +471,6 @@ _TIMELINE_OPTIONS = {
     "ALL": None,
 }
 
-_TIMELINE_LABELS = {
-    "1Y": "1 年",
-    "3Y": "3 年",
-    "5Y": "5 年",
-    "ALL": "全部",
-}
-
 
 def filter_by_timeline(
     df: pd.DataFrame, date_col: str = "date", timeline_key: str = "timeline_range"
@@ -531,7 +524,7 @@ def _lesson_card(title: str, content: str, icon: str = "📖", visual_area: str 
     """Full-width lesson card with visual area and navigation."""
     visual_html = ""
     if visual_area:
-        visual_html = f'<div style="background:#EBF5FB;border-radius:8px;padding:1rem;margin-bottom:0.8rem;font-size:0.9rem;">{visual_area}</div>'
+        visual_html = f'<div style="background:#F8F9FA;border-radius:8px;padding:1rem;margin-bottom:0.8rem;font-size:0.9rem;">{visual_area}</div>'
     st.markdown(
         f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin-bottom:1rem;">
             <div style="font-size:1.1rem;font-weight:600;color:#2C3E50;margin-bottom:0.5rem;">{icon} {title}</div>
@@ -558,7 +551,7 @@ def _progress_dots(current: int, total: int, active_color: str = "#27AE60", inac
 def _beginner_banner(message: str, icon: str = "🌱") -> None:
     """In-page banner for beginner mode."""
     st.markdown(
-        f"""<div style="background:#E8F8F5;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid #27AE60;margin-bottom:1rem;">
+        f"""<div style="background:#F8F9FA;border-radius:12px;padding:1rem 1.2rem;border-left:4px solid #27AE60;margin-bottom:1rem;">
             <span style="font-size:1.1rem;">{icon}</span>
             <span style="font-size:0.9rem;color:#27AE60;margin-left:0.5rem;">{message}</span>
         </div>""",

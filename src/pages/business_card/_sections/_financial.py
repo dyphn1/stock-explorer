@@ -246,7 +246,7 @@ def _render_dividend(data: dict, client) -> None:
                 # Render as HTML table to support badges
                 html_rows = []
                 _cols = list(display_df.columns)
-                _header = "".join(f'<th style="text-align:left;padding:8px 12px;color:#7F8C8D;font-size:0.85rem;border-bottom:2px solid #BDC3C7;">{c}</th>' for c in _cols)
+                _header = "".join(f'<th style="text-align:left;padding:8px 12px;color:#7F8C8D;font-size:0.85rem;border-bottom:2px solid #ECF0F1;">{c}</th>' for c in _cols)
                 html_rows.append(f"<tr>{_header}</tr>")
                 for _, _r in display_df.iterrows():
                     _cells = ""

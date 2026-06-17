@@ -7,7 +7,8 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 
-from src.pages._router_base import _TIMELINE_OPTIONS, _TIMELINE_LABELS
+from src.core.i18n import t
+from src.pages._router_base import _TIMELINE_OPTIONS
 
 
 def render_timeline_selector(key_prefix: str = "") -> str:
@@ -35,7 +36,7 @@ def render_timeline_selector(key_prefix: str = "") -> str:
 
     for i, opt in enumerate(options):
         with cols[i]:
-            label = _TIMELINE_LABELS[opt]
+            label = t(f"timeline.label_{opt.lower()}")
             is_active = current == opt
 
             # 使用 CSS 樣式讓選中的按鈕看起來不同

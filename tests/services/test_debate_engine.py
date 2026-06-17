@@ -15,7 +15,7 @@ import pytest
 from src.services.debate_engine import (
     generate_debate,
     get_debate_summary,
-    validate_debate_text,
+    contains_banned_words,
     _calc_strength,
     _METRICS,
 )
@@ -337,52 +337,47 @@ class TestGetDebateSummary:
         assert summary["bear_strength"] == 0.5
 
 
-# ── validate_debate_text() tests ─────────────────────────────
+# ── contains_banned_words() tests ─────────────────────────────
 
-class TestValidateDebateText:
+class TestContainsBannedWords:
     def test_clean_text_returns_true(self):
-        """validate_debate_text returns True when text is clean (no banned words)."""
-        # Note: validate_debate_text returns _check_banned(text), which returns
-        # True if banned words ARE found. So clean text → False... Wait, let me re-read.
-        # _check_banned: return any(word in text for word in _BANNED_WORDS) → True if banned found
-        # validate_debate_text: return _check_banned(text) → True if banned found
-        # So validate_debate_text returns True when text HAS banned words (is invalid)
-        # and False when text is clean (is valid).
-        # This is counterintuitive naming but that's the actual implementation.
-        assert validate_debate_text("ROE 15% above industry average 10%") is False
+        """contains_banned_words returns False when text is clean (no banned words)."""
+        # Note: contains_banned_words returns _check_banned(text), which returns
+        # True if banned words ARE found. So clean text → False.
+        assert contains_banned_words("ROE 15% above industry average 10%") is False
 
     def test_banned_chinese_buy_word(self):
         """Text with banned Chinese word '買進' returns True (banned detected)."""
-        assert validate_debate_text("建議買進此股票") is True
+        assert contains_banned_words("建議買進此股票") is True
 
     def test_banned_chinese_sell_word(self):
         """Text with banned Chinese word '賣出' returns True (banned detected)."""
-        assert validate_debate_text("建議賣出持股") is True
+        assert contains_banned_words("建議賣出持股") is True
 
     def test_banned_english_buy_word(self):
         """Text with banned English word 'buy' returns True (banned detected)."""
-        assert validate_debate_text("You should buy this stock") is True
+        assert contains_banned_words("You should buy this stock") is True
 
     def test_banned_english_sell_word(self):
         """Text with banned English word 'sell' returns True (banned detected)."""
-        assert validate_debate_text("You should sell this stock") is True
+        assert contains_banned_words("You should sell this stock") is True
 
     def test_banned_word_strong_buy(self):
         """Text with banned phrase 'strong buy' returns True (banned detected)."""
-        assert validate_debate_text("Analysts give a strong buy rating") is True
+        assert contains_banned_words("Analysts give a strong buy rating") is True
 
     def test_banned_word_target_price(self):
         """Text with banned phrase 'target price' returns True (banned detected)."""
-        assert validate_debate_text("The target price is $100") is True
+        assert contains_banned_words("The target price is $100") is True
 
     def test_empty_text_not_banned(self):
         """Empty text has no banned words → returns False."""
-        assert validate_debate_text("") is False
+        assert contains_banned_words("") is False
 
     def test_banned_word_推薦(self):
         """Text with banned Chinese word '推薦' returns True (banned detected)."""
-        assert validate_debate_text("推薦買入") is True
+        assert contains_banned_words("推薦買入") is True
 
     def test_banned_word_建議(self):
         """Text with banned Chinese word '建議' returns True (banned detected)."""
-        assert validate_debate_text("建議投資") is True
+        assert contains_banned_words("建議投資") is True

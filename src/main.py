@@ -52,11 +52,10 @@ st.markdown("""
     /* 警語 */
     .disclaimer {
         background: #FEF9E7;
-        border: 1px solid #F9E79F;
         border-radius: 8px;
         padding: 1rem;
         font-size: 0.85rem;
-        color: #7D6608;
+        color: #2C3E50;
         margin-top: 2rem;
     }
 
@@ -112,7 +111,7 @@ st.markdown("""
         color: #2C3E50 !important;
     }
     section[data-testid="stSidebar"] input[type="text"]::placeholder {
-        color: #95A5A6 !important;
+        color: #7F8C8D !important;
         opacity: 1 !important;
     }
 </style>
@@ -301,7 +300,7 @@ if not stock_id:
     <div style="text-align:center;padding:4rem 2rem;">
         <h1>📊 股識</h1>
         <p style="font-size:1.3rem;color:#7F8C8D;margin-top:1rem;">認識一家公司，從這裡開始</p>
-        <p style="font-size:1rem;color:#95A5A6;margin-top:2rem;">
+        <p style="font-size:1rem;color:#7F8C8D;margin-top:2rem;">
             在左側輸入股票代號或名稱，開始認識一家公司
         </p>
     </div>
