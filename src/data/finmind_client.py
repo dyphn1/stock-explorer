@@ -86,8 +86,25 @@ class FinMindClient:
     # ── 內部快取方法 ──────────────────────────────────
 
     def _cache_key(self, prefix: str, **params) -> str:
-        """生成快取 key"""
-        raw = json.dumps({"prefix": prefix, **params}, sort_keys=True)
+        """生成快取 key，並標準化滑動窗口開始日期以防止每日快取失效"""
+        filtered_params = {}
+        today = datetime.now().date()
+        for key, value in params.items():
+            # Check if the value is a string in YYYY-MM-DD format
+            if isinstance(value, str) and len(value) == 10 and value[4] == '-' and value[7] == '-':
+                try:
+                    param_date = datetime.strptime(value, "%Y-%m-%d").date()
+                    delta = today - param_date
+                    # If the date is between 30 and 2000 days ago (inclusive), treat as sliding window and exclude
+                    if 30 <= delta.days <= 2000:
+                        continue
+                except ValueError:
+                    # If parsing fails, fall through to include the value
+                    pass
+            # Include the parameter (either non-date, invalid date, or date outside sliding window)
+            filtered_params[key] = value
+
+        raw = json.dumps({"prefix": prefix, **filtered_params}, sort_keys=True)
         return hashlib.md5(raw.encode()).hexdigest()
 
     def _cache_path(self, key: str) -> Path:

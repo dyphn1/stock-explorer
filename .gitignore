@@ -38,6 +38,38 @@ design_improvement_suggestions.md
 design_improvement_task_summary.md
 team_round1_response.md
 test.txt
+memory.db
+conftest.py
+_verify_*.py
+_verify_*.md
+DEVELOPER_RESPONSE.md
+analysis_summary.md
+response_summary.txt
+summary_output.txt
 
 # Streamlit
 .streamlit/
+
+# Docs temp logs (keep decisions/, domain/, roles/, architecture/, design/ core files)
+docs/state/
+docs/status/
+docs/logs/
+docs/workflow/
+docs/research/
+docs/archive/
+docs/analysis/
+docs/architecture/discuss_*.md
+docs/architecture/review_*.md
+docs/design/discuss_*.md
+docs/design/discussion_*.md
+docs/design/review_*.md
+docs/design/challenge_*.md
+docs/design/estimates*.md
+
+# Scripts - keep only run.sh and verify.sh
+scripts/capture_screenshots.py
+scripts/clean_syspath*.py
+scripts/fix_path.py
+scripts/index_memory.py
+scripts/restore_syspath.py
+scripts/screenshot.py
