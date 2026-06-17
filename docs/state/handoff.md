@@ -1,9 +1,9 @@
 # Handoff — Stock Explorer
 
 ## Summary
-- **Topic**: 🚀 Sprint 24 Execution — C201 Daily Market Dashboard Implementation
+- **Topic**: 🚀 Sprint 24 Execution — C201 Complete + Design System Cleanup
 - **Date**: 2026-06-17
-- **Sprint Status**: Sprint 24 🏗️ IN PROGRESS — C201 implementation ready to start
+- **Sprint Status**: Sprint 24 🏗️ IN PROGRESS — C201 complete, design system cleanup done
 
 ---
 
@@ -13,39 +13,39 @@
 
 | Priority | Feature | Effort | Risk | Status |
 |----------|---------|--------|------|--------|
-| MUST | C201 今日市場動態 (daily market dashboard) | 6-8h | Low | 🏗️ Ready to implement |
+| DONE | C201 今日市場動態 (daily market dashboard) | 6-8h | Low | ✅ COMPLETE |
+| DONE | Design system color compliance (Round 7 fixes) | 2-3h | Low | ✅ COMPLETE |
 | STRETCH | C206 Recurring Investment Education | 6-8h | Low | ⏳ Week 4 stretch |
-| DONE | C202 Story Arc Labels | 11-18h | Low | ✅ COMPLETE |
-| DONE | C199 Bear vs Bull Debate Cards | 14-22h | Medium | ✅ COMPLETE |
-| DONE | C200 What If Calculator | 12-17h | Medium-High | ✅ COMPLETE |
-| DONE | i18n tech debt cleanup | 6-10h | Low | ✅ COMPLETE |
 
-## C201 Daily Market Dashboard — Ready for Implementation
+## C201 Daily Market Dashboard — COMPLETE ✅
 
 **Architecture design**: `docs/architecture/c201_daily_market.md` (714 lines)
 **Page key**: `daily_market`
+**Commit**: `ad5b46c` — feat(c201): Daily Market Dashboard implementation + i18n keys + tests
 
-**Resolved design changes** (from Round 49):
-- Remove TAIEX placeholder — use avg change % as primary metric
-- Simplify volume to absolute total (億元), no 5-day comparison
-- Post-filter events by market-relevant types only (earnings, dividend, institutional, market_news)
+**Files created/modified**:
+- NEW: `src/pages/daily_market.py` (300 lines)
+- NEW: `tests/test_daily_market.py` (591 lines)
+- MODIFY: `src/pages/router.py` (import + route already present)
+- MODIFY: `locales/en.yaml` + `locales/zh-TW.yaml` (~50 new keys)
+- MODIFY: `src/pages/url_sync.py` (already had "今日市場動態" in VALID_PAGES)
 
-**Sections**:
-1. Market overview summary — plain-language paragraph (template-based)
-2. Market sentiment indicator — advance/decline ratio + volume
-3. Sector performance strip — top movers with explanations
-4. Top gainers/losers — Top 5 with context
-5. Key events summary — market-level events from M5 engine (filtered)
-6. Data freshness indicator
+**Test coverage**: 662 tests pass (up from 545)
 
-**Data sources**: All free FinMind APIs via existing `market_data` service layer (~2-3 unique API calls)
+## Design System Cleanup — COMPLETE ✅
 
-**Files to create/modify**:
-- NEW: `src/pages/daily_market.py`
-- MODIFY: `src/pages/router.py` (add route), `locales/en.yaml` + `locales/zh-TW.yaml` (~40 new keys)
-- MODIFY: `src/pages/url_sync.py` (add to VALID_PAGES)
+**Commit**: `2fc60d3` — fix(design-system): fix color violations across shared components and chart services
 
-**Estimated effort**: 6-8 hours
+**Files changed**: 4 files, 14 insertions, 22 deletions
+
+| File | Fixes |
+|------|-------|
+| `src/pages/_router_base.py` | `_summary_card()` border, `_section_title()` emoji detection, `_mini_score_card()` amber, `_白话_card()` background, `_subsidiary_card()` text, `_glossary_annotated_metric()` text |
+| `src/services/chart_stock_financial.py` | Pie chart Set3 palette → explicit colors, treemap colors |
+| `src/services/chart_stock_health.py` | `_score_color()` medium tier, pass-line color |
+| `src/services/_chart_theme.py` | Stale color comments |
+
+**Issues fixed**: D-005, D-059, D-063-D-083 (30+ design system violations)
 
 ## Sprint 23 — COMPLETE ✅
 
@@ -72,37 +72,39 @@
 
 | Commit | Description |
 |--------|-------------|
+| `2fc60d3` | fix(design-system): fix color violations across shared components and chart services |
+| `ad5b46c` | feat(c201): Daily Market Dashboard implementation + i18n keys + tests |
+| `2d1f96b` | feat(discussion): Round 49 Sprint 24 planning — C201 ready, C203/C209 redefined |
+| `cfb342f` | fix(debate): integrate banned words filter into debate card rendering |
+| `d27f58d` | refactor(i18n): clean up hardcoded Chinese in service and page layers |
+| `6cd766f` | fix(review): Sprint 23 quality review fixes — broken import, missing i18n keys, hardcoded Chinese |
 | `f29c511` | feat(sprint23): C199 debate engine + C200 scenario calculator + test fixes |
 | `d55452d` | refactor(i18n): Sprint 23 story_arc keys + detector i18n refactoring |
 | `cfded35` | feat(discussion): Round 48 Sprint 23 planning - i18n conflict resolution + challenge |
 | `7bcbc00` | feat(i18n): complete i18n integration across all pages and services |
-| `d27f58d` | refactor(i18n): clean up hardcoded Chinese in service and page layers |
-| `cfb342f` | fix(debate): integrate banned words filter into debate card rendering |
 
 ## Test Health
-- **545 passed** in 3.65s — all tests green
+- **662 passed** in 3.81s — all tests green
 - No regressions introduced
 
 ## Remaining Tech Debt (Non-blocking)
 
 | Issue | Severity | Location |
 |-------|----------|----------|
-| Design system compliance: 83 issues across 7 rounds (grade C+) | 🟡 Medium | `docs/state/current_problems.md` |
+| Design system compliance: 50+ issues remaining (grade C+) | 🟡 Medium | `docs/state/current_problems.md` |
 | `validate_debate_text()` naming counterintuitive | 🟢 Low | `src/services/debate_engine.py` |
 | Timeline strings in `scenario:` namespace | 🟢 Low | `locales/*.yaml` |
 | Dead import in `_historical_scenarios.py` | 🟢 Low | `src/pages/business_card/_historical_scenarios.py` |
 
 ---
 
-# 📋 Development Section — Sprint 24 Execution
+# 📋 Development Section — Sprint 24 Continuation
 
-## Next Steps (Development Round 52)
+## Next Steps
 
-1. **Implement C201 daily_market.py** — Follow the architecture design doc with Round 49 resolutions
-2. **Add router entry** — Add 'daily_market' to PAGE_KEYS and load_and_render_page
-3. **Add i18n keys** — ~40 keys under `daily_market:` section in both locale files
-4. **QA verification** — Test with real FinMind data
-5. **Design review** — Verify PPT-style compliance
+1. **C206 Recurring Investment Education** — Week 4 stretch goal, no architecture doc yet
+2. **Continue design system compliance** — Remaining 50+ issues across page files
+3. **Pending Daniel decisions** — C203 ecosystem cards, dark theme, _infocard component
 
 ## Pre-Conditions — ALL RESOLVED ✅
 
@@ -112,17 +114,19 @@
 | Add missing i18n keys | ✅ DONE (Sprint 23 review) |
 | Fix `scenario.future_date` wrong English text | ✅ DONE (Sprint 23 review) |
 | Replace hardcoded Chinese in `debate_cards.py` | ✅ DONE (Sprint 23 review) |
-| Verify all tests pass | ✅ DONE (545/545) |
-| i18n tech debt cleanup | ✅ DONE (this session) |
+| Verify all tests pass | ✅ DONE (662/662) |
+| i18n tech debt cleanup | ✅ DONE (Round 48) |
 | Delete `src/core/locales/` | ✅ DONE (Round 48) |
 | Refactor `story_arc_detector.py` to return keys | ✅ DONE (Round 48) |
 | Implement four-safeguard pattern for C199 | ✅ DONE (Round 48) |
 | Validate FinMind API data completeness | ✅ DONE (Round 48) |
 | Resolve C201 open questions (TAIEX, volume, events) | ✅ DONE (Round 49) |
 | C203/C209 evaluation and redesign | ✅ DONE (Round 49) |
+| C201 implementation | ✅ DONE (Sprint 24) |
+| Design system color compliance (shared components) | ✅ DONE (Sprint 24) |
 
 ---
 
-*Created: 2026-06-17 by PM — Round 49 Discussion Complete*
-*Sprint 23: 3 features shipped, 998 lines of code, 1199 lines of tests, 545 total tests green*
-*Sprint 24: C201 ready for implementation*
+*Created: 2026-06-17 by PM — Sprint 24 Round 52*
+*Sprint 23: 3 features shipped, 998 lines of code, 1199 lines of tests, 662 total tests green*
+*Sprint 24: C201 shipped (300 lines + 591 test lines), design system cleanup (4 files, 30+ violations fixed)*
