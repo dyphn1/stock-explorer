@@ -79,6 +79,10 @@ class FinMindClient:
         # P0 fix: clean up expired cache files on init
         self._cleanup_cache()
 
+        # Memory cache for all stock info to avoid file cache lookups
+        self._all_stock_info_memory = None
+        self._all_stock_info_memory_time = None
+
     # ── 內部快取方法 ──────────────────────────────────
 
     def _cache_key(self, prefix: str, **params) -> str:
@@ -210,10 +214,23 @@ class FinMindClient:
         解決 P0-3 問題：避免每次 get_stock_info(stock_id) 都產生不同
         cache key 導致重複呼叫 API 抓取同一份全量資料。
         """
+        # Check memory cache first
+        now = datetime.now()
+        if (self._all_stock_info_memory is not None
+                and self._all_stock_info_memory_time is not None
+                and now - self._all_stock_info_memory_time < self.cache_ttl):
+            logger.debug("Returning all stock info from memory cache")
+            return self._all_stock_info_memory
+
         def fetch():
             return self._loader.taiwan_stock_info()
 
-        return self._fetch_or_cache("all_stock_info", fetch)
+        df = self._fetch_or_cache("all_stock_info", fetch)
+        if df is not None and len(df) > 0:
+            self._all_stock_info_memory = df
+            self._all_stock_info_memory_time = now
+            logger.debug("Updated memory cache for all stock info")
+        return df
 
     # ── 公開 API ──────────────────────────────────────
 

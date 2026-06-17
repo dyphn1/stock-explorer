@@ -13,9 +13,10 @@ from filelock import FileLock
 
 from src.utils import _atomic_write
 
-# Relative to project root (where streamlit is launched from)
-WATCHLIST_PATH = Path("config/watchlist.yaml")
-WATCHLIST_LOCK = Path("config/watchlist.lock")
+# Absolute path to project root
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+WATCHLIST_PATH = Path(BASE_DIR) / "config" / "watchlist.yaml"
+WATCHLIST_LOCK = Path(BASE_DIR) / "config" / "watchlist.lock"
 
 # ── In-memory cache ──────────────────────────────────────
 _cache: dict = {}
