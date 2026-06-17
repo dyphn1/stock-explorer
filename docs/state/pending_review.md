@@ -14,13 +14,6 @@
 - **Default if no response**: Defer C203 to Sprint 26
 - **Status**: ⏳ Pending Daniel
 
-#### 2. C206 Recurring Investment Education — Scope Definition
-- **Context**: Listed as stretch goal since Sprint 24. No architecture doc exists.
-- **Proposal**: Single DCA lesson in existing academy. Hypothetical data only, NO calculator, NO real stock examples. Uses `_lesson_card()` + `_progress_dots()`.
-- **Revised estimate**: 6-8h for single lesson
-- **Default if no response**: Single DCA lesson, hypothetical only
-- **Status**: ⏳ Pending Daniel (defaulting to single lesson)
-
 ### Previously Open Items (Still Pending)
 
 #### 3. Dark/Light Theme Implementation (D-126)
@@ -35,18 +28,11 @@
 - **Estimated Effort**: 6-9h
 - **Status**: ⏳ Pending Daniel — Sprint 26+ candidate
 
-## Resolved This Cycle (Sprint 25 Day 1)
+## Resolved This Cycle (Sprint 25 Day 3)
 
-| Item | Decision |
-|------|----------|
-| C209 `_source_section()` component | ✅ Created (commit 8ed9a97) |
-| Pre-sprint color fixes | ✅ Applied (commit 9bcbf22) |
-| `validate_debate_text()` rename | ✅ Renamed to `contains_banned_words()` |
-| Timeline labels i18n | ✅ Moved to `t()` calls |
-| C209 redesign | ✅ Option A: Collapsible source section |
-| Pre-sprint fixes | ✅ All applied |
-| C203 scope cap | ✅ 8 companies max (not 15-20) |
-| C206 scope | ✅ Single lesson, hypothetical only (default if no Daniel response) |
+|| Item | Decision |
+|------|--------|----------|
+|| C206 Recurring Investment Education | ✅ Implemented single DCA lesson with hypothetical data only (commit 1a0c426) |
 
 ---
 

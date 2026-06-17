@@ -1,13 +1,40 @@
 # Handoff — Stock Explorer
 
 ## Summary
-- **Topic**: 🚀 Sprint 25 Day 2 Planning — C209 Integration Ready
+- **Topic**: 🚀 Sprint 25 Day 3 Complete — C206 DCA Lesson
 - **Date**: 2026-06-17
-- **Sprint Status**: Sprint 25 📋 IN PROGRESS — Day 2 Complete, Day 3 Planned
+- **Sprint Status**: Sprint 25 ✅ COMPLETE
 
 ---
 
-# ✅ Sprint 25 Day 2 — COMPLETE
+# ✅ Sprint 25 Day 3 — COMPLETE
+
+## C206 Recurring Investment Education — LESSON CREATED
+
+| Item | Status |
+|------|--------|
+| `lesson_06.yaml` — DCA lesson | ✅ Created (commit 1a0c426) |
+| `academy_meta.yaml` — lesson_06 registered | ✅ Updated |
+| Hypothetical data only (no real stocks) | ✅ Confirmed |
+| No calculator, no stock_example blocks | ✅ Confirmed |
+| 3 quiz questions with explanations | ✅ Included |
+| All Traditional Chinese | ✅ Confirmed |
+
+**Lesson content:**
+- Title: "定期定額：懶人投資法"
+- 6 sections: concept, hypothetical 6-month example (範例公司), benefits, caveats, when DCA works, summary
+- 3 callout blocks (info, tip, warning)
+- Quiz: Q1 timing risk, Q2 averaging down, Q3 long-term commitment
+
+**Test health: 658 passed, 3.73s — no regressions**
+
+## Commit
+- `1a0c426` — `feat(c206): add DCA recurring investment lesson (lesson_06)`
+- Pushed to origin/main ✅
+
+---
+
+# ✅ Sprint 25 Day 2 — COMPLETE (prior)
 
 ## C209 Integration — ALL 3 PAGES DONE
 
@@ -18,100 +45,45 @@
 | `event_dashboard.py` | ✅ Integrated | 2 sources, dead code removed |
 
 ## Router Import Fix — APPLIED
-
 - Removed broken `_render_freshness_indicator` import from `router.py`
-- Removed dead `check_data_freshness` import + call site (line 267-268)
-- Fixes 2 test failures (`test_daily_market_in_page_keys`, `test_router_imports_without_errors`)
+- Fixes 2 test failures
 
 ## i18n Keys Added
-
-All 13 keys per locale (26 total) added atomically:
-- `daily_market.sources.*` (4 keys)
-- `business_card.sources.*` (5 keys)
-- `event_dashboard.sources.*` (4 keys)
+All 13 keys per locale (26 total) added atomically.
 
 ## Commit
-- `964e90c` — `feat(c209): integrate _source_section into daily_market, business_card, event_dashboard`
-- Pushed to origin/main ✅
+- `964e90c` — `feat(c209): integrate _source_section into ...`
 
 ---
 
-# ✅ Sprint 25 Day 1 — COMPLETE
+# ✅ Sprint 25 Day 1 — COMPLETE (prior)
 
 ## Pre-Sprint Fixes (All Applied)
-
-| Fix | Status |
-|-----|--------|
-| `validate_debate_text()` → `contains_banned_words()` | ✅ FIXED (commit 9bcbf22) |
-| `_TIMELINE_LABELS` → i18n `t()` in timeline_controls.py | ✅ FIXED (commit 9bcbf22) |
-| 8 non-palette color fixes across src/ | ✅ FIXED (commit 9bcbf22) |
-| `_section_title()` emoji logic improvement | ✅ FIXED (commit 9bcbf22) |
-| API abuse in `get_stock_info` | ✅ ALREADY FIXED (prior sprint) |
-| Dead `calculate_scenario` import | ✅ NOT dead (false alarm) |
-| D-073 `#5D6D7E` → `#7F8C8D` in `_info_card()` | ✅ ALREADY FIXED (prior sprint) |
-| D-071 Set3 palette | ✅ ALREADY FIXED (prior sprint) |
-| D-084 `st.bar_chart` → Plotly | ✅ ALREADY FIXED (prior sprint) |
+- `validate_debate_text()` → `contains_banned_words()` ✅
+- `_TIMELINE_LABELS` → i18n `t()` ✅
+- 8 non-palette color fixes ✅
+- `_section_title()` emoji logic improvement ✅
 
 ## C209 `_source_section()` Component — CREATED
-
-| Item | Status |
-|------|--------|
-| `_source_section()` in `_router_base.py` | ✅ Created (commit 8ed9a97) |
-| i18n keys in en.yaml + zh-TW.yaml | ✅ Added |
-| Freshness indicator (🟢🟡🔴) | ✅ Included |
-| Empty sources handling | ✅ Included |
-| Import test | ✅ Passes |
+- Commit `8ed9a97`
 
 ---
 
-# 📋 Sprint 25 — IN PROGRESS
+# 📋 Sprint 25 — COMPLETE ✅
 
-## Plan
+## Final Plan Status
 
-| Priority | Feature | Effort | Risk | Status |
-|----------|---------|--------|------|--------|
-| MUST | Pre-sprint fixes | 2h | Low | ✅ Day 1 Complete |
-| MUST | C209 `_source_section()` component | 30 min | Low | ✅ Day 1 Complete |
-| MUST | C209 integration (3 pages) | 1.5-2h | Low | ✅ Day 2 Complete |
-| SHOULD | C206 Recurring Investment Education (1 lesson) | 6-8h | Low | ⏳ Day 3 Ready (default: single DCA lesson) |
-| SHOULD | C203 Company Ecosystem Cards v1 (8 companies) | 10-12h | Medium | ⏳ Pending Daniel |
-
-## C209 Integration — Day 2 Ready
-
-Target pages for v1 (in priority order):
-1. **daily_market.py** — Replace `_render_freshness()` with `_source_section()`, 4 source entries
-2. **business_card.py** — Add `_source_section()` after `_render_footer()`, 5 grouped source entries
-3. **event_dashboard.py** — Add `_source_section()`, remove dead `_render_freshness_indicator()` + `_freshness_badge()`
-
-Each page needs:
-- Import `_source_section` from `_router_base.py`
-- Build a `sources` list with the APIs used on that page
-- Call `_source_section(sources, last_updated)` at the bottom of the page content
-- Add 13 new i18n keys per locale (26 total) atomically per page
-
-Full integration plan: `docs/state/discuss_r51_prep.md`
-Discussion handoff: `docs/state/handoff_discuss_r51.md`
-
-## C206 — Ready
-- Academy infrastructure: ✅ Complete (5 lessons exist)
-- `_lesson_card()` + `_progress_dots()`: ✅ Ready
-- Default scope: Single DCA lesson, hypothetical data only
-- No Daniel response needed — defaulting to single lesson
-
-## C203 — Pending Daniel
-- `group_structures.yaml`: 5 parent companies, ~20 subsidiaries
-- `_subsidiary_card()`: ✅ Reusable
-- Missing: `ecosystem_service.py` + `ecosystem_cards.py`
-- **Gate**: Daniel approval required; default defer to Sprint 26
+| Priority | Feature | Status |
+|----------|---------|--------|
+| MUST | Pre-sprint fixes | ✅ Day 1 |
+| MUST | C209 `_source_section()` component | ✅ Day 1 |
+| MUST | C209 integration (3 pages) | ✅ Day 2 |
+| SHOULD | C206 Recurring Investment Education | ✅ Day 3 |
+| SHOULD | C203 Company Ecosystem Cards v1 | ⏳ Deferred to Sprint 26 |
 
 ## Test Health
-- **658 passed** in 3.66s — all tests green
-- 2 failures from broken import fixed (router.py `_render_freshness_indicator`)
-- No regressions from C209 integration
-
-## Design System Grade: C+
-- Pre-sprint color fixes applied
-- Grade improvement to B- expected after C209 integration (cleaner pages)
+- **658 passed** in 3.73s — all tests green
+- No regressions from C206 or C209
 
 ---
 
@@ -121,22 +93,28 @@ Discussion handoff: `docs/state/handoff_discuss_r51.md`
 |--------|----------|--------|
 | Sprint 23 | C202 Story Arc Labels, C199 Debate Cards, C200 What If Calculator | ✅ Complete |
 | Sprint 24 | C201 Daily Market Dashboard, Design System Cleanup | ✅ Complete |
-| Sprint 25 | C209 Collapsible Source, C203 Ecosystem Cards, C206 Education | 📋 IN PROGRESS (Day 2/3) |
+| Sprint 25 | C209 Collapsible Source, C206 DCA Lesson, Pre-sprint fixes | ✅ Complete |
 
 ---
 
-# 📋 Development Section — Sprint 25
+# 📋 Development Section — Sprint 26 Planning
 
-## Next Steps (Priority Order)
-1. **C206 single DCA lesson** — Day 3 default scope (single lesson, hypothetical data only)
-2. **C203 ecosystem cards** — Only if Daniel approves (default defer to Sprint 26)
-3. **Sprint 25 retrospective** — Compress logs, update decisions/
+## Candidates for Sprint 26
+1. **C203 Company Ecosystem Cards v1** — Pending Daniel approval (default defer to Sprint 26)
+2. **D-005: Fix `_section_title()` emoji conflict** — 15 min, affects all pages
+3. **D-069+D-070: Fix chart.py theme colors** — 15 min, affects all charts globally
+4. **D-071: Replace Set3 palette in pie charts** — 30 min
+5. **Dark/Light Theme (D-126)** — 8-12h, pending Daniel
+6. **_infocard() component (D-127)** — 6-9h, pending Daniel
 
-## Pre-Conditions — ALL RESOLVED ✅
-All pre-conditions resolved. Sprint 25 Day 1 complete. Day 2 ready to execute.
+## Pre-Conditions for C203
+- `group_structures.yaml`: 5 parent companies, ~20 subsidiaries ✅
+- `_subsidiary_card()`: ✅ Reusable
+- Missing: `ecosystem_service.py` + `ecosystem_cards.py`
+- **Gate**: Daniel approval required
 
 ---
 
-*Created: 2026-06-17 by PM — Sprint 25 Day 2 Complete*
-*C209 integration: 3 pages, 26 i18n keys, 1 router fix. 1 commit pushed to origin/main.*
-*658 tests green. Sprint 25 Day 3 ready: C206 single DCA lesson.*
+*Created: 2026-06-17 by PM — Sprint 25 Complete*
+*C206 lesson: 6 sections, 3 quiz questions, hypothetical data only. 1 commit pushed.*
+*658 tests green. Sprint 26 ready for planning.*
