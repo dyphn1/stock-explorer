@@ -1,89 +1,87 @@
 # Handoff — Stock Explorer
 
 ## Summary
-- **Topic**: 🔍 Sprint 22 Review + Sprint 25 Readiness Assessment
+- **Topic**: 🚀 Sprint 25 Day 2 Planning — C209 Integration Ready
 - **Date**: 2026-06-17
-- **Sprint Status**: Sprint 24 ✅ COMPLETE → Sprint 25 ✅ READY TO START
+- **Sprint Status**: Sprint 25 📋 IN PROGRESS — Day 1 Complete, Day 2 Planned
 
 ---
 
-# ✅ Sprint 22 (C201) — REVIEW COMPLETE
+# ✅ Sprint 25 Day 1 — COMPLETE
 
-**Verdict: ✅ ALL DELIVERABLES PASS**
+## Pre-Sprint Fixes (All Applied)
 
-| Check | Status |
-|-------|--------|
-| daily_market.py structure (300 lines, 7 functions) | ✅ PASS |
-| i18n integration (all strings via `t()`) | ✅ PASS |
-| No hardcoded Chinese | ✅ PASS |
-| Test coverage (591 lines, 7 classes, 35+ tests) | ✅ PASS |
-| en.yaml C201 keys | ✅ PASS |
-| zh-TW.yaml C201 keys | ✅ PASS |
-| i18n.py format_amount/format_percent helpers | ✅ PASS |
-| router.py route registration | ✅ PASS |
-| url_sync.py VALID_PAGES | ✅ PASS |
+| Fix | Status |
+|-----|--------|
+| `validate_debate_text()` → `contains_banned_words()` | ✅ FIXED (commit 9bcbf22) |
+| `_TIMELINE_LABELS` → i18n `t()` in timeline_controls.py | ✅ FIXED (commit 9bcbf22) |
+| 8 non-palette color fixes across src/ | ✅ FIXED (commit 9bcbf22) |
+| `_section_title()` emoji logic improvement | ✅ FIXED (commit 9bcbf22) |
+| API abuse in `get_stock_info` | ✅ ALREADY FIXED (prior sprint) |
+| Dead `calculate_scenario` import | ✅ NOT dead (false alarm) |
+| D-073 `#5D6D7E` → `#7F8C8D` in `_info_card()` | ✅ ALREADY FIXED (prior sprint) |
+| D-071 Set3 palette | ✅ ALREADY FIXED (prior sprint) |
+| D-084 `st.bar_chart` → Plotly | ✅ ALREADY FIXED (prior sprint) |
 
-**Minor observation**: en.yaml and zh-TW.yaml have slightly different key ordering for `daily_market` nested keys (cosmetic only, not a bug).
+## C209 `_source_section()` Component — CREATED
+
+| Item | Status |
+|------|--------|
+| `_source_section()` in `_router_base.py` | ✅ Created (commit 8ed9a97) |
+| i18n keys in en.yaml + zh-TW.yaml | ✅ Added |
+| Freshness indicator (🟢🟡🔴) | ✅ Included |
+| Empty sources handling | ✅ Included |
+| Import test | ✅ Passes |
 
 ---
 
-# ✅ Sprint 25 — READY TO START
+# 📋 Sprint 25 — IN PROGRESS
 
-## Pre-Sprint Fixes Status (Updated)
-
-The Round 50 Designer verification corrected the initial assessment — the fix burden is **lower than estimated**:
-
-| Fix | Originally Estimated | Actual Status |
-|-----|---------------------|---------------|
-| D-073 `#5D6D7E` → `#7F8C8D` in `_info_card()` | Open | ✅ ALREADY FIXED |
-| D-071 Set3 palette in pie charts | Open | ✅ ALREADY FIXED |
-| D-084 `st.bar_chart` → Plotly | Open | ✅ ALREADY FIXED |
-| D-074 `#F8F9FA` background | Open | ✅ Acceptable as-is |
-| D-005 `_section_title()` emoji edge case | Open | ⚠️ Still needs fix (15 min) |
-| 8 non-palette color fixes | Open | ⚠️ Still needs fixes (~10 min) |
-| Rename `validate_debate_text()` | Open | ⚠️ Still needs fix (5 min) |
-| Timeline strings namespace | Open | ⚠️ Still needs fix (15 min) |
-| Dead `calculate_scenario` import | Open | ⚠️ Still needs fix (5 min) |
-| API abuse in `get_stock_info` | Open | ⚠️ Still needs fix (1-2h) |
-
-**Revised pre-sprint fix burden: ~2h** (down from 3-4h)
-
-## Sprint 25 Plan
+## Plan
 
 | Priority | Feature | Effort | Risk | Status |
 |----------|---------|--------|------|--------|
-| MUST | Pre-sprint fixes (remaining) | 2h | Low | ⏳ Week 1 Day 1 |
-| MUST | C209 Collapsible Source Transparency (3 pages) | 4-6h | Low | ⏳ Ready — spec complete |
+| MUST | Pre-sprint fixes | 2h | Low | ✅ Day 1 Complete |
+| MUST | C209 `_source_section()` component | 30 min | Low | ✅ Day 1 Complete |
+| MUST | C209 integration (3 pages) | 1.5-2h | Low | ⏳ Day 2 Ready |
+| SHOULD | C206 Recurring Investment Education (1 lesson) | 6-8h | Low | ⏳ Pending |
 | SHOULD | C203 Company Ecosystem Cards v1 (8 companies) | 10-12h | Medium | ⏳ Pending Daniel |
-| SHOULD | C206 Recurring Investment Education (1 lesson) | 6-8h | Low | ⏳ Default: proceed |
-| **Total** | | **22-28h** | | |
 
-## C209 — Blocker Status
-- **Designer spec**: ✅ Complete (in `docs/design/discuss_r50_designer.md`)
-- **`_source_section()` component**: ❌ NOT YET CREATED — must be first task
-- **Architecture doc**: ❌ Not yet created (30 min effort, can parallelize)
-- **Pattern**: `st.expander("📡 資料來源", expanded=False)` — collapsed by default
-- **Target pages for v1**: business_card, daily_market, event_dashboard
+## C209 Integration — Day 2 Ready
 
-## C203 — Infrastructure Status
-- `group_structures.yaml`: 5 parent companies, ~20 subsidiaries
-- `_subsidiary_card()`: ✅ Reusable, already in `_router_base.py`
-- **Missing**: `ecosystem_service.py` + `ecosystem_cards.py` (to be created)
-- **Gate**: Daniel approval required; default defer to Sprint 26
+Target pages for v1 (in priority order):
+1. **daily_market.py** — Replace `_render_freshness()` with `_source_section()`, 4 source entries
+2. **business_card.py** — Add `_source_section()` after `_render_footer()`, 5 grouped source entries
+3. **event_dashboard.py** — Add `_source_section()`, remove dead `_render_freshness_indicator()` + `_freshness_badge()`
 
-## C206 — Infrastructure Status
+Each page needs:
+- Import `_source_section` from `_router_base.py`
+- Build a `sources` list with the APIs used on that page
+- Call `_source_section(sources, last_updated)` at the bottom of the page content
+- Add 13 new i18n keys per locale (26 total) atomically per page
+
+Full integration plan: `docs/state/discuss_r51_prep.md`
+Discussion handoff: `docs/state/handoff_discuss_r51.md`
+
+## C206 — Ready
 - Academy infrastructure: ✅ Complete (5 lessons exist)
 - `_lesson_card()` + `_progress_dots()`: ✅ Ready
-- **Default scope**: Single DCA lesson, hypothetical data only
+- Default scope: Single DCA lesson, hypothetical data only
+- No Daniel response needed — defaulting to single lesson
+
+## C203 — Pending Daniel
+- `group_structures.yaml`: 5 parent companies, ~20 subsidiaries
+- `_subsidiary_card()`: ✅ Reusable
+- Missing: `ecosystem_service.py` + `ecosystem_cards.py`
+- **Gate**: Daniel approval required; default defer to Sprint 26
 
 ## Test Health
-- **662 passed** in 3.90s — all tests green
-- No regressions from i18n refactoring (commit 7bcbc00)
+- **662 passed** in 3.64s — all tests green
+- No regressions from Day 1 fixes
 
 ## Design System Grade: C+
-- 92 total issues found across 7 rounds, 5 fixed
-- Remaining: ~87 issues (mostly low-severity color inconsistencies)
-- Not blocking Sprint 25
+- Pre-sprint color fixes applied
+- Grade improvement to B- expected after C209 integration (cleaner pages)
 
 ---
 
@@ -93,24 +91,23 @@ The Round 50 Designer verification corrected the initial assessment — the fix 
 |--------|----------|--------|
 | Sprint 23 | C202 Story Arc Labels, C199 Debate Cards, C200 What If Calculator | ✅ Complete |
 | Sprint 24 | C201 Daily Market Dashboard, Design System Cleanup | ✅ Complete |
-| Sprint 25 | C209 Collapsible Source, C203 Ecosystem Cards, C206 Education | 📋 READY |
+| Sprint 25 | C209 Collapsible Source, C203 Ecosystem Cards, C206 Education | 📋 IN PROGRESS (Day 2/3) |
 
 ---
 
 # 📋 Development Section — Sprint 25
 
 ## Next Steps (Priority Order)
-1. **Pre-sprint fixes (Day 1)** — D-005 emoji fix + 8 color fixes + 3 tech debt + API abuse fix
-2. **Create `_source_section()` component** — First C209 task, designer spec ready
-3. **C209 integration** — Add to business_card, daily_market, event_dashboard
-4. **C206 single DCA lesson** — If proceeding with default scope
-5. **C203 ecosystem cards** — Only if Daniel approves
+1. **C209 integration (Day 2)** — Add `_source_section()` to daily_market, business_card, event_dashboard
+2. **C206 single DCA lesson** — If proceeding with default scope
+3. **C203 ecosystem cards** — Only if Daniel approves
 
 ## Pre-Conditions — ALL RESOLVED ✅
-All pre-conditions from previous sprints are resolved. No blockers to starting Sprint 25.
+All pre-conditions resolved. Sprint 25 Day 1 complete. Day 2 ready to execute.
 
 ---
 
-*Created: 2026-06-17 by PM — Sprint 22 Review + Sprint 25 Readiness*
-*Sprint 22 QA: All 9 checks PASS. Sprint 25: Architecturally ready with conditions (create `_source_section()` first).*
-*662 tests green. Pre-sprint fix burden revised to ~2h.*
+*Created: 2026-06-17 by PM — Sprint 25 Day 2 Planning*
+*Pre-sprint fixes: 8 files changed, 4 fix categories. C209 component: 3 files changed.*
+*662 tests green. 2 commits pushed to origin/main.*
+*Discussion Round 51: C209 integration plan finalized, i18n verified conflict-free.*

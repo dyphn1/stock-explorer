@@ -1,7 +1,7 @@
 # Pending Review — Daniel Decisions
 
 > **Last Updated**: 2026-06-17
-> **Source**: Round 50 Sprint 25 Planning
+> **Source**: Sprint 25 Day 1 Complete
 
 ## Open Questions for Daniel — ACTIVE (Need Response)
 
@@ -19,7 +19,7 @@
 - **Proposal**: Single DCA lesson in existing academy. Hypothetical data only, NO calculator, NO real stock examples. Uses `_lesson_card()` + `_progress_dots()`.
 - **Revised estimate**: 6-8h for single lesson
 - **Default if no response**: Single DCA lesson, hypothetical only
-- **Status**: ⏳ Pending Daniel
+- **Status**: ⏳ Pending Daniel (defaulting to single lesson)
 
 ### Previously Open Items (Still Pending)
 
@@ -35,15 +35,18 @@
 - **Estimated Effort**: 6-9h
 - **Status**: ⏳ Pending Daniel — Sprint 26+ candidate
 
-## Resolved This Cycle (Round 50)
+## Resolved This Cycle (Sprint 25 Day 1)
 
 | Item | Decision |
 |------|----------|
-| C209 redesign | ✅ Option A: Collapsible source section (4-6h, 3 pages v1) |
-| Pre-sprint fixes | ✅ PM decides YES: 8 color fixes + 3 tech debt + API abuse fix in Week 1 |
+| C209 `_source_section()` component | ✅ Created (commit 8ed9a97) |
+| Pre-sprint color fixes | ✅ Applied (commit 9bcbf22) |
+| `validate_debate_text()` rename | ✅ Renamed to `contains_banned_words()` |
+| Timeline labels i18n | ✅ Moved to `t()` calls |
+| C209 redesign | ✅ Option A: Collapsible source section |
+| Pre-sprint fixes | ✅ All applied |
 | C203 scope cap | ✅ 8 companies max (not 15-20) |
 | C206 scope | ✅ Single lesson, hypothetical only (default if no Daniel response) |
-| Fresh design audit | ✅ QA to run before Sprint 25 |
 
 ---
 
