@@ -1,21 +1,21 @@
 # Handoff — Stock Explorer
 
 ## Summary
-- **Topic**: 🚀 Sprint 24 Execution — C201 Complete + Design System Cleanup
+- **Topic**: 💡 Sprint 25 Planning — Round 50 Discussion Complete
 - **Date**: 2026-06-17
-- **Sprint Status**: Sprint 24 🏗️ IN PROGRESS — C201 complete, design system cleanup done
+- **Sprint Status**: Sprint 24 ✅ COMPLETE → Sprint 25 📋 PLANNING
 
 ---
 
-# 🚀 Sprint 24 Plan (2026-06-17)
+# 🚀 Sprint 24 — COMPLETE ✅
 
-## Sprint 24 Candidates
+## Sprint 24 Deliverables
 
 | Priority | Feature | Effort | Risk | Status |
 |----------|---------|--------|------|--------|
 | DONE | C201 今日市場動態 (daily market dashboard) | 6-8h | Low | ✅ COMPLETE |
 | DONE | Design system color compliance (Round 7 fixes) | 2-3h | Low | ✅ COMPLETE |
-| STRETCH | C206 Recurring Investment Education | 6-8h | Low | ⏳ Week 4 stretch |
+| DEFERRED | C206 Recurring Investment Education | 6-8h | Low | → Sprint 25 |
 
 ## C201 Daily Market Dashboard — COMPLETE ✅
 
@@ -46,6 +46,58 @@
 | `src/services/_chart_theme.py` | Stale color comments |
 
 **Issues fixed**: D-005, D-059, D-063-D-083 (30+ design system violations)
+
+# 📋 Sprint 25 Plan (2026-06-17)
+
+## Sprint 25 Candidates
+
+| Priority | Feature | Effort | Risk | Status |
+|----------|---------|--------|------|--------|
+| MUST | Pre-sprint fixes (colors + tech debt + API abuse) | 3-4h | Low | ⏳ Week 1 Day 1-2 |
+| MUST | C209 Collapsible Source Transparency (3 pages) | 4-6h | Low | ⏳ Pending |
+| SHOULD | C203 Company Ecosystem Cards v1 (8 companies) | 10-12h | Medium | ⏳ Pending Daniel |
+| SHOULD | C206 Recurring Investment Education (1 lesson) | 6-8h | Low | ⏳ Pending Daniel |
+| **Total** | | **23-30h** | | |
+
+## Pre-Sprint Fixes (Week 1 Day 1-2) — MUST
+
+| Fix | Effort | Impact |
+|-----|--------|--------|
+| 8 non-palette color fixes in `_router_base.py` | 10 min | Global — all pages |
+| Rename `validate_debate_text()` → `contains_banned_words()` | 5 min | Code clarity |
+| Move timeline strings from `scenario:` to `timeline:` namespace | 15 min | i18n consistency |
+| Remove dead `calculate_scenario` import | 5 min | Dead code cleanup |
+| Fix API abuse in `get_stock_info` | 1-2h | Prevents rate limits for C203 |
+
+## C209 Collapsible Source Transparency — MUST
+
+**Scope**: 3 pages for v1 (business_card, daily_market, event_dashboard)
+**New component**: `_source_section()` in `_router_base.py`
+**Pattern**: `st.expander("📡 資料來源", expanded=False)` — collapsed by default
+**Effort**: 4-6h
+
+## C203 Company Ecosystem Cards v1 — SHOULD (Pending Daniel)
+
+**Scope**: 8 companies (existing 5 + 3 new), parent-subsidiary + 2-3 customer-supplier pairs
+**Reuse**: `_subsidiary_card()` — no new component needed
+**New files**: `ecosystem_service.py` + `ecosystem_cards.py`
+**Effort**: 10-12h
+**Gate**: Daniel approval required
+
+## C206 Recurring Investment Education — SHOULD (Pending Daniel)
+
+**Scope**: Single DCA lesson, hypothetical data only, NO calculator, NO real stock examples
+**Reuse**: `_lesson_card()` + `_progress_dots()` + `_existing academy infrastructure`
+**Effort**: 6-8h
+**Gate**: Daniel scope confirmation; default to single lesson if no response
+
+## Fallback Plan (if Daniel doesn't approve C203)
+- C209 expands to all pages (7-9h) → MUST
+- C206 elevates to MUST (6-8h)
+
+---
+
+# 🚀 Sprint 23 — COMPLETE ✅
 
 ## Sprint 23 — COMPLETE ✅
 
@@ -98,13 +150,15 @@
 
 ---
 
-# 📋 Development Section — Sprint 24 Continuation
+# 📋 Development Section — Sprint 25
 
 ## Next Steps
 
-1. **C206 Recurring Investment Education** — Week 4 stretch goal, no architecture doc yet
-2. **Continue design system compliance** — Remaining 50+ issues across page files
-3. **Pending Daniel decisions** — C203 ecosystem cards, dark theme, _infocard component
+1. **Pre-sprint fixes (Week 1 Day 1-2)** — 8 color fixes + 3 tech debt + API abuse fix
+2. **C209 Collapsible Source** — Create `_source_section()`, integrate into 3 pages
+3. **C203 Ecosystem Cards** — If Daniel approves, expand data + create service + page
+4. **C206 Education Lesson** — Single DCA lesson in academy
+5. **Fresh design audit** — Verify actual open issue count
 
 ## Pre-Conditions — ALL RESOLVED ✅
 
@@ -127,6 +181,7 @@
 
 ---
 
-*Created: 2026-06-17 by PM — Sprint 24 Round 52*
+*Created: 2026-06-17 by PM — Sprint 25 Round 50*
 *Sprint 23: 3 features shipped, 998 lines of code, 1199 lines of tests, 662 total tests green*
 *Sprint 24: C201 shipped (300 lines + 591 test lines), design system cleanup (4 files, 30+ violations fixed)*
+*Sprint 25: Planning complete — C209 MUST, C203/C206 SHOULD (pending Daniel), pre-sprint fixes MUST*

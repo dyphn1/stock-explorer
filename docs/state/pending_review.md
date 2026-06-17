@@ -1,45 +1,49 @@
 # Pending Review — Daniel Decisions
 
 > **Last Updated**: 2026-06-17
-> **Source**: Round 52 Sprint 24 Execution
+> **Source**: Round 50 Sprint 25 Planning
 
-## Open Questions for Daniel
+## Open Questions for Daniel — ACTIVE (Need Response)
 
-### Sprint 24 Decisions — NEED CONFIRMATION
+### Sprint 25 Decisions — NEED CONFIRMATION
 
-#### 1. C206 Recurring Investment Education — Scope Definition
-- **Context**: Listed as Week 4 stretch goal in Sprint 24
-- **No architecture doc exists yet** — needs design before implementation
-- **Question**: What should C206 cover? (e.g., DCA simulation, compound interest visualization, investment scenario comparison)
+#### 1. C203 Company Ecosystem Cards v1 — Scope Approval
+- **Context**: Redefined from "Supply Chain Visual Map" (36-50h, paid API) to "Company Ecosystem Cards" (10-12h, existing data)
+- **Proposal**: Card-based layout for 8 companies (existing 5 + 3 new). Parent-subsidiary + 2-3 well-known customer-supplier pairs. Reuses `_subsidiary_card()` — no new component needed.
+- **Revised estimate**: 10-12h (down from 36-50h)
+- **Default if no response**: Defer C203 to Sprint 26
+- **Status**: ⏳ Pending Daniel
+
+#### 2. C206 Recurring Investment Education — Scope Definition
+- **Context**: Listed as stretch goal since Sprint 24. No architecture doc exists.
+- **Proposal**: Single DCA lesson in existing academy. Hypothetical data only, NO calculator, NO real stock examples. Uses `_lesson_card()` + `_progress_dots()`.
+- **Revised estimate**: 6-8h for single lesson
+- **Default if no response**: Single DCA lesson, hypothetical only
 - **Status**: ⏳ Pending Daniel
 
 ### Previously Open Items (Still Pending)
-
-#### 2. C203 Supply Chain Visual Map — FinMind API Limitation
-- **Context**: FinMind's supply chain API is paid-only
-- **Proposal**: Redefined as "Company Ecosystem Cards" v1 — card-based layout for top 15-20 stocks using existing `group_structures.yaml` + manually curated data. No network graph in v1.
-- **Revised estimate**: 12-15h (down from 36-50h)
-- **Status**: ⏳ Pending Daniel — approve "ecosystem cards" approach?
 
 #### 3. Dark/Light Theme Implementation (D-126)
 - **Context**: Design review identified missing dark/light theme implementation.
 - **Proposal**: Add theme preference in settings with CSS variables.
 - **Estimated Effort**: 8-12h
-- **Status**: ⏳ Pending Daniel
+- **Status**: ⏳ Pending Daniel — Sprint 26+ candidate
 
 #### 4. Missing Component: _infocard() for Visual-First Metrics (D-127)
 - **Context**: Missing _infocard() component for infographic-style visual cards.
 - **Proposal**: Create _infocard(icon, sparkline_data, label, value, analogy) component.
 - **Estimated Effort**: 6-9h
-- **Status**: ⏳ Pending Daniel
+- **Status**: ⏳ Pending Daniel — Sprint 26+ candidate
 
-## Resolved This Cycle (Round 52)
+## Resolved This Cycle (Round 50)
 
 | Item | Decision |
 |------|----------|
-| C201 implementation | ✅ Implemented and committed (`ad5b46c`) |
-| Design system color compliance | ✅ Fixed 30+ violations across 4 files (`2fc60d3`) |
-| All tests green | ✅ 662/662 pass |
+| C209 redesign | ✅ Option A: Collapsible source section (4-6h, 3 pages v1) |
+| Pre-sprint fixes | ✅ PM decides YES: 8 color fixes + 3 tech debt + API abuse fix in Week 1 |
+| C203 scope cap | ✅ 8 companies max (not 15-20) |
+| C206 scope | ✅ Single lesson, hypothetical only (default if no Daniel response) |
+| Fresh design audit | ✅ QA to run before Sprint 25 |
 
 ---
 
