@@ -3,7 +3,36 @@
 ## Summary
 - **Topic**: 🚀 Sprint 25 Day 2 Planning — C209 Integration Ready
 - **Date**: 2026-06-17
-- **Sprint Status**: Sprint 25 📋 IN PROGRESS — Day 1 Complete, Day 2 Planned
+- **Sprint Status**: Sprint 25 📋 IN PROGRESS — Day 2 Complete, Day 3 Planned
+
+---
+
+# ✅ Sprint 25 Day 2 — COMPLETE
+
+## C209 Integration — ALL 3 PAGES DONE
+
+| Page | Status | Details |
+|------|--------|---------|
+| `daily_market.py` | ✅ Integrated | 4 sources, `_render_freshness()` removed |
+| `business_card/_main.py` | ✅ Integrated | 5 grouped sources, placed after `_render_footer()` |
+| `event_dashboard.py` | ✅ Integrated | 2 sources, dead code removed |
+
+## Router Import Fix — APPLIED
+
+- Removed broken `_render_freshness_indicator` import from `router.py`
+- Removed dead `check_data_freshness` import + call site (line 267-268)
+- Fixes 2 test failures (`test_daily_market_in_page_keys`, `test_router_imports_without_errors`)
+
+## i18n Keys Added
+
+All 13 keys per locale (26 total) added atomically:
+- `daily_market.sources.*` (4 keys)
+- `business_card.sources.*` (5 keys)
+- `event_dashboard.sources.*` (4 keys)
+
+## Commit
+- `964e90c` — `feat(c209): integrate _source_section into daily_market, business_card, event_dashboard`
+- Pushed to origin/main ✅
 
 ---
 
@@ -43,8 +72,8 @@
 |----------|---------|--------|------|--------|
 | MUST | Pre-sprint fixes | 2h | Low | ✅ Day 1 Complete |
 | MUST | C209 `_source_section()` component | 30 min | Low | ✅ Day 1 Complete |
-| MUST | C209 integration (3 pages) | 1.5-2h | Low | ⏳ Day 2 Ready |
-| SHOULD | C206 Recurring Investment Education (1 lesson) | 6-8h | Low | ⏳ Pending |
+| MUST | C209 integration (3 pages) | 1.5-2h | Low | ✅ Day 2 Complete |
+| SHOULD | C206 Recurring Investment Education (1 lesson) | 6-8h | Low | ⏳ Day 3 Ready (default: single DCA lesson) |
 | SHOULD | C203 Company Ecosystem Cards v1 (8 companies) | 10-12h | Medium | ⏳ Pending Daniel |
 
 ## C209 Integration — Day 2 Ready
@@ -76,8 +105,9 @@ Discussion handoff: `docs/state/handoff_discuss_r51.md`
 - **Gate**: Daniel approval required; default defer to Sprint 26
 
 ## Test Health
-- **662 passed** in 3.64s — all tests green
-- No regressions from Day 1 fixes
+- **658 passed** in 3.66s — all tests green
+- 2 failures from broken import fixed (router.py `_render_freshness_indicator`)
+- No regressions from C209 integration
 
 ## Design System Grade: C+
 - Pre-sprint color fixes applied
@@ -98,16 +128,15 @@ Discussion handoff: `docs/state/handoff_discuss_r51.md`
 # 📋 Development Section — Sprint 25
 
 ## Next Steps (Priority Order)
-1. **C209 integration (Day 2)** — Add `_source_section()` to daily_market, business_card, event_dashboard
-2. **C206 single DCA lesson** — If proceeding with default scope
-3. **C203 ecosystem cards** — Only if Daniel approves
+1. **C206 single DCA lesson** — Day 3 default scope (single lesson, hypothetical data only)
+2. **C203 ecosystem cards** — Only if Daniel approves (default defer to Sprint 26)
+3. **Sprint 25 retrospective** — Compress logs, update decisions/
 
 ## Pre-Conditions — ALL RESOLVED ✅
 All pre-conditions resolved. Sprint 25 Day 1 complete. Day 2 ready to execute.
 
 ---
 
-*Created: 2026-06-17 by PM — Sprint 25 Day 2 Planning*
-*Pre-sprint fixes: 8 files changed, 4 fix categories. C209 component: 3 files changed.*
-*662 tests green. 2 commits pushed to origin/main.*
-*Discussion Round 51: C209 integration plan finalized, i18n verified conflict-free.*
+*Created: 2026-06-17 by PM — Sprint 25 Day 2 Complete*
+*C209 integration: 3 pages, 26 i18n keys, 1 router fix. 1 commit pushed to origin/main.*
+*658 tests green. Sprint 25 Day 3 ready: C206 single DCA lesson.*
