@@ -38,6 +38,12 @@ delegate_task(
 ) → Architect
 
 delegate_task(
+    model="openrouter/google/gemma-4-31b-it:free",
+    goal="Design HTML prototype for the feature / page",
+    ...
+) → UX Designer
+
+delegate_task(
     model="openrouter/owl-alpha",
     goal="Estimate implementation cost / provide approach",
     ...
@@ -45,9 +51,9 @@ delegate_task(
 
 delegate_task(
     model="openrouter/google/gemma-4-31b-it:free",
-    goal="Evaluate UX / visual impact",
+    goal="Review implementation against prototype and design system",
     ...
-) → Designer
+) → Design Reviewer
 
 delegate_task(
     model="openrouter/google/gemma-4-31b-it:free",
@@ -63,6 +69,24 @@ delegate_task(
 ```
 
 After each role reports, the PM consolidates the input and proposes a first draft plan.
+
+### Step 2.5: Design Review Gate (New)
+
+For any task involving UI changes:
+1. UX Designer creates HTML prototype in `design/prototypes/`
+2. **Daniel reviews the HTML prototype in browser** — this is the design approval gate
+3. Only after Daniel approves → Developer starts implementation
+4. After implementation → Design Reviewer verifies against prototype
+
+```
+UX Designer → HTML prototype → Daniel review → ✅ Approved
+    ↓
+Developer implements (guided by prototype)
+    ↓
+Design Reviewer verifies (implementation vs prototype)
+    ↓
+QA functional test
+```
 
 ### Step 3: Challenge Flow (3 rounds)
 

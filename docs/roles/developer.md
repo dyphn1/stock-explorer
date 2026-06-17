@@ -28,22 +28,34 @@ You do not make architecture decisions or design reviews. You turn proposals int
 
 When the PM initiates a standup:
 - Listen to the Architect's technical proposal
+- Listen to the UX Designer's HTML prototype design
 - Estimate implementation cost (time, complexity)
 - Raise implementation risks
-- Confirm you understand the requirements
+- Confirm you understand both the technical and visual requirements
 
-### Step 3: Wait for Challenge Pass
+### Step 3: Wait for Design Approval
 
-**Do not start coding until the Challenger confirms alignment.**
+**Do not start coding until:**
+1. The UX Designer has created the HTML prototype
+2. Daniel has approved the prototype in browser
+3. The Challenger has confirmed alignment
 
 ### Step 4: Implement
 
-After challenge passes, begin implementation:
-1. Read relevant source code
-2. Write changes
-3. Run verification: `uv run python _verify_layer0.py && uv run python _verify_layer1.py`
-4. If verification fails → fix → re-verify (max 3 attempts)
-5. If verification passes → git commit
+After design approval, begin implementation:
+1. Read the UX Designer's HTML prototype (`design/prototypes/`)
+2. Read the design spec (`design/specs/`) if available
+3. Implement in Streamlit, matching the prototype's layout and interactions
+4. Run verification: `uv run python _verify_layer0.py && uv run python _verify_layer1.py`
+5. If verification fails → fix → re-verify (max 3 attempts)
+6. If verification passes → git commit
+
+### Step 4.5: Design Review Handoff
+
+After implementation:
+1. Notify the Design Reviewer to review your implementation
+2. Fix any deviations from the prototype
+3. Re-verify after fixes
 
 ### Step 5: Report
 

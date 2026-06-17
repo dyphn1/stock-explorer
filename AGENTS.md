@@ -9,7 +9,7 @@ description: "Entry point router for Stock Explorer (股識) multi-agent workflo
 
 ---
 
-## 1. 文件結構（新）
+## 1. 文件結構
 
 ```
 docs/
@@ -31,13 +31,16 @@ docs/
 │   ├── 005-i18n-yaml.md
 │   ├── 006-browser-back-button.md
 │   ├── 007-llm-safety-boundary.md
-│   └── 008-yaml-config-driven.md
+│   ├── 008-yaml-config-driven.md
+│   ├── 009-layout-restructure.md
+│   └── 010-ppt-style-design.md
 │
 ├── roles/                     # 🤖 AI Agent 角色定義
 │   ├── pm.md
 │   ├── architect.md
+│   ├── ux-designer.md         # ← 新增：UX 設計師
+│   ├── designer.md            # Design Reviewer（審核實現）
 │   ├── developer.md
-│   ├── designer.md
 │   ├── qa.md
 │   └── challenger.md
 │
@@ -45,6 +48,13 @@ docs/
     ├── current_problems.md
     ├── handoff.md
     └── pending_review.md
+
+design/                        # 🎨 UX 設計原型（HTML）
+├── index.html                 # 原型入口
+├── prototypes/                # 各頁面 HTML 原型
+├── components/                # 可重用元件
+├── assets/                    # CSS、設計變數
+└── reviews/                   # 設計審核報告
 ```
 
 ---
@@ -54,13 +64,38 @@ docs/
 | Role | Model | Responsibility | Role File |
 |------|-------|----------------|-----------|
 | **PM** | `openrouter/owl-alpha` | Coordinate, synthesize, assign work | `docs/roles/pm.md` |
-| **Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | System architecture, data flow, feasibility | `docs/roles/architect.md` |
+| **Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | **Full system architecture** — code structure, data flow, infrastructure, security, cross-cutting concerns | `docs/roles/architect.md` |
+| **UX Designer** | `openrouter/google/gemma-4-31b-it:free` | **UI/UX design** — HTML prototypes, interaction flows, design system compliance | `docs/roles/ux-designer.md` |
 | **Developer** | `openrouter/owl-alpha` | Implementation, bug fixes, automated verification | `docs/roles/developer.md` |
-| **Designer** | `openrouter/google/gemma-4-31b-it:free` | UX/UI alignment, visual system | `docs/roles/designer.md` |
-| **QA** | `openrouter/google/gemma-4-31b-it:free` | Verification, testing, competitor analysis | `docs/roles/qa.md` |
+| **Design Reviewer** | `openrouter/google/gemma-4-31b-it:free` | **Visual QA** — verify implementation matches prototype & design system | `docs/roles/designer.md` |
+| **QA** | `openrouter/google/gemma-4-31b-it:free` | Functional testing, competitor analysis | `docs/roles/qa.md` |
 | **Challenger** | `openrouter/openai/gpt-oss-120b:free` | Cross-examine decisions, 3-round challenge | `docs/roles/challenger.md` |
 
 **CRITICAL**: When spawning sub-agents, the PM MUST pass the `model` parameter from the table above.
+
+### 角色分工說明
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        PM (協調者)                           │
+├──────────┬──────────┬──────────┬──────────┬─────────────────┤
+│ Architect│UX Designer│Developer │Design    │ QA + Challenger │
+│ (系統架構)│ (UI設計)  │ (實作)   │Reviewer  │ (品質把關)       │
+│          │          │          │(視覺審核) │                 │
+└──────────┴──────────┴──────────┴──────────┴─────────────────┘
+
+設計流程：
+  UX Designer → HTML prototype → Daniel review → Developer 實作
+                                                      ↓
+                                              Design Reviewer 審核
+                                                      ↓
+                                              QA 功能測試
+
+開發流程：
+  Architect 設計系統方案 → UX Designer 設計 UI → Developer 實作
+       ↓                                              ↓
+  Challenger 挑戰 ←──────────────────────── Design Reviewer 審核
+```
 
 ---
 
@@ -90,8 +125,9 @@ docs/
 
 - **Start/End Standups:** Read `docs/overview/01-product-vision.md` at sprint start. Review alignment at sprint end.
 - **Tier 1 (Minor fixes):** Direct to Developer. 0 challenges.
-- **Tier 2 (UI tweaks):** Developer + Designer peer review.
-- **Tier 3 (Core Logic/Architecture):** Triggers Challenger for rigor. Path heuristics (`src/pages/*`, `docs/overview/02-architecture.md`) automatically escalate to Tier 3.
+- **Tier 2 (UI changes):** UX Designer creates prototype → Developer implements → Design Reviewer verifies.
+- **Tier 3 (New features):** Full flow — Architect (feasibility) → UX Designer (prototype) → Daniel review → Developer (implement) → Design Reviewer (visual QA) → QA (functional test) → Challenger (3-round challenge).
+- **Tier 4 (Core Architecture):** Triggers Challenger for rigor. Path heuristics (`src/pages/*`, `docs/overview/02-architecture.md`) automatically escalate to Tier 4.
 
 ---
 

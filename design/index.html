@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>股識 Stock Explorer — 設計原型索引</title>
+  <link rel="stylesheet" href="assets/design-tokens.css">
+  <link rel="stylesheet" href="assets/base.css">
+  <style>
+    /* Index page specific */
+    .index-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: var(--space-2xl);
+    }
+    .index-header {
+      margin-bottom: var(--space-2xl);
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .index-header h1 {
+      font-size: var(--font-size-h1);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-xs);
+    }
+    .index-header p {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-body);
+    }
+    .page-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-md);
+    }
+    .page-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-radius);
+      padding: var(--space-lg);
+      transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .page-card:hover {
+      box-shadow: 0 4px 16px var(--color-shadow-hover);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .page-card__icon {
+      font-size: 28px;
+      margin-bottom: var(--space-sm);
+    }
+    .page-card__title {
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-xs);
+    }
+    .page-card__desc {
+      font-size: var(--font-size-caption);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+    .page-card__status {
+      display: inline-block;
+      font-size: var(--font-size-small);
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-top: var(--space-sm);
+      font-weight: var(--font-weight-medium);
+    }
+    .status-done { background: var(--color-positive-light); color: var(--color-positive); }
+    .status-wip { background: var(--color-bg-warning); color: #B7950B; }
+    .status-todo { background: var(--color-bg-overlay); color: var(--color-text-muted); }
+    .section-title {
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-bold);
+      margin: var(--space-xl) 0 var(--space-md);
+      color: var(--color-text-primary);
+    }
+    .legend {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: var(--font-size-small);
+      color: var(--color-text-secondary);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="index-container">
+    <div class="index-header">
+      <h1>🎨 股識 Stock Explorer — 設計原型索引</h1>
+      <p>點擊下方頁面卡片，在瀏覽器中預覽各頁面 UI 設計。每個 HTML 檔案都是獨立可開啟的。</p>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background:var(--color-positive)"></span> 已完成</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#B7950B"></span> 進行中</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--color-text-muted)"></span> 待設計</div>
+    </div>
+
+    <h2 class="section-title">核心頁面</h2>
+    <div class="page-grid">
+      <a href="prototypes/business_card.html" class="page-card">
+        <div class="page-card__icon">🏢</div>
+        <div class="page-card__title">公司名片頁</div>
+        <div class="page-card__desc">一句話定位、營收圓餅圖、關鍵數字、近期動態</div>
+        <span class="page-card__status status-done">設計完成</span>
+      </a>
+      <a href="prototypes/operation_checkup.html" class="page-card">
+        <div class="page-card__icon">🏥</div>
+        <div class="page-card__title">營運健檢</div>
+        <div class="page-card__desc">營收趨勢、股價走勢、法人動向、營運摘要</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+      <a href="prototypes/financial_health.html" class="page-card">
+        <div class="page-card__icon">💪</div>
+        <div class="page-card__title">財務體質</div>
+        <div class="page-card__desc">利潤漏斗、關鍵比率、資產負債、現金流量</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+      <a href="prototypes/peer_comparison.html" class="page-card">
+        <div class="page-card__icon">⚖️</div>
+        <div class="page-card__title">同業比較</div>
+        <div class="page-card__desc">與產業龍頭並排比較、雷達圖、差異分析</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+      <a href="prototypes/group_structure.html" class="page-card">
+        <div class="page-card__icon">🏗️</div>
+        <div class="page-card__title">集團架構</div>
+        <div class="page-card__desc">母公司→子公司點對點關係圖</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+    </div>
+
+    <h2 class="section-title">輔助頁面</h2>
+    <div class="page-grid">
+      <a href="prototypes/category_browser.html" class="page-card">
+        <div class="page-card__icon">📂</div>
+        <div class="page-card__title">分類瀏覽</div>
+        <div class="page-card__desc">權值股、產業分類、熱門列表</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+      <a href="prototypes/etf_browser.html" class="page-card">
+        <div class="page-card__icon">📊</div>
+        <div class="page-card__title">ETF 瀏覽</div>
+        <div class="page-card__desc">熱門 ETF、分類瀏覽、配息排行</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+      <a href="prototypes/watchlist.html" class="page-card">
+        <div class="page-card__icon">⭐</div>
+        <div class="page-card__title">我的關注</div>
+        <div class="page-card__desc">關注列表、價格提醒、摘要</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+      <a href="prototypes/event_dashboard.html" class="page-card">
+        <div class="page-card__icon">🔔</div>
+        <div class="page-card__title">事件儀表板</div>
+        <div class="page-card__desc">自適應更新、重大事件通知</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+      <a href="prototypes/daily_market.html" class="page-card">
+        <div class="page-card__icon">📰</div>
+        <div class="page-card__title">每日市場動態</div>
+        <div class="page-card__desc">市場總覽、產業漲跌幅、重要新聞</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+    </div>
+
+    <h2 class="section-title">可重用元件</h2>
+    <div class="page-grid">
+      <a href="components/_navbar.html" class="page-card">
+        <div class="page-card__icon">🔝</div>
+        <div class="page-card__title">頂部導航列</div>
+        <div class="page-card__desc">公司名、價格、分頁標籤</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+      <a href="components/_sidebar.html" class="page-card">
+        <div class="page-card__icon">📋</div>
+        <div class="page-card__title">側邊欄</div>
+        <div class="page-card__desc">搜尋、熱門股票、關注列表</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+      <a href="components/_card.html" class="page-card">
+        <div class="page-card__icon">🃏</div>
+        <div class="page-card__title">數據卡片</div>
+        <div class="page-card__desc">指標卡片、圖表卡片、狀態卡片</div>
+        <span class="page-card__status status-todo">待設計</span>
+      </a>
+    </div>
+
+    <footer style="margin-top: var(--space-2xl); padding-top: var(--space-lg); border-top: 1px solid var(--color-border); text-align: center; color: var(--color-text-muted); font-size: var(--font-size-small);">
+      股識 Stock Explorer — 設計原型 v0.1.0 — 2026-06-17
+    </footer>
+  </div>
+</body>
+</html>

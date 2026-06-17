@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>公司名片頁 — 股識 Stock Explorer</title>
+  <link rel="stylesheet" href="../assets/design-tokens.css">
+  <link rel="stylesheet" href="../assets/base.css">
+  <style>
+    /* ── Layout Shell (simulates Streamlit layout) ── */
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Zone B: Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--color-bg-card);
+      border-right: 1px solid var(--color-border);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar__brand {
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-xs);
+    }
+    .sidebar__tagline {
+      font-size: var(--font-size-small);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+    }
+    .sidebar__search {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-radius-sm);
+      font-size: var(--font-size-body);
+      font-family: var(--font-family);
+      margin-bottom: var(--space-md);
+      background: var(--color-bg-page);
+    }
+    .sidebar__search:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+    .sidebar__section-title {
+      font-size: var(--font-size-small);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+    .sidebar__btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      border: none;
+      border-radius: var(--card-radius-sm);
+      background: transparent;
+      font-size: var(--font-size-body);
+      font-family: var(--font-family);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+      text-align: left;
+    }
+    .sidebar__btn:hover {
+      background: var(--color-bg-overlay);
+    }
+    .sidebar__btn--active {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+    }
+    .sidebar__btn--active:hover {
+      background: var(--color-primary-dark);
+    }
+    .sidebar__stock-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--card-radius-sm);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+    .sidebar__stock-row:hover {
+      background: var(--color-bg-overlay);
+    }
+    .sidebar__stock-name {
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-medium);
+    }
+    .sidebar__stock-id {
+      font-size: var(--font-size-small);
+      color: var(--color-text-muted);
+    }
+    .sidebar__stock-price {
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-mono);
+    }
+    .sidebar__stock-change {
+      font-size: var(--font-size-small);
+      font-family: var(--font-family-mono);
+    }
+    .sidebar__footer {
+      margin-top: auto;
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--color-border);
+      font-size: var(--font-size-small);
+      color: var(--color-text-muted);
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* ── Main Content Area ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* ── Zone A: Top Navbar ── */
+    .navbar {
+      height: var(--navbar-height);
+      background: var(--color-bg-card);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-lg);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .navbar__left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .navbar__company-name {
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-bold);
+    }
+    .navbar__stock-id {
+      font-size: var(--font-size-body);
+      color: var(--color-text-muted);
+      font-family: var(--font-family-mono);
+    }
+    .navbar__industry-tag {
+      font-size: var(--font-size-small);
+      padding: 2px 8px;
+      background: var(--color-bg-overlay);
+      border-radius: 10px;
+      color: var(--color-text-secondary);
+    }
+    .navbar__right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .navbar__price {
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-mono);
+    }
+    .navbar__change {
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-mono);
+    }
+    .navbar__tabs {
+      display: flex;
+      gap: var(--space-xs);
+    }
+    .navbar__tab {
+      padding: var(--space-sm) var(--space-md);
+      border: none;
+      border-radius: var(--card-radius-sm);
+      background: transparent;
+      font-size: var(--font-size-body);
+      font-family: var(--font-family);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .navbar__tab:hover {
+      background: var(--color-bg-overlay);
+      color: var(--color-text-primary);
+    }
+    .navbar__tab--active {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Zone C: Main Content ── */
+    .content {
+      flex: 1;
+      padding: var(--space-lg);
+      max-width: var(--max-content-width);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-radius);
+      padding: var(--space-lg);
+      transition: box-shadow var(--transition-fast);
+    }
+    .card:hover {
+      box-shadow: 0 2px 8px var(--color-shadow);
+    }
+    .card__title {
+      font-size: var(--font-size-caption);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--space-sm);
+    }
+    .card__value {
+      font-size: 32px;
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-mono);
+      line-height: var(--line-height-tight);
+      margin-bottom: var(--space-xs);
+    }
+    .card__desc {
+      font-size: var(--font-size-body);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+    .card__analogy {
+      font-size: var(--font-size-caption);
+      color: var(--color-positive);
+      font-style: italic;
+      margin-top: var(--space-sm);
+      padding-top: var(--space-sm);
+      border-top: 1px dashed var(--color-border);
+    }
+
+    /* ── Grid Layouts ── */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+
+    /* ── Chart Placeholder ── */
+    .chart-placeholder {
+      background: var(--color-bg-card-alt);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--card-radius);
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-body);
+    }
+
+    /* ── One-liner ── */
+    .one-liner {
+      text-align: center;
+      padding: var(--space-xl) var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+    .one-liner__text {
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-primary);
+    }
+
+    /* ── News Card ── */
+    .news-item {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-item__date {
+      font-size: var(--font-size-small);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-xs);
+    }
+    .news-item__title {
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-medium);
+      margin-bottom: var(--space-xs);
+    }
+    .news-item__summary {
+      font-size: var(--font-size-caption);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+    .news-item__badge {
+      display: inline-block;
+      font-size: var(--font-size-small);
+      padding: 1px 6px;
+      border-radius: 8px;
+      margin-left: var(--space-xs);
+    }
+    .badge-high { background: var(--color-negative-light); color: var(--color-negative); }
+    .badge-medium { background: var(--color-bg-warning); color: #B7950B; }
+    .badge-low { background: var(--color-bg-overlay); color: var(--color-text-muted); }
+
+    /* ── Disclaimer ── */
+    .disclaimer {
+      margin-top: var(--space-xl);
+      padding: var(--space-md);
+      background: var(--color-bg-card-alt);
+      border-radius: var(--card-radius-sm);
+      font-size: var(--font-size-small);
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .navbar__tabs { display: none; }
+    }
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .navbar__company-name { font-size: var(--font-size-h3); }
+      .navbar__price { font-size: var(--font-size-h3); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     APP SHELL
+     ═══════════════════════════════════════════════════════════ -->
+<div class="app-shell">
+
+  <!-- ── Zone B: Sidebar ── -->
+  <aside class="sidebar">
+    <div class="sidebar__brand">🔍 股識</div>
+    <div class="sidebar__tagline">認識一家公司，從這裡開始</div>
+
+    <input type="text" class="sidebar__search" placeholder="搜尋股票代號或名稱…" value="2330 台積電">
+
+    <div class="sidebar__section-title">🔥 熱門股票</div>
+    <!-- On click: navigate to that stock's business card -->
+    <div class="sidebar__stock-row">
+      <div>
+        <div class="sidebar__stock-name">台積電</div>
+        <div class="sidebar__stock-id">2330</div>
+      </div>
+      <div class="text-right">
+        <div class="sidebar__stock-price">1,050</div>
+        <div class="sidebar__stock-change text-positive">+2.5%</div>
+      </div>
+    </div>
+    <div class="sidebar__stock-row">
+      <div>
+        <div class="sidebar__stock-name">鴻海</div>
+        <div class="sidebar__stock-id">2317</div>
+      </div>
+      <div class="text-right">
+        <div class="sidebar__stock-price">198</div>
+        <div class="sidebar__stock-change text-negative">-0.8%</div>
+      </div>
+    </div>
+    <div class="sidebar__stock-row">
+      <div>
+        <div class="sidebar__stock-name">聯發科</div>
+        <div class="sidebar__stock-id">2454</div>
+      </div>
+      <div class="text-right">
+        <div class="sidebar__stock-price">1,320</div>
+        <div class="sidebar__stock-change text-positive">+1.2%</div>
+      </div>
+    </div>
+
+    <div class="sidebar__section-title">🏷️ 熱門 ETF</div>
+    <div class="sidebar__stock-row">
+      <div>
+        <div class="sidebar__stock-name">元大台灣50</div>
+        <div class="sidebar__stock-id">0050</div>
+      </div>
+      <div class="text-right">
+        <div class="sidebar__stock-price">178</div>
+        <div class="sidebar__stock-change text-positive">+1.8%</div>
+      </div>
+    </div>
+    <div class="sidebar__stock-row">
+      <div>
+        <div class="sidebar__stock-name">元大高股息</div>
+        <div class="sidebar__stock-id">0056</div>
+      </div>
+      <div class="text-right">
+        <div class="sidebar__stock-price">38.5</div>
+        <div class="sidebar__stock-change text-positive">+0.5%</div>
+      </div>
+    </div>
+
+    <div class="sidebar__section-title">📌 導航</div>
+    <!-- On click: navigate to page -->
+    <button class="sidebar__btn">📂 分類瀏覽</button>
+    <button class="sidebar__btn">📊 ETF 專區</button>
+    <button class="sidebar__btn">⭐ 我的關注 <span style="margin-left:auto;background:var(--color-negative);color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;">3</span></button>
+    <button class="sidebar__btn">🔔 事件儀表板</button>
+    <button class="sidebar__btn">⚙️ 設定</button>
+
+    <div class="sidebar__footer">
+      ⚠️ 本工具不構成任何投資建議。<br>
+      資料僅供參考，投資有風險。
+    </div>
+  </aside>
+
+  <!-- ── Main Area ── -->
+  <main class="main">
+
+    <!-- ── Zone A: Top Navbar ── -->
+    <header class="navbar">
+      <div class="navbar__left">
+        <span class="navbar__company-name">台積電</span>
+        <span class="navbar__stock-id">2330</span>
+        <span class="navbar__industry-tag">半導體</span>
+      </div>
+      <div class="navbar__right">
+        <span class="navbar__price">1,050</span>
+        <span class="navbar__change text-positive">+25 (+2.44%)</span>
+      </div>
+    </header>
+
+    <!-- Sub-tabs (Zone A bottom) -->
+    <div style="background:var(--color-bg-card);border-bottom:1px solid var(--color-border);padding:0 var(--space-lg);display:flex;gap:var(--space-xs);overflow-x:auto;">
+      <!-- Active tab: bold + accent bar -->
+      <button class="navbar__tab--active" style="padding:var(--space-sm) var(--space-md);border:none;background:transparent;font-size:var(--font-size-body);font-family:var(--font-family);font-weight:var(--font-weight-bold);color:var(--color-primary);cursor:default;border-bottom:3px solid var(--color-primary);">▎名片</button>
+      <button class="navbar__tab">營運健檢</button>
+      <button class="navbar__tab">財務體質</button>
+      <button class="navbar__tab">同業比較</button>
+      <button class="navbar__tab">集團架構</button>
+    </div>
+
+    <!-- ── Zone C: Main Content ── -->
+    <div class="content">
+
+      <!-- One-liner positioning -->
+      <div class="one-liner">
+        <div class="one-liner__text">全球最大的晶圓代工廠，製造超過 90% 的先進晶片。<br>你手上的手機、電腦，裡面很可能就有台積電做的晶片。</div>
+      </div>
+
+      <!-- Key Metrics Triple Cards -->
+      <div class="grid-3 mb-md">
+        <div class="card">
+          <div class="card__title">📈 營收成長率</div>
+          <div class="card__value text-positive">+12.5%</div>
+          <div class="card__desc">比去年同月成長 12.5%</div>
+          <div class="card__analogy">💡 如果去年營收是 100 元，今年變成 112.5 元</div>
+        </div>
+        <div class="card">
+          <div class="card__title">💰 毛利率</div>
+          <div class="card__value">53.2%</div>
+          <div class="card__desc">每賣 100 元，扣掉直接成本剩 53.2 元</div>
+          <div class="card__analogy">💡 像是一家餐廳，每 100 元營收中，食材成本約 47 元</div>
+        </div>
+        <div class="card">
+          <div class="card__title">🏦 殖利率</div>
+          <div class="card__value">1.8%</div>
+          <div class="card__desc">每持有一股，每年約可領 18.9 元股息</div>
+          <div class="card__analogy">💡 像把錢存在銀行，每年領 1.8% 利息</div>
+        </div>
+      </div>
+
+      <!-- Revenue Breakdown + Chart -->
+      <div class="grid-2 mb-md">
+        <div class="card">
+          <div class="card__title">🥧 營收來源</div>
+          <!-- Pie chart placeholder -->
+          <div class="chart-placeholder" style="height:200px;border-radius:50%;width:200px;margin:var(--space-md) auto;">
+            📊 圓餅圖
+          </div>
+          <div style="font-size:var(--font-size-caption);color:var(--color-text-secondary);line-height:var(--line-height-relaxed);">
+            <div style="display:flex;align-items:center;gap:var(--space-xs);margin-bottom:var(--space-xs);"><span style="width:10px;height:10px;background:var(--color-primary);border-radius:2px;"></span> 高效能運算 40%</div>
+            <div style="display:flex;align-items:center;gap:var(--space-xs);margin-bottom:var(--space-xs);"><span style="width:10px;height:10px;background:var(--color-positive);border-radius:2px;"></span> 智慧型手機 28%</div>
+            <div style="display:flex;align-items:center;gap:var(--space-xs);margin-bottom:var(--space-xs);"><span style="width:10px;height:10px;background:#F39C12;border-radius:2px;"></span> 物聯網 15%</div>
+            <div style="display:flex;align-items:center;gap:var(--space-xs);"><span style="width:10px;height:10px;background:var(--color-text-muted);border-radius:2px;"></span> 其他 17%</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__title">📉 近期營收趨勢</div>
+          <!-- Line chart placeholder -->
+          <div class="chart-placeholder">📈 營收趨勢折線圖</div>
+          <div class="card__desc mt-sm">近 12 月營收（單位：億元）。整體呈現成長趨勢，但 Q2 有季節性回落。</div>
+        </div>
+      </div>
+
+      <!-- Recent News -->
+      <div class="card mb-md">
+        <div class="card__title">📰 近期動態</div>
+        <div class="news-item">
+          <div class="news-item__date">2026-06-15</div>
+          <div class="news-item__title">台積電 5 月營收 2,530 億元，月增 8.3% <span class="news-item__badge badge-high">重大</span></div>
+          <div class="news-item__summary">受惠於 AI 晶片需求強勁，5 月營收較 4 月成長 8.3%，但較去年同期仍下滑 2.1%。</div>
+        </div>
+        <div class="news-item">
+          <div class="news-item__date">2026-06-10</div>
+          <div class="news-item__title">法說會：Q3 展望優於預期 <span class="news-item__badge badge-medium">注意</span></div>
+          <div class="news-item__summary">管理層表示 AI 相關營收將持續成長，全年資本支出維持不變。</div>
+        </div>
+        <div class="news-item">
+          <div class="news-item__date">2026-06-05</div>
+          <div class="news-item__title">美國廠量產進度超前 <span class="news-item__badge badge-low">參考</span></div>
+          <div class="news-item__summary">亞利桑那州首座晶圓廠已開始量產 4nm 晶片，預計年底月產能達 2 萬片。</div>
+        </div>
+      </div>
+
+      <!-- Dividend Story -->
+      <div class="card mb-md">
+        <div class="card__title">💵 配息故事</div>
+        <div class="grid-3">
+          <div style="text-align:center;padding:var(--space-md);">
+            <div style="font-size:28px;font-weight:var(--font-weight-bold);font-family:var(--font-family-mono);">18.9</div>
+            <div style="font-size:var(--font-size-caption);color:var(--color-text-secondary);">今年預估現金股利（元/股）</div>
+          </div>
+          <div style="text-align:center;padding:var(--space-md);">
+            <div style="font-size:28px;font-weight:var(--font-weight-bold);font-family:var(--font-family-mono);">4</div>
+            <div style="font-size:var(--font-size-caption);color:var(--color-text-secondary);">每年配息次數（季配）</div>
+          </div>
+          <div style="text-align:center;padding:var(--space-md);">
+            <div style="font-size:28px;font-weight:var(--font-weight-bold);font-family:var(--font-family-mono);">1.8%</div>
+            <div style="font-size:var(--font-size-caption);color:var(--color-text-secondary);">目前殖利率</div>
+          </div>
+        </div>
+        <div class="card__analogy" style="text-align:center;margin-top:var(--space-md);">💡 如果你持有 1,000 股，今年大約可以領到 18,900 元的股息</div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="disclaimer">
+        ⚠️ 本工具不構成任何投資建議。所有數據來源為 FinMind API 及公開資訊。投資有風險，入市需謹慎。
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div><!-- /app-shell -->
+
+</body>
+</html>

@@ -137,7 +137,42 @@
 
 ---
 
-## 7. 無障礙
+## 7. HTML 原型
+
+> 📁 所有頁面的 HTML 原型位於 `design/prototypes/`，由 UX Designer 維護。
+
+### 原型目錄
+```
+design/
+├── index.html                 # 設計入口：所有頁面預覽索引
+├── prototypes/                # 各頁面 HTML 原型
+│   ├── business_card.html     # 公司名片頁 ✅
+│   ├── operation_checkup.html # 營運健檢
+│   ├── financial_health.html  # 財務體質
+│   ├── peer_comparison.html   # 同業比較
+│   ├── group_structure.html   # 集團架構
+│   ├── category_browser.html  # 分類瀏覽
+│   ├── etf_browser.html       # ETF 瀏覽
+│   ├── watchlist.html         # 我的關注
+│   ├── event_dashboard.html   # 事件儀表板
+│   └── daily_market.html      # 每日市場動態
+├── components/                # 可重用元件
+│   ├── _navbar.html           # 頂部導航列
+│   ├── _sidebar.html          # 側邊欄
+│   └── _card.html             # 數據卡片
+├── assets/                    # CSS、設計變數
+│   ├── design-tokens.css      # 設計系統變數
+│   └── base.css               # 全局基礎樣式
+├── specs/                     # 設計規格書
+└── reviews/                   # 設計審核報告
+```
+
+### 原型使用方式
+1. **Daniel 審核**：開啟 `design/index.html` → 點擊頁面卡片 → 在瀏覽器中預覽
+2. **Developer 實作**：參考原型檔案中的佈局、間距、顏色
+3. **Design Reviewer 審核**：將 Streamlit 實現與原型並排比較
+
+## 8. 無障礙
 
 - 所有圖片必須有 alt text
 - 色彩不是傳達資訊的唯一方式（搭配圖示、文字）
