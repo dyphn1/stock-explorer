@@ -12,8 +12,11 @@ if _project_root not in sys.path:
     sys.path.insert(0, _project_root)
 
 import streamlit as st
-from src.services.validation import validate_stock_id
-from src.core.i18n import t\nfrom src.pages.router import load_and_render_page
+from src.services.validation = validate_stock_id
+from src.core.i18n import t
+from src.pages.router = load_and_render_page
+from src.services.benchmarks = get_industry_benchmarks
+from src.services.benchmarks = get_industry_benchmarks
 
 # ── 頁面設定 ──────────────────────────────────────────
 st.set_page_config(
@@ -199,13 +202,13 @@ def _render_sidebar_hot_etfs(client):
 def _render_sidebar(client):
     """Main sidebar rendering function."""
     st.markdown(t("sidebar.search_header"))
-    st.markdown("*認識一家公司，從這裡開始*")
+    st.markdown(t("main.welcome.subtitle"))
     st.markdown("---")
 
     # Search box
     search_input = st.text_input(
-        "搜尋股票",
-        placeholder="例如：2330 或 台積電",
+        t("main.sidebar.search_label"),
+        placeholder=t("main.sidebar.search_placeholder"),
         label_visibility="collapsed",
         key="sidebar_search",
     )
@@ -213,12 +216,12 @@ def _render_sidebar(client):
     # Rate limit banner
     _rate_status = get_rate_limit_status()
     if _rate_status["is_limited"]:
-        st.warning("⚠️ FinMind API 暫時受限，資料可能不完整。請稍後再試。")
+        st.warning(t("main.sidebar.api_warning"))
 
     st.markdown("---")
-
-    # Primary navigation
-    st.markdown("### 頁面導航")
+    st.markdown("--")
+    \n    # Primary navigation
+    st.markdown(t("main.sidebar.navigation_header"))
     nav_items = [
         ("📊", "名片", "sidebar_nav_home"),
         ("🗺️", "產業熱力圖", "sidebar_nav_sector"),

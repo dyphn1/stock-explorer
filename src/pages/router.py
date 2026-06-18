@@ -1,6 +1,10 @@
 """
 股識 Stock Explorer — M5 自適應更新
 頁面路由器：根據 session_state['page'] 顯示不同頁面
+
+TD-01 Phase 1: 使用 PluginRegistry 管理獨立頁面（category_browser, settings,
+event_dashboard, notification_center, daily_market）。
+核心分析頁面仍使用傳統 if-elif（Phase 2 遷移）。
 """
 
 import logging
@@ -51,6 +55,10 @@ from src.pages.investor_story_feed import render_investor_story_feed
 from src.pages.academy import _render_academy
 from src.pages.case_study_library import _render_case_study_library
 
+# TD-01 Phase 1: Plugin Registry
+from src.core.plugin_protocol import PluginRenderContext, PluginCategory
+from src.core.plugin_registry import PluginRegistry
+
 # Page keys for i18n (must match keys in locale files under 'page:' section)
 PAGE_KEYS = [
     "business_card",
@@ -95,6 +103,57 @@ def _get_label_to_key_map():
     """Return mapping from localized label to page key."""
     labels = _get_localized_page_labels()
     return {label: key for key, label in zip(PAGE_KEYS, labels)}
+
+
+# ── TD-01 Phase 1: Plugin Registry ──────────────────────
+
+# Phase 1 pages managed by PluginRegistry (standalone, no stock_id required)
+_PHASE1_PLUGIN_KEYS = {
+    "category_browser",
+    "settings",
+    "event_dashboard",
+    "notification_center",
+    "daily_market",
+}
+
+_registry: PluginRegistry | None = None
+
+
+def _get_registry() -> PluginRegistry:
+    """Get or create the singleton PluginRegistry, discovering plugins once."""
+    global _registry
+    if _registry is None:
+        _registry = PluginRegistry()
+        count = _registry.discover()
+        logger.info("PluginRegistry initialized: %d plugins discovered.", count)
+    return _registry
+
+
+def _render_via_plugin(
+    page_key: str,
+    client: FinMindClient,
+    stock_id: str | None = None,
+    data: dict | None = None,
+) -> bool:
+    """Try to render a page via the PluginRegistry.
+
+    Returns True if the page was handled by a plugin, False if not found
+    (caller should fall back to legacy rendering).
+    """
+    registry = _get_registry()
+    if not registry.has(page_key):
+        return False
+
+    plugin = registry.get(page_key)
+    ctx = PluginRenderContext(
+        page_key=page_key,
+        data=data,
+        client=client,
+        stock_id=stock_id,
+        session_state=st.session_state,
+    )
+    plugin.render(ctx)
+    return True
 
 
 # ── 初始化 ────────────────────────────────────────────
@@ -144,12 +203,21 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
     """根據 session_state['page'] 渲染對應頁面"""
     page_key = st.session_state.get("page_key", "business_card")
 
-    # 不需要特定股票的頁面，獨立渲染
-    if page_key == "category_browser":
+    # TD-01 Phase 1: Try plugin registry first for standalone pages
+    if page_key in _PHASE1_PLUGIN_KEYS:
         _render_navbar_minimal(page_key)
         with st.spinner(t("status.loading_page")):
-            _render_category_browser(client)
+            rendered = _render_via_plugin(page_key, client)
+        if not rendered:
+            # Fallback to legacy rendering if plugin not found
+            logger.warning(
+                "Plugin '%s' not found in registry, falling back to legacy.",
+                page_key,
+            )
+            _render_standalone_page_legacy(page_key, client)
         return
+
+    # Legacy standalone pages (not yet migrated to plugin)
     if page_key == "etf_section":
         _render_navbar_minimal(page_key)
         with st.spinner(t("status.loading_page")):
@@ -160,29 +228,10 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         with st.spinner(t("status.loading_page")):
             _render_watchlist_page(client)
         return
-    if page_key == "event_dashboard":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_event_dashboard(client)
-        return
-    if page_key == "notification_center":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_notification_center(client)
-        return
-    if page_key == "settings":
-        _render_navbar_minimal(page_key)
-        render_settings_page()
-        return
     if page_key == "sector_heatmap":
         _render_navbar_minimal(page_key)
         with st.spinner(t("status.loading_page")):
             _render_sector_heatmap(client)
-        return
-    if page_key == "daily_market":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_daily_market(client)
         return
     if page_key == "investment_memo":
         _render_navbar_minimal(page_key)
@@ -307,6 +356,20 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
     elif page_key == "debate_cards":
         with st.spinner(t("status.loading_page")):
             render_debate_cards_page(data, client)
+
+
+def _render_standalone_page_legacy(page_key: str, client: FinMindClient):
+    """Fallback legacy rendering for Phase 1 pages if plugin is not available."""
+    if page_key == "category_browser":
+        _render_category_browser(client)
+    elif page_key == "settings":
+        render_settings_page()
+    elif page_key == "event_dashboard":
+        _render_event_dashboard(client)
+    elif page_key == "notification_center":
+        _render_notification_center(client)
+    elif page_key == "daily_market":
+        _render_daily_market(client)
 
 
 def _render_navbar(data: dict, current_page_key: str):
