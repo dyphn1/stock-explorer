@@ -104,11 +104,11 @@
 ### 技術債務（優先排序）
 | ID | 項目 | 優先級 | 說明 |
 |----|------|--------|------|
-| TD-01 | Plugin Chassis 重構 | P0 | router.py if-elif → Plugin 架構 |
-| TD-02 | i18n 全面化 | P0 | 3,146 處 hardcoded 字串 |
+| TD-01 | Plugin Chassis 重構 | ✅ 完成 | Phase 1+2 完成，24 頁面全部遷移至 PluginRegistry |
+| TD-02 | i18n 全面化 | P0 | 2,877 處 hardcoded 字串需逐步替換 |
 | TD-03 | API 快取修復 | P1 | get_stock_info 全表拉取問題 |
-| TD-04 | business_card.py 拆分 | P1 | 561 行 → sub-directory |
-| TD-05 | 單元測試覆蓋率提升 | P1 | 目前 319+ 但覆蓋不足 |
+| TD-04 | business_card.py 拆分 | ✅ 完成 | 已拆分至 business_card/ 子目錄 |
+| TD-05 | 單元測試覆蓋率提升 | P1 | 目前 699 通過但覆蓋不足 |
 | TD-06 | 色彩系統統一 | P1 | 所有頁面使用設計系統色彩 |
 | TD-07 | 元件一致性 | P1 | 統一使用 `_白话_card()` |
 

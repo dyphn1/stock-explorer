@@ -2,9 +2,9 @@
 股識 Stock Explorer — M5 自適應更新
 頁面路由器：根據 session_state['page'] 顯示不同頁面
 
-TD-01 Phase 1: 使用 PluginRegistry 管理獨立頁面（category_browser, settings,
-event_dashboard, notification_center, daily_market）。
-核心分析頁面仍使用傳統 if-elif（Phase 2 遷移）。
+TD-01 Phase 1+2: 使用 PluginRegistry 管理所有頁面。
+所有頁面（獨立頁 + 股票分析頁）均通過 PluginRegistry 路由，
+router.py 中不再有 if-elif 分頁鏈。
 """
 
 import logging
@@ -15,47 +15,18 @@ from src.pages.url_sync import navigate_to
 from src.pages._router_base import (
     get_stock_data,
 )
-from src.pages.business_card import _render_business_card
-from src.pages.revenue_tree import _render_revenue_tree
-from src.pages.compare_stories import _render_compare_stories_page
-from src.pages.moat_comparison import _render_moat_comparison_page
-from src.pages.operation_checkup import _render_operation_checkup
-from src.pages.financial_health import _render_financial_health
-from src.pages.peer_comparison import _render_peer_comparison
-from src.pages.group_structure import _render_group_structure
-from src.pages.category_browser import _render_category_browser
-from src.pages.etf_browser import _render_etf_browser
-from src.pages.etf_detail import _render_etf_detail
-from src.pages.watchlist_page import _render_watchlist_page
 from src.pages.event_dashboard import (
-    _render_event_dashboard,
     _render_adaptive_banner,
     _render_event_alerts,
 )
-from src.pages.sector_heatmap import _render_sector_heatmap
-from src.pages.daily_market import _render_daily_market
-from src.pages.settings import render_settings_page
-from src.pages.investment_memo import _render_investment_memo
-from src.pages.financial_wellness import _render_financial_wellness
-from src.pages.comprehension_check import _render_comprehension_check
-from src.pages.market_event_case_study import _render_market_event_case_study
-from src.pages.stock_screener import _render_stock_screener
-from src.pages.notification_center import _render_notification_center
-from src.pages.first_visit_guide import _render_first_visit_guide
-from src.pages.learn_first_gate import _render_learn_first_gate
-from src.pages.company_timeline import render_company_timeline
-from src.pages.story_timeline import render_story_timeline_page
-from src.pages.debate_cards import render_debate_cards_page
 from src.services.adaptive_engine import (
     run_auto_detection,
 )
 from src.core.i18n import t, set_lang, get_available_locales
 from src.services.watchlist import _is_etf as _is_etf_check
-from src.pages.investor_story_feed import render_investor_story_feed
-from src.pages.academy import _render_academy
-from src.pages.case_study_library import _render_case_study_library
+from src.pages.etf_detail import _render_etf_detail
 
-# TD-01 Phase 1: Plugin Registry
+# TD-01 Phase 1+2: Plugin Registry
 from src.core.plugin_protocol import PluginRenderContext, PluginCategory
 from src.core.plugin_registry import PluginRegistry
 
@@ -105,15 +76,46 @@ def _get_label_to_key_map():
     return {label: key for key, label in zip(PAGE_KEYS, labels)}
 
 
-# ── TD-01 Phase 1: Plugin Registry ──────────────────────
+# ── TD-01 Phase 1+2: Plugin Registry ────────────────────
 
-# Phase 1 pages managed by PluginRegistry (standalone, no stock_id required)
-_PHASE1_PLUGIN_KEYS = {
+# Standalone pages (no stock_id, no data required)
+_STANDALONE_PLUGIN_KEYS = {
+    # Phase 1 (existing)
     "category_browser",
     "settings",
     "event_dashboard",
     "notification_center",
     "daily_market",
+    # Phase 2 Wave 1 (new)
+    "watchlist",
+    "investment_memo",
+    "etf_section",
+    "case_study",
+    "financial_wellness",
+    "comprehension_check",
+    "case_study_library",
+    "stock_screener",
+    "sector_heatmap",
+    "learn_first_gate",
+    "first_visit_guide",
+    "daily_story",
+    # Phase 2 Waves 2+3 (new)
+    "academy",
+}
+
+# Stock-dependent pages (require stock_id + data, rendered after data loading)
+_STOCK_PLUGIN_KEYS = {
+    "business_card",
+    "operation_checkup",
+    "financial_health",
+    "peer_comparison",
+    "group_structure",
+    "story_timeline",
+    "full_story_timeline",
+    "revenue_tree",
+    "compare_stories",
+    "moat_comparison",
+    "debate_cards",
 }
 
 _registry: PluginRegistry | None = None
@@ -203,85 +205,17 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
     """根據 session_state['page'] 渲染對應頁面"""
     page_key = st.session_state.get("page_key", "business_card")
 
-    # TD-01 Phase 1: Try plugin registry first for standalone pages
-    if page_key in _PHASE1_PLUGIN_KEYS:
+    # TD-01 Phase 1+2: Try plugin registry first for standalone pages
+    if page_key in _STANDALONE_PLUGIN_KEYS:
         _render_navbar_minimal(page_key)
         with st.spinner(t("status.loading_page")):
             rendered = _render_via_plugin(page_key, client)
         if not rendered:
-            # Fallback to legacy rendering if plugin not found
+            # Fallback: plugin not found in registry
             logger.warning(
-                "Plugin '%s' not found in registry, falling back to legacy.",
+                "Plugin '%s' not found in registry.",
                 page_key,
             )
-            _render_standalone_page_legacy(page_key, client)
-        return
-
-    # Legacy standalone pages (not yet migrated to plugin)
-    if page_key == "etf_section":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_etf_browser(client)
-        return
-    if page_key == "watchlist":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_watchlist_page(client)
-        return
-    if page_key == "sector_heatmap":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_sector_heatmap(client)
-        return
-    if page_key == "investment_memo":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_investment_memo(client)
-        return
-    if page_key == "case_study":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_market_event_case_study(client)
-        return
-    if page_key == "financial_wellness":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_financial_wellness(client)
-        return
-    if page_key == "comprehension_check":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_comprehension_check(client)
-        return
-    if page_key == "academy":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_academy(client)
-        return
-    if page_key == "case_study_library":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_case_study_library(client)
-        return
-    if page_key == "stock_screener":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_stock_screener(client)
-        return
-    if page_key == "learn_first_gate":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_learn_first_gate(client)
-        return
-    if page_key == "first_visit_guide":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            _render_first_visit_guide(client)
-        return
-    if page_key == "daily_story":
-        _render_navbar_minimal(page_key)
-        with st.spinner(t("status.loading_page")):
-            render_investor_story_feed({}, client)
         return
 
     # 頁面需要特定股票資料
@@ -312,6 +246,17 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
     except Exception as exc:
         logger.warning("M5 event detection/rendering failed for %s: %s", stock_id, exc)
 
+    # TD-01 Phase 2: Try plugin registry for stock-dependent pages
+    if page_key in _STOCK_PLUGIN_KEYS:
+        _render_navbar(data, page_key)
+        with st.spinner(t("status.loading_page")):
+            rendered = _render_via_plugin(page_key, client, stock_id, data)
+        if not rendered:
+            logger.warning(
+                "Stock plugin '%s' not found in registry.", page_key,
+            )
+        return
+
     # ETF 導向 ETF 詳細頁
     if _is_etf_check(stock_id, data["stock_name"], data["industry"]):
         _render_navbar(data, page_key)
@@ -319,57 +264,11 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
             _render_etf_detail(data, client)
         return
 
-    # 渲染導航列
-    _render_navbar(data, page_key)
-
-    # 分頁渲染
-    if page_key == "business_card":
-        with st.spinner(t("status.loading_page")):
-            _render_business_card(data, client)
-    elif page_key == "operation_checkup":
-        with st.spinner(t("status.loading_page")):
-            _render_operation_checkup(data)
-    elif page_key == "financial_health":
-        with st.spinner(t("status.loading_page")):
-            _render_financial_health(data)
-    elif page_key == "peer_comparison":
-        with st.spinner(t("status.loading_page")):
-            _render_peer_comparison(data, client)
-    elif page_key == "group_structure":
-        with st.spinner(t("status.loading_page")):
-            _render_group_structure(data)
-    elif page_key == "story_timeline":
-        with st.spinner(t("status.loading_page")):
-            render_company_timeline(data, client)
-    elif page_key == "full_story_timeline":
-        with st.spinner(t("status.loading_page")):
-            render_story_timeline_page(data, client)
-    elif page_key == "revenue_tree":
-        with st.spinner(t("status.loading_page")):
-            _render_revenue_tree(data, client)
-    elif page_key == "compare_stories":
-        with st.spinner(t("status.loading_page")):
-            _render_compare_stories_page(data, client)
-    elif page_key == "moat_comparison":
-        with st.spinner(t("status.loading_page")):
-            _render_moat_comparison_page(data, client)
-    elif page_key == "debate_cards":
-        with st.spinner(t("status.loading_page")):
-            render_debate_cards_page(data, client)
-
-
-def _render_standalone_page_legacy(page_key: str, client: FinMindClient):
-    """Fallback legacy rendering for Phase 1 pages if plugin is not available."""
-    if page_key == "category_browser":
-        _render_category_browser(client)
-    elif page_key == "settings":
-        render_settings_page()
-    elif page_key == "event_dashboard":
-        _render_event_dashboard(client)
-    elif page_key == "notification_center":
-        _render_notification_center(client)
-    elif page_key == "daily_market":
-        _render_daily_market(client)
+    # Fallback: unknown page key — render business_card via plugin
+    logger.warning("Unknown page_key '%s', falling back to business_card.", page_key)
+    _render_navbar(data, "business_card")
+    with st.spinner(t("status.loading_page")):
+        _render_via_plugin("business_card", client, stock_id, data)
 
 
 def _render_navbar(data: dict, current_page_key: str):

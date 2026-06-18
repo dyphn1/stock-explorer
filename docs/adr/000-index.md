@@ -11,7 +11,7 @@
 | [ADR-001](./001-streamlit-as-frontend.md) | 選擇 Streamlit 作為前端框架 | 已接受 | 2026-06-06 |
 | [ADR-002](./002-finmind-as-data-source.md) | 選擇 FinMind 作為主要數據來源 | 已接受 | 2026-06-06 |
 | [ADR-003](./003-layered-architecture.md) | 採用嚴格分層架構 | 已接受 | 2026-06-07 |
-| [ADR-004](./004-plugin-chassis.md) | Plugin Chassis 架構（規劃中） | 規劃中 | 2026-06-14 |
+| [ADR-004](./004-plugin-chassis.md) | Plugin Chassis 架構 | ✅ 完成（Phase 1+2） | 2026-06-18 |
 | [ADR-005](./005-i18n-yaml.md) | i18n 使用 YAML 單一檔案 per locale | 已接受 | 2026-06-14 |
 | [ADR-006](./006-browser-back-button.md) | 瀏覽器返回按鈕支援 | 已接受 | 2026-06-12 |
 | [ADR-007](./007-llm-safety-boundary.md) | LLM 安全邊界：只翻譯不推導 | 已接受 | 2026-06-07 |
