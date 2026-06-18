@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from src.data.finmind_client import FinMindClient
+from src.core.i18n import t
 from src.pages._router_base import _section_title, _白话_card, _info_card, filter_by_timeline
 from src.services.chart import create_price_area_chart, _get_chart_colors
 
@@ -15,43 +16,28 @@ def _get_etf_one_liner(stock_name: str) -> str:
     """根據 ETF 名稱關鍵字產生一句話定位"""
     name = stock_name.lower()
     if "50" in name or "台灣50" in name:
-        return "追蹤台灣前 50 大企業的指數型基金"
+        return t("etf.detail.one_liner_50")
     if "高股息" in name or "股息" in name:
-        return "專注於高股息股票的收益型基金"
+        return t("etf.detail.one_liner_dividend")
     if "債券" in name or "債" in name:
-        return "投資債券市場的固定收益型基金"
+        return t("etf.detail.one_liner_bond")
     if "esg" in name or "永續" in name:
-        return "考慮環境、社會、治理的永續投資型基金"
-    return "一籃子股票的分散投資工具"
+        return t("etf.detail.one_liner_esg")
+    return t("etf.detail.one_liner_default")
 
 
 def _get_etf_knowledge(stock_name: str) -> str:
     """根據 ETF 類型回傳對應的 ETF 小知識"""
     name = stock_name.lower()
     if "50" in name or "台灣50" in name:
-        return (
-            "ETF（指數股票型基金）就像「一籃子股票」的套餐，一次買進就等於持有前 50 大上市公司。"
-            "不用選股、自動跟著大盤走，管理費也遠低於主動型基金，適合想參與台股大盤但不想個股研究的投資人。"
-        )
+        return t("etf.detail.knowledge_50")
     if "高股息" in name or "股息" in name:
-        return (
-            "高股息 ETF 專門挑選「現金股利大方」的公司，目標是讓投資人定期收到配息，"
-            "就像收房租一樣有穩定現金流。適合需要定期收入（如退休族）或偏好領息而非賺價差的投資人。"
-        )
+        return t("etf.detail.knowledge_dividend")
     if "債券" in name or "債" in name:
-        return (
-            "債券 ETF 投資的是政府或企業發行的債券，性質類似「借錢給對方、對方按期付利息」。"
-            "波動通常比股票小，報酬來源主要是配息而非價差，適合保守型投資人或在股市震盪時作為避風港。"
-        )
+        return t("etf.detail.knowledge_bond")
     if "esg" in name or "永續" in name:
-        return (
-            "ESG ETF 在選股時除了看財務表現，還會評估企業的環保（E）、社會責任（S）與公司治理（G）。"
-            "概念是「好公司不只賺錢，還要對世界好」，適合重視永續發展、不想投資高污染或爭議產業的投資人。"
-        )
-    return (
-        "ETF（指數股票型基金）就像一籃子股票的套餐，一次買進就分散持有多檔標的。"
-        "好處是不用自己選股、管理費低、透明度高，適合想參與市場但不想花時間研究個股的投資人。"
-    )
+        return t("etf.detail.knowledge_esg")
+    return t("etf.detail.knowledge_default")
 
 
 def _get_dividend_frequency_analogy(dividend_df: pd.DataFrame) -> str:
@@ -69,13 +55,13 @@ def _get_dividend_frequency_analogy(dividend_df: pd.DataFrame) -> str:
         avg_per_year = total / years if years > 0 else 0
 
         if avg_per_year >= 4:
-            return "📅 配息頻率：季配（一年配 4 次）"
+            return t("etf.detail.dividend_frequency_quarterly")
         elif avg_per_year >= 2:
-            return "📅 配息頻率：半年配（一年配 2 次）— 就像半年領一次分紅"
+            return t("etf.detail.dividend_frequency_semi")
         elif avg_per_year >= 1:
-            return "📅 配息頻率：年配（一年配 1 次）— 就像年底領一次年終"
+            return t("etf.detail.dividend_frequency_annual")
         else:
-            return "📅 配息頻率：不固定 — 視當年獲利情況決定"
+            return t("etf.detail.dividend_frequency_irregular")
     except Exception:
         return ""
 
@@ -109,7 +95,7 @@ def _render_etf_detail(data: dict, client: FinMindClient):
     _info_card(f"💡 {one_liner}", "", "💡")
 
     # ── 績效走勢 ────────────────────────────────────────────
-    _section_title("績效走勢")
+    _section_title(t("etf.detail.section_performance"))
     if daily_price is not None and len(daily_price) > 0:
         try:
             df_price = daily_price.copy()
@@ -120,25 +106,25 @@ def _render_etf_detail(data: dict, client: FinMindClient):
 
             if len(df_price) > 0:
                 fig = create_price_area_chart(
-                    df_price, title=f"{stock_name} 近一年收盤價走勢"
+                    df_price, title=t("etf.detail.chart_price_title", stock_name=stock_name)
                 )
                 st.plotly_chart(fig, use_container_width=True)
             else:
-                st.info("近一年無價格資料")
+                st.info(t("etf.detail.no_price_data_1y"))
         except Exception:
-            st.info("價格資料處理中，暫時無法顯示圖表")
+            st.info(t("etf.detail.price_data_processing"))
     else:
-        st.info("暫無價格資料")
+        st.info(t("etf.detail.no_price_data"))
 
     st.markdown("---")
 
     # ── 配息資訊 ────────────────────────────────────────────
-    _section_title("配息資訊")
+    _section_title(t("etf.detail.section_dividend"))
     if dividend is not None and len(dividend) > 0:
         try:
             freq_analogy = _get_dividend_frequency_analogy(dividend)
             if freq_analogy:
-                _info_card("配息頻率", freq_analogy, icon="📅")
+                _info_card(t("etf.detail.dividend_explanation_title"), freq_analogy, icon="📅")
 
             # 顯示最近 5 筆配息
             display_cols = []
@@ -149,16 +135,16 @@ def _render_etf_detail(data: dict, client: FinMindClient):
                     col_mapping[col] = col
                 elif "CashEarningsDistribution" in col:
                     display_cols.append(col)
-                    col_mapping[col] = "現金股利"
+                    col_mapping[col] = t("etf.detail.col_cash_dividend")
                 elif "CashExDividendTradingDate" in col:
                     display_cols.append(col)
-                    col_mapping[col] = "除息日"
+                    col_mapping[col] = t("etf.detail.col_ex_dividend_date")
                 elif "StockEarningsDistribution" in col:
                     display_cols.append(col)
-                    col_mapping[col] = "股票股利"
+                    col_mapping[col] = t("etf.detail.col_stock_dividend")
                 elif "ExRightDividendTradingDate" in col:
                     display_cols.append(col)
-                    col_mapping[col] = "除權日"
+                    col_mapping[col] = t("etf.detail.col_ex_right_date")
 
             if not display_cols:
                 display_cols = list(dividend.columns[:6])
@@ -168,7 +154,7 @@ def _render_etf_detail(data: dict, client: FinMindClient):
 
             # 格式化數值
             for col in recent.columns:
-                if "股利" in str(col):
+                if t("etf.detail.col_cash_dividend") in str(col):
                     recent[col] = recent[col].apply(
                         lambda x: f"{x:.2f}" if pd.notna(x) else "-"
                     )
@@ -176,16 +162,16 @@ def _render_etf_detail(data: dict, client: FinMindClient):
             st.dataframe(recent, use_container_width=True, hide_index=True)
 
             # 白話說明
-            _info_card("股利白話說明", "「現金股利」是公司直接發錢給你，就像房東每月匯房租到你戶頭。\n「除息日」是股價會扣除配息金額的日子，所以除息當天股價會「自然下跌」，不代表賠錢。", "💡")
+            _info_card(t("etf.detail.dividend_explanation_title"), t("etf.detail.dividend_explanation_content"), "💡")
         except Exception:
-            st.info("配息資料處理中")
+            st.info(t("etf.detail.dividend_data_processing"))
     else:
-        st.info("此 ETF 暫無配息資料（可能為不配息型或尚未開始配息）")
+        st.info(t("etf.detail.no_dividend_data"))
 
     st.markdown("---")
 
     # ── 法人動向 ────────────────────────────────────────────
-    _section_title("法人動向")
+    _section_title(t("etf.detail.section_institutional"))
     if institutional is not None and len(institutional) > 0:
         try:
             df_inst = institutional.copy()
@@ -210,20 +196,20 @@ def _render_etf_detail(data: dict, client: FinMindClient):
                     fig.add_trace(go.Bar(
                         x=df_inst["date"],
                         y=df_inst[buy_col],
-                        name="買超",
+                        name=t("etf.detail.buy_label"),
                         marker_color="#27AE60",
                     ))
                     fig.add_trace(go.Bar(
                         x=df_inst["date"],
                         y=-df_inst[sell_col],
-                        name="賣超",
+                        name=t("etf.detail.sell_label"),
                         marker_color="#E74C3C",
                     ))
                     _tc = _get_chart_colors()
                     fig.update_layout(
-                        title=f"{stock_name} 近 30 日法人買賣超",
-                        xaxis_title="日期",
-                        yaxis_title="張數",
+                        title=t("etf.detail.chart_institutional_title", stock_name=stock_name),
+                        xaxis_title=t("etf.detail.chart_date"),
+                        yaxis_title=t("etf.detail.chart_shares"),
                         barmode="relative",
                         height=350,
                         margin=dict(l=40, r=40, t=60, b=40),
@@ -239,54 +225,50 @@ def _render_etf_detail(data: dict, client: FinMindClient):
                     st.dataframe(df_inst.tail(10), use_container_width=True, hide_index=True)
 
                 # 白話說明
-                _info_card("法人動向白話說明", "「法人」指的是外資、投信、自營商這些大資金玩家。\n法人連續買超 = 大戶看好；法人連續賣超 = 大戶在撤退。散戶可以參考法人動向，但不要盲目跟單。", "💡")
+                _info_card(t("etf.detail.institutional_explanation_title"), t("etf.detail.institutional_explanation_content"), "💡")
             else:
-                st.info("近 30 日無法人交易資料")
+                st.info(t("etf.detail.no_institutional_data_30d"))
         except Exception:
-            st.info("法人資料處理中")
+            st.info(t("etf.detail.institutional_data_processing"))
     else:
-        st.info("暫無法人交易資料")
+        st.info(t("etf.detail.no_institutional_data"))
 
     st.markdown("---")
 
     # ── 費用說明 ────────────────────────────────────────────
-    _section_title("費用說明")
+    _section_title(t("etf.detail.section_fees"))
     col1, col2 = st.columns(2)
 
     with col1:
         _白话_card(
-            label="📋 經理費（管理費）",
-            value="約 0.3% / 年",
-            analogy="每投資 10 萬元，一年付 300 元 — 就像請一位專業管家幫你管錢，一天不到 1 元",
+            label=t("etf.detail.fee_management_label"),
+            value=t("etf.detail.fee_management_value"),
+            analogy=t("etf.detail.fee_management_analogy"),
         )
 
     with col2:
         _白话_card(
-            label="📋 保管費",
-            value="約 0.04% / 年",
-            analogy="每投資 10 萬元，一年付 40 元 — 就像把錢存在銀行保險庫的保管費",
+            label=t("etf.detail.fee_custody_label"),
+            value=t("etf.detail.fee_custody_value"),
+            analogy=t("etf.detail.fee_custody_analogy"),
         )
 
     _info_card(
-        title="💡 ETF 費用小提醒",
-        content=(
-            "ETF 的總費用（經理費 + 保管費 + 其他）通常比主動型基金低很多。"
-            "以台股 ETF 為例，總費用率大約 0.3%~0.5%，而主動型基金可能 1.5% 以上。"
-            "長期投資下來，省下來的費用會默默幫你多賺好幾年的複利！"
-        ),
+        title=t("etf.detail.fee_reminder_title"),
+        content=t("etf.detail.fee_reminder_content"),
         icon="💰",
     )
 
     st.markdown("---")
 
     # ── ETF 小知識 ──────────────────────────────────────────
-    _section_title("ETF 小知識")
+    _section_title(t("etf.detail.section_knowledge"))
     knowledge = _get_etf_knowledge(stock_name)
     _info_card(
-        title=f"📚 {stock_name} 是什麼？",
+        title=t("etf.detail.knowledge_title", stock_name=stock_name),
         content=knowledge,
         icon="🎓",
     )
 
     # 免責聲明
-    _info_card("免責聲明", "本工具僅供認識 ETF 使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。", "⚠️")
+    _info_card(t("etf.detail.disclaimer"), t("etf.detail.disclaimer_content"), "⚠️")

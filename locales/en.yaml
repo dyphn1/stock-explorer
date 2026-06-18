@@ -855,6 +855,59 @@ etf:
     filet:
       price: "Price: {price}"
       change: "Change: {change}"
+  detail:
+    one_liner_50: Index fund tracking Taiwan's top 50 companies
+    one_liner_dividend: Income fund focused on high-dividend stocks
+    one_liner_bond: Fixed-income fund investing in the bond market
+    one_liner_esg: Sustainable investing fund considering ESG factors
+    one_liner_default: A diversified basket of stocks in one purchase
+    knowledge_50: "ETF (Exchange-Traded Fund) is like a \"basket of stocks\" — one purchase means you hold shares in the top 50 listed companies. No stock picking needed, it automatically follows the market, with management fees far lower than active funds. Ideal for investors who want exposure to Taiwan's market without researching individual stocks."
+    knowledge_dividend: "High-dividend ETFs select companies that pay generous cash dividends, aiming to give investors regular payouts — like collecting rent. Suitable for those who need regular income (e.g., retirees) or prefer dividends over capital gains."
+    knowledge_bond: "Bond ETFs invest in government or corporate bonds — essentially \"lending money to them in exchange for regular interest.\" Volatility is usually lower than stocks, and returns come mainly from dividends rather than price appreciation. Suitable for conservative investors or as a safe haven during market turbulence."
+    knowledge_esg: "ESG ETFs evaluate companies not only on financial performance but also on Environmental, Social, and Governance factors. The idea is \"good companies don't just make money — they do good for the world.\" Suitable for investors who care about sustainability and don't want to invest in polluting or controversial industries."
+    knowledge_default: "ETF (Exchange-Traded Fund) is like a basket of stocks — one purchase diversifies your holdings across multiple benefits. Benefits include no need for stock picking, low management fees, and high transparency. Ideal for investors who want market exposure without spending time on individual stock research."
+    section_performance: Performance Trend
+    section_dividend: Dividend Info
+    section_institutional: Institutional Activity
+    section_fees: Fee Explanation
+    section_knowledge: ETF Knowledge
+    chart_price_title: "{stock_name} 1-Year Closing Price Trend"
+    no_price_data_1y: No price data for the past year
+    price_data_processing: Price data is being processed; chart temporarily unavailable
+    no_price_data: No price data available
+    dividend_frequency_quarterly: "📅 Dividend Frequency: Quarterly (4 times/year)"
+    dividend_frequency_semi: "📅 Dividend Frequency: Semi-annual (2 times/year) — like receiving a bonus every half year"
+    dividend_frequency_annual: "📅 Dividend Frequency: Annual (1 time/year) — like receiving a year-end bonus"
+    dividend_frequency_irregular: "📅 Dividend Frequency: Irregular — depends on annual earnings"
+    col_cash_dividend: Cash Dividend
+    col_ex_dividend_date: Ex-Dividend Date
+    col_stock_dividend: Stock Dividend
+    col_ex_right_date: Ex-Right Date
+    dividend_explanation_title: Dividend Explanation
+    dividend_explanation_content: "\"Cash Dividend\" is money the company pays you directly — like a landlord depositing rent into your account every month. \"Ex-Dividend Date\" is the day the stock price adjusts downward by the dividend amount, so the price drop on that day is \"natural\" — it doesn't mean you lost money."
+    dividend_data_processing: Dividend data is being processed
+    no_dividend_data: This ETF has no dividend data (may be a non-dividend type or hasn't started paying yet)
+    buy_label: Buy
+    sell_label: Sell
+    chart_institutional_title: "{stock_name} Institutional Trading (Past 30 Days)"
+    chart_date: Date
+    chart_shares: Shares
+    institutional_explanation_title: Institutional Activity Explanation
+    institutional_explanation_content: "\"Institutions\" refers to foreign investors, securities firms, and proprietary traders — the big players. Continuous institutional buying = big money is bullish; continuous selling = big money is retreating. Retail investors can reference institutional trends but should not blindly follow."
+    no_institutional_data_30d: No institutional trading data for the past 30 days
+    institutional_data_processing: Institutional data is being processed
+    no_institutional_data: No institutional trading data available
+    fee_management_label: "📋 Management Fee"
+    fee_management_value: "~ 0.3% / year"
+    fee_management_analogy: "For every 100,000 TWD invested, you pay 300 TWD/year — like hiring a professional manager for less than 1 TWD/day"
+    fee_custody_label: "📋 Custody Fee"
+    fee_custody_value: "~ 0.04% / year"
+    fee_custody_analogy: "For every 100,000 TWD invested, you pay 40 TWD/year — like a bank safe deposit box custody fee"
+    fee_reminder_title: "💡 ETF Fee Reminder"
+    fee_reminder_content: "ETF total fees (management + custody + other) are typically much lower than active funds. For Taiwan ETFs, total expense ratios are about 0.3%~0.5%, while active funds may charge 1.5% or more. Over long-term investing, the fee savings quietly compound into extra returns for you!"
+    knowledge_title: "📚 What is {stock_name}?"
+    disclaimer: Disclaimer
+    disclaimer_content: "This tool is for ETF education only. All data comes from public information sources and FinMind. Does not constitute investment advice. Investing involves risk; please evaluate carefully."
 group:
   structure:
     subtitle: Understand the relationships within a corporate group
