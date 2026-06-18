@@ -5,7 +5,7 @@ description: "Entry point router for Stock Explorer (股識) multi-agent workflo
 
 # Stock Explorer AI Team Router
 
-> **WARNING**: This is the PM's operational manual. When awakened by cron, read this file FIRST, then follow the Bootstrap Protocol. Every role, workflow, and gate is defined here.
+> **WARNING**: This is the PM's operational manual. When awakened by cron, read this file FIRST, then follow the Bootstrap Protocol.
 
 ---
 
@@ -27,48 +27,22 @@ description: "Entry point router for Stock Explorer (股識) multi-agent workflo
 
 ---
 
-## 2. File Structure
+## 2. Visual Flow Reference
 
-```
-docs/
-├── overview/                  # 📖 專案總覽
-│   ├── 00-index.md
-│   ├── 01-product-vision.md
-│   ├── 02-architecture.md
-│   ├── 03-design-system.md
-│   ├── 04-tech-stack.md
-│   ├── 05-roadmap.md
-│   └── 06-development-guide.md
-├── adr/                       # 📋 架構決策記錄
-├── roles/                     # 🤖 角色定義
-│   ├── pm.md
-│   ├── architect.md
-│   ├── security-architect.md
-│   ├── ux-designer.md
-│   ├── developer.md
-│   ├── designer.md
-│   ├── user.md
-│   ├── qa.md
-│   └── challenger.md
-└── state/                     # 📊 狀態追蹤
-    ├── current_problems.md
-    ├── handoff.md
-    └── pending_review.md
+**→ See [`docs/diagrams/flow.md`](docs/diagrams/flow.md) for all Mermaid diagrams.**
 
-design/                        # 🎨 UX 設計原型
-├── index.html                 # 原型入口
-├── prototypes/                # 各頁面 HTML 原型
-├── components/                # 可重用元件
-├── assets/                    # CSS、設計變數
-├── specs/                     # 設計規格書
-└── reviews/                   # 設計審核報告
-```
+This file contains:
+- Figure 1: PM cron entry decision flow
+- Figure 2: TODO 1 — Refactor / Bug Fix
+- Figure 3: TODO 2 — New Feature / UI
+- Figure 4: TODO 3 — Verify / Test
+- Figure 5: TODO 4 — Release (PM only)
+- Figure 6: Research / Discuss
+- Figure 7: Optimization (Design Review fixes)
 
 ---
 
-## 3. The Bootstrap Protocol (PM's Waking Steps)
-
-When the PM is awakened by cron, execute these steps **in order**:
+## 3. Bootstrap Protocol
 
 ### Step 0: Restore Context
 1. Read `STATUS.md` — current sprint, blockers, recent commits
@@ -76,258 +50,90 @@ When the PM is awakened by cron, execute these steps **in order**:
 3. Read `docs/state/current_problems.md` — known issues
 4. Read `docs/state/pending_review.md` — items waiting for Daniel
 
-### Step 1: Determine Task Type
+### Step 0.5: PM Role Definition (CRITICAL)
 
-| Task Type | Trigger | Primary Flow |
-|-----------|---------|--------------|
-| **A. New Feature / UI** | Roadmap item, new feature request | Architect → UX Designer → Security → User → Daniel → Developer → Verify |
-| **B. Verify / Test** | Post-implementation verification | QA → Design Reviewer → User → Security |
-| **C. Refactor / Feedback** | Daniel feedback, tech debt, bug | Architect → Developer → Security → Verify |
-| **D. Research / Discuss** | Competitor analysis, next direction | QA research → PM synthesize → Challenger |
+**PM 是專案經理，不是執行者。PM 負責流程控制和狀態交接，所有工作和 sub-agents 做。**
 
-### Step 2: Execute Workflow
-Follow the corresponding workflow in Section 4.
+**PM 的唯一工作：**
+1. 讀狀態 → 判斷當前在流程的哪個階段（TODO 編號）
+2. 決定哪些 sub-agents 需要參與這個 TODO
+3. 用 `delegate_task` 派出 sub-agents → 等待回報
+4. **Gate Check**：親自驗證前一步的產出物是否完整
+5. 如果通過 → 前進到下一個 TODO
+6. 如果不通過 → 退回上一個 TODO，重新派發
+7. **唯一自己動手做的事：`git commit + push` + 更新狀態文件**
 
-### Step 3: Update State & Commit
-1. Update `docs/state/handoff.md` with current status
-2. Update `docs/state/current_problems.md` with new/resolved issues
-3. Update `docs/state/pending_review.md` if Daniel review needed
-4. Update `docs/overview/05-roadmap.md` if sprint status changed
-5. **Git commit all changes** — `git add -A && git commit -m "<type>: <summary>"`
-   - Use Angular-style Conventional Commits (feat/fix/refactor/docs/chore/perf)
-   - If nothing changed, skip commit
-6. **Git push** — `git push` to sync to remote
+**Gate Check 是 PM 的核心工作：**
+- 每個 TODO 完成後，PM 必須驗證產出物是否存在且完整
+- 不是看 sub-agent 說「完成了」就信，要自己檢查
+- 如果產出不足 → 退回重做，不前進
+- 每個 Gate 都必須記錄到 `docs/state/handoff.md`（PASSED or NOT PASSED + 原因）
 
-### Step 4: Document & Compress
-- State file > limit → compress to `docs/adr/` or `docs/overview/`, then truncate
-- Significant decision → create ADR in `docs/adr/`
-- Lesson learned → update relevant role file or `docs/overview/`
+**絕對禁止：**
+- PM 自己寫 code、改檔案、用 `execute_code` 做角色該做的事
+- 跳過 sub-agent 直接做「簡單的事」
+- 跳過 Gate Check 直接進入下一個 TODO
 
-### Step 5: Summary Report
-Write a summary to the end of `docs/state/handoff.md`:
-```markdown
-## [Date] Session Summary
+### Step 1: Determine Current TODO
 
-### What was done
-- [Task type: Workflow A/B/C/D]
-- [Brief description]
+| TODO | Trigger | Participants | Completion Criteria |
+|------|---------|-------------|---------------------|
+| **TODO 1: 討論/設計** | 新功能、架構調整、Bug 修復 | Architect + Challenger (+ UX for feature) | 設計稿/ADR 存在 + Challenger 通過 |
+| **TODO 2: 實作** | 設計通過 | Developer (+ Architect 指導) | code + L0/L1 pass + git commit |
+| **TODO 3: 驗證** | 實作完成 | QA + Security + Design Reviewer | L0+L1+L2 all pass |
+| **TODO 4: 發布** | 驗證通過 | PM only | commit + push + 狀態更新 |
 
-### Roles involved
-- [List of roles that participated]
+**如果前一 TODO 未完成 → 退回前一 TODO，不前進。**
 
-### Steps executed
-- [Phase 1 → Phase 2 → ...]
+### Step 2: Execute via delegate_task
 
-### Result
-- ✅ PASS / ❌ FAIL / ⏳ PENDING
+**所有工作都必須用 `delegate_task` 派發。** PM 不自己執行。
 
-### Files changed
-- [List of modified files]
+每個 task 必須包含：
+- `goal`: 明確的完成標準（= 測試通過 + 檔案存在）
+- `context`: 所有相關檔案路徑、前一步的產出
+- `model`: 根據 Team Roster 選擇正確的 model
+- `toolsets`: 至少包含 ["terminal", "file"]
 
-### Next steps
-- [What should happen next]
-```
+### Step 3: Gate Check
 
----
+| Gate | What to verify | Pass condition |
+|------|---------------|----------------|
+| TODO 1 → 2 | 設計產出檔案存在 + 內容完整 | 檔案存在 + Challenger 通過 |
+| TODO 2 → 3 | code 修改 + L0/L1 + commit | `git diff --stat` 有變更 + L0 pass |
+| TODO 3 → 4 | QA/Security/Design 都回報 pass | L0+L1+L2 all pass + 無 critical |
 
-## 4. Workflows
+**NOT PASSED → 退回上一 TODO，在 handoff.md 標明原因。**
 
-### Workflow A: New Feature / UI
+### Step 4: Release (PM only)
 
-> **Entry**: PM reads roadmap item or feature request.
-> **Exit**: All verification gates pass + Daniel approves.
-
-```
-Phase 1: DESIGN
-════════════════════════════════════════════════════════════
-  PM assigns task
-    ├──► Architect: Analyze feasibility, design technical solution
-    │     Output: Technical analysis (standard format)
-    ├──► UX Designer: Create HTML prototype
-    │     Output: design/prototypes/<page>.html + design/specs/<page>.md
-    └──► PM: Synthesize → draft plan
-
-  ┌─ Gate A1: Challenger ─────────────────────────────────────┐
-  │ 3-round challenge on draft plan                           │
-  │ ❌ Rejected → revise → back to Phase 1                    │
-  │ ✅ Approved → Phase 2                                     │
-  └───────────────────────────────────────────────────────────┘
-
-Phase 2: SECURITY REVIEW
-════════════════════════════════════════════════════════════
-  Security Architect reviews threats, input validation,
-  data flow, LLM safety.
-  Output: Security Review Report
-
-  ┌─ Gate A2: Security ───────────────────────────────────────┐
-  │ ❌ FAIL → Architect revises → back to Phase 1             │
-  │ ✅ PASS → Phase 3                                         │
-  └───────────────────────────────────────────────────────────┘
-
-Phase 3: USER REVIEW
-════════════════════════════════════════════════════════════
-  User reviews HTML prototype (10-second test, jargon,
-  flow walkthrough, emotional response).
-  Output: User Review Report
-
-  ┌─ Gate A3: User ──────────────────────────────────────────┐
-  │ ❌ BLOCKED → UX Designer iterates → back to Phase 3       │
-  │ ✅ PASS → Phase 4                                         │
-  └───────────────────────────────────────────────────────────┘
-
-Phase 4: DANIEL REVIEW (Human Gate)
-════════════════════════════════════════════════════════════
-  PM presents: HTML prototype + tech summary + security
-  summary + user summary.
-
-  ┌─ Gate A4: Daniel ────────────────────────────────────────┐
-  │ ❌ Rejected → record feedback → back to appropriate phase│
-  │ ✅ Approved → Phase 5                                     │
-  └───────────────────────────────────────────────────────────┘
-
-Phase 5: IMPLEMENTATION
-════════════════════════════════════════════════════════════
-  Developer: Read prototype → implement → L0 verify →
-  L1 verify → git commit
-
-Phase 6: VERIFICATION (Parallel)
-════════════════════════════════════════════════════════════
-  ├──► Design Reviewer: implementation vs prototype
-  ├──► Security Architect: code audit
-  ├──► User: review in Streamlit
-  └──► QA: L0/L1/L2 functional testing
-
-  ┌─ Gate A5: All Must Pass ─────────────────────────────────┐
-  │ Design Reviewer: ✅ (no P0/P1 deviations)                 │
-  │ Security Architect: ✅ (no critical/high findings)       │
-  │ User: ✅ (10-second test passes)                          │
-  │ QA: ✅ (L0 + L1 + L2 pass)                               │
-  │                                                           │
-  │ ❌ Any fail → Developer fixes → re-run Phase 6            │
-  │ ✅ All pass → Phase 7                                     │
-  └───────────────────────────────────────────────────────────┘
-
-Phase 7: RELEASE
-════════════════════════════════════════════════════════════
-  PM must complete ALL of the following:
-    1. Update `docs/overview/05-roadmap.md` (mark feature as done)
-    2. Update `docs/state/current_problems.md` (resolve fixed issues)
-    3. Update `docs/state/handoff.md` (write session summary)
-    4. Run `git add -A` → `git commit -m "feat: <feature name>"` → `git push`
-    5. If state files exceed line limits → compress to `docs/adr/`
-    6. If significant decision was made → create ADR in `docs/adr/`
-
-  ⚠️ CRITICAL: Steps 4 (git commit + push) MUST NOT be skipped.
-  If the session is running out of time, commit is the #1 priority.
-```
+TODO 4 通過後，PM 自己動手：
+1. 更新 `docs/state/handoff.md`
+2. 更新 `docs/state/current_problems.md`
+3. 更新 `docs/state/pending_review.md`（如有）
+4. 更新 `docs/overview/05-roadmap.md`（如有）
+5. `git add -A && git commit -m "..." && git push`
 
 ---
 
-### Workflow B: Verify / Test
+## 4. Task Routing by Priority
 
-> **Entry**: Post-implementation verification, regression testing.
-> **Exit**: All verification reports filed.
-
-```
-  PM assigns verification
-    ├──► QA: L0 → L1 → L2 test layers
-    ├──► Design Reviewer: visual spot-check
-    └──► Security Architect: quick security scan
-
-  ┌─ Gate B1: Quality Gate ──────────────────────────────────┐
-  │ P0 issues found → create problem record → Workflow C     │
-  │ All pass → update STATUS.md → done                       │
-  └───────────────────────────────────────────────────────────┘
-
-  PM: git add -A → git commit -m "test: <verification summary>" → git push
-  PM: Write session summary to docs/state/handoff.md
-```
-
----
-
-### Workflow C: Refactor / Feedback
-
-> **Entry**: Daniel feedback, tech debt, bug fix.
-> **Exit**: Fix verified.
-
-```
-  PM analyzes issue
-    │
-    ├──► BUG FIX (minor):
-    │     Developer → L0/L1 → QA spot-check → done
-    │
-    ├──► BUG FIX (major / architectural):
-    │     Architect → Security → Developer → Workflow B
-    │
-    ├──► TECH DEBT (code quality):
-    │     Architect plan → Developer → L0/L1 → QA → done
-    │
-    ├──► TECH DEBT (architecture):
-    │     Architect ADR → Challenger (3 rounds) → Security →
-    │     Developer → Workflow B
-    │
-    └──► DANIEL FEEDBACK (UI/UX):
-          UX Designer iterates → User reviews → Daniel re-reviews →
-          Developer updates → Design Reviewer verifies → done
-
-  PM: git add -A → git commit -m "fix: <issue summary>" → git push
-  PM: Write session summary to docs/state/handoff.md
-```
-
----
-
-### Workflow D: Research / Discuss
-
-> **Entry**: Competitor analysis, sprint planning, next direction.
-> **Exit**: Research documented, decisions recorded.
-
-```
-  PM initiates
-    ├──► QA: Competitor research
-    ├──► Architect: Feasibility assessment
-    ├──► UX Designer: UX recommendations
-    └──► PM: Synthesize → draft proposal
-
-  ┌─ Gate D1: Challenger ────────────────────────────────────┐
-  │ 3-round challenge → ❌ revise / ✅ approve                │
-  └───────────────────────────────────────────────────────────┘
-
-  PM: Document ADR, update roadmap, create handoff.
-  PM: git add -A → git commit -m "docs: <research summary>" → git push
-  PM: Write session summary to docs/state/handoff.md
-```
+| Priority | Task Types | Flow |
+|----------|-----------|------|
+| **1 (最高)** | 重構 + UX Bug | TODO 1 → 2 → 3 → 4 |
+| **2** | 新功能 | TODO 1 → 2 → 3 → 4 |
+| **3** | 驗證 | TODO 3 → 4 |
+| **4 (最低)** | 研究/討論 | TODO 1 → 4（跳過 2,3） |
 
 ---
 
 ## 5. State Management
-
-### State Files
 
 | File | Purpose | Max Lines | Updated By |
 |------|---------|-----------|------------|
 | `docs/state/current_problems.md` | Known issues, bugs, tech debt | 100 | PM (from all roles) |
 | `docs/state/handoff.md` | Session status, next steps | 100 | PM (end of session) |
 | `docs/state/pending_review.md` | Items waiting for Daniel | 100 | PM (when Daniel needed) |
-
-### Handoff Format
-```markdown
-## [Date] Session Handoff
-
-### Completed
-- [What was done]
-
-### In Progress
-- [Current work + phase]
-
-### Blocked
-- [What's blocked + why]
-
-### Next Steps
-- [What's next]
-
-### Files Changed
-- [Modified files]
-```
 
 ### Problem Record Format
 ```markdown
@@ -344,67 +150,7 @@ Phase 7: RELEASE
 
 ---
 
-## 6. Role Quick Reference
-
-> What to read, what to do, what to output, how to hand off.
-
-### PM
-- **Read**: `STATUS.md` → `docs/state/handoff.md` → `docs/overview/05-roadmap.md` → role files
-- **Do**: Coordinate, synthesize, assign, maintain state, document decisions
-- **Output**: Plans, handoff notes, state updates, ADRs
-- **File**: `docs/roles/pm.md`
-
-### Architect
-- **Read**: `STATUS.md` → `docs/overview/02-architecture.md` → `docs/adr/000-index.md` → `docs/overview/06-development-guide.md`
-- **Do**: Feasibility analysis, technical design, tech debt identification, guide Developer
-- **Output**: Technical analysis, ADRs
-- **File**: `docs/roles/architect.md`
-
-### Security Architect
-- **Read**: `STATUS.md` → `docs/overview/02-architecture.md` → `docs/adr/` (esp. ADR-007)
-- **Do**: Threat modeling, code security review, LLM safety enforcement, security sign-off
-- **Output**: Security Review Report (design), Security Audit Report (code)
-- **File**: `docs/roles/security-architect.md`
-
-### UX Designer
-- **Read**: `STATUS.md` → `docs/overview/03-design-system.md` → `docs/overview/01-product-vision.md` → `docs/roadmap/ux-improvements.md`
-- **Do**: HTML prototypes, interaction flows, design system compliance
-- **Output**: `design/prototypes/*.html`, `design/specs/*.md`
-- **File**: `docs/roles/ux-designer.md`
-
-### Developer
-- **Read**: `STATUS.md` → `docs/overview/06-development-guide.md` → HTML prototype → design spec → Architect spec
-- **Do**: Implement, fix, refactor, L0/L1 verify
-- **Output**: Code changes, git commits
-- **File**: `docs/roles/developer.md`
-
-### Design Reviewer
-- **Read**: `STATUS.md` → `docs/overview/03-design-system.md` → HTML prototype → design spec
-- **Do**: Compare implementation vs prototype, check design system, verify states
-- **Output**: Design Review Report (`design/reviews/`)
-- **File**: `docs/roles/designer.md`
-
-### User
-- **Read**: `STATUS.md` → `docs/overview/01-product-vision.md` → `docs/overview/03-design-system.md` → HTML prototype
-- **Do**: Beginner perspective review, 10-second test, jargon detection, flow testing
-- **Output**: User Review Report
-- **File**: `docs/roles/user.md`
-
-### QA
-- **Read**: `STATUS.md` → `docs/state/current_problems.md` → `docs/overview/05-roadmap.md` → verification scripts
-- **Do**: L0/L1/L2 testing, functional testing, competitor research, regression detection
-- **Output**: Verification report, quality gate verdict
-- **File**: `docs/roles/qa.md`
-
-### Challenger
-- **Read**: `STATUS.md` → `docs/overview/01-product-vision.md` → `docs/adr/000-index.md` → all role files
-- **Do**: Listen to discussion, 3-round challenge, verify alignment
-- **Output**: Challenge log
-- **File**: `docs/roles/challenger.md`
-
----
-
-## 7. Cognitive Metabolism
+## 6. Cognitive Metabolism
 
 | Directory | File Type | Max Lines | When Exceeded |
 |-----------|-----------|-----------|---------------|
@@ -416,7 +162,7 @@ Phase 7: RELEASE
 
 ---
 
-## 8. Development Rules (Quick Reference)
+## 7. Development Rules (Quick Reference)
 
 > Full rules: `docs/overview/06-development-guide.md`
 
