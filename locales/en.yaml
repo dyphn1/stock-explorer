@@ -805,3 +805,53 @@ source_section:
     recent: < 1 hour ago
     day: < 24 hours ago
     stale: '> 24 hours ago'
+etf:
+  browser:
+    title: ETF Browser
+    subtitle: Explore Taiwan ETFs — hot rankings, category browsing, dividend comparison
+    what_is_etf: What is an ETF?
+    what_is_etf_content: "ETF (Exchange-Traded Fund) is like a \"basket of stocks\" — one purchase gives you exposure to a whole basket of assets. For example, buying 0050 means you simultaneously hold shares in Taiwan's 50 largest companies by market cap. ETFs trade like stocks on the exchange, with lower fees than mutual funds, making them great for beginners to diversify.\\n\\n⚠️ Note: ETF prices fluctuate with the market; please assess your risk tolerance before investing."
+    loading_data: Loading ETF data...
+    loading_price: Fetching ETF prices (first load may take longer; switching tabs will be faster)...
+    no_stock_info: Unable to fetch stock info
+    no_stock_data: No stock data available
+    no_etf_found: No ETF data found
+    count_etf: ETFs
+    select_feature: Select Feature
+    hot_etfs: 🔥 Hot ETFs
+    etf_categories: 📂 ETF Categories
+    dividend_ranking: 💰 Dividend Ranking
+    hot_etfs_by_volume: Hot ETFs (by Volume)
+    top_20_hot: Top 20 Hot ETFs
+    rank: Rank
+    view: View
+    view_business_card: View Business Card
+    no_volume_data: No volume data available
+    categories_title: ETF Categories
+    no_category_data: No ETF data to categorize
+    category:
+      market_cap: Market Cap Type
+      high_dividend: High Dividend Type
+      bond: Bond Type
+      thematic: Thematic Type
+      other: Other
+    category_desc:
+      market_cap: Tracks the market index, buying Taiwan large-cap stocks in one go
+      high_dividend: Focuses on high-dividend stocks, suitable for dividend investors
+      bond: Invests in the bond market with relatively lower volatility
+      thematic: Targets specific industries or trending themes
+      other: ETFs that don't fall into the above categories
+    dividend_ranking_title: Dividend Ranking (by Yield)
+    dividend_caption: "⏳ Dividend ranking requires fetching dividend data; first load may be slow, please wait..."
+    fetching_dividend: Fetching dividend data...
+    processed_count: Processed {current}/{total}...
+    no_dividend_data: No dividend data available
+    no_dividend_etf: No ETFs with dividend data
+    top_20_dividend: Top 20 Dividend ETFs
+    dividend_yield_knowledge: Dividend Yield Knowledge
+    dividend_yield_content: "Dividend Yield = Annual Dividend ÷ Stock Price × 100%. A higher yield means more cash back per dollar invested, but high yield doesn't equal high returns. Still pay attention to tracking error, expense ratio, and premium/discount status."
+    price_label: "Price:"
+    change_label: "Change:"
+    filet:
+      price: "Price: {price}"
+      change: "Change: {change}"

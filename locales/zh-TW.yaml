@@ -554,3 +554,53 @@ source_section:
     recent: 1 小時內
     day: 24 小時內
     stale: 超過 24 小時
+etf:
+  browser:
+    title: ETF 瀏覽
+    subtitle: 探索台灣 ETF 市場：熱門排行、分類瀏覽、配息比較
+    what_is_etf: 什麼是 ETF？
+    what_is_etf_content: "ETF（指數股票型基金）就像一個「股票籃子」，一次買進就等於買進一籃子標的。例如買入 0050，等於同時持有台灣市值最大的 50 間公司股票。ETF 可以像股票一樣在交易所買賣，費用比基金低，適合新手分散投資。\\n\\n⚠️ 注意：ETF 價格會隨市場波動，投資前請評估自身風險承受能力。"
+    loading_data: 載入 ETF 資料中…
+    loading_price: 正在取得 ETF 價格（首次載入需時較長，之後切換頁籤將加速）…
+    no_stock_info: 無法取得股票資訊
+    no_stock_data: 目前無股票資料可顯示
+    no_etf_found: 找不到任何 ETF 資料
+    count_etf: 檔 ETF
+    select_feature: 選擇功能
+    hot_etfs: 🔥 熱門 ETF
+    etf_categories: 📂 ETF 分類
+    dividend_ranking: 💰 配息排行
+    hot_etfs_by_volume: 熱門 ETF（依成交量）
+    top_20_hot: 前 20 大熱門 ETF
+    rank: 排名
+    view: 查看
+    view_business_card: 查看名片
+    no_volume_data: 暫無成交量資料
+    categories_title: ETF 分類
+    no_category_data: 無 ETF 資料可分類
+    category:
+      market_cap: 市值型
+      high_dividend: 高股息型
+      bond: 債券型
+      thematic: 主題型
+      other: 其他
+    category_desc:
+      market_cap: 追蹤大盤指數，一次買進台灣大型股
+      high_dividend: 聚焦高配息股票，適合存股領息
+      bond: 投資債券市場，波動相對較低
+      thematic: 鎖定特定產業或趨勢主題
+      other: 不屬於以上分類的 ETF
+    dividend_ranking_title: 配息排行（依殖利率）
+    dividend_caption: ⏳ 配息排行需取得股利資料，首次載入可能較慢，請耐心等候…
+    fetching_dividend: 正在取得股利資料…
+    processed_count: 已處理 {current}/{total} 檔…
+    no_dividend_data: 暫無股利資料
+    no_dividend_etf: 目前無配息資料的 ETF
+    top_20_dividend: 前 20 大配息 ETF
+    dividend_yield_knowledge: 殖利率小知識
+    dividend_yield_content: 殖利率 = 年度股利 ÷ 股價 × 100%。殖利率越高代表每投入 1 元能領回的現金越多，但高殖利率不等於高報酬，仍需留意 ETF 的追蹤誤差、費用率及折溢價狀況。
+    price_label: 價格：
+    change_label: 漲跌：
+    filet:
+      price: "價格：{price}"
+      change: "漲跌：{change}"

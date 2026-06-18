@@ -9,6 +9,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
 from src.pages._router_base import _info_card, _summary_card, _count_label
+from src.core.i18n import t
 
 
 def _cached_get_stock_info(client: FinMindClient):
@@ -68,23 +69,23 @@ def _get_all_etf_prices(client: FinMindClient, etf_ids_tuple):
 def _render_etf_browser(client: FinMindClient):
     """ETF 瀏覽主頁"""
 
-    st.markdown("## 📊 ETF 瀏覽")
-    st.markdown("探索台灣 ETF 市場：熱門排行、分類瀏覽、配息比較")
+    st.markdown(f"## 📊 {t('etf.browser.title')}")
+    st.markdown(t("etf.browser.subtitle"))
     st.markdown("---")
 
     # ── 白話解釋卡片 ──────────────────────────────────────
-    _info_card("💡 什麼是 ETF？", "ETF（指數股票型基金）就像一個「股票籃子」，一次買進就等於買進一籃子標的。\n例如買入 0050，等於同時持有台灣市值最大的 50 間公司股票。\nETF 可以像股票一樣在交易所買賣，費用比基金低，適合新手分散投資。\n\n⚠️ 注意：ETF 價格會隨市場波動，投資前請評估自身風險承受能力。", "💡")
+    _info_card(t("etf.browser.what_is_etf"), t("etf.browser.what_is_etf_content"), "💡")
 
     # ── 取得 ETF 股票清單（cached） ──────────────────────────
-    with st.spinner("載入 ETF 資料中…"):
+    with st.spinner(t("etf.browser.loading_data")):
         try:
             all_stock_info = _cached_get_stock_info(client)
         except Exception as e:
-            st.error(f"無法取得股票資訊：{e}")
+            st.error(f"{t('etf.browser.no_stock_info')}：{e}")
             return
 
     if all_stock_info is None or len(all_stock_info) == 0:
-        st.warning("目前無股票資料可顯示。")
+        st.warning(t("etf.browser.no_stock_data"))
         return
 
     # 過濾 ETF（industry_category 包含 "ETF"，不分大小寫）
@@ -92,30 +93,30 @@ def _render_etf_browser(client: FinMindClient):
     etf_info = all_stock_info[etf_mask].copy()
 
     if len(etf_info) == 0:
-        st.warning("找不到任何 ETF 資料。")
+        st.warning(t("etf.browser.no_etf_found"))
         return
 
-    _count_label(len(etf_info), "檔 ETF")
+    _count_label(len(etf_info), t("etf.browser.count_etf"))
 
     # ── 預取所有 ETF 價格（一次的迭代，全部 cache）────────────
     etf_ids = tuple(sorted(etf_info["stock_id"].tolist()))
-    with st.spinner("正在取得 ETF 價格（首次載入需時較長，之後切換頁籤將加速）…"):
+    with st.spinner(t("etf.browser.loading_price")):
         price_df = _get_all_etf_prices(client, etf_ids)
 
     # ── 子頁面選擇 ──────────────────────────────────────────
     st.markdown("---")
     sub_view = st.radio(
-        "選擇功能",
-        ["🔥 熱門 ETF", "📂 ETF 分類", "💰 配息排行"],
+        t("etf.browser.select_feature"),
+        [t("etf.browser.hot_etfs"), t("etf.browser.etf_categories"), t("etf.browser.dividend_ranking")],
         horizontal=True,
         label_visibility="collapsed",
     )
 
-    if sub_view == "🔥 熱門 ETF":
+    if sub_view == t("etf.browser.hot_etfs"):
         _render_hot_etfs(etf_info, price_df)
-    elif sub_view == "📂 ETF 分類":
+    elif sub_view == t("etf.browser.etf_categories"):
         _render_etf_categories(etf_info, price_df)
-    elif sub_view == "💰 配息排行":
+    elif sub_view == t("etf.browser.dividend_ranking"):
         _render_dividend_ranking(client, etf_info, price_df)
 
 
@@ -125,7 +126,7 @@ def _render_etf_browser(client: FinMindClient):
 
 def _render_hot_etfs(etf_info: pd.DataFrame, price_df: pd.DataFrame):
     """熱門 ETF：取最近一日成交量最高的前 20 檔"""
-    st.markdown("### 🔥 熱門 ETF（依成交量）")
+    st.markdown(f"### {t('etf.browser.hot_etfs_by_volume')}")
 
     # Build candidates from cached price data
     records = []
@@ -144,13 +145,13 @@ def _render_hot_etfs(etf_info: pd.DataFrame, price_df: pd.DataFrame):
             })
 
     if not records:
-        st.info("暫無成交量資料。")
+        st.info(t("etf.browser.no_volume_data"))
         return
 
     df_volume = pd.DataFrame(records).sort_values("trading_volume", ascending=False).head(20)
-    df_volume["排名"] = range(1, len(df_volume) + 1)
+    df_volume[t("etf.browser.rank")] = range(1, len(df_volume) + 1)
 
-    st.markdown("#### 前 20 大熱門 ETF")
+    st.markdown(f"#### {t('etf.browser.top_20_hot')}")
     for _, row in df_volume.iterrows():
         change = row["change"]
         change_pct = row["change_pct"]
@@ -158,7 +159,7 @@ def _render_hot_etfs(etf_info: pd.DataFrame, price_df: pd.DataFrame):
         color = "#E74C3C" if change >= 0 else "#27AE60"  # 紅漲綠跌（台股慣例）
 
         cols = st.columns([0.6, 1, 2, 1.4, 1.4, 1])
-        cols[0].markdown(f"**#{int(row['排名'])}**")
+        cols[0].markdown(f"**#{int(row[t('etf.browser.rank')])}**")
         cols[1].markdown(f"`{row['stock_id']}`")
         cols[2].markdown(row["stock_name"])
         cols[3].markdown(f"{row['close']:,.2f}")
@@ -166,7 +167,7 @@ def _render_hot_etfs(etf_info: pd.DataFrame, price_df: pd.DataFrame):
             f"<span style='color:{color};font-weight:600;'>{sign}{change:,.2f} ({sign}{change_pct:.2f}%)</span>",
             unsafe_allow_html=True,
         )
-        if cols[5].button("查看", key=f"hot_{row['stock_id']}", use_container_width=True):
+        if cols[5].button(t("etf.browser.view"), key=f"hot_{row['stock_id']}", use_container_width=True):
             navigate_to(page="名片", stock_id=row["stock_id"])
 
 
@@ -177,7 +178,13 @@ def _render_hot_etfs(etf_info: pd.DataFrame, price_df: pd.DataFrame):
 # 分類關鍵字（依 stock_name 匹配）
 # 優先順序：先匹配精確/高置信度關鍵字，再匹配通用關鍵字
 ETF_CATEGORY_KEYWORDS = {
-    "高股息型": [
+    t("etf.browser.category.market_cap"): [
+        # 精確匹配
+        "元大台灣50", "富邦台50", "元大台股", "大盤", "加權",
+        # 一般關鍵字
+        "50", "56", "6208", "台灣",
+    ],
+    t("etf.browser.category.high_dividend"): [
         # 精確匹配
         "元大高股息", "國泰永續", "國泰高股息", "元大臺灣高息",
         "富邦高股息", "復華高股息", "凱基優選", "FT臺灣",
@@ -185,14 +192,14 @@ ETF_CATEGORY_KEYWORDS = {
         # 一般關鍵字
         "股息", "高息", "高殖", "股利", "存股", "優息",
     ],
-    "債券型": [
+    t("etf.browser.category.bond"): [
         # 精確匹配
         "國泰美債", "富邦美債", "元大美債", "永豐美債",
         "群益美債", "復華美債", "中信美債", "統一美債",
         # 一般關鍵字
         "債券", "債", "政府債", "公司債", "美債", "投資等級",
     ],
-    "主題型": [
+    t("etf.browser.category.thematic"): [
         # 精確匹配
         "元大全球AI", "國泰AI", "富邦NASDAQ", "元大未來關鍵科技",
         "新光車電", "中信電池", "群益半導體", "富邦半導體",
@@ -200,12 +207,6 @@ ETF_CATEGORY_KEYWORDS = {
         # 一般關鍵字
         "電動車", "AI", "半導體", "5G", "ESG", "生技", "醫療",
         "網安", "資安", "太空", "元宇宙", "電競", "遊戲",
-    ],
-    "市值型": [
-        # 精確匹配（高置信度）
-        "元大台灣50", "富邦台50", "元大台股", "大盤", "加權",
-        # 一般關鍵字
-        "50", "56", "6208", "台灣",
     ],
 }
 
@@ -216,12 +217,12 @@ def _classify_etf(stock_name: str) -> str:
         for kw in keywords:
             if kw in stock_name:
                 return category
-    return "其他"
+    return t("etf.browser.category.other")
 
 
 def _render_etf_categories(etf_info: pd.DataFrame, price_df: pd.DataFrame):
     """ETF 分類：將 ETF 依類型分組，可展開查看"""
-    st.markdown("### 📂 ETF 分類")
+    st.markdown(f"### 📂 {t('etf.browser.categories_title')}")
 
     # 分類所有 ETF
     etf_info = etf_info.copy()
@@ -252,24 +253,30 @@ def _render_etf_categories(etf_info: pd.DataFrame, price_df: pd.DataFrame):
 
     df_cat = pd.DataFrame(etf_with_price)
     if df_cat.empty:
-        st.info("無 ETF 資料可分類。")
+        st.info(t("etf.browser.no_category_data"))
         return
 
     # 分類順序
-    categories = ["市值型", "高股息型", "債券型", "主題型", "其他"]
+    categories = [
+        t("etf.browser.category.market_cap"),
+        t("etf.browser.category.high_dividend"),
+        t("etf.browser.category.bond"),
+        t("etf.browser.category.thematic"),
+        t("etf.browser.category.other"),
+    ]
     category_icons = {
-        "市值型": "🏛️",
-        "高股息型": "💵",
-        "債券型": "📜",
-        "主題型": "🎯",
-        "其他": "📦",
+        t("etf.browser.category.market_cap"): "🏛️",
+        t("etf.browser.category.high_dividend"): "💵",
+        t("etf.browser.category.bond"): "📜",
+        t("etf.browser.category.thematic"): "🎯",
+        t("etf.browser.category.other"): "📦",
     }
     category_descriptions = {
-        "市值型": "追蹤大盤指數，一次買進台灣大型股",
-        "高股息型": "聚焦高配息股票，適合存股領息",
-        "債券型": "投資債券市場，波動相對較低",
-        "主題型": "鎖定特定產業或趨勢主題",
-        "其他": "不屬於以上分類的 ETF",
+        t("etf.browser.category.market_cap"): t("etf.browser.category_desc.market_cap"),
+        t("etf.browser.category.high_dividend"): t("etf.browser.category_desc.high_dividend"),
+        t("etf.browser.category.bond"): t("etf.browser.category_desc.bond"),
+        t("etf.browser.category.thematic"): t("etf.browser.category_desc.thematic"),
+        t("etf.browser.category.other"): t("etf.browser.category_desc.other"),
     }
 
     # 使用 st.expander 顯示各分類
@@ -282,7 +289,7 @@ def _render_etf_categories(etf_info: pd.DataFrame, price_df: pd.DataFrame):
         desc = category_descriptions.get(cat, "")
         count = len(cat_df)
 
-        with st.expander(f"{icon} **{cat}**（{count} 檔）— {desc}", expanded=(cat == "市值型")):
+        with st.expander(f"{icon} **{cat}**（{count} {t('etf.browser.count_etf')}）— {desc}", expanded=(cat == t("etf.browser.category.market_cap"))):
             # 以卡片網格顯示
             cols_per_row = 2
             stock_list = cat_df.reset_index(drop=True)
@@ -299,9 +306,13 @@ def _render_etf_categories(etf_info: pd.DataFrame, price_df: pd.DataFrame):
                     color = "#E74C3C" if change >= 0 else "#27AE60"
 
                     with cols[j]:
-                        _info_card(f"{row['stock_name']} ({row['stock_id']})", f"價格：{row['close']:,.2f}  漲跌：{sign}{change:,.2f} ({sign}{change_pct:.2f}%)", "📊")
+                        _info_card(
+                            f"{row['stock_name']} ({row['stock_id']})",
+                            t("etf.browser.filet.price", price=f"{row['close']:,.2f}") + "  " + t("etf.browser.filet.change", change=f"{sign}{change:,.2f} ({sign}{change_pct:.2f}%)"),
+                            "📊",
+                        )
                         if st.button(
-                            "查看名片",
+                            t("etf.browser.view_business_card"),
                             key=f"cat_{row['stock_id']}",
                             use_container_width=True,
                         ):
@@ -356,14 +367,14 @@ def _fetch_one_dividend(client: FinMindClient, sid: str, stock_name: str, close:
 
 def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, price_df: pd.DataFrame):
     """配息排行：取最近年度股利換算殖利率，排序前 20 檔"""
-    st.markdown("### 💰 配息排行（依殖利率）")
-    st.caption("⏳ 配息排行需取得股利資料，首次載入可能較慢，請耐心等候…")
+    st.markdown(f"### 💰 {t('etf.browser.dividend_ranking_title')}")
+    st.caption(t("etf.browser.dividend_caption"))
 
     etf_dividends = []
     candidate_etfs = etf_info.sort_values("stock_id")
     total = len(candidate_etfs)
 
-    progress = st.progress(0, text="正在取得股利資料…")
+    progress = st.progress(0, text=t("etf.browser.fetching_dividend"))
 
     # Build list of (sid, stock_name, close, change, change_pct) for parallel fetch
     tasks = []
@@ -381,7 +392,7 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
         tasks.append((sid, row.get("stock_name", sid), close, change, change_pct))
 
         if idx % 10 == 0:
-            progress.progress(min((idx + 1) / total, 1.0), text=f"已處理 {idx + 1}/{total} 檔…")
+            progress.progress(min((idx + 1) / total, 1.0), text=t("etf.browser.processed_count", current=idx + 1, total=total))
 
     # Parallelize dividend fetching
     with ThreadPoolExecutor(max_workers=10) as executor:
@@ -397,7 +408,7 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
     progress.empty()
 
     if not etf_dividends:
-        st.info("暫無股利資料。")
+        st.info(t("etf.browser.no_dividend_data"))
         return
 
     df_div = pd.DataFrame(etf_dividends)
@@ -405,12 +416,12 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
     df_div = df_div[df_div["dividend_yield"] > 0].sort_values("dividend_yield", ascending=False).head(20)
 
     if df_div.empty:
-        st.info("目前無配息資料的 ETF。")
+        st.info(t("etf.browser.no_dividend_etf"))
         return
 
-    df_div["排名"] = range(1, len(df_div) + 1)
+    df_div[t("etf.browser.rank")] = range(1, len(df_div) + 1)
 
-    st.markdown("#### 前 20 大配息 ETF")
+    st.markdown(f"#### {t('etf.browser.top_20_dividend')}")
     for _, row in df_div.iterrows():
         change = row["change"]
         change_pct = row["change_pct"]
@@ -418,7 +429,7 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
         color = "#E74C3C" if change >= 0 else "#27AE60"
 
         cols = st.columns([0.6, 1, 1.5, 1, 1, 1.2, 1])
-        cols[0].markdown(f"**#{int(row['排名'])}**")
+        cols[0].markdown(f"**#{int(row[t('etf.browser.rank')])}**")
         cols[1].markdown(f"`{row['stock_id']}`")
         cols[2].markdown(row["stock_name"])
         cols[3].markdown(f"{row['close']:,.2f}")
@@ -430,8 +441,8 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
             f"<span style='color:#3498DB;font-weight:600;'>{row['dividend_yield']:.2f}%</span>",
             unsafe_allow_html=True,
         )
-        if cols[6].button("查看", key=f"div_{row['stock_id']}", use_container_width=True):
+        if cols[6].button(t("etf.browser.view"), key=f"div_{row['stock_id']}", use_container_width=True):
             navigate_to(page="名片", stock_id=row["stock_id"])
 
     # 白話補充
-    _info_card("殖利率小知識", "殖利率 = 年度股利 ÷ 股價 × 100%。\n殖利率越高代表每投入 1 元能領回的現金越多，但高殖利率不等於高報酬，仍需留意 ETF 的追蹤誤差、費用率及折溢價狀況。", "💡")
+    _info_card(t("etf.browser.dividend_yield_knowledge"), t("etf.browser.dividend_yield_content"), "💡")
