@@ -105,7 +105,7 @@
 | ID | 項目 | 優先級 | 說明 |
 |----|------|--------|------|
 | TD-01 | Plugin Chassis 重構 | ✅ 完成 | Phase 1+2 完成，24 頁面全部遷移至 PluginRegistry |
-| TD-02 | i18n 全面化 | P0 | 2,877 處 hardcoded 字串需逐步替換 |
+| TD-02 | i18n 全面化 | P0 | Phase 1 完成（5 大頁面，~300 字串），剩餘 ~42 檔案約 ~1,200 字串 |
 | TD-03 | API 快取修復 | P1 | get_stock_info 全表拉取問題 |
 | TD-04 | business_card.py 拆分 | ✅ 完成 | 已拆分至 business_card/ 子目錄 |
 | TD-05 | 單元測試覆蓋率提升 | P1 | 目前 699 通過但覆蓋不足 |
