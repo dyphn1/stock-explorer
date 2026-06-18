@@ -88,16 +88,45 @@ When the PM is awakened by cron, execute these steps **in order**:
 ### Step 2: Execute Workflow
 Follow the corresponding workflow in Section 4.
 
-### Step 3: Update State
+### Step 3: Update State & Commit
 1. Update `docs/state/handoff.md` with current status
 2. Update `docs/state/current_problems.md` with new/resolved issues
 3. Update `docs/state/pending_review.md` if Daniel review needed
 4. Update `docs/overview/05-roadmap.md` if sprint status changed
+5. **Git commit all changes** — `git add -A && git commit -m "<type>: <summary>"`
+   - Use Angular-style Conventional Commits (feat/fix/refactor/docs/chore/perf)
+   - If nothing changed, skip commit
+6. **Git push** — `git push` to sync to remote
 
 ### Step 4: Document & Compress
 - State file > limit → compress to `docs/adr/` or `docs/overview/`, then truncate
 - Significant decision → create ADR in `docs/adr/`
 - Lesson learned → update relevant role file or `docs/overview/`
+
+### Step 5: Summary Report
+Write a summary to the end of `docs/state/handoff.md`:
+```markdown
+## [Date] Session Summary
+
+### What was done
+- [Task type: Workflow A/B/C/D]
+- [Brief description]
+
+### Roles involved
+- [List of roles that participated]
+
+### Steps executed
+- [Phase 1 → Phase 2 → ...]
+
+### Result
+- ✅ PASS / ❌ FAIL / ⏳ PENDING
+
+### Files changed
+- [List of modified files]
+
+### Next steps
+- [What should happen next]
+```
 
 ---
 
@@ -180,7 +209,16 @@ Phase 6: VERIFICATION (Parallel)
 
 Phase 7: RELEASE
 ════════════════════════════════════════════════════════════
-  PM: Update roadmap, handoff, problems, compress state.
+  PM must complete ALL of the following:
+    1. Update `docs/overview/05-roadmap.md` (mark feature as done)
+    2. Update `docs/state/current_problems.md` (resolve fixed issues)
+    3. Update `docs/state/handoff.md` (write session summary)
+    4. Run `git add -A` → `git commit -m "feat: <feature name>"` → `git push`
+    5. If state files exceed line limits → compress to `docs/adr/`
+    6. If significant decision was made → create ADR in `docs/adr/`
+
+  ⚠️ CRITICAL: Steps 4 (git commit + push) MUST NOT be skipped.
+  If the session is running out of time, commit is the #1 priority.
 ```
 
 ---
@@ -200,6 +238,9 @@ Phase 7: RELEASE
   │ P0 issues found → create problem record → Workflow C     │
   │ All pass → update STATUS.md → done                       │
   └───────────────────────────────────────────────────────────┘
+
+  PM: git add -A → git commit -m "test: <verification summary>" → git push
+  PM: Write session summary to docs/state/handoff.md
 ```
 
 ---
@@ -228,6 +269,9 @@ Phase 7: RELEASE
     └──► DANIEL FEEDBACK (UI/UX):
           UX Designer iterates → User reviews → Daniel re-reviews →
           Developer updates → Design Reviewer verifies → done
+
+  PM: git add -A → git commit -m "fix: <issue summary>" → git push
+  PM: Write session summary to docs/state/handoff.md
 ```
 
 ---
@@ -249,6 +293,8 @@ Phase 7: RELEASE
   └───────────────────────────────────────────────────────────┘
 
   PM: Document ADR, update roadmap, create handoff.
+  PM: git add -A → git commit -m "docs: <research summary>" → git push
+  PM: Write session summary to docs/state/handoff.md
 ```
 
 ---

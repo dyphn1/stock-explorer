@@ -113,15 +113,22 @@ After challenge passes, the PM assigns work to the relevant role:
 - Design review → Designer
 - Verification testing → QA
 
-### Step 5: Summarize and Report
+### Step 5: Summarize, Commit, and Report
 
 After all roles complete their work, the PM is responsible for:
 1. Consolidate all role outputs.
 2. Update `STATUS.md`.
-3. Update `docs/status/issues.md` to remove resolved items.
-4. Update `docs/status/pending_review.md` with items waiting for Daniel's decision.
-5. Commit all changes.
-6. Reply to Daniel with the report.
+3. Update `docs/state/current_problems.md` to remove/resolve fixed items.
+4. Update `docs/state/pending_review.md` with items waiting for Daniel's decision.
+5. Update `docs/state/handoff.md` with session summary.
+6. **Git commit all changes** — `git add -A && git commit -m "<type>: <summary>"`
+   - Use Angular-style Conventional Commits (feat/fix/refactor/docs/chore/perf)
+   - If nothing changed, skip commit
+7. **Git push** — `git push` to sync to remote
+8. Write summary report (what was done, who participated, steps, result, next steps)
+
+⚠️ CRITICAL: Steps 6-7 (git commit + push) MUST NOT be skipped.
+If time is running out, commit + push is the #1 priority.
 
 ---
 
