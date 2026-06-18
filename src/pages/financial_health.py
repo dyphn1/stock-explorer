@@ -19,7 +19,7 @@ from src.services.dividend_analyzer import extract_dividend_summary
 from src.pages._router_base import filter_by_timeline, _section_title, _白话_card, _info_card
 from src.services.financial_metrics import find_financial_value
 from src.pages.timeline_controls import render_timeline_selector
-from src.core.i18n import format_amount, format_percent
+from src.core.i18n import t, format_amount, format_percent
 
 
 def _render_financial_health(data: dict):
@@ -32,8 +32,8 @@ def _render_financial_health(data: dict):
     latest_per_pbr = data["latest_per_pbr"]
     dividend = data.get("dividend")
 
-    st.markdown(f"## 💪 財務體質 — {stock_name}")
-    st.markdown(f"*賺多少？花多少？剩多少？*")
+    st.markdown(f"## 💪 {t('page.financial_health')} — {stock_name}")
+    st.markdown(f"*{t('financial.health.subtitle')}*")
     st.markdown("---")
 
     # ── M3: 時間軸選擇器 ──────────────────────────────
@@ -41,7 +41,7 @@ def _render_financial_health(data: dict):
     st.markdown("---")
 
     # ── 1. 利潤漏斗 ──────────────────────────────────
-    _section_title("利潤漏斗：錢從哪裡來、往哪裡去？")
+    _section_title(t("financial.health.profit_funnel"))
 
     # 從損益表提取數據
     revenue = 0
@@ -64,39 +64,39 @@ def _render_financial_health(data: dict):
 
     if revenue > 0:
         fig = create_funnel_chart(revenue, gross_profit, operating_income, net_income,
-                                  f"{stock_name} 利潤漏斗")
+                                  f"{stock_name} {t('financial.health.profit_funnel')}")
         st.plotly_chart(fig, use_container_width=True)
 
         # 漏斗白話解釋
         if gross_profit > 0 and net_income > 0:
             margin_pct = net_income / revenue * 100
-            _info_card("淨利率", f"{margin_pct:.1f}% — 每 100 元營收賺 {margin_pct:.1f} 元", "💰")
+            _info_card(t("metric.net_margin"), t("financial.health.net_margin_explain", margin_pct=f"{margin_pct:.1f}"), "💰")
     else:
-        st.info("暫無損益表資料，無法生成利潤漏斗")
+        st.info(t("financial.health.no_financial_data"))
 
     st.markdown("---")
 
     # ── 2. 關鍵財務比率 ──────────────────────────────
-    _section_title("關鍵財務比率：這家公司健不健康？")
+    _section_title(t("financial.health.key_ratios"))
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
         gm = extra_metrics.get("gross_margin")
         if gm is not None:
-            _白话_card("毛利率", f"{gm:.1f}%", get_gross_margin_analogy(gm))
+            _白话_card(t("metric.gross_margin"), f"{gm:.1f}%", get_gross_margin_analogy(gm))
         else:
-            _白话_card("毛利率", "資料不足", "從損益表計算中")
+            _白话_card(t("metric.gross_margin"), t("financial.health.data_insufficient"), t("financial.health.calculating_from"))
 
         om = extra_metrics.get("operating_margin")
         if om is not None:
-            _白话_card("營業利益率", f"{om:.1f}%",
-                       f"每 100 元營收，扣掉成本和營業費用後賺 {om:.1f} 元")
+            _白话_card(t("metric.operating_margin"), f"{om:.1f}%",
+                       t("financial.health.operating_margin_explain", om=f"{om:.1f}"))
 
         nm = extra_metrics.get("net_margin")
         if nm is not None:
-            _白话_card("淨利率", f"{nm:.1f}%",
-                       f"每 100 元營收，最終賺進 {nm:.1f} 元")
+            _白话_card(t("metric.net_margin"), f"{nm:.1f}%",
+                       t("financial.health.net_margin_explain2", nm=f"{nm:.1f}"))
 
     with col2:
         # ROE
@@ -107,44 +107,44 @@ def _render_financial_health(data: dict):
         if roe_result is not None:
             roe = roe_result["roe"]
             method = roe_result["method"]
-            label = "ROE（近4季）" if method == "TTM" else f"ROE（{method}）"
+            label = t("financial.health.roe_ttm") if method == "TTM" else t("financial.health.roe_method", method=method)
             analogy = get_roe_analogy(roe)
             if is_seasonal_industry(industry):
                 if method != "TTM":
-                    analogy = f"⚠ {method}數據，此產業具明顯季節性 — {analogy}"
+                    analogy = t("financial.health.seasonal_warning", method=method) + " — " + analogy
                 else:
-                    analogy = f"⚠ 此產業具明顯季節性，ROE 波動大 — {analogy}"
+                    analogy = t("financial.health.seasonal_warning2") + " — " + analogy
             _白话_card(label, f"{roe:.1f}%", analogy)
         else:
-            _白话_card("ROE", "資料不足", "股東權益報酬率")
+            _白话_card(t("metric.roe"), t("financial.health.data_insufficient"), t("financial.health.roe_desc"))
 
         # 負債比
         debt = extra_metrics.get("debt_ratio")
         if debt is not None:
-            _白话_card("負債比", f"{debt:.1f}%", get_debt_ratio_analogy(debt))
+            _白话_card(t("metric.debt_ratio"), f"{debt:.1f}%", get_debt_ratio_analogy(debt))
         else:
-            _白话_card("負債比", "資料不足", "從資產負債表計算中")
+            _白话_card(t("metric.debt_ratio"), t("financial.health.data_insufficient"), t("financial.health.calculating_from_bs"))
 
         # 淨值比
         if latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
-            _白话_card("淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr))
+            _白话_card(t("financial.health.pbr_label"), f"{pbr:.2f}", get_pbr_analogy(pbr))
 
     with col3:
         # PER
         if latest_per_pbr and latest_per_pbr.get("PER"):
             per = latest_per_pbr["PER"]
-            _白话_card("本益比 (PER)", f"{per:.1f}", get_per_analogy(per))
+            _白话_card(t("financial.health.per_label"), f"{per:.1f}", get_per_analogy(per))
 
         # 殖利率
         if latest_per_pbr and latest_per_pbr.get("dividend_yield"):
             dy = latest_per_pbr["dividend_yield"]
-            _白话_card("殖利率", f"{dy:.2f}%", get_dividend_analogy(dy))
+            _白话_card(t("metric.dividend_yield"), f"{dy:.2f}%", get_dividend_analogy(dy))
 
     st.markdown("---")
 
     # ── 3. 資產負債結構 ──────────────────────────────
-    _section_title("資產負債結構：公司家底有多厚？")
+    _section_title(t("financial.health.balance_structure"))
 
     if balance_sheet is not None and len(balance_sheet) > 0:
         filtered_balance = filter_by_timeline(balance_sheet, date_col="date")
@@ -159,38 +159,38 @@ def _render_financial_health(data: dict):
             if total_assets > 0:
                 col1, col2, col3 = st.columns(3)
                 with col1:
-                    _白话_card("總資產", f"{total_assets/1e8:,.0f} 億",
-                               f"公司名下所有財產，相當於 {total_assets/1e8/1000:.1f} 個 1000 億")
+                    _白话_card(t("metric.total_assets"), f"{total_assets/1e8:,.0f} {t('unit.hundred_million')}",
+                               t("financial.health.assets_explain", assets=f"{total_assets/1e8/1000:.1f}"))
                 with col2:
-                    _白话_card("總負債", f"{total_liabilities/1e8:,.0f} 億",
-                               f"公司欠別人的錢，佔資產的 {total_liabilities/total_assets*100:.1f}%")
+                    _白话_card(t("metric.total_liabilities"), f"{total_liabilities/1e8:,.0f} {t('unit.hundred_million')}",
+                               t("financial.health.liabilities_explain", pct=f"{total_liabilities/total_assets*100:.1f}"))
                 with col3:
-                    _白话_card("股東權益", f"{total_equity/1e8:,.0f} 億",
-                               f"真正屬於股東的錢，資產扣除負債後的剩餘")
+                    _白话_card(t("metric.total_equity"), f"{total_equity/1e8:,.0f} {t('unit.hundred_million')}",
+                               t("financial.health.equity_explain"))
 
                 # 財務體質評估
                 debt_ratio = total_liabilities / total_assets * 100 if total_assets > 0 else 0
                 if debt_ratio >= 70:
-                    health = "⚠️ 負債比較高，要注意償債能力"
+                    health = t("financial.health.debt_high")
                 elif debt_ratio >= 50:
-                    health = "📊 負債比適中，屬於正常範圍"
+                    health = t("financial.health.debt_medium")
                 elif debt_ratio >= 30:
-                    health = "✅ 財務結構穩健，負債比偏低"
+                    health = t("financial.health.debt_low")
                 else:
-                    health = "✅ 幾乎不借錢，財務非常保守"
+                    health = t("financial.health.debt_very_low")
 
-                _info_card("財務體質評估", f"{health}\n\n負債比 {debt_ratio:.1f}%", "🏥")
+                _info_card(t("financial.health.health_assessment"), f"{health}\n\n{t('metric.debt_ratio')} {debt_ratio:.1f}%", "🏥")
             else:
-                st.info("資產負債表資料不完整")
+                st.info(t("financial.health.balance_incomplete"))
         except Exception:
-            st.info("無法解析資產負債表")
+            st.info(t("financial.health.balance_parse_error"))
     else:
-        st.info("暫無資產負債表資料")
+        st.info(t("financial.health.no_balance_data"))
 
     st.markdown("---")
 
     # ── 4. 現金流量 ──────────────────────────────────
-    _section_title("現金流量：公司真的有在賺錢嗎？")
+    _section_title(t("financial.health.cash_flow"))
 
     if cash_flow is not None and len(cash_flow) > 0:
         filtered_cashflow = filter_by_timeline(cash_flow, date_col="date")
@@ -205,33 +205,33 @@ def _render_financial_health(data: dict):
             col1, col2, col3 = st.columns(3)
             with col1:
                 sign = "+" if operating_cf >= 0 else ""
-                _白话_card("營業現金流", f"{sign}{operating_cf/1e8:,.0f} 億",
-                           "⬆ 本業賺錢" if operating_cf >= 0 else "⬇ 本業燒錢")
+                _白话_card(t("metric.operating_cash_flow"), f"{sign}{operating_cf/1e8:,.0f} {t('unit.hundred_million')}",
+                           t("financial.health.operating_cf_pos") if operating_cf >= 0 else t("financial.health.operating_cf_neg"))
             with col2:
                 sign = "+" if investing_cf >= 0 else ""
-                _白话_card("投資現金流", f"{sign}{investing_cf/1e8:,.0f} 億",
-                           "⬆ 回收投資" if investing_cf >= 0 else "⬇ 擴大投資")
+                _白话_card(t("metric.investing_cash_flow"), f"{sign}{investing_cf/1e8:,.0f} {t('unit.hundred_million')}",
+                           t("financial.health.investing_cf_pos") if investing_cf >= 0 else t("financial.health.investing_cf_neg"))
             with col3:
                 sign = "+" if financing_cf >= 0 else ""
-                _白话_card("籌資現金流", f"{sign}{financing_cf/1e8:,.0f} 億",
-                           "⬆ 借錢或增資" if financing_cf >= 0 else "⬇ 還錢或配息")
+                _白话_card(t("metric.financing_cash_flow"), f"{sign}{financing_cf/1e8:,.0f} {t('unit.hundred_million')}",
+                           t("financial.health.financing_cf_pos") if financing_cf >= 0 else t("financial.health.financing_cf_neg"))
 
             # 現金流解讀
             if operating_cf > 0 and investing_cf < 0:
-                _info_card("現金流解讀", "本業賺錢＋投資擴廠 → 健康成長", "💵")
+                _info_card(t("financial.health.cash_flow_reading"), t("financial.health.cash_flow_growth"), "💵")
             elif operating_cf > 0 and investing_cf > 0:
-                _info_card("現金流解讀", "本業賺錢＋回收投資 → 成熟穩定", "💵")
+                _info_card(t("financial.health.cash_flow_reading"), t("financial.health.cash_flow_mature"), "💵")
             elif operating_cf < 0:
-                _info_card("現金流解讀", "本業燒錢，關注資金支撐", "⚠️")
+                _info_card(t("financial.health.cash_flow_reading"), t("financial.health.cash_flow_warning"), "⚠️")
         except Exception:
-            st.info("無法解析現金流量表")
+            st.info(t("financial.health.cashflow_parse_error"))
     else:
-        st.info("暫無現金流量表資料")
+        st.info(t("financial.health.no_cashflow_data"))
 
     st.markdown("---")
 
     # ── 5. 股利指標 ──────────────────────────────────
-    _section_title("股利指標：這家公司有分紅嗎？")
+    _section_title(t("financial.health.dividend_section"))
 
     current_price = None
     if latest_per_pbr and latest_per_pbr.get("price"):
@@ -243,25 +243,25 @@ def _render_financial_health(data: dict):
         col1, col2, col3 = st.columns(3)
         with col1:
             latest_div = div_summary["latest_cash_div"]
-            _白话_card("最近配息", f"{latest_div} 元" if latest_div else "—",
-                       "每股現金股利")
+            _白话_card(t("financial.health.latest_dividend"), f"{latest_div} {t('unit.yuan')}" if latest_div else "—",
+                       t("financial.health.cash_dividend_per_share"))
         with col2:
             est_annual = div_summary["estimated_annual"]
-            annual_str = f"{est_annual} 元" if est_annual else "—"
-            est_label = "預估年化" if div_summary.get("is_estimated") else "年度配息"
-            hint = "預估全年配息（基於近年資料推算）" if div_summary.get("is_estimated") else "最近一年實際配息"
+            annual_str = f"{est_annual} {t('unit.yuan')}" if est_annual else "—"
+            est_label = t("financial.health.estimated_annual") if div_summary.get("is_estimated") else t("financial.health.annual_dividend")
+            hint = t("financial.health.estimated_hint") if div_summary.get("is_estimated") else t("financial.health.actual_hint")
             _白话_card(est_label, annual_str, hint)
         with col3:
             est_yield = div_summary["estimated_yield"]
-            yield_label = "預估殖利率" if div_summary.get("is_estimated") else "殖利率"
+            yield_label = t("financial.health.estimated_yield") if div_summary.get("is_estimated") else t("metric.dividend_yield")
             _白话_card(yield_label, f"{est_yield}%" if est_yield else "—",
-                       "年化股利／股價")
+                       t("financial.health.yield_calc"))
 
         freq_label = {
-            "quarterly": "季配",
-            "annual": "年配",
-            "irregular": "不穩定",
+            "quarterly": t("dividend.frequency_quarterly"),
+            "annual": t("dividend.frequency_annual"),
+            "irregular": t("dividend.frequency_irregular"),
         }.get(div_summary["frequency"], "—")
-        _info_card("配息頻率", f"{freq_label} — {div_summary['plain_summary']}", "🎁")
+        _info_card(t("financial.health.dividend_frequency"), f"{freq_label} — {div_summary['plain_summary']}", "🎁")
     else:
-        _info_card("股利資料", div_summary["plain_summary"], "🎁")
+        _info_card(t("dividend.summary"), div_summary["plain_summary"], "🎁")

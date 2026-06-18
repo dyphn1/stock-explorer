@@ -604,3 +604,57 @@ etf:
     filet:
       price: "價格：{price}"
       change: "漲跌：{change}"
+financial:
+  health:
+    subtitle: 用生活化比喻理解財務數據
+    profit_funnel: 利潤漏斗
+    net_margin_explain: 「每 100 元營收，最終有 {margin_pct} 元變成淨利」
+    no_financial_data: 暫無損益表資料
+    key_ratios: 關鍵財務比率
+    data_insufficient: 資料不足
+    calculating_from: 正在從損益表計算中...
+    operating_margin_explain: 「營業利益率 {om}% — 扣掉營運成本後剩餘的利潤」
+    net_margin_explain2: 「淨利率 {nm}% — 扣掉所有費用和稅後，真正留下的利潤」
+    roe_ttm: ROE（近四季）
+    roe_method: ROE（{method}）
+    seasonal_warning: ⚠️ 景氣循環產業，{method} 可能失真 — 建議參考 TTM
+    seasonal_warning2: ⚠️ 景氣循環產業，單季數字可能失真
+    roe_desc: 股東權益報酬率 — 公司用股東的錢賺錢的效率
+    calculating_from_bs: 正在從資產負債表計算中...
+    pbr_label: 淨值比（PBR）
+    per_label: 本益比（PER）
+    balance_structure: 資產負債結構
+    assets_explain: 「總資產 {assets} 千億 — 公司擁有的全部資源」
+    liabilities_explain: 「負債佔資產 {pct}% — 公司欠別人的錢」
+    equity_explain: 股東權益 — 真正屬於股東的部分
+    debt_high: "⚠️ 負債比偏高 — 財務風險較高，需留意償債能力"
+    debt_medium: "負債比適中 — 適度運用槓桿，風險尚可"
+    debt_low: "負債比偏低 — 財務結構穩健，安全邊際充足"
+    debt_very_low: "負債比極低 — 幾乎不借錢，偏向保守或投資機會有限"
+    health_assessment: 財務體質評估
+    balance_incomplete: 資產負債表資料不完整，無法解析
+    balance_parse_error: 解析資產負債表資料時發生錯誤
+    no_balance_data: 暫無資產負債表資料
+    cash_flow: 現金流量
+    operating_cf_pos: 營業現金流為正 — 本業有在賺錢，現金流入
+    operating_cf_neg: 營業現金流為負 — 本業都在燒錢
+    investing_cf_pos: 投資現金流為正 — 變賣資產或收到投資收益
+    investing_cf_neg: 投資現金流為負 — 正在投資未來
+    financing_cf_pos: 籌資現金流為正 — 借錢或發行新股
+    financing_cf_neg: 籌資現金流為負 — 還錢或配發股利
+    cash_flow_reading: 現金流解讀
+    cash_flow_growth: 「營業為正 + 投資為負 = 用本業賺的錢扩张，典型的成長型企業」
+    cash_flow_mature: 「營業為正 + 投資為正 = 成熟型企業，不需要大幅投資」
+    cash_flow_warning: 營業現金流為負 — 本業獲利能力需要關注
+    cashflow_parse_error: 解析現金流量資料時發生錯誤
+    no_cashflow_data: 暫無現金流量資料
+    dividend_section: 股利指標
+    latest_dividend: 最近一次現金股利
+    cash_dividend_per_share: 每股現金股利（元）
+    estimated_annual: 預估全年配息
+    annual_dividend: 年度配息
+    estimated_hint: 根據最近一次配息預估，實際可能不同
+    actual_hint: 根據實際公告的配息金額
+    estimated_yield: 預估殖利率
+    yield_calc: 預估殖利率 = 年度股利 ÷ 目前股價 × 100%
+    dividend_frequency: 配息頻率

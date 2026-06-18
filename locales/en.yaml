@@ -855,3 +855,57 @@ etf:
     filet:
       price: "Price: {price}"
       change: "Change: {change}"
+financial:
+  health:
+    subtitle: Understand financial data through everyday analogies
+    profit_funnel: Profit Funnel
+    net_margin_explain: "Out of every 100 dollars of revenue, {margin_pct} dollars end up as net profit."
+    no_financial_data: No financial data available
+    key_ratios: Key Financial Ratios
+    data_insufficient: Data insufficient
+    calculating_from: Calculating from income statement...
+    operating_margin_explain: "Operating margin {om}% — profit left after operating expenses"
+    net_margin_explain2: "Net margin {nm}% — profit left after all expenses and taxes"
+    roe_ttm: ROE (TTM)
+    roe_method: ROE ({method})
+    seasonal_warning: "⚠️ Seasonal industry, {method} may be distorted — refer to TTM"
+    seasonal_warning2: "⚠️ Seasonal industry, single-quarter figures may be distorted"
+    roe_desc: Return on Equity — how efficiently the company uses shareholder capital
+    calculating_from_bs: Calculating from balance sheet...
+    pbr_label: Price-to-Book Ratio (PBR)
+    per_label: Price-to-Earnings Ratio (PER)
+    balance_structure: Balance Sheet Structure
+    assets_explain: "Total assets {assets} trillion — the company's full resource base"
+    liabilities_explain: "Liabilities represent {pct}% of assets — the company's obligations"
+    equity_explain: Shareholders' equity — the portion truly belonging to shareholders
+    debt_high: "⚠️ High debt ratio — financial risk is elevated, proceed with caution"
+    debt_medium: "Moderate debt ratio — using leverage to amplify returns, manageable risk"
+    debt_low: "Low debt ratio — solid financial structure with ample safety margin"
+    debt_very_low: "Very low debt ratio — minimal borrowing, very conservative or limited growth investment"
+    health_assessment: Financial Health Assessment
+    balance_incomplete: Balance sheet data incomplete, unable to parse
+    balance_parse_error: Error parsing balance sheet data
+    no_balance_data: No balance sheet data available
+    cash_flow: Cash Flow
+    operating_cf_pos: Positive operating cash flow — core business is generating cash
+    operating_cf_neg: Negative operating cash flow — core business is burning cash
+    investing_cf_pos: Positive investing cash flow — selling assets or receiving investment income
+    investing_cf_neg: Negative investing cash flow — investing in future growth
+    financing_cf_pos: Positive financing cash flow — borrowing or issuing shares
+    financing_cf_neg: Negative financing cash flow — repaying debt or paying dividends
+    cash_flow_reading: Cash Flow Reading
+    cash_flow_growth: "Operating positive + Investing negative — classic growth pattern: expanding with its own cash"
+    cash_flow_mature: "Operating positive + Investing positive — mature business, no longer heavily investing"
+    cash_flow_warning: Negative operating cash flow — core business profitability needs attention
+    cashflow_parse_error: Error parsing cash flow data
+    no_cashflow_data: No cash flow data available
+    dividend_section: Dividend Metrics
+    latest_dividend: Latest Cash Dividend
+    cash_dividend_per_share: Cash dividend per share (TWD)
+    estimated_annual: Estimated Annual Dividend
+    annual_dividend: Annual Dividend
+    estimated_hint: Estimated based on latest payout, actual may differ
+    actual_hint: Based on actual announced dividend amount
+    estimated_yield: Estimated Yield
+    yield_calc: Estimated yield = annual dividend ÷ current price × 100%
+    dividend_frequency: Dividend Frequency
