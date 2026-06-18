@@ -855,6 +855,124 @@ etf:
     filet:
       price: "Price: {price}"
       change: "Change: {change}"
+group:
+  structure:
+    subtitle: Understand the relationships within a corporate group
+    about_title: What is a Corporate Group?
+    about_content: A corporate group (or "group") is a collection of companies connected through shareholding relationships. The parent company controls subsidiaries through majority ownership, forming an integrated business entity. This page displays subsidiaries with >50% ownership or >10% revenue contribution.
+    overview: Group Overview
+    member_count: "{count} major members"
+    parent: Parent Company
+    members: Subsidiaries (Point-to-Point)
+    controlled: Controlled
+    major_investment: Major Investment
+    general_investment: General Investment
+    chart_title: Group Structure Chart
+    chart_company: Company
+    chart_holding: Holding %
+    chart_revenue: Revenue Contribution %
+    chart_reading: How to Read This Chart
+    chart_reading_content: Blue bars represent shareholding percentage; green bars represent revenue contribution percentage. Comparing the two shows the importance of each subsidiary to the group.
+    strategy: Group Strategy Interpretation
+    core_control: "{names} are core controlled businesses, playing a central role in the group's operations."
+    strategic_investment: "{names} are strategically invested companies, representing key expansion directions."
+    financial_investment: "{names} are financial investments, maintained at a portfolio level."
+    revenue_concentrated: "Revenue is highly concentrated; the parent's performance heavily depends on a few core subsidiaries."
+    revenue_balanced: "Revenue is moderately balanced across multiple subsidiaries, diversifying risk."
+    revenue_dispersed: "Revenue is dispersed; each subsidiary contributes a smaller share, indicating a diversified investment portfolio."
+    strategy_reading: How to Interpret Group Strategy
+    strategy_reading_content: "A group's investment strategy can be understood through holding ratios and revenue distribution. High-holding subsidiaries represent the core business, while low-holding, high-revenue subsidiaries indicate strategic ecosystem investments."
+    no_data: No group structure data available for {name}.
+    tsmc:
+      desc: World's largest dedicated semiconductor foundry
+      sub:
+        china:
+          name: TSMC China
+          business: 8-inch wafer manufacturing in China
+          relation: Manufacturing base for the China market
+        usa:
+          name: TSMC Arizona
+          business: Advanced process wafer manufacturing in the US
+          relation: Strategic presence in the US market
+        vis:
+          name: VIS (Vanguard International Semiconductor)
+          business: Specialty foundry and memory
+          relation: Minority investment in specialty foundry, supporting upstream supply chain
+        ssmc:
+          name: SSMC (Systems on Silicon Manufacturing)
+          business: Mixed-signal and RF chip manufacturing
+          relation: Joint venture providing specialty process capacity
+    foxconn:
+      desc: World's largest electronics contract manufacturer
+      sub:
+        fii:
+          name: Foxconn Industrial Internet (FII)
+          business: Smart manufacturing and industrial automation equipment
+          relation: Core subsidiary driving Foxconn's transformation into smart manufacturing
+        fhg:
+          name: Foxconn Technology Group (Foxhom)
+          business: Consumer electronics assembly and precision components
+          relation: Core assembly business, the main revenue driver
+        sharp:
+          name: Sharp Corporation
+          business: Consumer electronics and display panels
+          relation: Acquired to obtain display technology and brand presence
+        enspire:
+          name: Enspire
+          business: Cloud computing and AI server solutions
+          relation: Investing in high-growth AI and cloud computing sectors
+    fubon:
+      parent: Fubon Financial Holding
+      desc: Leading financial holding company in Taiwan
+      sub:
+        life:
+          name: Fubon Life
+          business: Life insurance and financial planning
+          relation: Largest revenue contributor, core business of the financial group
+        bank:
+          name: Fubon Bank
+          business: Commercial banking and consumer finance
+          relation: Banking arm, providing integrated financial services
+        securities:
+          name: Fubon Securities
+          business: Brokerage and investment banking
+          relation: Securities arm, serving capital market needs
+        property:
+          name: Fubon Property & Casualty
+          business: Property and casualty insurance
+          relation: Non-life insurance subsidiary, complementing the financial ecosystem
+    fp:
+      parent: Formosa Plastics Group
+      desc: Taiwan's largest petrochemical conglomerate
+      sub:
+        nanya:
+          name: Nanya Technology
+          business: DRAM memory manufacturing
+          relation: Key investment in the semiconductor memory sector
+        fpcc:
+          name: Formosa Plastics Corp.
+          business: Petrochemical and plastics manufacturing
+          relation: Core business, the main revenue driver of the group
+        fcfc:
+          name: Formosa Chemicals & Fibre
+          business: Chemical fiber and petrochemical products
+          relation: Midstream/downstream petrochemical production
+    tcc:
+      parent: Taiwan Cement Group
+      desc: Taiwan's leading cement and building materials conglomerate
+      sub:
+        intl:
+          name: TCC International Holdings
+          business: Cement operations in mainland China and overseas markets
+          relation: Key platform for international expansion
+        power:
+          name: TCC Green Energy
+          business: Renewable energy and power generation
+          relation: Energy subsidiary driving green transformation
+        dahe:
+          name: Dahe Environmental Services
+          business: Waste treatment and environmental services
+          relation: Environmental services arm supporting sustainable operations
 financial:
   health:
     subtitle: Understand financial data through everyday analogies

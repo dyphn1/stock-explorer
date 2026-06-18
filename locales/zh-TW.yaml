@@ -604,9 +604,127 @@ etf:
     filet:
       price: "價格：{price}"
       change: "漲跌：{change}"
+group:
+  structure:
+    subtitle: 認識集團內部的關係（點對點）
+    about_title: 什麼是集團？
+    about_content: 集團（Corporate Group）是由多家公司透過持股關係連結而成的企業集合。母公司透過持股過半控制子公司，形成一個整合的商業實體。本頁面顯示持股 > 50% 或營收貢獻 > 10% 的子公司。
+    overview: 集團總覽
+    member_count: "{count} 個主要成員"
+    parent: 母公司
+    members: 子公司列表（點對點）
+    controlled: 控制持股
+    major_investment: 重大投資
+    general_investment: 一般投資
+    chart_title: 集團關係圖
+    chart_company: 公司
+    chart_holding: 持股比例 %
+    chart_revenue: 營收貢獻 %
+    chart_reading: 圖表怎麼看
+    chart_reading_content: 藍色長條代表持股比例，綠色長條代表營收貢獻比例。兩者比較可以看出各子公司對集團的重要性。
+    strategy: 集團策略解讀
+    core_control: "{names} 為核心控制業務，在集團運作中扮演關鍵角色。"
+    strategic_investment: "{names} 為策略性投資的公司，代表重要的擴展方向。"
+    financial_investment: "{names} 為財務性投資，以投資組合方式持有。"
+    revenue_concentrated: "營收高度集中，母公司的表現高度依賴少數核心子公司。"
+    revenue_balanced: "營收分布較為均衡，分散在多個子公司，風險較為分散。"
+    revenue_dispersed: "營收分散，各子公司貢獻比例較小，屬於多元投資布局。"
+    strategy_reading: 集團策略怎麼看
+    strategy_reading_content: "從持股比例和營收分布可以理解集團的投資策略。高持股的子公司代表核心業務，而低持股但高營收的子公司則代表策略性的生態系投資。"
+    no_data: 目前沒有 {name} 的集團架構資料。
+    tsmc:
+      desc: 全球最大的專業晶圓代工廠
+      sub:
+        china:
+          name: 台積電中國
+          business: 中國 8 吋晶圓製造
+          relation: 中國市場的生產基地
+        usa:
+          name: 台積電亞利桑那
+          business: 美國先進製程晶圓製造
+          relation: 美國市場的戰略布局
+        vis:
+          name: 世界先進（VIS）
+          business: 特殊製程晶圓代工與記憶體
+          relation: 投資特殊製程代工廠，支援上游供應鏈
+        ssmc:
+          name: 系統半導體製造（SSMC）
+          business: 混合訊號與射頻晶片製造
+          relation: 合資企業提供特殊製程產能
+    foxconn:
+      desc: 全球最大的電子專業代工製造服務商
+      sub:
+        fii:
+          name: 工業富聯（FII）
+          business: 智慧製造與工業自動化設備
+          relation: 推動鴻海轉型智慧製造的核心子公司
+        fhg:
+          name: 鴻海科技集團（鴻準）
+          business: 消費性電子組裝與精密零組件
+          relation: 核心組裝業務，主要營收來源
+        sharp:
+          name: 夏普（Sharp）
+          business: 消費性電子與顯示面板
+          relation: 併購以取得顯示技術與品牌通路
+        enspire:
+          name: 鴻雲科技
+          business: 雲端運算與 AI 伺服器解決方案
+          relation: 投資高成長的 AI 與雲端運算領域
+    fubon:
+      parent: 富邦金控
+      desc: 台灣領先的金融控股公司
+      sub:
+        life:
+          name: 富邦人壽
+          business: 人壽保險與理財規劃
+          relation: 最大營收來源，金融集團核心業務
+        bank:
+          name: 富邦銀行
+          business: 商業銀行與消費金融
+          relation: 銀行端，提供整合金融服務
+        securities:
+          name: 富邦證券
+          business: 經紀業務與投資銀行
+          relation: 證券端，服務資本市場需求
+        property:
+          name: 富邦產險
+          business: 產物保險
+          relation: 非人壽保險子公司，完善金融生態系
+    fp:
+      parent: 台塑集團
+      desc: 台灣最大的石化集團
+      sub:
+        nanya:
+          name: 南亞科技
+          business: DRAM 記憶體製造
+          relation: 投資半導體記憶體產業的重要布局
+        fpcc:
+          name: 台塑石化
+          business: 石化與塑膠製造
+          relation: 核心業務，集團主要營收來源
+        fcfc:
+          name: 台化纖
+          business: 化學纖維與石化產品
+          relation: 中下游石化生產
+    tcc:
+      parent: 台泥集團
+      desc: 台灣最大的水泥與建材集團
+      sub:
+        intl:
+          name: 台泥國際
+          business: 中國大陸與海外水泥營運
+          relation: 國際化擴展的重要平台
+        power:
+          name: 台泥綠能
+          business: 再生能源與發電
+          relation: 能源子公司推動綠色轉型
+        dahe:
+          name: 達和環保服務
+          business: 廢棄物處理與環保服務
+          relation: 環保服務支援永續營運
 financial:
   health:
-    subtitle: 用生活化比喻理解財務數據
+    subtitle: 用生活化的方式理解財務數據
     profit_funnel: 利潤漏斗
     net_margin_explain: 「每 100 元營收，最終有 {margin_pct} 元變成淨利」
     no_financial_data: 暫無損益表資料
