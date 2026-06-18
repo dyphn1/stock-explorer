@@ -8,24 +8,25 @@ from src.services.analogy_engine import (
     get_per_analogy,
     get_dividend_analogy,
     get_gross_margin_analogy,
-    get_revenue_analogy,
-    get_yoy_analogy,
-    get_roe_analogy,
-    get_pbr_analogy,
+    get_revenue_analyzer,
+    get_yoy_analyzer,
+    get_roe_analyzer,
+    get_pbr_analyzer,
 )
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.metric_education import get_metric_explanation, get_top_metrics_for_education
 from src.pages._router_base import _白话_card, _info_card, _glossary_tooltip, _confidence_badge, _section_title_with_read_time
 from src.services import glossary_service
+from src.core.i18n import t
 
 
 # Mapping from metric_name to glossary term key for D-079 merged popover
 _METRIC_GLOSSARY_MAP: dict[str, str] = {
     "PER": "本益比",
-    "gross_margin": "毛利率",
+    "gross_margin": t("metric_gross_margin_label"),
     "revenue_yoy": "營收年增率",
-    "ROE": "ROE",
-    "dividend_yield": "殖利率",
+    t("metric_roe_label"): t("metric_roe_label"),
+    "dividend_yield": t("metric_dividend_yield_label"),
     "PBR": "淨值比",
 }
 
@@ -40,54 +41,56 @@ def _render_metric_popover(label: str, value: str, analogy: str, metric_name: st
     with col_card:
         _白话_card(label, value, analogy)
     with col_help:
-        with st.popover("❓", key=popover_key, help="點擊了解這個指標"):
+        with st.popover("❓", key=popover_key, help=t("metric_popover_help")):
             edu = get_metric_explanation(metric_name, metric_value, stock_id)
             glossary_key = _METRIC_GLOSSARY_MAP.get(metric_name)
             glossary_term = glossary_service.get_glossary_term(glossary_key) if glossary_key else None
 
-            st.markdown(f"### 📖 {edu['display_name']} 是什麼？")
-            st.markdown(f"**數值：{metric_value:.2f} {edu['unit']}**")
+            st.markdown(f"### 📖 {t('metric_popover_title', name=edu['display_name'])}")
+            st.markdown(f"**{t('metric_popover_value_label')}: {metric_value:.2f} {edu['unit']}**")
             st.markdown("---")
 
             # ── Glossary definition (D-079: merged from separate _glossary_tooltip) ──
             if glossary_term:
-                st.markdown(f"**📖 名詞解釋**\n\n_{glossary_term.get('plain', '')}_")
+                st.markdown(f"**{t('metric_popover_glossary_title')}**\n\n_{glossary_term.get('plain', '')}_")
                 if glossary_term.get("analogy"):
-                    st.markdown(f"**🌰 名詞比喻**\n\n{glossary_term['analogy']}")
+                    st.markdown(f"**{t('metric_popover_analogy_title')}**\n\n{glossary_term['analogy']}")
                 if glossary_term.get("example"):
                     st.markdown(f"**📌 例子**\n\n{glossary_term['example']}")
                 st.markdown("---")
 
-            st.markdown(f"**💡 白話解釋**\n\n{edu['explanation']}")
-            st.markdown(f"**🏠 生活比喻**\n\n{edu['analogy']}")
-            direction = "⬆️ 越高越好" if edu["is_higher_better"] else "⬇️ 越低越好"
-            st.markdown(f"**📊 方向**\n\n{direction}")
-            st.markdown(f"**📚 進階背景**\n\n{edu['historical_context']}")
+            st.markdown(f"**{t('metric_popover_explanation_title')}**\n\n{edu['explanation']}")
+            st.markdown(f"**{t('metric_popover_analogy_label')}**\n\n{edu['analogy']}")
+            direction = t("metric_popover_higher_better") if edu["is_higher_better"] else t("metric_popover_lower_better")
+            direction_text = f"**{t('metric_popover_direction_label')}**\n\n{direction}"
+            st.markdown(direction_text)
+
+            bg_text = f"**{t('metric_popover_background_label')}**\n\n{edu['historical_context']}"
+            st.markdown(bg_text)
 
 
 def _render_key_metrics(data: dict, client) -> None:
     """Triple cards: PER/gross margin, revenue/ROE, dividend yield/PBR."""
-    latest_per_pbr = data["latest_per_pbr"]
     extra_metrics = data["extra_metrics"]
     monthly_revenue = data["monthly_revenue"]
     industry = data["industry"]
     stock_id = data["stock_id"]
 
     # 關鍵數字三連卡
-    st.markdown("### 📊 關鍵數字")
+    st.markdown(f"### 📊 {t('financial:key_metrics')}")
     col1, col2, col3 = st.columns(3)
 
     with col1:
         if latest_per_pbr and latest_per_pbr.get("PER"):
             per = latest_per_pbr["PER"]
             _render_metric_popover(
-                "本益比 (PER)", f"{per:.1f}", get_per_analogy(per),
+                t("metric_per_label"), f"{per:.1f}", get_per_analogy(per),
                 "PER", per, stock_id, glossary_service,
             )
         elif extra_metrics.get("gross_margin"):
             gm = extra_metrics["gross_margin"]
             _render_metric_popover(
-                "毛利率", f"{gm:.1f}%", get_gross_margin_analogy(gm),
+                t("metric_gross_margin_label"), f"{gm:.1f}%", get_gross_margin_analogy(gm),
                 "gross_margin", gm, stock_id, glossary_service,
             )
 
@@ -97,28 +100,28 @@ def _render_key_metrics(data: dict, client) -> None:
             yoy = extra_metrics.get("revenue_yoy")
             yoy_analogy = get_yoy_analogy(yoy) if yoy is not None else ""
             _render_metric_popover(
-                "最近月營收", f"{rev:,.0f} 億",
+                t("metric_recent_monthly_revenue_label"), f"{rev:,.0f} 億",
                 get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""),
                 "revenue_yoy", yoy if yoy is not None else 0.0, stock_id, glossary_service,
             )
         elif extra_metrics.get("roe"):
             roe = extra_metrics["roe"]
             _render_metric_popover(
-                "ROE", f"{roe:.1f}%", get_roe_analogy(roe),
-                "ROE", roe, stock_id, glossary_service,
+                t("metric_roe_label"), f"{roe:.1f}%", get_roe_analogy(roe),
+                t("metric_roe_label"), roe, stock_id, glossary_service,
             )
 
     with col3:
         if latest_per_pbr and latest_per_pbr.get("dividend_yield"):
             dy = latest_per_pbr["dividend_yield"]
             _render_metric_popover(
-                "殖利率", f"{dy:.2f}%", get_dividend_analogy(dy),
+                t("metric_dividend_yield_label"), f"{dy:.2f}%", get_dividend_analogy(dy),
                 "dividend_yield", dy, stock_id, glossary_service,
             )
         elif latest_per_pbr and latest_per_pbr.get("PBR"):
             pbr = latest_per_pbr["PBR"]
             _render_metric_popover(
-                "淨值比 (PBR)", f"{pbr:.2f}", get_pbr_analogy(pbr),
+                t("metric_pbr_label"), f"{pbr:.2f}", get_pbr_analogy(pbr),
                 "PBR", pbr, stock_id, glossary_service,
             )
 
@@ -127,12 +130,12 @@ def _render_key_metrics(data: dict, client) -> None:
     # ── 📚 學更多：Metric Education Expander ──
     top_metrics = get_top_metrics_for_education(data)
     if top_metrics:
-        with st.expander("📚 學更多：關鍵指標白話教室", expanded=False):
-            st.markdown("*點擊每個指標的 ❓ 按鈕，了解它的意思和背後的故事*")
+        with st.expander(t("financial:learn_more_expander"), expanded=False):
+            st.markdown(t("financial:learn_more_intro"))
             st.markdown("")
             for item in top_metrics:
                 edu = item["explanation"]
-                direction_icon = "⬆️ 越高越好" if edu["is_higher_better"] else "⬇️ 越低越好"
+                direction_icon = t("financial:higher_better") if edu["is_higher_better"] else t("financial:lower_better")
                 direction_color = "#27AE60" if edu["is_higher_better"] else "#E74C3C"
 
                 _info_card(
@@ -204,12 +207,12 @@ def _render_dividend(data: dict, client) -> None:
             annual_str = f"{div_summary['estimated_annual']:.2f} 元" if div_summary['estimated_annual'] else "—"
             est_label = "預估全年" if div_summary.get("is_estimated") else "最近年度"
             _白话_card(est_label, annual_str, "預估全年配息")
-            _glossary_tooltip("殖利率", glossary_service)
+            _glossary_tooltip(t("metric_dividend_yield_label"), glossary_service)
         with col3:
             yield_str = f"{div_summary['estimated_yield']:.2f}%" if div_summary['estimated_yield'] else "—"
-            yield_label = "預估殖利率" if div_summary.get("is_estimated") else "殖利率"
+            yield_label = "預估殖利率" if div_summary.get("is_estimated") else t("metric_dividend_yield_label")
             _白话_card(yield_label, yield_str, "年化股利／股價")
-            _glossary_tooltip("殖利率", glossary_service)
+            _glossary_tooltip(t("metric_dividend_yield_label"), glossary_service)
 
         # Expandable history table
         with st.expander("📋 展開查看歷史除權息紀錄", expanded=False):

@@ -7,6 +7,7 @@ Standalone page (no stock_id required).
 from __future__ import annotations
 
 import streamlit as st
+from src.core.i18n import t
 from src.data.finmind_client import FinMindClient
 from src.pages.url_sync import navigate_to
 from src.pages._router_base import _info_card, _summary_card, _白话_card, _subsidiary_card, _section_title
@@ -19,9 +20,9 @@ from src.services.market_event_service import (
 
 def _severity_badge(severity: str) -> str:
     badges = {
-        "high": "🔴 重大事件",
-        "medium": "🟡 重要事件",
-        "low": "🟢 參考事件",
+        "high": t("case_study.severity_high"),
+        "medium": t("case_study.severity_medium"),
+        "low": t("case_study.severity_low"),
     }
     return badges.get(severity, "⚪ 未知")
 
@@ -35,21 +36,21 @@ def _render_related_stock_card(stock_id: str, stock_name: str, impact: str):
         holding=0,
         revenue=0,
         business=impact,
-        relation=f"股票代碼 {stock_id}",
+        relation=t("case_study.stock_code", sid=stock_id),
     )
 
 
 def _render_market_event_case_study(client: FinMindClient):
     """Market Event Case Study main page — historian perspective."""
-    st.markdown("## 📚 市場事件案例研究")
-    st.markdown("以歷史學家的角度，回顧台灣與全球金融市場的重大事件")
+    st.markdown(f"## 📚 {t('case_study.title')}")
+    st.markdown(t("case_study.subtitle"))
     st.markdown("---\n")
 
     # ── Historian positioning disclaimer ─────────────────────
     _info_card(
-        "我們的定位：歷史學家，不是投資顧問",
-        "這些案例研究是在解釋「發生了什麼事」和「為什麼」，不是在告訴你「該買什麼」。"
-        "投資決策每個人都不同，過去的經驗不代表未來的結果。",
+        t("case_study.disclaimer_title"),
+        t("case_study.disclaimer_body")
+        t("case_study.disclaimer_footer"),
         icon="📖",
     )
 
@@ -61,12 +62,12 @@ def _render_market_event_case_study(client: FinMindClient):
         if new_events:
             case_studies = new_events
 
-    st.markdown("### 🔍 選擇一個事件深入研究\n")
+    st.markdown(f"### 🔍 {t('case_study.select_event')}")
 
     # Display as selection cards using a selectbox
     options = {f"{_severity_badge(cs['severity'])} {cs['title']}（{cs['date'][:4]}）": cs["id"] for cs in case_studies}
     selected_label = st.selectbox(
-        "選擇事件",
+        t("case_study.choose_event"),
         list(options.keys()),
         key="case_study_selector",
         label_visibility="collapsed",
@@ -78,7 +79,7 @@ def _render_market_event_case_study(client: FinMindClient):
 
     study = get_case_study(selected_id)
     if not study:
-        st.error("找不到此案例研究的詳細資料。")
+        st.error(t("case_study.not_found"))
         return
 
     st.markdown("---\n")
@@ -92,7 +93,7 @@ def _render_market_event_case_study(client: FinMindClient):
     st.markdown("---\n")
 
     # ── What Happened ────────────────────────────────────────
-    _section_title(f"📖 發生了什麼事")
+    _section_title(t("case_study.what_happened"))
 
     for i, paragraph in enumerate(study["what_happened"]):
         if i == 0:
@@ -104,7 +105,7 @@ def _render_market_event_case_study(client: FinMindClient):
 
     # ── Key Metrics ──────────────────────────────────────────
     st.markdown("---\n")
-    _section_title(f"📊 關鍵數據")
+    _section_title(t("case_study.key_data"))
 
     key_metrics = study.get("key_metrics", {})
     if key_metrics:
@@ -124,7 +125,7 @@ def _render_market_event_case_study(client: FinMindClient):
 
     # ── Lessons Learned ──────────────────────────────────────
     st.markdown("---\n")
-    _section_title(f"🎓 歷史教了我們什麼")
+    _section_title(t("case_study.lessons"))
 
     lessons = study.get("lessons", [])
     for lesson in lessons:
@@ -133,7 +134,7 @@ def _render_market_event_case_study(client: FinMindClient):
 
     # ── Related Stocks ───────────────────────────────────────
     st.markdown("---\n")
-    _section_title(f"🏷️ 相關個股")
+    _section_title(t("case_study.related_stocks"))
 
     related_stocks = study.get("related_stocks", [])
     if related_stocks:
@@ -152,7 +153,7 @@ def _render_market_event_case_study(client: FinMindClient):
                         impact=stock["impact"],
                     )
                     if st.button(
-                        f"查看 {stock['stock_name']} 名片",
+                        t("case_study.view_card", name=stock["stock_name"]),
                         key=f"related_{study['id']}_{stock['stock_id']}",
                         use_container_width=True,
                     ):
@@ -160,14 +161,14 @@ def _render_market_event_case_study(client: FinMindClient):
 
     # ── All case studies overview ────────────────────────────
     st.markdown("---\n")
-    _section_title(f"📋 所有案例研究")
+    _section_title(t("case_study.all_studies"))
 
     for cs in case_studies:
         badge = _severity_badge(cs["severity"])
         with st.expander(f"{badge} {cs['title']} — {cs['date'][:4]}"):
             st.markdown(cs["summary"])
             if st.button(
-                f"深入研究：{cs['title']}",
+                t("case_study.deep_dive", title=cs["title"]),
                 key=f"goto_{cs['id']}",
                 use_container_width=True,
             ):

@@ -12,6 +12,7 @@ from src.services.chart import create_revenue_pie_chart, create_revenue_treemap,
 from src.services.analogy_engine import get_revenue_analogy, get_yoy_analogy
 from src.services import glossary_service
 from src.pages.business_card._helpers import _historian_disclaimer
+from src.core.i18n import t
 
 
 def _render_revenue_tree(data: dict, client) -> None:
@@ -33,34 +34,35 @@ def _render_revenue_tree(data: dict, client) -> None:
     monthly_revenue = data["monthly_revenue"]
 
     # Page header
-    _section_title(f"🌳 營收結構樹 — {stock_name} ({stock_id})")
-    st.markdown("*深入拆解這家公司靠什麼賺錢*")
+    _section_title(f"🌳 {t('revenue_tree:title')} — {stock_name} ({stock_id})")
+    st.markdown(f"*{t('revenue_tree:subtitle')}*")
     st.markdown("")
 
     # ── Revenue breakdown chart with treemap toggle ──
     revenue_items = analyze_revenue_breakdown(financial, stock_id, industry)
 
     if revenue_items:
-        st.markdown("### 📊 營收來源佔比")
+        st.markdown(f"### 📊 {t('revenue_tree:revenue_source_pct')}")
 
         # Treemap toggle
-        treemap_mode = st.toggle("🔬 切換樹狀圖", value=False, help="切換為樹狀圖視圖，面積大小代表營收佔比")
+        treemap_mode = st.toggle(t("revenue_tree:treemap_toggle"), value=False, help=t("revenue_tree:treemap_toggle_help"))
         if treemap_mode:
-            fig = create_revenue_treemap(revenue_items, f"{stock_name} 營收來源")
+            fig = create_revenue_treemap(revenue_items, t("revenue_tree:chart_title", name=stock_name))
         else:
-            fig = create_revenue_pie_chart(revenue_items, f"{stock_name} 營收來源")
+            fig = create_revenue_pie_chart(revenue_items, t("revenue_tree:chart_title", name=stock_name))
         st.plotly_chart(fig, use_container_width=True)
 
         # Concentration warning
         max_item = max(revenue_items, key=lambda x: x["value"])
         if max_item["value"] > 60:
-            _info_card("⚠️ 營收集中風險", 
-                       f"{max_item['name']}佔營收 {max_item['value']:.0f}%，超過 60% 營收來自單一來源，需留意客戶集中度風險", 
+            max_value_str = f"{max_item['value']:.0f}"
+            _info_card(t("revenue_tree:concentration_warning_title"),
+                       t("revenue_tree:concentration_warning_body", name=max_item['name'], value=max_value_str),
                        "⚠️")
 
         # Revenue trend sparkline
         if len(monthly_revenue) >= 3:
-            st.markdown("##### 📈 近 12 個月營收趨勢")
+            st.markdown(f"##### 📈 {t('revenue_tree:trend_title')}")
             trend_fig = create_revenue_trend_chart(monthly_revenue.tail(12), "")
             trend_fig.update_layout(height=200, margin=dict(t=10, b=10, l=10, r=10),
                                    showlegend=False)
@@ -69,24 +71,25 @@ def _render_revenue_tree(data: dict, client) -> None:
         st.markdown("---")
 
         # ── Revenue details ──
-        st.markdown("### 📋 各營收來源說明")
+        st.markdown(f"### 📋 {t('revenue_tree:details_title')}")
         for item in revenue_items:
             analogy = get_revenue_analogy(item['value'], industry)
             _白话_card(item['name'], f"{item['value']:.0f}%", analogy)
 
         st.markdown("---")
     else:
-        st.info("目前沒有詳細營收組成資料")
+        st.info(t("revenue_tree:no_data"))
 
     # ── YoY growth context ──
     yoy = extra_metrics.get("revenue_yoy")
     if yoy is not None:
         yoy_analogy = get_yoy_analogy(yoy)
-        direction = "成長" if yoy >= 0 else "衰退"
+        direction = t("revenue_tree:growth") if yoy >= 0 else t("revenue_tree:decline")
         _info_card(
-            "營收年增率",
-            f"較去年同期 **{direction} {abs(yoy):.1f}%**\n\n{yoy_analogy}",
+            t("revenue_tree:yoy_title"),
+            t("revenue_tree:yoy_body", direction=direction, value=abs(yoy)),
             "📈" if yoy >= 0 else "📉",
+        )
         )
 
     _historian_disclaimer("revenue_tree")

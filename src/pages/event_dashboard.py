@@ -26,44 +26,44 @@ from src.core.i18n import t
 def _severity_badge(severity: str) -> str:
     """產生嚴重程度標籤"""
     badges = {
-        "high": "🔴 重大",
-        "medium": "🟡 注意",
-        "low": "🟢 參考",
+        "high": t('event_dashboard.severity.high'),
+        "medium": t('event_dashboard.severity.medium'),
+        "low": t('event_dashboard.severity.low'),
     }
-    return badges.get(severity, "⚪ 未知")
+    return badges.get(severity, t('event_dashboard.severity.unknown'))
 
 
 def _event_type_label(event_type: str) -> str:
     """事件類型中文標籤"""
     labels = {
-        "revenue_surge": "💰 營收異動",
-        "news_major": "📰 重大新聞",
-        "news_medium": "📰 注意新聞",
-        "price_abnormal": "📉 股價異常",
-        "dividend_change": "💵 股利變更",
-        "institutional_shift": "🏷️ 法人突變",
+        "revenue_surge": t('event_dashboard.event_type.revenue_surge'),
+        "news_major": t('event_dashboard.event_type.news_major'),
+        "news_medium": t('event_dashboard.event_type.news_medium'),
+        "price_abnormal": t('event_dashboard.event_type.price_abnormal'),
+        "dividend_change": t('event_dashboard.event_type.dividend_change'),
+        "institutional_shift": t('event_dashboard.event_type.institutional_shift'),
     }
     return labels.get(event_type, f"📌 {event_type}")
 
 
 def _render_event_dashboard(client):
     """事件儀表板主頁面"""
-    st.markdown("## 🔔 事件儀表板")
-    st.markdown("*近期市場重大事件與異動*")
+    st.markdown(f"## 🔔 {t('event_dashboard.title')}")
+    st.markdown(f"*{t('event_dashboard.subtitle')}*")
     st.markdown("---")
 
     # ── 近期重大事件 ──────────────────────────────────────
-    st.markdown("### 📋 近期重大事件")
+    st.markdown(f"### 📋 {t('event_dashboard.recent_events')}")
 
     recent_events = get_all_recent_events(days=30, limit=50)
 
     if not recent_events:
-        st.info("近期無重大事件記錄。事件會在瀏覽股票頁面時自動偵測。")
+        st.info(t('event_dashboard.no_events'))
     else:
         # 依日期分組顯示
         dates = {}
         for event in recent_events:
-            date = event.get("date", "未知")
+            date = event.get("date", t('event_dashboard.unknown_date'))
             if date not in dates:
                 dates[date] = []
             dates[date].append(event)
@@ -81,7 +81,7 @@ def _render_event_dashboard(client):
                 stock_id = event.get("stock_id", "")
 
                 with st.expander(f"{badge} {event_type} — {title}"):
-                    st.markdown(f"**股票代號：** `{stock_id}`")
+                    st.markdown(f"**{t('event_dashboard.stock_code')}: **`{stock_id}`")
 
                     # ── Interpretation card (replaces plain summary) ──────
                     interp = get_interpretation(
@@ -91,16 +91,16 @@ def _render_event_dashboard(client):
                         summary,
                     )
                     _summary_card(
-                        title="歷史學家解讀",
+                        title=t("event_dashboard.historian_interpretation"),
                         content=interp["short"],
                         icon="🧭",
                     )
 
                     # ── Key concept (ten-second test) ────────────────────
-                    st.caption(f"💡 核心概念：{interp['key_concept']}")
+                    st.caption(f"{t('event_dashboard.key_concept')}: {interp['key_concept']}")
 
                     # ── Drill-down button ────────────────────────────────
-                    if st.button("🔍 為什麼？", key=f"why_{evt_idx}"):
+                    if st.button(t("event_dashboard.why_button"), key=f"why_{evt_idx}"):
                         drilldown = get_drilldown_interpretation(
                             {
                                 "type": event.get("type", ""),
@@ -110,17 +110,17 @@ def _render_event_dashboard(client):
                             }
                         )
                         _info_card(
-                            title="詳細解讀",
+                            title=t("event_dashboard.detailed_interpretation"),
                             content=drilldown["detail"],
                             icon="📖",
                         )
-                        st.caption("⚠️ 以上解讀僅說明事件背景與可能意涵，不構成投資建議。")
+                        st.caption(t("event_dashboard.disclaimer"))
 
                     # ── Raw summary in collapsed section ────────────────
-                    with st.expander("📄 原始摘要", expanded=False):
+                    with st.expander(t("event_dashboard.raw_summary"), expanded=False):
                         st.markdown(summary)
 
-                    if st.button("查看名片", key=f"evt_{evt_idx}"):
+                    if st.button(t("event_dashboard.view_card"), key=f"evt_{evt_idx}"):
                         navigate_to(page="名片", stock_id=stock_id)
                 evt_idx += 1
 
@@ -129,19 +129,8 @@ def _render_event_dashboard(client):
     st.markdown("---")
 
     # ── 使用說明 ──────────────────────────────────────────
-    st.markdown("### 💡 關於事件儀表板")
-    st.markdown("""
-    事件儀表板會自動偵測以下類型的重大變化：
-
-    | 事件類型 | 觸發條件 | 嚴重程度 |
-    |----------|----------|----------|
-    | 💰 營收異動 | 月營收 YoY 變化 ±30% 以上 | 🟡~🔴 |
-    | 📰 重大新聞 | 新聞標題包含收購、合併、虧損等關鍵字 | 🔴 |
-    | 📰 注意新聞 | 新聞標題包含股利、訂單、合作等關鍵字 | 🟡 |
-    | 📉 股價異常 | 單日漲跌幅超過 ±7% | 🔴 |
-
-    事件會在瀏覽股票頁面時自動偵測並記錄。
-    """)
+    st.markdown(f"### 💡 {t('event_dashboard.about_title')}")
+    st.markdown(t("event_dashboard.about_content"))
 
     # ── Data Sources ──
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -159,7 +148,7 @@ def _render_adaptive_banner(data: dict):
 
     if company_type != "default":
         _info_card(
-            title=f"🎯 分析框架：{framework['name']}",
+            title=t('event_dashboard.analysis_framework', name=framework['name']),
             content=f"{framework['description']} — {framework['focus']}",
         )
 
@@ -178,7 +167,7 @@ def _render_event_alerts(stock_id: str):
             f"- **{e['title']}**：{e['summary']}" for e in high_events[:3]
         )
         _summary_card(
-            title=f"🔴 近期有 {len(high_events)} 項重大事件需要注意！",
+            title=t('event_dashboard.high_events_alert', count=len(high_events)),
             content=high_details,
             icon="⚠️",
         )
@@ -188,7 +177,7 @@ def _render_event_alerts(stock_id: str):
             f"- **{e['title']}**：{e['summary']}" for e in medium_events[:2]
         )
         _info_card(
-            title=f"🟡 近期有 {len(medium_events)} 項注意事件",
+            title=t('event_dashboard.medium_events_alert', count=len(medium_events)),
             content=medium_details,
             icon="📌",
         )

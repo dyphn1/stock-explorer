@@ -6,6 +6,7 @@ from src.services.company_facts import get_company_facts
 from src.pages._router_base import _info_card, _section_title, _explain_button, _so_what_box, _confidence_badge
 from src.pages.url_sync import navigate_to
 from src.services.compare_stories import generate_compare_stories
+from src.core.i18n import t
 
 
 def _render_deltas(data: dict, client) -> None:
@@ -35,9 +36,9 @@ def _render_deltas(data: dict, client) -> None:
                 f"　→ {implication_text}"
             )
         delta_text = "\\n\\n".join(delta_lines)
-        _info_card("最近有什麼變化", delta_text, "🔄")
+        _info_card(t("story.recent_changes"), delta_text, "🔄")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+        st.caption(f"{_confidence_badge(0.9)} · {t("story.confidence_note")}")
 
         # C139: 💡 explain buttons for each delta metric (show original explanation in popover)
         for d in deltas:
@@ -54,9 +55,9 @@ def _render_deltas(data: dict, client) -> None:
         # C149: So What? implication box — synthesize all deltas
         _so_what_box(deltas)
     else:
-        _info_card("最近有什麼變化", "近期無顯著變化，所有指標波動均在 10% 以內", "🔄")
+        _info_card(t("story.recent_changes"), t("story.no_significant_changes"), "🔄")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+        st.caption(f"{_confidence_badge(0.9)} · {t("story.confidence_note")}")
 
 
 def _render_compare_stories(data: dict, client, all_info=None) -> None:
@@ -77,7 +78,7 @@ def _render_compare_stories(data: dict, client, all_info=None) -> None:
     # ── Find peers ──
     if all_info is None or len(all_info) == 0:
         return
-    if not industry or industry == "未知":
+    if not industry or industry == t("story.unknown_industry"):
         return
 
     peer_mask = (
@@ -111,8 +112,8 @@ def _render_compare_stories(data: dict, client, all_info=None) -> None:
         return
 
     # ── Render in collapsible section (D-032 progressive disclosure) ──
-    with st.expander("📖 同業比較故事 — 跟同業比起來怎麼樣？", expanded=False):
-        st.markdown(f"*{stock_name} 與同產業同業的敘事比較*")
+    with st.expander(t("story.peer_comparison"), expanded=False):
+        st.markdown(t("story.peer_comparison_subtitle", name=stock_name))
         st.markdown("")
 
         for story in stories:
@@ -126,7 +127,7 @@ def _render_compare_stories(data: dict, client, all_info=None) -> None:
                 st.markdown(f"**vs. {peer_name}** `{peer_id}`")
             with col2:
                 if st.button(
-                    f"查看 {peer_name}",
+                    t("story.view_peer", name=peer_name),
                     key=f"compare_story_{stock_id}_peer_{peer_id}",
                     use_container_width=True,
                 ):
@@ -166,18 +167,18 @@ def _render_read_next(data: dict, client, all_info=None) -> None:
     industry = data["industry"]
 
     # 📖 推薦閱讀 (C41: Read Next Recommendations)
-    _section_title(f"📖 推薦閱讀")
+    _section_title(t("story.read_next"))
 
     # --- Peer stocks from same industry ---
     _peers = pd.DataFrame()
-    if all_info is not None and len(all_info) > 0 and industry and industry != "未知":
+    if all_info is not None and len(all_info) > 0 and industry and industry != t("story.unknown_industry"):
         _peers = all_info[
             (all_info["industry_category"] == industry) &
             (all_info["stock_id"] != stock_id)
         ].head(5)
 
     if len(_peers) > 0:
-        st.markdown("**同產業個股推薦**")
+        st.markdown(t("story.peer_recommendations"))
         for _, _peer in _peers.iterrows():
             _peer_id = str(_peer["stock_id"])
             _peer_name = _peer["stock_name"]
@@ -186,23 +187,23 @@ def _render_read_next(data: dict, client, all_info=None) -> None:
 
             _info_card(
                 f"{_peer_name} ({_peer_id})",
-                f"📍 {_peer_industry}\\n🔗 同產業同業，一起認識這家公司",
+                t("story.peer_info", industry=_peer_industry),
                 "📖",
             )
             if st.button(
-                f"查看 {_peer_name} 名片",
+                t("story.view_peer_card", name=_peer_name),
                 key=_key,
                 use_container_width=True,
             ):
                 navigate_to(page="名片", stock_id=_peer_id)
             st.markdown("")
     else:
-        _info_card("推薦閱讀", "目前沒有找到相關的同產業個股推薦", "📖")
+        _info_card("推薦閱讀", t("story.no_recommendations"), "📖")
 
     # --- Curated fun facts from company_facts.yaml ---
     _curated_facts = get_company_facts(stock_id)
     if _curated_facts:
-        st.markdown("**你可能會好奇**")
+        st.markdown(t("story.you_might_wonder"))
         # Show up to 2 remaining facts (skip the one already shown in 你知道嗎？ section)
         _fact_idx_key = f"_fact_idx_{stock_id}"
         _shown_idx = st.session_state.get(_fact_idx_key, 0) % len(_curated_facts) if _curated_facts else 0
@@ -211,14 +212,14 @@ def _render_read_next(data: dict, client, all_info=None) -> None:
             if i != _shown_idx
         ]
         for _fact in _remaining_facts[:2]:
-            _info_card("💡 你知道嗎？", _fact, "🤔")
+            _info_card(t("story.did_you_know"), _fact, "🤔")
 
     # ── C28: Story Timeline nav button ──────────────────────
-    st.markdown("**🔬 更多分析**")
+    st.markdown(t("story.more_analysis"))
     if st.button(
-        "📅 完整故事時間軸",
+        t("story.full_timeline"),
         key=f"nav_story_timeline_{stock_id}",
         use_container_width=True,
     ):
         navigate_to(page="完整故事時間軸", stock_id=stock_id)
-    st.caption("查看公司完整的故事時間軸，包含事件、案例研究與歷史里程碑")
+    st.caption(t("story.timeline_caption"))

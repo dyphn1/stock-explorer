@@ -15,14 +15,14 @@ def _get_health_metric_values(extra_metrics: dict, latest_per_pbr: dict | None) 
     if extra_metrics.get("net_margin") is not None:
         profit.append(f"淨利率 {extra_metrics['net_margin']:.1f}%")
     if profit:
-        metrics["獲利能力"] = profit
+        metrics[t("helpers:profitability")] = profit
 
     # 成長性: 營收年增率
     growth = []
     if extra_metrics.get("revenue_yoy") is not None:
         growth.append(f"營收年增率 {extra_metrics['revenue_yoy']:.1f}%")
     if growth:
-        metrics["成長性"] = growth
+        metrics[t("helpers:growth")] = growth
 
     # 財務健康: 負債比, 流動比
     health = []
@@ -31,7 +31,7 @@ def _get_health_metric_values(extra_metrics: dict, latest_per_pbr: dict | None) 
     if extra_metrics.get("current_ratio") is not None:
         health.append(f"流動比 {extra_metrics['current_ratio']:.1f}")
     if health:
-        metrics["財務健康"] = health
+        metrics[t("helpers:financial_health_dim")] = health
 
     # 股利品質: 殖利率, 連續配息
     div = []
@@ -40,7 +40,7 @@ def _get_health_metric_values(extra_metrics: dict, latest_per_pbr: dict | None) 
     if extra_metrics.get("dividend_years") is not None:
         div.append(f"連續配息 {extra_metrics['dividend_years']:.0f} 年")
     if div:
-        metrics["股利品質"] = div
+        metrics[t("helpers:dividend_quality")] = div
 
     # 估值合理性: PER, PBR
     val = []
@@ -49,7 +49,7 @@ def _get_health_metric_values(extra_metrics: dict, latest_per_pbr: dict | None) 
     if latest_per_pbr and latest_per_pbr.get("PBR") is not None:
         val.append(f"淨值比 {latest_per_pbr['PBR']:.2f}")
     if val:
-        metrics["估值合理性"] = val
+        metrics[t("helpers:valuation")] = val
 
     return metrics
 
@@ -57,17 +57,17 @@ def _get_health_metric_values(extra_metrics: dict, latest_per_pbr: dict | None) 
 def get_health_dimension_explanation(dim_name: str, score: float) -> str:
     """Return a plain-language explanation for a health dimension score."""
     if score >= 70:
-        return "表現優異，在同產業中屬於前段班"
+        return t("helpers:score_excellent")
     elif score >= 40:
-        return "表現穩定，有改善空間"
+        return t("helpers:score_average")
     else:
-        return "需要留意，可能拖累整體表現"
+        return t("helpers:score_poor")
 
 
 _RISK_BADGES = {
-    "high":   "🔴 高風險",
-    "medium": "🟡 中風險",
-    "low":    "🟢 低風險",
+    "high":   t("helpers:risk_high"),
+    "medium": t("helpers:risk_medium"),
+    "low":    t("helpers:risk_low"),
 }
 
 _RISK_COLORS = {

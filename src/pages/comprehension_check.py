@@ -10,6 +10,7 @@ import streamlit as st
 from src.data.finmind_client import FinMindClient
 from src.pages._router_base import _info_card, _section_title, _白话_card
 from src.pages.business_card._helpers import _historian_disclaimer
+from src.core.i18n import t
 from src.services.comprehension_quiz_service import (
     get_questions,
     check_answer,
@@ -19,15 +20,14 @@ from src.services.comprehension_quiz_service import (
 
 def _render_comprehension_check(client: FinMindClient):
     """Comprehension Check Quiz main page — investing literacy questions."""
-    st.markdown("## 📝 理解力測驗")
-    st.markdown("測試你對投資基礎觀念的理解程度，共 5 題選擇題")
+    st.markdown(f"## 📝 {t('comprehension_check.title')}")
+    st.markdown(t("comprehension_check.subtitle"))
     st.markdown("---\n")
 
     # ── Introduction ───────────────────────────────────────
     _info_card(
-        "這是什麼？",
-        "這份測驗的目的不是考滿分，而是幫你確認自己對投資基礎觀念的理解是否正確。"
-        "沒答對也沒關係——重要的是看解說，學到東西才是重點！",
+        t("comprehension_check.what_is_this"),
+        t("comprehension_check.what_is_this_desc"),
         icon="💡",
     )
 
@@ -43,12 +43,12 @@ def _render_comprehension_check(client: FinMindClient):
     col_start, col_reset = st.columns(2)
     with col_start:
         if not st.session_state["comprehension_show_form"] and not st.session_state["comprehension_quiz_done"]:
-            if st.button("🚀 開始測驗", key="comprehension_start", use_container_width=True):
+            if st.button(f"🚀 {t('comprehension_check.start_btn')}", key="comprehension_start", use_container_width=True):
                 st.session_state["comprehension_show_form"] = True
                 st.rerun()
     with col_reset:
         if st.session_state["comprehension_quiz_done"]:
-            if st.button("🔄 重新測驗", key="comprehension_reset", use_container_width=True):
+            if st.button(f"🔄 {t('comprehension_check.reset_btn')}", key="comprehension_reset", use_container_width=True):
                 st.session_state["comprehension_quiz_done"] = False
                 st.session_state["comprehension_show_form"] = False
                 # Clear answers
@@ -62,7 +62,7 @@ def _render_comprehension_check(client: FinMindClient):
 
     # ── Quiz form ──────────────────────────────────────────
     if st.session_state["comprehension_show_form"] and not st.session_state["comprehension_quiz_done"]:
-        _section_title("📝 開始作答")
+        _section_title(f"📝 {t('comprehension_check.start_answering')}")
 
         with st.form("comprehension_quiz_form"):
             answers = {}
@@ -83,7 +83,7 @@ def _render_comprehension_check(client: FinMindClient):
                 answers[qid] = option_keys[idx]
                 st.markdown("")
 
-            quiz_submitted = st.form_submit_button("✅ 提交答案", use_container_width=True)
+            quiz_submitted = st.form_submit_button(f"✅ {t('comprehension_check.submit_btn')}", use_container_width=True)
 
         if quiz_submitted:
             st.session_state["comprehension_answers"] = answers
@@ -95,7 +95,7 @@ def _render_comprehension_check(client: FinMindClient):
     if st.session_state["comprehension_quiz_done"]:
         answers = st.session_state.get("comprehension_answers", {})
         if not answers:
-            st.warning("找不到測驗答案，請重新開始。")
+            st.warning(t("comprehension_check.no_answers"))
             return
 
         result = calculate_score(answers)
@@ -104,35 +104,35 @@ def _render_comprehension_check(client: FinMindClient):
         percentage = result["percentage"]
 
         st.markdown("---\n")
-        _section_title("📊 測驗結果")
+        _section_title(f"📊 {t('comprehension_check.results')}")
 
         # ── Score summary cards ─────────────────────────────
         if percentage >= 80:
             score_color = "#27AE60"
             score_emoji = "🟢"
-            score_title = "優秀！"
-            score_desc = "你對投資基礎觀念有很好的理解，繼續保持！"
+            score_title = t("comprehension_check.excellent")
+            score_desc = t("comprehension_check.excellent_desc")
         elif percentage >= 60:
             score_color = "#F39C12"
             score_emoji = "🟡"
-            score_title = "不錯！"
-            score_desc = "你有基本的概念，但還有一些地方可以加強。"
+            score_title = t("comprehension_check.good")
+            score_desc = t("comprehension_check.good_desc")
         else:
             score_color = "#E74C3C"
             score_emoji = "🔴"
-            score_title = "加油！"
-            score_desc = "別擔心，投資知識需要慢慢累積。看看下方的解說，下次會更好！"
+            score_title = t("comprehension_check.needs_work")
+            score_desc = t("comprehension_check.needs_work_desc")
 
         col1, col2 = st.columns(2)
         with col1:
             _白话_card(
-                "答對題數",
+                t("comprehension_check.correct_count"),
                 f"{correct_count} / {total}",
                 f"{score_emoji} {score_title}",
             )
         with col2:
             _白话_card(
-                "正確率",
+                t("comprehension_check.accuracy"),
                 f"{percentage:.0f}%",
                 score_desc,
             )
@@ -140,18 +140,18 @@ def _render_comprehension_check(client: FinMindClient):
         st.markdown("\n")
 
         # ── Detailed results per question ───────────────────
-        _section_title("📋 各題詳解")
+        _section_title(f"📋 {t('comprehension_check.question_details')}")
 
         for i, r in enumerate(result["results"], 1):
             qid = r["question_id"]
             is_correct = r["correct"]
-            status = "✅ 答對" if is_correct else "❌ 答錯"
+            status = f"✅ {t('comprehension_check.correct')}" if is_correct else f"❌ {t('comprehension_check.wrong')}"
 
             with st.container():
                 if is_correct:
-                    st.success(f"{status} 第 {i} 題")
+                    st.success(f"{status} {t('comprehension_check.question_n', n=i)}")
                 else:
-                    st.error(f"{status} 第 {i} 題")
+                    st.error(f"{status} {t('comprehension_check.question_n', n=i)}")
                 st.markdown(f"**{r['question_text']}**")
                 st.info(r["explanation"])
                 st.markdown("---")
@@ -161,20 +161,20 @@ def _render_comprehension_check(client: FinMindClient):
         # ── Encouragement message ───────────────────────────
         if correct_count == total:
             _info_card(
-                "🎉 太厲害了！全部答對！",
-                "你已經具備了良好的投資基礎知識。記住，知識是投資最好的武器。繼續學習，保持謙虛！",
+                t("comprehension_check.perfect_title"),
+                t("comprehension_check.perfect_desc"),
                 icon="🏆",
             )
         elif correct_count >= total // 2:
             _info_card(
-                "💪 表現不錯！",
-                "你已經掌握了大部分概念。錯的題目是很好的學習機會，回頭看看解說，你會進步得更快。",
+                t("comprehension_check.good_job_title"),
+                t("comprehension_check.good_job_desc"),
                 icon="📚",
             )
         else:
             _info_card(
-                "🌱 學習是投資最好的朋友",
-                "投資知識需要慢慢累積，每位投資大師都是從零開始。建議重新閱讀名片頁的內容，再試一次！",
+                t("comprehension_check.keep_learning_title"),
+                t("comprehension_check.keep_learning_desc"),
                 icon="📖",
             )
 

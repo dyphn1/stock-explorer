@@ -25,27 +25,28 @@ from src.services.notification_service import (
     acknowledge_all_notifications,
     _make_event_id,
 )
+from src.core.i18n import t
 
 
 def _severity_badge(severity: str) -> str:
     """產生嚴重程度標籤"""
     badges = {
-        "high": "🔴 重大",
-        "medium": "🟡 注意",
-        "low": "🟢 參考",
+        "high": t("notification.severity.high"),
+        "medium": t("notification.severity.medium"),
+        "low": t("notification.severity.low"),
     }
-    return badges.get(severity, "⚪ 未知")
+    return badges.get(severity, t("notification.severity.unknown"))
 
 
 def _event_type_label(event_type: str) -> str:
     """事件類型中文標籤"""
     labels = {
-        "revenue_surge": "💰 營收異動",
-        "news_major": "📰 重大新聞",
-        "news_medium": "📰 注意新聞",
-        "price_abnormal": "📉 股價異常",
-        "dividend_change": "💵 股利變更",
-        "institutional_shift": "🏷️ 法人突變",
+        "revenue_surge": t("notification.event_type.revenue_surge"),
+        "news_major": t("notification.event_type.news_major"),
+        "news_medium": t("notification.event_type.news_medium"),
+        "price_abnormal": t("notification.event_type.price_abnormal"),
+        "dividend_change": t("notification.event_type.dividend_change"),
+        "institutional_shift": t("notification.event_type.institutional_shift"),
     }
     return labels.get(event_type, f"📌 {event_type}")
 
@@ -61,8 +62,8 @@ def _severity_color(severity: str) -> str:
 
 def _render_notification_center(client: FinMindClient):
     """通知中心主頁面"""
-    st.markdown("## 🔔 通知中心")
-    st.markdown("*追蹤你關注股票的重要事件與異動*")
+    st.markdown(f"## {t('notification.heading')}")
+    st.markdown(f"*{t('notification.subtitle')}*")
     st.markdown("---\n")
 
     # ── 取得訂閱股票 ──────────────────────────────────────
@@ -70,8 +71,8 @@ def _render_notification_center(client: FinMindClient):
 
     if not stock_ids:
         _info_card(
-            "尚未設定關注清單",
-            "請先在「我的關注」頁面加入股票，通知中心才會顯示相關事件。",
+            t("notification.no_watchlist.title"),
+            t("notification.no_watchlist.body"),
             icon="📋",
         )
         st.markdown("---\n")
@@ -79,7 +80,7 @@ def _render_notification_center(client: FinMindClient):
         return
 
     # ── 摘要橫幅 ──────────────────────────────────────────
-    with st.spinner("檢查通知..."):
+    with st.spinner(t("notification.checking")):
         summary = get_notification_summary(client, stock_ids)
 
     high_count = summary.get("high", 0)
@@ -90,49 +91,49 @@ def _render_notification_center(client: FinMindClient):
     if total_count > 0:
         parts = []
         if high_count > 0:
-            parts.append(f"🔴 {high_count} 項重大事件")
+            parts.append(f"🔴 {high_count} {t('notification.summary.high_events')}")
         if medium_count > 0:
-            parts.append(f"🟡 {medium_count} 項注意事件")
+            parts.append(f"🟡 {medium_count} {t('notification.summary.medium_events')}")
         if low_count > 0:
-            parts.append(f"🟢 {low_count} 項參考事件")
+            parts.append(f"🟢 {low_count} {t('notification.summary.low_events')}")
         summary_text = " ｜ ".join(parts)
-        _summary_card("未讀通知", summary_text, icon="🔔")
+        _summary_card(t("notification.unread"), summary_text, icon="🔔")
     else:
         _info_card(
-            "目前沒有待處理的通知",
-            "當你有關注的股票出現重大事件時，會顯示在這裡。",
+            t("notification.empty.title"),
+            t("notification.empty.body"),
             icon="🔔",
         )
 
     # ── 全部標記已讀 ──────────────────────────────────────
     if total_count > 0:
-        if st.button("✅ 全部標記已讀", key="ack_all_top", use_container_width=True):
-            with st.spinner("標記中..."):
+        if st.button(t("notification.mark_all_read_btn"), key="ack_all_top", use_container_width=True):
+            with st.spinner(t("notification.marking")):
                 pending = get_pending_notifications(client, stock_ids)
                 event_ids = [e.get("_event_id", _make_event_id(e)) for e in pending]
                 acknowledge_all_notifications(event_ids)
-            st.success("已將所有通知標記為已讀")
+            st.success(t("notification.all_marked_read"))
             st.rerun()
 
     st.markdown("---\n")
 
     # ── 待處理通知列表 ────────────────────────────────────
-    _section_title(f"📋 待處理通知")
+    _section_title(f"📋 {t('notification.pending_section')}")
 
-    with st.spinner("載入通知..."):
+    with st.spinner(t("notification.loading_notifications")):
         pending = get_pending_notifications(client, stock_ids)
 
     if not pending:
         _info_card(
-            "目前沒有待處理的通知",
-            "當你有關注的股票出現重大事件時，會顯示在這裡。",
+            t("notification.empty.title"),
+            t("notification.empty.body"),
             icon="🔔",
         )
     else:
         # 依股票分組顯示
         grouped: dict = {}
         for event in pending:
-            sid = event.get("stock_id", "未知")
+            sid = event.get("stock_id", t("notification.unknown_stock"))
             if sid not in grouped:
                 grouped[sid] = []
             grouped[sid].append(event)
@@ -170,14 +171,14 @@ def _render_notification_center(client: FinMindClient):
                 col_btn1, col_btn2 = st.columns([1, 1])
                 with col_btn1:
                     if st.button(
-                        "查看名片",
+                        t("notification.view_card_btn"),
                         key=f"notif_goto_{event.get('_event_id', '')}",
                         use_container_width=True,
                     ):
                         navigate_to(page="名片", stock_id=sid)
                 with col_btn2:
                     if st.button(
-                        "標記已讀",
+                        t("notification.mark_read_btn"),
                         key=f"notif_ack_{event.get('_event_id', '')}",
                         use_container_width=True,
                     ):
@@ -191,53 +192,57 @@ def _render_notification_center(client: FinMindClient):
 
     # ── 通知設定（收合） ──────────────────────────────────
     st.markdown("\n")
-    _section_title(f"⚙️ 通知設定")
+    _section_title(f"⚙️ {t('notification.settings_section')}")
 
     settings = get_notification_settings()
 
-    with st.expander("展開通知偏好設定", expanded=False):
+    with st.expander(t("notification.settings_expander"), expanded=False):
         enable = st.toggle(
-            "啟用通知",
+            t("notification.toggle.enable"),
             value=settings.get("enable_notifications", True),
             key="notif_enable",
         )
         notify_high = st.toggle(
-            "重大事件通知（🔴）",
+            t("notification.toggle.high_severity"),
             value=settings.get("notify_high_severity", True),
             key="notif_high",
         )
         notify_medium = st.toggle(
-            "注意事件通知（🟡）",
+            t("notification.toggle.medium_severity"),
             value=settings.get("notify_medium_severity", True),
             key="notif_medium",
         )
         notify_low = st.toggle(
-            "參考事件通知（🟢）",
+            t("notification.toggle.low_severity"),
             value=settings.get("notify_low_severity", False),
             key="notif_low",
         )
 
         digest_mode = st.selectbox(
-            "通知頻率",
+            t("notification.digest_label"),
             options=["realtime", "daily", "weekly"],
             index=["realtime", "daily", "weekly"].index(
                 settings.get("digest_mode", "realtime")
             ),
-            format_func=lambda x: {"realtime": "即時", "daily": "每日彙整", "weekly": "每週彙整"}[x],
+            format_func=lambda x: {
+                "realtime": t("notification.digest.realtime"),
+                "daily": t("notification.digest.daily"),
+                "weekly": t("notification.digest.weekly"),
+            }[x],
             key="notif_digest",
         )
 
-        if st.button("💾 儲存設定", key="notif_save_settings", use_container_width=True):
+        if st.button(t("notification.save_settings_btn"), key="notif_save_settings", use_container_width=True):
             new_settings = {
                 "enable_notifications": enable,
                 "notify_high_severity": notify_high,
                 "notify_medium_severity": notify_medium,
                 "notify_low_severity": notify_low,
                 "digest_mode": digest_mode,
-                "subscribed_lists": settings.get("subscribed_lists", ["預設清單"]),
+                "subscribed_lists": settings.get("subscribed_lists", [t("notification.default_list")]),
             }
             update_notification_settings(new_settings)
-            st.success("✅ 設定已儲存")
+            st.success(t("notification.settings_saved"))
 
     st.markdown("---\n")
     _historian_disclaimer("general")

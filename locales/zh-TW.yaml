@@ -124,6 +124,25 @@ timeline:
   label_all: 全部
   filter_failed: ⚠️ 時間軸過濾失敗，已顯示全部資料
   no_data_in_range: 📌 此時間範圍內無資料，已切換至全部資料
+  page_title: "{name} — 故事時間軸"
+  page_subtitle: 過去一年內該股票重要事件的時間軸總覽。
+  no_events_title: 找不到事件
+  no_events_content: 過去一年內未偵測到 **{name}** 的時間軸事件。嘗試瀏覽其他頁面以觸發自動事件偵測。
+  event_count: "共找到 {count} 個時間軸事件"
+  unknown_date: 未知日期
+  unnamed_event: 未命名事件
+  event_unknown: "未知事件（{type}）"
+  event_revenue_surge: 營收異動
+  event_news_major: 重大新聞
+  event_news_medium: 一般新聞
+  event_price_abnormal: 股價異常
+  event_dividend_change: 股利異動
+  event_institutional_shift: 法人動向
+  severity_high: 🔴 高
+  severity_medium: 🟡 中
+  severity_low: 🟢 低
+  severity_unknown: 未知嚴重程度
+  disclaimer: ⚠️ 時間軸事件由系統根據公開資料自動生成，可能不完全準確，僅供參考。
 error:
   not_found: 找不到股票代號 {sid}
   no_data: 無法取得資料
@@ -176,6 +195,72 @@ memo:
   edit: 編輯備忘
   delete: 刪除備忘
   empty: 目前沒有任何備忘
+  subtitle: 寫下你對這家公司的看法，建立自己的分析框架
+  tip_title: 怎麼寫？
+  tip_content: 投資備忘錄是寫給自己看的筆記。不需要專業術語，用你自己的話記錄想法就好。
+  select_stock: 選擇股票
+  input_label: 輸入股票代號或名稱
+  input_placeholder: 例如：2330 或 台積電
+  select: 選擇
+  searching: 搜尋中…
+  no_match: 找不到符合的股票，請確認代號或名稱是否正確。
+  selected: "已選擇：**{name}** `{id}`"
+  write_analysis: 寫下你的分析
+  one_liner: 一句話定位
+  one_liner_placeholder: 用一句話描述這家公司是做什麼的
+  reasons: 投資理由
+  reasons_placeholder: 為什麼想投資這家公司？列出 2-3 個理由
+  concerns: 擔心的事
+  concerns_placeholder: 有什麼讓你猶豫的地方？
+  key_metrics: 關鍵指標
+  key_metrics_placeholder: 你會追蹤哪些指標來驗證你的判斷？
+  target_price: 目標價區間
+  target_low: 下限
+  target_high: 上限
+  confidence: 信心水平
+  notes: 備註
+  notes_placeholder: 其他想法或備注
+  save_button: 💾 儲存備忘錄
+  save_success: ✅ 備忘錄已儲存！
+  saved_memos: 已儲存的備忘錄
+  memo_for_stock: "{name} 的投資備忘錄"
+  view_business_card: "查看 {name} 名片"
+  business_card_page: 名片
+  no_memos_title: 還沒有儲存的備忘錄
+  no_memos_content: 填寫上方表單並點擊「儲存備忘錄」，你的分析記錄就會顯示在這裡。
+
+academy:
+  title: 學習學院
+  lesson_list: 課程列表
+  lesson_number: 第 {order} 課
+  difficulty: 難度
+  score: 得分
+  completed: 已完成
+  start: 開始
+  review: 複習
+  lesson_not_found: 找不到課程內容。
+  back_to_list: ← 返回課程列表
+  learning_objectives: 學習目標
+  lesson_quiz: 課後測驗
+  quiz_instruction: 完成以下問題來檢驗你的理解。
+  submit_answers: ✅ 提交答案
+  no_answer_error: 找不到測驗答案，請重新開始。
+  quiz_results: 測驗結果
+  correct_count: 答對題數
+  accuracy: 正確率
+  question_explanations: 各題詳解
+  correct: ✅ 答對
+  incorrect: ❌ 答錯
+  question_n: 第 {n} 題
+  congrats_complete: 🎉 恭喜完成這一課！
+  next_lesson: ➡️ 前往下一課
+  retake_quiz: 🔄 重新測驗
+  score_excellent: 優秀！
+  score_excellent_desc: 你對這課的內容有很好的理解，繼續保持！
+  score_good: 不錯！
+  score_good_desc: 你有基本的概念，但還有一些地方可以加強。
+  score_needs_work: 加油！
+  score_needs_work_desc: 別擔心，回頭看看解說，你會進步的！
 disclaimer:
   general: ⚠️ 本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。
   expert: ⚠️ 專家分析由 AI 輔助整理，僅供參考，不構成投資建議。
@@ -189,6 +274,69 @@ unit:
   percent: '%'
   shares: 張
   thousand_shares: 萬張
+stock_screener:
+  title: 股票探索引擎
+  subtitle: 不知道從哪開始？用篩選條件發現適合你的股票
+  mode_selector: 選擇模式
+  beginner_mode: 新手模式
+  advanced_mode: 進階模式
+  load_btn: 載入股票資料
+  loading_data: 載入股票資料中…
+  loaded_count: "已載入 {count} 檔股票資料"
+  load_failed: 無法載入股票資料
+  please_load_first: 請先載入資料
+  please_load_first_desc: 點擊上方「載入股票資料」按鈕，取得最新股票數據。
+  no_stock_data: 沒有股票資料
+  no_stock_data_desc: 資料載入為空，請檢查 API 連線或稍後再試。
+  choose_style: 選擇你的投資風格
+  dividend_title: 穩定收息
+  dividend_desc: 殖利率 > 3%，波動較小
+  growth_title: 成長潛力
+  growth_desc: 營收成長 > 10%，具成長動能
+  value_title: 便宜估值
+  value_desc: PER < 15，PBR < 2
+  btn_select: 選擇
+  custom_filters: 自訂篩選條件
+  all_industries: 全部
+  industry_label: 產業分類
+  revenue_growth_only: 只顯示營收正成長
+  per_range: 本益比 (PER) 範圍
+  div_range: 殖利率 (%) 範圍
+  results: 篩選結果
+  matching_stocks: "符合條件的股票：{count} 檔"
+  no_matching_stocks: 沒有符合條件的股票
+  no_matching_stocks_desc: 試著放寬篩選條件，或選擇不同的投資風格。
+  explanation_title: 篩選說明
+  btn_view: 查看
+comprehension_check:
+  title: 理解力測驗
+  subtitle: 測試你對投資基礎觀念的理解程度，共 5 題選擇題
+  what_is_this: 這是什麼？
+  what_is_this_desc: 這份測驗的目的不是考滿分，而是幫你確認自己對投資基礎觀念的理解是否正確。沒答對也沒關係——重要的是看解說，學到東西才是重點！
+  start_btn: 開始測驗
+  reset_btn: 重新測驗
+  start_answering: 開始作答
+  submit_btn: 提交答案
+  no_answers: 找不到測驗答案，請重新開始。
+  results: 測驗結果
+  excellent: 優秀！
+  excellent_desc: 你對投資基礎觀念有很好的理解，繼續保持！
+  good: 不錯！
+  good_desc: 你有基本的概念，但還有一些地方可以加強。
+  needs_work: 加油！
+  needs_work_desc: 別擔心，投資知識需要慢慢累積。看看下方的解說，下次會更好！
+  correct_count: 答對題數
+  accuracy: 正確率
+  question_details: 各題詳解
+  correct: 答對
+  wrong: 答錯
+  question_n: "第 {n} 題"
+  perfect_title: 🎉 太厲害了！全部答對！
+  perfect_desc: 你已經具備了良好的投資基礎知識。記住，知識是投資最好的武器。繼續學習，保持謙虛！
+  good_job_title: 💪 表現不錯！
+  good_job_desc: 你已經掌握了大部分概念。錯的題目是很好的學習機會，回頭看看解說，你會進步得更快。
+  keep_learning_title: 🌱 學習是投資最好的朋友
+  keep_learning_desc: 投資知識需要慢慢累積，每位投資大師都是從零開始。建議重新閱讀名片頁的內容，再試一次！
 story_arc:
   growth: 成長期
   decline: 調整期
@@ -883,3 +1031,341 @@ peer:
       per_higher: "• 本益比（{target_per}）明顯高於標竿（{bench_per}），市場對 {stock_name} 的成長預期較高。"
       per_lower: "• 本益比（{target_per}）低於標竿（{bench_per}），市場對 {stock_name} 的評價較保守。"
       per_similar: "• 本益比跟標竿接近，市場評價相當。"
+
+notification:
+  heading: "🔔 通知中心"
+  subtitle: "追蹤你關注股票的重要事件與異動"
+  checking: "檢查通知..."
+  loading_notifications: "載入通知..."
+  marking: "標記中..."
+  no_watchlist:
+    title: "尚未設定關注清單"
+    body: "請先在「我的關注」頁面加入股票，通知中心才會顯示相關事件。"
+  empty:
+    title: "目前沒有待處理的通知"
+    body: "當你有關注的股票出現重大事件時，會顯示在這裡。"
+  unread: "未讀通知"
+  summary:
+    high_events: "項重大事件"
+    medium_events: "項注意事件"
+    low_events: "項參考事件"
+  mark_all_read_btn: "✅ 全部標記已讀"
+  all_marked_read: "已將所有通知標記為已讀"
+  pending_section: "待處理通知"
+  view_card_btn: "查看名片"
+  mark_read_btn: "標記已讀"
+  settings_section: "通知設定"
+  settings_expander: "展開通知偏好設定"
+  toggle:
+    enable: "啟用通知"
+    high_severity: "重大事件通知（🔴）"
+    medium_severity: "注意事件通知（🟡）"
+    low_severity: "參考事件通知（🟢）"
+  digest_label: "通知頻率"
+  digest:
+    realtime: "即時"
+    daily: "每日彙整"
+    weekly: "每週彙整"
+  save_settings_btn: "💾 儲存設定"
+  settings_saved: "✅ 設定已儲存"
+  default_list: "預設清單"
+  severity:
+    high: "🔴 重大"
+    medium: "🟡 注意"
+    low: "🟢 參考"
+    unknown: "⚪ 未知"
+  event_type:
+    revenue_surge: "💰 營收異動"
+    news_major: "📰 重大新聞"
+    news_medium: "📰 注意新聞"
+    price_abnormal: "📉 股價異常"
+    dividend_change: "💵 股利變更"
+    institutional_shift: "🏷️ 法人突變"
+  unknown_stock: "未知"
+
+settings:
+  title: "設定"
+  risk_section: "風險閾值設定"
+  risk_description: "調整以下閾值來控制事件偵測的敏感度。較低的閾值會觸發較多提醒，較高的閾值僅在重大變化時提醒。"
+  price:
+    heading: "股價變動閾值"
+    description: "當股價單日漲跌幅超過此百分比時，觸發事件提醒。"
+    slider_label: "股價變動閾值（%）"
+    help_text: "預設值 5%。偵測到單日漲跌幅超過此值時，會標記為異常事件。"
+    error_negative: "❌ 閾值不可為負數，請調整為 0 以上的值。"
+    warn_zero: "⚠️ 設為 0% 將觸發所有價格變動事件。"
+    current_threshold: "目前有效閾值：{value:.1f}%"
+    trigger_when: "當單日漲跌幅 ≥ {value:.1f}% 時觸發事件偵測"
+    sensitive: "（敏感）"
+    moderate: "（適中）"
+    relaxed: "（寬鬆）"
+  volume:
+    heading: "成交量放大閾值"
+    description: "當成交量超過過去 20 日均量的此倍數時，觸發事件提醒。"
+    slider_label: "成交量放大閾值（倍數）"
+    help_text: "預設值 2x。成交量超過 20 日均量此倍數時，會標記為異常事件。"
+    error_below_one: "❌ 閾值不可低於 1.0 倍（即為平均量本身）。"
+    de_scoped: "🔜 成交量事件偵測尚未實作（volume detection de-scoped）"
+    sensitive: "（敏感）"
+    moderate: "（適中）"
+    relaxed: "（寬鬆）"
+  revenue:
+    heading: "營收變化閾值"
+    description: "當營收月增率或年增率超過此百分比時，觸發事件提醒。"
+    slider_label: "營收變化閾值（%）"
+    help_text: "預設值 10%。營收變化超過此值時，會標記為異常事件。"
+    error_negative: "❌ 閾值不可為負數。"
+    warn_zero: "⚠️ 設為 0% 將觸發所有營收變動事件。"
+    caption_very_sensitive: "🔴 非常敏感 — 幾乎每次營收公告都會觸發"
+    caption_moderate: "🟡 適中 — 只在明顯變化時觸發"
+    caption_relaxed: "🟢 寬鬆 — 僅在劇烈變化時觸發"
+    current_threshold: "目前有效閾值：{value:.1f}%"
+    trigger_when: "當營收 YoY 變化 ≥ {value:.1f}% 時觸發事件偵測"
+  reset_btn: "🔄 重設為預設值"
+  info_box: "✅ 股價變動與營收變化閾值已串接自適應更新引擎。更多自訂選項即將推出：產業別閾值、法人動向敏感度、訊息通知頻率等。"
+
+expert_analysis:
+  title: "{name} ({id}) 專家觀點"
+  coming_soon: "📋 專家分析即將上線！\n\n我們正在為您準備這檔股票的深度專家分析，\n目前先來看看其他已上線的名牌吧！"
+
+watchlist:
+  title: 我的關注
+  subtitle: 管理您關注的股票與 ETF，掌握最新價格與警示狀態
+  list_selection: 清單選擇
+  new_list_btn: ➕ 新增清單
+  new_list_popover: 新增清單
+  list_name_input: 清單名稱
+  list_name_placeholder: 請輸入清單名稱
+  create_list_btn: 建立清單
+  list_created: "已建立清單：{name}"
+  list_create_failed: 清單名稱已存在或建立失敗
+  list_name_required: 請輸入清單名稱
+  select_list_label: 選擇要檢視的清單
+  no_lists: 目前沒有任何清單
+  total_label: 關注總數
+  total_help: 所有關注標的
+  stocks_label: 個股
+  stocks_help: 個股數量
+  etfs_label: ETF
+  etfs_help: ETF 數量
+  empty_title: 尚未加入任何關注標的
+  empty_message: "您可以透過以下方式將股票或 ETF 加入關注：\n\n1️⃣ 前往 🔍 分類瀏覽 找到有興趣的股票\n2️⃣ 前往 📊 ETF 瀏覽 探索各類 ETF\n3️⃣ 在個股名片頁點擊「加入關注」按鈕\n\n加入後即可在此查看最新價格與設定警示價格 🔔"
+  loading_prices: 載入最新價格…
+  price_error: "無法取得價格資料：{error}"
+  price_unavailable: 無法取得價格資料，請稍後再試。
+  price_overview: 價格概覽
+  alert_above: "🔺 高於 {price}"
+  alert_below: "🔻 低於 {price}"
+  alert_triggered: "⚠️ 已觸發"
+  alert_separator: " ｜ "
+  alert_unset: 未設定
+  card_content: "價格：{price}  漲跌：{change}\n警示：{alert}"
+  btn_view_card: 查看名片
+  btn_remove: 移除
+  removed_toast: "🗑️ 已移除關注"
+  remove_failed: 移除失敗
+  set_alert: "🔔 設定提醒"
+  alert_upper_label: 上限價格（高於此價提醒）
+  alert_lower_label: 下限價格（低於此價提醒）
+  btn_save: 儲存
+  btn_clear_alert: 清除提醒
+  alert_saved: 提醒已儲存
+  alert_save_failed: 儲存失敗
+  alert_cleared: 提醒已清除
+  alert_clear_failed: 清除失敗
+  list_management: 清單管理
+  current_list: "目前清單："
+  btn_rename: "✏️ 重命名"
+  new_list_name_input: 新清單名稱
+  new_list_name_placeholder: 請輸入新清單名稱
+  btn_confirm_rename: 確認重命名
+  renamed_success: "已重命名為：{name}"
+  rename_failed: 重命名失敗：名稱可能已存在或操作失敗
+  new_name_required: 請輸入新清單名稱
+  btn_delete_list: "🗑️ 刪除清單"
+  cannot_delete_last: 無法刪除最後一個清單
+  deleted_success: "已刪除清單：{name}"
+  delete_failed: 刪除失敗
+  footer_title: 提示
+  footer_message: 在個股名片頁可以設定警示價格，當股價觸及警示價格時，此頁面會顯示 ⚠️ 已觸發 標記。
+
+operation_checkup:
+  title: 營運健檢
+  subtitle: "靠什麼賺錢？穩不穩？隨時間怎麼變？"
+  revenue_trend_section: 營收趨勢：公司生意做多大？
+  monthly_revenue_trend: 月營收趨勢
+  latest_monthly_revenue: 最近月營收
+  revenue_yoy: 營收年增率
+  data_insufficient: 資料不足
+  need_13_months: 需要至少 13 個月資料才能計算
+  trend_strong: "{stock_name} 的營收成長很強勁！這代表市場對它的產品或服務需求正在增加。"
+  trend_stable: "{stock_name} 的營收穩定成長，經營狀況不錯。"
+  trend_flat: "{stock_name} 的營收跟去年差不多，屬於持平狀態。"
+  trend_decline: "{stock_name} 的營收比去年下滑，需要關注是什麼原因導致的。"
+  trend_interpret: 營收趨勢解讀
+  price_trend_section: 股價走勢：市場怎麼看這家公司？
+  price_trend: 股價走勢
+  latest_close: 最新收盤價
+  open: 開盤
+  high: 最高
+  low: 最低
+  volume: 成交量
+  institutional_section: 法人動向：大戶在想什麼？
+  institutional_net: 三大法人買賣超
+  net_5d: 近 5 日法人買賣超
+  institutional_interpret: 法人動向解讀
+  inst_strong_buy: 近期法人積極買進，代表專業投資人對這家公司看法偏多。
+  inst_mild_buy: 法人小幅買進，態度中性偏多。
+  inst_mild_sell: 法人小幅賣出，態度中性偏空。
+  inst_strong_sell: 法人積極賣出，需要關注原因。
+  summary_title: 營運摘要
+  summary_fast_growth: 營收快速成長
+  summary_stable_growth: 營收穩定成長
+  summary_flat: 營收持平
+  summary_decline: 營收下滑
+  summary_hot: 市場交易熱絡
+  summary_cold: 市場交易冷清
+  summary_inst_buy: 法人積極買進
+  summary_inst_sell: 法人積極賣出
+  summary_observing: 持續觀察中
+
+category_browser:
+  title: 分類瀏覽
+  subtitle: 探索台股市場：權值股、產業分類、熱門標的
+  loading_stocks: 載入股票資料中…
+  loading_prices: 正在取得行情資料…
+  fetch_error: 無法取得股票資訊
+  no_data: 目前無股票資料可顯示。
+  missing_col: 資料缺少必要欄位
+  top_stocks_title: 權值股列表（依成交金額）
+  no_value_data: 暫無成交金額資料。
+  col_rank: 排名
+  col_money: 成交金額
+  col_close: 收盤價
+  top_20: 前 20 大權值股
+  btn_view: 查看
+  industry_browser_title: 產業分類瀏覽
+  no_industry_data: 無產業分類資料。
+  select_industry: 選擇產業
+  components: 成分股
+  no_industry_stocks: 此產業無股票資料。
+  btn_view_card: 查看名片
+  hot_stocks_title: 熱門列表（依成交量）
+  no_volume_data: 暫無成交量資料。
+  col_volume: 成交量
+  top_20_hot: 前 20 大熱門股
+
+
+financial_wellness:
+  btn_start_quiz: 📝 開始測驗
+  btn_reset_quiz: 🔄 重新測驗
+  section_start_answer: 📝 開始作答
+  btn_view_results: 📊 查看結果
+  no_answers_found: 找不到測驗答案，請重新開始。
+  section_quiz_results: 📊 測驗結果
+  section_personal_tips: 💡 個人化建議
+  strengthen_category: 加強「{category}」
+  section_category_scores: 📋 各面向得分
+
+why_moved:
+  section_title: 🔍 為什麼這檔股票會動？
+  direction_up: 上漲
+  direction_down: 下跌
+  direction_sideways: 震盪
+  direction_change: 變動
+  magnitude_major: 大幅
+  magnitude_significant: 明顯
+  stock_price_change: 股價變動
+  confidence_note: 信心指標反映資料完整度，非AI預測確定性
+  detail_explanation: 詳細說明
+  key_concept: 📌 核心概念
+
+router:
+  page_navigation: 頁面導航
+
+learn_first_gate:
+  title: 🎓 學習入門
+  coming_soon: 學習內容即將推出，目前可以先探索其他功能。
+  intro: 花幾分鐘認識股識，讓你更快上手！
+  btn_prev_lesson: ← 上一課
+  btn_skip: 跳過 →
+  btn_next_lesson: 下一課 →
+  btn_start_using: 開始使用 ✓
+  btn_explore_instead: 先探索其他功能 →
+
+# ── TD-02 Phase 2: New locale keys ──────────────────────────
+
+helpers:
+  profitability: 獲利能力
+  growth: 成長性
+  financial_health_dim: 財務健康
+  dividend_quality: 股利品質
+  valuation: 估值合理性
+  risk_high: 🔴 高風險
+  risk_medium: 🟡 中風險
+  risk_low: 🟢 低風險
+  score_excellent: 表現優異，在同產業中屬於前段班
+  score_average: 表現穩定，有改善空間
+  score_poor: 需要留意，可能拖累整體表現
+
+moat_comparison:
+  title: 護城河比較
+  subtitle: 與同產業同業的護城河深度比較
+  no_peer_data: 無法取得同業資料
+
+compare_stories:
+  title: 同業比較故事
+  subtitle: 與同產業同業的深度敘事比較
+  no_peer_data: 無法取得同業資料
+
+revenue_tree:
+  title: 營收結構樹
+  subtitle: 深入拆解這家公司靠什麼賺錢
+  revenue_source_pct: 營收來源佔比
+  no_data: 無法取得營收組成資料
+  treemap_toggle: "🔬 切換樹狀圖"
+  treemap_toggle_help: 切換為樹狀圖視圖，面積大小代表營收佔比
+  chart_title: "{name} 營收來源"
+  concentration_warning_title: "⚠️ 營收集中風險"
+  concentration_warning_body: "{name}佔營收 {value}%，超過 60% 營收來自單一來源，需留意客戶集中度風險"
+  trend_title: 近 12 個月營收趨勢
+  details_title: 各營收來源說明
+  growth: 成長
+  decline: 衰退
+  yoy_title: 營收年增率
+
+first_visit:
+  welcome: 歡迎使用股識
+  intro: 花兩分鐘認識這個工具，讓你更快上手。
+  what_you_learn: 你將學到什麼
+  what_you_learn_content: "在這裡，你會認識公司，而不是追逐股價。從一個故事開始，了解這家公司是做什麼的、怎麼賺錢、最近有什麼變化。"
+  about_title: "關於股識"
+  about_content: "股識不是投資建議工具。我們不告訴你該買什麼或賣什麼。我們只告訴你這家公司發生了什麼事。"
+  about_analogy: "我們是「公司紀錄者」，不是「股票推薦者」。"
+  dismiss_btn: "我知道了 ✓"
+  start_exploring: 開始探索
+  skip_guide: 跳過導覽
+
+timeline_controls:
+  time_range: "時間範圍："
+
+detail:
+  share_card: 🔗 分享這張名片
+
+historical_pattern:
+  title: 📊 歷史模式
+  no_data: 目前無歷史模式資料。我們正在持續擴充歷史事件資料庫。
+  disclaimer: ⚠️ 歷史表現不代表未來結果。本工具僅供認識公司使用，不構成投資決策的依據。
+  outcome_label: "後續結果："
+
+study_log:
+  title: 📚 學習日誌
+  current_streak: 目前連續學習 **{streak}** 天
+  start_today: 今天開始學習吧！
+  total_studied: 累計研究過 **{total}** 檔股票
+
+wellness:
+  total_score: 總分
+  grade: 評級
+  dimensions: 各面向
+

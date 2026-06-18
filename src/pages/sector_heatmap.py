@@ -8,6 +8,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
+from src.core.i18n import t
 from src.pages.url_sync import navigate_to
 from src.pages._router_base import _白话_card, _info_card, _section_title
 from src.services.market_data import (
@@ -61,37 +62,37 @@ def _format_pct(value: float | None) -> str:
 
 def _render_sector_heatmap(client):
     """Sector Heatmap main page — visual market overview."""
-    st.markdown("## 🗺️ 產業熱力圖")
-    st.markdown("*即時掌握各產業板塊的漲跌分布*")
+    st.markdown(f"## 🗺️ {t('sector_heatmap.title')}")
+    st.markdown(f"*{t('sector_heatmap.subtitle')}*")
     st.markdown("---\n")
 
     # ── Load stock info via market_data service ────────────
-    with st.spinner("載入股票資料中…"):
+    with st.spinner(t('sector_heatmap.loading_data')):
         try:
             all_stock_info = get_all_stock_info(client)
         except Exception as e:
-            st.error(f"無法取得股票資訊：{e}")
+            st.error(t('sector_heatmap.fetch_error', error=e))
             return
 
     if all_stock_info is None or len(all_stock_info) == 0:
-        st.warning("目前無股票資料可顯示。")
+        st.warning(t('sector_heatmap.no_data'))
         return
 
     # Ensure required columns exist
     for col in ("stock_id", "stock_name", "industry_category"):
         if col not in all_stock_info.columns:
-            st.error(f"資料缺少必要欄位：{col}")
+            st.error(t('sector_heatmap.missing_col', col=col))
             return
 
     # ── Build industry → stock_ids mapping via service ────
     sector_stocks = get_sector_stocks(all_stock_info)
 
     if not sector_stocks:
-        st.info("無產業分類資料。")
+        st.info(t('sector_heatmap.no_industry_data'))
         return
 
     # ── Fetch prices via market_data service ───────────────
-    progress = st.progress(0, text="正在取得即時報價…")
+    progress = st.progress(0, text=t('sector_heatmap.fetching_prices'))
     all_stock_ids = sorted(all_stock_info["stock_id"].unique())
     total_stocks = len(all_stock_ids)
     batch_size = 50
@@ -99,7 +100,7 @@ def _render_sector_heatmap(client):
     def _update_progress(fraction: float):
         progress.progress(
             fraction,
-            text=f"已處理 {int(fraction * total_stocks)}/{total_stocks} 檔…",
+            text=t('sector_heatmap.processing_count', processed=int(fraction * total_stocks), total=total_stocks),
         )
 
     try:
@@ -111,20 +112,20 @@ def _render_sector_heatmap(client):
         )
     except Exception as e:
         progress.empty()
-        st.warning(f"無法取得報價資料：{e}")
+        st.warning(t('sector_heatmap.fetch_error', error=e))
         return
 
     progress.empty()
 
     if not summary_map:
-        st.warning("無法取得報價資料，請稍後再試。")
+        st.warning(t('sector_heatmap.no_price_data'))
         return
 
     # ── Compute sector-level metrics via service ───────────
     sector_metrics = compute_sector_metrics(summary_map, sector_stocks)
 
     if not sector_metrics:
-        st.info("無報價資料可分析。")
+        st.info(t('sector_heatmap.no_price_data_to_analyze'))
         return
 
     # ── Summary KPIs ───────────────────────────────────────
@@ -139,27 +140,27 @@ def _render_sector_heatmap(client):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         _白话_card(
-            "產業平均漲幅",
+            t('sector_heatmap.avg_change'),
             _format_pct(overall_avg),
-            "所有產業平均值",
+            t('sector_heatmap.avg_change_help'),
         )
     with col2:
         _白话_card(
-            "最強板塊",
+            t('sector_heatmap.strongest_sector'),
             leading_sector[0],
-            f"平均 {_format_pct(leading_sector[1]['avg_change'])}",
+            t('sector_heatmap.avg_change_value', value=_format_pct(leading_sector[1]['avg_change'])),
         )
     with col3:
         _白话_card(
-            "最弱板塊",
+            t('sector_heatmap.weakest_sector'),
             lagging_sector[0],
-            f"平均 {_format_pct(lagging_sector[1]['avg_change'])}",
+            t('sector_heatmap.avg_change_value', value=_format_pct(lagging_sector[1]['avg_change'])),
         )
     with col4:
         _白话_card(
-            "漲跌產業數",
+            t('sector_heatmap.up_down_count'),
             f"🔴 {up_sectors} / 🟢 {down_sectors}",
-            "上漲 / 下跌",
+            t('sector_heatmap.up_down_help'),
         )
 
     st.markdown("---\n")
@@ -180,7 +181,7 @@ def _render_sector_heatmap(client):
 
 def _render_treemap(sector_metrics: dict):
     """Render a treemap showing sector performance."""
-    st.markdown("### 📊 板塊熱力圖（TreeMap）")
+    st.markdown(f"### 📊 {t('sector_heatmap.treemap_title')}")
 
     # Sort by average change for better color distribution
     sorted_sectors = sorted(
@@ -209,9 +210,9 @@ def _render_treemap(sector_metrics: dict):
         colors.append(_perf_bg_color(avg_chg, 0.6))
         hover_texts.append(
             f"<b>{sector}</b><br>"
-            f"平均漲跌: {_format_pct(avg_chg)}<br>"
-            f"上漲: {up} / 下跌: {down} / 平盤: {flat}<br>"
-            f"共 {count} 檔"
+            f"{t('sector_heatmap.avg_change')}: {_format_pct(avg_chg)}<br>"
+            f"{t('sector_heatmap.up')}: {up} / {t('sector_heatmap.down')}: {down} / {t('sector_heatmap.flat')}: {flat}<br>"
+            f"{t('sector_heatmap.count')} {count} {t('sector_heatmap.stocks_unit')}"
         )
 
         # Stock nodes (top 5 by abs change for readability)
@@ -230,7 +231,7 @@ def _render_treemap(sector_metrics: dict):
             colors.append(_perf_bg_color(chg, 0.4 if chg is not None else 0.1))
             hover_texts.append(
                 f"<b>{stock_label} ({s['stock_id']})</b><br>"
-                f"漲跌: {_format_pct(chg)}"
+                f"{t('sector_heatmap.change')}: {_format_pct(chg)}"
             )
 
     fig = go.Figure(go.Treemap(
@@ -250,7 +251,7 @@ def _render_treemap(sector_metrics: dict):
 
     fig.update_layout(
         title=dict(
-            text="板塊熱力圖 — 紅色=上漲、綠色=下跌、面積=檔數",
+            text=t('sector_heatmap.treemap_legend'),
             font=dict(size=16, color="#2C3E50"),
             x=0.5,
         ),
@@ -264,7 +265,7 @@ def _render_treemap(sector_metrics: dict):
 
 def _render_sector_grid(sector_metrics: dict):
     """Render a detailed grid table of sector performance."""
-    st.markdown("### 🏭 板塊表現排行")
+    st.markdown(f"### 🏭 {t('sector_heatmap.sector_ranking')}")
 
     # Sort by avg change descending
     sorted_sectors = sorted(
@@ -296,13 +297,13 @@ def _render_sector_grid(sector_metrics: dict):
             if idx >= len(df):
                 break
             row = df.iloc[idx]
-            chg = row["_avg_change"]
+            chg = row[_avg_change]
 
             with cols[j]:
                 _白话_card(
-                    label=f"#{int(row['排名'])}  {row['產業']}",
+                    label=t('sector_heatmap.rank_col', rank=int(row["排名"])),
                     value=row["平均漲跌"],
-                    analogy=f"🔴{int(row['上漲'])} 🟢{int(row['下跌'])} ⚪{int(row['平盤'])}",
+                    analogy=f"🔴{int(row["上漲"])} 🟢{int(row["下跌"])} ⚪{int(row["平盤"])}",
                 )
 
 
@@ -323,7 +324,7 @@ def _render_mover_row(rank: int, stock_name: str, stock_id: str, change_pct: flo
 
 def _render_top_movers(summary_map: dict, sector_stocks: dict):
     """Show top gainers and losers across all sectors."""
-    st.markdown("### 🔥 漲跌幅排行")
+    st.markdown(f"### 🔥 {t('sector_heatmap.top_movers')}")
 
     all_stocks = []
     for sector, stock_ids in sector_stocks.items():
@@ -333,7 +334,7 @@ def _render_top_movers(summary_map: dict, sector_stocks: dict):
                 all_stocks.append({**s, "sector": sector})
 
     if not all_stocks:
-        st.info("無可比較的漲跌幅資料。")
+        st.info(t('sector_heatmap.no_mover_data'))
         return
 
     all_stocks.sort(key=lambda x: x["change"], reverse=True)
@@ -341,7 +342,7 @@ def _render_top_movers(summary_map: dict, sector_stocks: dict):
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("#### 🔴 漲幅排行")
+        st.markdown(f"#### 🔴 {t('sector_heatmap.gainers')}")
         top_gainers = all_stocks[:10]
         for rank, s in enumerate(top_gainers, 1):
             change = s["change"]
@@ -355,7 +356,7 @@ def _render_top_movers(summary_map: dict, sector_stocks: dict):
             )
 
     with col2:
-        st.markdown("#### 🟢 跌幅排行")
+        st.markdown(f"#### 🟢 {t('sector_heatmap.losers')}")
         top_losers = all_stocks[-10:][::-1]
         for rank, s in enumerate(top_losers, 1):
             change = s["change"]

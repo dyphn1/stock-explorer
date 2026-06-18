@@ -2,6 +2,7 @@
 import streamlit as st
 from src.services.pattern_detector import detect_patterns, get_available_types
 from src.pages._router_base import _info_card, _section_title
+from src.core.i18n import t
 
 
 def _render_historical_pattern(data: dict, client) -> None:
@@ -14,17 +15,17 @@ def _render_historical_pattern(data: dict, client) -> None:
     stock_id = data["stock_id"]
     stock_name = data["stock_name"]
 
-    _section_title("📊 歷史模式")
+    _section_title(t("historical_pattern:title"))
 
     available_types = get_available_types(stock_id)
 
     if not available_types:
         _info_card(
             f"{stock_name} ({stock_id})",
-            "目前無歷史模式資料。我們正在持續擴充歷史事件資料庫。",
+            t("historical_pattern:no_data"),
             "📊",
         )
-        st.caption("⚠️ 歷史表現不代表未來結果。本工具僅供認識公司使用。")
+        st.caption(t("historical_pattern:disclaimer"))
         return
 
     # 顯示每個事件類型的歷史模式
@@ -49,10 +50,10 @@ def _render_historical_pattern(data: dict, client) -> None:
             card_content = (
                 f"**{match.date}**\n\n"
                 f"{match.description}\n\n"
-                f"{direction_emoji} **後續結果：** {match.outcome}"
+                f"{direction_emoji} **{t('historical_pattern:outcome_label')}** {match.outcome}"
             )
             _info_card("", card_content, direction_emoji)
 
     # 歷史免責聲明
-    st.caption("⚠️ 歷史表現不代表未來結果。本工具僅供認識公司使用，不構成投資決策的依據。")
+    st.caption(t("historical_pattern:disclaimer"))
     st.markdown("---")

@@ -126,6 +126,25 @@ timeline:
   label_all: All
   filter_failed: ⚠️ Timeline filter failed, showing all data
   no_data_in_range: 📌 No data in this range, showing all data
+  page_title: "{name} — Story Timeline"
+  page_subtitle: A chronological overview of key events for this stock over the past year.
+  no_events_title: No Events Found
+  no_events_content: No timeline events were detected for **{name}** in the past year. Try browsing other pages to trigger auto event detection.
+  event_count: "{count} timeline events found"
+  unknown_date: Unknown Date
+  unnamed_event: Unnamed Event
+  event_unknown: "Unknown Event ({type})"
+  event_revenue_surge: Revenue Surge
+  event_news_major: Major News
+  event_news_medium: General News
+  event_price_abnormal: Price Anomaly
+  event_dividend_change: Dividend Change
+  event_institutional_shift: Institutional Flow
+  severity_high: 🔴 High
+  severity_medium: 🟡 Medium
+  severity_low: 🟢 Low
+  severity_unknown: Unknown Severity
+  disclaimer: ⚠️ Timeline events are auto-generated from public data and may contain inaccuracies. For reference only.
 error:
   not_found: Stock ID {sid} not found
   no_data: Unable to fetch data
@@ -196,6 +215,69 @@ unit:
   percent: '%'
   shares: K
   thousand_shares: 10K
+stock_screener:
+  title: Stock Screener
+  subtitle: Not sure where to start? Use filters to discover stocks that fit your style.
+  mode_selector: Mode
+  beginner_mode: Beginner
+  advanced_mode: Advanced
+  load_btn: Load Stock Data
+  loading_data: Loading stock data...
+  loaded_count: "Loaded {count} stocks"
+  load_failed: Unable to load stock data
+  please_load_first: Please Load Data First
+  please_load_first_desc: Click the "Load Stock Data" button above to get the latest stock data.
+  no_stock_data: No Stock Data
+  no_stock_data_desc: Data load returned empty. Please check API connection or try again later.
+  choose_style: Choose Your Investment Style
+  dividend_title: Stable Dividend
+  dividend_desc: Dividend yield > 3%, lower volatility
+  growth_title: Growth Potential
+  growth_desc: Revenue growth > 10%, with growth momentum
+  value_title: Value
+  value_desc: PER < 15, PBR < 2
+  btn_select: Select
+  custom_filters: Custom Filters
+  all_industries: All
+  industry_label: Industry
+  revenue_growth_only: Show only positive revenue growth
+  per_range: PER Range
+  div_range: Dividend Yield (%) Range
+  results: Results
+  matching_stocks: "Matching stocks: {count}"
+  no_matching_stocks: No Matching Stocks
+  no_matching_stocks_desc: Try relaxing the filters or choosing a different investment style.
+  explanation_title: Explanation
+  btn_view: View
+comprehension_check:
+  title: Comprehension Check
+  subtitle: Test your understanding of basic investing concepts — 5 multiple-choice questions
+  what_is_this: What is this?
+  what_is_this_desc: This quiz is not about getting a perfect score — it's about confirming your understanding of basic investing concepts. It's okay to get things wrong — the important thing is to read the explanations and learn!
+  start_btn: Start Quiz
+  reset_btn: Retake Quiz
+  start_answering: Start Answering
+  submit_btn: Submit Answers
+  no_answers: Quiz answers not found, please restart.
+  results: Quiz Results
+  excellent: Excellent!
+  excellent_desc: You have a good understanding of basic investing concepts — keep it up!
+  good: Good!
+  good_desc: You have a basic understanding, but there's room for improvement.
+  needs_work: Keep Going!
+  needs_work_desc: Don't worry, investing knowledge takes time to build. Check the explanations below and you'll do better next time!
+  correct_count: Correct Answers
+  accuracy: Accuracy
+  question_details: Question Details
+  correct: Correct
+  wrong: Incorrect
+  question_n: "Question {n}"
+  perfect_title: Amazing! All Correct!
+  perfect_desc: You have a solid foundation of investing knowledge. Remember, knowledge is the best weapon for investing. Keep learning and stay humble!
+  good_job_title: Nice Work!
+  good_job_desc: You've grasped most concepts. Wrong answers are great learning opportunities — review the explanations and you'll improve faster.
+  keep_learning_title: Learning is Investing's Best Friend
+  keep_learning_desc: Investing knowledge builds over time — every expert started from zero. Try reviewing the business card content and give it another shot!
 story_arc:
   growth: Growth
   decline: Decline
@@ -1134,3 +1216,342 @@ peer:
       per_higher: "• P/E ratio ({target_per}) is significantly higher than the benchmark ({bench_per}), suggesting the market has higher growth expectations for {stock_name}."
       per_lower: "• P/E ratio ({target_per}) is lower than the benchmark ({bench_per}), suggesting the market is more conservative on {stock_name}."
       per_similar: "• P/E ratio is close to the benchmark; market valuation is comparable."
+
+notification:
+  heading: "🔔 Notifications"
+  subtitle: "Track important events for your watched stocks"
+  checking: "Checking notifications..."
+  loading_notifications: "Loading notifications..."
+  marking: "Marking..."
+  no_watchlist:
+    title: "No watchlist set up yet"
+    body: "Please add stocks on the Watchlist page first; the notification center will then show relevant events."
+  empty:
+    title: "No pending notifications"
+    body: "When major events occur for stocks you follow, they will appear here."
+  unread: "Unread Notifications"
+  summary:
+    high_events: "high severity events"
+    medium_events: "medium severity events"
+    low_events: "reference events"
+  mark_all_read_btn: "✅ Mark All as Read"
+  all_marked_read: "All notifications marked as read"
+  pending_section: "Pending Notifications"
+  view_card_btn: "View Card"
+  mark_read_btn: "Mark as Read"
+  settings_section: "Notification Settings"
+  settings_expander: "Expand notification preferences"
+  toggle:
+    enable: "Enable notifications"
+    high_severity: "High severity notifications (🔴)"
+    medium_severity: "Medium severity notifications (🟡)"
+    low_severity: "Low severity notifications (🟢)"
+  digest_label: "Notification frequency"
+  digest:
+    realtime: "Real-time"
+    daily: "Daily digest"
+    weekly: "Weekly digest"
+  save_settings_btn: "💾 Save Settings"
+  settings_saved: "✅ Settings saved"
+  default_list: "Default List"
+  severity:
+    high: "🔴 High"
+    medium: "🟡 Medium"
+    low: "🟢 Low"
+    unknown: "⚪ Unknown"
+  event_type:
+    revenue_surge: "💰 Revenue Change"
+    news_major: "📰 Major News"
+    news_medium: "📰 Notable News"
+    price_abnormal: "📉 Price Anomaly"
+    dividend_change: "💵 Dividend Change"
+    institutional_shift: "🏷️ Institutional Shift"
+  unknown_stock: "Unknown"
+
+settings:
+  title: "Settings"
+  risk_section: "Risk Threshold Settings"
+  risk_description: "Adjust the following thresholds to control event detection sensitivity. Lower thresholds trigger more alerts; higher thresholds only alert on significant changes."
+  price:
+    heading: "Price Change Threshold"
+    description: "Trigger an alert when the stock price changes by more than this percentage in a single day."
+    slider_label: "Price Change Threshold (%)"
+    help_text: "Default 5%. When the daily price change exceeds this value, it will be flagged as an anomaly."
+    error_negative: "❌ Threshold cannot be negative. Please set a value of 0 or above."
+    warn_zero: "⚠️ Setting to 0% will trigger alerts for all price changes."
+    current_threshold: "Current effective threshold: {value:.1f}%"
+    trigger_when: "Triggers when daily change ≥ {value:.1f}%"
+    sensitive: "(sensitive)"
+    moderate: "(moderate)"
+    relaxed: "(relaxed)"
+  volume:
+    heading: "Volume Spike Threshold"
+    description: "Trigger an alert when volume exceeds this multiple of the 20-day average."
+    slider_label: "Volume Spike Threshold (multiple)"
+    help_text: "Default 2x. When volume exceeds this multiple of the 20-day average, it will be flagged as an anomaly."
+    error_below_one: "❌ Threshold cannot be below 1.0x (the average itself)."
+    de_scoped: "🔜 Volume event detection not yet implemented (de-scoped)"
+    sensitive: "(sensitive)"
+    moderate: "(moderate)"
+    relaxed: "(relaxed)"
+  revenue:
+    heading: "Revenue Change Threshold"
+    description: "Trigger an alert when revenue MoM or YoY change exceeds this percentage."
+    slider_label: "Revenue Change Threshold (%)"
+    help_text: "Default 10%. When revenue change exceeds this value, it will be flagged as an anomaly."
+    error_negative: "❌ Threshold cannot be negative."
+    warn_zero: "⚠️ Setting to 0% will trigger alerts for all revenue changes."
+    caption_very_sensitive: "🔴 Very sensitive — will trigger on nearly every revenue announcement"
+    caption_moderate: "🟡 Moderate — only triggers on significant changes"
+    caption_relaxed: "🟢 Relaxed — only triggers on dramatic changes"
+    current_threshold: "Current effective threshold: {value:.1f}%"
+    trigger_when: "Triggers when revenue YoY change ≥ {value:.1f}%"
+  reset_btn: "🔄 Reset to Defaults"
+  info_box: "✅ Price change and revenue change thresholds are connected to the adaptive update engine. More customization options coming soon: industry-specific thresholds, institutional activity sensitivity, notification frequency, and more."
+
+operation_checkup:
+  title: Operations Checkup
+  subtitle: "How does it make money? How stable is it? How has it changed over time?"
+  revenue_trend_section: "Revenue Trend: How big is the business?"
+  monthly_revenue_trend: Monthly Revenue Trend
+  latest_monthly_revenue: Latest Monthly Revenue
+  revenue_yoy: Revenue YoY Growth
+  data_insufficient: Insufficient data
+  need_13_months: Need at least 13 months of data to calculate
+  trend_strong: "{stock_name}'s revenue growth is strong! This means market demand for its products or services is increasing."
+  trend_stable: "{stock_name}'s revenue is growing steadily, indicating solid operations."
+  trend_flat: "{stock_name}'s revenue is about the same as last year, essentially flat."
+  trend_decline: "{stock_name}'s revenue declined compared to last year; worth investigating the cause."
+  trend_interpret: Revenue Trend Interpretation
+  price_trend_section: "Price Trend: How does the market view this company?"
+  price_trend: Price Trend
+  latest_close: Latest Close
+  open: Open
+  high: High
+  low: Low
+  volume: Volume
+  institutional_section: "Institutional Activity: What are the big players thinking?"
+  institutional_net: 3 Major Institutional Net Buying/Selling
+  net_5d: Net 5-Day Institutional Activity
+  institutional_interpret: Institutional Activity Interpretation
+  inst_strong_buy: "Institutions have been actively buying recently, indicating professional investors are bullish on this company."
+  inst_mild_buy: "Institutions made mild purchases, neutral-to-bullish stance."
+  inst_mild_sell: "Institutions made mild sales, neutral-to-bearish stance."
+  inst_strong_sell: "Institutions are actively selling; worth investigating the reason."
+  summary_title: Operations Summary
+  summary_fast_growth: Revenue Growing Rapidly
+  summary_stable_growth: Revenue Growing Steadily
+  summary_flat: Revenue Flat
+  summary_decline: Revenue Declining
+  summary_hot: Active Market Trading
+  summary_cold: Quiet Market Trading
+  summary_inst_buy: Institutions Actively Buying
+  summary_inst_sell: Institutions Actively Selling
+  summary_observing: Under Observation
+
+category_browser:
+  title: Browse by Category
+  subtitle: "Explore the TWSE market: top stocks by value, industry categories, hot picks"
+  loading_stocks: Loading stock data...
+  loading_prices: Fetching market data...
+  fetch_error: Unable to fetch stock info
+  no_data: No stock data available to display.
+  missing_col: Data missing required column
+  top_stocks_title: Top Stocks by Trading Value
+  no_value_data: No trading value data available.
+  col_rank: Rank
+  col_money: Trading Value
+  col_close: Close
+  top_20: Top 20 by Value
+  btn_view: View
+  industry_browser_title: Industry Browser
+  no_industry_data: No industry category data.
+  select_industry: Select Industry
+  components: Components
+  no_industry_stocks: No stocks in this industry.
+  btn_view_card: View Card
+  hot_stocks_title: Hot Stocks by Volume
+  no_volume_data: No trading volume data available.
+  col_volume: Volume
+  top_20_hot: Top 20 Hot Stocks
+
+expert_analysis:
+  title: "{name} ({id}) Expert Analysis"
+  coming_soon: "📋 Expert analysis coming soon!\n\nWe are preparing in-depth expert analysis for this stock.\nIn the meantime, check out other available stocks!"
+
+watchlist:
+  title: My Watchlist
+  subtitle: "Manage your watched stocks and ETFs, track latest prices and alert status"
+  list_selection: List Selection
+  new_list_btn: "➕ New List"
+  new_list_popover: New List
+  list_name_input: List Name
+  list_name_placeholder: Enter list name
+  create_list_btn: Create List
+  list_created: "List created: {name}"
+  list_create_failed: List name already exists or creation failed
+  list_name_required: Please enter a list name
+  select_list_label: Select a list to view
+  no_lists: No lists available
+  total_label: Total Watched
+  total_help: All watched items
+  stocks_label: Stocks
+  stocks_help: Number of stocks
+  etfs_label: ETFs
+  etfs_help: Number of ETFs
+  empty_title: No items in watchlist yet
+  empty_message: "You can add stocks or ETFs to your watchlist by:\n\n1️⃣ Go to 🔍 Browse by Category to find stocks of interest\n2️⃣ Go to 📊 ETF Center to explore various ETFs\n3️⃣ Click the Add to Watchlist button on a stock card page\n\nOnce added, you can view latest prices and set alert prices here 🔔"
+  loading_prices: Loading latest prices...
+  price_error: "Unable to fetch price data: {error}"
+  price_unavailable: Unable to fetch price data, please try again later.
+  price_overview: Price Overview
+  alert_above: "🔺 Above {price}"
+  alert_below: "🔻 Below {price}"
+  alert_triggered: "⚠️ Triggered"
+  alert_separator: " ｜ "
+  alert_unset: Not set
+  card_content: "Price: {price}  Change: {change}\nAlert: {alert}"
+  btn_view_card: View Card
+  btn_remove: Remove
+  removed_toast: "🗑️ Removed from watchlist"
+  remove_failed: Removal failed
+  set_alert: "🔔 Set Alert"
+  alert_upper_label: Upper price (alert when above)
+  alert_lower_label: Lower price (alert when below)
+  btn_save: Save
+  btn_clear_alert: Clear Alert
+  alert_saved: Alert saved
+  alert_save_failed: Save failed
+  alert_cleared: Alert cleared
+  alert_clear_failed: Clear failed
+  list_management: List Management
+  current_list: "Current list:"
+  btn_rename: "✏️ Rename"
+  new_list_name_input: New list name
+  new_list_name_placeholder: Enter new list name
+  btn_confirm_rename: Confirm Rename
+  renamed_success: "Renamed to: {name}"
+  rename_failed: "Rename failed: name may already exist"
+  new_name_required: Please enter a new list name
+  btn_delete_list: "🗑️ Delete List"
+  cannot_delete_last: Cannot delete the last list
+  deleted_success: "Deleted list: {name}"
+  delete_failed: Deletion failed
+  footer_title: Tip
+  footer_message: "You can set alert prices on stock card pages. When the stock price reaches the alert price, this page will show a ⚠️ Triggered indicator."
+
+
+financial_wellness:
+  btn_start_quiz: 📝 Start Quiz
+  btn_reset_quiz: 🔄 Retake Quiz
+  section_start_answer: 📝 Begin Answering
+  btn_view_results: 📊 View Results
+  no_answers_found: No quiz answers found. Please restart.
+  section_quiz_results: 📊 Quiz Results
+  section_personal_tips: 💡 Personalized Tips
+  strengthen_category: Strengthen "{category}"
+  section_category_scores: 📋 Category Scores
+
+why_moved:
+  section_title: 🔍 Why Did This Stock Move?
+  direction_up: Up
+  direction_down: Down
+  direction_sideways: Sideways
+  direction_change: Change
+  magnitude_major: Major
+  magnitude_significant: Significant
+  stock_price_change: Stock Price Change
+  confidence_note: Confidence reflects data completeness, not AI prediction certainty
+  detail_explanation: Detail Explanation
+  key_concept: 📌 Key Concept
+
+router:
+  page_navigation: Page Navigation
+
+learn_first_gate:
+  title: 🎓 Learn First Gate
+  coming_soon: Learning content coming soon, feel free to explore other features in the meantime.
+  intro: Spend a few minutes getting to know Stock Explorer to get up to speed faster!
+  btn_prev_lesson: ← Previous Lesson
+  btn_skip: Skip →
+  btn_next_lesson: Next Lesson →
+  btn_start_using: Start Using ✓
+  btn_explore_instead: Explore Other Features →
+
+# ── TD-02 Phase 2: New locale keys ──────────────────────────
+
+helpers:
+  profitability: Profitability
+  growth: Growth
+  financial_health_dim: Financial Health
+  dividend_quality: Dividend Quality
+  valuation: Valuation
+  risk_high: 🔴 High Risk
+  risk_medium: 🟡 Medium Risk
+  risk_low: 🟢 Low Risk
+  score_excellent: Excellent performance, top-tier in the industry
+  score_average: Stable performance, room for improvement
+  score_poor: Needs attention, may drag down overall performance
+
+moat_comparison:
+  title: Moat Comparison
+  subtitle: Comparing moat depth with industry peers
+  no_peer_data: Unable to retrieve peer data
+
+compare_stories:
+  title: Peer Comparison Stories
+  subtitle: In-depth narrative comparison with industry peers
+  no_peer_data: Unable to retrieve peer data
+
+revenue_tree:
+  title: Revenue Structure
+  subtitle: Deep dive into how this company makes money
+  revenue_source_pct: Revenue Source Breakdown
+  no_data: Unable to retrieve revenue breakdown data
+  treemap_toggle: "🔬 Treemap View"
+  treemap_toggle_help: Switch to treemap view; area size represents revenue share
+  chart_title: "{name} Revenue Sources"
+  concentration_warning_title: "⚠️ Revenue Concentration Risk"
+  concentration_warning_body: "{name} accounts for {value}% of revenue. Over 60% of revenue comes from a single source — be aware of customer concentration risk."
+  trend_title: "12-Month Revenue Trend"
+  details_title: "Revenue Source Breakdown"
+  growth: Growth
+  decline: Decline
+  yoy_title: YoY Revenue Growth
+  yoy_body: "Compared to last year: **{direction} {value:.1f}%**\n\n{yoy_analogy}"
+
+first_visit:
+  welcome: Welcome to Stock Explorer
+  intro: Spend two minutes to get familiar with this tool.
+  what_you_learn: What You'll Learn
+  what_you_learn_content: "Here, you'll understand companies, not chase stock prices. Start with a story — learn what the company does, how it makes money, and what's changed recently."
+  about_title: "About Stock Explorer"
+  about_content: "Stock Explorer is not an investment advice tool. We don't tell you what to buy or sell. We only tell you what's happening with the company."
+  about_analogy: "We are 'company chroniclers,' not 'stock pickers.'"
+  dismiss_btn: "Got it ✓"
+  start_exploring: Start Exploring
+  skip_guide: Skip Guide
+
+timeline_controls:
+  time_range: "Time Range:"
+
+detail:
+  share_card: 🔗 Share This Card
+
+historical_pattern:
+  title: 📊 Historical Patterns
+  no_data: No historical pattern data available. We are continuously expanding our historical event database.
+  disclaimer: ⚠️ Past performance does not guarantee future results. This tool is for educational purposes only and does not constitute investment advice.
+  outcome_label: "Subsequent outcome:"
+
+study_log:
+  title: 📚 Study Log
+  current_streak: Currently on a **{streak}** day learning streak
+  start_today: Start learning today!
+  total_studied: Studied **{total}** stocks in total
+
+wellness:
+  total_score: Total Score
+  grade: Grade
+  dimensions: Dimensions
+

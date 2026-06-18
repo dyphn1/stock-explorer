@@ -1,5 +1,6 @@
 """C73 Expert Analysis (專家分析) — curated expert analysis for major Taiwan stocks."""
 import streamlit as st
+from src.core.i18n import t
 from src.pages.business_card._helpers import (
     _expert_card,
     _historian_disclaimer,
@@ -9,7 +10,7 @@ from src.pages._router_base import _section_title
 # Curated expert analysis for 10 major Taiwan stocks
 _EXPERT_ANALYSIS = {
     "2330": {
-        "title": "台積電 (2330) 專家觀點",
+        "title": t("expert_analysis.title", name="台積電", id="2330"),
         "content": (
             "🌍 **全球晶圓代工龍頭**：台積電在全球先進製程（7nm 以下）市占率超過 90%，"
             "是蘋果、NVIDIA、AMD 等科技大廠的核心供應商。\n\n"
@@ -20,7 +21,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2317": {
-        "title": "鴻海 (2317) 專家觀點",
+        "title": t("expert_analysis.title", name="鴻海", id="2317"),
         "content": (
             "🔧 **電子製造服務霸主**：鴻海為全球最大的電子代工廠，"
             "主要客戶涵蓋蘋果、戴爾、HP 等國際品牌。\n\n"
@@ -31,7 +32,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2454": {
-        "title": "聯發科 (2454) 專家觀點",
+        "title": t("expert_analysis.title", name="聯發科", id="2454"),
         "content": (
             "📱 **IC 設計領導者**：聯發科為全球智慧型手機晶片的主要供應商之一，"
             "天璣系列 5G 晶片在旗艦與中階市場均有斬獲。\n\n"
@@ -42,7 +43,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2308": {
-        "title": "台達電 (2308) 專家觀點",
+        "title": t("expert_analysis.title", name="台達電", id="2308"),
         "content": (
             "🔋 **電源管理專家**：台達電為全球領先的電源與散熱解決方案供應商，"
             "在資料中心、電動車充電、工業自動化等領域均有布局。\n\n"
@@ -52,7 +53,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2881": {
-        "title": "富邦金 (2881) 專家觀點",
+        "title": t("expert_analysis.title", name="富邦金", id="2881"),
         "content": (
             "🏦 **金融控股巨擘**：富邦金為台灣最大的金融控股公司之一，"
             "旗下涵蓋銀行、壽險、證券等多元金融業務。\n\n"
@@ -62,7 +63,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2882": {
-        "title": "國泰金 (2882) 專家觀點",
+        "title": t("expert_analysis.title", name="國泰金", id="2882"),
         "content": (
             "🏦 **金融雙雄之一**：國泰金為台灣最大的金融控股公司，"
             "國泰人壽為台灣最大壽險公司，國泰世華銀行為領先商業銀行。\n\n"
@@ -73,7 +74,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "1301": {
-        "title": "台塑 (1301) 專家觀點",
+        "title": t("expert_analysis.title", name="台塑", id="1301"),
         "content": (
             "🧪 **石化產業龍頭**：台塑為全球主要的石化產品生產商，"
             "產品涵蓋 PVC、PE、PP 等泛用塑膠與化學品。\n\n"
@@ -84,7 +85,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2002": {
-        "title": "中鋼 (2002) 專家觀點",
+        "title": t("expert_analysis.title", name="中鋼", id="2002"),
         "content": (
             "🏗️ **鋼鐵產業龍頭**：中鋼為台灣最大的鋼鐵製造商，"
             "產品廣泛應用於營建、機械、汽車等產業。\n\n"
@@ -95,7 +96,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2382": {
-        "title": "廣達 (2382) 專家觀點",
+        "title": t("expert_analysis.title", name="廣達", id="2382"),
         "content": (
             "💻 **伺服器代工龍頭**：廣達為全球最大的筆記型電腦代工廠，"
             "同時也是 AI 伺服器的主要供應商之一。\n\n"
@@ -106,7 +107,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "3045": {
-        "title": "大立光 (3045) 專家觀點",
+        "title": t("expert_analysis.title", name="大立光", id="3045"),
         "content": (
             "📷 **光學鏡頭霸主**：大立光為全球智慧型手機光學鏡頭的領導廠商，"
             "技術門檻高，客戶涵蓋蘋果、三星、華為等。\n\n"
@@ -128,7 +129,7 @@ def _render_expert_analysis(data: dict, client) -> None:
     stock_id = data["stock_id"]
     stock_name = data["stock_name"]
 
-    _section_title(f"🎓 專家分析")
+    _section_title(t("expert_analysis.title"))
 
     analysis = _EXPERT_ANALYSIS.get(stock_id)
     if analysis:
@@ -136,9 +137,7 @@ def _render_expert_analysis(data: dict, client) -> None:
     else:
         _expert_card(
             f"{stock_name} ({stock_id})",
-            "📋 專家分析即將上線！\n\n"
-            "我們正在為您準備這檔股票的深度專家分析，"
-            "目前先來看看其他已上線的名牌吧！",
+            t("expert_analysis.coming_soon"),
             "🎓",
         )
 

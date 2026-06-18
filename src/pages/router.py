@@ -298,7 +298,7 @@ def _render_navbar(data: dict, current_page_key: str):
         current_idx = 0
 
     selected_label = st.radio(
-        "頁面導航",
+        t("router.page_navigation"),
         page_labels,
         index=current_idx,
         horizontal=True,

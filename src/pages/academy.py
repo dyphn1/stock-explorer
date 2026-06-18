@@ -10,6 +10,7 @@ import streamlit as st
 from src.data.finmind_client import FinMindClient
 from src.pages._router_base import _info_card, _section_title, _白话_card, get_stock_data
 from src.pages.business_card._helpers import _historian_disclaimer
+from src.core.i18n import t
 from src.services.lesson_service import (
     load_academy_meta,
     get_lesson,
@@ -35,7 +36,7 @@ def _render_content_block(block: dict, client: FinMindClient) -> None:
 
     elif btype == "callout":
         text = block.get("text", "")
-        _info_card("重點提示", text, icon="💡")
+        _info_card(t("academy.key_point"), text, icon="💡")
 
     elif btype == "stock_example":
         _render_stock_example(block, client)
@@ -89,7 +90,7 @@ def _render_stock_example(block: dict, client: FinMindClient) -> None:
                         with cols[i + 1]:
                             _白话_card(label, str(value), "")
         except Exception:
-            st.caption("⚠️ 無法載入即時資料，請稍後再試。")
+            st.caption(t("academy.load_error"))
 
     st.markdown("---")
 
@@ -99,20 +100,20 @@ def _get_score_style(percentage: float) -> dict:
     if percentage >= 80:
         return {
             "emoji": "🟢",
-            "title": "優秀！",
-            "desc": "你對這課的內容有很好的理解，繼續保持！"
+            "title": t('academy.score_excellent'),
+            "desc": t('academy.score_excellent_desc')
         }
     elif percentage >= 60:
         return {
             "emoji": "🟡",
-            "title": "不錯！",
-            "desc": "你有基本的概念，但還有一些地方可以加強。"
+            "title": t('academy.score_good'),
+            "desc": t('academy.score_good_desc')
         }
     else:
         return {
             "emoji": "🔴",
-            "title": "加油！",
-            "desc": "別擔心，回頭看看解說，你會進步的！"
+            "title": t('academy.score_needs_work'),
+            "desc": t('academy.score_needs_work_desc')
         }
 
 
@@ -123,9 +124,9 @@ def _render_quiz(lesson: dict, lesson_id: str, progress: dict) -> None:
         return
 
     st.markdown("---")
-    _section_title("📝 課後測驗")
+    _section_title(f"📝 {t('academy.lesson_quiz')}")
 
-    st.markdown("完成以下問題來檢驗你的理解。")
+    st.markdown(t('academy.quiz_instruction'))
 
     # Quiz state keys
     quiz_submitted_key = f"academy_quiz_submitted_{lesson_id}"
@@ -153,7 +154,7 @@ def _render_quiz(lesson: dict, lesson_id: str, progress: dict) -> None:
                 answers[qid] = option_keys[idx]
                 st.markdown("")
 
-            quiz_submitted = st.form_submit_button("✅ 提交答案", use_container_width=True)
+            quiz_submitted = st.form_submit_button(t('academy.submit_answers'), use_container_width=True)
 
         if quiz_submitted:
             st.session_state[quiz_answers_key] = answers
@@ -164,7 +165,7 @@ def _render_quiz(lesson: dict, lesson_id: str, progress: dict) -> None:
     if st.session_state[quiz_submitted_key]:
         answers = st.session_state.get(quiz_answers_key, {})
         if not answers:
-            st.warning("找不到測驗答案，請重新開始。")
+            st.warning(t('academy.no_answer_error'))
             return
 
         results = []
@@ -186,41 +187,41 @@ def _render_quiz(lesson: dict, lesson_id: str, progress: dict) -> None:
         mark_lesson_complete(progress, lesson_id, percentage)
 
         st.markdown("---")
-        _section_title("📊 測驗結果")
+        _section_title(f"📊 {t('academy.quiz_results')}")
 
         # Score summary
         score_style = _get_score_style(percentage)
 
         col1, col2 = st.columns(2)
         with col1:
-            _白话_card("答對題數", f"{correct_count} / {total}", f"{score_style['emoji']} {score_style['title']}")
+            _白话_card(t('academy.correct_count'), f"{correct_count} / {total}", f"{score_style['emoji']} {score_style['title']}")
         with col2:
-            _白话_card("正確率", f"{percentage:.0f}%", score_style['desc'])
+            _白话_card(t('academy.accuracy'), f"{percentage:.0f}%", score_style['desc'])
 
         st.markdown("")
 
         # Detailed results
-        _section_title("📋 各題詳解")
+        _section_title(f"📋 {t('academy.question_explanations')}")
         for i, r in enumerate(results, 1):
             is_correct = r["correct"]
-            status = "✅ 答對" if is_correct else "❌ 答錯"
+            status = t('academy.correct') if is_correct else t('academy.incorrect')
 
             if is_correct:
-                st.success(f"{status} 第 {i} 題")
+                st.success(f"{status} {t('academy.question_n', n=i)}")
             else:
-                st.error(f"{status} 第 {i} 題")
+                st.error(f"{status} {t('academy.question_n', n=i)}")
             st.markdown(f"**{r['question_text']}**")
             st.info(r["explanation"])
             st.markdown("---")
 
         # Completion message
-        completion_message = lesson.get("completion_message", "🎉 恭喜完成這一課！")
+        completion_message = lesson.get("completion_message", t('academy.congrats_complete'))
         st.success(completion_message)
 
         # Next lesson button
         next_lesson_id = lesson.get("next_lesson_id")
         if next_lesson_id:
-            if st.button("➡️ 前往下一課", key=f"academy_next_{lesson_id}", use_container_width=True):
+            if st.button(t('academy.next_lesson'), key=f"academy_next_{lesson_id}", use_container_width=True):
                 st.session_state["academy_current_lesson"] = next_lesson_id
                 # Clear quiz state for current lesson
                 st.session_state[quiz_submitted_key] = False
@@ -229,7 +230,7 @@ def _render_quiz(lesson: dict, lesson_id: str, progress: dict) -> None:
                 st.rerun()
 
         # Reset button
-        if st.button("🔄 重新測驗", key=f"academy_reset_{lesson_id}", use_container_width=True):
+        if st.button(t('academy.retake_quiz'), key=f"academy_reset_{lesson_id}", use_container_width=True):
             st.session_state[quiz_submitted_key] = False
             if quiz_answers_key in st.session_state:
                 del st.session_state[quiz_answers_key]
@@ -241,7 +242,7 @@ def _render_quiz(lesson: dict, lesson_id: str, progress: dict) -> None:
 def _render_academy(client: FinMindClient):
     """Education Academy main page — structured investing lessons with quizzes."""
     meta = load_academy_meta()
-    title = meta.get("title", "學習學院")
+    title = meta.get("title", t('academy.title'))
     description = meta.get("description", "")
 
     # ── Academy header ────────────────────────────────────────
@@ -262,7 +263,7 @@ def _render_academy(client: FinMindClient):
     with col_prog:
         st.progress(completion_rate / 100.0)
     with col_text:
-        st.markdown(f"**{completed_count}/{total_lessons}** 完成")
+        st.markdown(f"**{completed_count}/{total_lessons}** {t('academy.completed')}")
 
     st.markdown("---")
 
@@ -276,7 +277,7 @@ def _render_academy(client: FinMindClient):
 
     if current_lesson_id is None:
         # Show lesson list
-        _section_title("📚 課程列表")
+        _section_title(f"📚 {t('academy.lesson_list')}")
 
         for lesson in all_lessons:
             lid = lesson.get("id", "")
@@ -297,13 +298,13 @@ def _render_academy(client: FinMindClient):
             with st.container():
                 col_main, col_btn = st.columns([4, 1])
                 with col_main:
-                    st.markdown(f"### {status_icon} {l_icon} 第 {order} 課：{l_title}")
-                    st.markdown(f"⏱ {l_time} ｜ 📊 難度：{l_diff}")
+                    st.markdown(f"### {status_icon} {l_icon} {t('academy.lesson_number', order=order)}：{l_title}")
+                    st.markdown(f"⏱ {l_time} ｜ 📊 {t('academy.difficulty')}：{l_diff}")
                     if is_completed:
-                        st.caption(f"已完成 ｜ 得分：{score:.0f}%")
+                        st.caption(f"{t('academy.completed')} ｜ {t('academy.score')}：{score:.0f}%")
                 with col_btn:
                     if st.button(
-                        "開始" if not is_completed else "複習",
+                        t('academy.start') if not is_completed else t('academy.review'),
                         key=f"academy_start_{lid}",
                         use_container_width=True,
                     ):
@@ -323,14 +324,14 @@ def _render_academy(client: FinMindClient):
         # Show specific lesson
         lesson = get_lesson(current_lesson_id)
         if lesson is None:
-            st.error("找不到課程內容。")
-            if st.button("← 返回課程列表"):
+            st.error(t('academy.lesson_not_found'))
+            if st.button(t('academy.back_to_list')):
                 st.session_state["academy_current_lesson"] = None
                 st.rerun()
             return
 
         # Back button
-        if st.button("← 返回課程列表"):
+        if st.button(t('academy.back_to_list')):
             st.session_state["academy_current_lesson"] = None
             st.rerun()
 
@@ -340,14 +341,14 @@ def _render_academy(client: FinMindClient):
         l_time = lesson.get("estimated_time", "")
         l_diff = lesson.get("difficulty", "")
 
-        st.markdown(f"## {l_icon} 第 {lesson.get('order', '')} 課：{l_title}")
-        st.markdown(f"⏱ {l_time} ｜ 📊 難度：{l_diff}")
+        st.markdown(f"## {l_icon} {t('academy.lesson_number', order=lesson.get('order', ''))}：{l_title}")
+        st.markdown(f"⏱ {l_time} ｜ 📊 {t('academy.difficulty')}：{l_diff}")
         st.markdown("---")
 
         # Learning objectives
         objectives = lesson.get("learning_objectives", [])
         if objectives:
-            _section_title("🎯 學習目標")
+            _section_title(f"🎯 {t('academy.learning_objectives')}")
             if isinstance(objectives, list):
                 for obj in objectives:
                     st.markdown(f"- {obj}")

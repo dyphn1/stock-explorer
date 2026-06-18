@@ -4,6 +4,7 @@ Renders an inline explanation of single-stock price movements
 with plain-language narratives. Only shown when movement is significant (>3%).
 """
 import streamlit as st
+from src.core.i18n import t
 from src.services.stock_movement_explainer import explain_movement
 from src.pages._router_base import _info_card, _summary_card, _section_title, _confidence_badge, _section_title_with_read_time
 
@@ -87,7 +88,7 @@ def _render_why_moved(data: dict, client) -> None:
     # ── Render the section ──
     # C205: section title with read time badge
     movement_full_text = explanation.get("narrative", "") + " " + explanation.get("detail", "")
-    _section_title_with_read_time("🔍 為什麼這檔股票會動？", movement_full_text)
+    _section_title_with_read_time(t("why_moved.section_title"), movement_full_text)
 
     # Direction emoji and magnitude
     direction_emoji = {
@@ -97,14 +98,14 @@ def _render_why_moved(data: dict, client) -> None:
     }.get(explanation["direction"], "➡️")
 
     direction_label = {
-        "up": "上漲",
-        "down": "下跌",
-        "sideways": "震盪",
-    }.get(explanation["direction"], "變動")
+        "up": t("why_moved.direction_up"),
+        "down": t("why_moved.direction_down"),
+        "sideways": t("why_moved.direction_sideways"),
+    }.get(explanation["direction"], t("why_moved.direction_change"))
 
     magnitude_label = {
-        "major": "大幅",
-        "significant": "明顯",
+        "major": t("why_moved.magnitude_major"),
+        "significant": t("why_moved.magnitude_significant"),
     }.get(explanation["magnitude"], "")
 
     change_pct = explanation["change_pct"]
@@ -119,18 +120,18 @@ def _render_why_moved(data: dict, client) -> None:
     border_color = "#27AE60" if explanation["direction"] == "up" else (
         "#E74C3C" if explanation["direction"] == "down" else "#F39C12"
     )
-    _summary_card("股價變動", movement_content, direction_emoji, border_color=border_color)
+    _summary_card(t("why_moved.stock_price_change"), movement_content, direction_emoji, border_color=border_color)
     # C204: confidence badge
-    st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+    st.caption(f"{_confidence_badge(0.9)} · {t('why_moved.confidence_note')}")
 
     # Detail explanation
     if explanation.get("detail"):
-        _info_card("詳細說明", explanation["detail"], "📖")
+        _info_card(t("why_moved.detail_explanation"), explanation["detail"], "📖")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+        st.caption(f"{_confidence_badge(0.9)} · {t('why_moved.confidence_note')}")
 
     # Key concept callout
     if explanation.get("key_concept"):
-        _info_card("📌 核心概念", explanation["key_concept"], "💡")
+        _info_card(t("why_moved.key_concept"), explanation["key_concept"], "💡")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+        st.caption(f"{_confidence_badge(0.9)} · {t('why_moved.confidence_note')}")

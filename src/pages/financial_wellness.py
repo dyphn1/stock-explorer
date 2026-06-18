@@ -45,12 +45,12 @@ def _render_financial_wellness(client: FinMindClient):
     col_start, col_reset = st.columns(2)
     with col_start:
         if not st.session_state["wellness_show_form"] and not st.session_state["wellness_quiz_done"]:
-            if st.button("📝 開始測驗", key="wellness_start", use_container_width=True):
+            if st.button(t("financial_wellness.btn_start_quiz"), key="wellness_start", use_container_width=True):
                 st.session_state["wellness_show_form"] = True
                 st.rerun()
     with col_reset:
         if st.session_state["wellness_quiz_done"]:
-            if st.button("🔄 重新測驗", key="wellness_reset", use_container_width=True):
+            if st.button(t("financial_wellness.btn_reset_quiz"), key="wellness_reset", use_container_width=True):
                 st.session_state["wellness_quiz_done"] = False
                 st.session_state["wellness_show_form"] = False
                 # Clear answers
@@ -64,7 +64,7 @@ def _render_financial_wellness(client: FinMindClient):
 
     # ── Quiz form ──────────────────────────────────────────
     if st.session_state["wellness_show_form"] and not st.session_state["wellness_quiz_done"]:
-        _section_title(f"📝 開始作答")
+        _section_title(t("financial_wellness.section_start_answer"))
 
         with st.form("wellness_quiz_form"):
             answers = {}
@@ -87,7 +87,7 @@ def _render_financial_wellness(client: FinMindClient):
                 answers[qid] = option_keys[idx]
                 st.markdown("")
 
-            quiz_submitted = st.form_submit_button("📊 查看結果", use_container_width=True)
+            quiz_submitted = st.form_submit_button(t("financial_wellness.btn_view_results"), use_container_width=True)
 
         if quiz_submitted:
             st.session_state["wellness_answers"] = answers
@@ -99,7 +99,7 @@ def _render_financial_wellness(client: FinMindClient):
     if st.session_state["wellness_quiz_done"]:
         answers = st.session_state.get("wellness_answers", {})
         if not answers:
-            st.warning("找不到測驗答案，請重新開始。")
+            st.warning(t("financial_wellness.no_answers_found"))
             return
 
         result = calculate_score(answers)
@@ -107,7 +107,7 @@ def _render_financial_wellness(client: FinMindClient):
         tips = get_tips(answers)
 
         st.markdown("---\n")
-        _section_title(f"📊 測驗結果")
+        _section_title(t("financial_wellness.section_quiz_results"))
 
         # Score display
         score = result["total_score"]
@@ -118,7 +118,7 @@ def _render_financial_wellness(client: FinMindClient):
             st.markdown(
                 f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;
                 border-left:4px solid {interpretation['color']};text-align:center;">
-                    <div style="font-size:0.85rem;color:#7F8C8D;">總分</div>
+                    <div style="font-size:0.85rem;color:#7F8C8D;">{t("wellness:total_score")}</div>
                     <div style="font-size:2.5rem;font-weight:700;color:{interpretation['color']};">
                         {score}
                     </div>
@@ -130,7 +130,7 @@ def _render_financial_wellness(client: FinMindClient):
             st.markdown(
                 f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;
                 border-left:4px solid {interpretation['color']};text-align:center;">
-                    <div style="font-size:0.85rem;color:#7F8C8D;">評級</div>
+                    <div style="font-size:0.85rem;color:#7F8C8D;">{t("wellness:grade")}</div>
                     <div style="font-size:1.8rem;font-weight:700;color:{interpretation['color']};">
                         {interpretation['emoji']} {interpretation['title']}
                     </div>
@@ -145,7 +145,7 @@ def _render_financial_wellness(client: FinMindClient):
             st.markdown(
                 f"""<div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;
                 border-left:4px solid #3498DB;text-align:center;">
-                    <div style="font-size:0.85rem;color:#7F8C8D;">各面向</div>
+                    <div style="font-size:0.85rem;color:#7F8C8D;">{t("wellness:dimensions")}</div>
                     <div style="font-size:1.2rem;font-weight:700;color:#27AE60;">
                         🟢 {high_count} 個達標
                     </div>
@@ -168,17 +168,17 @@ def _render_financial_wellness(client: FinMindClient):
         # ── Personalized tips ───────────────────────────────
         if tips:
             st.markdown("---\n")
-            _section_title(f"💡 個人化建議")
+            _section_title(t("financial_wellness.section_personal_tips"))
             for tip in tips:
                 _info_card(
-                    f"加強「{tip['category']}」",
+                    t("financial_wellness.strengthen_category", category=tip['category']),
                     tip["tip"],
                     icon="📌",
                 )
 
         # ── Category breakdown ─────────────────────────────
         st.markdown("---\n")
-        _section_title(f"📋 各面向得分")
+        _section_title(t("financial_wellness.section_category_scores"))
 
         cat_scores = result.get("category_scores", {})
         if cat_scores:

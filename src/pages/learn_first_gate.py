@@ -5,6 +5,7 @@ Replaces the old first_visit_guide.py (C103).
 """
 from __future__ import annotations
 import streamlit as st
+from src.core.i18n import t
 from src.pages._router_base import (
     _lesson_card, _progress_dots, _section_title,
     _beginner_banner, _advanced_content_expander,
@@ -21,8 +22,8 @@ def _render_learn_first_gate(client):
     lessons = get_gateway_lessons()
     if not lessons:
         # No lessons loaded — show coming soon and allow skip
-        _section_title("🎓 學習入門")
-        _beginner_banner("學習內容即將推出，目前可以先探索其他功能。")
+        _section_title(t("learn_first_gate.title"))
+        _beginner_banner(t("learn_first_gate.coming_soon"))
         _render_skip_button()
         return
 
@@ -33,8 +34,8 @@ def _render_learn_first_gate(client):
     idx = st.session_state["gateway_lesson_idx"]
     total = len(lessons)
 
-    _section_title("🎓 學習入門")
-    _beginner_banner("花幾分鐘認識股識，讓你更快上手！")
+    _section_title(t("learn_first_gate.title"))
+    _beginner_banner(t("learn_first_gate.intro"))
     _progress_dots(idx, total)
 
     # Current lesson
@@ -50,21 +51,21 @@ def _render_learn_first_gate(client):
     col1, col2, col3 = st.columns([1, 1, 1])
     with col1:
         if idx > 0:
-            if st.button("← 上一課", key="gateway_prev", use_container_width=True):
+            if st.button(t("learn_first_gate.btn_prev_lesson"), key="gateway_prev", use_container_width=True):
                 st.session_state["gateway_lesson_idx"] = idx - 1
                 st.rerun()
     with col2:
-        if st.button("跳過 →", key="gateway_skip", use_container_width=True):
+        if st.button(t("learn_first_gate.btn_skip"), key="gateway_skip", use_container_width=True):
             st.session_state["gateway_completed"] = True
             st.session_state["first_visit_dismissed"] = True
             st.rerun()
     with col3:
         if idx < total - 1:
-            if st.button("下一課 →", key="gateway_next", use_container_width=True):
+            if st.button(t("learn_first_gate.btn_next_lesson"), key="gateway_next", use_container_width=True):
                 st.session_state["gateway_lesson_idx"] = idx + 1
                 st.rerun()
         else:
-            if st.button("開始使用 ✓", key="gateway_complete", use_container_width=True):
+            if st.button(t("learn_first_gate.btn_start_using"), key="gateway_complete", use_container_width=True):
                 st.session_state["gateway_completed"] = True
                 st.session_state["first_visit_dismissed"] = True
                 st.rerun()
@@ -76,7 +77,7 @@ def _render_skip_button():
     """Skip button for coming-soon state."""
     _, col, _ = st.columns([2, 1, 2])
     with col:
-        if st.button("先探索其他功能 →", key="gateway_skip_soon", use_container_width=True):
+        if st.button(t("learn_first_gate.btn_explore_instead"), key="gateway_skip_soon", use_container_width=True):
             st.session_state["gateway_completed"] = True
             st.session_state["first_visit_dismissed"] = True
             st.rerun()

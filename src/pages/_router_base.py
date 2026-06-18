@@ -9,6 +9,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta
 from src.data.finmind_client import FinMindClient, FinMindRateLimitError
 from src.services.financial_metrics import calc_extra_metrics, find_financial_value
+from src.core.i18n import t
 
 
 def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
@@ -61,7 +62,7 @@ def get_stock_data(client: FinMindClient, stock_id: str) -> dict:
     )
 
     if st.session_state.get("_rate_limited"):
-        st.warning("⚠️ API 速率限制已達上限，部分資料可能無法載入。請稍後再試。")
+        st.warning(t("rate_limited"))
         st.session_state["_rate_limited"] = False  # reset after showing
 
     return data
@@ -95,11 +96,11 @@ def _confidence_badge(confidence: float) -> str:
         A string like "🟢 高度信心" with appropriate emoji and label.
     """
     if confidence >= 0.8:
-        return "🟢 高度信心"
+        return t("router_base:confidence_high")
     elif confidence >= 0.5:
-        return "🟡 中度信心"
+        return t("router_base:confidence_medium")
     else:
-        return "🟠 參考性質"
+        return t("router_base:confidence_low")
 
 
 def _read_time(text: str) -> str:
@@ -115,7 +116,7 @@ def _read_time(text: str) -> str:
     """
     char_count = len(text)
     minutes = max(1, math.ceil(char_count / 450))
-    return f"{minutes} 分鐘閱讀"
+    return t("router_base:read_time", minutes=minutes)
 
 
 def _section_title_with_read_time(title: str, content: str) -> None:
@@ -143,7 +144,7 @@ def _explain_button(
     delta: str = "",
     context: dict | None = None,
     key_prefix: str = "",
-    source_label: str = "📊 系統估算",
+    source_label: str = "",
 ) -> None:
     """Render a 💡 button that opens a popover with a plain-language metric explanation.
 
@@ -160,6 +161,9 @@ def _explain_button(
     """
     from src.services.metric_explainer import get_metric_explanation_for_popover
 
+    if not source_label:
+        source_label = t("router_base:source_estimate")
+
     popover_key = f"explain_{key_prefix}_{metric_name}"
     try:
         explanation = get_metric_explanation_for_popover(
@@ -168,17 +172,17 @@ def _explain_button(
             delta=delta,
             context=context or {},
         )
-        with st.popover("💡", key=popover_key, help=f"解釋「{metric_name}」"):
+        with st.popover("💡", key=popover_key, help=t("router_base:explain_help", name=metric_name)):
             st.markdown(f"**{explanation['display_name']}**")
             st.markdown(f"_{explanation['value_text']}_")
             st.markdown("---")
             st.markdown(explanation["explanation_text"])
             st.caption(source_label)
     except Exception:
-        with st.popover("💡", key=popover_key, help=f"解釋「{metric_name}」"):
+        with st.popover("💡", key=popover_key, help=t("router_base:explain_help", name=metric_name)):
             st.markdown(f"**{metric_name}**")
             st.markdown(f"_{metric_value}_")
-            st.info("暫時無法產生解釋，請稍後再試。")
+            st.info(t("router_base:explain_error"))
             st.caption(source_label)
 
 
@@ -262,7 +266,7 @@ def _so_what_box(deltas: list[dict]) -> None:
 
     st.markdown(f"""
     <div style="background:#F8F9FA;border-radius:12px;padding:1.2rem;border-left:4px solid #3498DB;margin:0.8rem 0 0.5rem 0;">
-        <div style="font-weight:600;color:#2C3E50;">🧭 所以呢？</div>
+        <div style="font-weight:600;color:#2C3E50;">🧭 {t('router_base:so_what')}</div>
         <div style="font-size:0.9rem;color:#2C3E50;margin-top:0.4rem;line-height:1.7;">{synthesized}</div>
     </div>
     """, unsafe_allow_html=True)
@@ -291,15 +295,15 @@ def _subsidiary_card(name: str, hold_label: str, hold_color: str,
                 </span>
             </div>
             <div style="text-align:right;">
-                <span style="font-size:0.85rem;color:#7F8C8D;">持股 {holding}%</span>
-                <span style="font-size:0.85rem;color:#7F8C8D;margin-left:1rem;">營收貢獻 ~{revenue}%</span>
+                <span style="font-size:0.85rem;color:#7F8C8D;">{t('router_base:holding', holding=holding)}</span>
+                <span style="font-size:0.85rem;color:#7F8C8D;margin-left:1rem;">{t('router_base:revenue_contribution', revenue=revenue)}</span>
             </div>
         </div>
         <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.8rem;line-height:1.6;">
-            <strong>在做什麼：</strong>{business}
+            <strong>{t('router_base:business')}</strong>{business}
         </div>
         <div style="font-size:0.85rem;color:#27AE60;margin-top:0.5rem;line-height:1.5;">
-            <strong>跟母公司的關係：</strong>{relation}
+            <strong>{t('router_base:parent_relation')}</strong>{relation}
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -313,7 +317,7 @@ def _count_label(count: int, label: str):
         label: Descriptive text after the count.
     """
     st.markdown(
-        f"<div style='color:#7F8C8D;font-size:0.85rem;'>共找到 <b>{count}</b> {label}</div>",
+        f"<div style='color:#7F8C8D;font-size:0.85rem;'>{t('router_base:count_found', count=count)} <b>{count}</b> {label}</div>",
         unsafe_allow_html=True,
     )
 
@@ -340,17 +344,17 @@ def _glossary_tooltip(term_key: str, glossary_service, *, beginner: bool = False
     analogy = term.get("analogy", "")
 
     if beginner:
-        popover_label = f"💡 什麼是{name}？"
+        popover_label = t("router_base:glossary_beginner_label", name=name)
     else:
-        popover_label = f"ℹ️ {name}"
+        popover_label = t("router_base:glossary_label", name=name)
 
     with st.popover(popover_label):
         st.markdown(f"**{name}**")
         st.markdown(f"_{plain}_")
         if example:
-            st.markdown(f"**例子：** {example}")
+            st.markdown(f"**{t('router_base:glossary_example')}** {example}")
         if analogy:
-            st.markdown(f"**比喻：** {analogy}")
+            st.markdown(f"**{t('router_base:glossary_analogy')}** {analogy}")
 
 
 def _glossary_label(label: str, term_key: str, glossary_service, *, beginner: bool = False) -> None:
@@ -413,17 +417,17 @@ def _glossary_annotated_metric(
 
     # Build popover content
     if term:
-        popover_label = f"{icon} 解釋「{label}」"
-        with st.popover(popover_label, key=pop_key, help=f"了解「{label}」是什麼"):
+        popover_label = t("router_base:glossary_metric_label", icon=icon, label=label)
+        with st.popover(popover_label, key=pop_key, help=t("router_base:glossary_metric_help", label=label)):
             st.markdown(f"**{term.get('name', label)}**")
             st.markdown(f"_{term.get('plain', '')}_")
             if term.get("example"):
-                st.markdown(f"**例子：** {term['example']}")
+                st.markdown(f"**{t('router_base:glossary_example')}** {term['example']}")
             if term.get("analogy"):
-                st.markdown(f"**比喻：** {term['analogy']}")
+                st.markdown(f"**{t('router_base:glossary_analogy')}** {term['analogy']}")
             if beginner:
                 st.markdown("---")
-                st.caption("🌱 點擊任何 💡 圖示都能查看名詞解釋")
+                st.caption(t("router_base:glossary_tip"))
     else:
         # Fallback: just show the card without popover
         pass
@@ -506,15 +510,15 @@ def filter_by_timeline(
         mask = dates >= cutoff
         filtered_df = df[mask].reset_index(drop=True)
     except (ValueError, TypeError, KeyError) as e:
-        st.warning(f"⚠️ 時間軸過濾失敗（{e}），已顯示全部資料")
+        st.warning(t("router_base:time_filter_failed", error=e))
         return df
     except Exception as e:
-        st.warning(f"⚠️ 時間軸過濾異常，已顯示全部資料")
+        st.warning(t("router_base:time_filter_error", error=e))
         return df
 
     # Filtered result is empty — fall back to full data with info
     if len(filtered_df) == 0:
-        st.info("📌 此時間範圍內無資料，已切換至全部資料")
+        st.info(t("router_base:no_data_in_range"))
         return df
 
     return filtered_df

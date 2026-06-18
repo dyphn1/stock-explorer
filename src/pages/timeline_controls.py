@@ -29,7 +29,7 @@ def render_timeline_selector(key_prefix: str = "") -> str:
 
     current = st.session_state[state_key]
 
-    st.markdown("📅 **時間範圍：**")
+    st.markdown(f"📅 **{t('timeline_controls:time_range')}**")
 
     cols = st.columns(4)
     options = ["1Y", "3Y", "5Y", "ALL"]

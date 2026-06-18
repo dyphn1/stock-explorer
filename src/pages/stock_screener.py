@@ -18,6 +18,7 @@ from src.services.stock_screener_service import (
     apply_custom_filter,
     format_screening_results,
 )
+from src.core.i18n import t
 from src.services.screener_explanation_provider import ScreenerExplanationProvider
 
 # ── Singleton provider ──────────────────────────────────────────────
@@ -26,14 +27,14 @@ _screener_provider = ScreenerExplanationProvider()
 
 def _render_stock_screener(client: FinMindClient):
     """Stock Screener main page — discover stocks by criteria."""
-    st.markdown("## 🔎 股票探索引擎")
-    st.markdown("不知道從哪開始？用篩選條件發現適合你的股票")
+    st.markdown(f"## 🔎 {t('stock_screener.title')}")
+    st.markdown(t("stock_screener.subtitle"))
     st.markdown("---\n")
 
     # ── Mode selector ──────────────────────────────────────
     mode = st.radio(
-        "選擇模式",
-        ["新手模式", "進階模式"],
+        t("stock_screener.mode_selector"),
+        [t("stock_screener.beginner_mode"), t("stock_screener.advanced_mode")],
         horizontal=True,
         key="screener_mode",
         label_visibility="collapsed",
@@ -45,21 +46,21 @@ def _render_stock_screener(client: FinMindClient):
 
     load_col, _ = st.columns([1, 3])
     with load_col:
-        if st.button("🔄 載入股票資料", key="screener_load", use_container_width=True):
-            with st.spinner("載入股票資料中…"):
+        if st.button(f"🔄 {t('stock_screener.load_btn')}", key="screener_load", use_container_width=True):
+            with st.spinner(t("stock_screener.loading_data")):
                 df = get_all_stocks_with_metrics(client)
             st.session_state["screener_data"] = df
             if not df.empty:
-                st.success(f"已載入 {len(df)} 檔股票資料")
+                st.success(t("stock_screener.loaded_count", count=len(df)))
             else:
-                st.warning("無法載入股票資料")
+                st.warning(t("stock_screener.load_failed"))
 
     df = st.session_state.get("screener_data")
 
     if df is None:
         _info_card(
-            "請先載入資料",
-            "點擊上方「載入股票資料」按鈕，取得最新股票數據。",
+            t("stock_screener.please_load_first"),
+            t("stock_screener.please_load_first_desc"),
             icon="📊",
         )
         st.markdown("---\n")
@@ -68,8 +69,8 @@ def _render_stock_screener(client: FinMindClient):
 
     if df.empty:
         _info_card(
-            "沒有股票資料",
-            "資料載入為空，請檢查 API 連線或稍後再試。",
+            t("stock_screener.no_stock_data"),
+            t("stock_screener.no_stock_data_desc"),
             icon="⚠️",
         )
         st.markdown("---\n")
@@ -81,7 +82,7 @@ def _render_stock_screener(client: FinMindClient):
     # ── Filtering ──────────────────────────────────────────
     filtered_df = df.copy()
 
-    if mode == "新手模式":
+    if mode == t("stock_screener.beginner_mode"):
         _render_beginner_mode(df)
     else:
         _render_advanced_mode(df)
@@ -92,7 +93,7 @@ def _render_stock_screener(client: FinMindClient):
 
 def _render_beginner_mode(df: pd.DataFrame):
     """Render beginner mode with preset profiles."""
-    _section_title(f"🎯 選擇你的投資風格")
+    _section_title(f"🎯 {t('stock_screener.choose_style')}")
 
     # Preset cards
     col1, col2, col3 = st.columns(3)
@@ -101,24 +102,24 @@ def _render_beginner_mode(df: pd.DataFrame):
 
     with col1:
         selected_marker = " ✅" if preset == "dividend" else ""
-        _info_card(f"💰 穩定收息{selected_marker}", "殖利率 > 3%，波動較小")
-        if st.button("選擇", key="screener_preset_dividend", use_container_width=True):
+        _info_card(f"💰 {t('stock_screener.dividend_title')}{selected_marker}", t("stock_screener.dividend_desc"))
+        if st.button(t("stock_screener.btn_select"), key="screener_preset_dividend", use_container_width=True):
             st.session_state["screener_preset"] = "dividend"
             preset = "dividend"
             st.rerun()
 
     with col2:
         selected_marker = " ✅" if preset == "growth" else ""
-        _info_card(f"🚀 成長潛力{selected_marker}", "營收成長 > 10%，具成長動能")
-        if st.button("選擇", key="screener_preset_growth", use_container_width=True):
+        _info_card(f"🚀 {t('stock_screener.growth_title')}{selected_marker}", t("stock_screener.growth_desc"))
+        if st.button(t("stock_screener.btn_select"), key="screener_preset_growth", use_container_width=True):
             st.session_state["screener_preset"] = "growth"
             preset = "growth"
             st.rerun()
 
     with col3:
         selected_marker = " ✅" if preset == "value" else ""
-        _info_card(f"💎 便宜估值{selected_marker}", "PER < 15，PBR < 2")
-        if st.button("選擇", key="screener_preset_value", use_container_width=True):
+        _info_card(f"💎 {t('stock_screener.value_title')}{selected_marker}", t("stock_screener.value_desc"))
+        if st.button(t("stock_screener.btn_select"), key="screener_preset_value", use_container_width=True):
             st.session_state["screener_preset"] = "value"
             preset = "value"
             st.rerun()
@@ -131,25 +132,25 @@ def _render_beginner_mode(df: pd.DataFrame):
 
 def _render_advanced_mode(df: pd.DataFrame):
     """Render advanced mode with custom filters."""
-    _section_title(f"⚙️ 自訂篩選條件")
+    _section_title(f"⚙️ {t('stock_screener.custom_filters')}")
 
     # Get unique industries
     industries = sorted(df["industry_category"].dropna().unique().tolist())
     industries = [i for i in industries if i.strip()]
-    industry_options = ["全部"] + industries
+    industry_options = [t("stock_screener.all_industries")] + industries
 
     col1, col2 = st.columns(2)
 
     with col1:
         selected_industry = st.selectbox(
-            "產業分類",
+            t("stock_screener.industry_label"),
             industry_options,
             key="screener_industry",
         )
 
     with col2:
         revenue_growth = st.checkbox(
-            "只顯示營收正成長",
+            t("stock_screener.revenue_growth_only"),
             key="screener_revenue_growth",
         )
 
@@ -157,7 +158,7 @@ def _render_advanced_mode(df: pd.DataFrame):
 
     with col3:
         per_range = st.slider(
-            "本益比 (PER) 範圍",
+            t("stock_screener.per_range"),
             min_value=0,
             max_value=50,
             value=(0, 50),
@@ -166,7 +167,7 @@ def _render_advanced_mode(df: pd.DataFrame):
 
     with col4:
         div_range = st.slider(
-            "殖利率 (%) 範圍",
+            t("stock_screener.div_range"),
             min_value=0.0,
             max_value=15.0,
             value=(0.0, 15.0),
@@ -190,15 +191,15 @@ def _render_advanced_mode(df: pd.DataFrame):
 def _render_results(filtered_df: pd.DataFrame, preset: str | None = None, filters: dict | None = None):
     """Render screening results as card grid with AI explanations."""
     st.markdown("---\n")
-    _section_title(f"📋 篩選結果")
+    _section_title(f"📋 {t('stock_screener.results')}")
 
     count = len(filtered_df)
-    st.markdown(f"**符合條件的股票：{count} 檔**\n")
+    st.markdown(f"**{t('stock_screener.matching_stocks', count=count)}**\n")
 
     if count == 0:
         _info_card(
-            "沒有符合條件的股票",
-            "試著放寬篩選條件，或選擇不同的投資風格。",
+            t("stock_screener.no_matching_stocks"),
+            t("stock_screener.no_matching_stocks_desc"),
             icon="🔍",
         )
         return
@@ -249,13 +250,13 @@ def _render_results(filtered_df: pd.DataFrame, preset: str | None = None, filter
                 # Show explanation if available
                 if explanation:
                     _summary_card(
-                        "篩選說明",
+                        t("stock_screener.explanation_title"),
                         explanation,
                         icon="🔍",
                         border_color="#3498DB",
                     )
                 if st.button(
-                    "查看",
+                    t("stock_screener.btn_view"),
                     key=f"screener_goto_{r['stock_id']}_{idx}",
                     use_container_width=True,
                 ):

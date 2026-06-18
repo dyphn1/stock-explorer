@@ -9,6 +9,7 @@ import pandas as pd
 from src.pages._router_base import _section_title, _info_card
 from src.services.compare_stories import generate_compare_stories
 from src.pages.url_sync import navigate_to
+from src.core.i18n import t
 
 
 def _render_compare_stories_page(data: dict, client) -> None:
@@ -26,15 +27,15 @@ def _render_compare_stories_page(data: dict, client) -> None:
     financial = data["financial"]
 
     # Page header
-    _section_title(f"📖 同業比較故事 — {stock_name} ({stock_id})")
-    st.markdown("*與同產業同業的深度敘事比較*")
+    _section_title(f"📖 {t('compare_stories:title')} — {stock_name} ({stock_id})")
+    st.markdown(f"*{t('compare_stories:subtitle')}*")
     st.markdown("")
 
     # ── Find peers ──
     all_info = client.get_stock_info()
 
     if all_info is None or len(all_info) == 0:
-        st.info("無法取得同業資料")
+        st.info(t("compare_stories:no_peer_data"))
         return
 
     if not industry or industry == "未知":
@@ -49,11 +50,11 @@ def _render_compare_stories_page(data: dict, client) -> None:
     try:
         peers_df = all_info[peer_mask]
         if not isinstance(peers_df, pd.DataFrame):
-            st.info("無法取得同業資料")
+            st.info(t("compare_stories:no_peer_data"))
             return
         peers_df = peers_df.sort_values("stock_id").head(3)
     except Exception:
-        st.info("無法取得同業資料")
+        st.info(t("compare_stories:no_peer_data"))
         return
 
     if len(peers_df) == 0:
