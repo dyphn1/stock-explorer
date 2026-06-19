@@ -17,7 +17,7 @@ description: "Entry point router for Stock Explorer (股識) multi-agent workflo
 | **Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | Full system architecture — code structure, data flow, infrastructure | `docs/roles/architect.md` |
 | **Security Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | Security review, threat modeling, code audit, LLM safety enforcement | `docs/roles/security-architect.md` |
 | **UX Designer** | `openrouter/google/gemma-4-31b-it:free` | UI/UX design — HTML prototypes, interaction flows, design system compliance | `docs/roles/ux-designer.md` |
-| **Developer** | `openrouter/owl-alpha` | Implementation, bug fixes, automated verification | `docs/roles/developer.md` |
+| **Developer** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | Implementation, bug fixes, automated verification | `docs/roles/developer.md` |
 | **Design Reviewer** | `openrouter/google/gemma-4-31b-it:free` | Visual QA — verify implementation matches prototype & design system | `docs/roles/designer.md` |
 | **User** | `openrouter/google/gemma-4-31b-it:free` | End-user advocate — review from beginner perspective, 10-second test | `docs/roles/user.md` |
 | **QA** | `openrouter/google/gemma-4-31b-it:free` | Functional testing, competitor analysis, quality gate | `docs/roles/qa.md` |

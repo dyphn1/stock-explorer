@@ -6,6 +6,21 @@
 
 ---
 
+## 🔴 Model 選擇規則（2026-06-19 教訓）
+
+**絕對不要用 `openrouter/owl-alpha` 做需要大量 API call 的任務。**
+
+| 角色 | 模型 | 原因 |
+|------|------|------|
+| **PM** | `openrouter/owl-alpha` | 只做流程控制，API call 量少 |
+| **Developer** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | Nvidia free tier 速度快 3-5x，適合大量檔案操作 |
+| **Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | 同上 |
+| **QA** | `openrouter/google/gemma-4-31b-it:free` | 測試驗證，速度優先 |
+
+**教訓**：owl-alpha 平均每次 API call ~30s，nemotron 平均 ~5-10s。i18n 遷移一輪要 15-20 次 call，用 owl-alpha 會超過 600s timeout。
+
+---
+
 ## 🔴 Cron 環境限制（所有 cron-run agents 必讀）
 
 | 限制 | 說明 | 解法 |
