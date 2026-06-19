@@ -3,6 +3,7 @@
 將複雜的風險分析結果轉換為新手友善的 1-5 級風險指標
 """
 
+from src.core.i18n import t
 from src.services.risk_analyzer import assess_risk
 from src.services.health_scoring import compute_health_scores
 
@@ -70,46 +71,28 @@ def get_risk_level(data: dict) -> dict:
 
     # ── Labels ──
     _LABELS = {
-        1: {"label": "非常低風險", "emoji": "🟢"},
-        2: {"label": "低風險", "emoji": "🟢"},
-        3: {"label": "中等風險", "emoji": "🟡"},
-        4: {"label": "高風險", "emoji": "🟠"},
-        5: {"label": "非常高風險", "emoji": "🔴"},
+        1: {"label": t("risk.simplifier.level.1.label"), "emoji": "🟢"},
+        2: {"label": t("risk.simplifier.level.2.label"), "emoji": "🟢"},
+        3: {"label": t("risk.simplifier.level.3.label"), "emoji": "🟡"},
+        4: {"label": t("risk.simplifier.level.4.label"), "emoji": "🟠"},
+        5: {"label": t("risk.simplifier.level.5.label"), "emoji": "🔴"},
     }
 
     # ── Generate plain-language description ──
     if level == 1:
-        description = (
-            f"這家公司目前風險很低，財務健康狀況良好（平均 {health_avg:.0f} 分）。"
-            f"各項風險指標都在安全範圍內，適合保守型投資人關注。"
-        )
+        description = t("risk.simplifier.level.1.description", health_avg=health_avg)
     elif level == 2:
-        description = (
-            f"這家公司風險偏低，財務健康狀況尚可（平均 {health_avg:.0f} 分）。"
-            f"雖然有些小地方可以留意，但整體來說問題不大。"
-        )
+        description = t("risk.simplifier.level.2.description", health_avg=health_avg)
     elif level == 3:
         weak_dims = [name for name, score in health_scores.items() if score < 40]
         if weak_dims:
-            description = (
-                f"這家公司有中等程度的風險，財務健康狀況普通（平均 {health_avg:.0f} 分）。"
-                f"其中 {'、'.join(weak_dims)} 面向需要特別留意。"
-            )
+            description = t("risk.simplifier.level.3.description.weak", health_avg=health_avg, weak_dims="、".join(weak_dims))
         else:
-            description = (
-                f"這家公司有中等程度的風險，財務健康狀況普通（平均 {health_avg:.0f} 分）。"
-                f"部分指標表現不均，建議持續觀察。"
-            )
+            description = t("risk.simplifier.level.3.description.mixed", health_avg=health_avg)
     elif level == 4:
-        description = (
-            f"這家公司風險較高，財務健康狀況偏弱（平均 {health_avg:.0f} 分）。"
-            f"有明顯的高風險面向，投資前請做好功課並評估自身風險承受能力。"
-        )
+        description = t("risk.simplifier.level.4.description", health_avg=health_avg)
     else:  # level 5
-        description = (
-            f"這家公司風險非常高，財務健康狀況較差（平均 {health_avg:.0f} 分）。"
-            f"多個風險指標亮紅燈，建議謹慎評估，不適合風險承受度較低的投資人。"
-        )
+        description = t("risk.simplifier.level.5.description", health_avg=health_avg)
 
     return {
         "level": level,

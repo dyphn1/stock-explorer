@@ -32,13 +32,13 @@ def _render_deltas(data: dict, client) -> None:
             # C143: implication sentence replaces explanation on card
             implication_text = d.get("implication", "")
             delta_lines.append(
-                f"{emoji} <span style=\\\"color:{color}\\\">**{d['metric_name']}**：{d['current_value']}（前期：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）</span><br>\\n"
+                f"{emoji} <span style=\\\\\\\"color:{color}\\\\\\\">**{d['metric_name']}**：{d['current_value']}（{t('story.previous_period')}：{d['previous_value']}，{sign}{d['change_pct']:.1f}%）</span><br>\\\\n"
                 f"　→ {implication_text}"
             )
         delta_text = "\\n\\n".join(delta_lines)
         _info_card(t("story.recent_changes"), delta_text, "🔄")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · {t("story.confidence_note")}")
+        st.caption(f'{_confidence_badge(0.9)} · {t("story.confidence_note")}')
 
         # C139: 💡 explain buttons for each delta metric (show original explanation in popover)
         for d in deltas:
@@ -57,7 +57,7 @@ def _render_deltas(data: dict, client) -> None:
     else:
         _info_card(t("story.recent_changes"), t("story.no_significant_changes"), "🔄")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · {t("story.confidence_note")}")
+        st.caption(f'{_confidence_badge(0.9)} · {t("story.confidence_note")}')
 
 
 def _render_compare_stories(data: dict, client, all_info=None) -> None:
@@ -198,7 +198,7 @@ def _render_read_next(data: dict, client, all_info=None) -> None:
                 navigate_to(page="名片", stock_id=_peer_id)
             st.markdown("")
     else:
-        _info_card("推薦閱讀", t("story.no_recommendations"), "📖")
+        _info_card(t("story.read_next_fallback"), t("story.no_recommendations"), "📖")
 
     # --- Curated fun facts from company_facts.yaml ---
     _curated_facts = get_company_facts(stock_id)

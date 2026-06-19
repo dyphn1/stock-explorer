@@ -8,10 +8,10 @@ from src.services.analogy_engine import (
     get_per_analogy,
     get_dividend_analogy,
     get_gross_margin_analogy,
-    get_revenue_analyzer,
-    get_yoy_analyzer,
-    get_roe_analyzer,
-    get_pbr_analyzer,
+    get_revenue_analogy,
+    get_yoy_analogy,
+    get_roe_analogy,
+    get_pbr_analogy,
 )
 from src.services.dividend_analyzer import extract_dividend_summary
 from src.services.metric_education import get_metric_explanation, get_top_metrics_for_education
@@ -22,12 +22,12 @@ from src.core.i18n import t
 
 # Mapping from metric_name to glossary term key for D-079 merged popover
 _METRIC_GLOSSARY_MAP: dict[str, str] = {
-    "PER": "本益比",
+    "PER": t("financial.glossary_per"),
     "gross_margin": t("metric_gross_margin_label"),
-    "revenue_yoy": "營收年增率",
+    "revenue_yoy": t("financial.glossary_revenue_yoy"),
     t("metric_roe_label"): t("metric_roe_label"),
     "dividend_yield": t("metric_dividend_yield_label"),
-    "PBR": "淨值比",
+    "PBR": t("financial.glossary_pbr"),
 }
 
 
@@ -56,7 +56,7 @@ def _render_metric_popover(label: str, value: str, analogy: str, metric_name: st
                 if glossary_term.get("analogy"):
                     st.markdown(f"**{t('metric_popover_analogy_title')}**\n\n{glossary_term['analogy']}")
                 if glossary_term.get("example"):
-                    st.markdown(f"**📌 例子**\n\n{glossary_term['example']}")
+                    st.markdown(f"**📌 {t('metric_popover_example_label')}**\n\n{glossary_term['example']}")
                 st.markdown("---")
 
             st.markdown(f"**{t('metric_popover_explanation_title')}**\n\n{edu['explanation']}")
@@ -100,7 +100,7 @@ def _render_key_metrics(data: dict, client) -> None:
             yoy = extra_metrics.get("revenue_yoy")
             yoy_analogy = get_yoy_analogy(yoy) if yoy is not None else ""
             _render_metric_popover(
-                t("metric_recent_monthly_revenue_label"), f"{rev:,.0f} 億",
+                t("metric_recent_monthly_revenue_label"), f"{rev:,.0f} {t('financial:unit_hundred_million')}",
                 get_revenue_analogy(rev, industry) + (f" ｜ {yoy_analogy}" if yoy_analogy else ""),
                 "revenue_yoy", yoy if yoy is not None else 0.0, stock_id, glossary_service,
             )
@@ -141,14 +141,14 @@ def _render_key_metrics(data: dict, client) -> None:
                 _info_card(
                     f"{edu['display_name']} — {item['value']:.2f} {edu['unit']}",
                     f"**💡 {edu['explanation']}**\n\n"
-                    f"**🏠 比喻：** {edu['analogy']}\n\n"
+                    f"**🏠 {t('financial:analogy_label')}:** {edu['analogy']}\n\n"
                     f"{direction_icon}\n\n"
                     f"*{edu['historical_context']}*",
                     "📖",
                 )
                 st.markdown("")
             # C204: confidence badge for metric education
-            st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+            st.caption(f"{_confidence_badge(0.9)} · {t('financial:confidence_badge_note')}")
 
 
 def _render_dividend(data: dict, client) -> None:
@@ -188,63 +188,63 @@ def _render_dividend(data: dict, client) -> None:
         if _next_ex_date:
             _days_left = (_next_ex_date - _today).days
             _info_card(
-                "除息日倒數",
-                f"距離除息日還剩 {_days_left} 天（預計 {_next_ex_date.strftime('%Y/%m/%d')}）",
+                t("financial:dividend_countdown_title"),
+                t("financial:dividend_countdown_content", days=_days_left, date=_next_ex_date.strftime('%Y/%m/%d')),
                 "⏳",
             )
 
         # Plain-language headline (tip card style)
-        _info_card("配息摘要", div_summary["plain_summary"], "💵")
+        _info_card(t("financial:dividend_summary_title"), div_summary["plain_summary"], "💵")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+        st.caption(f"{_confidence_badge(0.9)} · {t('financial:confidence_badge_note')}")
 
         # Three mini-cards
         col1, col2, col3 = st.columns(3)
         with col1:
-            _白话_card("最近一季", f"{div_summary['latest_cash_div']:.2f} 元", "每股現金股利")
-            _glossary_tooltip("每股盈餘", glossary_service)
+            _白话_card(t("financial:latest_quarter_label"), f"{div_summary['latest_cash_div']:.2f} {t('financial:unit_yuan')}", t("financial:cash_dividend_per_share"))
+            _glossary_tooltip(t("financial.glossary_eps"), glossary_service)
         with col2:
-            annual_str = f"{div_summary['estimated_annual']:.2f} 元" if div_summary['estimated_annual'] else "—"
-            est_label = "預估全年" if div_summary.get("is_estimated") else "最近年度"
-            _白话_card(est_label, annual_str, "預估全年配息")
+            annual_str = f"{div_summary['estimated_annual']:.2f} {t('financial:unit_yuan')}" if div_summary['estimated_annual'] else "—"
+            est_label = t("financial:estimated_annual_label") if div_summary.get("is_estimated") else t("financial:latest_year_label")
+            _白话_card(est_label, annual_str, t("financial:estimated_annual_hint"))
             _glossary_tooltip(t("metric_dividend_yield_label"), glossary_service)
         with col3:
             yield_str = f"{div_summary['estimated_yield']:.2f}%" if div_summary['estimated_yield'] else "—"
-            yield_label = "預估殖利率" if div_summary.get("is_estimated") else t("metric_dividend_yield_label")
-            _白话_card(yield_label, yield_str, "年化股利／股價")
+            yield_label = t("financial:estimated_yield_label") if div_summary.get("is_estimated") else t("metric_dividend_yield_label")
+            _白话_card(yield_label, yield_str, t("financial:yield_calc_hint"))
             _glossary_tooltip(t("metric_dividend_yield_label"), glossary_service)
 
         # Expandable history table
-        with st.expander("📋 展開查看歷史除權息紀錄", expanded=False):
+        with st.expander(t("financial:expand_history"), expanded=False):
             if div_summary["yearly_dividends"]:
                 hist_df = pd.DataFrame(div_summary["yearly_dividends"])
                 # Rename columns for display
                 display_df = hist_df[["year", "cash_div", "ex_date", "status"]].copy()
-                display_df.columns = ["年度", "現金股利", "除息日", "狀態"]
+                display_df.columns = [t("financial:hist_col_year"), t("financial:hist_col_cash_div"), t("financial:hist_col_ex_date"), t("financial:hist_col_status")]
                 if "stock_div" in hist_df.columns:
-                    display_df["股票股利"] = hist_df["stock_div"]
+                    display_df[t("financial:hist_col_stock_div")] = hist_df["stock_div"]
 
                 # Add ex-date badge column
                 _today = date.today()
                 _badges = []
                 for _, _row in display_df.iterrows():
-                    _ex = _row["除息日"]
+                    _ex = _row[t("financial:hist_col_ex_date")]
                     if _ex and _ex != "—":
                         try:
                             _ex_dt = pd.Timestamp(_ex).date()
                             if _ex_dt >= _today:
                                 _badges.append(
-                                    f'<span style="background:#27AE60;color:#FFFFFF;padding:2px 8px;border-radius:10px;font-size:0.75rem;">即將除息</span>'
+                                    f'<span style="background:#27AE60;color:#FFFFFF;padding:2px 8px;border-radius:10px;font-size:0.75rem;">{t("financial:badge_upcoming")}</span>'
                                 )
                             else:
                                 _badges.append(
-                                    f'<span style="background:#3498DB;color:#FFFFFF;padding:2px 8px;border-radius:10px;font-size:0.75rem;">已除息</span>'
+                                    f'<span style="background:#3498DB;color:#FFFFFF;padding:2px 8px;border-radius:10px;font-size:0.75rem;">{t("financial:badge_paid")}</span>'
                                 )
                         except Exception:
                             _badges.append("")
                     else:
                         _badges.append("")
-                display_df["除息標記"] = _badges
+                display_df[t("financial:hist_col_ex_badge")] = _badges
 
                 # Render as HTML table to support badges
                 html_rows = []
@@ -255,7 +255,7 @@ def _render_dividend(data: dict, client) -> None:
                     _cells = ""
                     for _c in _cols:
                         _val = _r[_c]
-                        if _c == "除息標記":
+                        if _c == t("financial:hist_col_ex_badge"):
                             _cells += f'<td style="padding:8px 12px;border-bottom:1px solid #F8F9FA;">{_val}</td>'
                         else:
                             _cells += f'<td style="padding:8px 12px;color:#2C3E50;border-bottom:1px solid #F8F9FA;">{_val}</td>'
@@ -268,9 +268,9 @@ def _render_dividend(data: dict, client) -> None:
                 st.markdown(_table_html, unsafe_allow_html=True)
     else:
         # Show a subtle note for stocks without dividends
-        _info_card("配息摘要", div_summary["plain_summary"], "💡")
+        _info_card(t("financial:dividend_summary_title"), div_summary["plain_summary"], "💡")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.5)} · 信心指標反映資料完整度，非AI預測確定性")
+        st.caption(f"{_confidence_badge(0.5)} · {t('financial:confidence_badge_note')}")
 
     st.markdown("---")
 
@@ -287,12 +287,12 @@ def _render_revenue_breakdown(data: dict, client) -> None:
     # 營收組成（圓餅圖 + 白話說明）
     # C205: section title with read time badge
     revenue_desc = " ".join(item.get("description", "") for item in revenue_items)
-    _section_title_with_read_time("📊 營收組成", revenue_desc)
-    st.markdown("*這家公司靠什麼賺錢？*")
+    _section_title_with_read_time(t("financial:revenue_composition_title"), revenue_desc)
+    st.markdown(f"*{t('financial:revenue_composition_subtitle')}*")
 
     col1, col2 = st.columns([3, 2])
     with col1:
-        fig = create_revenue_pie_chart(revenue_items, f"{stock_name} 營收來源")
+        fig = create_revenue_pie_chart(revenue_items, f"{stock_name} {t('financial:revenue_source_suffix')}")
         st.plotly_chart(fig, use_container_width=True)
 
     with col2:
@@ -310,14 +310,14 @@ def _render_revenue_trend(data: dict, client) -> None:
     stock_name = data["stock_name"]
 
     # 營收趨勢圖
-    st.markdown("### 📊 營收趨勢")
+    st.markdown(f"### 📊 {t('financial:revenue_trend_title')}")
     if len(monthly_revenue) > 0:
-        fig = create_revenue_trend_chart(monthly_revenue, f"{stock_name} 月營收趨勢")
+        fig = create_revenue_trend_chart(monthly_revenue, f"{stock_name} {t('financial:monthly_revenue_trend_suffix')}")
         st.plotly_chart(fig, use_container_width=True)
         # C170: Glossary tooltip for revenue
-        _glossary_tooltip("營業收入", glossary_service)
+        _glossary_tooltip(t("financial.glossary_revenue"), glossary_service)
     else:
-        st.info("暫無營收資料")
+        st.info(t("financial:no_revenue_data"))
 
     st.markdown("---")
 
@@ -331,8 +331,8 @@ def _render_valuation(data: dict, client) -> None:
 
     # 估值區間圖（歷史 P/E 範圍）
     # C205: section title with read time badge
-    _section_title_with_read_time("📊 估值區間", "目前本益比在歷史上的位置")
-    st.markdown("*目前本益比在歷史上的位置*")
+    _section_title_with_read_time(t("financial:valuation_range_title"), t("financial:valuation_range_subtitle"))
+    st.markdown(f"*{t('financial:valuation_range_subtitle')}*")
 
     daily_price = data.get("daily_price")
     if daily_price is not None and len(daily_price) > 0 and len(financial) > 0 and latest_per_pbr and latest_per_pbr.get("PER"):
@@ -347,13 +347,13 @@ def _render_valuation(data: dict, client) -> None:
 
         # 白話解讀 — use interpretation returned by chart function
         if interp and interp.get("valuation_text"):
-            _info_card("估值解讀", interp["valuation_text"], "💡")
+            _info_card(t("financial:valuation_reading_title"), interp["valuation_text"], "💡")
             # C204: confidence badge
-            st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+            st.caption(f"{_confidence_badge(0.9)} · {t('financial:confidence_badge_note')}")
         # C170: Glossary tooltip for PER / PBR
-        _glossary_tooltip("本益比", glossary_service)
-        _glossary_tooltip("淨值比", glossary_service)
+        _glossary_tooltip(t("financial.glossary_per"), glossary_service)
+        _glossary_tooltip(t("financial.glossary_pbr"), glossary_service)
     else:
-        st.info("暫無足夠資料計算估值區間")
+        st.info(t("financial:no_valuation_data"))
 
     st.markdown("---")

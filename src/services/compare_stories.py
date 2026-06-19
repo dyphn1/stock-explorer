@@ -12,6 +12,7 @@ from typing import Optional
 
 import pandas as pd
 
+from src.core.i18n import t
 from src.services.analogy_engine import (
     get_one_liner,
     get_per_analogy,
@@ -98,20 +99,20 @@ def _compare_metric_story(
         peer_str = fmt.format(peer_value)
 
         if abs_diff < 0.5:
-            return f"{label}：兩家相近（{self_str} vs {peer_str}{unit}）"
+            return t('comparison.metric.close', label=label, self_str=self_str, peer_str=peer_str, unit=unit)
 
-        direction = "高於" if diff > 0 else "低於"
-        better = ""
-        if higher_is_better:
-            better = "，相對優勢" if diff > 0 else "，相對劣勢"
+        if diff > 0:
+            direction = t('comparison.higher')
+            better = t('comparison.advantage') if higher_is_better else t('comparison.valuation_higher')
         else:
-            better = "，估值較低" if diff < 0 else "，估值較高"
+            direction = t('comparison.lower')
+            better = t('comparison.disadvantage') if higher_is_better else t('comparison.valuation_lower')
 
-        return f"{label}：{self_str}{unit}，{direction}同業的 {peer_str}{unit}{better}"
+        return t('comparison.metric.diff', label=label, self_str=self_str, unit=unit, direction=direction, peer_str=peer_str, better=better)
 
     # 只有一邊有資料
     if self_value is not None:
-        return f"{label}：{fmt.format(self_value)}{unit}（同業無資料）"
+        return t('comparison.metric.self_only', label=label, value=fmt.format(self_value), unit=unit)
     return None
 
 
@@ -141,11 +142,15 @@ def _build_peer_narrative(
     if rev_story:
         if self_rev and peer_rev:
             if self_rev > peer_rev * 1.5:
-                lines.append(f"📏 {stock_name} 的營收規模明顯大於 {peer_name}，{revs_desc(self_rev, peer_rev)}")
+                lines.append(
+                    t('comparison.revenue.larger', stock_name=stock_name, peer_name=peer_name, rev_desc=revs_desc(self_rev, peer_rev))
+                )
             elif peer_rev > self_rev * 1.5:
-                lines.append(f"📏 {stock_name} 的營收規模小於 {peer_name}，{revs_desc(self_rev, peer_rev)}")
+                lines.append(
+                    t('comparison.revenue.smaller', stock_name=stock_name, peer_name=peer_name, rev_desc=revs_desc(self_rev, peer_rev))
+                )
             else:
-                lines.append(f"📏 兩家營收規模相近，{rev_story}")
+                lines.append(t('comparison.revenue.similar', rev_story=rev_story))
         else:
             lines.append(f"📏 {rev_story}")
 
@@ -155,16 +160,14 @@ def _build_peer_narrative(
     if self_gm is not None and peer_gm is not None:
         if self_gm > peer_gm + 5:
             lines.append(
-                f"💰 {stock_name} 毛利率 {self_gm:.1f}%，高於 {peer_name} 的 {peer_gm:.1f}%"
-                f" — {get_gross_margin_analogy(self_gm)}"
+                t('comparison.gross_margin.higher', stock_name=stock_name, self_gm=self_gm, peer_name=peer_name, peer_gm=peer_gm, analogy=get_gross_margin_analogy(self_gm))
             )
         elif peer_gm > self_gm + 5:
             lines.append(
-                f"💰 {stock_name} 毛利率 {self_gm:.1f}%，低於 {peer_name} 的 {peer_gm:.1f}%"
-                f" — {get_gross_margin_analogy(self_gm)}"
+                t('comparison.gross_margin.lower', stock_name=stock_name, self_gm=self_gm, peer_name=peer_name, peer_gm=peer_gm, analogy=get_gross_margin_analogy(self_gm))
             )
         else:
-            lines.append(f"💰 兩家毛利率相近（{self_gm:.1f}% vs {peer_gm:.1f}%）")
+            lines.append(t('comparison.gross_margin.similar', self_gm=self_gm, peer_gm=peer_gm))
 
     # 3. 獲利能力（ROE）
     self_roe = self_metrics.get("roe")
@@ -181,16 +184,14 @@ def _build_peer_narrative(
     if self_per is not None and peer_per is not None and self_per > 0 and peer_per > 0:
         if self_per > peer_per * 1.3:
             lines.append(
-                f"🏷️ {stock_name} 本益比 {self_per:.1f} 倍，高於 {peer_name} 的 {peer_per:.1f} 倍"
-                f" — 市場對 {stock_name} 的成長預期較高"
+                t('comparison.per.higher', stock_name=stock_name, self_per=self_per, peer_name=peer_name, peer_per=peer_per)
             )
         elif peer_per > self_per * 1.3:
             lines.append(
-                f"🏷️ {stock_name} 本益比 {self_per:.1f} 倍，低於 {peer_name} 的 {peer_per:.1f} 倍"
-                f" — 相對來說 {stock_name} 的估值較為保守"
+                t('comparison.per.lower', stock_name=stock_name, self_per=self_per, peer_name=peer_name, peer_per=peer_per)
             )
         else:
-            lines.append(f"🏷️ 兩家本益比相近（{self_per:.1f} vs {peer_per:.1f} 倍）")
+            lines.append(t('comparison.per.similar', self_per=self_per, peer_per=peer_per))
 
     # 5. 殖利率
     self_dy = self_per_pbr.get("dividend_yield") if self_per_pbr else None
@@ -198,19 +199,18 @@ def _build_peer_narrative(
     if self_dy is not None and peer_dy is not None:
         if self_dy > peer_dy + 1:
             lines.append(
-                f"💵 {stock_name} 殖利率 {self_dy:.2f}%，高於 {peer_name} 的 {peer_dy:.2f}%"
-                f" — 對存股族較有吸引力"
+                t('comparison.dividend_yield.higher', stock_name=stock_name, self_dy=self_dy, peer_name=peer_name, peer_dy=peer_dy)
             )
         elif peer_dy > self_dy + 1:
             lines.append(
-                f"💵 {stock_name} 殖利率 {self_dy:.2f}%，低於 {peer_name} 的 {peer_dy:.2f}%"
+                t('comparison.dividend_yield.lower', stock_name=stock_name, self_dy=self_dy, peer_name=peer_name, peer_dy=peer_dy)
             )
         elif self_dy > 0:
-            lines.append(f"💵 兩家殖利率相近（{self_dy:.2f}% vs {peer_dy:.2f}%）")
+            lines.append(t('comparison.dividend_yield.similar', self_dy=self_dy, peer_dy=peer_dy))
 
     # 確保至少回傳 1 行
     if not lines:
-        lines.append(f"📊 {stock_name} 與 {peer_name} 在可比較的指標上差異不大")
+        lines.append(t('comparison.no_difference', stock_name=stock_name, peer_name=peer_name))
 
     return lines[:5]
 
@@ -229,15 +229,15 @@ def revs_desc(self_rev: float, peer_rev: float) -> str:
         return ""
     ratio = self_rev / peer_rev
     if ratio >= 2:
-        return f"約為同業的 {ratio:.1f} 倍"
+        return t('comparison.revs_ratio.double', ratio=ratio)
     elif ratio >= 1.2:
-        return f"略大於同業（{ratio:.1f} 倍）"
+        return t('comparison.revs_ratio.slightly_larger', ratio=ratio)
     elif ratio >= 0.8:
-        return "規模相近"
+        return t('comparison.revs_ratio.similar')
     elif ratio >= 0.5:
-        return f"約為同業的 {ratio:.0%}"
+        return t('comparison.revs_ratio.percent', ratio=ratio)
     else:
-        return f"僅同業的 {ratio:.0%}"
+        return t('comparison.revs_ratio.only_percent', ratio=ratio)
 
 
 # ── Public API ─────────────────────────────────────────────

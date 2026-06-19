@@ -5,6 +5,8 @@ Evaluates competitive advantage using 5-dimension scoring + moat type classifica
 from pathlib import Path
 import yaml
 
+from src.core.i18n import t
+
 _MODULE_DIR = Path(__file__).resolve().parent
 _DATA_FILE = _MODULE_DIR.parent / "data" / "moat_data.yaml"
 
@@ -55,7 +57,7 @@ def get_moat_summary(
         # Use curated YAML data
         dimensions = yaml_data.get("dimensions", {})
         return {
-            "moat_type": yaml_data.get("moat_type", "無明顯護城河"),
+            "moat_type": yaml_data.get("moat_type", t("moat.type.none")),
             "moat_score": yaml_data.get("moat_score", 0),
             "dimensions": {
                 "品牌力": dimensions.get("品牌力", 0),
@@ -78,7 +80,7 @@ def get_moat_summary(
         "moat_type": moat_type,
         "moat_score": round(avg_score, 1),
         "dimensions": dimensions,
-        "evidence": [f"系統自動評分：{moat_type}"],
+        "evidence": [t("moat.evidence.auto_score", moat_type=moat_type)],
         "moat_type_description": moat_type_desc,
         "has_data": avg_score > 0,
     }
@@ -147,20 +149,20 @@ def compute_moat_dimensions(
 def _classify_moat_type(dimensions: dict) -> tuple:
     """Classify moat type based on highest-scoring dimension."""
     if not dimensions:
-        return "無明顯護城河", "目前各項護城河指標分數均偏低，尚未形成明顯競爭優勢"
+        return t("moat.type.none"), t("moat.description.none")
 
     max_dim = max(dimensions, key=lambda k: dimensions[k])
     max_score = dimensions[max_dim]
 
     descriptions = {
-        "品牌力": ("品牌護城河", "公司擁有強勁的品牌定價能力，客戶願意為品牌支付溢價"),
-        "成本優勢": ("成本護城河", "公司在生產或營運成本上具有結構性優勢，競爭對手難以複製"),
-        "網路效應": ("網路效應護城河", "平台或產品的價值隨用戶增長而提升，形成正向循環"),
-        "轉換成本": ("轉換成本護城河", "客戶轉換至高競爭對手的成本高，形成自然鎖定"),
-        "規模經濟": ("規模經濟護城河", "公司因規模龐大而享有單位成本優勢，新進入者難以競爭"),
+        "品牌力": (t("moat.type.brand"), t("moat.description.brand")),
+        "成本優勢": (t("moat.type.cost"), t("moat.description.cost")),
+        "網路效應": (t("moat.type.network"), t("moat.description.network")),
+        "轉換成本": (t("moat.type.switching"), t("moat.description.switching")),
+        "規模經濟": (t("moat.type.scale"), t("moat.description.scale")),
     }
 
     if max_score < 40:
-        return "無明顯護城河", "目前各項護城河指標分數均偏低，尚未形成明顯競爭優勢"
+        return t("moat.type.none"), t("moat.description.none")
 
-    return descriptions.get(max_dim, ("無明顯護城河", ""))
+    return descriptions.get(max_dim, (t("moat.type.none"), ""))

@@ -132,7 +132,7 @@ def _render_story_card(data: dict, client) -> None:
     # One-liner
     _info_card(t("business_card.summary_hero.one_liner_title"), one_liner, "💡")
     # C204: confidence badge for the one-liner explanation
-    st.caption(f"{_confidence_badge(0.9)} · {t("summary_hero.confidence_note")}")
+    st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
     # Key metrics row — use _白话_card for each + 💡 explain button + glossary tooltip
     # C170: beginner mode → more prominent glossary indicators
@@ -163,7 +163,7 @@ def _render_story_card(data: dict, client) -> None:
             health_border = "#E74C3C"
         _summary_card("整體健康度", f"{overall_health:.0f}/100 {health_label}", "🏥", border_color=health_border)
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · {t("summary_hero.confidence_note")}")
+        st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
     # ── C14: vs 同業 comparison ──
     if health_scores:
@@ -188,19 +188,16 @@ def _render_story_card(data: dict, client) -> None:
                         vs_emoji = "⬇️"
                         vs_text = t("summary_hero.vs_below", name=bench_name, diff=abs(diff))
 
-                    vs_content = (
-                        t("summary_hero.vs_content", health=overall_health, bench_name=bench_name, bench_overall=bench_overall)
-                        f"{vs_emoji} {vs_text}"
-                    )
+                    vs_content = t("summary_hero.vs_content", health=overall_health, bench_name=bench_name, bench_overall=bench_overall) + f"\n\n{vs_emoji} {vs_text}"
                     _info_card(t("business_card.summary_hero.vs_industry_title"), vs_content, "🏭")
                     # C204: confidence badge
-                    st.caption(f"{_confidence_badge(0.9)} · {t("summary_hero.confidence_note")}")
+                    st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
     # Did You Know?
     if fact_text:
         _info_card(t("business_card.summary_hero.did_you_know_title"), fact_text, "🤔")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · {t("summary_hero.confidence_note")}")
+        st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
 
 def _render_header(data: dict, client) -> None:

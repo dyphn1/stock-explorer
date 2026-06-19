@@ -276,13 +276,13 @@ def _render_sector_grid(sector_metrics: dict):
 
     df = pd.DataFrame([
         {
-            "排名": idx + 1,
-            "產業": sector,
-            "平均漲跌": _format_pct(m["avg_change"]),
-            "上漲": m["up"],
-            "下跌": m["down"],
-            "平盤": m["flat"],
-            "有報價": m["count"],
+            t("sector_heatmap.rank_col", rank=""): idx + 1,
+            t("sector_heatmap.industry_col"): sector,
+            t("sector_heatmap.avg_change_col"): _format_pct(m["avg_change"]),
+            t("sector_heatmap.up_col"): m["up"],
+            t("sector_heatmap.down_col"): m["down"],
+            t("sector_heatmap.flat_col"): m["flat"],
+            t("sector_heatmap.count_col"): m["count"],
             "_avg_change": m["avg_change"],
         }
         for idx, (sector, m) in enumerate(sorted_sectors)

@@ -34,6 +34,8 @@ page:
   debate_cards: Bear vs Bull Debate
   learn_first_gate: Learn First Gate
   daily_market: Daily Market
+url_sync:
+  default_page: Business Card
 sidebar:
   nav_label: Navigation
   hot_stocks: 🔥 Hot Stocks
@@ -252,6 +254,7 @@ disclaimer:
   feedback_positive: Thank you for your positive feedback! 👍
   feedback_negative: Thank you for your feedback, we will keep improving! 👎
 unit:
+  point: pts
   hundred_million: B
   ten_thousand: M
   yuan: TWD
@@ -917,6 +920,12 @@ business_card:
     dividend: Dividend Data
     news_institutional: News & Institutional Investors
     corporate: Corporate Data (Balance Sheet, Cash Flow)
+  health:
+    section_title: Company Health
+    source_estimated: 📊 System Estimate
+    confidence_note: Confidence indicator reflects data completeness, not AI prediction certainty
+    risk_analysis_title: ⚠️ Risk Analysis — What Could Go Wrong?
+
 event_dashboard:
   sources:
     events: Event Records
@@ -1553,6 +1562,9 @@ compare_stories:
   title: Peer Comparison Stories
   subtitle: In-depth narrative comparison with industry peers
   no_peer_data: Unable to retrieve peer data
+  unknown_industry: Unknown
+  view_peer: "View {name}"
+  no_comparison_data: Not enough data for peer comparison analysis
 
 revenue_tree:
   title: Revenue Structure

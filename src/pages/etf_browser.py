@@ -168,7 +168,7 @@ def _render_hot_etfs(etf_info: pd.DataFrame, price_df: pd.DataFrame):
             unsafe_allow_html=True,
         )
         if cols[5].button(t("etf.browser.view"), key=f"hot_{row['stock_id']}", use_container_width=True):
-            navigate_to(page="名片", stock_id=row["stock_id"])
+            navigate_to(page=t("page.business_card"), stock_id=row["stock_id"])
 
 
 # ════════════════════════════════════════════════════════════
@@ -316,7 +316,7 @@ def _render_etf_categories(etf_info: pd.DataFrame, price_df: pd.DataFrame):
                             key=f"cat_{row['stock_id']}",
                             use_container_width=True,
                         ):
-                            navigate_to(page="名片", stock_id=row["stock_id"])
+                            navigate_to(page=t("page.business_card"), stock_id=row["stock_id"])
 
 
 # ════════════════════════════════════════════════════════════
@@ -442,7 +442,7 @@ def _render_dividend_ranking(client: FinMindClient, etf_info: pd.DataFrame, pric
             unsafe_allow_html=True,
         )
         if cols[6].button(t("etf.browser.view"), key=f"div_{row['stock_id']}", use_container_width=True):
-            navigate_to(page="名片", stock_id=row["stock_id"])
+            navigate_to(page=t("page.business_card"), stock_id=row["stock_id"])
 
     # 白話補充
     _info_card(t("etf.browser.dividend_yield_knowledge"), t("etf.browser.dividend_yield_content"), "💡")

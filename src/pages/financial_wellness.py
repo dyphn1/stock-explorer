@@ -147,10 +147,10 @@ def _render_financial_wellness(client: FinMindClient):
                 border-left:4px solid #3498DB;text-align:center;">
                     <div style="font-size:0.85rem;color:#7F8C8D;">{t("wellness:dimensions")}</div>
                     <div style="font-size:1.2rem;font-weight:700;color:#27AE60;">
-                        🟢 {high_count} 個達標
+                        {t("financial_wellness.dimensions_count_pass", count=high_count)}
                     </div>
                     <div style="font-size:1.2rem;font-weight:700;color:#E74C3C;">
-                        🔴 {low_count} 個需加強
+                        {t("financial_wellness.dimensions_count_improve", count=low_count)}
                     </div>
                 </div>""",
                 unsafe_allow_html=True,

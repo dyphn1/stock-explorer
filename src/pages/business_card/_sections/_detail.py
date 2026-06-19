@@ -51,11 +51,11 @@ def _render_share_section(data: dict, client) -> None:
         # Start with a placeholder; JS will update it with the full URL
         placeholder_params = f"?page={page}&stock_id={stock_id}"
         st.text_input(
-            "分享連結",
+            t("detail:share_link_label"),
             value=placeholder_params,
             label_visibility="collapsed",
             key=f"share_url_{stock_id}_{page}",
-            help="複製此連結以分享此股票名片",
+            help=t("detail:share_link_help"),
         )
 
     with col2:
@@ -89,7 +89,7 @@ def _render_share_section(data: dict, client) -> None:
                   display:inline-block;padding:0.3rem 0.6rem;
                   background:#F0F0F0;border-radius:8px;
                   text-align:center;min-width:2.2rem;"
-           title="複製分享連結">
+           title=t("detail:share_link_title")>
             <span id="share-copy-icon">📋</span>
         </a>
         """
@@ -103,4 +103,4 @@ def _render_footer(data: dict, client) -> None:
     st.markdown("---")
 
     # 免責聲明
-    _info_card("免責聲明", "本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。", "⚠️")
+    _info_card(t("detail:disclaimer_title"), t("detail:disclaimer_content"), "⚠️")

@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 
 import pandas as pd
 
+from src.core.i18n import t
 from src.services.adaptive_engine import get_events_for_stock, get_all_recent_events
 from src.services.market_data import get_sector_list, get_sector_performance
 from src.services.analogy_engine import (
@@ -41,10 +42,10 @@ _EDUCATION_METRICS = ["ROE", "gross_margin", "PER", "dividend_yield", "debt_rati
 
 # Historian-style footnote templates
 _HISTORIAN_TEMPLATES = [
-    "這位歷史學者追溯過往類似的市場訊號…",
-    "翻開歷史的篇章，這位史官發現類似的情境…",
-    "從歷史的角度來看，這樣的走勢往往…",
-    "回顧過去十年，類似的事件曾導致…",
+    t("story.feed.historian.1"),
+    t("story.feed.historian.2"),
+    t("story.feed.historian.3"),
+    t("story.feed.historian.4"),
 ]
 
 
@@ -56,7 +57,7 @@ def _severity_level(severity: str) -> int:
 def _event_to_story(event: dict) -> dict:
     """Convert a raw event dict into a story dict."""
     stock_id = event.get("stock_id", "")
-    title = event.get("title", "未知事件")
+    title = event.get("title", t("story.feed.event.unknown"))
     summary = event.get("summary", "")
     date_str = event.get("date", datetime.now().strftime("%Y-%m-%d"))
     severity = event.get("severity", "low")
@@ -73,17 +74,17 @@ def _event_to_story(event: dict) -> dict:
                 pct = float(m.group(1))
                 analogy = get_revenue_analogy(abs(pct) / 10, "")  # rough scale-down
             else:
-                analogy = "營收的變化就像觀察一家餐廳的每日來客數。"
+                analogy = t("story.feed.analogy.revenue_surge")
         elif event_type == "price_abnormal":
-            analogy = "股價劇烈波動就像氣溫骤變，可能有暴風雨要來了。"
+            analogy = t("story.feed.analogy.price_abnormal")
         elif event_type in ("news_major", "news_medium"):
-            analogy = "市場新聞就像天氣預報，提醒我們要帶傘還是穿短袖。"
+            analogy = t("story.feed.analogy.news")
         elif event_type == "institutional_shift":
-            analogy = "法人買賣就像大戶在牌桌上的下注，值得留意。"
+            analogy = t("story.feed.analogy.institutional_shift")
         else:
-            analogy = "每一個市場事件背後，都有值得關注的故事。"
+            analogy = t("story.feed.analogy.default")
     except Exception:
-        analogy = "每一個市場事件背後，都有值得關注的故事。"
+        analogy = t("story.feed.analogy.default")
 
     return {
         "title": title,
@@ -119,19 +120,16 @@ def _sector_story(client, sector: str, perf: dict) -> dict:
 
     if avg > 1:
         emoji = "🔼"
-        direction = "走強"
+        direction = t("story.feed.sector.direction.up")
     elif avg < -1:
         emoji = "🔽"
-        direction = "走弱"
+        direction = t("story.feed.sector.direction.down")
     else:
         emoji = "➡️"
-        direction = "盤整"
+        direction = t("story.feed.sector.direction.flat")
 
-    title = f"{sector} {direction}（平均 {avg:+.1f}%）"
-    summary = (
-        f"本日 {sector} 共有 {count} 檔有數據，"
-        f"其中 {up} 檔上漲、{down} 檔下跌。"
-    )
+    title = t("story.feed.sector.title", sector=sector, direction=direction, avg=avg)
+    summary = t("story.feed.sector.summary", sector=sector, count=count, up=up, down=down)
 
     # Pick top mover for analogy
     stocks = perf.get("stocks", [])
@@ -139,9 +137,9 @@ def _sector_story(client, sector: str, perf: dict) -> dict:
     stock_name = top_stock.get("stock_id", sector)
     try:
         top_chg = float(top_stock.get("change", 0))
-        analogy = f"領頭羊 {stock_name} 變動 {top_chg:+.1f}%，像龍捲風的風眼帶領方向。"
+        analogy = t("story.feed.sector.analogy.top_mover", stock_name=stock_name, top_chg=top_chg)
     except (TypeError, ValueError):
-        analogy = f"{sector} 的整體表現，就像觀察一整片森林的季節變化。"
+        analogy = t("story.feed.sector.analogy.general", sector=sector)
 
     return {
         "title": title,
@@ -152,7 +150,7 @@ def _sector_story(client, sector: str, perf: dict) -> dict:
         "severity": "medium" if abs(avg) > 3 else "low",
         "severity_level": _severity_level("medium" if abs(avg) > 3 else "low"),
         "analogy": analogy,
-        "historian_note": f"📜 從歷史來看，{sector} 的平均報酬率與整體景氣循環密切相關。",
+        "historian_note": t("story.feed.sector.historian_note", sector=sector),
     }
 
 
@@ -271,13 +269,13 @@ def generate_education_story(client) -> dict:
     historical = edu.get("historical_context", "")
 
     return {
-        "title": f"📚 今日指標教室：{display_name}",
+        "title": t("story.feed.education.title", display_name=display_name),
         "summary": explanation,
         "stock_id": None,
         "date": datetime.now().strftime("%Y-%m-%d"),
         "type": TYPE_EDUCATION,
         "severity": "low",
         "severity_level": 0,
-        "analogy": analogy or "每天學一個指標，就像每天多認識一位新朋友。",
+        "analogy": analogy or t("story.feed.education.analogy_default"),
         "historian_note": f"📜 {historical}",
     }

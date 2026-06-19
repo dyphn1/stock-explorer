@@ -12,109 +12,81 @@ _EXPERT_ANALYSIS = {
     "2330": {
         "title": t("expert_analysis.title", name="台積電", id="2330"),
         "content": (
-            "🌍 **全球晶圓代工龍頭**：台積電在全球先進製程（7nm 以下）市占率超過 90%，"
-            "是蘋果、NVIDIA、AMD 等科技大廠的核心供應商。\n\n"
-            "📈 **成長動能**：AI 與 HPC（高效能運算）需求持續爆發，"
-            "CoWoS 先進封裝產能供不應求，預計 2025-2026 年營收維持雙位數成長。\n\n"
-            "⚠️ **風險提示**：海外擴廠（美國、日本）資本支出龐大，"
-            "折舊成本上升可能短期壓抑毛利率。地緣政治風險亦需持續關注。"
+            f"🌍 {t('expert_analysis.tsmc.global_leader')}\n\n"
+            f"📈 {t('expert_analysis.tsmc.growth')}\n\n"
+            f"⚠️ {t('expert_analysis.tsmc.risk')}"
         ),
     },
     "2317": {
         "title": t("expert_analysis.title", name="鴻海", id="2317"),
         "content": (
-            "🔧 **電子製造服務霸主**：鴻海為全球最大的電子代工廠，"
-            "主要客戶涵蓋蘋果、戴爾、HP 等國際品牌。\n\n"
-            "🤖 **轉型加速**：積極布局 AI 伺服器、電動車（MIH 平台）與半導體三大領域，"
-            "AI 伺服器業務受惠於資料中心擴建需求，成長可期。\n\n"
-            "⚠️ **風險提示**：傳統消費電子代工競爭激烈，利潤率偏低。"
-            "轉型成效仍需時間驗證。"
+            f"🔧 {t('expert_analysis.foxconn.ems_leader')}\n\n"
+            f"🤖 {t('expert_analysis.foxconn.transformation')}\n\n"
+            f"⚠️ {t('expert_analysis.foxconn.risk')}"
         ),
     },
     "2454": {
         "title": t("expert_analysis.title", name="聯發科", id="2454"),
         "content": (
-            "📱 **IC 設計領導者**：聯發科為全球智慧型手機晶片的主要供應商之一，"
-            "天璣系列 5G 晶片在旗艦與中階市場均有斬獲。\n\n"
-            "🚀 **AI 邊緣運算**：積極布局 AI PC 與車用晶片市場，"
-            "與 NVIDIA 合作的車用晶片方案備受矚目。\n\n"
-            "⚠️ **風險提示**：智慧型手機市場復甦力道不均，"
-            "高通競爭壓力持續存在。"
+            f"📱 {t('expert_analysis.mediatek.ic_leader')}\n\n"
+            f"🚀 {t('expert_analysis.mediatek.ai_edge')}\n\n"
+            f"⚠️ {t('expert_analysis.mediatek.risk')}"
         ),
     },
     "2308": {
         "title": t("expert_analysis.title", name="台達電", id="2308"),
         "content": (
-            "🔋 **電源管理專家**：台達電為全球領先的電源與散熱解決方案供應商，"
-            "在資料中心、電動車充電、工業自動化等領域均有布局。\n\n"
-            "🌱 **ESG 先行者**：積極投入節能減碳，"
-            "資料中心電源與散熱需求受惠於 AI 基礎建設浪潮。\n\n"
-            "⚠️ **風險提示**：原材料價格波動與供應鏈管理是主要挑戰。"
+            f"🔋 {t('expert_analysis.delta.power_expert')}\n\n"
+            f"🌱 {t('expert_analysis.delta.esg')}\n\n"
+            f"⚠️ {t('expert_analysis.delta.risk')}"
         ),
     },
     "2881": {
         "title": t("expert_analysis.title", name="富邦金", id="2881"),
         "content": (
-            "🏦 **金融控股巨擘**：富邦金為台灣最大的金融控股公司之一，"
-            "旗下涵蓋銀行、壽險、證券等多元金融業務。\n\n"
-            "💰 **獲利穩健**：受惠於升息循環與資本市場回溫，"
-            "壽險利差損壓力緩解，銀行端淨利息收入成長。\n\n"
-            "⚠️ **風險提示**：金融市場波動與匯率風險需持續關注。"
+            f"🏦 {t('expert_analysis.fubon_finance.financial_giant')}\n\n"
+            f"💰 {t('expert_analysis.fubon_finance.profit_stable')}\n\n"
+            f"⚠️ {t('expert_analysis.fubon_finance.risk')}"
         ),
     },
     "2882": {
         "title": t("expert_analysis.title", name="國泰金", id="2882"),
         "content": (
-            "🏦 **金融雙雄之一**：國泰金為台灣最大的金融控股公司，"
-            "國泰人壽為台灣最大壽險公司，國泰世華銀行為領先商業銀行。\n\n"
-            "📊 **數位轉型**：積極推動數位金融服務，"
-            "行動銀行與線上保險平台用戶持續成長。\n\n"
-            "⚠️ **風險提示**：壽險業面臨 IFRS 17 會計準則接軌挑戰，"
-            "資本市場波動影響投資收益。"
+            f"🏦 {t('expert_analysis.cathay_finance.financial_duo')}\n\n"
+            f"📊 {t('expert_analysis.cathay_finance.digital_transform')}\n\n"
+            f"⚠️ {t('expert_analysis.cathay_finance.risk')}"
         ),
     },
     "1301": {
         "title": t("expert_analysis.title", name="台塑", id="1301"),
         "content": (
-            "🧪 **石化產業龍頭**：台塑為全球主要的石化產品生產商，"
-            "產品涵蓋 PVC、PE、PP 等泛用塑膠與化學品。\n\n"
-            "🔄 **轉型布局**：積極發展綠能、半導體材料與高階應用材料，"
-            "降低對傳統石化景氣循環的依賴。\n\n"
-            "⚠️ **風險提示**：全球石化產能過剩壓力持續，"
-            "中國同業擴產加劇競爭。"
+            f"🧪 {t('expert_analysis.formosa_plastics.petro_leader')}\n\n"
+            f"🔄 {t('expert_analysis.formosa_plastics.transformation')}\n\n"
+            f"⚠️ {t('expert_analysis.formosa_plastics.risk')}"
         ),
     },
     "2002": {
         "title": t("expert_analysis.title", name="中鋼", id="2002"),
         "content": (
-            "🏗️ **鋼鐵產業龍頭**：中鋼為台灣最大的鋼鐵製造商，"
-            "產品廣泛應用於營建、機械、汽車等產業。\n\n"
-            "🌱 **綠色轉型**：積極推動減碳製程，"
-            "發展高值化鋼品以提升附加價值。\n\n"
-            "⚠️ **風險提示**：鋼鐵景氣循環明顯，"
-            "中國鋼鐵出口傾銷壓力與原物料價格波動是主要風險。"
+            f"🏗️ {t('expert_analysis.china_steel.steel_leader')}\n\n"
+            f"🌱 {t('expert_analysis.china_steel.green_transform')}\n\n"
+            f"⚠️ {t('expert_analysis.china_steel.risk')}"
         ),
     },
     "2382": {
         "title": t("expert_analysis.title", name="廣達", id="2382"),
         "content": (
-            "💻 **伺服器代工龍頭**：廣達為全球最大的筆記型電腦代工廠，"
-            "同時也是 AI 伺服器的主要供應商之一。\n\n"
-            "🤖 **AI 伺服器爆發**：受惠於大型雲端服務供應商（CSP）資本支出擴張，"
-            "AI 伺服器營收占比快速提升。\n\n"
-            "⚠️ **風險提示**：PC/NB 市場需求疲軟，"
-            "AI 伺服器訂單能見度雖高但競爭加劇。"
+            f"💻 {t('expert_analysis.quanta.server_leader')}\n\n"
+            f"🤖 {t('expert_analysis.quanta.ai_server')}\n\n"
+            f"⚠️ {t('expert_analysis.quanta.risk')}"
         ),
     },
     "3045": {
         "title": t("expert_analysis.title", name="大立光", id="3045"),
         "content": (
-            "📷 **光學鏡頭霸主**：大立光為全球智慧型手機光學鏡頭的領導廠商，"
-            "技術門檻高，客戶涵蓋蘋果、三星、華為等。\n\n"
-            "🔬 **技術領先**：在潛望式鏡頭、自由曲面鏡頭等先進光學技術上保持領先，"
-            "持續受惠於多鏡頭趨勢。\n\n"
-            "⚠️ **風險提示**：智慧型手機市場成長放緩，"
-            "中國競爭對手（舜宇、瑞聲）持續追趕。"
+            f"📷 {t('expert_analysis.largan.optical_leader')}\n\n"
+            f"🔬 {t('expert_analysis.largan.tech_lead')}\n\n"
+            f"⚠️ {t('expert_analysis.largan.risk')}"
         ),
     },
 }

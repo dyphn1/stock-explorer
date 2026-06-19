@@ -5,6 +5,7 @@
 
 import plotly.graph_objects as go
 import pandas as pd
+from src.core.i18n import t
 from src.services.financial_metrics import extract_quarterly_eps
 from src.services.chart_stock_financial import _get_chart_colors, _apply_theme_layout
 
@@ -26,19 +27,19 @@ def create_valuation_band_chart(
     # ── 基本資料驗證 ─────────────────────────────────────────
     if daily_price_df is None or len(daily_price_df) == 0:
         fig = go.Figure()
-        fig.add_annotation(text="暫無股價資料", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.valuation.no_price_data"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig, {}
 
     if financial_df is None or len(financial_df) == 0:
         fig = go.Figure()
-        fig.add_annotation(text="暫無財務資料，無法計算本益比", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.valuation.no_financial_data_per"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig, {}
 
     if not latest_per_pbr or not latest_per_pbr.get("PER"):
         fig = go.Figure()
-        fig.add_annotation(text="目前無法取得本益比資料", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.valuation.no_per_data"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig, {}
 
@@ -59,15 +60,15 @@ def create_valuation_band_chart(
             price_df = price_df.sort_values("date").reset_index(drop=True)
             if len(price_df) == 0:
                 fig = go.Figure()
-                fig.add_annotation(text="近五年無股價資料", x=0.5, y=0.5, showarrow=False)
+                fig.add_annotation(text=t("chart.valuation.no_price_data_5y"), x=0.5, y=0.5, showarrow=False)
                 _apply_theme_layout(fig)
                 return fig, {}
-            note = "（資料不足 5 年，顯示全部可用資料）"
+            note = t("chart.valuation.data_less_than_5y")
         else:
             # Check if we have at least 2 years of data in the 5-year window
             date_range = price_df["date"].max() - price_df["date"].min()
             if date_range.days < 730:
-                note = "（資料不足 5 年，顯示全部可用資料）"
+                note = t("chart.valuation.data_less_than_5y")
             else:
                 note = ""
 
@@ -76,7 +77,7 @@ def create_valuation_band_chart(
 
         if eps_df is None:
             fig = go.Figure()
-            fig.add_annotation(text="無法從財務資料中提取 EPS", x=0.5, y=0.5, showarrow=False)
+            fig.add_annotation(text=t("chart.valuation.cannot_extract_eps"), x=0.5, y=0.5, showarrow=False)
             _apply_theme_layout(fig)
             return fig, {}
 
@@ -110,7 +111,7 @@ def create_valuation_band_chart(
 
         if len(per_values) == 0:
             fig = go.Figure()
-            fig.add_annotation(text="EPS 為負或零，無法計算本益比", x=0.5, y=0.5, showarrow=False)
+            fig.add_annotation(text=t("chart.valuation.eps_negative_or_zero"), x=0.5, y=0.5, showarrow=False)
             _apply_theme_layout(fig)
             return fig, {}
 
@@ -123,11 +124,11 @@ def create_valuation_band_chart(
 
         # ── Step 5: 估值解讀 ─────────────────────────────────
         if current_per < p25:
-            valuation_text = "📉 目前估值偏低，比過去 75% 的時候都便宜"
+            valuation_text = t("chart.valuation.valuation_low")
         elif current_per > p75:
-            valuation_text = "📈 目前估值偏高，比過去 75% 的時候都貴"
+            valuation_text = t("chart.valuation.valuation_high")
         else:
-            valuation_text = "📊 目前估值在中間範圍"
+            valuation_text = t("chart.valuation.valuation_middle")
 
         interpretation = {
             "p25": p25,
@@ -146,7 +147,7 @@ def create_valuation_band_chart(
             fill="toself",
             fillcolor="rgba(52, 152, 219, 0.12)",
             line=dict(color="rgba(0,0,0,0)"),
-            name="25th-75th 百分位",
+            name=t("chart.valuation.percentile_band"),
             hoverinfo="skip",
         ))
 
@@ -155,9 +156,9 @@ def create_valuation_band_chart(
             x=per_series.index,
             y=per_series.values,
             mode="lines",
-            name="歷史 PER",
+            name=t("chart.valuation.historical_per"),
             line=dict(color="#3498DB", width=2),
-            hovertemplate="日期: %{x|%Y/%m/%d}<br>PER: %{y:.1f}<extra></extra>",
+            hovertemplate=t("chart.valuation.hover_template"),
         ))
 
         # 當前 PER 水平線
@@ -166,7 +167,7 @@ def create_valuation_band_chart(
             line_dash="dash",
             line_color="#E74C3C",
             line_width=2,
-            annotation_text=f"目前 PER: {current_per:.1f}",
+            annotation_text=t("chart.valuation.current_per", value=current_per),
             annotation_position="top right",
             annotation_font=dict(color="#E74C3C", size=13),
         )
@@ -175,10 +176,10 @@ def create_valuation_band_chart(
         fig.add_hline(y=p25, line_dash="dot", line_color=theme["divider"], line_width=1)
         fig.add_hline(y=p75, line_dash="dot", line_color=theme["divider"], line_width=1)
 
-        title_text = f"{stock_name} 估值區間（歷史 P/E 範圍）"
+        title_text = t("chart.valuation.chart_title", name=stock_name)
         if note:
             title_text += f" {note}"
-        title_text += " <sub style='font-size:0.7rem;color:#7F8C8D;'>💡 PER = 本益比</sub>"
+        title_text += t("chart.valuation.chart_subtitle")
 
         fig.update_layout(
             title=dict(
@@ -186,8 +187,8 @@ def create_valuation_band_chart(
                 font=dict(size=18, color=theme["title"]),
                 x=0.5,
             ),
-            xaxis_title="日期",
-            yaxis_title="本益比 (PER)",
+            xaxis_title=t("chart.valuation.xaxis_title"),
+            yaxis_title=t("chart.valuation.yaxis_title"),
             height=420,
             margin=dict(t=60, b=40, l=60, r=20),
             showlegend=True,
@@ -199,6 +200,6 @@ def create_valuation_band_chart(
 
     except Exception:
         fig = go.Figure()
-        fig.add_annotation(text="估值區間圖計算失敗", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.valuation.chart_failed"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig, {}

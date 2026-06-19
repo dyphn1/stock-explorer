@@ -90,6 +90,5 @@ def _render_revenue_tree(data: dict, client) -> None:
             t("revenue_tree:yoy_body", direction=direction, value=abs(yoy)),
             "📈" if yoy >= 0 else "📉",
         )
-        )
 
     _historian_disclaimer("revenue_tree")

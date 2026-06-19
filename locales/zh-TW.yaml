@@ -34,6 +34,8 @@ page:
   debate_cards: 看多看空辯論
   learn_first_gate: 學習優先門
   daily_market: 今日市場動態
+url_sync:
+  default_page: 名片
 sidebar:
   nav_label: 導覽
   hot_stocks: 🔥 熱門股票
@@ -311,6 +313,7 @@ disclaimer:
   feedback_positive: 感謝你的正面回饋！👍
   feedback_negative: 感謝你的回饋，我們會持續改進！👎
 unit:
+  point: 分
   hundred_million: 億
   ten_thousand: 萬
   yuan: 元
@@ -732,6 +735,12 @@ business_card:
     dividend: 股利資料
     news_institutional: 新聞與法人動向
     corporate: 公司資料（資產負債表、現金流量表）
+  health:
+    section_title: 公司健康狀況
+    source_estimated: 📊 系統估算
+    confidence_note: 信心指標反映資料完整度，非AI預測確定性
+    risk_analysis_title: ⚠️ 風險分析 — 什麼可能出問題？
+
 event_dashboard:
   sources:
     events: 事件紀錄
@@ -1368,6 +1377,9 @@ compare_stories:
   title: 同業比較故事
   subtitle: 與同產業同業的深度敘事比較
   no_peer_data: 無法取得同業資料
+  unknown_industry: 未知
+  view_peer: "查看 {name}"
+  no_comparison_data: 目前沒有足夠資料進行同業比較分析
 
 revenue_tree:
   title: 營收結構樹

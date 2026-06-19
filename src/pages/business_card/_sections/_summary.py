@@ -54,9 +54,9 @@ def _render_one_liner(data: dict, client) -> None:
 
     # 一句話定位
     one_liner = get_one_liner(stock_id, stock_name, industry)
-    _info_card("一句話定位", one_liner, "💡")
+    _info_card(t("summary:one_liner"), one_liner, "💡")
     # C204: confidence badge
-    st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+    st.caption(f"{_confidence_badge(0.9)} · {t('summary:confidence_note')}")
 
     # 💡 你知道嗎？ Company facts tip card
     facts = get_company_facts(stock_id)
@@ -68,9 +68,9 @@ def _render_one_liner(data: dict, client) -> None:
         idx = st.session_state[fact_key] % len(facts)
         st.session_state[fact_key] = (idx + 1) % len(facts)
         current_fact = facts[idx]
-        _info_card("你知道嗎？", current_fact, "💡")
+        _info_card(t("summary:fact_title"), current_fact, "💡")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+        st.caption(f"{_confidence_badge(0.9)} · {t('summary:confidence_note')}")
 
 
 def _render_news(data: dict, client) -> None:
@@ -79,12 +79,12 @@ def _render_news(data: dict, client) -> None:
     stock_name = data["stock_name"]
 
     # 近期動態（白話摘要版）
-    st.markdown("### 📊 近期動態")
+    st.markdown(f"### 📊 {t('summary:recent_news')}")
     if len(news) > 0:
         for i in range(min(3, len(news))):
             news_item = news.iloc[i]
             title = news_item['title']
-            source = news_item.get('source', '未知')
+            source = news_item.get('source', t('summary:unknown_source'))
             date_str = str(news_item.get('date', ''))[:10]
             impact = get_news_impact_level(title)
             summary = summarize_news(title, stock_name)
@@ -93,4 +93,4 @@ def _render_news(data: dict, client) -> None:
 
             _info_card(f"{impact_class} {title}\n\n{summary}\n\n📡 {source} ｜ {date_str}", "", "📰")
     else:
-        st.info("近期無重大新聞")
+        st.info(t('summary:no_news'))

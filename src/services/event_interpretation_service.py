@@ -14,6 +14,8 @@ from typing import Any
 
 import yaml
 
+from src.core.i18n import t
+
 logger = logging.getLogger(__name__)
 
 # ── Load interpretation templates once at module level ──────────
@@ -67,12 +69,9 @@ def get_interpretation(
         # Graceful fallback for unknown event types
         logger.info("No interpretation template for event_type='%s', using fallback.", event_type)
         return {
-            "short": f'"{title}" 代表市場出現了值得關注的變化。',
-            "detail": (
-                f'這筆事件記錄顯示 "{title}"。'
-                f"建議搭配其他資訊一起觀察，不要僅憑單一事件做判斷。"
-            ),
-            "key_concept": "單一事件不足以判斷，要搭配整體分析",
+            "short": t("event.fallback_short", title=title),
+            "detail": t("event.fallback_detail", title=title),
+            "key_concept": t("event.fallback_key_concept"),
             "event_type": event_type,
             "severity": severity,
         }
@@ -104,15 +103,18 @@ def get_drilldown_interpretation(event: dict[str, Any]) -> dict[str, str]:
     interp = get_interpretation(event_type, severity, title, summary)
 
     # Build full plain-language explanation
-    severity_label = {"high": "重大", "medium": "注意", "low": "參考"}.get(severity, "未知")
+    severity_label = {
+        "high": t("event.severity_high"),
+        "medium": t("event.severity_medium"),
+        "low": t("event.severity_low"),
+    }.get(severity, t("event.severity_unknown"))
     full_text = (
-        f"【事件解讀】\n\n"
-        f"這是一則「{severity_label}」等級的「{event_type}」事件。\n\n"
-        f"📌 核心概念：{interp['key_concept']}\n\n"
-        f"📖 詳細說明：{interp['detail']}\n\n"
-        f"📋 原始摘要：{summary}\n\n"
-        f"⚠️ 歷史學家觀點：以上解讀僅說明事件背景與可能意涵，"
-        f"不構成任何投資建議。"
+        t("event.interpretation_header")
+        + t("event.interpretation_severity", severity_label=severity_label, event_type=event_type)
+        + t("event.interpretation_key_concept", key_concept=interp["key_concept"])
+        + t("event.interpretation_detail", detail=interp["detail"])
+        + t("event.interpretation_summary", summary=summary)
+        + t("event.interpretation_disclaimer")
     )
 
     return {

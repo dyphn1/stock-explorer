@@ -10,6 +10,7 @@ from src.pages.business_card._helpers import (
     _get_health_metric_values,
 )
 from src.services import glossary_service
+from src.core.i18n import t
 from src.services.benchmarks import (
     get_industry_benchmarks,
     fetch_benchmark_health_scores,
@@ -45,11 +46,11 @@ def _render_health(data: dict, client) -> None:
     if health_scores:
         # C205: section title with read time badge
         health_summary_text = get_health_summary(health_scores)
-        _section_title_with_read_time("🏥 公司健康狀況", health_summary_text)
+        _section_title_with_read_time(t("business_card.health.section_title"), health_summary_text)
 
         # ── Fetch benchmark overlay data ──
         benchmark_scores = None
-        benchmark_label = "同業平均"
+        benchmark_label = t("health.benchmark_label")
         if industry:
             benchmark_scores = _fetch_benchmark_health_scores(client, industry, stock_id)
             if benchmark_scores:
@@ -88,9 +89,9 @@ def _render_health(data: dict, client) -> None:
                     st.caption(metric_text)
                 _explain_button(
                     metric_name=dim_name,
-                    metric_value=f"{score:.0f} 分",
+                    metric_value=f"{score:.0f} {t('unit.point')}",
                     key_prefix=f"health_{stock_id}",
-                    source_label="📊 系統估算",
+                    source_label=t("business_card.health.source_estimated"),
                 )
                 # C170: Glossary tooltip for each health dimension
                 _gkey = glossary_service.resolve_term_key(dim_name)
@@ -98,9 +99,9 @@ def _render_health(data: dict, client) -> None:
                     _glossary_tooltip(_gkey, glossary_service, beginner=_is_beginner)
 
         # 白話健康摘要
-        _info_card("健康摘要", health_summary_text, "🏥")
+        _info_card(t("health.summary_title"), health_summary_text, "🏥")
         # C204: confidence badge
-        st.caption(f"{_confidence_badge(0.9)} · 信心指標反映資料完整度，非AI預測確定性")
+        st.caption(f"{_confidence_badge(0.9)} · {t('business_card.health.confidence_note')}")
 
 
 def _render_risk(data: dict, client) -> None:
@@ -114,7 +115,7 @@ def _render_risk(data: dict, client) -> None:
         for dim in ("customer_concentration", "financial_health", "event_based")
     )
     if has_risk_dims:
-        with st.expander("⚠️ 風險分析 — 什麼可能出問題？", expanded=False):
+        with st.expander(t("business_card.health.risk_analysis_title"), expanded=False):
             if risk.get("summary_text"):
                 st.caption(risk["summary_text"])
             for dim_key in ("customer_concentration", "financial_health", "event_based"):

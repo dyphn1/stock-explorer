@@ -8,6 +8,8 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import pandas as pd
 
+from src.core.i18n import t
+
 
 # ── Theme-aware color scheme ─────────────────────────────
 # Strategy: use colors that provide sufficient contrast in BOTH
@@ -75,14 +77,16 @@ def _apply_theme_layout(fig: go.Figure) -> go.Figure:
     return fig
 
 
-def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -> go.Figure:
+def create_revenue_pie_chart(revenue_items: list, title: str = None) -> go.Figure:
     """
     營收來源圓餅圖
     revenue_items: [{"name": "手機晶片", "value": 40.0, "description": "..."}]
     """
+    if title is None:
+        title = t("chart.stock_financial.revenue_source")
     if not revenue_items:
         fig = go.Figure()
-        fig.add_annotation(text="暫無營收組成資料", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.stock_financial.no_revenue_composition"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig
 
@@ -105,7 +109,7 @@ def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -
         textinfo="label+percent",
         textposition="outside",
         hovertemplate="<b>%{label}</b><br>" +
-                      "佔比: %{percent}<br>" +
+                      t("chart.stock_financial.proportion") + ": %{percent}<br>" +
                       "<extra></extra>"
     )])
 
@@ -120,11 +124,13 @@ def create_revenue_pie_chart(revenue_items: list, title: str = "營收來源") -
     return fig
 
 
-def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢") -> go.Figure:
+def create_revenue_trend_chart(df: pd.DataFrame, title: str = None) -> go.Figure:
     """月營收趨勢圖（含年增率）"""
+    if title is None:
+        title = t("chart.stock_financial.revenue_trend")
     if df is None or len(df) == 0:
         fig = go.Figure()
-        fig.add_annotation(text="暫無營收資料", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.stock_financial.no_revenue_data"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig
 
@@ -138,7 +144,7 @@ def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢")
         rows=2, cols=1,
         shared_xaxes=True,
         vertical_spacing=0.08,
-        subplot_titles=("月營收", "年增率 (%)"),
+        subplot_titles=(t("chart.stock_financial.monthly_revenue"), t("chart.stock_financial.yoy_rate") + " (%)"),
         row_heights=[0.7, 0.3]
     )
 
@@ -147,9 +153,9 @@ def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢")
         go.Bar(
             x=df["date"],
             y=df["revenue"] / 1e8,  # 轉為億
-            name="月營收",
+            name=t("chart.stock_financial.monthly_revenue"),
             marker_color="#3498DB",
-            hovertemplate="%{x|%Y/%m}<br>營收: %{y:,.1f} 億<extra></extra>"
+            hovertemplate="%{x|%Y/%m}<br>" + t("chart.stock_financial.revenue") + ": %{y:,.1f} " + t("chart.unit_hundred_million") + "<extra></extra>"
         ),
         row=1, col=1
     )
@@ -162,9 +168,9 @@ def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢")
             go.Bar(
                 x=yoy_data["date"],
                 y=yoy_data["yoy"],
-                name="年增率",
+                name=t("chart.stock_financial.yoy_rate"),
                 marker_color=colors,
-                hovertemplate="%{x|%Y/%m}<br>年增率: %{y:.1f}%<extra></extra>"
+                hovertemplate="%{x|%Y/%m}<br>" + t("chart.stock_financial.yoy_rate") + ": %{y:.1f}%<extra></extra>"
             ),
             row=2, col=1
         )
@@ -179,13 +185,13 @@ def create_revenue_trend_chart(df: pd.DataFrame, title: str = "月營收趨勢")
     )
     _apply_theme_layout(fig)
 
-    fig.update_yaxes(title_text="億元", row=1, col=1)
+    fig.update_yaxes(title_text=t("chart.unit_hundred_million"), row=1, col=1)
     fig.update_yaxes(title_text="%", row=2, col=1)
 
     return fig
 
 
-def create_revenue_treemap(revenue_items: list, title: str = "營收來源") -> go.Figure:
+def create_revenue_treemap(revenue_items: list, title: str = None) -> go.Figure:
     """
     Create a treemap visualization of revenue breakdown.
 
@@ -196,6 +202,8 @@ def create_revenue_treemap(revenue_items: list, title: str = "營收來源") -> 
     Returns:
         plotly go.Figure
     """
+    if title is None:
+        title = t("chart.stock_financial.revenue_source")
     # Use a pleasant color palette
     colors = ["#3498DB", "#27AE60", "#E74C3C", "#2C3E50", "#7F8C8D", "#ECF0F1"]
 
@@ -239,11 +247,13 @@ def create_revenue_treemap(revenue_items: list, title: str = "營收來源") -> 
     return fig
 
 
-def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figure:
+def create_price_chart(df: pd.DataFrame, title: str = None) -> go.Figure:
     """股價走勢圖（K 線 + 成交量）；單日資料時以分組長條圖呈現 OHLC"""
+    if title is None:
+        title = t("chart.stock_financial.price_trend")
     if df is None or len(df) == 0:
         fig = go.Figure()
-        fig.add_annotation(text="暫無股價資料", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.stock_financial.no_price_data"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig
 
@@ -254,7 +264,7 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
     # ── 單日 fallback：分組長條圖呈現 OHLC ─────────────────
     if len(df) < 2:
         row = df.iloc[0]
-        ohlc_labels = ["開盤", "最高", "最低", "收盤"]
+        ohlc_labels = [t("chart.stock_financial.open"), t("chart.stock_financial.high"), t("chart.stock_financial.low"), t("chart.stock_financial.close")]
         ohlc_values = [row["open"], row["max"], row["min"], row["close"]]
         ohlc_colors = ["#3498DB", "#27AE60", "#E74C3C", "#3498DB"]
         theme = _get_chart_colors()
@@ -269,7 +279,7 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
             ))
 
         fig.update_layout(
-            title=dict(text=f"{title}（僅單日資料）", font=dict(size=18, color=theme["title"]), x=0.5),
+            title=dict(text=f"{title}（" + t("chart.stock_financial.single_day_only") + "）", font=dict(size=18, color=theme["title"]), x=0.5),
             showlegend=True,
             legend=dict(orientation="h", yanchor="bottom", y=-0.15),
             margin=dict(t=60, b=60, l=60, r=20),
@@ -277,9 +287,9 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
             barmode="group",
         )
         _apply_theme_layout(fig)
-        fig.update_yaxes(title_text="價格")
+        fig.update_yaxes(title_text=t("chart.stock_financial.price"))
         fig.add_annotation(
-            text="只有1天的資料，改用長條圖顯示",
+            text=t("chart.stock_financial.single_day_note"),
             xref="paper", yref="paper", x=0.5, y=-0.25,
             showarrow=False, font=dict(size=13, color=theme["muted"]),
         )
@@ -301,7 +311,7 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
             high=df["max"],
             low=df["min"],
             close=df["close"],
-            name="K線",
+            name=t("chart.stock_financial.candlestick"),
             increasing_line_color="#E74C3C",
             decreasing_line_color="#27AE60",
         ),
@@ -315,7 +325,7 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
         go.Bar(
             x=df["date"],
             y=df["Trading_Volume"] / 1e3,  # 轉為張
-            name="成交量",
+            name=t("chart.stock_financial.volume"),
             marker_color=colors,
             opacity=0.6,
         ),
@@ -333,27 +343,29 @@ def create_price_chart(df: pd.DataFrame, title: str = "股價走勢") -> go.Figu
     )
     _apply_theme_layout(fig)
 
-    fig.update_yaxes(title_text="價格", row=1, col=1)
-    fig.update_yaxes(title_text="張數(千)", row=2, col=1)
+    fig.update_yaxes(title_text=t("chart.stock_financial.price"), row=1, col=1)
+    fig.update_yaxes(title_text=t("chart.stock_financial.thousand_shares"), row=2, col=1)
 
     return fig
 
 
 def create_funnel_chart(revenue: float, gross_profit: float,
                         operating_income: float, net_income: float,
-                        title: str = "利潤漏斗") -> go.Figure:
+                        title: str = None) -> go.Figure:
     """
     利潤漏斗圖
     營收 → 毛利 → 營業利益 → 淨利
     """
-    stages = ["營收", "毛利", "營業利益", "淨利"]
+    if title is None:
+        title = t("chart.stock_financial.profit_funnel")
+    stages = [t("chart.stock_financial.revenue_stage"), t("chart.stock_financial.gross_profit"), t("chart.stock_financial.operating_income"), t("chart.stock_financial.net_income")]
     values = [revenue, gross_profit, operating_income, net_income]
 
     # 過濾掉 0 或負值
     valid = [(s, v) for s, v in zip(stages, values) if v > 0]
     if not valid:
         fig = go.Figure()
-        fig.add_annotation(text="暫無財務資料", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.stock_financial.no_financial_data"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig
 
@@ -365,7 +377,7 @@ def create_funnel_chart(revenue: float, gross_profit: float,
         y=stages,
         x=[v / 1e8 for v in values],  # 轉為億
         textinfo="value+percent initial",
-        texttemplate="%{x:,.1f} 億<br>%{percentInitial}",
+        texttemplate="%{x:,.1f} " + t("chart.unit_hundred_million") + "<br>%{percentInitial}",
         marker=dict(
             color=["#3498DB", "#27AE60", "#3498DB", "#E74C3C"],
             line=dict(width=2, color=theme["border"])
@@ -391,7 +403,7 @@ def create_comparison_radar(metrics: dict, target_name: str,
     """
     if not metrics:
         fig = go.Figure()
-        fig.add_annotation(text="暫無比較資料", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.stock_financial.no_comparison_data"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig
 
@@ -437,11 +449,13 @@ def create_comparison_radar(metrics: dict, target_name: str,
     return fig
 
 
-def create_institutional_chart(df: pd.DataFrame, title: str = "三大法人買賣超") -> go.Figure:
+def create_institutional_chart(df: pd.DataFrame, title: str = None) -> go.Figure:
     """三大法人買賣超圖"""
+    if title is None:
+        title = t("chart.stock_financial.institutional_trading")
     if df is None or len(df) == 0:
         fig = go.Figure()
-        fig.add_annotation(text="暫無法人資料", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.stock_financial.no_institutional_data"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig
 
@@ -459,7 +473,7 @@ def create_institutional_chart(df: pd.DataFrame, title: str = "三大法人買�
         x=df["date"],
         y=df["net_buy"] / 1e3,  # 轉為張
         marker_color=colors,
-        hovertemplate="%{x|%Y/%m/%d}<br>買賣超: %{y:,.0f} 張<extra></extra>"
+        hovertemplate="%{x|%Y/%m/%d}<br>" + t("chart.stock_financial.net_buy_sell") + ": %{y:,.0f} " + t("chart.stock_financial.shares") + "<extra></extra>"
     ))
 
     theme = _get_chart_colors()
@@ -474,6 +488,6 @@ def create_institutional_chart(df: pd.DataFrame, title: str = "三大法人買�
     )
     _apply_theme_layout(fig)
 
-    fig.update_yaxes(title_text="張數(千)")
+    fig.update_yaxes(title_text=t("chart.stock_financial.thousand_shares"))
 
     return fig

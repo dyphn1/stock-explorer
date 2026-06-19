@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import pandas as pd
 
+from src.core.i18n import t
+
 
 def extract_dividend_summary(
     dividend_df: pd.DataFrame | None,
@@ -50,7 +52,7 @@ def extract_dividend_summary(
 
     div_rows = df[df[cash_col].fillna(0) > 0].copy()
     if div_rows.empty:
-        return _empty_result("此公司近五年無配息紀錄")
+        return _empty_result(t("dividend.no_record_recent"))
 
     # Build yearly_dividends list (up to 8 most recent)
     yearly_dividends = _build_yearly_dividends(div_rows, cash_col)
@@ -90,8 +92,10 @@ def extract_dividend_summary(
     }
 
 
-def _empty_result(msg: str = "此公司暫無除權息紀錄") -> dict:
+def _empty_result(msg: str | None = None) -> dict:
     """Return an empty dividend result."""
+    if msg is None:
+        msg = t("dividend.no_record")
     return {
         "has_data": False,
         "yearly_dividends": [],
@@ -119,11 +123,11 @@ def _build_yearly_dividends(div_rows: pd.DataFrame, cash_col: str) -> list[dict]
         if pay_date and pay_date != "":
             try:
                 pay_dt = pd.Timestamp(pay_date)
-                status = "✓ 已發放" if pay_dt <= today else "⏳ 待發放"
+                status = t("dividend.status_paid") if pay_dt <= today else t("dividend.status_pending")
             except Exception:
-                status = "⏳ 待發放"
+                status = t("dividend.status_pending")
         else:
-            status = "⏳ 待發放"
+            status = t("dividend.status_pending")
 
         yearly_dividends.append({
             "year": year_str,
@@ -298,22 +302,22 @@ def _generate_summary(
 ) -> str:
     """Generate plain-language dividend summary."""
     if not yearly_dividends:
-        return "此公司近五年無配息紀錄"
+        return t("dividend.no_record_recent")
 
     n_years = len(set(d["year"] for d in yearly_dividends if d["year"] != "—"))
-    est_label = "預估" if is_estimated else ""
+    est_label = t("dividend.estimated_label") if is_estimated else ""
 
     if frequency == "quarterly" and latest_cash_div:
-        parts = [f"每季約配息 {latest_cash_div} 元"]
+        parts = [t("dividend.quarterly_dividend", amount=latest_cash_div)]
         if estimated_yield:
-            parts.append(f"{est_label}年化殖利率約 {estimated_yield}%")
-        return f"過去 {n_years} 年，這家企業穩定" + "，".join(parts)
+            parts.append(t("dividend.quarterly_yield", label=est_label, yield_pct=estimated_yield))
+        return t("dividend.stable_years", n_years=n_years) + "，".join(parts)
     elif frequency == "annual" and latest_cash_div:
-        parts = [f"每年配息約 {latest_cash_div} 元"]
+        parts = [t("dividend.annual_dividend", amount=latest_cash_div)]
         if estimated_yield:
-            parts.append(f"{est_label}殖利率約 {estimated_yield}%")
-        return f"過去 {n_years} 年，這家企業每年穩定" + "，".join(parts)
+            parts.append(t("dividend.annual_yield", label=est_label, yield_pct=estimated_yield))
+        return t("dividend.stable_years", n_years=n_years) + "，".join(parts)
     elif frequency == "irregular":
-        return f"配息不穩定，依當年度獲利情形決定。最近一次配息 {latest_cash_div or '—'} 元"
+        return t("dividend.irregular", amount=latest_cash_div or "—")
     else:
-        return f"此公司近 {n_years} 年有配息紀錄"
+        return t("dividend.record_years", n_years=n_years)

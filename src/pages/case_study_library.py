@@ -135,7 +135,7 @@ def _render_case_study_library(client: FinMindClient) -> None:
     st.markdown("---")
 
     # ── Results ───────────────────────────────────────────────
-    _count_label(len(filtered), "篇案例研究")
+    _count_label(len(filtered), t("library.case_count"))
 
     if not filtered:
         st.info(t("library.no_results"))

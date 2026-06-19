@@ -4,6 +4,7 @@
 """
 
 import plotly.graph_objects as go
+from src.core.i18n import t
 from src.services.chart_stock_financial import _get_chart_colors, _apply_theme_layout
 
 
@@ -12,7 +13,7 @@ def create_health_snowflake(
     health_scores: dict,
     metric_values: dict | None = None,
     benchmark_scores: dict | None = None,
-    benchmark_label: str = "同業平均",
+    benchmark_label: str = "",
 ) -> go.Figure:
     """
     公司健康狀況雷達圖（雪花圖）
@@ -26,7 +27,7 @@ def create_health_snowflake(
     """
     if not health_scores:
         fig = go.Figure()
-        fig.add_annotation(text="暫無健康評分資料", x=0.5, y=0.5, showarrow=False)
+        fig.add_annotation(text=t("chart.health.no_data"), x=0.5, y=0.5, showarrow=False)
         _apply_theme_layout(fig)
         return fig
 
@@ -65,34 +66,35 @@ def create_health_snowflake(
                 pass
 
         if bench_values:
-            # 閉合 the polygon
+            # Close the polygon
             bv_closed = bench_values + [bench_values[0]]
             bc_closed = bench_categories + [bench_categories[0]]
+            label = benchmark_label or t("comparison.industry_avg")
 
             fig.add_trace(go.Scatterpolar(
                 r=bv_closed,
                 theta=bc_closed,
                 fill="none",
                 line=dict(color="#ECF0F1", width=2, dash="dash"),
-                name=benchmark_label,
+                name=label,
                 text=[
-                    f"<b>{benchmark_label} — {c}: {v:.0f}分</b>"
+                    t("chart.health.benchmark_tooltip", label=label, category=c, score=v)
                     for c, v in zip(bench_categories, bench_values)
                 ],
                 hovertemplate="%{text}<extra></extra>",
             ))
 
-    # 外框線（各維度實際分數）
+    # Outer line (actual scores per dimension)
     fig.add_trace(go.Scatterpolar(
-        r=values + [values[0]],  # 閉合
+        r=values + [values[0]],  # Close the polygon
         theta=categories + [categories[0]],
         fill="toself",
         fillcolor="rgba(52, 152, 219, 0.15)",
         line=dict(color=main_color, width=2.5),
-        name="目前評分",
+        name=t("chart.health.current_score"),
         text=(
             (
-                f"<b>{c}: {v:.0f}分</b>"
+                t("chart.health.score_tooltip", category=c, score=v)
                 + ("<br>" + "<br>".join(f"  • {m}" for m in metric_values[c]) if metric_values and c in metric_values and metric_values[c] else "")
             )
             for c, v in zip(categories, values)
@@ -100,21 +102,21 @@ def create_health_snowflake(
         hovertemplate="%{text}<extra></extra>",
     ))
 
-    # 參考線：及格線 40
+    # Reference line: pass line 40
     fig.add_trace(go.Scatterpolar(
         r=[40] * (len(categories) + 1),
         theta=categories + [categories[0]],
         line=dict(color="#3498DB", width=1, dash="dot"),
-        name="及格線 (40)",
+        name=t("chart.health.pass_line"),
         hoverinfo="skip",
     ))
 
-    # 參考線：良好線 70
+    # Reference line: good line 70
     fig.add_trace(go.Scatterpolar(
         r=[70] * (len(categories) + 1),
         theta=categories + [categories[0]],
         line=dict(color="#27AE60", width=1, dash="dot"),
-        name="良好線 (70)",
+        name=t("chart.health.good_line"),
         hoverinfo="skip",
     ))
 
@@ -122,7 +124,7 @@ def create_health_snowflake(
 
     fig.update_layout(
         title=dict(
-            text=f"{stock_name} 公司健康狀況"
+            text=t("chart.health.title", stock_name=stock_name)
                  + " <sub style='font-size:0.7rem;color:#7F8C8D;'>💡 點擊各維度分數旁圖示查看名詞解釋</sub>",
             font=dict(size=18, color=theme["title"]),
             x=0.5,

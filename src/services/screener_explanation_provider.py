@@ -17,6 +17,7 @@ import os
 
 import yaml
 
+from src.core.i18n import t
 from src.services.llm.base import ExplanationProvider, ExplanationRequest, ExplanationResponse
 from src.services.llm.template_provider import TemplateExplanationProvider
 
@@ -43,7 +44,7 @@ def _load_templates_from_yaml() -> dict:
 _yaml_data = _load_templates_from_yaml()
 
 # ── Historian tone disclaimer ──────────────────────────────────────
-_DISCLAIMER = _yaml_data.get("disclaimer", "篩選結果僅供學習參考，不構成投資諮詢")
+_DISCLAIMER = t("screener.explanation.disclaimer")
 
 # ── Screener-specific explanation templates ────────────────────────
 # Each filter type maps to a set of explanation templates keyed by
@@ -67,7 +68,7 @@ _CUSTOM_FILTER_TEMPLATES: dict[str, str] = {
 
 # ── Fallback template ──────────────────────────────────────────────
 _FALLBACK_TEMPLATE = _custom_data.get(
-    "fallback", "{stock_name}（{stock_id}）符合所設篩選條件"
+    "fallback", t("screener.explanation.fallback")
 )
 
 
@@ -253,27 +254,26 @@ def _build_screener_implication(
         A one-sentence implication string.
     """
     if preset == "dividend":
-        return "高殖利率公司通常具穩定現金流，可留意其配息持續性"
+        return t("screener.explanation.implication.dividend")
     elif preset == "growth":
-        return "營收成長公司可能具擴張動能，可觀察其獲利是否同步提升"
+        return t("screener.explanation.implication.growth")
     elif preset == "value":
-        return "低估值公司可能存在市場低估，可進一步評估其基本面是否穩健"
+        return t("screener.explanation.implication.value")
     elif filters:
         active_filters = []
         if filters.get("revenue_growth"):
-            active_filters.append("營收正成長")
-        if filters.get("industry") and filters["industry"] != "全部":
-            active_filters.append(f"屬於{filters['industry']}")
+            active_filters.append(t("screener.explanation.filter.revenue_positive"))
+        if filters.get("industry") and filters["industry"] != t("screener.explanation.filter.all_industries"):
+            active_filters.append(t("screener.explanation.filter.industry_match", industry=filters["industry"]))
         if filters.get("per_min") is not None or filters.get("per_max") is not None:
-            active_filters.append("本益比在指定範圍")
+            active_filters.append(t("screener.explanation.filter.per_range"))
         if filters.get("div_min") is not None or filters.get("div_max") is not None:
-            active_filters.append("殖利率在指定範圍")
+            active_filters.append(t("screener.explanation.filter.div_range"))
         if active_filters:
-            conditions = "、".join(active_filters)
-            return "符合多項篩選條件的公司，可進一步比較其財務面與評價面"
-        return "篩選結果可作為進一步研究的起點，可搭配基本面分析"
+            return t("screener.explanation.implication.custom_many")
+        return t("screener.explanation.implication.custom_fallback")
 
-    return "篩選結果可作為進一步研究的起點"
+    return t("screener.explanation.implication.default")
 
 
 class ScreenerExplanationProvider:

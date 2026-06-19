@@ -7,6 +7,7 @@
 import pandas as pd
 from typing import Optional
 
+from src.core.i18n import t
 from src.services.financial_metrics import find_financial_value
 from src.services.news_summarizer import get_news_impact_level, summarize_news
 
@@ -247,31 +248,31 @@ def assess_customer_concentration(data: dict) -> dict | None:
     if concentration_pct is not None and concentration_pct > 0:
         if risk_level == "high":
             desc_parts.append(
-                f"根據最近一期財報，前三大客戶合計佔營收約 {concentration_pct:.0f}%。"
+                t("risk.customer_high_concentration", pct=concentration_pct)
             )
         elif risk_level == "medium":
             desc_parts.append(
-                f"近月營收主要來自 2–3 個業務線，最大業務線佔營收約 {concentration_pct:.0f}%。"
+                t("risk.customer_medium_concentration", pct=concentration_pct)
             )
         else:
             desc_parts.append(
-                f"公司營收來源分散在多個業務線，最大業務線佔營收不到 {concentration_pct:.0f}%。"
+                t("risk.customer_low_concentration", pct=concentration_pct)
             )
 
     if revenue_stability_cv is not None:
         if risk_level == "high":
             desc_parts.append(
-                f"過去 12 個月營收波動幅度（變異係數為 {revenue_stability_cv:.2f}），顯示收入來源較不穩定。"
-                f"這意味著少數客戶的訂單變化會顯著影響公司營收。"
+                t("risk.revenue_unstable", cv=revenue_stability_cv)
+                + t("risk.revenue_unstable_note")
             )
         elif risk_level == "medium":
             desc_parts.append(
-                f"過去 12 個月營收波動幅度為 {revenue_stability_cv:.2f}，屬於正常範圍。"
-                f"公司營收來源有一定集中，但仍在可控範圍。"
+                t("risk.revenue_normal", cv=revenue_stability_cv)
+                + t("risk.revenue_normal_note")
             )
         else:
             desc_parts.append(
-                f"過去 12 月營收波動幅度為 {revenue_stability_cv:.2f}，收入來源穩定多元。"
+                t("risk.revenue_stable", cv=revenue_stability_cv)
             )
 
     if not desc_parts:
@@ -281,7 +282,7 @@ def assess_customer_concentration(data: dict) -> dict | None:
 
     return {
         "risk_level": risk_level,
-        "title": "客戶集中風險",
+        "title": t("risk.customer_concentration_title"),
         "plain_language_description": plain_language_description,
         "supporting_data": supporting_data,
     }
@@ -390,30 +391,30 @@ def assess_financial_health(data: dict) -> dict | None:
     if risk_level == "high":
         if debt_ratio is not None:
             desc_parts.append(
-                f"最近一期負債比為 {debt_ratio:.0f}%，高於一般認為的警戒線 65%。"
+                t("risk.debt_high", ratio=debt_ratio)
             )
         if operating_cash_flow_trend == "negative":
             desc_parts.append(
-                "過去 4 季營業現金流有 2 季為負數，表示本業賺取的現金不足以支應營運所需。"
+                t("risk.cashflow_negative")
             )
         if net_margin is not None and net_margin < _MARGIN_HIGH:
-            desc_parts.append(f"淨利率僅 {net_margin:.1f}%，獲利空間極為有限。")
+            desc_parts.append(t("risk.margin_very_low", margin=net_margin))
     elif risk_level == "medium":
         if debt_ratio is not None:
-            desc_parts.append(f"負債比為 {debt_ratio:.0f}%，屬於適度槓桿範圍。")
+            desc_parts.append(t("risk.debt_medium", ratio=debt_ratio))
         if net_margin is not None:
-            desc_parts.append(f"淨利率為 {net_margin:.1f}%，獲利穩定但不算突出。")
+            desc_parts.append(t("risk.margin_medium", margin=net_margin))
         if operating_cash_flow_trend == "mixed":
-            desc_parts.append("過去 4 季營業現金流有 1 季為負，需留意後續是否改善。")
+            desc_parts.append(t("risk.cashflow_mixed"))
     else:  # low
         if debt_ratio is not None:
-            desc_parts.append(f"負債比僅 {debt_ratio:.0f}%，財務結構穩健。")
+            desc_parts.append(t("risk.debt_low", ratio=debt_ratio))
         if net_margin is not None:
             desc_parts.append(
-                f"淨利率維持在 {net_margin:.1f}% 以上，獲利能力在同產業中屬於前段班。"
+                t("risk.margin_high", margin=net_margin)
             )
         if operating_cash_flow_trend == "positive":
-            desc_parts.append("過去 4 季營業現金流均為正數，本業現金創造能力良好。")
+            desc_parts.append(t("risk.cashflow_positive"))
 
     if not desc_parts:
         return None
@@ -422,7 +423,7 @@ def assess_financial_health(data: dict) -> dict | None:
 
     return {
         "risk_level": risk_level,
-        "title": "財務健康風險",
+        "title": t("risk.financial_health_title"),
         "plain_language_description": plain_language_description,
         "supporting_data": supporting_data,
     }
@@ -485,29 +486,28 @@ def assess_event_risk(data: dict) -> dict | None:
 
     # Generate plain-language description
     if risk_level == "high":
-        event_desc = f"近 90 天內有 {high_count + medium_count} 則重大消息"
+        event_desc = t("risk.event_high_count", count=high_count + medium_count)
         if top_events:
-            event_desc += "，包含" + "、".join(top_events[:2])
-        event_desc += "。"
+            event_desc += t("risk.event_includes", events="、".join(top_events[:2]))
         if high_count > 0:
-            event_desc += f"其中 {high_count} 則被列為高度關注事件。"
+            event_desc += t("risk.event_high_impact", count=high_count)
         if foreign_flow_trend == "selling":
-            event_desc += "同期外資累計賣超，法人態度偏向保守。"
+            event_desc += t("risk.event_foreign_selling")
         plain_language_description = event_desc
     elif risk_level == "medium":
         plain_language_description = (
-            f"近 90 天內有 {medium_count} 則中度關注消息，涉及產品認證與供應鏈調整。"
-            f"同期外資買賣互見，法人態度中性。"
+            t("risk.event_medium_count", count=medium_count)
+            + t("risk.event_foreign_neutral")
         )
     else:
         plain_language_description = (
-            "近 90 天內未有重大消息，新聞多為例行性公告。"
-            "同期外資小幅買超，法人態度穩定。"
+            t("risk.event_low")
+            + t("risk.event_foreign_buying")
         )
 
     return {
         "risk_level": risk_level,
-        "title": "事件型風險",
+        "title": t("risk.event_risk_title"),
         "plain_language_description": plain_language_description,
         "supporting_data": supporting_data,
     }
@@ -527,7 +527,7 @@ def assess_risk(data: dict) -> dict:
             "financial_health": None,
             "event_based": None,
             "overall_level": "low",
-            "summary_text": "風險分析資料不足",
+            "summary_text": t("risk.insufficient_data"),
         }
 
     customer_concentration = assess_customer_concentration(data)
@@ -544,19 +544,19 @@ def assess_risk(data: dict) -> dict:
 
     # Generate summary text
     if not dim_levels:
-        summary_text = "風險分析資料不足"
+        summary_text = t("risk.insufficient_data")
     else:
         high_dims = []
         if customer_concentration and customer_concentration["risk_level"] == "high":
-            high_dims.append("客戶集中")
+            high_dims.append(t("risk.dim_customer"))
         if financial_health and financial_health["risk_level"] == "high":
-            high_dims.append("財務健康")
+            high_dims.append(t("risk.dim_financial"))
         if event_based and event_based["risk_level"] == "high":
-            high_dims.append("事件型")
+            high_dims.append(t("risk.dim_event"))
         if high_dims:
-            summary_text = f"分析顯示 {'、'.join(high_dims)} 面向存在較高風險，以下為各維度詳細說明。"
+            summary_text = t("risk.summary_high_risk", dims="、".join(high_dims))
         else:
-            summary_text = "以下為各風險維度分析，資料來源為近期公開資訊。"
+            summary_text = t("risk.summary_normal")
 
     return {
         "customer_concentration": customer_concentration,

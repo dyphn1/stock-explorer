@@ -40,7 +40,7 @@ def _render_moat_comparison_page(data: dict, client) -> None:
         return
 
     if not industry or industry == "未知":
-        st.info("無法確認產業分類，無法進行同業比較")
+        st.info(t("moat_comparison:unknown_industry"))
         return
 
     peer_mask = (
@@ -59,11 +59,11 @@ def _render_moat_comparison_page(data: dict, client) -> None:
         return
 
     if len(peers_df) == 0:
-        st.info("目前沒有找到同產業的同業可比較")
+        st.info(t("moat_comparison:no_peers_found"))
         return
 
     # ── Peer overview ──
-    _section_title("🏢 同業一覽")
+    _section_title(t("moat_comparison:peer_overview"))
     peer_cols = st.columns(len(peers_df))
     for col, (_, peer) in zip(peer_cols, peers_df.iterrows()):
         with col:
@@ -73,7 +73,7 @@ def _render_moat_comparison_page(data: dict, client) -> None:
                 "🏢",
             )
             if st.button(
-                f"查看 {peer['stock_name']} 名片",
+                t("moat_comparison:view_business_card", name=peer['stock_name']),
                 key=f"moat_compare_nav_{stock_id}_to_{peer['stock_id']}",
                 use_container_width=True,
             ):
@@ -111,7 +111,7 @@ def _render_moat_comparison_page(data: dict, client) -> None:
         })
 
     # ── Moat score comparison ──
-    _section_title("📊 護城河總分比較")
+    _section_title(t("moat_comparison:moat_score_comparison"))
 
     all_names = [stock_name] + [p["stock_name"] for p in peer_moats]
     all_scores = [primary_moat.get("moat_score", 0)] + [p["moat"].get("moat_score", 0) for p in peer_moats]
@@ -125,8 +125,14 @@ def _render_moat_comparison_page(data: dict, client) -> None:
     st.markdown("---")
 
     # ── 5-dimension comparison ──
-    _section_title("📐 五維度比較")
-    dim_order = ["品牌力", "成本優勢", "網路效應", "轉換成本", "規模經濟"]
+    _section_title(t("moat_comparison:five_dimensions"))
+    dim_order = [
+        t("moat_comparison:dim_brand"),
+        t("moat_comparison:dim_cost_advantage"),
+        t("moat_comparison:dim_network_effect"),
+        t("moat_comparison:dim_switching_cost"),
+        t("moat_comparison:dim_economies_of_scale"),
+    ]
 
     # Collect all dimension scores
     all_dims = [primary_moat.get("dimensions", {})] + [p["moat"].get("dimensions", {}) for p in peer_moats]
@@ -143,18 +149,18 @@ def _render_moat_comparison_page(data: dict, client) -> None:
     st.markdown("---")
 
     # ── Moat type comparison ──
-    _section_title("🏷️ 護城河類型")
+    _section_title(t("moat_comparison:moat_type"))
     type_cols = st.columns(len(all_names))
     for col, name, moat in zip(type_cols, all_names, [primary_moat] + [p["moat"] for p in peer_moats]):
         with col:
-            moat_type = moat.get("moat_type", "未知")
+            moat_type = moat.get("moat_type", t("moat_comparison:unknown_type"))
             moat_desc = moat.get("moat_type_description", "")
             _info_card(name, f"**{moat_type}**\n\n{moat_desc}", "🏷️")
 
     st.markdown("---")
 
     # ── Evidence comparison ──
-    _section_title("📋 證據比較")
+    _section_title(t("moat_comparison:evidence"))
     evidence_cols = st.columns(len(all_names))
     for col, name, moat in zip(evidence_cols, all_names, [primary_moat] + [p["moat"] for p in peer_moats]):
         with col:
@@ -163,4 +169,4 @@ def _render_moat_comparison_page(data: dict, client) -> None:
                 evidence_text = "\n\n".join(f"• {ev}" for ev in evidence)
                 _info_card(name, evidence_text, "📋")
             else:
-                _info_card(name, "目前無具體證據", "📋")
+                _info_card(name, t("moat_comparison:no_evidence"), "📋")

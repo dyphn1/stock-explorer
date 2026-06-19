@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from src.core.i18n import t
 from src.services.market_event_service import (
     get_events_by_type,
     get_event_types_for_stock,
@@ -79,13 +80,13 @@ def _build_outcome_summary(matches: list[HistoricalPattern]) -> str:
 
     parts: list[str] = []
     if positive > 0:
-        parts.append(f"{positive} 次偏向正面")
+        parts.append(t("pattern.outcome_positive", count=positive))
     if mixed > 0:
-        parts.append(f"{mixed} 次結果不一")
+        parts.append(t("pattern.outcome_mixed", count=mixed))
     if negative > 0:
-        parts.append(f"{negative} 次偏向負面")
+        parts.append(t("pattern.outcome_negative", count=negative))
 
     if not parts:
-        return f"共 {total} 筆歷史記錄"
+        return t("pattern.history_total", total=total)
 
-    return f"歷史共 {total} 次類似事件：{'、'.join(parts)}"
+    return t("pattern.history_summary", total=total, parts="、".join(parts))

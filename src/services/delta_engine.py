@@ -3,6 +3,7 @@
 計算最近的重要變化並生成白話解釋
 """
 
+from src.core.i18n import t
 from src.services.delta_explanation_provider import DeltaExplanationProvider
 from src.services.llm.base import ExplanationRequest
 
@@ -36,9 +37,9 @@ def compute_recent_deltas(
                 rev_change = (latest_rev - prev_rev) / prev_rev * 100
                 if abs(rev_change) > 10:
                     deltas.append({
-                        "metric_name": "月營收",
-                        "current_value": f"{latest_rev / 1e8:.0f} 億",
-                        "previous_value": f"{prev_rev / 1e8:.0f} 億",
+                        "metric_name": t("delta.metric.revenue_monthly"),
+                        "current_value": f"{latest_rev / 1e8:.0f} {t('unit.hundred_million')}",
+                        "previous_value": f"{prev_rev / 1e8:.0f} {t('unit.hundred_million')}",
                         "change_pct": round(rev_change, 1),
                         "direction": "up" if rev_change > 0 else "down",
                         "explanation": "",
@@ -57,9 +58,9 @@ def compute_recent_deltas(
                 price_change = (recent_avg - prior_avg) / prior_avg * 100
                 if abs(price_change) > 10:
                     deltas.append({
-                        "metric_name": "股價（近 30 日均價）",
-                        "current_value": f"{recent_avg:.0f} 元",
-                        "previous_value": f"{prior_avg:.0f} 元",
+                        "metric_name": t("delta.metric.price_30d"),
+                        "current_value": f"{recent_avg:.0f} {t('unit.yuan')}",
+                        "previous_value": f"{prior_avg:.0f} {t('unit.yuan')}",
                         "change_pct": round(price_change, 1),
                         "direction": "up" if price_change > 0 else "down",
                         "explanation": "",
@@ -72,9 +73,9 @@ def compute_recent_deltas(
     yoy = extra_metrics.get("revenue_yoy")
     if yoy is not None and abs(yoy) > 10:
         deltas.append({
-            "metric_name": "營收年增率",
+            "metric_name": t("delta.metric.revenue_yoy"),
             "current_value": f"{yoy:+.1f}%",
-            "previous_value": "去年同期",
+            "previous_value": t("delta.previous_year_same_period"),
             "change_pct": round(yoy, 1),
             "direction": "up" if yoy > 0 else "down",
             "explanation": "",

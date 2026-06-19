@@ -1,5 +1,6 @@
 """Business card shared helpers and constants."""
 import streamlit as st
+from src.core.i18n import t
 
 
 def _get_health_metric_values(extra_metrics: dict, latest_per_pbr: dict | None) -> dict:
@@ -11,43 +12,43 @@ def _get_health_metric_values(extra_metrics: dict, latest_per_pbr: dict | None) 
     if extra_metrics.get("roe") is not None:
         profit.append(f"ROE {extra_metrics['roe']:.1f}%")
     if extra_metrics.get("gross_margin") is not None:
-        profit.append(f"毛利率 {extra_metrics['gross_margin']:.1f}%")
+        profit.append(t("helpers:gross_margin_value", value=f"{extra_metrics['gross_margin']:.1f}"))
     if extra_metrics.get("net_margin") is not None:
-        profit.append(f"淨利率 {extra_metrics['net_margin']:.1f}%")
+        profit.append(t("helpers:net_margin_value", value=f"{extra_metrics['net_margin']:.1f}"))
     if profit:
         metrics[t("helpers:profitability")] = profit
 
     # 成長性: 營收年增率
     growth = []
     if extra_metrics.get("revenue_yoy") is not None:
-        growth.append(f"營收年增率 {extra_metrics['revenue_yoy']:.1f}%")
+        growth.append(t("helpers:revenue_yoy_value", value=f"{extra_metrics['revenue_yoy']:.1f}"))
     if growth:
         metrics[t("helpers:growth")] = growth
 
     # 財務健康: 負債比, 流動比
     health = []
     if extra_metrics.get("debt_ratio") is not None:
-        health.append(f"負債比 {extra_metrics['debt_ratio']:.1f}%")
+        health.append(t("helpers:debt_ratio_value", value=f"{extra_metrics['debt_ratio']:.1f}"))
     if extra_metrics.get("current_ratio") is not None:
-        health.append(f"流動比 {extra_metrics['current_ratio']:.1f}")
+        health.append(t("helpers:current_ratio_value", value=f"{extra_metrics['current_ratio']:.1f}"))
     if health:
         metrics[t("helpers:financial_health_dim")] = health
 
     # 股利品質: 殖利率, 連續配息
     div = []
     if latest_per_pbr and latest_per_pbr.get("dividend_yield") is not None:
-        div.append(f"殖利率 {latest_per_pbr['dividend_yield']:.2f}%")
+        div.append(t("helpers:dividend_yield_value", value=f"{latest_per_pbr['dividend_yield']:.2f}"))
     if extra_metrics.get("dividend_years") is not None:
-        div.append(f"連續配息 {extra_metrics['dividend_years']:.0f} 年")
+        div.append(t("helpers:dividend_years_value", value=f"{extra_metrics['dividend_years']:.0f}"))
     if div:
         metrics[t("helpers:dividend_quality")] = div
 
     # 估值合理性: PER, PBR
     val = []
     if latest_per_pbr and latest_per_pbr.get("PER") is not None:
-        val.append(f"本益比 {latest_per_pbr['PER']:.1f}")
+        val.append(t("helpers:per_value", value=f"{latest_per_pbr['PER']:.1f}"))
     if latest_per_pbr and latest_per_pbr.get("PBR") is not None:
-        val.append(f"淨值比 {latest_per_pbr['PBR']:.2f}")
+        val.append(t("helpers:pbr_value", value=f"{latest_per_pbr['PBR']:.2f}"))
     if val:
         metrics[t("helpers:valuation")] = val
 
@@ -79,7 +80,7 @@ _RISK_COLORS = {
 
 def _render_risk_dimension(dim: dict, stock_name: str):
     """Render a single risk dimension as an expandable info card."""
-    badge = _RISK_BADGES.get(dim["risk_level"], "⚪ 未知")
+    badge = _RISK_BADGES.get(dim["risk_level"], t("helpers:risk_unknown"))
     color = _RISK_COLORS.get(dim["risk_level"], "#7F8C8D")
 
     st.markdown(

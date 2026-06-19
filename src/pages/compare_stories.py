@@ -38,8 +38,8 @@ def _render_compare_stories_page(data: dict, client) -> None:
         st.info(t("compare_stories:no_peer_data"))
         return
 
-    if not industry or industry == "未知":
-        st.info("無法確認產業分類，無法進行同業比較")
+    if not industry or industry == t("compare_stories:unknown_industry"):
+        st.info(t("compare_stories:unknown_industry"))
         return
 
     peer_mask = (
@@ -58,11 +58,11 @@ def _render_compare_stories_page(data: dict, client) -> None:
         return
 
     if len(peers_df) == 0:
-        st.info("目前沒有找到同產業的同業可比較")
+        st.info(t("compare_stories:no_peers_found"))
         return
 
     # ── Peer overview ──
-    st.markdown("### 🏢 同業一覽")
+    st.markdown(f"### 🏢 {t('compare_stories:peer_overview')}")
     peer_cols = st.columns(len(peers_df))
     for col, (_, peer) in zip(peer_cols, peers_df.iterrows()):
         with col:
@@ -72,7 +72,7 @@ def _render_compare_stories_page(data: dict, client) -> None:
                 "🏢",
             )
             if st.button(
-                f"查看 {peer['stock_name']} 名片",
+                t("compare_stories:view_business_card", name=peer['stock_name']),
                 key=f"compare_nav_{stock_id}_to_{peer['stock_id']}",
                 use_container_width=True,
             ):
@@ -93,7 +93,7 @@ def _render_compare_stories_page(data: dict, client) -> None:
     )
 
     if stories:
-        st.markdown("### 📊 比較分析")
+        st.markdown(f"### 📊 {t('compare_stories:analysis')}")
         for story in stories:
             peer_name = story["peer_name"]
             peer_id = story["peer_id"]
@@ -105,7 +105,7 @@ def _render_compare_stories_page(data: dict, client) -> None:
                 st.markdown(f"**vs. {peer_name}** `{peer_id}`")
             with col2:
                 if st.button(
-                    f"查看 {peer_name}",
+                    t("compare_stories:view_peer", name=peer_name),
                     key=f"story_{stock_id}_peer_{peer_id}",
                     use_container_width=True,
                 ):
@@ -135,4 +135,4 @@ def _render_compare_stories_page(data: dict, client) -> None:
 
             st.markdown("---")
     else:
-        st.info("目前沒有足夠資料進行同業比較分析")
+        st.info(t("compare_stories:no_comparison_data"))
