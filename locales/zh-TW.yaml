@@ -1954,3 +1954,5 @@ delta:
     price_30d: 股價（近 30 日均價）
     revenue_yoy: 營收年增率
   previous_year_same_period: 去年同期
+metric_education:
+  roe_display_name: "ROE（股東權益報酬率）"

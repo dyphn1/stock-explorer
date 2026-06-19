@@ -3,6 +3,7 @@ Metric Education Service
 將財務指標轉化為新手能秒懂的解釋 + 比喻
 No Streamlit imports — pure data service.
 """
+
 from src.services.analogy_engine import (
     get_roe_analogy,
     get_gross_margin_analogy,
@@ -13,11 +14,13 @@ from src.services.analogy_engine import (
     get_yoy_analogy,
 )
 
-# ── Metric registry ────────────────────────────────────────
+from src.core.i18n import t
+
+# ── Metric registry ──────────────────────────────────────
 # Each entry: (display_name, unit, is_higher_better, explanation_template, analogy_fn, historical_context)
 _METRIC_REGISTRY: dict[str, dict] = {
     "ROE": {
-        "display_name": "ROE（股東權益報酬率）",
+        "display_name": t('metric_education.roe_display_name'),
         "unit": "%",
         "is_higher_better": True,
         "explanation": (

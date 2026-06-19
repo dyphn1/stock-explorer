@@ -1,6 +1,54 @@
 # Handoff — Stock Explorer (股識)
 
+> **上次更新**: 2026-06-20
+
+## 2026-06-20 Session Summary — i18n 微顆粒遷移
+
+### What was done
+- 將 src/services/metric_education.py 第 20 行的硬編碼 'ROE（股東權益報酬率）' 替換為 t('metric_education.roe_display_name')
+- 在 locales/en.yaml 和 locales/zh-TW.yaml 中加入 key 'metric_education.roe_display_name' 值為英文 'ROE (Return on Equity)' 和中文 'ROE（股東權益報酬率）'
+
+### Roles involved
+- PM: 協調、分配工作
+- Developer: 執行 i18n 遷移
+
+### Result
+- ✅ PASS — 小顆粒 i18n 遷移完成，所有修改已提交
+
+### Files changed
+- src/services/metric_education.py — 替換硬編碼字串
+- locales/en.yaml — 新增翻譯 key
+- locales/zh-TW.yaml — 新增翻譯 key
+
+### Git commit + push
+- TBD
+
+（注意：需要保留原始檔案的其餘內容，只在開頭插入上述內容）
+# Handoff — Stock Explorer (股識)
+
 > **上次更新**: 2026-06-18
+
+
+## 2026-06-19 Session Summary — i18n 小顆粒遷移
+
+### What was done
+- 將 src/pages/watchlist_page.py 第 132 行的硬編碼 'ETF' 替換為 t('watchlist.type_etf_badge')
+- 在 locales/en.yaml 和 locales/zh-TW.yaml 中加入 key 'watchlist.type_etf_badge' 值為 'ETF'
+
+### Roles involved
+- PM: 協調、分配工作
+- Developer: 執行 i18n 遷移
+
+### Result
+- ✅ PASS — 小顆粒 i18n 遷移完成，所有修改已提交
+
+### Files changed
+- src/pages/watchlist_page.py — 替換硬編碼字串
+- locales/en.yaml — 新增翻譯 key
+- locales/zh-TW.yaml — 新增翻譯 key
+
+### Git commit + push
+- 7c31d52 → origin/main
 
 ---
 

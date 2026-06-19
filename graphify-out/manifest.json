@@ -90,7 +90,7 @@
     "semantic_hash": "7542bb5f89ccf920d38f3c75cf05367a"
   },
   "src/pages/business_card/_expert_analysis.py": {
-    "mtime": 1781847874.035004,
+    "mtime": 1781848384.3117793,
     "ast_hash": "f6de076d78f457df76ca63371aabbebc",
     "semantic_hash": "f6de076d78f457df76ca63371aabbebc"
   },
@@ -140,9 +140,9 @@
     "semantic_hash": "8b09ac851dbb409256f2fe4827739c9e"
   },
   "src/pages/business_card/_sections/_moat.py": {
-    "mtime": 1781833183.9586122,
-    "ast_hash": "a36d727b96048d5f0bd854d8bd50bc77",
-    "semantic_hash": "a36d727b96048d5f0bd854d8bd50bc77"
+    "mtime": 1781854220.9002368,
+    "ast_hash": "f358da7b7d2bf7be73ab6beaf7a6c771",
+    "semantic_hash": ""
   },
   "src/pages/business_card/_sections/_story.py": {
     "mtime": 1781833183.9588223,
@@ -165,9 +165,9 @@
     "semantic_hash": "12fa8cb682df5876d9297a2db5eb6291"
   },
   "src/pages/business_card/_study_log.py": {
-    "mtime": 1781799479.5563705,
-    "ast_hash": "5cded3105e02a9baf3ef8f57432edff6",
-    "semantic_hash": "5cded3105e02a9baf3ef8f57432edff6"
+    "mtime": 1781854255.6069558,
+    "ast_hash": "48370dbe3167a00ac4e207bd9c2fbf1f",
+    "semantic_hash": ""
   },
   "src/pages/case_study_library.py": {
     "mtime": 1781834609.5306995,
@@ -320,9 +320,9 @@
     "semantic_hash": "cf76e6466a260f3a878389a5f08cc942"
   },
   "src/pages/watchlist_page.py": {
-    "mtime": 1781776849.835983,
-    "ast_hash": "21d7d7a8c8792075133b381f2e7d079d",
-    "semantic_hash": "21d7d7a8c8792075133b381f2e7d079d"
+    "mtime": 1781856964.5551362,
+    "ast_hash": "e41bf54cd53595583224e6b7829600c0",
+    "semantic_hash": ""
   },
   "src/plugins/__init__.py": {
     "mtime": 1781728676.5249074,
@@ -858,5 +858,430 @@
     "mtime": 1781642012.4054575,
     "ast_hash": "d7a9bc4a73bf51197e51ce4d6a269047",
     "semantic_hash": "d7a9bc4a73bf51197e51ce4d6a269047"
+  },
+  "count_dict.py": {
+    "mtime": 1781852430.8801353,
+    "ast_hash": "cb61d086a7d990b4ceda7c798cb53ab0",
+    "semantic_hash": ""
+  },
+  "count_dict2.py": {
+    "mtime": 1781852552.9051976,
+    "ast_hash": "bb2496b60f31e45bede84f40238cd909",
+    "semantic_hash": ""
+  },
+  "find_strings.py": {
+    "mtime": 1781852348.819154,
+    "ast_hash": "f2c14e9b5f67fdaa472039152b941358",
+    "semantic_hash": ""
+  },
+  "find_strings2.py": {
+    "mtime": 1781852382.601125,
+    "ast_hash": "f26dc644fbc104eb06d032b157106d97",
+    "semantic_hash": ""
+  },
+  ".github/copilot-instructions.md": {
+    "mtime": 1781848255.7343616,
+    "ast_hash": "ec2dc0dc7bef63488889f34de2f5584d",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1781848384.309817,
+    "ast_hash": "144422c40e4d7c7ecf184d7eb07d613e",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1781709366.7096055,
+    "ast_hash": "865cb1b23a4c41f7fe0f6e8c27b97d6d",
+    "semantic_hash": ""
+  },
+  "STATUS.md": {
+    "mtime": 1781709366.7135463,
+    "ast_hash": "f3961320598d8625c9b31b4d8dcfd1bd",
+    "semantic_hash": ""
+  },
+  "config/comprehension_quiz.yaml": {
+    "mtime": 1781302466.158494,
+    "ast_hash": "7ff27cd7ae9d9fa1d8f55ac4bfc76da2",
+    "semantic_hash": ""
+  },
+  "config/event_interpretation_templates.yaml": {
+    "mtime": 1781302799.1494393,
+    "ast_hash": "23834d0408709289f5db25aac1acb638",
+    "semantic_hash": ""
+  },
+  "config/events.yaml": {
+    "mtime": 1781400098.5162673,
+    "ast_hash": "6e60b7f84842858a74316a4955da95a6",
+    "semantic_hash": ""
+  },
+  "config/lessons/academy_meta.yaml": {
+    "mtime": 1781691114.5818932,
+    "ast_hash": "3a01467326dba8aa6eb7b2a54d31edaa",
+    "semantic_hash": ""
+  },
+  "config/lessons/gateway_lessons.yaml": {
+    "mtime": 1781455396.985909,
+    "ast_hash": "8d6b4004b5d1f66ebe8e16f073e58f6b",
+    "semantic_hash": ""
+  },
+  "config/lessons/lesson_01.yaml": {
+    "mtime": 1781362756.230463,
+    "ast_hash": "93ce3acca5c91389e104401bfa83b735",
+    "semantic_hash": ""
+  },
+  "config/lessons/lesson_02.yaml": {
+    "mtime": 1781362756.2362678,
+    "ast_hash": "b0f2538b6c8aa2163cf3b3dd05990fbc",
+    "semantic_hash": ""
+  },
+  "config/lessons/lesson_03.yaml": {
+    "mtime": 1781363207.0711248,
+    "ast_hash": "4775d9a4f8cf4f17a1948796b2838783",
+    "semantic_hash": ""
+  },
+  "config/lessons/lesson_04.yaml": {
+    "mtime": 1781363221.1516745,
+    "ast_hash": "ad924ee81b0f37442b016313cd67ea50",
+    "semantic_hash": ""
+  },
+  "config/lessons/lesson_05.yaml": {
+    "mtime": 1781362756.2246373,
+    "ast_hash": "5bf4aeccb2eda574b4c373b4f26b239b",
+    "semantic_hash": ""
+  },
+  "config/lessons/lesson_06.yaml": {
+    "mtime": 1781691114.5391355,
+    "ast_hash": "3fc8d1166f41590c3c7d71e3d1cf03a5",
+    "semantic_hash": ""
+  },
+  "config/movement_explanation_templates.yaml": {
+    "mtime": 1781476121.876678,
+    "ast_hash": "f5329c16677ff388f366d24ea0a9d69b",
+    "semantic_hash": ""
+  },
+  "config/quiz.yaml": {
+    "mtime": 1781282476.613162,
+    "ast_hash": "ea70bb6f36d5762ee8d456bb030507c3",
+    "semantic_hash": ""
+  },
+  "config/watchlist.yaml": {
+    "mtime": 1780940431.499127,
+    "ast_hash": "58e0494c51d30eb3494f7c9198986bb9",
+    "semantic_hash": ""
+  },
+  "data/moat_data.yaml": {
+    "mtime": 1781347529.1971645,
+    "ast_hash": "5aca6ff94e9c8d54e051fedb8d7cf0bb",
+    "semantic_hash": ""
+  },
+  "design/index.html": {
+    "mtime": 1781711817.3048153,
+    "ast_hash": "fceba6b07b15ce582159caf06fd0a43a",
+    "semantic_hash": ""
+  },
+  "design/prototypes/business_card.html": {
+    "mtime": 1781711817.3048937,
+    "ast_hash": "5f8bf19812674cb99941a161499db00e",
+    "semantic_hash": ""
+  },
+  "docs/adr/000-index.md": {
+    "mtime": 1781744598.7305694,
+    "ast_hash": "817956e2d1d0b11e507e1efe25523ae8",
+    "semantic_hash": ""
+  },
+  "docs/adr/001-streamlit-as-frontend.md": {
+    "mtime": 1781709366.6929405,
+    "ast_hash": "1f6688f3bdee06c139639644f53a3895",
+    "semantic_hash": ""
+  },
+  "docs/adr/002-finmind-as-data-source.md": {
+    "mtime": 1781709366.6930213,
+    "ast_hash": "04c2487c740e565366db4f262d2d9e51",
+    "semantic_hash": ""
+  },
+  "docs/adr/003-layered-architecture.md": {
+    "mtime": 1781709366.6931033,
+    "ast_hash": "51a971b8f774e2e418d053d8880d2c57",
+    "semantic_hash": ""
+  },
+  "docs/adr/004-phase2-migration-plan.md": {
+    "mtime": 1781743399.5682678,
+    "ast_hash": "d8c23d296f33fe2e32df8fa2d4d90ae8",
+    "semantic_hash": ""
+  },
+  "docs/adr/004-plugin-chassis.md": {
+    "mtime": 1781728789.6008215,
+    "ast_hash": "b6dc6f9dfd981f66633dfc4a50f67426",
+    "semantic_hash": ""
+  },
+  "docs/adr/005-i18n-yaml.md": {
+    "mtime": 1781709366.693142,
+    "ast_hash": "d185672b46c7067e473e8d14ad206224",
+    "semantic_hash": ""
+  },
+  "docs/adr/006-browser-back-button.md": {
+    "mtime": 1781709366.6984508,
+    "ast_hash": "282f03a761c19af826e62aac644fc63e",
+    "semantic_hash": ""
+  },
+  "docs/adr/007-llm-safety-boundary.md": {
+    "mtime": 1781709366.6984332,
+    "ast_hash": "bdd2d7698ab19f510ad066682551e3d9",
+    "semantic_hash": ""
+  },
+  "docs/adr/008-yaml-config-driven.md": {
+    "mtime": 1781709366.7067544,
+    "ast_hash": "50c72a89128ae256978d39696cbcfb8d",
+    "semantic_hash": ""
+  },
+  "docs/adr/009-layout-restructure.md": {
+    "mtime": 1781710184.2500827,
+    "ast_hash": "ee5bce97c063132b9ea9ecd3f9b555a6",
+    "semantic_hash": ""
+  },
+  "docs/adr/010-ppt-style-design.md": {
+    "mtime": 1781710184.2500823,
+    "ast_hash": "1fd8e99350c382c95762f593696513fa",
+    "semantic_hash": ""
+  },
+  "docs/diagrams/flow.md": {
+    "mtime": 1781794167.0587678,
+    "ast_hash": "79ecce822149dcb1038c23446b4353ff",
+    "semantic_hash": ""
+  },
+  "docs/overview/00-index.md": {
+    "mtime": 1781708596.733604,
+    "ast_hash": "abff00893a02b0ffb650619e876a11db",
+    "semantic_hash": ""
+  },
+  "docs/overview/01-product-vision.md": {
+    "mtime": 1781708596.7336104,
+    "ast_hash": "1abbae12a8942df0686da8439f5e028e",
+    "semantic_hash": ""
+  },
+  "docs/overview/02-architecture.md": {
+    "mtime": 1781708596.7336915,
+    "ast_hash": "9a30ed7beaab361ac39c930b254519e1",
+    "semantic_hash": ""
+  },
+  "docs/overview/03-design-system.md": {
+    "mtime": 1781711817.304811,
+    "ast_hash": "f3394330c33581a6b38147a2c9e9c3a2",
+    "semantic_hash": ""
+  },
+  "docs/overview/04-tech-stack.md": {
+    "mtime": 1781708594.7030985,
+    "ast_hash": "89243b4914cff9423dcfd62563de6896",
+    "semantic_hash": ""
+  },
+  "docs/overview/05-roadmap.md": {
+    "mtime": 1781751681.7037776,
+    "ast_hash": "a1d1631dca7e9547a832e3d9a37fb37b",
+    "semantic_hash": ""
+  },
+  "docs/overview/06-development-guide.md": {
+    "mtime": 1781709366.6929286,
+    "ast_hash": "816357a49eb5cc25da8fa9826d5fa32b",
+    "semantic_hash": ""
+  },
+  "docs/roadmap/00-index.md": {
+    "mtime": 1781710184.2572427,
+    "ast_hash": "6bca4fc1c9a164238ce027e7d992873d",
+    "semantic_hash": ""
+  },
+  "docs/roadmap/competitor-research-summary.md": {
+    "mtime": 1781710184.2461634,
+    "ast_hash": "80b5b4bd2688b0c4146421669e421f89",
+    "semantic_hash": ""
+  },
+  "docs/roadmap/cost-estimation.md": {
+    "mtime": 1781710184.2462285,
+    "ast_hash": "8979d82a08390c2e8a14329ddf01b15c",
+    "semantic_hash": ""
+  },
+  "docs/roadmap/ux-improvements.md": {
+    "mtime": 1781710184.2400582,
+    "ast_hash": "87101329f864f6eeef617c18c41929d6",
+    "semantic_hash": ""
+  },
+  "docs/roles/architect.md": {
+    "mtime": 1781711389.2098436,
+    "ast_hash": "4f6957effa1ff3920af503b806bf376a",
+    "semantic_hash": ""
+  },
+  "docs/roles/challenger.md": {
+    "mtime": 1781709408.8381102,
+    "ast_hash": "a36863870dc0ad71a16b90b1eddc3226",
+    "semantic_hash": ""
+  },
+  "docs/roles/designer.md": {
+    "mtime": 1781711389.2098758,
+    "ast_hash": "0a69394963afc22db3a4b00bd9523d0d",
+    "semantic_hash": ""
+  },
+  "docs/roles/developer.md": {
+    "mtime": 1781711389.2098892,
+    "ast_hash": "28dad7715fc7abcf6c2b6c9632547b53",
+    "semantic_hash": ""
+  },
+  "docs/roles/pm.md": {
+    "mtime": 1781742635.279885,
+    "ast_hash": "a38b33be9021c61fa2cbd5344b1edf1c",
+    "semantic_hash": ""
+  },
+  "docs/roles/qa.md": {
+    "mtime": 1781709366.7206633,
+    "ast_hash": "e376ed2a36791898c753835b993ee168",
+    "semantic_hash": ""
+  },
+  "docs/roles/security-architect.md": {
+    "mtime": 1781712655.2391078,
+    "ast_hash": "e688b5810fe00c260bf3fd4be2faa6c5",
+    "semantic_hash": ""
+  },
+  "docs/roles/user.md": {
+    "mtime": 1781712655.239108,
+    "ast_hash": "eb746288ed992c3810e2f54530c879d2",
+    "semantic_hash": ""
+  },
+  "docs/roles/ux-designer.md": {
+    "mtime": 1781711389.2099648,
+    "ast_hash": "f4aabb8bcbe8cdd1bf0f295e302786c5",
+    "semantic_hash": ""
+  },
+  "docs/security-review-td01.md": {
+    "mtime": 1781730232.3893542,
+    "ast_hash": "2a5c35c123b7245c3301fc5b273acfba",
+    "semantic_hash": ""
+  },
+  "locales/en.yaml": {
+    "mtime": 1781857012.3087223,
+    "ast_hash": "a6ef82befe511ef8a1b8c05e637803c1",
+    "semantic_hash": ""
+  },
+  "locales/zh-TW.yaml": {
+    "mtime": 1781857025.9660823,
+    "ast_hash": "91586deb904d6c78b6d1840a44ebbf95",
+    "semantic_hash": ""
+  },
+  "src/data/case_studies.yaml": {
+    "mtime": 1781291194.9911566,
+    "ast_hash": "9efee3035d6d48755b0902e8fb4df5e0",
+    "semantic_hash": ""
+  },
+  "src/data/case_studies_library.yaml": {
+    "mtime": 1781421505.2653909,
+    "ast_hash": "b8a00c4fb710988316c67c7afff13edc",
+    "semantic_hash": ""
+  },
+  "src/data/company_facts.yaml": {
+    "mtime": 1781095432.4453795,
+    "ast_hash": "ca341d1c80aa695bba380c3a8a403a50",
+    "semantic_hash": ""
+  },
+  "src/data/company_milestones.yaml": {
+    "mtime": 1781388351.5195677,
+    "ast_hash": "73e3982e1c2f4e9020b93589c77015fb",
+    "semantic_hash": ""
+  },
+  "src/data/events.yaml": {
+    "mtime": 1781421217.2854178,
+    "ast_hash": "a02d31659d1a66d4e5ef4c79f6bb3c78",
+    "semantic_hash": ""
+  },
+  "src/data/glossary.yaml": {
+    "mtime": 1781334964.079647,
+    "ast_hash": "8e5c1fc2341db4061ec02105850eaeda",
+    "semantic_hash": ""
+  },
+  "src/data/group_structures.yaml": {
+    "mtime": 1781366749.718681,
+    "ast_hash": "26d87809613dad410bd853b34746d8b2",
+    "semantic_hash": ""
+  },
+  "src/data/industry_benchmarks.yaml": {
+    "mtime": 1781466276.7968056,
+    "ast_hash": "1bb3514d53295475a7a2268a603c6280",
+    "semantic_hash": ""
+  },
+  "src/data/industry_templates.yaml": {
+    "mtime": 1781366697.8955002,
+    "ast_hash": "f88c1e1a9ebd6dd247332915574e87dd",
+    "semantic_hash": ""
+  },
+  "src/data/key_takeaways.yaml": {
+    "mtime": 1781366697.891245,
+    "ast_hash": "2f150c363eab46c82584607ffa491178",
+    "semantic_hash": ""
+  },
+  "src/data/known_revenue.yaml": {
+    "mtime": 1781366697.8886175,
+    "ast_hash": "13633ba3ef5af5750ced37f99ab52b53",
+    "semantic_hash": ""
+  },
+  "src/data/moat_data.yaml": {
+    "mtime": 1781346517.7261438,
+    "ast_hash": "b61aa6d71325b8ed606723c2eb9a35e6",
+    "semantic_hash": ""
+  },
+  "src/data/one_liners.yaml": {
+    "mtime": 1781366697.8890982,
+    "ast_hash": "8e183741900cb2d52b365b083b87f4f9",
+    "semantic_hash": ""
+  },
+  "src/data/screener_templates.yaml": {
+    "mtime": 1781431794.1360934,
+    "ast_hash": "5d3475aea926fa047c33b075a083e5a5",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/debate_templates.yaml": {
+    "mtime": 1781638251.2716925,
+    "ast_hash": "32a49953eb4d9c3774c4053ba2e337d6",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/etf_category_keywords.yaml": {
+    "mtime": 1781367538.1648474,
+    "ast_hash": "7a258c36011503e359fc65b0b7399499",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/expert_analysis.yaml": {
+    "mtime": 1781367538.1319482,
+    "ast_hash": "ce0045ff35b24b299cf096d6b6d0c7f6",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/historical_scenarios.yaml": {
+    "mtime": 1781367538.1381576,
+    "ast_hash": "595b8a12c175c82673ab10dc2682c506",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/industry_benchmarks.yaml": {
+    "mtime": 1781367538.1347733,
+    "ast_hash": "3ff1617319d265b96ba076b1e5ff9e56",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/news_templates.yaml": {
+    "mtime": 1781367538.1288056,
+    "ast_hash": "6b9c61bb01867a81922e6dff45469b9b",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/quiz/dividend_yield.yaml": {
+    "mtime": 1781369992.7470944,
+    "ast_hash": "8b94a5f15d15d8633139d33fd1fb577b",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/quiz/pe_ratio.yaml": {
+    "mtime": 1781369988.0482292,
+    "ast_hash": "fc49697f1fcb9691e92aa26cb99a2c23",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/quiz/roe.yaml": {
+    "mtime": 1781369977.3714902,
+    "ast_hash": "ab8e1a2afd23157ffca82d806078dfbc",
+    "semantic_hash": ""
+  },
+  "src/data/yaml/story_arcs.yaml": {
+    "mtime": 1781568334.1608524,
+    "ast_hash": "cef57e0ddb3eae1dd2ec55201ebf889f",
+    "semantic_hash": ""
   }
 }

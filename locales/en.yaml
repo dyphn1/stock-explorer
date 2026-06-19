@@ -2233,4 +2233,6 @@ delta:
     revenue_monthly: Monthly Revenue
     price_30d: Stock Price (30-Day Avg)
     revenue_yoy: Revenue YoY Growth
-  previous_year_same_period: Same Period Last Year
+    previous_year_same_period: Same Period Last Year
+metric_education:
+  roe_display_name: "ROE (Return on Equity)"
