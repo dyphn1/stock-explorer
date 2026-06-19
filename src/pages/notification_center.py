@@ -175,7 +175,7 @@ def _render_notification_center(client: FinMindClient):
                         key=f"notif_goto_{event.get('_event_id', '')}",
                         use_container_width=True,
                     ):
-                        navigate_to(page="名片", stock_id=sid)
+                        navigate_to(page=t('notification_center_business_card'), stock_id=sid)
                 with col_btn2:
                     if st.button(
                         t("notification.mark_read_btn"),

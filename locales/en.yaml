@@ -92,6 +92,14 @@ dividend:
   dividend_yield_label: Dividend Yield
   summary: Dividend Summary
   detail_expand: 📋 Expand to view historical dividend record
+  estimated_label: Estimated
+  quarterly_dividend: "Quarterly dividend approximately {amount} TWD"
+  quarterly_yield: "{label} annualized yield approximately {yield_pct}%"
+  annual_dividend: "Annual dividend approximately {amount} TWD"
+  annual_yield: "{label} yield approximately {yield_pct}%"
+  stable_years: "Past {n_years} years, this company has consistently paid"
+  irregular: "Irregular dividends determined by annual earnings. Most recent dividend: {amount} TWD"
+  record_years: "This company has dividend records for the past {n_years} years"
 action:
   submit: Submit
   retry: Retry
@@ -176,6 +184,40 @@ comparison:
   stronger: Stronger than peers
   weaker: Weaker than peers
   similar: Comparable to peers
+  # --- compare_stories.py ---
+  higher: higher
+  lower: lower
+  advantage: ", relative advantage"
+  disadvantage: ", relative disadvantage"
+  valuation_lower: ", lower valuation"
+  valuation_higher: ", higher valuation"
+  metric:
+    close: "{label}: Close ({self_str} vs {peer_str}{unit})"
+    diff: "{label}: {self_str}{unit}, {direction} peer's {peer_str}{unit}{better}"
+    self_only: "{label}: {value}{unit} (no peer data)"
+  revenue:
+    larger: "📏 {stock_name}'s revenue scale is significantly larger than {peer_name}, {rev_desc}"
+    smaller: "📏 {stock_name}'s revenue scale is smaller than {peer_name}, {rev_desc}"
+    similar: "📏 Similar revenue scale, {rev_story}"
+  revs_ratio:
+    double: "About {ratio:.1f}x the peer"
+    slightly_larger: "Slightly larger than peer ({ratio:.1f}x)"
+    similar: "Similar scale"
+    percent: "About {ratio:.0%} of peer"
+    only_percent: "Only {ratio:.0%} of peer"
+  gross_margin:
+    higher: "💰 {stock_name} gross margin {self_gm:.1f}%, higher than {peer_name}'s {peer_gm:.1f}% — {analogy}"
+    lower: "💰 {stock_name} gross margin {self_gm:.1f}%, lower than {peer_name}'s {peer_gm:.1f}% — {analogy}"
+    similar: "💰 Similar gross margins ({self_gm:.1f}% vs {peer_gm:.1f}%)"
+  per:
+    higher: "🏷️ {stock_name} P/E ratio {self_per:.1f}x, higher than {peer_name}'s {peer_per:.1f}x — market has higher growth expectations for {stock_name}"
+    lower: "🏷️ {stock_name} P/E ratio {self_per:.1f}x, lower than {peer_name}'s {peer_per:.1f}x — {stock_name}'s valuation is relatively more conservative"
+    similar: "🏷️ Similar P/E ratios ({self_per:.1f} vs {peer_per:.1f}x)"
+  dividend_yield:
+    higher: "💵 {stock_name} dividend yield {self_dy:.2f}%, higher than {peer_name}'s {peer_dy:.2f}% — more attractive for dividend investors"
+    lower: "💵 {stock_name} dividend yield {self_dy:.2f}%, lower than {peer_name}'s {peer_dy:.2f}%"
+    similar: "💵 Similar dividend yields ({self_dy:.2f}% vs {peer_dy:.2f}%)"
+  no_difference: "📊 {stock_name} and {peer_name} show little difference across comparable metrics"
 financial_statement:
   revenue: Revenue
   gross_profit: Gross Profit
@@ -191,6 +233,7 @@ notification:
   subtitle: Track important events for your watched stocks
   mark_all_read: All notifications marked as read
   no_notification: No notifications
+  business_card: Business Card
 memo:
   title: Investment Memo
   add: Add Memo
@@ -1442,6 +1485,12 @@ watchlist:
 
 
 financial_wellness:
+  title: Financial Wellness Check
+  intro: A behavioral finance self-assessment quiz — understand your investing habits and areas for improvement.
+  disclaimer:
+    title: About This Quiz
+    desc1: This quiz assesses your behavioral finance tendencies across multiple dimensions.
+    desc2: There are no right or wrong answers — the goal is self-awareness, not a perfect score.
   btn_start_quiz: 📝 Start Quiz
   btn_reset_quiz: 🔄 Retake Quiz
   section_start_answer: 📝 Begin Answering
@@ -1451,6 +1500,8 @@ financial_wellness:
   section_personal_tips: 💡 Personalized Tips
   strengthen_category: Strengthen "{category}"
   section_category_scores: 📋 Category Scores
+  dimensions_count_pass: "🟢 {count} meeting standard"
+  dimensions_count_improve: "🔴 {count} needs improvement"
 
 why_moved:
   section_title: 🔍 Why Did This Stock Move?
@@ -1555,3 +1606,575 @@ wellness:
   grade: Grade
   dimensions: Dimensions
 
+# ── TD-02 Batch 3: Story section keys ────────────────────────
+
+story:
+  recent_changes: Recent Changes
+  no_significant_changes: No significant changes detected recently.
+  confidence_note: Confidence reflects data completeness, not AI prediction certainty
+  unknown_industry: Unknown Industry
+  peer_comparison: Peer Comparison
+  peer_comparison_subtitle: "How does {name} compare to its industry peers?"
+  view_peer: "View {name}"
+  read_next: Read Next
+  peer_recommendations: "Stocks from the same industry you might also be interested in:"
+  peer_info: "Industry: {industry}"
+  view_peer_card: "View {name}'s Card"
+  no_recommendations: No recommendations available at this time.
+  you_might_wonder: You Might Also Wonder
+  did_you_know: Did You Know?
+  more_analysis: Want to dive deeper?
+  full_timeline: View Full Story Timeline
+  timeline_caption: Explore the complete chronological story of this company
+  previous_period: "prev."
+  read_next_fallback: Recommended Reading
+
+# ── TD-02 Batch 1: Expert Analysis content ──────────────────
+
+expert_analysis:
+  title: "{name} ({id}) Expert Analysis"
+  coming_soon: "📋 Expert analysis coming soon!\n\nWe are preparing in-depth expert analysis for this stock.\nIn the meantime, check out other available stocks!"
+  tsmc:
+    global_leader: "**Global Semiconductor Leader**: TSMC has over 90% market share in advanced processes (below 7nm) and is a core supplier to Apple, NVIDIA, AMD, and other tech giants."
+    growth: "**Growth Momentum**: AI and HPC (High-Performance Computing) demand continues to surge. CoWoS advanced packaging capacity is in short supply, with revenue expected to maintain double-digit growth in 2025-2026."
+    risk: "**Risk Warning**: Overseas expansion (US, Japan) involves massive capital expenditure. Rising depreciation costs may temporarily compress margins. Geopolitical risks also require ongoing attention."
+  foxconn:
+    ems_leader: "**EMS Dominance**: Foxconn is the world's largest electronics contract manufacturer, with major clients including Apple, Dell, HP, and other international brands."
+    transformation: "**Accelerating Transformation**: Actively expanding into AI servers, electric vehicles (MIH platform), and semiconductors. AI server business benefits from data center expansion demand."
+    risk: "**Risk Warning**: Traditional consumer electronics manufacturing is highly competitive with thin margins. Transformation results still need time to verify."
+  mediatek:
+    ic_leader: "**IC Design Leader**: MediaTek is one of the world's major smartphone chipset suppliers, with its Dimensity 5G series gaining traction in both flagship and mid-range segments."
+    ai_edge: "**AI Edge Computing**: Actively expanding into AI PC and automotive chip markets. The automotive chip solution developed with NVIDIA has drawn significant attention."
+    risk: "**Risk Warning**: Smartphone market recovery is uneven, and competitive pressure from Qualcomm persists."
+  delta:
+    power_expert: "**Power Management Expert**: Delta Electronics is a global leader in power and thermal management solutions, with presence in data centers, EV charging, and industrial automation."
+    esg: "**ESG Pioneer**: Actively investing in energy efficiency and carbon reduction. Data center power and thermal demand benefits from the AI infrastructure wave."
+    risk: "**Risk Warning**: Raw material price volatility and supply chain management are key challenges."
+  fubon_finance:
+    financial_giant: "**Financial Holding Giant**: Fubon Financial is one of Taiwan's largest financial holding companies, with businesses spanning banking, life insurance, and securities."
+    profit_stable: "**Stable Profitability**: Benefiting from the rate hike cycle and capital market recovery. Life insurance spread loss pressure has eased, and net interest income on the banking side has grown."
+    risk: "**Risk Warning**: Financial market volatility and currency risks require ongoing attention."
+  cathay_finance:
+    financial_duo: "**One of the Financial Duo**: Cathay Financial is Taiwan's largest financial holding company. Cathay Life is Taiwan's largest life insurer, and Cathay United Bank is a leading commercial bank."
+    digital_transform: "**Digital Transformation**: Actively promoting digital financial services, with growing users on mobile banking and online insurance platforms."
+    risk: "**Risk Warning**: The life insurance industry faces IFRS 17 accounting standard transition challenges, and capital market volatility affects investment returns."
+  formosa_plastics:
+    petro_leader: "**Petrochemical Industry Leader**: Formosa Plastics is a major global petrochemical producer, with products covering PVC, PE, PP, and other general-purpose plastics and chemicals."
+    transformation: "**Transformation Strategy**: Actively developing green energy, semiconductor materials, and high-grade application materials to reduce dependence on traditional petrochemical cycles."
+    risk: "**Risk Warning**: Global petrochemical overcapacity pressure continues, and Chinese competitors' expansion intensifies competition."
+  china_steel:
+    steel_leader: "**Steel Industry Leader**: China Steel is Taiwan's largest steel manufacturer, with products widely used in construction, machinery, and automotive industries."
+    green_transform: "**Green Transformation**: Actively promoting carbon-reduction processes and developing high-value-added steel products."
+    risk: "**Risk Warning**: Steel cycles are pronounced. Chinese steel export dumping pressure and raw material price volatility are key risks."
+  quanta:
+    server_leader: "**Server Contract Manufacturing Leader**: Quanta Computer is the world's largest notebook contract manufacturer and a major AI server supplier."
+    ai_server: "**AI Server Boom**: Benefiting from CSP (Cloud Service Provider) capital expenditure expansion, AI server revenue share is rapidly increasing."
+    risk: "**Risk Warning**: PC/NB market demand is weak. While AI server order visibility is high, competition is intensifying."
+  largan:
+    optical_leader: "**Optical Lens Leader**: Largan Precision is the global leader in smartphone optical lenses, with high technical barriers and customers including Apple, Samsung, and Huawei."
+    tech_lead: "**Technology Leadership**: Maintains leadership in advanced optical technologies such as periscope lenses and free-form lenses, continuing to benefit from the multi-camera trend."
+    risk: "**Risk Warning**: Smartphone market growth is slowing, and Chinese competitors (Sunny, AAC Technologies) continue to catch up."
+
+# ── TD-02 Batch 1: Financial section keys ──────────────────
+
+financial:
+  key_metrics: Key Metrics
+  learn_more_expander: 📚 Learn More
+  learn_more_intro: "Deepen your understanding of key financial metrics — what they mean and how to interpret them."
+  higher_better: Higher is better
+  lower_better: Lower is better
+  analogy_label: Analogy
+  confidence_badge_note: Confidence reflects data completeness, not AI prediction certainty
+  unit_hundred_million: B
+  unit_yuan: TWD
+  dividend_countdown_title: Ex-Dividend Countdown
+  dividend_countdown_content: "{days} days until ex-dividend date (estimated {date})"
+  dividend_summary_title: Dividend Summary
+  latest_quarter_label: Latest Quarter
+  cash_dividend_per_share: Cash dividend per share
+  estimated_annual_label: Estimated Annual
+  latest_year_label: Latest Year
+  estimated_annual_hint: Estimated annual dividend payout
+  estimated_yield_label: Estimated Yield
+  yield_calc_hint: Annual dividend / stock price
+  expand_history: 📋 Expand to view historical dividend record
+  hist_col_year: Year
+  hist_col_cash_div: Cash Dividend
+  hist_col_ex_date: Ex-Dividend Date
+  hist_col_status: Status
+  hist_col_stock_div: Stock Dividend
+  hist_col_ex_badge: Ex-Dividend Badge
+  badge_upcoming: Upcoming
+  badge_paid: Paid
+  revenue_composition_title: Revenue Composition
+  revenue_composition_subtitle: How does this company make money?
+  revenue_source_suffix: Revenue Sources
+  revenue_trend_title: Revenue Trend
+  monthly_revenue_trend_suffix: Monthly Revenue Trend
+  no_revenue_data: No revenue data available
+  valuation_range_title: Valuation Range
+  valuation_range_subtitle: Where the current P/E stands historically
+  valuation_reading_title: Valuation Reading
+  no_valuation_data: Insufficient data to calculate valuation range
+
+# ── TD-02 Batch 1: Metric popover keys ──────────────────────
+
+metric_popover_help: Click for detailed explanation
+metric_popover_title: "📖 {name}"
+metric_popover_value_label: Current Value
+metric_popover_glossary_title: Glossary Definition
+metric_popover_analogy_title: Analogy
+metric_popover_example_label: Example
+metric_popover_explanation_title: What does this mean?
+metric_popover_analogy_label: Analogy
+metric_popover_direction_label: Direction
+metric_popover_higher_better: Higher is better
+metric_popover_lower_better: Lower is better
+metric_popover_background_label: Historical Context
+
+# ── TD-02 Batch 1: Sector Heatmap keys ──────────────────────
+
+sector_heatmap:
+  rank_col: "Rank {rank}"
+  industry_col: Industry
+  avg_change_col: Avg Change
+  up_col: Up
+  down_col: Down
+  flat_col: Flat
+  count_col: Count
+
+# ── TD-02 Batch 1: Detail section keys ──────────────────────
+
+detail:
+  share_link_label: Share Link
+  share_link_help: Copy this link to share this stock card
+  share_link_title: Copy share link
+  disclaimer_title: Disclaimer
+  disclaimer_content: This tool is for educational purposes only. All data comes from public information sources and FinMind. Does not constitute investment advice. Investing involves risk; please evaluate carefully.
+
+# ── TD-02 Batch 1: Financial glossary term keys ─────────────
+
+financial:
+  glossary_per: Price-to-Earnings Ratio (PER)
+  glossary_revenue_yoy: Revenue YoY Growth
+  glossary_pbr: Price-to-Book Ratio (PBR)
+  glossary_eps: Earnings Per Share (EPS)
+  glossary_revenue: Revenue
+
+# ── Analogy engine ──────────────────────────────────────────
+
+analogy:
+  revenue:
+    gov_budget_pct: "Equivalent to {pct}% of Taiwan's annual government budget"
+    trillion: "Approximately {value} trillion"
+    monthly_100b: "Earning {billion} billion per month, equivalent to building {buildings} Taipei 101 towers"
+    monthly_10b: "Earning {billion} billion per month, roughly {salaries} times TSMC's monthly salary"
+    monthly_small: "Earning {billion} billion per month, a steady little golden goose"
+  gross_margin:
+    high: "For every 100 dollars of goods sold, {margin} dollars remain after costs — more profitable than most restaurants"
+    good: "For every 100 dollars of goods sold, {margin} dollars remain after costs — a decent profit margin"
+    thin: "For every 100 dollars of goods sold, {margin} dollars remain after costs — thin margins, high volume"
+    low: "For every 100 dollars of goods sold, only {margin} dollars remain after costs — a highly competitive industry"
+    very_low: "For every 100 dollars of goods sold, only {margin} dollars remain after costs — really competing on volume"
+  per:
+    high: "For every dollar earned, the market is willing to pay {per} dollars — everyone is bullish on its future growth"
+    moderate: "For every dollar earned, the market is willing to pay {per} dollars — reasonable growth expectations"
+    fair: "For every dollar earned, the market is willing to pay {per} dollars — the market sees it as stable but unlikely to surge"
+    low: "For every dollar earned, the market is only willing to pay {per} dollars — the market is conservative about it"
+    negative: "Currently unprofitable, PER is meaningless"
+  pbr:
+    premium: "Stock price is {pbr}x net value — the market thinks its brand and management are worth the price"
+    reasonable: "Stock price is {pbr}x net value — a reasonable premium"
+    neutral: "Stock price is {pbr}x net value — close to net value, neutral market assessment"
+    discount: "Stock price is below net value ({pbr}x) — the market thinks its assets may not be worth that much"
+  dividend:
+    high: "For every 100 dollars invested, you get about {dy} dollars back — much better than a savings account, but watch out for risk"
+    good: "For every 100 dollars invested, you get about {dy} dollars back — a solid dividend stock choice"
+    moderate: "For every 100 dollars invested, you get about {dy} dollars back — slightly better than a savings account"
+    low: "For every 100 dollars invested, you get about {dy} dollars back — not primarily an income stock"
+    none: "Currently no dividends, the company is reinvesting its cash"
+  roe:
+    excellent: "For every 100 dollars of capital invested, it earns {roe} dollars — a very profitable company"
+    good: "For every 100 dollars of capital invested, it earns {roe} dollars — good profitability"
+    average: "For every 100 dollars of capital invested, it earns {roe} dollars — average performance"
+    poor: "For every 100 dollars of capital invested, it earns {roe} dollars — low capital efficiency"
+    very_poor: "For every 100 dollars of capital invested, it only earns {roe} dollars — needs improvement"
+    negative: "Currently unprofitable, invested capital has no return"
+  debt:
+    high: "Out of every 100 dollars of assets, {ratio} dollars are borrowed — borrowing heavily, be cautious"
+    moderate: "Out of every 100 dollars of assets, {ratio} dollars are borrowed — moderate leverage"
+    healthy: "Out of every 100 dollars of assets, {ratio} dollars are borrowed — solid financial structure"
+    low: "Out of every 100 dollars of assets, only {ratio} dollars are borrowed — barely borrowing"
+  volume:
+    very_high: "Today's volume: {volume}K shares — the market is very focused on this stock"
+    high: "Today's volume: {volume}K shares — active trading"
+    normal: "Today's volume: {volume}K shares — normal trading volume"
+    low: "Today's volume: {volume}K shares — quiet trading"
+    very_low: "Today's volume: only {volume} shares — almost no one is buying or selling"
+  institutional:
+    strong_buy: "Three major institutions heavily bought {volume}K shares today — institutions are very bullish"
+    buy: "Three major institutions net bought {volume}K shares today — institutions are slightly bullish"
+    slight_buy: "Three major institutions slightly bought {volume}K shares today — institutions are neutral to slightly bullish"
+    sell: "Three major institutions net sold {volume}K shares today — institutions are slightly bearish"
+    strong_sell: "Three major institutions heavily sold {volume}K shares today — institutions are rushing to exit"
+  yoy:
+    strong: "Revenue YoY {yoy}% — very strong growth, likely a hot new product"
+    good: "Revenue YoY {yoy}% — steady growth, the company is well-run"
+    moderate: "Revenue YoY {yoy}% — moderate growth"
+    flat: "Revenue YoY {yoy}% — about the same as last year, flat"
+    decline: "Revenue YoY -{yoy}% — worse than last year, worth investigating"
+    sharp_decline: "Revenue YoY -{yoy}% — sharp decline, may have structural issues"
+  oneliner:
+    "2330": "The world's largest foundry, manufacturing chips for tech giants like Apple and NVIDIA — your phone and computer likely contain its products"
+    "2317": "The world's largest electronics empire, the primary assembler of iPhones — one out of every two iPhones comes from it"
+    "2454": "Mobile chip design leader, your phone likely has its chips — makes money through design without owning factories"
+    "2308": "Power supply hidden champion, from phone chargers to EV charging stations — low-key but ubiquitous"
+    "2881": "One of Taiwan's largest financial holding groups, with banking, securities, and insurance — your deposits, policies, and stocks may all be connected to it"
+    "1101": "Taiwan's oldest cement company, essential for construction and infrastructure — anyone building in Taiwan needs it"
+    "2002": "Taiwan's steel industry leader, from construction steel to automotive steel — the backbone of Taiwan's industry"
+    "1301": "Taiwan's largest plastics group, from plastic bags to medical supplies — its products are everywhere in daily life"
+    "2357": "ASUS, from motherboards to laptops — the computer parts you use may come from it"
+    "2382": "Quanta Computer, the world's largest laptop ODM — primary manufacturer of Apple MacBooks"
+    "2886": "Mega Financial Holding, Taiwan's largest public financial holding — expert in forex and corporate finance"
+    "2891": "CTBC Financial Holding, Taiwan's largest private financial holding — leader in credit cards and consumer finance"
+    "1216": "Uni-President, from instant noodles to convenience stores — 7-Eleven and Uni-President foods are all part of it"
+    "2912": "7-Eleven Taiwan, Taiwan's largest convenience store chain — one every 500 meters on average"
+    "2303": "UMC, Taiwan's second-largest foundry — TSMC's brother company"
+    "2345": "Accton Technology, a major network switch manufacturer — key equipment supplier for data centers"
+    "3008": "Largan Precision, the smartphone lens king — one out of every three phone lenses comes from it"
+    "2412": "Chunghwa Telecom, Taiwan's largest telecom company — your mobile network may depend on it"
+    "3711": "ASE Technology, the world's largest packaging and testing factory — the final step before chips ship"
+    "2324": "Compal Electronics, the world's second-largest laptop ODM — primary partner of Dell and HP"
+    industry:
+      semiconductor: "{name} is an important member of the semiconductor industry, playing a key role in this globally vital sector"
+      electronics: "{name} is an important member of the electronics industry, spanning consumer electronics to industrial equipment"
+      finance: "{name} is an important member of the financial and insurance industry, managing trillions in assets"
+      computer: "{name} is an important member of the computer industry, playing an important role in this digital age"
+      biotech: "{name} is an important member of the biotech and medical industry, dedicated to improving human health"
+      tourism: "{name} is an important member of the tourism and hospitality industry, serving countless travelers and consumers"
+      machinery: "{name} is an important member of the electrical machinery industry, spanning industrial equipment to consumer goods"
+      construction: "{name} is an important member of the construction and building materials industry, involved in countless construction projects in Taiwan"
+      chemical: "{name} is an important member of the chemical industry, producing everything from basic chemicals to specialty products"
+      telecom: "{name} is an important member of the telecommunications and networking industry, connecting Taiwan's digital life"
+      default: "{name} is an important member of the {industry} industry, stock code {stock_id}"
+
+key_takeaways:
+  one_liner: "{first_sentence}, is an important member of the {industry} industry"
+  gm_high: "Gross margin {gm:.1f}%, profitability is in the top tier of the industry"
+  gm_medium: "Gross margin {gm:.1f}%, stable profit margin"
+  gm_low: "Gross margin {gm:.1f}%, operates on a thin-margin high-volume model"
+  gm_very_low: "Gross margin only {gm:.1f}%, limited profitability, relies on scale"
+  yoy_high: "Revenue YoY {yoy:.0f}%, strong growth momentum"
+  yoy_medium: "Revenue YoY {yoy:.0f}%, growing steadily"
+  yoy_flat: "Revenue YoY {yoy:.0f}%, roughly flat vs. last year"
+  yoy_negative: "Revenue declined {yoy:.0f}%, worth monitoring for causes of decline"
+  per_high: "PER {per:.1f}x, market pricing in high growth expectations"
+  per_medium: "PER {per:.1f}x, fairly valued"
+  per_low: "PER {per:.1f}x, market valuation is relatively conservative"
+  per_negative: "Currently unprofitable, PER is not meaningful"
+  dy_high: "Dividend yield {dy:.2f}%, a popular dividend stock choice"
+  dy_medium: "Dividend yield {dy:.2f}%, stable payouts"
+  dy_low: "Dividend yield {dy:.2f}%, modest payouts, growth prioritized"
+  dy_none: "No dividend payout currently, earnings retained for reinvestment"
+  roe_high: "ROE {roe:.1f}%, excellent return on equity"
+  roe_medium: "ROE {roe:.1f}%, good capital efficiency"
+  roe_low: "ROE {roe:.1f}%, room for improvement in capital efficiency"
+  roe_negative: "ROE is negative, company has not yet created value for shareholders"
+  debt_high: "Debt ratio {debt:.0f}%, high financial leverage, monitor solvency risk"
+  debt_medium: "Debt ratio {debt:.0f}%, moderate use of leverage"
+  debt_low: "Debt ratio {debt:.0f}%, solid financial structure"
+  "2330":
+    "0": "Global foundry leader with over 55% market share and clear technology lead"
+    "1": "Advanced processes (5nm/3nm) remain fully loaded; sole supplier for Apple, NVIDIA and other giants"
+    "2": "Extremely deep moat: high capital expenditure barriers make it difficult for competitors to catch up"
+    "3": "Long-term beneficiary of structural growth trends such as AI, HPC, and electric vehicles"
+  "2317":
+    "0": "The world's largest electronics empire, primary assembler for iPhone"
+    "1": "Huge revenue scale but low gross margin (~5-6%), wins on volume"
+    "2": "Actively expanding into EVs, servers, robotics and other new areas"
+    "3": "Risk: over-reliance on Apple orders, geopolitical factors affect capacity allocation"
+  "2454":
+    "0": "Mobile chip design leader, MediaTek Dimensity series leads Android market share"
+    "1": "Asset-light model (fabless), gross margin exceeds 45%"
+    "2": "Actively expanding into automotive, AIoT, Wi-Fi 7 and other new markets"
+    "3": "Intense competition with Qualcomm, but clear price-performance advantage in mid-to-low end"
+  "2308":
+    "0": "Power supply隐形冠军, spanning consumer electronics to data centers"
+    "1": "Gross margin stable at 25-30%, profitability better than peers"
+    "2": "Benefiting from AI server power demand explosion, strong growth momentum"
+    "3": "Diversified product lines reduce single-customer risk"
+  "2881":
+    "0": "One of Taiwan's largest financial holding companies, covering banking, securities, and insurance"
+    "1": "Stable earnings, generous dividends, popular among dividend investors"
+    "2": "High mortgage exposure, monitor real estate market volatility risk"
+    "3": "Active digital finance transformation, but slower than private financial holdings"
+  "1101":
+    "0": "Taiwan's oldest cement manufacturer, over 70 years in the market"
+    "1": "Cement industry is highly correlated with public construction"
+    "2": "Diversified operations (power, chemicals, transportation) reduce single-industry risk"
+    "3": "Stable earnings but limited growth, suitable for conservative investors"
+  "2002":
+    "0": "Taiwan's steel industry leader, complete product line (rebar, sections, plates)"
+    "1": "Steel cycle is pronounced, earnings are volatile"
+    "2": "Actively developing high-value-added products (automotive steel, electrical steel)"
+    "3": "Benefiting from public construction and manufacturing recovery"
+  "1301":
+    "0": "Taiwan's largest plastics group, products span consumer and industrial use"
+    "1": "Upstream raw material (ethylene) price swings significantly impact earnings"
+    "2": "Complete cross-strait presence, but competition intensifying in China"
+    "3": "Transforming toward high-value and eco-friendly materials"
+  "2357":
+    "0": "High brand value, ROG gaming series leads global market share"
+    "1": "PC industry is mature, but gaming and creator markets still have room to grow"
+    "2": "AI PC replacement cycle is a key future growth driver"
+    "3": "Server business growing rapidly, becoming a second growth curve"
+  "2382":
+    "0": "World's largest laptop ODM, primary manufacturer of Apple MacBook"
+    "1": "Actively transitioning to server/cloud business, AI server orders booming"
+    "2": "Gross margin ~3-4%, maintains profitability through economies of scale"
+    "3": "Risk: laptop market saturation, growth depends on server business"
+  "2886":
+    "0": "Taiwan's largest state-owned financial holding company, market leader in forex"
+    "1": "Most overseas locations, cross-border finance is a core advantage"
+    "2": "Stable earnings, dividend yield ~3-4%, suitable for dividend investing"
+    "3": "State-owned background makes operations relatively conservative and stable"
+  "2891":
+    "0": "Taiwan's largest private financial holding company, leader in credit cards and consumer finance"
+    "1": "CTBC Bank is Taiwan's largest credit card issuer"
+    "2": "Active overseas expansion, especially in China and Southeast Asia"
+    "3": "Digital finance development leads peers, Bank 3.0 fully deployed"
+  "1216":
+    "0": "Uni-President Group spans food, retail, and logistics"
+    "1": "Uni-President Convenience Store (7-Eleven) is Taiwan's largest convenience store network"
+    "2": "Diversified operations are stable, strong cash flow"
+    "3": "Southeast Asia and China markets are key future growth areas"
+  "2912":
+    "0": "Taiwan's convenience store leader, market share exceeds 50%"
+    "1": "Highest store density in the world (one every 500 meters on average)"
+    "2": "Extends from retail to logistics, finance, and e-commerce ecosystem"
+    "3": "Same-store revenue growth slowing, but diversified services increase average ticket"
+  "2303":
+    "0": "Taiwan's second-largest foundry, focused on mature process nodes"
+    "1": "Mature process (28nm+) demand is stable, automotive and IoT are main drivers"
+    "2": "Complements TSMC, does not directly compete on advanced nodes"
+    "3": "Capacity utilization is a key metric to watch for operations"
+  "2345":
+    "0": "Network switch manufacturer, key equipment supplier for data centers"
+    "1": "Benefiting from AI data center build-out, 400G/800G switch demand surging"
+    "2": "White-box switch trend favors independent suppliers"
+    "3": "Customers include major global cloud service providers"
+  "3008":
+    "0": "Smartphone lens king, global market share exceeds 30%"
+    "1": "High technical barriers, increasing lens count (7P→8P) drives unit price up"
+    "2": "Dual-engine driven by Apple and Android camps"
+    "3": "Risk: Chinese competitors (Sunny, AAC) continue to catch up"
+  "2412":
+    "0": "Taiwan's largest telecom operator, over 10 million mobile subscribers"
+    "1": "Telecom industry is stable, strong cash flow, generous dividends"
+    "2": "5G pricing increases ARPU, but capex also rises"
+    "3": "Actively developing enterprise customers and digital value-added services"
+  "3711":
+    "0": "World's largest packaging and testing factory, works closely with TSMC"
+    "1": "Advanced packaging (CoWoS, InFO) is a critical AI chip process"
+    "2": "Benefiting from AI chip packaging demand surge, capacity供不应求"
+    "3": "Capex continues to increase to meet customer demand"
+  "2324":
+    "0": "World's second-largest laptop ODM, primary partner of Dell and HP"
+    "1": "Actively expanding server business to reduce laptop dependence"
+    "2": "Low gross margin, maintains competitiveness through scale and efficiency"
+    "3": "Overseas capacity in Vietnam, Mexico diversifies risk"
+
+chart:
+  unit_hundred_million: B
+  valuation:
+    no_price_data: No price data
+    no_financial_data_per: No financial data, cannot calculate PER
+    no_per_data: PER data currently unavailable
+    no_price_data_5y: No price data in the past 5 years
+    data_less_than_5y: "(Less than 5 years of data, showing all available data)"
+    cannot_extract_eps: Unable to extract EPS from financial data
+    eps_negative_or_zero: EPS is negative or zero, cannot calculate PER
+    valuation_low: "📉 Current valuation is low — cheaper than 75% of historical periods"
+    valuation_high: "📈 Current valuation is high — more expensive than 75% of historical periods"
+    valuation_middle: "📊 Current valuation is in the middle range"
+    percentile_band: 25th-75th Percentile
+    historical_per: Historical PER
+    hover_template: "Date: %{x|%Y/%m/%d}<br>PER: %{y:.1f}<extra></extra>"
+    current_per: "Current PER: {value:.1f}"
+    chart_title: "{name} Valuation Range (Historical P/E Range)"
+    chart_subtitle: " <sub style='font-size:0.7rem;color:#7F8C8D;'>💡 PER = Price-to-Earnings Ratio</sub>"
+    xaxis_title: Date
+    yaxis_title: "P/E Ratio (PER)"
+    chart_failed: Valuation range chart calculation failed
+  stock_financial:
+    revenue_source: Revenue Source
+    no_revenue_composition: No revenue composition data
+    proportion: Proportion
+    revenue_trend: Monthly Revenue Trend
+    no_revenue_data: No revenue data
+    monthly_revenue: Monthly Revenue
+    yoy_rate: YoY Rate
+    revenue: Revenue
+    price_trend: Stock Price Trend
+    no_price_data: No price data
+    open: Open
+    high: High
+    low: Low
+    close: Close
+    single_day_only: Single day only
+    price: Price
+    single_day_note: Only 1 day of data available, showing as bar chart
+    candlestick: Candlestick
+    volume: Volume
+    thousand_shares: Shares (K)
+    profit_funnel: Profit Funnel
+    revenue_stage: Revenue
+    gross_profit: Gross Profit
+    operating_income: Operating Income
+    net_income: Net Income
+    no_financial_data: No financial data
+    no_comparison_data: No comparison data
+    institutional_trading: Institutional Trading
+    no_institutional_data: No institutional data
+    net_buy_sell: Net Buy/Sell
+    shares: shares
+
+risk:
+  customer_concentration_title: Customer Concentration Risk
+  customer_high_concentration: "Based on the latest financial report, the top three customers account for approximately {pct:.0f}% of revenue."
+  customer_medium_concentration: "Recent monthly revenue is mainly from 2-3 business lines, with the largest accounting for approximately {pct:.0f}% of revenue."
+  customer_low_concentration: "The company's revenue is diversified across multiple business lines, with the largest accounting for less than {pct:.0f}% of revenue."
+  revenue_unstable: "The revenue fluctuation over the past 12 months (coefficient of variation: {cv:.2f}) indicates relatively unstable income sources."
+  revenue_unstable_note: "This means that order changes from a few customers can significantly impact company revenue."
+  revenue_normal: "The revenue fluctuation over the past 12 months is {cv:.2f}, within the normal range."
+  revenue_normal_note: "The company has some revenue concentration, but it remains within a manageable range."
+  revenue_stable: "The revenue fluctuation over the past 12 months is {cv:.2f}, indicating stable and diversified income sources."
+  financial_health_title: Financial Health Risk
+  debt_high: "The latest debt ratio is {ratio:.0f}%, above the generally recognized warning threshold of 65%."
+  debt_medium: "The debt ratio is {ratio:.0f}%, within a moderate leverage range."
+  debt_low: "The debt ratio is only {ratio:.0f}%, indicating a solid financial structure."
+  cashflow_negative: "Operating cash flow was negative in 2 of the past 4 quarters, meaning cash generated from operations is insufficient to cover operating needs."
+  cashflow_mixed: "Operating cash flow was negative in 1 of the past 4 quarters; monitor whether this improves going forward."
+  cashflow_positive: "Operating cash flow has been positive in all of the past 4 quarters, demonstrating good cash generation capability."
+  margin_very_low: "Net profit margin is only {margin:.1f}%, leaving very limited profit margin."
+  margin_medium: "Net profit margin is {margin:.1f}%, stable but not outstanding."
+  margin_high: "Net profit margin is maintained above {margin:.1f}%, placing profitability in the top tier within the industry."
+  event_risk_title: Event-Based Risk
+  event_high_count: "There were {count} significant news events in the past 90 days"
+  event_includes: ", including {events}"
+  event_high_impact: "Of these, {count} are classified as high-attention events."
+  event_foreign_selling: "Foreign institutions had net selling over the same period, with a conservative institutional stance."
+  event_medium_count: "There were {count} medium-attention news events in the past 90 days, involving product certification and supply chain adjustments."
+  event_foreign_neutral: "Foreign institutions had mixed buying and selling, with a neutral institutional stance."
+  event_low: "No significant news in the past 90 days; most news was routine announcements."
+  event_foreign_buying: "Foreign institutions had slight net buying, with a stable institutional stance."
+  insufficient_data: Insufficient data for risk analysis
+  dim_customer: Customer Concentration
+  dim_financial: Financial Health
+  dim_event: Event-Based
+  summary_high_risk: "Analysis shows {dims} dimensions have higher risk. See detailed breakdown by dimension below."
+  summary_normal: "Below is the analysis for each risk dimension, based on recent public information."
+  simplifier:
+    level:
+      1:
+        label: "Very Low Risk"
+        description: "This company currently has very low risk, with good financial health (average {health_avg:.0f} points). All risk indicators are within safe ranges, suitable for conservative investors to follow."
+      2:
+        label: "Low Risk"
+        description: "This company has relatively low risk, with acceptable financial health (average {health_avg:.0f} points). Although there are minor areas to watch, overall there are no major concerns."
+      3:
+        label: "Medium Risk"
+        description:
+          weak: "This company has a medium level of risk, with average financial health (average {health_avg:.0f} points). The {weak_dims} aspects require special attention."
+          mixed: "This company has a medium level of risk, with average financial health (average {health_avg:.0f} points). Some indicators show uneven performance; continued observation is recommended."
+      4:
+        label: "High Risk"
+        description: "This company has higher risk, with weaker financial health (average {health_avg:.0f} points). There are clear high-risk dimensions. Please do your homework and assess your risk tolerance before investing."
+      5:
+        label: "Very High Risk"
+        description: "This company has very high risk, with poor financial health (average {health_avg:.0f} points). Multiple risk indicators are flashing red. Please evaluate carefully; not suitable for investors with lower risk tolerance."
+
+story:
+  feed:
+    historian:
+      1: "This historian traces back to similar market signals…"
+      2: "Opening the pages of history, this chronicler finds a similar situation…"
+      3: "From a historical perspective, such trends often…"
+      4: "Looking back over the past decade, similar events have led to…"
+    event:
+      unknown: "Unknown Event"
+    analogy:
+      revenue_surge: "Revenue changes are like observing a restaurant's daily customer count."
+      price_abnormal: "Sharp stock price fluctuations are like sudden temperature changes — a storm may be coming."
+      news: "Market news is like a weather forecast, reminding us whether to bring an umbrella or wear short sleeves."
+      institutional_shift: "Institutional trading is like big players betting at the table — worth paying attention to."
+      default: "Behind every market event, there is a story worth following."
+    sector:
+      direction:
+        up: "strengthening"
+        down: "weakening"
+        flat: "consolidating"
+      title: "{sector} {direction} (avg {avg:+.1f}%)"
+      summary: "Today {sector} has {count} stocks with data, of which {up} rose and {down} fell."
+      analogy:
+        top_mover: "The leading stock {stock_name} changed {top_chg:+.1f}%, like the eye of a tornado leading the direction."
+        general: "The overall performance of {sector} is like observing the seasonal changes of an entire forest."
+      historian_note: "📜 Historically, {sector}'s average returns are closely related to the overall economic cycle."
+    education:
+      title: "📚 Metric of the Day: {display_name}"
+      analogy_default: "Learning one metric a day is like making a new friend every day."
+
+pattern:
+  outcome_positive: "{count} times leaning positive"
+  outcome_mixed: "{count} times mixed results"
+  outcome_negative: "{count} times leaning negative"
+  history_total: "Total of {total} historical records"
+  history_summary: "History has {total} similar events: {parts}"
+
+event:
+  fallback_short: "\"{title}\" indicates a noteworthy market change."
+  fallback_detail: "This event record shows \"{title}\". Consider it alongside other information; don't judge based on a single event alone."
+  fallback_key_concept: "A single event is insufficient for judgment; combine with overall analysis"
+  severity_high: "High"
+  severity_medium: "Medium"
+  severity_low: "Low"
+  severity_unknown: "Unknown"
+  interpretation_header: "【Event Interpretation】\n\n"
+  interpretation_severity: "This is a \"{severity_label}\" severity \"{event_type}\" event.\n\n"
+  interpretation_key_concept: "📌 Key Concept: {key_concept}\n\n"
+  interpretation_detail: "📖 Detail: {detail}\n\n"
+  interpretation_summary: "📋 Summary: {summary}\n\n"
+  interpretation_disclaimer: "⚠️ Historian's View: The above interpretation only explains the event background and possible implications, and does not constitute investment advice."
+
+chart:
+  health:
+    no_data: "No health score data available"
+    current_score: "Current Score"
+    pass_line: "Pass Line (40)"
+    good_line: "Good Line (70)"
+    title: "{stock_name} Company Health"
+    score_tooltip: "<b>{category}: {score:.0f} pts</b>"
+    benchmark_tooltip: "<b>{label} — {category}: {score:.0f} pts</b>"
+moat:
+  type:
+    none: No Obvious Moat
+    brand: Brand Moat
+    cost: Cost Moat
+    network: Network Effect Moat
+    switching: Switching Cost Moat
+    scale: Scale Economy Moat
+  description:
+    none: All moat dimension scores are relatively low; no clear competitive advantage yet.
+    brand: The company has strong brand pricing power, with customers willing to pay a premium.
+    cost: The company has a structural advantage in production or operating costs that rivals cannot easily replicate.
+    network: Platform or product value increases with user growth, forming a positive feedback loop.
+    switching: High switching costs for customers to move to close competitors, creating natural lock-in.
+    scale: The company enjoys unit cost advantages due to its massive scale, making it difficult for new entrants to compete.
+  evidence:
+    auto_score: "Auto Score: {moat_type}"
+delta:
+  metric:
+    revenue_monthly: Monthly Revenue
+    price_30d: Stock Price (30-Day Avg)
+    revenue_yoy: Revenue YoY Growth
+  previous_year_same_period: Same Period Last Year

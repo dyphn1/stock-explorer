@@ -91,6 +91,14 @@ dividend:
   dividend_yield_label: 殖利率
   summary: 配息摘要
   detail_expand: 📋 展開查看歷史除權息紀錄
+  estimated_label: 預估
+  quarterly_dividend: "每季約配息 {amount} 元"
+  quarterly_yield: "{label}年化殖利率約 {yield_pct}%"
+  annual_dividend: "每年配息約 {amount} 元"
+  annual_yield: "{label}殖利率約 {yield_pct}%"
+  stable_years: "過去 {n_years} 年，這家企業穩定"
+  irregular: "配息不穩定，依當年度獲利情形決定。最近一次配息 {amount} 元"
+  record_years: "此公司近 {n_years} 年有配息紀錄"
 action:
   submit: 提交答案
   retry: 重新測驗
@@ -174,6 +182,40 @@ comparison:
   stronger: 優於同業
   weaker: 落後同業
   similar: 與同業相當
+  # --- compare_stories.py ---
+  higher: 高於
+  lower: 低於
+  advantage: ，相對優勢
+  disadvantage: ，相對劣勢
+  valuation_lower: ，估值較低
+  valuation_higher: ，估值較高
+  metric:
+    close: "{label}：兩家相近（{self_str} vs {peer_str}{unit}）"
+    diff: "{label}：{self_str}{unit}，{direction}同業的 {peer_str}{unit}{better}"
+    self_only: "{label}：{value}{unit}（同業無資料）"
+  revenue:
+    larger: "📏 {stock_name} 的營收規模明顯大於 {peer_name}，{rev_desc}"
+    smaller: "📏 {stock_name} 的營收規模小於 {peer_name}，{rev_desc}"
+    similar: "📏 兩家營收規模相近，{rev_story}"
+  revs_ratio:
+    double: "約為同業的 {ratio:.1f} 倍"
+    slightly_larger: "略大於同業（{ratio:.1f} 倍）"
+    similar: 規模相近
+    percent: "約為同業的 {ratio:.0%}"
+    only_percent: "僅同業的 {ratio:.0%}"
+  gross_margin:
+    higher: "💰 {stock_name} 毛利率 {self_gm:.1f}%，高於 {peer_name} 的 {peer_gm:.1f}% — {analogy}"
+    lower: "💰 {stock_name} 毛利率 {self_gm:.1f}%，低於 {peer_name} 的 {peer_gm:.1f}% — {analogy}"
+    similar: "💰 兩家毛利率相近（{self_gm:.1f}% vs {peer_gm:.1f}%）"
+  per:
+    higher: "🏷️ {stock_name} 本益比 {self_per:.1f} 倍，高於 {peer_name} 的 {peer_per:.1f} 倍 — 市場對 {stock_name} 的成長預期較高"
+    lower: "🏷️ {stock_name} 本益比 {self_per:.1f} 倍，低於 {peer_name} 的 {peer_per:.1f} 倍 — 相對來說 {stock_name} 的估值較為保守"
+    similar: "🏷️ 兩家本益比相近（{self_per:.1f} vs {peer_per:.1f} 倍）"
+  dividend_yield:
+    higher: "💵 {stock_name} 殖利率 {self_dy:.2f}%，高於 {peer_name} 的 {peer_dy:.2f}% — 對存股族較有吸引力"
+    lower: "💵 {stock_name} 殖利率 {self_dy:.2f}%，低於 {peer_name} 的 {peer_dy:.2f}%"
+    similar: "💵 兩家殖利率相近（{self_dy:.2f}% vs {peer_dy:.2f}%）"
+  no_difference: "📊 {stock_name} 與 {peer_name} 在可比較的指標上差異不大"
 financial_statement:
   revenue: 營業收入
   gross_profit: 營業毛利
@@ -189,6 +231,7 @@ notification:
   subtitle: 追蹤你關注股票的重要事件與異動
   mark_all_read: 已將所有通知標記為已讀
   no_notification: 目前沒有通知
+  business_card: 名片
 memo:
   title: 投資備忘錄
   add: 新增備忘
@@ -1257,6 +1300,12 @@ category_browser:
 
 
 financial_wellness:
+  title: 理財健康檢查
+  intro: 理財健康檢查——透過行為財務學自我評量，了解自己的投資習慣與改善方向。
+  disclaimer:
+    title: 關於這份測驗
+    desc1: 這份測驗從多個面向評估你的行為財務傾向。
+    desc2: 沒有對錯之分，重點是自我覺察，不是考滿分。
   btn_start_quiz: 📝 開始測驗
   btn_reset_quiz: 🔄 重新測驗
   section_start_answer: 📝 開始作答
@@ -1266,6 +1315,8 @@ financial_wellness:
   section_personal_tips: 💡 個人化建議
   strengthen_category: 加強「{category}」
   section_category_scores: 📋 各面向得分
+  dimensions_count_pass: "🟢 {count} 個達標"
+  dimensions_count_improve: "🔴 {count} 個需加強"
 
 why_moved:
   section_title: 🔍 為什麼這檔股票會動？
@@ -1369,3 +1420,472 @@ wellness:
   grade: 評級
   dimensions: 各面向
 
+# ── TD-02 Batch 3: Story section keys ────────────────────────
+
+story:
+  recent_changes: 最近有什麼變化
+  no_significant_changes: 近期未偵測到顯著變化。
+  confidence_note: 信心指標反映資料完整度，非AI預測確定性
+  unknown_industry: 未知產業
+  peer_comparison: 同業比較
+  peer_comparison_subtitle: "{name} 跟同業比起來如何？"
+  view_peer: "查看 {name}"
+  read_next: 推薦閱讀
+  peer_recommendations: "同產業你可能也感興趣的股票："
+  peer_info: "產業：{industry}"
+  view_peer_card: "查看 {name} 的名片"
+  no_recommendations: 目前沒有可推薦的內容。
+  you_might_wonder: 你可能還想知道
+  did_you_know: 你知道嗎？
+  more_analysis: 想更深入了解嗎？
+  full_timeline: 查看完整故事時間軸
+  timeline_caption: 探索這家公司的完整時間軸故事
+  previous_period: "前期"
+  read_next_fallback: 推薦閱讀
+
+# ── TD-02 Batch 1: Sector Heatmap keys ──────────────────────
+
+sector_heatmap:
+  rank_col: "排名 {rank}"
+  industry_col: 產業
+  avg_change_col: 平均漲跌
+  up_col: 上漲
+  down_col: 下跌
+  flat_col: 平盤
+  count_col: 有報價
+
+# ── TD-02 Batch 1: Detail section keys ──────────────────────
+
+detail:
+  share_link_label: 分享連結
+  share_link_help: 複製此連結以分享此股票名片
+  share_link_title: 複製分享連結
+  disclaimer_title: 免責聲明
+  disclaimer_content: 本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。
+
+# ── TD-02 Batch 1: Financial glossary term keys ─────────────
+
+financial:
+  glossary_per: 本益比
+  glossary_revenue_yoy: 營收年增率
+  glossary_pbr: 淨值比
+  glossary_eps: 每股盈餘
+  glossary_revenue: 營業收入
+
+# ── Analogy engine ──────────────────────────────────────────
+
+analogy:
+  revenue:
+    gov_budget_pct: "相當於台灣政府年度預算的 {pct}%"
+    trillion: "約為 {value} 千億"
+    monthly_100b: "每個月賺進 {billion} 億，相當於蓋 {buildings} 棟台北 101"
+    monthly_10b: "每個月賺 {billion} 億，大約是 {salaries} 間台積電的月薪"
+    monthly_small: "每個月賺 {billion} 億，穩定的小金雞"
+  gross_margin:
+    high: "賣 100 元東西，扣掉成本還剩 {margin} 元 — 比多數餐廳還賺"
+    good: "賣 100 元東西，扣掉成本還剩 {margin} 元 — 不錯的利潤空間"
+    thin: "賣 100 元東西，扣掉成本還剩 {margin} 元 — 薄利多銷型"
+    low: "賣 100 元東西，扣掉成本只剩 {margin} 元 — 競爭激烈的產業"
+    very_low: "賣 100 元東西，扣掉成本只剩 {margin} 元 — 真的是在拚量"
+  per:
+    high: "每賺 1 元，市場願意付 {per} 元 — 大家看好它未來會賺更多"
+    moderate: "每賺 1 元，市場願意付 {per} 元 — 合理的成長預期"
+    fair: "每賺 1 元，市場願意付 {per} 元 — 市場覺得它穩定但不太會暴衝"
+    low: "每賺 1 元，市場只願付 {per} 元 — 市場對它比較保守"
+    negative: "目前虧損，本益比無意義"
+  pbr:
+    premium: "股價是淨值的 {pbr} 倍 — 市場覺得它的品牌和管理值這個價"
+    reasonable: "股價是淨值的 {pbr} 倍 — 合理的溢價"
+    neutral: "股價是淨值的 {pbr} 倍 — 接近淨值，市場評價中性"
+    discount: "股價比淨值還低（{pbr} 倍）— 市場覺得它的資產可能不值那麼多"
+  dividend:
+    high: "每放 100 元，大約領回 {dy} 元 — 比定存好很多，但要注意風險"
+    good: "每放 100 元，大約領回 {dy} 元 — 穩健的存股選擇"
+    moderate: "每放 100 元，大約領回 {dy} 元 — 比定存好一點"
+    low: "每放 100 元，大約領回 {dy} 元 — 主要不是靠配息"
+    none: "目前不配息，公司把錢留在手上再投資"
+  roe:
+    excellent: "每投入 100 元資本，賺回 {roe} 元 — 非常會賺錢的公司"
+    good: "每投入 100 元資本，賺回 {roe} 元 — 賺錢能力不錯"
+    average: "每投入 100 元資本，賺回 {roe} 元 — 表現中規中矩"
+    poor: "每投入 100 元資本，賺回 {roe} 元 — 賺錢效率偏低"
+    very_poor: "每投入 100 元資本，只賺回 {roe} 元 — 需要改善"
+    negative: "目前虧損，投入的資本沒有回報"
+  debt:
+    high: "每 100 元資產中，有 {ratio} 元是借來的 — 借錢借比較多，要注意"
+    moderate: "每 100 元資產中，有 {ratio} 元是借來的 — 適度槓桿"
+    healthy: "每 100 元資產中，有 {ratio} 元是借來的 — 財務結構穩健"
+    low: "每 100 元資產中，只有 {ratio} 元是借來的 — 幾乎不借錢"
+  volume:
+    very_high: "今天成交 {volume} 千張 — 市場非常關注這檔股票"
+    high: "今天成交 {volume} 千張 — 交易熱絡"
+    normal: "今天成交 {volume} 千張 — 正常交易量"
+    low: "今天成交 {volume} 千張 — 交易冷清"
+    very_low: "今天只成交 {volume} 張 — 幾乎沒人在買賣"
+  institutional:
+    strong_buy: "三大法人今天大買 {volume} 千張 — 法人很看好"
+    buy: "三大法人今天買超 {volume} 千張 — 法人偏多"
+    slight_buy: "三大法人今天小買 {volume} 千張 — 法人態度中性偏多"
+    sell: "三大法人今天賣超 {volume} 千張 — 法人偏空"
+    strong_sell: "三大法人今天大賣 {volume} 千張 — 法人急著出場"
+  yoy:
+    strong: "營收年增 {yoy}% — 成長非常強勁，可能是新產品大賣"
+    good: "營收年增 {yoy}% — 穩定成長，公司經營得不錯"
+    moderate: "營收年增 {yoy}% — 溫和成長"
+    flat: "營收年增 {yoy}% — 跟去年差不多，持平"
+    decline: "營收年減 {yoy}% — 比去年差，需要關注原因"
+    sharp_decline: "營收年減 {yoy}% — 大幅衰退，可能有結構性問題"
+  oneliner:
+    "2330": "全世界最大的晶圓代工廠，幫蘋果、輝達等科技巨頭製造晶片 — 你的手機和電腦裡都有它的產品"
+    "2317": "全球最大的電子代工帝國，iPhone 的主要組裝廠 — 全世界每兩支 iPhone 就有一支出自它"
+    "2454": "手機晶片設計龍頭，你的手機裡很可能有它的晶片 — 不用自己蓋工廠，靠設計就能賺錢"
+    "2308": "電源供應器隱形冠軍，從手機充電器到電動車充電樁都有它的身影 — 低調但無所不在"
+    "2881": "台灣最大的金融控股集團之一，旗下有銀行、證券、壽險 — 你的存款、保單、股票可能都跟它有關"
+    "1101": "台灣最老牌的水泥廠，從蓋房子到基礎建設都少不了它 — 蓋台灣的人都需要它"
+    "2002": "台灣鋼鐵業龍頭，從建築鋼材到汽車鋼板都有生產 — 台灣工業的骨架"
+    "1301": "台灣最大的塑膠集團，從塑膠袋到醫療用品都有它的產品 — 生活中到處都是它的影子"
+    "2357": "華碩電腦，從主機板到筆記型電腦 — 你用的電腦零件可能就來自它"
+    "2382": "廣達電腦，全球最大的筆記型電腦代工廠 — 蘋果 MacBook 的主要製造商"
+    "2886": "兆豐金控，台灣最大的公股金控 — 外匯和企業金融的專家"
+    "2891": "中信金控，台灣最大的民營金控 — 信用卡和消費金融的領導者"
+    "1216": "統一企業，從泡麵到便利商店 — 統一超商和統一食品都是它的"
+    "2912": "統一超商，台灣最大的便利商店 — 平均每 500 公尺就有一家"
+    "2303": "聯華電子，台灣第二大晶圓代工廠 — 台積電的兄弟公司"
+    "2345": "智邦科技，網路交換器大廠 — 資料中心的關鍵設備供應商"
+    "3008": "大立光，手機鏡頭霸主 — 全球每三支手機鏡頭就有一支來自它"
+    "2412": "中華電信，台灣最大的電信公司 — 你的手機網路可能就靠它"
+    "3711": "日月光，全球最大的封裝測試廠 — 晶片出廠前的最後一道工序"
+    "2324": "仁寶電腦，全球第二大筆電代工廠 — 戴爾、惠普的主要合作夥伴"
+    industry:
+      semiconductor: "{name} 是半導體產業的重要成員，在這個驅動全球科技的產業中扮演關鍵角色"
+      electronics: "{name} 是電子產業的重要成員，從消費電子到工業設備都有佈局"
+      finance: "{name} 是金融保險業的重要成員，管理著數以兆計的資產"
+      computer: "{name} 是電腦產業的重要成員，在這個數位時代扮演重要角色"
+      biotech: "{name} 是生技醫療產業的重要成員，致力於改善人類健康"
+      tourism: "{name} 是觀光餐旅業的重要成員，服務著無數的旅客和消費者"
+      machinery: "{name} 是電機機械產業的重要成員，從工業設備到民生用品都有涉獵"
+      construction: "{name} 是建材營造業的重要成員，參與台灣無數的建設工程"
+      chemical: "{name} 是化學工業的重要成員，從基礎化學到特化品都有生產"
+      telecom: "{name} 是通信網路業的重要成員，連接著台灣的數位生活"
+      default: "{name} 是 {industry} 的重要成員，股票代號 {stock_id}"
+
+key_takeaways:
+  one_liner: "{first_sentence}，是 {industry} 的重要成員"
+  gm_high: "毛利率 {gm:.1f}%，獲利能力在同產業中屬於前段班"
+  gm_medium: "毛利率 {gm:.1f}%，利潤空間穩定"
+  gm_low: "毛利率 {gm:.1f}%，屬於薄利多銷的經營模式"
+  gm_very_low: "毛利率僅 {gm:.1f}%，獲利空間有限，需靠規模取勝"
+  yoy_high: "營收年增 {yoy:.0f}%，成長動能強勁"
+  yoy_medium: "營收年增 {yoy:.0f}%，穩定成長中"
+  yoy_flat: "營收年增 {yoy:.0f}%，與去年持平"
+  yoy_negative: "營收年減 {yoy:.0f}%，需留意衰退原因"
+  per_high: "本益比 {per:.1f} 倍，市場給予高度成長預期"
+  per_medium: "本益比 {per:.1f} 倍，評價合理"
+  per_low: "本益比 {per:.1f} 倍，市場評價相對保守"
+  per_negative: "目前處於虧損狀態，本益比無參考意義"
+  dy_high: "殖利率 {dy:.2f}%，是熱門的存股選擇"
+  dy_medium: "殖利率 {dy:.2f}%，配息穩健"
+  dy_low: "殖利率 {dy:.2f}%，配息較少，成長優先"
+  dy_none: "目前不配息，公司將盈餘保留再投資"
+  roe_high: "ROE {roe:.1f}%，股東報酬率優異"
+  roe_medium: "ROE {roe:.1f}%，資本運用效率良好"
+  roe_low: "ROE {roe:.1f}%，資本運用效率有改善空間"
+  roe_negative: "目前 ROE 為負，公司尚未為股東創造報酬"
+  debt_high: "負債比 {debt:.0f}%，財務槓桿較高，需留意償債風險"
+  debt_medium: "負債比 {debt:.0f}%，適度運用槓桿"
+  debt_low: "負債比 {debt:.0f}%，財務結構穩健"
+  "2330":
+    "0": "全球晶圓代工龍頭，市佔率超過 55%，技術領先優勢明顯"
+    "1": "先進製程（5nm/3nm）持續滿載，是蘋果、輝達等巨頭的唯一選擇"
+    "2": "護城河極深：高資本支出門檻讓競爭者難以追上"
+    "3": "長期受惠於 AI、HPC、電動車等結構性成長趨勢"
+  "2317":
+    "0": "全球最大的電子代工帝國，iPhone 主要組裝廠"
+    "1": "營收規模巨大但毛利率偏低（約 5-6%），靠量取勝"
+    "2": "積極佈局電動車、伺服器、機器人等新領域"
+    "3": "風險：過度依賴蘋果訂單，地緣政治影響產能配置"
+  "2454":
+    "0": "手機晶片設計龍頭，聯發科天系列在 Android 陣營市佔率第一"
+    "1": "輕資產模式（無晶圓廠），毛利率高達 45% 以上"
+    "2": "積極拓展車用、AIoT、Wi-Fi 7 等新市場"
+    "3": "與高通競爭激烈，但性價比優勢在中低階市場明顯"
+  "2308":
+    "0": "電源供應器隱形冠軍，從消費電子到資料中心都有佈局"
+    "1": "毛利率穩定在 25-30%，獲利能力優於同業"
+    "2": "受惠於 AI 伺服器電源需求爆發，成長動能強勁"
+    "3": "產品線多元，分散單一客戶風險"
+  "2881":
+    "0": "台灣最大泛公股金控之一，旗下涵蓋銀行、證券、壽險"
+    "1": "獲利穩健，配息大方，是存股族熱門選擇"
+    "2": "房貸比重較高，需留意房地產市場波動風險"
+    "3": "數位金融轉型積極，但進展相對民營金控緩慢"
+  "1101":
+    "0": "台灣最老牌水泥廠，深耕市場超過 70 年"
+    "1": "水泥產業景氣與公共建設高度相關"
+    "2": "多角化經營（電力、化工、運輸）降低單一產業風險"
+    "3": "獲利穩定但成長性有限，適合保守型投資人"
+  "2002":
+    "0": "台灣鋼鐵業龍頭，產品線完整（鋼筋、型鋼、鋼板）"
+    "1": "鋼鐵景氣循環明顯，獲利波動較大"
+    "2": "積極發展高附加價值產品（汽車板、電磁鋼片）"
+    "3": "受惠於公共建設與製造業回溫"
+  "1301":
+    "0": "台灣最大塑膠集團，產品遍及民生與工業用途"
+    "1": "上游原料（乙烯）價格波動影響獲利甚鉅"
+    "2": "兩岸佈局完整，但中國市場競爭加劇"
+    "3": "朝高值化、環保材料方向轉型"
+  "2357":
+    "0": "華碩品牌價值高，ROG 電競系列在全球市佔率領先"
+    "1": "PC 產業成熟，但電競與創作者市場仍有成長空間"
+    "2": "AI PC 換機潮是未來重要成長動能"
+    "3": "伺服器業務快速成長，成為第二成長曲線"
+  "2382":
+    "0": "全球最大筆記型電腦代工廠，蘋果 MacBook 主要製造商"
+    "1": "積極轉型伺服器/雲端業務，AI 伺服器訂單暢旺"
+    "2": "毛利率約 3-4%，靠規模經濟維持獲利"
+    "3": "風險：筆電市場飽和，成長依賴伺服器業務"
+  "2886":
+    "0": "台灣最大公股金控，外匯業務市場領導者"
+    "1": "海外據點最多，跨境金融業務是核心優勢"
+    "2": "獲利穩健，殖利率約 3-4%，適合存股"
+    "3": "公股背景讓其經營相對保守穩健"
+  "2891":
+    "0": "台灣最大民營金控，信用卡與消費金融領導品牌"
+    "1": "中信銀行是台灣最大的信用卡發卡行"
+    "2": "海外佈局積極，尤其在中國和東南亞"
+    "3": "數位金融發展領先同業，Bank 3.0 佈局完整"
+  "1216":
+    "0": "統一集團橫跨食品、零售、物流的綜合企業集團"
+    "1": "統一超商（7-11）是台灣最大的便利商店網絡"
+    "2": "多角化經營穩定，現金流充沛"
+    "3": "東南亞和中國市場是未來成長重點"
+  "2912":
+    "0": "台灣便利商店龍頭，市佔率超過 50%"
+    "1": "據點密度全球最高（平均每 500 公尺一家）"
+    "2": "從零售延伸到物流、金融、電商等生態系"
+    "3": "單店營收成長趨緩，但多元服務提升客單價"
+  "2303":
+    "0": "台灣第二大晶圓代工廠，專注成熟製程"
+    "1": "成熟製程（28nm 以上）需求穩定，車用、IoT 是主力"
+    "2": "與台積電互補，不直接競爭先進製程"
+    "3": "產能利用率是觀察營運的關鍵指標"
+  "2345":
+    "0": "網路交換器大廠，資料中心關鍵設備供應商"
+    "1": "受惠於 AI 資料中心建置潮，400G/800G 交換器需求爆發"
+    "2": "白牌交換器趨勢有利於獨立供應商"
+    "3": "客戶涵蓋全球主要雲端服務業者"
+  "3008":
+    "0": "手機鏡頭霸主，全球市佔率超過 30%"
+    "1": "技術門檻高，鏡片數持續增加（7P→8P）提升單價"
+    "2": "蘋果和 Android 陣營雙引擎驅動"
+    "3": "風險：中國競爭者（舜宇、瑞聲）持續追趕"
+  "2412":
+    "0": "台灣最大電信業者，行動用戶數超過 1,000 萬"
+    "1": "電信產業穩定，現金流充沛，配息大方"
+    "2": "5G 資費提升 ARPU，但資本支出也增加"
+    "3": "積極發展企業客戶和數位加值服務"
+  "3711":
+    "0": "全球最大封裝測試廠，與台積電緊密合作"
+    "1": "先進封裝（CoWoS、InFO）是 AI 晶片關鍵製程"
+    "2": "受惠於 AI 晶片封裝需求爆發，產能供不應求"
+    "3": "資本支出持續增加以滿足客戶需求"
+  "2324":
+    "0": "全球第二大筆記型電腦代工廠，戴爾、惠普主要夥伴"
+    "1": "積極拓展伺服器業務，降低對筆電依賴"
+    "2": "毛利率偏低，靠規模和效率維持競爭力"
+    "3": "越南、墨西哥等海外產能佈局分散風險"
+
+chart:
+  unit_hundred_million: 億
+  valuation:
+    no_price_data: 暫無股價資料
+    no_financial_data_per: 暫無財務資料，無法計算本益比
+    no_per_data: 目前無法取得本益比資料
+    no_price_data_5y: 近五年無股價資料
+    data_less_than_5y: "（資料不足 5 年，顯示全部可用資料）"
+    cannot_extract_eps: 無法從財務資料中提取 EPS
+    eps_negative_or_zero: EPS 為負或零，無法計算本益比
+    valuation_low: "📉 目前估值偏低，比過去 75% 的時候都便宜"
+    valuation_high: "📈 目前估值偏高，比過去 75% 的時候都貴"
+    valuation_middle: "📊 目前估值在中間範圍"
+    percentile_band: 25th-75th 百分位
+    historical_per: 歷史 PER
+    hover_template: "日期: %{x|%Y/%m/%d}<br>PER: %{y:.1f}<extra></extra>"
+    current_per: "目前 PER: {value:.1f}"
+    chart_title: "{name} 估值區間（歷史 P/E 範圍）"
+    chart_subtitle: " <sub style='font-size:0.7rem;color:#7F8C8D;'>💡 PER = 本益比</sub>"
+    xaxis_title: 日期
+    yaxis_title: "本益比 (PER)"
+    chart_failed: 估值區間圖計算失敗
+  stock_financial:
+    revenue_source: 營收來源
+    no_revenue_composition: 暫無營收組成資料
+    proportion: 佔比
+    revenue_trend: 月營收趨勢
+    no_revenue_data: 暫無營收資料
+    monthly_revenue: 月營收
+    yoy_rate: 年增率
+    revenue: 營收
+    price_trend: 股價走勢
+    no_price_data: 暫無股價資料
+    open: 開盤
+    high: 最高
+    low: 最低
+    close: 收盤
+    single_day_only: 僅單日資料
+    price: 價格
+    single_day_note: 只有1天的資料，改用長條圖顯示
+    candlestick: K線
+    volume: 成交量
+    thousand_shares: 張數(千)
+    profit_funnel: 利潤漏斗
+    revenue_stage: 營收
+    gross_profit: 毛利
+    operating_income: 營業利益
+    net_income: 淨利
+    no_financial_data: 暫無財務資料
+    no_comparison_data: 暫無比較資料
+    institutional_trading: 三大法人買賣超
+    no_institutional_data: 暫無法人資料
+    net_buy_sell: 買賣超
+    shares: 張
+
+risk:
+  customer_concentration_title: 客戶集中風險
+  customer_high_concentration: "根據最近一期財報，前三大客戶合計佔營收約 {pct:.0f}%。"
+  customer_medium_concentration: "近月營收主要來自 2–3 個業務線，最大業務線佔營收約 {pct:.0f}%。"
+  customer_low_concentration: "公司營收來源分散在多個業務線，最大業務線佔營收不到 {pct:.0f}%。"
+  revenue_unstable: "過去 12 個月營收波動幅度（變異係數為 {cv:.2f}），顯示收入來源較不穩定。"
+  revenue_unstable_note: "這意味著少數客戶的訂單變化會顯著影響公司營收。"
+  revenue_normal: "過去 12 個月營收波動幅度為 {cv:.2f}，屬於正常範圍。"
+  revenue_normal_note: "公司營收來源有一定集中，但仍在可控範圍。"
+  revenue_stable: "過去 12 月營收波動幅度為 {cv:.2f}，收入來源穩定多元。"
+  financial_health_title: 財務健康風險
+  debt_high: "最近一期負債比為 {ratio:.0f}%，高於一般認為的警戒線 65%。"
+  debt_medium: "負債比為 {ratio:.0f}%，屬於適度槓桿範圍。"
+  debt_low: "負債比僅 {ratio:.0f}%，財務結構穩健。"
+  cashflow_negative: "過去 4 季營業現金流有 2 季為負數，表示本業賺取的現金不足以支應營運所需。"
+  cashflow_mixed: "過去 4 季營業現金流有 1 季為負，需留意後續是否改善。"
+  cashflow_positive: "過去 4 季營業現金流均為正數，本業現金創造能力良好。"
+  margin_very_low: "淨利率僅 {margin:.1f}%，獲利空間極為有限。"
+  margin_medium: "淨利率為 {margin:.1f}%，獲利穩定但不算突出。"
+  margin_high: "淨利率維持在 {margin:.1f}% 以上，獲利能力在同產業中屬於前段班。"
+  event_risk_title: 事件型風險
+  event_high_count: "近 90 天內有 {count} 則重大消息"
+  event_includes: "，包含{events}"
+  event_high_impact: "其中 {count} 則被列為高度關注事件。"
+  event_foreign_selling: "同期外資累計賣超，法人態度偏向保守。"
+  event_medium_count: "近 90 天內有 {count} 則中度關注消息，涉及產品認證與供應鏈調整。"
+  event_foreign_neutral: "同期外資買賣互見，法人態度中性。"
+  event_low: "近 90 天內未有重大消息，新聞多為例行性公告。"
+  event_foreign_buying: "同期外資小幅買超，法人態度穩定。"
+  insufficient_data: 風險分析資料不足
+  dim_customer: 客戶集中
+  dim_financial: 財務健康
+  dim_event: 事件型
+  summary_high_risk: "分析顯示 {dims} 面向存在較高風險，以下為各維度詳細說明。"
+  summary_normal: "以下為各風險維度分析，資料來源為近期公開資訊。"
+  simplifier:
+    level:
+      1:
+        label: "非常低風險"
+        description: "這家公司目前風險很低，財務健康狀況良好（平均 {health_avg:.0f} 分）。各項風險指標都在安全範圍內，適合保守型投資人關注。"
+      2:
+        label: "低風險"
+        description: "這家公司風險偏低，財務健康狀況尚可（平均 {health_avg:.0f} 分）。雖然有些小地方可以留意，但整體來說問題不大。"
+      3:
+        label: "中等風險"
+        description:
+          weak: "這家公司有中等程度的風險，財務健康狀況普通（平均 {health_avg:.0f} 分）。其中 {weak_dims} 面向需要特別留意。"
+          mixed: "這家公司有中等程度的風險，財務健康狀況普通（平均 {health_avg:.0f} 分）。部分指標表現不均，建議持續觀察。"
+      4:
+        label: "高風險"
+        description: "這家公司風險較高，財務健康狀況偏弱（平均 {health_avg:.0f} 分）。有明顯的高風險面向，投資前請做好功課並評估自身風險承受能力。"
+      5:
+        label: "非常高風險"
+        description: "這家公司風險非常高，財務健康狀況較差（平均 {health_avg:.0f} 分）。多個風險指標亮紅燈，建議謹慎評估，不適合風險承受度較低的投資人。"
+
+story:
+  feed:
+    historian:
+      1: "這位歷史學者追溯過往類似的市場訊號…"
+      2: "翻開歷史的篇章，這位史官發現類似的情境…"
+      3: "從歷史的角度來看，這樣的走勢往往…"
+      4: "回顧過去十年，類似的事件曾導致…"
+    event:
+      unknown: "未知事件"
+    analogy:
+      revenue_surge: "營收的變化就像觀察一家餐廳的每日來客數。"
+      price_abnormal: "股價劇烈波動就像氣溫骤變，可能有暴風雨要來了。"
+      news: "市場新聞就像天氣預報，提醒我們要帶傘還是穿短袖。"
+      institutional_shift: "法人買賣就像大戶在牌桌上的下注，值得留意。"
+      default: "每一個市場事件背後，都有值得關注的故事。"
+    sector:
+      direction:
+        up: "走強"
+        down: "走弱"
+        flat: "盤整"
+      title: "{sector} {direction}（平均 {avg:+.1f}%）"
+      summary: "本日 {sector} 共有 {count} 檔有數據，其中 {up} 檔上漲、{down} 檔下跌。"
+      analogy:
+        top_mover: "領頭羊 {stock_name} 變動 {top_chg:+.1f}%，像龍捲風的風眼帶領方向。"
+        general: "{sector} 的整體表現，就像觀察一整片森林的季節變化。"
+      historian_note: "📜 從歷史來看，{sector} 的平均報酬率與整體景氣循環密切相關。"
+    education:
+      title: "📚 今日指標教室：{display_name}"
+      analogy_default: "每天學一個指標，就像每天多認識一位新朋友。"
+
+pattern:
+  outcome_positive: "{count} 次偏向正面"
+  outcome_mixed: "{count} 次結果不一"
+  outcome_negative: "{count} 次偏向負面"
+  history_total: "共 {total} 筆歷史記錄"
+  history_summary: "歷史共 {total} 次類似事件：{parts}"
+
+event:
+  fallback_short: "\"{title}\" 代表市場出現了值得關注的變化。"
+  fallback_detail: "這筆事件記錄顯示 \"{title}\"。建議搭配其他資訊一起觀察，不要僅憑單一事件做判斷。"
+  fallback_key_concept: "單一事件不足以判斷，要搭配整體分析"
+  severity_high: "重大"
+  severity_medium: "注意"
+  severity_low: "參考"
+  severity_unknown: "未知"
+  interpretation_header: "【事件解讀】\n\n"
+  interpretation_severity: "這是一則「{severity_label}」等級的「{event_type}」事件。\n\n"
+  interpretation_key_concept: "📌 核心概念：{key_concept}\n\n"
+  interpretation_detail: "📖 詳細說明：{detail}\n\n"
+  interpretation_summary: "📋 原始摘要：{summary}\n\n"
+  interpretation_disclaimer: "⚠️ 歷史學家觀點：以上解讀僅說明事件背景與可能意涵，不構成任何投資建議。"
+
+chart:
+  health:
+    no_data: "暫無健康評分資料"
+    current_score: "目前評分"
+    pass_line: "及格線 (40)"
+    good_line: "良好線 (70)"
+    title: "{stock_name} 公司健康狀況"
+    score_tooltip: "<b>{category}: {score:.0f}分</b>"
+    benchmark_tooltip: "<b>{label} — {category}: {score:.0f}分</b>"
+moat:
+  type:
+    none: 無明顯護城河
+    brand: 品牌護城河
+    cost: 成本護城河
+    network: 網路效應護城河
+    switching: 轉換成本護城河
+    scale: 規模經濟護城河
+  description:
+    none: 目前各項護城河指標分數均偏低，尚未形成明顯競爭優勢
+    brand: 公司擁有強勁的品牌定價能力，客戶願意為品牌支付溢價
+    cost: 公司在生產或營運成本上具有結構性優勢，競爭對手難以複製
+    network: 平台或產品的價值隨用戶增長而提升，形成正向循環
+    switching: 客戶轉換至高競爭對手的成本高，形成自然鎖定
+    scale: 公司因規模龐大而享有單位成本優勢，新進入者難以競爭
+  evidence:
+    auto_score: "系統自動評分：{moat_type}"
+delta:
+  metric:
+    revenue_monthly: 月營收
+    price_30d: 股價（近 30 日均價）
+    revenue_yoy: 營收年增率
+  previous_year_same_period: 去年同期
