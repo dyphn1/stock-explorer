@@ -45,10 +45,11 @@ This file contains:
 ## 3. Bootstrap Protocol
 
 ### Step 0: Restore Context
-1. Read `STATUS.md` — current sprint, blockers, recent commits
+1. Read `docs/state/known_issues_and_reminders.md` — **所有 agent 必讀**，含 cron 限制、角色教訓、路徑速查
 2. Read `docs/state/handoff.md` — previous session's handoff notes
 3. Read `docs/state/current_problems.md` — known issues
-4. Read `docs/state/pending_review.md` — items waiting for Daniel
+4. Read `docs/state/pending_review.md` — items waiting for Daniel（如果存在）
+5. Read `STATUS.md` — current sprint, blockers（只在需要時讀）
 
 ### Step 0.5: PM Role Definition (CRITICAL)
 
@@ -73,6 +74,10 @@ This file contains:
 - PM 自己寫 code、改檔案、用 `execute_code` 做角色該做的事
 - 跳過 sub-agent 直接做「簡單的事」
 - 跳過 Gate Check 直接進入下一個 TODO
+- **不用 `memory`**（cron 環境不可用，用 handoff.md 替代）
+- **不用 `skill_manage`**（參數問題會導致無限循環）
+- **不用 `terminal` 跑 Python script 分析檔案**（太慢，用 `read_file` 直接讀）
+- **不在 terminal 反覆摸索**——讀完狀態檔案後立刻派發 sub-agent
 
 ### Step 1: Determine Current TODO
 
