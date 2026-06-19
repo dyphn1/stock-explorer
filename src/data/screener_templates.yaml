@@ -4,30 +4,28 @@
 
 preset_explanations:
   dividend:
-    high_yield: "{stock_name} 殖利率為 {dividend_yield:.2f}%，高於市場平均水準，顯示公司持續配發股利的能力"
-    stable: "{stock_name} 殖利率為 {dividend_yield:.2f}%，波動幅度較小，屬相對穩定的收息標的"
-    fallback: "{stock_name}（{stock_id}）符合穩定收息篩選條件"
-    implication: "高殖利率公司通常具穩定現金流，可留意其配息持續性"
-
+    high_yield: "screener.explanation.preset.dividend.high_yield"
+    stable: "screener.explanation.preset.dividend.stable"
+    fallback: "screener.explanation.preset.dividend.fallback"
+    implication: "screener.explanation.preset.dividend.implication"
   growth:
-    strong: "{stock_name} 營收年增率達 {revenue_yoy:.1f}%，顯示營收擴張速度優於同業平均水準"
-    moderate: "{stock_name} 營收年增率為 {revenue_yoy:.1f}%，呈現溫和成長趨勢"
-    fallback: "{stock_name}（{stock_id}）符合成長潛力篩選條件"
-    implication: "營收成長公司可能具擴張動能，可觀察其獲利是否同步提升"
-
+    strong: "screener.explanation.preset.growth.strong"
+    moderate: "screener.explanation.preset.growth.moderate"
+    fallback: "screener.explanation.preset.growth.fallback"
+    implication: "screener.explanation.preset.growth.implication"
   value:
-    deep_value: "{stock_name} 本益比為 {per:.1f}、淨值比為 {pbr:.2f}，估值低於市場平均，市場對其評價相對保守"
-    moderate_value: "{stock_name} 本益比為 {per:.1f}、淨值比為 {pbr:.2f}，估值處於合理範圍"
-    fallback: "{stock_name}（{stock_id}）符合便宜估值篩選條件"
-    implication: "低估值公司可能存在市場低估，可進一步評估其基本面是否穩健"
+    deep_value: "screener.explanation.preset.value.deep_value"
+    moderate_value: "screener.explanation.preset.value.moderate_value"
+    fallback: "screener.explanation.preset.value.fallback"
+    implication: "screener.explanation.preset.value.implication"
 
 custom_filter_explanations:
-  revenue_positive: "{stock_name} 營收年增率為 {revenue_yoy:.1f}%，營收較去年同期成長"
-  industry_match: "{stock_name} 屬於 {industry} 產業，符合所選產業分類"
-  per_range: "{stock_name} 本益比為 {per:.1f}，落在所選範圍內"
-  div_range: "{stock_name} 殖利率為 {dividend_yield:.2f}%，落在所選範圍內"
-  fallback: "{stock_name}（{stock_id}）符合所設篩選條件"
-  implication: "符合多項篩選條件的公司，可進一步比較其財務面與評價面"
+  revenue_positive: "screener.explanation.custom_filter.revenue_positive"
+  industry_match: "screener.explanation.custom_filter.industry_match"
+  per_range: "screener.explanation.custom_filter.per_range"
+  div_range: "screener.explanation.custom_filter.div_range"
+  fallback: "screener.explanation.custom_filter.fallback"
+  implication: "screener.explanation.custom_filter.implication"
 
 thresholds:
   dividend:
@@ -42,4 +40,4 @@ thresholds:
     moderate_per_max: 15.0
     moderate_pbr_max: 2.0
 
-disclaimer: "篩選結果僅供學習參考，不構成投資建議"
+disclaimer: "screener.explanation.disclaimer"

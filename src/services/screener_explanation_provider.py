@@ -34,17 +34,30 @@ def _load_templates_from_yaml() -> dict:
 
     Returns a dict with the keys:
         preset_explanations, custom_filter_explanations, thresholds, disclaimer.
+    All string values are translated via the t() function.
     """
+    def _translate_dict(data):
+        if isinstance(data, dict):
+            return {k: _translate_dict(v) for k, v in data.items()}
+        elif isinstance(data, list):
+            return [_translate_dict(item) for item in data]
+        elif isinstance(data, str):
+            return t(data)
+        else:
+            return data
+
     yaml_path = os.path.join(_config_dir(), "screener_templates.yaml")
     with open(yaml_path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+        data = yaml.safe_load(f)
+    # Translate all string values in the data dict using t()
+    return _translate_dict(data)
 
 
 # ── Load templates from YAML ────────────────────────────────────────
 _yaml_data = _load_templates_from_yaml()
 
 # ── Historian tone disclaimer ──────────────────────────────────────
-_DISCLAIMER = t("screener.explanation.disclaimer")
+_DISCLAIMER = _yaml_data.get("disclaimer")
 
 # ── Screener-specific explanation templates ────────────────────────
 # Each filter type maps to a set of explanation templates keyed by
