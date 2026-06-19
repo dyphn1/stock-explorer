@@ -233,6 +233,7 @@ notification:
   subtitle: 追蹤你關注股票的重要事件與異動
   mark_all_read: 已將所有通知標記為已讀
   no_notification: 目前沒有通知
+  event_type.unknown: '未知事件類型：{event_type}'
   business_card: 名片
 memo:
   title: 投資備忘錄
@@ -1420,6 +1421,17 @@ helpers:
   score_excellent: 表現優異，在同產業中屬於前段班
   score_average: 表現穩定，有改善空間
   score_poor: 需要留意，可能拖累整體表現
+  roe_value: "ROE {value}%"
+  per_value: "本益比 {value}"
+  pbr_value: "淨值比 {value}"
+  gross_margin_value: "毛利率 {value}%"
+  net_margin_value: "淨利率 {value}%"
+  revenue_yoy_value: "營收年增率 {value}%"
+  debt_ratio_value: "負債比 {value}%"
+  current_ratio_value: "流動比 {value}"
+  dividend_yield_value: "殖利率 {value}%"
+  dividend_years_value: "連續配息 {value} 年"
+  risk_unknown: "未知風險"
 
 moat_comparison:
   title: 護城河比較

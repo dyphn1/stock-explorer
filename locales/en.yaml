@@ -235,6 +235,7 @@ notification:
   subtitle: Track important events for your watched stocks
   mark_all_read: All notifications marked as read
   no_notification: No notifications
+  event_type.unknown: 'Unknown event type: {event_type}'
   business_card: Business Card
 memo:
   title: Investment Memo
@@ -1586,6 +1587,17 @@ helpers:
   score_excellent: Excellent performance, top-tier in the industry
   score_average: Stable performance, room for improvement
   score_poor: Needs attention, may drag down overall performance
+  roe_value: "ROE {value}%"
+  per_value: "PER {value}"
+  pbr_value: "PBR {value}"
+  gross_margin_value: "Gross Margin {value}%"
+  net_margin_value: "Net Margin {value}%"
+  revenue_yoy_value: "Revenue Growth {value}%"
+  debt_ratio_value: "Debt Ratio {value}%"
+  current_ratio_value: "Current Ratio {value}"
+  dividend_yield_value: "Dividend Yield {value}%"
+  dividend_years_value: "Consecutive Dividend Years {value}"
+  risk_unknown: "Unknown Risk"
 
 moat_comparison:
   title: Moat Comparison
