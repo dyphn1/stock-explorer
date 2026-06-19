@@ -80,9 +80,9 @@
     "semantic_hash": "346cce417ac1c8a5718cb0fd56739428"
   },
   "src/pages/academy.py": {
-    "mtime": 1781885855.3439512,
-    "ast_hash": "8cf53fa8a4a749ff6a2f70e7c154adb2",
-    "semantic_hash": ""
+    "mtime": 1781781554.368692,
+    "ast_hash": "de4717dfd830023b00e6753a6ffd2c75",
+    "semantic_hash": "de4717dfd830023b00e6753a6ffd2c75"
   },
   "src/pages/business_card/__init__.py": {
     "mtime": 1781215779.4774895,
@@ -1155,13 +1155,13 @@
     "semantic_hash": ""
   },
   "locales/en.yaml": {
-    "mtime": 1781891534.6856472,
-    "ast_hash": "07650c48fd5070de05493b053c682660",
+    "mtime": 1781880564.3043833,
+    "ast_hash": "655cdd130a667d4d947c2a51d70b96f4",
     "semantic_hash": ""
   },
   "locales/zh-TW.yaml": {
-    "mtime": 1781891075.3324368,
-    "ast_hash": "a881874023d498cddb510fcac5d9e7c5",
+    "mtime": 1781882645.0627816,
+    "ast_hash": "72e950ac76fb0aff546f86c0ae762cc6",
     "semantic_hash": ""
   },
   "src/data/case_studies.yaml": {

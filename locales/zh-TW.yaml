@@ -94,13 +94,13 @@ dividend:
   summary: 配息摘要
   detail_expand: 📋 展開查看歷史除權息紀錄
   estimated_label: 預估
-  quarterly_dividend: "每季約配息 {amount} 元"
-  quarterly_yield: "{label}年化殖利率約 {yield_pct}%"
-  annual_dividend: "每年配息約 {amount} 元"
-  annual_yield: "{label}殖利率約 {yield_pct}%"
-  stable_years: "過去 {n_years} 年，這家企業穩定"
-  irregular: "配息不穩定，依當年度獲利情形決定。最近一次配息 {amount} 元"
-  record_years: "此公司近 {n_years} 年有配息紀錄"
+  quarterly_dividend: 每季約配息 {amount} 元
+  quarterly_yield: '{label}年化殖利率約 {yield_pct}%'
+  annual_dividend: 每年配息約 {amount} 元
+  annual_yield: '{label}殖利率約 {yield_pct}%'
+  stable_years: 過去 {n_years} 年，這家企業穩定
+  irregular: 配息不穩定，依當年度獲利情形決定。最近一次配息 {amount} 元
+  record_years: 此公司近 {n_years} 年有配息紀錄
 action:
   submit: 提交答案
   retry: 重新測驗
@@ -134,14 +134,14 @@ timeline:
   label_all: 全部
   filter_failed: ⚠️ 時間軸過濾失敗，已顯示全部資料
   no_data_in_range: 📌 此時間範圍內無資料，已切換至全部資料
-  page_title: "{name} — 故事時間軸"
+  page_title: '{name} — 故事時間軸'
   page_subtitle: 過去一年內該股票重要事件的時間軸總覽。
   no_events_title: 找不到事件
   no_events_content: 過去一年內未偵測到 **{name}** 的時間軸事件。嘗試瀏覽其他頁面以觸發自動事件偵測。
-  event_count: "共找到 {count} 個時間軸事件"
+  event_count: 共找到 {count} 個時間軸事件
   unknown_date: 未知日期
   unnamed_event: 未命名事件
-  event_unknown: "未知事件（{type}）"
+  event_unknown: 未知事件（{type}）
   event_revenue_surge: 營收異動
   event_news_major: 重大新聞
   event_news_medium: 一般新聞
@@ -184,7 +184,6 @@ comparison:
   stronger: 優於同業
   weaker: 落後同業
   similar: 與同業相當
-  # --- compare_stories.py ---
   higher: 高於
   lower: 低於
   advantage: ，相對優勢
@@ -192,32 +191,34 @@ comparison:
   valuation_lower: ，估值較低
   valuation_higher: ，估值較高
   metric:
-    close: "{label}：兩家相近（{self_str} vs {peer_str}{unit}）"
-    diff: "{label}：{self_str}{unit}，{direction}同業的 {peer_str}{unit}{better}"
-    self_only: "{label}：{value}{unit}（同業無資料）"
+    close: '{label}：兩家相近（{self_str} vs {peer_str}{unit}）'
+    diff: '{label}：{self_str}{unit}，{direction}同業的 {peer_str}{unit}{better}'
+    self_only: '{label}：{value}{unit}（同業無資料）'
   revenue:
-    larger: "📏 {stock_name} 的營收規模明顯大於 {peer_name}，{rev_desc}"
-    smaller: "📏 {stock_name} 的營收規模小於 {peer_name}，{rev_desc}"
-    similar: "📏 兩家營收規模相近，{rev_story}"
+    larger: 📏 {stock_name} 的營收規模明顯大於 {peer_name}，{rev_desc}
+    smaller: 📏 {stock_name} 的營收規模小於 {peer_name}，{rev_desc}
+    similar: 📏 兩家營收規模相近，{rev_story}
   revs_ratio:
-    double: "約為同業的 {ratio:.1f} 倍"
-    slightly_larger: "略大於同業（{ratio:.1f} 倍）"
+    double: 約為同業的 {ratio:.1f} 倍
+    slightly_larger: 略大於同業（{ratio:.1f} 倍）
     similar: 規模相近
-    percent: "約為同業的 {ratio:.0%}"
-    only_percent: "僅同業的 {ratio:.0%}"
+    percent: 約為同業的 {ratio:.0%}
+    only_percent: 僅同業的 {ratio:.0%}
   gross_margin:
-    higher: "💰 {stock_name} 毛利率 {self_gm:.1f}%，高於 {peer_name} 的 {peer_gm:.1f}% — {analogy}"
-    lower: "💰 {stock_name} 毛利率 {self_gm:.1f}%，低於 {peer_name} 的 {peer_gm:.1f}% — {analogy}"
-    similar: "💰 兩家毛利率相近（{self_gm:.1f}% vs {peer_gm:.1f}%）"
+    higher: 💰 {stock_name} 毛利率 {self_gm:.1f}%，高於 {peer_name} 的 {peer_gm:.1f}% — {analogy}
+    lower: 💰 {stock_name} 毛利率 {self_gm:.1f}%，低於 {peer_name} 的 {peer_gm:.1f}% — {analogy}
+    similar: 💰 兩家毛利率相近（{self_gm:.1f}% vs {peer_gm:.1f}%）
   per:
-    higher: "🏷️ {stock_name} 本益比 {self_per:.1f} 倍，高於 {peer_name} 的 {peer_per:.1f} 倍 — 市場對 {stock_name} 的成長預期較高"
-    lower: "🏷️ {stock_name} 本益比 {self_per:.1f} 倍，低於 {peer_name} 的 {peer_per:.1f} 倍 — 相對來說 {stock_name} 的估值較為保守"
-    similar: "🏷️ 兩家本益比相近（{self_per:.1f} vs {peer_per:.1f} 倍）"
+    higher: 🏷️ {stock_name} 本益比 {self_per:.1f} 倍，高於 {peer_name} 的 {peer_per:.1f} 倍
+      — 市場對 {stock_name} 的成長預期較高
+    lower: 🏷️ {stock_name} 本益比 {self_per:.1f} 倍，低於 {peer_name} 的 {peer_per:.1f} 倍
+      — 相對來說 {stock_name} 的估值較為保守
+    similar: 🏷️ 兩家本益比相近（{self_per:.1f} vs {peer_per:.1f} 倍）
   dividend_yield:
-    higher: "💵 {stock_name} 殖利率 {self_dy:.2f}%，高於 {peer_name} 的 {peer_dy:.2f}% — 對存股族較有吸引力"
-    lower: "💵 {stock_name} 殖利率 {self_dy:.2f}%，低於 {peer_name} 的 {peer_dy:.2f}%"
-    similar: "💵 兩家殖利率相近（{self_dy:.2f}% vs {peer_dy:.2f}%）"
-  no_difference: "📊 {stock_name} 與 {peer_name} 在可比較的指標上差異不大"
+    higher: 💵 {stock_name} 殖利率 {self_dy:.2f}%，高於 {peer_name} 的 {peer_dy:.2f}% — 對存股族較有吸引力
+    lower: 💵 {stock_name} 殖利率 {self_dy:.2f}%，低於 {peer_name} 的 {peer_dy:.2f}%
+    similar: 💵 兩家殖利率相近（{self_dy:.2f}% vs {peer_dy:.2f}%）
+  no_difference: 📊 {stock_name} 與 {peer_name} 在可比較的指標上差異不大
 financial_statement:
   revenue: 營業收入
   gross_profit: 營業毛利
@@ -229,60 +230,55 @@ financial_statement:
   current_liabilities: 流動負債
   total_equity: 權益總計
 notification:
-  title: 通知中心
+  heading: 🔔 通知中心
   subtitle: 追蹤你關注股票的重要事件與異動
-  mark_all_read: 已將所有通知標記為已讀
-  no_notification: 目前沒有通知
-  event_type.unknown: '未知事件類型：{event_type}'
-  business_card: 名片
-  summary:
-    high_events: "重大事件"
-    medium_events: "顯著事件"
-    low_events: "參考事件"
-    business_card: 名片
-  pending_section: 待處理通知
-  settings_section: 設定
-  severity:
-    high: 高
-    medium: 中
-    low: 低
-    unknown: 未知
-  event_type:
-    revenue_surge: 營收激增
-    news_major: 重大新聞
-    news_medium: 一般新聞
-    price_abnormal: 股價異常
-    dividend_change: 股利變動
-    institutional_shift: 法人動向
+  checking: 檢查通知...
+  loading_notifications: 載入通知...
+  marking: 標記中...
   no_watchlist:
-    title: 尚未加入關注股票
-    body: 您尚未將任何股票加入關注清單。請加入一些股票以開始接收通知。
-  checking: 正在檢查通知...
-  unread: 未讀
+    title: 尚未設定關注清單
+    body: 請先在「我的關注」頁面加入股票，通知中心才會顯示相關事件。
   empty:
-    title: 無通知
-    body: 您目前沒有任何待處理通知。
-  mark_all_read_btn: 全部標為已讀
-  marking: 正在標記為已讀...
-  all_marked_read: 所有通知已標記為已讀
-  loading_notifications: 正在載入通知...
-  unknown_stock: 未知股票
+    title: 目前沒有待處理的通知
+    body: 當你有關注的股票出現重大事件時，會顯示在這裡。
+  unread: 未讀通知
+  summary:
+    high_events: 項重大事件
+    medium_events: 項注意事件
+    low_events: 項參考事件
+  mark_all_read_btn: ✅ 全部標記已讀
+  all_marked_read: 已將所有通知標記為已讀
+  pending_section: 待處理通知
   view_card_btn: 查看名片
-  mark_read_btn: 標為已讀
-  settings_expander: 通知設定
+  mark_read_btn: 標記已讀
+  settings_section: 通知設定
+  settings_expander: 展開通知偏好設定
   toggle:
     enable: 啟用通知
-    high_severity: 通知高嚴重度事件
-    medium_severity: 通知中等嚴重度事件
-    low_severity: 通知低嚴重度事件
-  digest_label: 摘要頻率
+    high_severity: 重大事件通知（🔴）
+    medium_severity: 注意事件通知（🟡）
+    low_severity: 參考事件通知（🟢）
+  digest_label: 通知頻率
   digest:
     realtime: 即時
-    daily: 每日
-    weekly: 每週
-  save_settings_btn: 儲存設定
-  default_list: 預設關注清單
-  settings_saved: 設定已成功儲存
+    daily: 每日彙整
+    weekly: 每週彙整
+  save_settings_btn: 💾 儲存設定
+  settings_saved: ✅ 設定已儲存
+  default_list: 預設清單
+  severity:
+    high: 🔴 重大
+    medium: 🟡 注意
+    low: 🟢 參考
+    unknown: ⚪ 未知
+  event_type:
+    revenue_surge: 💰 營收異動
+    news_major: 📰 重大新聞
+    news_medium: 📰 注意新聞
+    price_abnormal: 📉 股價異常
+    dividend_change: 💵 股利變更
+    institutional_shift: 🏷️ 法人突變
+  unknown_stock: 未知
 memo:
   title: 投資備忘錄
   add: 新增備忘
@@ -298,7 +294,7 @@ memo:
   select: 選擇
   searching: 搜尋中…
   no_match: 找不到符合的股票，請確認代號或名稱是否正確。
-  selected: "已選擇：**{name}** `{id}`"
+  selected: 已選擇：**{name}** `{id}`
   write_analysis: 寫下你的分析
   one_liner: 一句話定位
   one_liner_placeholder: 用一句話描述這家公司是做什麼的
@@ -317,12 +313,11 @@ memo:
   save_button: 💾 儲存備忘錄
   save_success: ✅ 備忘錄已儲存！
   saved_memos: 已儲存的備忘錄
-  memo_for_stock: "{name} 的投資備忘錄"
-  view_business_card: "查看 {name} 名片"
+  memo_for_stock: '{name} 的投資備忘錄'
+  view_business_card: 查看 {name} 名片
   business_card_page: 名片
   no_memos_title: 還沒有儲存的備忘錄
   no_memos_content: 填寫上方表單並點擊「儲存備忘錄」，你的分析記錄就會顯示在這裡。
-
 academy:
   title: 學習學院
   lesson_list: 課程列表
@@ -355,7 +350,7 @@ academy:
   score_good_desc: 你有基本的概念，但還有一些地方可以加強。
   score_needs_work: 加油！
   score_needs_work_desc: 別擔心，回頭看看解說，你會進步的！
-  colon: ":"
+  colon: ':'
   key_point: 重點
   load_error: 載入失敗。
 disclaimer:
@@ -380,7 +375,7 @@ stock_screener:
   advanced_mode: 進階模式
   load_btn: 載入股票資料
   loading_data: 載入股票資料中…
-  loaded_count: "已載入 {count} 檔股票資料"
+  loaded_count: 已載入 {count} 檔股票資料
   load_failed: 無法載入股票資料
   please_load_first: 請先載入資料
   please_load_first_desc: 點擊上方「載入股票資料」按鈕，取得最新股票數據。
@@ -401,7 +396,7 @@ stock_screener:
   per_range: 本益比 (PER) 範圍
   div_range: 殖利率 (%) 範圍
   results: 篩選結果
-  matching_stocks: "符合條件的股票：{count} 檔"
+  matching_stocks: 符合條件的股票：{count} 檔
   no_matching_stocks: 沒有符合條件的股票
   no_matching_stocks_desc: 試著放寬篩選條件，或選擇不同的投資風格。
   explanation_title: 篩選說明
@@ -428,7 +423,7 @@ comprehension_check:
   question_details: 各題詳解
   correct: 答對
   wrong: 答錯
-  question_n: "第 {n} 題"
+  question_n: 第 {n} 題
   perfect_title: 🎉 太厲害了！全部答對！
   perfect_desc: 你已經具備了良好的投資基礎知識。記住，知識是投資最好的武器。繼續學習，保持謙虛！
   good_job_title: 💪 表現不錯！
@@ -792,7 +787,6 @@ business_card:
     source_estimated: 📊 系統估算
     confidence_note: 信心指標反映資料完整度，非AI預測確定性
     risk_analysis_title: ⚠️ 風險分析 — 什麼可能出問題？
-
 event_dashboard:
   sources:
     events: 事件紀錄
@@ -811,7 +805,8 @@ etf:
     title: ETF 瀏覽
     subtitle: 探索台灣 ETF 市場：熱門排行、分類瀏覽、配息比較
     what_is_etf: 什麼是 ETF？
-    what_is_etf_content: "ETF（指數股票型基金）就像一個「股票籃子」，一次買進就等於買進一籃子標的。例如買入 0050，等於同時持有台灣市值最大的 50 間公司股票。ETF 可以像股票一樣在交易所買賣，費用比基金低，適合新手分散投資。\\n\\n⚠️ 注意：ETF 價格會隨市場波動，投資前請評估自身風險承受能力。"
+    what_is_etf_content: ETF（指數股票型基金）就像一個「股票籃子」，一次買進就等於買進一籃子標的。例如買入 0050，等於同時持有台灣市值最大的
+      50 間公司股票。ETF 可以像股票一樣在交易所買賣，費用比基金低，適合新手分散投資。\n\n⚠️ 注意：ETF 價格會隨市場波動，投資前請評估自身風險承受能力。
     loading_data: 載入 ETF 資料中…
     loading_price: 正在取得 ETF 價格（首次載入需時較長，之後切換頁籤將加速）…
     no_stock_info: 無法取得股票資訊
@@ -850,72 +845,79 @@ etf:
     no_dividend_etf: 目前無配息資料的 ETF
     top_20_dividend: 前 20 大配息 ETF
     dividend_yield_knowledge: 殖利率小知識
-    dividend_yield_content: 殖利率 = 年度股利 ÷ 股價 × 100%。殖利率越高代表每投入 1 元能領回的現金越多，但高殖利率不等於高報酬，仍需留意 ETF 的追蹤誤差、費用率及折溢價狀況。
+    dividend_yield_content: 殖利率 = 年度股利 ÷ 股價 × 100%。殖利率越高代表每投入 1 元能領回的現金越多，但高殖利率不等於高報酬，仍需留意
+      ETF 的追蹤誤差、費用率及折溢價狀況。
     price_label: 價格：
     change_label: 漲跌：
     filet:
-      price: "價格：{price}"
-      change: "漲跌：{change}"
+      price: 價格：{price}
+      change: 漲跌：{change}
   detail:
     one_liner_50: 追蹤台灣前 50 大企業的指數型基金
     one_liner_dividend: 專注於高股息股票的收益型基金
     one_liner_bond: 投資債券市場的固定收益型基金
     one_liner_esg: 考慮環境、社會、治理的永續投資型基金
     one_liner_default: 一籃子股票的分散投資工具
-    knowledge_50: "ETF（指數股票型基金）就像「一籃子股票」的套餐，一次買進就等於持有前 50 大上市公司。不用選股、自動跟著大盤走，管理費也遠低於主動型基金，適合想參與台股大盤但不想個股研究的投資人。"
-    knowledge_dividend: "高股息 ETF 專門挑選「現金股利大方」的公司，目標是讓投資人定期收到配息，就像收房租一樣有穩定現金流。適合需要定期收入（如退休族）或偏好領息而非賺價差的投資人。"
-    knowledge_bond: "債券 ETF 投資的是政府或企業發行的債券，性質類似「借錢給對方、對方按期付利息」。波動通常比股票小，報酬來源主要是配息而非價差，適合保守型投資人或在股市震盪時作為避風港。"
-    knowledge_esg: "ESG ETF 在選股時除了看財務表現，還會評估企業的環保（E）、社會責任（S）與公司治理（G）。概念是「好公司不只賺錢，還要對世界好」，適合重視永續發展、不想投資高污染或爭議產業的投資人。"
-    knowledge_default: "ETF（指數股票型基金）就像一籃子股票的套餐，一次買進就分散持有多檔標的。好處是不用自己選股、管理費低、透明度高，適合想參與市場但不想花時間研究個股的投資人。"
+    knowledge_50: ETF（指數股票型基金）就像「一籃子股票」的套餐，一次買進就等於持有前 50 大上市公司。不用選股、自動跟著大盤走，管理費也遠低於主動型基金，適合想參與台股大盤但不想個股研究的投資人。
+    knowledge_dividend: 高股息 ETF 專門挑選「現金股利大方」的公司，目標是讓投資人定期收到配息，就像收房租一樣有穩定現金流。適合需要定期收入（如退休族）或偏好領息而非賺價差的投資人。
+    knowledge_bond: 債券 ETF 投資的是政府或企業發行的債券，性質類似「借錢給對方、對方按期付利息」。波動通常比股票小，報酬來源主要是配息而非價差，適合保守型投資人或在股市震盪時作為避風港。
+    knowledge_esg: ESG ETF 在選股時除了看財務表現，還會評估企業的環保（E）、社會責任（S）與公司治理（G）。概念是「好公司不只賺錢，還要對世界好」，適合重視永續發展、不想投資高污染或爭議產業的投資人。
+    knowledge_default: ETF（指數股票型基金）就像一籃子股票的套餐，一次買進就分散持有多檔標的。好處是不用自己選股、管理費低、透明度高，適合想參與市場但不想花時間研究個股的投資人。
     section_performance: 績效走勢
     section_dividend: 配息資訊
     section_institutional: 法人動向
     section_fees: 費用說明
     section_knowledge: ETF 小知識
-    chart_price_title: "{stock_name} 近一年收盤價走勢"
+    chart_price_title: '{stock_name} 近一年收盤價走勢'
     no_price_data_1y: 近一年無價格資料
     price_data_processing: 價格資料處理中，暫時無法顯示圖表
     no_price_data: 暫無價格資料
-    dividend_frequency_quarterly: "📅 配息頻率：季配（一年配 4 次）"
-    dividend_frequency_semi: "📅 配息頻率：半年配（一年配 2 次）— 就像半年領一次分紅"
-    dividend_frequency_annual: "📅 配息頻率：年配（一年配 1 次）— 就像年底領一次年終"
-    dividend_frequency_irregular: "📅 配息頻率：不固定 — 視當年獲利情況決定"
+    dividend_frequency_quarterly: 📅 配息頻率：季配（一年配 4 次）
+    dividend_frequency_semi: 📅 配息頻率：半年配（一年配 2 次）— 就像半年領一次分紅
+    dividend_frequency_annual: 📅 配息頻率：年配（一年配 1 次）— 就像年底領一次年終
+    dividend_frequency_irregular: 📅 配息頻率：不固定 — 視當年獲利情況決定
     col_cash_dividend: 現金股利
     col_ex_dividend_date: 除息日
     col_stock_dividend: 股票股利
     col_ex_right_date: 除權日
     dividend_explanation_title: 股利白話說明
-    dividend_explanation_content: "「現金股利」是公司直接發錢給你，就像房東每月匯房租到你戶頭。\n「除息日」是股價會扣除配息金額的日子，所以除息當天股價會「自然下跌」，不代表賠錢。"
+    dividend_explanation_content: '「現金股利」是公司直接發錢給你，就像房東每月匯房租到你戶頭。
+
+      「除息日」是股價會扣除配息金額的日子，所以除息當天股價會「自然下跌」，不代表賠錢。'
     dividend_data_processing: 配息資料處理中
     no_dividend_data: 此 ETF 暫無配息資料（可能為不配息型或尚未開始配息）
     buy_label: 買超
     sell_label: 賣超
-    chart_institutional_title: "{stock_name} 近 30 日法人買賣超"
+    chart_institutional_title: '{stock_name} 近 30 日法人買賣超'
     chart_date: 日期
     chart_shares: 張數
     institutional_explanation_title: 法人動向白話說明
-    institutional_explanation_content: "「法人」指的是外資、投信、自營商這些大資金玩家。\n法人連續買超 = 大戶看好；法人連續賣超 = 大戶在撤退。散戶可以參考法人動向，但不要盲目跟單。"
+    institutional_explanation_content: '「法人」指的是外資、投信、自營商這些大資金玩家。
+
+      法人連續買超 = 大戶看好；法人連續賣超 = 大戶在撤退。散戶可以參考法人動向，但不要盲目跟單。'
     no_institutional_data_30d: 近 30 日無法人交易資料
     institutional_data_processing: 法人資料處理中
     no_institutional_data: 暫無法人交易資料
-    fee_management_label: "📋 經理費（管理費）"
+    fee_management_label: 📋 經理費（管理費）
     fee_management_value: 約 0.3% / 年
     fee_management_analogy: 每投資 10 萬元，一年付 300 元 — 就像請一位專業管家幫你管錢，一天不到 1 元
-    fee_custody_label: "📋 保管費"
+    fee_custody_label: 📋 保管費
     fee_custody_value: 約 0.04% / 年
     fee_custody_analogy: 每投資 10 萬元，一年付 40 元 — 就像把錢存在銀行保險庫的保管費
-    fee_reminder_title: "💡 ETF 費用小提醒"
-    fee_reminder_content: "ETF 的總費用（經理費 + 保管費 + 其他）通常比主動型基金低很多。以台股 ETF 為例，總費用率大約 0.3%~0.5%，而主動型基金可能 1.5% 以上。長期投資下來，省下來的費用會默默幫你多賺好幾年的複利！"
-    knowledge_title: "📚 {stock_name} 是什麼？"
+    fee_reminder_title: 💡 ETF 費用小提醒
+    fee_reminder_content: ETF 的總費用（經理費 + 保管費 + 其他）通常比主動型基金低很多。以台股 ETF 為例，總費用率大約 0.3%~0.5%，而主動型基金可能
+      1.5% 以上。長期投資下來，省下來的費用會默默幫你多賺好幾年的複利！
+    knowledge_title: 📚 {stock_name} 是什麼？
     disclaimer: 免責聲明
-    disclaimer_content: "本工具僅供認識 ETF 使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。"
+    disclaimer_content: 本工具僅供認識 ETF 使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。
 group:
   structure:
     subtitle: 認識集團內部的關係（點對點）
     about_title: 什麼是集團？
-    about_content: 集團（Corporate Group）是由多家公司透過持股關係連結而成的企業集合。母公司透過持股過半控制子公司，形成一個整合的商業實體。本頁面顯示持股 > 50% 或營收貢獻 > 10% 的子公司。
+    about_content: 集團（Corporate Group）是由多家公司透過持股關係連結而成的企業集合。母公司透過持股過半控制子公司，形成一個整合的商業實體。本頁面顯示持股
+      > 50% 或營收貢獻 > 10% 的子公司。
     overview: 集團總覽
-    member_count: "{count} 個主要成員"
+    member_count: '{count} 個主要成員'
     parent: 母公司
     members: 子公司列表（點對點）
     controlled: 控制持股
@@ -928,14 +930,14 @@ group:
     chart_reading: 圖表怎麼看
     chart_reading_content: 藍色長條代表持股比例，綠色長條代表營收貢獻比例。兩者比較可以看出各子公司對集團的重要性。
     strategy: 集團策略解讀
-    core_control: "{names} 為核心控制業務，在集團運作中扮演關鍵角色。"
-    strategic_investment: "{names} 為策略性投資的公司，代表重要的擴展方向。"
-    financial_investment: "{names} 為財務性投資，以投資組合方式持有。"
-    revenue_concentrated: "營收高度集中，母公司的表現高度依賴少數核心子公司。"
-    revenue_balanced: "營收分布較為均衡，分散在多個子公司，風險較為分散。"
-    revenue_dispersed: "營收分散，各子公司貢獻比例較小，屬於多元投資布局。"
+    core_control: '{names} 為核心控制業務，在集團運作中扮演關鍵角色。'
+    strategic_investment: '{names} 為策略性投資的公司，代表重要的擴展方向。'
+    financial_investment: '{names} 為財務性投資，以投資組合方式持有。'
+    revenue_concentrated: 營收高度集中，母公司的表現高度依賴少數核心子公司。
+    revenue_balanced: 營收分布較為均衡，分散在多個子公司，風險較為分散。
+    revenue_dispersed: 營收分散，各子公司貢獻比例較小，屬於多元投資布局。
     strategy_reading: 集團策略怎麼看
-    strategy_reading_content: "從持股比例和營收分布可以理解集團的投資策略。高持股的子公司代表核心業務，而低持股但高營收的子公司則代表策略性的生態系投資。"
+    strategy_reading_content: 從持股比例和營收分布可以理解集團的投資策略。高持股的子公司代表核心業務，而低持股但高營收的子公司則代表策略性的生態系投資。
     no_data: 目前沒有 {name} 的集團架構資料。
     tsmc:
       desc: 全球最大的專業晶圓代工廠
@@ -1028,273 +1030,268 @@ group:
           business: 廢棄物處理與環保服務
           relation: 環保服務支援永續營運
 financial:
-  health:
-    subtitle: 用生活化的方式理解財務數據
-    profit_funnel: 利潤漏斗
-    net_margin_explain: 「每 100 元營收，最終有 {margin_pct} 元變成淨利」
-    no_financial_data: 暫無損益表資料
-    key_ratios: 關鍵財務比率
-    data_insufficient: 資料不足
-    calculating_from: 正在從損益表計算中...
-    operating_margin_explain: 「營業利益率 {om}% — 扣掉營運成本後剩餘的利潤」
-    net_margin_explain2: 「淨利率 {nm}% — 扣掉所有費用和稅後，真正留下的利潤」
-    roe_ttm: ROE（近四季）
-    roe_method: ROE（{method}）
-    seasonal_warning: ⚠️ 景氣循環產業，{method} 可能失真 — 建議參考 TTM
-    seasonal_warning2: ⚠️ 景氣循環產業，單季數字可能失真
-    roe_desc: 股東權益報酬率 — 公司用股東的錢賺錢的效率
-    calculating_from_bs: 正在從資產負債表計算中...
-    pbr_label: 淨值比（PBR）
-    per_label: 本益比（PER）
-    balance_structure: 資產負債結構
-    assets_explain: 「總資產 {assets} 千億 — 公司擁有的全部資源」
-    liabilities_explain: 「負債佔資產 {pct}% — 公司欠別人的錢」
-    equity_explain: 股東權益 — 真正屬於股東的部分
-    debt_high: "⚠️ 負債比偏高 — 財務風險較高，需留意償債能力"
-    debt_medium: "負債比適中 — 適度運用槓桿，風險尚可"
-    debt_low: "負債比偏低 — 財務結構穩健，安全邊際充足"
-    debt_very_low: "負債比極低 — 幾乎不借錢，偏向保守或投資機會有限"
-    health_assessment: 財務體質評估
-    balance_incomplete: 資產負債表資料不完整，無法解析
-    balance_parse_error: 解析資產負債表資料時發生錯誤
-    no_balance_data: 暫無資產負債表資料
-    cash_flow: 現金流量
-    operating_cf_pos: 營業現金流為正 — 本業有在賺錢，現金流入
-    operating_cf_neg: 營業現金流為負 — 本業都在燒錢
-    investing_cf_pos: 投資現金流為正 — 變賣資產或收到投資收益
-    investing_cf_neg: 投資現金流為負 — 正在投資未來
-    financing_cf_pos: 籌資現金流為正 — 借錢或發行新股
-    financing_cf_neg: 籌資現金流為負 — 還錢或配發股利
-    cash_flow_reading: 現金流解讀
-    cash_flow_growth: 「營業為正 + 投資為負 = 用本業賺的錢扩张，典型的成長型企業」
-    cash_flow_mature: 「營業為正 + 投資為正 = 成熟型企業，不需要大幅投資」
-    cash_flow_warning: 營業現金流為負 — 本業獲利能力需要關注
-    cashflow_parse_error: 解析現金流量資料時發生錯誤
-    no_cashflow_data: 暫無現金流量資料
-    dividend_section: 股利指標
-    latest_dividend: 最近一次現金股利
-    cash_dividend_per_share: 每股現金股利（元）
-    estimated_annual: 預估全年配息
-    annual_dividend: 年度配息
-    estimated_hint: 根據最近一次配息預估，實際可能不同
-    actual_hint: 根據實際公告的配息金額
-    estimated_yield: 預估殖利率
-    yield_calc: 預估殖利率 = 年度股利 ÷ 目前股價 × 100%
-    dividend_frequency: 配息頻率
+  glossary_per: 本益比
+  glossary_revenue_yoy: 營收年增率
+  glossary_pbr: 淨值比
+  glossary_eps: 每股盈餘
+  glossary_revenue: 營業收入
 peer:
   comparison:
-    title: "⚖️ 同業比較 — {stock_name}"
-    subtitle: "*跟產業第一名差在哪？*"
-    no_benchmark: '找不到「{industry}」的同業標竿公司，以下僅顯示 {stock_name} 的指標'
-    no_metrics: "目前無法取得此公司的指標資料"
-    switch_industry: "💡 如需同業比較，請在側邊欄切換到其他具有標竿公司的產業"
-    searching_benchmark: "正在尋找同業標竿..."
-    fallback_benchmark: "此產業無預設標竿，已自動選取同業最大公司作為基準"
-    is_benchmark: "💡 {stock_name} 就是 {industry} 的產業標竿！"
-    benchmark_status: "標竿地位"
-    benchmark_status_desc: "{stock_name} 是 {industry} 的領導者，可以跟其他產業的標竿比較看看。"
-    industry_benchmark: "**產業：{industry}**　｜　**標竿：{benchmark_name}（{benchmark_id}）**"
-    loading_benchmark: "正在載入標竿公司 {benchmark_name} 的資料..."
-    load_failed: "無法載入標竿公司 {benchmark_name} 的資料，以下僅顯示 {stock_name} 的指標"
-    side_by_side: "並排比較：數字差多少？"
-    col_metric: "指標"
-    col_diff: "差距"
-    no_comparison_data: "目前沒有足夠的比較資料"
-    radar_chart: "雷達圖：多維度比較"
-    radar_guide_title: "雷達圖解讀"
-    radar_guide: "藍色區域是 {stock_name}，紅色區域是 {benchmark_name}（標竿）。面積越大代表該指標表現越好。如果藍色完全被紅色覆蓋，代表標竿公司在所有面向都領先。"
-    no_radar_data: "目前沒有足夠的雷達圖資料"
-    diff_analysis: "差異分析：為什麼差這麼多？"
-    diff_no_data: "目前沒有足夠資料進行差異分析"
-    cannot_compare: "無法進行比較"
-    summary_header: "**{stock_name} 在 {total} 項指標中：**"
-    leading_count: "✅ **領先 {leading} 項**"
-    trailing_count: "⚠️ **落後 {trailing} 項**"
-    summary_title: "總結"
-    summary_leading: "{stock_name} 在多數指標上領先 {benchmark_name}。這代表 {stock_name} 在 {industry} 中表現優異。不過，單一指標不代表全部，建議搭配其他面向一起看。"
-    summary_tied: "{stock_name} 和 {benchmark_name} 各有勝負，實力相當。可以關注兩家公司在不同面向的差異。"
-    summary_trailing: "{stock_name} 在多數指標上落後 {benchmark_name}。這不代表 {stock_name} 不好，而是標竿公司在這些面向表現更強。可以關注 {stock_name} 是否有其他獨特優勢。"
+    title: ⚖️ 同業比較 — {stock_name}
+    subtitle: '*跟產業第一名差在哪？*'
+    no_benchmark: 找不到「{industry}」的同業標竿公司，以下僅顯示 {stock_name} 的指標
+    no_metrics: 目前無法取得此公司的指標資料
+    switch_industry: 💡 如需同業比較，請在側邊欄切換到其他具有標竿公司的產業
+    searching_benchmark: 正在尋找同業標竿...
+    fallback_benchmark: 此產業無預設標竿，已自動選取同業最大公司作為基準
+    is_benchmark: 💡 {stock_name} 就是 {industry} 的產業標竿！
+    benchmark_status: 標竿地位
+    benchmark_status_desc: '{stock_name} 是 {industry} 的領導者，可以跟其他產業的標竿比較看看。'
+    industry_benchmark: '**產業：{industry}**　｜　**標竿：{benchmark_name}（{benchmark_id}）**'
+    loading_benchmark: 正在載入標竿公司 {benchmark_name} 的資料...
+    load_failed: 無法載入標竿公司 {benchmark_name} 的資料，以下僅顯示 {stock_name} 的指標
+    side_by_side: 並排比較：數字差多少？
+    col_metric: 指標
+    col_diff: 差距
+    no_comparison_data: 目前沒有足夠的比較資料
+    radar_chart: 雷達圖：多維度比較
+    radar_guide_title: 雷達圖解讀
+    radar_guide: 藍色區域是 {stock_name}，紅色區域是 {benchmark_name}（標竿）。面積越大代表該指標表現越好。如果藍色完全被紅色覆蓋，代表標竿公司在所有面向都領先。
+    no_radar_data: 目前沒有足夠的雷達圖資料
+    diff_analysis: 差異分析：為什麼差這麼多？
+    diff_no_data: 目前沒有足夠資料進行差異分析
+    cannot_compare: 無法進行比較
+    summary_header: '**{stock_name} 在 {total} 項指標中：**'
+    leading_count: ✅ **領先 {leading} 項**
+    trailing_count: ⚠️ **落後 {trailing} 項**
+    summary_title: 總結
+    summary_leading: '{stock_name} 在多數指標上領先 {benchmark_name}。這代表 {stock_name} 在 {industry}
+      中表現優異。不過，單一指標不代表全部，建議搭配其他面向一起看。'
+    summary_tied: '{stock_name} 和 {benchmark_name} 各有勝負，實力相當。可以關注兩家公司在不同面向的差異。'
+    summary_trailing: '{stock_name} 在多數指標上落後 {benchmark_name}。這不代表 {stock_name} 不好，而是標竿公司在這些面向表現更強。可以關注
+      {stock_name} 是否有其他獨特優勢。'
     metric:
-      gross_margin: "毛利率 (%)"
-      net_margin: "淨利率 (%)"
-      roe: "ROE (%)"
-      pe: "本益比"
-      dividend_yield: "殖利率"
-      dividend_yield_pct: "殖利率 (%)"
-      pb: "淨值比"
-      revenue_yoy: "營收年增率 (%)"
-      debt_ratio: "負債比 (%)"
+      gross_margin: 毛利率 (%)
+      net_margin: 淨利率 (%)
+      roe: ROE (%)
+      pe: 本益比
+      dividend_yield: 殖利率
+      dividend_yield_pct: 殖利率 (%)
+      pb: 淨值比
+      revenue_yoy: 營收年增率 (%)
+      debt_ratio: 負債比 (%)
     analysis:
-      title: "指標差異解讀"
-      gross_margin_similar: "• 毛利率跟標竿差不多（差距 {diff}%），代表兩家公司的產品利潤空間接近。"
-      gross_margin_higher: "• 毛利率比標竿高 {diff}%，代表 {stock_name} 的產品或服務利潤空間更大。"
-      gross_margin_lower: "• 毛利率比標竿低 {diff}%，可能是產品定位不同或成本控制較弱。"
-      roe_similar: "• ROE 跟標竿接近（差距 {diff}%），股東報酬率相當。"
-      roe_higher: "• ROE 比標竿高 {diff}%，代表 {stock_name} 幫股東賺錢的效率更好。"
-      roe_lower: "• ROE 比標竿低 {diff}%，可能是資本運用效率較差。"
-      per_higher: "• 本益比（{target_per}）明顯高於標竿（{bench_per}），市場對 {stock_name} 的成長預期較高。"
-      per_lower: "• 本益比（{target_per}）低於標竿（{bench_per}），市場對 {stock_name} 的評價較保守。"
-      per_similar: "• 本益比跟標竿接近，市場評價相當。"
-
-notification:
-  heading: "🔔 通知中心"
-  subtitle: "追蹤你關注股票的重要事件與異動"
-  checking: "檢查通知..."
-  loading_notifications: "載入通知..."
-  marking: "標記中..."
-  no_watchlist:
-    title: "尚未設定關注清單"
-    body: "請先在「我的關注」頁面加入股票，通知中心才會顯示相關事件。"
-  empty:
-    title: "目前沒有待處理的通知"
-    body: "當你有關注的股票出現重大事件時，會顯示在這裡。"
-  unread: "未讀通知"
-  summary:
-    high_events: "項重大事件"
-    medium_events: "項注意事件"
-    low_events: "項參考事件"
-  mark_all_read_btn: "✅ 全部標記已讀"
-  all_marked_read: "已將所有通知標記為已讀"
-  pending_section: "待處理通知"
-  view_card_btn: "查看名片"
-  mark_read_btn: "標記已讀"
-  settings_section: "通知設定"
-  settings_expander: "展開通知偏好設定"
-  toggle:
-    enable: "啟用通知"
-    high_severity: "重大事件通知（🔴）"
-    medium_severity: "注意事件通知（🟡）"
-    low_severity: "參考事件通知（🟢）"
-  digest_label: "通知頻率"
-  digest:
-    realtime: "即時"
-    daily: "每日彙整"
-    weekly: "每週彙整"
-  save_settings_btn: "💾 儲存設定"
-  settings_saved: "✅ 設定已儲存"
-  default_list: "預設清單"
-  severity:
-    high: "🔴 重大"
-    medium: "🟡 注意"
-    low: "🟢 參考"
-    unknown: "⚪ 未知"
-  event_type:
-    revenue_surge: "💰 營收異動"
-    news_major: "📰 重大新聞"
-    news_medium: "📰 注意新聞"
-    price_abnormal: "📉 股價異常"
-    dividend_change: "💵 股利變更"
-    institutional_shift: "🏷️ 法人突變"
-  unknown_stock: "未知"
-
+      title: 指標差異解讀
+      gross_margin_similar: • 毛利率跟標竿差不多（差距 {diff}%），代表兩家公司的產品利潤空間接近。
+      gross_margin_higher: • 毛利率比標竿高 {diff}%，代表 {stock_name} 的產品或服務利潤空間更大。
+      gross_margin_lower: • 毛利率比標竿低 {diff}%，可能是產品定位不同或成本控制較弱。
+      roe_similar: • ROE 跟標竿接近（差距 {diff}%），股東報酬率相當。
+      roe_higher: • ROE 比標竿高 {diff}%，代表 {stock_name} 幫股東賺錢的效率更好。
+      roe_lower: • ROE 比標竿低 {diff}%，可能是資本運用效率較差。
+      per_higher: • 本益比（{target_per}）明顯高於標竿（{bench_per}），市場對 {stock_name} 的成長預期較高。
+      per_lower: • 本益比（{target_per}）低於標竿（{bench_per}），市場對 {stock_name} 的評價較保守。
+      per_similar: • 本益比跟標竿接近，市場評價相當。
 settings:
-  title: "設定"
-  risk_section: "風險閾值設定"
-  risk_description: "調整以下閾值來控制事件偵測的敏感度。較低的閾值會觸發較多提醒，較高的閾值僅在重大變化時提醒。"
+  title: 設定
+  risk_section: 風險閾值設定
+  risk_description: 調整以下閾值來控制事件偵測的敏感度。較低的閾值會觸發較多提醒，較高的閾值僅在重大變化時提醒。
   price:
-    heading: "股價變動閾值"
-    description: "當股價單日漲跌幅超過此百分比時，觸發事件提醒。"
-    slider_label: "股價變動閾值（%）"
-    help_text: "預設值 5%。偵測到單日漲跌幅超過此值時，會標記為異常事件。"
-    error_negative: "❌ 閾值不可為負數，請調整為 0 以上的值。"
-    warn_zero: "⚠️ 設為 0% 將觸發所有價格變動事件。"
-    current_threshold: "目前有效閾值：{value:.1f}%"
-    trigger_when: "當單日漲跌幅 ≥ {value:.1f}% 時觸發事件偵測"
-    sensitive: "（敏感）"
-    moderate: "（適中）"
-    relaxed: "（寬鬆）"
+    heading: 股價變動閾值
+    description: 當股價單日漲跌幅超過此百分比時，觸發事件提醒。
+    slider_label: 股價變動閾值（%）
+    help_text: 預設值 5%。偵測到單日漲跌幅超過此值時，會標記為異常事件。
+    error_negative: ❌ 閾值不可為負數，請調整為 0 以上的值。
+    warn_zero: ⚠️ 設為 0% 將觸發所有價格變動事件。
+    current_threshold: 目前有效閾值：{value:.1f}%
+    trigger_when: 當單日漲跌幅 ≥ {value:.1f}% 時觸發事件偵測
+    sensitive: （敏感）
+    moderate: （適中）
+    relaxed: （寬鬆）
   volume:
-    heading: "成交量放大閾值"
-    description: "當成交量超過過去 20 日均量的此倍數時，觸發事件提醒。"
-    slider_label: "成交量放大閾值（倍數）"
-    help_text: "預設值 2x。成交量超過 20 日均量此倍數時，會標記為異常事件。"
-    error_below_one: "❌ 閾值不可低於 1.0 倍（即為平均量本身）。"
-    de_scoped: "🔜 成交量事件偵測尚未實作（volume detection de-scoped）"
-    sensitive: "（敏感）"
-    moderate: "（適中）"
-    relaxed: "（寬鬆）"
+    heading: 成交量放大閾值
+    description: 當成交量超過過去 20 日均量的此倍數時，觸發事件提醒。
+    slider_label: 成交量放大閾值（倍數）
+    help_text: 預設值 2x。成交量超過 20 日均量此倍數時，會標記為異常事件。
+    error_below_one: ❌ 閾值不可低於 1.0 倍（即為平均量本身）。
+    de_scoped: 🔜 成交量事件偵測尚未實作（volume detection de-scoped）
+    sensitive: （敏感）
+    moderate: （適中）
+    relaxed: （寬鬆）
   revenue:
-    heading: "營收變化閾值"
-    description: "當營收月增率或年增率超過此百分比時，觸發事件提醒。"
-    slider_label: "營收變化閾值（%）"
-    help_text: "預設值 10%。營收變化超過此值時，會標記為異常事件。"
-    error_negative: "❌ 閾值不可為負數。"
-    warn_zero: "⚠️ 設為 0% 將觸發所有營收變動事件。"
-    caption_very_sensitive: "🔴 非常敏感 — 幾乎每次營收公告都會觸發"
-    caption_moderate: "🟡 適中 — 只在明顯變化時觸發"
-    caption_relaxed: "🟢 寬鬆 — 僅在劇烈變化時觸發"
-    current_threshold: "目前有效閾值：{value:.1f}%"
-    trigger_when: "當營收 YoY 變化 ≥ {value:.1f}% 時觸發事件偵測"
-  reset_btn: "🔄 重設為預設值"
-  info_box: "✅ 股價變動與營收變化閾值已串接自適應更新引擎。更多自訂選項即將推出：產業別閾值、法人動向敏感度、訊息通知頻率等。"
-
+    heading: 營收變化閾值
+    description: 當營收月增率或年增率超過此百分比時，觸發事件提醒。
+    slider_label: 營收變化閾值（%）
+    help_text: 預設值 10%。營收變化超過此值時，會標記為異常事件。
+    error_negative: ❌ 閾值不可為負數。
+    warn_zero: ⚠️ 設為 0% 將觸發所有營收變動事件。
+    caption_very_sensitive: 🔴 非常敏感 — 幾乎每次營收公告都會觸發
+    caption_moderate: 🟡 適中 — 只在明顯變化時觸發
+    caption_relaxed: 🟢 寬鬆 — 僅在劇烈變化時觸發
+    current_threshold: 目前有效閾值：{value:.1f}%
+    trigger_when: 當營收 YoY 變化 ≥ {value:.1f}% 時觸發事件偵測
+  reset_btn: 🔄 重設為預設值
+  info_box: ✅ 股價變動與營收變化閾值已串接自適應更新引擎。更多自訂選項即將推出：產業別閾值、法人動向敏感度、訊息通知頻率等。
 expert_analysis:
-  title: "{name} ({id}) 專家觀點"
-  coming_soon: "📋 專家分析即將上線！\n\n我們正在為您準備這檔股票的深度專家分析，\n目前先來看看其他已上線的名牌吧！"
-  tsmc:
-    stock_name: "台積電"
-    global_leader: "**全球半導體龍頭**：台積電在先進製程（7nm以下）市占率超過90%，是Apple、NVIDIA、AMD等科技巨頭的核心供應商。"
-    growth: "**成長動能**：AI與HPC（高效能運算）需求持續強勁，CoWoS先進封裝產能供不應收，預期2025-2026年營收維持雙位數成長。"
-    risk: "**風險提示**：海外擴張（美國、日本）涉及巨額資本支出，折舊成本上升可能短期壓縮毛利率，地緣政治風險亦需持續關注。"
-  foxconn:
-    stock_name: "鴻海"
-    ems_leader: "**EMS龍頭**：鴻海是全球最大的電子代工製造商，主要客戶包括Apple、Dell、HP等國際品牌。"
-    transformation: "**加速轉型**：積極拓展AI伺服器、電動車（MIH平台）及半導體業務，AI伺服器業務受惠於資料中心擴建需求。"
-    risk: "**風險提示**：傳統消費電子代工競爭激烈、毛利偏低，轉型成果仍需時間驗證。"
-  mediatek:
-    stock_name: "聯發科"
-    ic_leader: "**IC設計龍頭**：聯發科是全球主要智慧型手機晶片供應商之一，其Dimensity 5G系列在旗艦及中階市場均有斬獲。"
-    ai_edge: "**AI邊緣運算**：積極拓展AI PC與車用晶片市場，與NVIDIA合作的車用晶片方案備受矚目。"
-    risk: "**風險提示**：智慧型手機市場復甦不均，且來自Qualcomm的競爭壓力持續。"
-  delta:
-    stock_name: "台達電"
-    power_expert: "**電源管理專家**：台達電是全球電源與散熱管理解決方案的領導者，涵蓋資料中心、電動車充電及工業自動化。"
-    esg: "**ESG先驱**：積極投入節能減碳，資料中心電源與散熱需求受惠於AI基礎建設浪潮。"
-    risk: "**風險提示**：原物料價格波動及供應鏈管理是主要挑戰。"
-  fubon_finance:
-    stock_name: "富邦金"
-    financial_giant: "**金融控股巨頭**：富邦金是台灣最大的金融控股公司之一，涵蓋銀行、壽險及證券業務。"
-    profit_stable: "**穩定獲利**：受惠於升息循環與資本市場復甦，壽險利差損失壓力緩解，銀行端利息收入成長。"
-    risk: "**風險提示**：金融市場波動及匯率風險需持續關注。"
-  cathay_finance:
-    stock_name: "國泰金"
-    financial_duo: "**金融雙雄之一**：國泰金是台灣最大的金融控股公司，國泰人壽為全台最大壽險，國泰世華銀行為領先商業銀行。"
-    digital_transform: "**數位轉型**：積極推動數位金融服務，行動銀行及線上保險平台用戶持續成長。"
-    risk: "**風險提示**：壽險業面臨IFRS 17會計準則轉換挑戰，資本市場波動影響投資收益。"
-  formosa_plastics:
-    stock_name: "台塑"
-    petro_leader: "**石化產業龍頭**：台塑是全球重要的石化生產商，產品涵蓋PVC、PE、PP等通用塑膠及化學品。"
-    transformation: "**轉型策略**：積極發展綠能、半導體材料及高階應用材料，降低對傳統石化循環的依賴。"
-    risk: "**風險提示**：全球石化產能過剩壓力持續，中國競爭者擴張加劇競爭。"
-  china_steel:
-    stock_name: "中鋼"
-    steel_leader: "**鋼鐵產業龍頭**：中鋼是台灣最大的鋼鐵製造商，產品廣泛應用於建築、機械及汽車工業。"
-    green_transform: "**綠色轉型**：積極推動減碳製程並開發高附加值鋼品。"
-    risk: "**風險提示**：鋼鐵週期明顯，中國鋼鐵傾銷壓力及原物料價格波動是主要風險。"
-  quanta:
-    stock_name: "廣達"
-    server_leader: "**伺服器代工龍頭**：廣達是全球最大的筆記型電腦代工廠，也是AI伺服器的主要供應商。"
-    ai_server: "**AI伺服器爆發**：受惠於CSP（雲端服務供應商）資本支出擴張，AI伺服器營收占比快速提升。"
-    risk: "**風險提示**：PC/NB市場需求疲弱，AI伺服器訂單能見度雖高但競爭加劇。"
-  largan:
-    stock_name: "大立光"
-    optical_leader: "**光學鏡頭龍頭**：大立光是全球智慧型手機光學鏡頭的領導者，技術壁壘高，客戶包括Apple、Samsung、華為。"
-    tech_lead: "**技術領先**：在潛望式鏡頭、自由曲面鏡頭等先進光學技術保持領先，持續受惠於多鏡頭趨勢。"
-    risk: "**風險提示**：智慧型手機市場成長放緩，中國競爭者（舜宇、AAC）持續追趕。"
+  title: '{name} ({id}) 專家觀點'
+  coming_soon: '📋 專家分析即將上線！
 
+
+    我們正在為您準備這檔股票的深度專家分析，
+
+    目前先來看看其他已上線的名牌吧！'
+  tsmc:
+    stock_name: 台積電
+    global_leader: '**全球半導體龍頭**：台積電在先進製程（7nm以下）市占率超過90%，是Apple、NVIDIA、AMD等科技巨頭的核心供應商。'
+    growth: '**成長動能**：AI與HPC（高效能運算）需求持續強勁，CoWoS先進封裝產能供不應收，預期2025-2026年營收維持雙位數成長。'
+    risk: '**風險提示**：海外擴張（美國、日本）涉及巨額資本支出，折舊成本上升可能短期壓縮毛利率，地緣政治風險亦需持續關注。'
+  foxconn:
+    stock_name: 鴻海
+    ems_leader: '**EMS龍頭**：鴻海是全球最大的電子代工製造商，主要客戶包括Apple、Dell、HP等國際品牌。'
+    transformation: '**加速轉型**：積極拓展AI伺服器、電動車（MIH平台）及半導體業務，AI伺服器業務受惠於資料中心擴建需求。'
+    risk: '**風險提示**：傳統消費電子代工競爭激烈、毛利偏低，轉型成果仍需時間驗證。'
+  mediatek:
+    stock_name: 聯發科
+    ic_leader: '**IC設計龍頭**：聯發科是全球主要智慧型手機晶片供應商之一，其Dimensity 5G系列在旗艦及中階市場均有斬獲。'
+    ai_edge: '**AI邊緣運算**：積極拓展AI PC與車用晶片市場，與NVIDIA合作的車用晶片方案備受矚目。'
+    risk: '**風險提示**：智慧型手機市場復甦不均，且來自Qualcomm的競爭壓力持續。'
+  delta:
+    stock_name: 台達電
+    power_expert: '**電源管理專家**：台達電是全球電源與散熱管理解決方案的領導者，涵蓋資料中心、電動車充電及工業自動化。'
+    esg: '**ESG先驱**：積極投入節能減碳，資料中心電源與散熱需求受惠於AI基礎建設浪潮。'
+    risk: '**風險提示**：原物料價格波動及供應鏈管理是主要挑戰。'
+  fubon_finance:
+    stock_name: 富邦金
+    financial_giant: '**金融控股巨頭**：富邦金是台灣最大的金融控股公司之一，涵蓋銀行、壽險及證券業務。'
+    profit_stable: '**穩定獲利**：受惠於升息循環與資本市場復甦，壽險利差損失壓力緩解，銀行端利息收入成長。'
+    risk: '**風險提示**：金融市場波動及匯率風險需持續關注。'
+  cathay_finance:
+    stock_name: 國泰金
+    financial_duo: '**金融雙雄之一**：國泰金是台灣最大的金融控股公司，國泰人壽為全台最大壽險，國泰世華銀行為領先商業銀行。'
+    digital_transform: '**數位轉型**：積極推動數位金融服務，行動銀行及線上保險平台用戶持續成長。'
+    risk: '**風險提示**：壽險業面臨IFRS 17會計準則轉換挑戰，資本市場波動影響投資收益。'
+  formosa_plastics:
+    stock_name: 台塑
+    petro_leader: '**石化產業龍頭**：台塑是全球重要的石化生產商，產品涵蓋PVC、PE、PP等通用塑膠及化學品。'
+    transformation: '**轉型策略**：積極發展綠能、半導體材料及高階應用材料，降低對傳統石化循環的依賴。'
+    risk: '**風險提示**：全球石化產能過剩壓力持續，中國競爭者擴張加劇競爭。'
+  china_steel:
+    stock_name: 中鋼
+    steel_leader: '**鋼鐵產業龍頭**：中鋼是台灣最大的鋼鐵製造商，產品廣泛應用於建築、機械及汽車工業。'
+    green_transform: '**綠色轉型**：積極推動減碳製程並開發高附加值鋼品。'
+    risk: '**風險提示**：鋼鐵週期明顯，中國鋼鐵傾銷壓力及原物料價格波動是主要風險。'
+  quanta:
+    stock_name: 廣達
+    server_leader: '**伺服器代工龍頭**：廣達是全球最大的筆記型電腦代工廠，也是AI伺服器的主要供應商。'
+    ai_server: '**AI伺服器爆發**：受惠於CSP（雲端服務供應商）資本支出擴張，AI伺服器營收占比快速提升。'
+    risk: '**風險提示**：PC/NB市場需求疲弱，AI伺服器訂單能見度雖高但競爭加劇。'
+  largan:
+    stock_name: 大立光
+    optical_leader: '**光學鏡頭龍頭**：大立光是全球智慧型手機光學鏡頭的領導者，技術壁壘高，客戶包括Apple、Samsung、華為。'
+    tech_lead: '**技術領先**：在潛望式鏡頭、自由曲面鏡頭等先進光學技術保持領先，持續受惠於多鏡頭趨勢。'
+    risk: '**風險提示**：智慧型手機市場成長放緩，中國競爭者（舜宇、AAC）持續追趕。'
+  '2330':
+    title: 台積電 (2330) 專家觀點
+    content: '🌍 **全球半導體龍頭**：台積電在先進製程（7nm以下）市占率超過90%，是Apple、NVIDIA、AMD等科技巨頭的核心供應商。
+
+
+      📈 **成長動能**：AI與HPC（高效能運算）需求持續強勁，CoWoS先進封裝產能供不應收，預期2025-2026年營收維持雙位數成長。
+
+
+      ⚠️ **風險提示**：海外擴張（美國、日本）涉及巨額資本支出，折舊成本上升可能短期壓縮毛利率，地緣政治風險亦需持續關注。'
+  '2317':
+    title: 鴻海 (2317) 專家觀點
+    content: '🌍 **EMS龍頭**：鴻海是全球最大的電子代工製造商，主要客戶包括Apple、Dell、HP等國際品牌。
+
+
+      📈 **加速轉型**：積極拓展AI伺服器、電動車（MIH平台）及半導體業務，AI伺服器業務受惠於資料中心擴建需求。
+
+
+      ⚠️ **風險提示**：傳統消費電子代工競爭激烈、毛利偏低，轉型成果仍需時間驗證。'
+  '2454':
+    title: 聯發科 (2454) 專家觀點
+    content: '🌍 **IC設計龍頭**：聯發科是全球主要智慧型手機晶片供應商之一，其Dimensity 5G系列在旗艦及中階市場均有斬獲。
+
+
+      📈 **AI邊緣運算**：積極拓展AI PC與車用晶片市場，與NVIDIA合作的車用晶片方案備受矚目。
+
+
+      ⚠️ **風險提示**：智慧型手機市場復甦不均，且來自Qualcomm的競爭壓力持續。'
+  '2308':
+    title: 台達電 (2308) 專家觀點
+    content: '🌍 **電源管理專家**：台達電是全球電源與散熱管理解決方案的領導者，涵蓋資料中心、電動車充電及工業自動化。
+
+
+      📈 **ESG先驱**：積極投入節能減碳，資料中心電源與散熱需求受惠於AI基礎建設浪潮。
+
+
+      ⚠️ **風險提示**：原物料價格波動及供應鏈管理是主要挑戰。'
+  '2881':
+    title: 富邦金 (2881) 專家觀點
+    content: '🌍 **金融控股巨頭**：富邦金是台灣最大的金融控股公司之一，涵蓋銀行、壽險及證券業務。
+
+
+      📈 **穩定獲利**：受惠於升息循環與資本市場復甦，壽險利差損失壓力緩解，銀行端利息收入成長。
+
+
+      ⚠️ **風險提示**：金融市場波動及匯率風險需持續關注。'
+  '2882':
+    title: 國泰金 (2882) 專家觀點
+    content: '🌍 **金融雙雄之一**：國泰金是台灣最大的金融控股公司，國泰人壽為全台最大壽險，國泰世華銀行為領先商業銀行。
+
+
+      📈 **數位轉型**：積極推動數位金融服務，行動銀行及線上保險平台用戶持續成長。
+
+
+      ⚠️ **風險提示**：壽險業面臨IFRS 17會計準則轉換挑戰，資本市場波動影響投資收益。'
+  '1301':
+    title: 台塑 (1301) 專家觀點
+    content: '🌍 **石化產業龍頭**：台塑是全球重要的石化生產商，產品涵蓋PVC、PE、PP等通用塑膠及化學品。
+
+
+      📈 **轉型策略**：積極發展綠能、半導體材料及高階應用材料，降低對傳統石化循環的依賴。
+
+
+      ⚠️ **風險提示**：全球石化產能過剩壓力持續，中國競爭者擴張加劇競爭。'
+  '2002':
+    title: 中鋼 (2002) 專家觀點
+    content: '🌍 **鋼鐵產業龍頭**：中鋼是台灣最大的鋼鐵製造商，產品廣泛應用於建築、機械及汽車工業。
+
+
+      📈 **綠色轉型**：積極推動減碳製程並開發高附加值鋼品。
+
+
+      ⚠️ **風險提示**：鋼鐵週期明顯，中國鋼鐵傾銷壓力及原物料價格波動是主要風險。'
+  '2382':
+    title: 廣達 (2382) 專家觀點
+    content: '🌍 **伺服器代工龍頭**：廣達是全球最大的筆記型電腦代工廠，也是AI伺服器的主要供應商。
+
+
+      📈 **AI伺服器爆發**：受惠於CSP（雲端服務供應商）資本支出擴張，AI伺服器營收占比快速提升。
+
+
+      ⚠️ **風險提示**：PC/NB市場需求疲弱，AI伺服器訂單能見度雖高但競爭加劇。'
+  '3045':
+    title: 大立光 (3045) 專家觀點
+    content: '🌍 **光學鏡頭龍頭**：大立光是全球智慧型手機光學鏡頭的領導者，技術壁壘高，客戶包括Apple、Samsung、華為。
+
+
+      📈 **技術領先**：在潛望式鏡頭、自由曲面鏡頭等先進光學技術保持領先，持續受惠於多鏡頭趨勢。
+
+
+      ⚠️ **風險提示**：智慧型手機市場成長放緩，中國競爭者（舜宇、AAC）持續追趕。'
 watchlist:
   title: 我的關注
   subtitle: 管理您關注的股票與 ETF，掌握最新價格與警示狀態
-  default_list_name: "預設清單"
-  type_stock_badge: "股票"
-  type_etf_badge: "ETF"
+  default_list_name: 預設清單
+  type_stock_badge: 股票
+  type_etf_badge: ETF
   list_selection: 清單選擇
   new_list_btn: ➕ 新增清單
   new_list_popover: 新增清單
   list_name_input: 清單名稱
   list_name_placeholder: 請輸入清單名稱
   create_list_btn: 建立清單
-  list_created: "已建立清單：{name}"
+  list_created: 已建立清單：{name}
   list_create_failed: 清單名稱已存在或建立失敗
   list_name_required: 請輸入清單名稱
   select_list_label: 選擇要檢視的清單
@@ -1306,22 +1303,34 @@ watchlist:
   etfs_label: ETF
   etfs_help: ETF 數量
   empty_title: 尚未加入任何關注標的
-  empty_message: "您可以透過以下方式將股票或 ETF 加入關注：\n\n1️⃣ 前往 🔍 分類瀏覽 找到有興趣的股票\n2️⃣ 前往 📊 ETF 瀏覽 探索各類 ETF\n3️⃣ 在個股名片頁點擊「加入關注」按鈕\n\n加入後即可在此查看最新價格與設定警示價格 🔔"
+  empty_message: '您可以透過以下方式將股票或 ETF 加入關注：
+
+
+    1️⃣ 前往 🔍 分類瀏覽 找到有興趣的股票
+
+    2️⃣ 前往 📊 ETF 瀏覽 探索各類 ETF
+
+    3️⃣ 在個股名片頁點擊「加入關注」按鈕
+
+
+    加入後即可在此查看最新價格與設定警示價格 🔔'
   loading_prices: 載入最新價格…
-  price_error: "無法取得價格資料：{error}"
+  price_error: 無法取得價格資料：{error}
   price_unavailable: 無法取得價格資料，請稍後再試。
   price_overview: 價格概覽
-  alert_above: "🔺 高於 {price}"
-  alert_below: "🔻 低於 {price}"
-  alert_triggered: "⚠️ 已觸發"
-  alert_separator: " ｜ "
+  alert_above: 🔺 高於 {price}
+  alert_below: 🔻 低於 {price}
+  alert_triggered: ⚠️ 已觸發
+  alert_separator: ' ｜ '
   alert_unset: 未設定
-  card_content: "價格：{price}  漲跌：{change}\n警示：{alert}"
+  card_content: '價格：{price}  漲跌：{change}
+
+    警示：{alert}'
   btn_view_card: 查看名片
   btn_remove: 移除
-  removed_toast: "🗑️ 已移除關注"
+  removed_toast: 🗑️ 已移除關注
   remove_failed: 移除失敗
-  set_alert: "🔔 設定提醒"
+  set_alert: 🔔 設定提醒
   alert_upper_label: 上限價格（高於此價提醒）
   alert_lower_label: 下限價格（低於此價提醒）
   btn_save: 儲存
@@ -1331,34 +1340,33 @@ watchlist:
   alert_cleared: 提醒已清除
   alert_clear_failed: 清除失敗
   list_management: 清單管理
-  current_list: "目前清單："
-  btn_rename: "✏️ 重命名"
+  current_list: 目前清單：
+  btn_rename: ✏️ 重命名
   new_list_name_input: 新清單名稱
   new_list_name_placeholder: 請輸入新清單名稱
   btn_confirm_rename: 確認重命名
-  renamed_success: "已重命名為：{name}"
+  renamed_success: 已重命名為：{name}
   rename_failed: 重命名失敗：名稱可能已存在或操作失敗
   new_name_required: 請輸入新清單名稱
-  btn_delete_list: "🗑️ 刪除清單"
+  btn_delete_list: 🗑️ 刪除清單
   cannot_delete_last: 無法刪除最後一個清單
-  deleted_success: "已刪除清單：{name}"
+  deleted_success: 已刪除清單：{name}
   delete_failed: 刪除失敗
   footer_title: 提示
   footer_message: 在個股名片頁可以設定警示價格，當股價觸及警示價格時，此頁面會顯示 ⚠️ 已觸發 標記。
-
 operation_checkup:
   title: 營運健檢
-  subtitle: "靠什麼賺錢？穩不穩？隨時間怎麼變？"
+  subtitle: 靠什麼賺錢？穩不穩？隨時間怎麼變？
   revenue_trend_section: 營收趨勢：公司生意做多大？
   monthly_revenue_trend: 月營收趨勢
   latest_monthly_revenue: 最近月營收
   revenue_yoy: 營收年增率
   data_insufficient: 資料不足
   need_13_months: 需要至少 13 個月資料才能計算
-  trend_strong: "{stock_name} 的營收成長很強勁！這代表市場對它的產品或服務需求正在增加。"
-  trend_stable: "{stock_name} 的營收穩定成長，經營狀況不錯。"
-  trend_flat: "{stock_name} 的營收跟去年差不多，屬於持平狀態。"
-  trend_decline: "{stock_name} 的營收比去年下滑，需要關注是什麼原因導致的。"
+  trend_strong: '{stock_name} 的營收成長很強勁！這代表市場對它的產品或服務需求正在增加。'
+  trend_stable: '{stock_name} 的營收穩定成長，經營狀況不錯。'
+  trend_flat: '{stock_name} 的營收跟去年差不多，屬於持平狀態。'
+  trend_decline: '{stock_name} 的營收比去年下滑，需要關注是什麼原因導致的。'
   trend_interpret: 營收趨勢解讀
   price_trend_section: 股價走勢：市場怎麼看這家公司？
   price_trend: 股價走勢
@@ -1385,7 +1393,6 @@ operation_checkup:
   summary_inst_buy: 法人積極買進
   summary_inst_sell: 法人積極賣出
   summary_observing: 持續觀察中
-
 category_browser:
   title: 分類瀏覽
   subtitle: 探索台股市場：權值股、產業分類、熱門標的
@@ -1411,8 +1418,6 @@ category_browser:
   no_volume_data: 暫無成交量資料。
   col_volume: 成交量
   top_20_hot: 前 20 大熱門股
-
-
 financial_wellness:
   title: 理財健康檢查
   intro: 理財健康檢查——透過行為財務學自我評量，了解自己的投資習慣與改善方向。
@@ -1429,9 +1434,8 @@ financial_wellness:
   section_personal_tips: 💡 個人化建議
   strengthen_category: 加強「{category}」
   section_category_scores: 📋 各面向得分
-  dimensions_count_pass: "🟢 {count} 個達標"
-  dimensions_count_improve: "🔴 {count} 個需加強"
-
+  dimensions_count_pass: 🟢 {count} 個達標
+  dimensions_count_improve: 🔴 {count} 個需加強
 why_moved:
   section_title: 🔍 為什麼這檔股票會動？
   direction_up: 上漲
@@ -1444,10 +1448,8 @@ why_moved:
   confidence_note: 信心指標反映資料完整度，非AI預測確定性
   detail_explanation: 詳細說明
   key_concept: 📌 核心概念
-
 router:
   page_navigation: 頁面導航
-
 learn_first_gate:
   title: 🎓 學習入門
   coming_soon: 學習內容即將推出，目前可以先探索其他功能。
@@ -1457,9 +1459,6 @@ learn_first_gate:
   btn_next_lesson: 下一課 →
   btn_start_using: 開始使用 ✓
   btn_explore_instead: 先探索其他功能 →
-
-# ── TD-02 Phase 2: New locale keys ──────────────────────────
-
 helpers:
   profitability: 獲利能力
   growth: 成長性
@@ -1472,528 +1471,430 @@ helpers:
   score_excellent: 表現優異，在同產業中屬於前段班
   score_average: 表現穩定，有改善空間
   score_poor: 需要留意，可能拖累整體表現
-  roe_value: "ROE {value}%"
-  per_value: "本益比 {value}"
-  pbr_value: "淨值比 {value}"
-  gross_margin_value: "毛利率 {value}%"
-  net_margin_value: "淨利率 {value}%"
-  revenue_yoy_value: "營收年增率 {value}%"
-  debt_ratio_value: "負債比 {value}%"
-  current_ratio_value: "流動比 {value}"
-  dividend_yield_value: "殖利率 {value}%"
-  dividend_years_value: "連續配息 {value} 年"
-  risk_unknown: "未知風險"
-
+  roe_value: ROE {value}%
+  per_value: 本益比 {value}
+  pbr_value: 淨值比 {value}
+  gross_margin_value: 毛利率 {value}%
+  net_margin_value: 淨利率 {value}%
+  revenue_yoy_value: 營收年增率 {value}%
+  debt_ratio_value: 負債比 {value}%
+  current_ratio_value: 流動比 {value}
+  dividend_yield_value: 殖利率 {value}%
+  dividend_years_value: 連續配息 {value} 年
+  risk_unknown: 未知風險
 moat_comparison:
   title: 護城河比較
   subtitle: 與同產業同業的護城河深度比較
   no_peer_data: 無法取得同業資料
-
 compare_stories:
   title: 同業比較故事
   subtitle: 與同產業同業的深度敘事比較
   no_peer_data: 無法取得同業資料
   unknown_industry: 未知
-  view_peer: "查看 {name}"
+  view_peer: 查看 {name}
   no_comparison_data: 目前沒有足夠資料進行同業比較分析
-
 revenue_tree:
   title: 營收結構樹
   subtitle: 深入拆解這家公司靠什麼賺錢
   revenue_source_pct: 營收來源佔比
   no_data: 無法取得營收組成資料
-  treemap_toggle: "🔬 切換樹狀圖"
+  treemap_toggle: 🔬 切換樹狀圖
   treemap_toggle_help: 切換為樹狀圖視圖，面積大小代表營收佔比
-  chart_title: "{name} 營收來源"
-  concentration_warning_title: "⚠️ 營收集中風險"
-  concentration_warning_body: "{name}佔營收 {value}%，超過 60% 營收來自單一來源，需留意客戶集中度風險"
+  chart_title: '{name} 營收來源'
+  concentration_warning_title: ⚠️ 營收集中風險
+  concentration_warning_body: '{name}佔營收 {value}%，超過 60% 營收來自單一來源，需留意客戶集中度風險'
   trend_title: 近 12 個月營收趨勢
   details_title: 各營收來源說明
   growth: 成長
   decline: 衰退
   yoy_title: 營收年增率
-
 first_visit:
   welcome: 歡迎使用股識
   intro: 花兩分鐘認識這個工具，讓你更快上手。
   what_you_learn: 你將學到什麼
-  what_you_learn_content: "在這裡，你會認識公司，而不是追逐股價。從一個故事開始，了解這家公司是做什麼的、怎麼賺錢、最近有什麼變化。"
-  about_title: "關於股識"
-  about_content: "股識不是投資建議工具。我們不告訴你該買什麼或賣什麼。我們只告訴你這家公司發生了什麼事。"
-  about_analogy: "我們是「公司紀錄者」，不是「股票推薦者」。"
-  dismiss_btn: "我知道了 ✓"
+  what_you_learn_content: 在這裡，你會認識公司，而不是追逐股價。從一個故事開始，了解這家公司是做什麼的、怎麼賺錢、最近有什麼變化。
+  about_title: 關於股識
+  about_content: 股識不是投資建議工具。我們不告訴你該買什麼或賣什麼。我們只告訴你這家公司發生了什麼事。
+  about_analogy: 我們是「公司紀錄者」，不是「股票推薦者」。
+  dismiss_btn: 我知道了 ✓
   start_exploring: 開始探索
   skip_guide: 跳過導覽
-
 timeline_controls:
-  time_range: "時間範圍："
-
-detail:
-  share_card: 🔗 分享這張名片
-
-historical_pattern:
-  title: 📊 歷史模式
-  no_data: 目前無歷史模式資料。我們正在持續擴充歷史事件資料庫。
-  disclaimer: ⚠️ 歷史表現不代表未來結果。本工具僅供認識公司使用，不構成投資決策的依據。
-  outcome_label: "後續結果："
-
-study_log:
-  title: 📚 學習日誌
-  current_streak: 目前連續學習 **{streak}** 天
-  start_today: 今天開始學習吧！
-  total_studied: 累計研究過 **{total}** 檔股票
-
-wellness:
-  total_score: 總分
-  grade: 評級
-  dimensions: 各面向
-
-# ── TD-02 Batch 3: Story section keys ────────────────────────
-
-story:
-  recent_changes: 最近有什麼變化
-  no_significant_changes: 近期未偵測到顯著變化。
-  confidence_note: 信心指標反映資料完整度，非AI預測確定性
-  unknown_industry: 未知產業
-  peer_comparison: 同業比較
-  peer_comparison_subtitle: "{name} 跟同業比起來如何？"
-  view_peer: "查看 {name}"
-  read_next: 推薦閱讀
-  peer_recommendations: "同產業你可能也感興趣的股票："
-  peer_info: "產業：{industry}"
-  view_peer_card: "查看 {name} 的名片"
-  no_recommendations: 目前沒有可推薦的內容。
-  you_might_wonder: 你可能還想知道
-  did_you_know: 你知道嗎？
-  more_analysis: 想更深入了解嗎？
-  full_timeline: 查看完整故事時間軸
-  timeline_caption: 探索這家公司的完整時間軸故事
-  previous_period: "前期"
-  read_next_fallback: 推薦閱讀
-
-# ── TD-02 Batch 1: Sector Heatmap keys ──────────────────────
-
-sector_heatmap:
-  rank_col: "排名 {rank}"
-  industry_col: 產業
-  avg_change_col: 平均漲跌
-  up_col: 上漲
-  down_col: 下跌
-  flat_col: 平盤
-  count_col: 有報價
-
-# ── TD-02 Batch 1: Detail section keys ──────────────────────
-
+  time_range: 時間範圍：
 detail:
   share_link_label: 分享連結
   share_link_help: 複製此連結以分享此股票名片
   share_link_title: 複製分享連結
   disclaimer_title: 免責聲明
   disclaimer_content: 本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。
-
-# ── TD-02 Batch 1: Financial glossary term keys ─────────────
-
-financial:
-  glossary_per: 本益比
-  glossary_revenue_yoy: 營收年增率
-  glossary_pbr: 淨值比
-  glossary_eps: 每股盈餘
-  glossary_revenue: 營業收入
-
-# ── Analogy engine ──────────────────────────────────────────
-
+historical_pattern:
+  title: 📊 歷史模式
+  no_data: 目前無歷史模式資料。我們正在持續擴充歷史事件資料庫。
+  disclaimer: ⚠️ 歷史表現不代表未來結果。本工具僅供認識公司使用，不構成投資決策的依據。
+  outcome_label: 後續結果：
+study_log:
+  title: 📚 學習日誌
+  current_streak: 目前連續學習 **{streak}** 天
+  start_today: 今天開始學習吧！
+  total_studied: 累計研究過 **{total}** 檔股票
+wellness:
+  total_score: 總分
+  grade: 評級
+  dimensions: 各面向
+story:
+  feed:
+    historian:
+      1: 這位歷史學者追溯過往類似的市場訊號…
+      2: 翻開歷史的篇章，這位史官發現類似的情境…
+      3: 從歷史的角度來看，這樣的走勢往往…
+      4: 回顧過去十年，類似的事件曾導致…
+    event:
+      unknown: 未知事件
+    analogy:
+      revenue_surge: 營收的變化就像觀察一家餐廳的每日來客數。
+      price_abnormal: 股價劇烈波動就像氣溫骤變，可能有暴風雨要來了。
+      news: 市場新聞就像天氣預報，提醒我們要帶傘還是穿短袖。
+      institutional_shift: 法人買賣就像大戶在牌桌上的下注，值得留意。
+      default: 每一個市場事件背後，都有值得關注的故事。
+    sector:
+      direction:
+        up: 走強
+        down: 走弱
+        flat: 盤整
+      title: '{sector} {direction}（平均 {avg:+.1f}%）'
+      summary: 本日 {sector} 共有 {count} 檔有數據，其中 {up} 檔上漲、{down} 檔下跌。
+      analogy:
+        top_mover: 領頭羊 {stock_name} 變動 {top_chg:+.1f}%，像龍捲風的風眼帶領方向。
+        general: '{sector} 的整體表現，就像觀察一整片森林的季節變化。'
+      historian_note: 📜 從歷史來看，{sector} 的平均報酬率與整體景氣循環密切相關。
+    education:
+      title: 📚 今日指標教室：{display_name}
+      analogy_default: 每天學一個指標，就像每天多認識一位新朋友。
+sector_heatmap:
+  rank_col: 排名 {rank}
+  industry_col: 產業
+  avg_change_col: 平均漲跌
+  up_col: 上漲
+  down_col: 下跌
+  flat_col: 平盤
+  count_col: 有報價
 analogy:
   revenue:
-    gov_budget_pct: "相當於台灣政府年度預算的 {pct}%"
-    trillion: "約為 {value} 千億"
-    monthly_100b: "每個月賺進 {billion} 億，相當於蓋 {buildings} 棟台北 101"
-    monthly_10b: "每個月賺 {billion} 億，大約是 {salaries} 間台積電的月薪"
-    monthly_small: "每個月賺 {billion} 億，穩定的小金雞"
+    gov_budget_pct: 相當於台灣政府年度預算的 {pct}%
+    trillion: 約為 {value} 千億
+    monthly_100b: 每個月賺進 {billion} 億，相當於蓋 {buildings} 棟台北 101
+    monthly_10b: 每個月賺 {billion} 億，大約是 {salaries} 間台積電的月薪
+    monthly_small: 每個月賺 {billion} 億，穩定的小金雞
   gross_margin:
-    high: "賣 100 元東西，扣掉成本還剩 {margin} 元 — 比多數餐廳還賺"
-    good: "賣 100 元東西，扣掉成本還剩 {margin} 元 — 不錯的利潤空間"
-    thin: "賣 100 元東西，扣掉成本還剩 {margin} 元 — 薄利多銷型"
-    low: "賣 100 元東西，扣掉成本只剩 {margin} 元 — 競爭激烈的產業"
-    very_low: "賣 100 元東西，扣掉成本只剩 {margin} 元 — 真的是在拚量"
+    high: 賣 100 元東西，扣掉成本還剩 {margin} 元 — 比多數餐廳還賺
+    good: 賣 100 元東西，扣掉成本還剩 {margin} 元 — 不錯的利潤空間
+    thin: 賣 100 元東西，扣掉成本還剩 {margin} 元 — 薄利多銷型
+    low: 賣 100 元東西，扣掉成本只剩 {margin} 元 — 競爭激烈的產業
+    very_low: 賣 100 元東西，扣掉成本只剩 {margin} 元 — 真的是在拚量
   per:
-    high: "每賺 1 元，市場願意付 {per} 元 — 大家看好它未來會賺更多"
-    moderate: "每賺 1 元，市場願意付 {per} 元 — 合理的成長預期"
-    fair: "每賺 1 元，市場願意付 {per} 元 — 市場覺得它穩定但不太會暴衝"
-    low: "每賺 1 元，市場只願付 {per} 元 — 市場對它比較保守"
-    negative: "目前虧損，本益比無意義"
+    high: 每賺 1 元，市場願意付 {per} 元 — 大家看好它未來會賺更多
+    moderate: 每賺 1 元，市場願意付 {per} 元 — 合理的成長預期
+    fair: 每賺 1 元，市場願意付 {per} 元 — 市場覺得它穩定但不太會暴衝
+    low: 每賺 1 元，市場只願付 {per} 元 — 市場對它比較保守
+    negative: 目前虧損，本益比無意義
   pbr:
-    premium: "股價是淨值的 {pbr} 倍 — 市場覺得它的品牌和管理值這個價"
-    reasonable: "股價是淨值的 {pbr} 倍 — 合理的溢價"
-    neutral: "股價是淨值的 {pbr} 倍 — 接近淨值，市場評價中性"
-    discount: "股價比淨值還低（{pbr} 倍）— 市場覺得它的資產可能不值那麼多"
+    premium: 股價是淨值的 {pbr} 倍 — 市場覺得它的品牌和管理值這個價
+    reasonable: 股價是淨值的 {pbr} 倍 — 合理的溢價
+    neutral: 股價是淨值的 {pbr} 倍 — 接近淨值，市場評價中性
+    discount: 股價比淨值還低（{pbr} 倍）— 市場覺得它的資產可能不值那麼多
   dividend:
-    high: "每放 100 元，大約領回 {dy} 元 — 比定存好很多，但要注意風險"
-    good: "每放 100 元，大約領回 {dy} 元 — 穩健的存股選擇"
-    moderate: "每放 100 元，大約領回 {dy} 元 — 比定存好一點"
-    low: "每放 100 元，大約領回 {dy} 元 — 主要不是靠配息"
-    none: "目前不配息，公司把錢留在手上再投資"
+    high: 每放 100 元，大約領回 {dy} 元 — 比定存好很多，但要注意風險
+    good: 每放 100 元，大約領回 {dy} 元 — 穩健的存股選擇
+    moderate: 每放 100 元，大約領回 {dy} 元 — 比定存好一點
+    low: 每放 100 元，大約領回 {dy} 元 — 主要不是靠配息
+    none: 目前不配息，公司把錢留在手上再投資
   roe:
-    excellent: "每投入 100 元資本，賺回 {roe} 元 — 非常會賺錢的公司"
-    good: "每投入 100 元資本，賺回 {roe} 元 — 賺錢能力不錯"
-    average: "每投入 100 元資本，賺回 {roe} 元 — 表現中規中矩"
-    poor: "每投入 100 元資本，賺回 {roe} 元 — 賺錢效率偏低"
-    very_poor: "每投入 100 元資本，只賺回 {roe} 元 — 需要改善"
-    negative: "目前虧損，投入的資本沒有回報"
+    excellent: 每投入 100 元資本，賺回 {roe} 元 — 非常會賺錢的公司
+    good: 每投入 100 元資本，賺回 {roe} 元 — 賺錢能力不錯
+    average: 每投入 100 元資本，賺回 {roe} 元 — 表現中規中矩
+    poor: 每投入 100 元資本，賺回 {roe} 元 — 賺錢效率偏低
+    very_poor: 每投入 100 元資本，只賺回 {roe} 元 — 需要改善
+    negative: 目前虧損，投入的資本沒有回報
   debt:
-    high: "每 100 元資產中，有 {ratio} 元是借來的 — 借錢借比較多，要注意"
-    moderate: "每 100 元資產中，有 {ratio} 元是借來的 — 適度槓桿"
-    healthy: "每 100 元資產中，有 {ratio} 元是借來的 — 財務結構穩健"
-    low: "每 100 元資產中，只有 {ratio} 元是借來的 — 幾乎不借錢"
+    high: 每 100 元資產中，有 {ratio} 元是借來的 — 借錢借比較多，要注意
+    moderate: 每 100 元資產中，有 {ratio} 元是借來的 — 適度槓桿
+    healthy: 每 100 元資產中，有 {ratio} 元是借來的 — 財務結構穩健
+    low: 每 100 元資產中，只有 {ratio} 元是借來的 — 幾乎不借錢
   volume:
-    very_high: "今天成交 {volume} 千張 — 市場非常關注這檔股票"
-    high: "今天成交 {volume} 千張 — 交易熱絡"
-    normal: "今天成交 {volume} 千張 — 正常交易量"
-    low: "今天成交 {volume} 千張 — 交易冷清"
-    very_low: "今天只成交 {volume} 張 — 幾乎沒人在買賣"
+    very_high: 今天成交 {volume} 千張 — 市場非常關注這檔股票
+    high: 今天成交 {volume} 千張 — 交易熱絡
+    normal: 今天成交 {volume} 千張 — 正常交易量
+    low: 今天成交 {volume} 千張 — 交易冷清
+    very_low: 今天只成交 {volume} 張 — 幾乎沒人在買賣
   institutional:
-    strong_buy: "三大法人今天大買 {volume} 千張 — 法人很看好"
-    buy: "三大法人今天買超 {volume} 千張 — 法人偏多"
-    slight_buy: "三大法人今天小買 {volume} 千張 — 法人態度中性偏多"
-    sell: "三大法人今天賣超 {volume} 千張 — 法人偏空"
-    strong_sell: "三大法人今天大賣 {volume} 千張 — 法人急著出場"
+    strong_buy: 三大法人今天大買 {volume} 千張 — 法人很看好
+    buy: 三大法人今天買超 {volume} 千張 — 法人偏多
+    slight_buy: 三大法人今天小買 {volume} 千張 — 法人態度中性偏多
+    sell: 三大法人今天賣超 {volume} 千張 — 法人偏空
+    strong_sell: 三大法人今天大賣 {volume} 千張 — 法人急著出場
   yoy:
-    strong: "營收年增 {yoy}% — 成長非常強勁，可能是新產品大賣"
-    good: "營收年增 {yoy}% — 穩定成長，公司經營得不錯"
-    moderate: "營收年增 {yoy}% — 溫和成長"
-    flat: "營收年增 {yoy}% — 跟去年差不多，持平"
-    decline: "營收年減 {yoy}% — 比去年差，需要關注原因"
-    sharp_decline: "營收年減 {yoy}% — 大幅衰退，可能有結構性問題"
+    strong: 營收年增 {yoy}% — 成長非常強勁，可能是新產品大賣
+    good: 營收年增 {yoy}% — 穩定成長，公司經營得不錯
+    moderate: 營收年增 {yoy}% — 溫和成長
+    flat: 營收年增 {yoy}% — 跟去年差不多，持平
+    decline: 營收年減 {yoy}% — 比去年差，需要關注原因
+    sharp_decline: 營收年減 {yoy}% — 大幅衰退，可能有結構性問題
   oneliner:
-    "2330": "全世界最大的晶圓代工廠，幫蘋果、輝達等科技巨頭製造晶片 — 你的手機和電腦裡都有它的產品"
-    "2317": "全球最大的電子代工帝國，iPhone 的主要組裝廠 — 全世界每兩支 iPhone 就有一支出自它"
-    "2454": "手機晶片設計龍頭，你的手機裡很可能有它的晶片 — 不用自己蓋工廠，靠設計就能賺錢"
-    "2308": "電源供應器隱形冠軍，從手機充電器到電動車充電樁都有它的身影 — 低調但無所不在"
-    "2881": "台灣最大的金融控股集團之一，旗下有銀行、證券、壽險 — 你的存款、保單、股票可能都跟它有關"
-    "1101": "台灣最老牌的水泥廠，從蓋房子到基礎建設都少不了它 — 蓋台灣的人都需要它"
-    "2002": "台灣鋼鐵業龍頭，從建築鋼材到汽車鋼板都有生產 — 台灣工業的骨架"
-    "1301": "台灣最大的塑膠集團，從塑膠袋到醫療用品都有它的產品 — 生活中到處都是它的影子"
-    "2357": "華碩電腦，從主機板到筆記型電腦 — 你用的電腦零件可能就來自它"
-    "2382": "廣達電腦，全球最大的筆記型電腦代工廠 — 蘋果 MacBook 的主要製造商"
-    "2886": "兆豐金控，台灣最大的公股金控 — 外匯和企業金融的專家"
-    "2891": "中信金控，台灣最大的民營金控 — 信用卡和消費金融的領導者"
-    "1216": "統一企業，從泡麵到便利商店 — 統一超商和統一食品都是它的"
-    "2912": "統一超商，台灣最大的便利商店 — 平均每 500 公尺就有一家"
-    "2303": "聯華電子，台灣第二大晶圓代工廠 — 台積電的兄弟公司"
-    "2345": "智邦科技，網路交換器大廠 — 資料中心的關鍵設備供應商"
-    "3008": "大立光，手機鏡頭霸主 — 全球每三支手機鏡頭就有一支來自它"
-    "2412": "中華電信，台灣最大的電信公司 — 你的手機網路可能就靠它"
-    "3711": "日月光，全球最大的封裝測試廠 — 晶片出廠前的最後一道工序"
-    "2324": "仁寶電腦，全球第二大筆電代工廠 — 戴爾、惠普的主要合作夥伴"
+    '2330': 全世界最大的晶圓代工廠，幫蘋果、輝達等科技巨頭製造晶片 — 你的手機和電腦裡都有它的產品
+    '2317': 全球最大的電子代工帝國，iPhone 的主要組裝廠 — 全世界每兩支 iPhone 就有一支出自它
+    '2454': 手機晶片設計龍頭，你的手機裡很可能有它的晶片 — 不用自己蓋工廠，靠設計就能賺錢
+    '2308': 電源供應器隱形冠軍，從手機充電器到電動車充電樁都有它的身影 — 低調但無所不在
+    '2881': 台灣最大的金融控股集團之一，旗下有銀行、證券、壽險 — 你的存款、保單、股票可能都跟它有關
+    '1101': 台灣最老牌的水泥廠，從蓋房子到基礎建設都少不了它 — 蓋台灣的人都需要它
+    '2002': 台灣鋼鐵業龍頭，從建築鋼材到汽車鋼板都有生產 — 台灣工業的骨架
+    '1301': 台灣最大的塑膠集團，從塑膠袋到醫療用品都有它的產品 — 生活中到處都是它的影子
+    '2357': 華碩電腦，從主機板到筆記型電腦 — 你用的電腦零件可能就來自它
+    '2382': 廣達電腦，全球最大的筆記型電腦代工廠 — 蘋果 MacBook 的主要製造商
+    '2886': 兆豐金控，台灣最大的公股金控 — 外匯和企業金融的專家
+    '2891': 中信金控，台灣最大的民營金控 — 信用卡和消費金融的領導者
+    '1216': 統一企業，從泡麵到便利商店 — 統一超商和統一食品都是它的
+    '2912': 統一超商，台灣最大的便利商店 — 平均每 500 公尺就有一家
+    '2303': 聯華電子，台灣第二大晶圓代工廠 — 台積電的兄弟公司
+    '2345': 智邦科技，網路交換器大廠 — 資料中心的關鍵設備供應商
+    '3008': 大立光，手機鏡頭霸主 — 全球每三支手機鏡頭就有一支來自它
+    '2412': 中華電信，台灣最大的電信公司 — 你的手機網路可能就靠它
+    '3711': 日月光，全球最大的封裝測試廠 — 晶片出廠前的最後一道工序
+    '2324': 仁寶電腦，全球第二大筆電代工廠 — 戴爾、惠普的主要合作夥伴
     industry:
-      semiconductor: "{name} 是半導體產業的重要成員，在這個驅動全球科技的產業中扮演關鍵角色"
-      electronics: "{name} 是電子產業的重要成員，從消費電子到工業設備都有佈局"
-      finance: "{name} 是金融保險業的重要成員，管理著數以兆計的資產"
-      computer: "{name} 是電腦產業的重要成員，在這個數位時代扮演重要角色"
-      biotech: "{name} 是生技醫療產業的重要成員，致力於改善人類健康"
-      tourism: "{name} 是觀光餐旅業的重要成員，服務著無數的旅客和消費者"
-      machinery: "{name} 是電機機械產業的重要成員，從工業設備到民生用品都有涉獵"
-      construction: "{name} 是建材營造業的重要成員，參與台灣無數的建設工程"
-      chemical: "{name} 是化學工業的重要成員，從基礎化學到特化品都有生產"
-      telecom: "{name} 是通信網路業的重要成員，連接著台灣的數位生活"
-      default: "{name} 是 {industry} 的重要成員，股票代號 {stock_id}"
-
+      semiconductor: '{name} 是半導體產業的重要成員，在這個驅動全球科技的產業中扮演關鍵角色'
+      electronics: '{name} 是電子產業的重要成員，從消費電子到工業設備都有佈局'
+      finance: '{name} 是金融保險業的重要成員，管理著數以兆計的資產'
+      computer: '{name} 是電腦產業的重要成員，在這個數位時代扮演重要角色'
+      biotech: '{name} 是生技醫療產業的重要成員，致力於改善人類健康'
+      tourism: '{name} 是觀光餐旅業的重要成員，服務著無數的旅客和消費者'
+      machinery: '{name} 是電機機械產業的重要成員，從工業設備到民生用品都有涉獵'
+      construction: '{name} 是建材營造業的重要成員，參與台灣無數的建設工程'
+      chemical: '{name} 是化學工業的重要成員，從基礎化學到特化品都有生產'
+      telecom: '{name} 是通信網路業的重要成員，連接著台灣的數位生活'
+      default: '{name} 是 {industry} 的重要成員，股票代號 {stock_id}'
 key_takeaways:
-  one_liner: "{first_sentence}，是 {industry} 的重要成員"
-  gm_high: "毛利率 {gm:.1f}%，獲利能力在同產業中屬於前段班"
-  gm_medium: "毛利率 {gm:.1f}%，利潤空間穩定"
-  gm_low: "毛利率 {gm:.1f}%，屬於薄利多銷的經營模式"
-  gm_very_low: "毛利率僅 {gm:.1f}%，獲利空間有限，需靠規模取勝"
-  yoy_high: "營收年增 {yoy:.0f}%，成長動能強勁"
-  yoy_medium: "營收年增 {yoy:.0f}%，穩定成長中"
-  yoy_flat: "營收年增 {yoy:.0f}%，與去年持平"
-  yoy_negative: "營收年減 {yoy:.0f}%，需留意衰退原因"
-  per_high: "本益比 {per:.1f} 倍，市場給予高度成長預期"
-  per_medium: "本益比 {per:.1f} 倍，評價合理"
-  per_low: "本益比 {per:.1f} 倍，市場評價相對保守"
-  per_negative: "目前處於虧損狀態，本益比無參考意義"
-  dy_high: "殖利率 {dy:.2f}%，是熱門的存股選擇"
-  dy_medium: "殖利率 {dy:.2f}%，配息穩健"
-  dy_low: "殖利率 {dy:.2f}%，配息較少，成長優先"
-  dy_none: "目前不配息，公司將盈餘保留再投資"
-  roe_high: "ROE {roe:.1f}%，股東報酬率優異"
-  roe_medium: "ROE {roe:.1f}%，資本運用效率良好"
-  roe_low: "ROE {roe:.1f}%，資本運用效率有改善空間"
-  roe_negative: "目前 ROE 為負，公司尚未為股東創造報酬"
-  debt_high: "負債比 {debt:.0f}%，財務槓桿較高，需留意償債風險"
-  debt_medium: "負債比 {debt:.0f}%，適度運用槓桿"
-  debt_low: "負債比 {debt:.0f}%，財務結構穩健"
-  "2330":
-    "0": "全球晶圓代工龍頭，市佔率超過 55%，技術領先優勢明顯"
-    "1": "先進製程（5nm/3nm）持續滿載，是蘋果、輝達等巨頭的唯一選擇"
-    "2": "護城河極深：高資本支出門檻讓競爭者難以追上"
-    "3": "長期受惠於 AI、HPC、電動車等結構性成長趨勢"
-  "2317":
-    "0": "全球最大的電子代工帝國，iPhone 主要組裝廠"
-    "1": "營收規模巨大但毛利率偏低（約 5-6%），靠量取勝"
-    "2": "積極佈局電動車、伺服器、機器人等新領域"
-    "3": "風險：過度依賴蘋果訂單，地緣政治影響產能配置"
-  "2454":
-    "0": "手機晶片設計龍頭，聯發科天系列在 Android 陣營市佔率第一"
-    "1": "輕資產模式（無晶圓廠），毛利率高達 45% 以上"
-    "2": "積極拓展車用、AIoT、Wi-Fi 7 等新市場"
-    "3": "與高通競爭激烈，但性價比優勢在中低階市場明顯"
-  "2308":
-    "0": "電源供應器隱形冠軍，從消費電子到資料中心都有佈局"
-    "1": "毛利率穩定在 25-30%，獲利能力優於同業"
-    "2": "受惠於 AI 伺服器電源需求爆發，成長動能強勁"
-    "3": "產品線多元，分散單一客戶風險"
-  "2881":
-    "0": "台灣最大泛公股金控之一，旗下涵蓋銀行、證券、壽險"
-    "1": "獲利穩健，配息大方，是存股族熱門選擇"
-    "2": "房貸比重較高，需留意房地產市場波動風險"
-    "3": "數位金融轉型積極，但進展相對民營金控緩慢"
-  "1101":
-    "0": "台灣最老牌水泥廠，深耕市場超過 70 年"
-    "1": "水泥產業景氣與公共建設高度相關"
-    "2": "多角化經營（電力、化工、運輸）降低單一產業風險"
-    "3": "獲利穩定但成長性有限，適合保守型投資人"
-  "2002":
-    "0": "台灣鋼鐵業龍頭，產品線完整（鋼筋、型鋼、鋼板）"
-    "1": "鋼鐵景氣循環明顯，獲利波動較大"
-    "2": "積極發展高附加價值產品（汽車板、電磁鋼片）"
-    "3": "受惠於公共建設與製造業回溫"
-  "1301":
-    "0": "台灣最大塑膠集團，產品遍及民生與工業用途"
-    "1": "上游原料（乙烯）價格波動影響獲利甚鉅"
-    "2": "兩岸佈局完整，但中國市場競爭加劇"
-    "3": "朝高值化、環保材料方向轉型"
-  "2357":
-    "0": "華碩品牌價值高，ROG 電競系列在全球市佔率領先"
-    "1": "PC 產業成熟，但電競與創作者市場仍有成長空間"
-    "2": "AI PC 換機潮是未來重要成長動能"
-    "3": "伺服器業務快速成長，成為第二成長曲線"
-  "2382":
-    "0": "全球最大筆記型電腦代工廠，蘋果 MacBook 主要製造商"
-    "1": "積極轉型伺服器/雲端業務，AI 伺服器訂單暢旺"
-    "2": "毛利率約 3-4%，靠規模經濟維持獲利"
-    "3": "風險：筆電市場飽和，成長依賴伺服器業務"
-  "2886":
-    "0": "台灣最大公股金控，外匯業務市場領導者"
-    "1": "海外據點最多，跨境金融業務是核心優勢"
-    "2": "獲利穩健，殖利率約 3-4%，適合存股"
-    "3": "公股背景讓其經營相對保守穩健"
-  "2891":
-    "0": "台灣最大民營金控，信用卡與消費金融領導品牌"
-    "1": "中信銀行是台灣最大的信用卡發卡行"
-    "2": "海外佈局積極，尤其在中國和東南亞"
-    "3": "數位金融發展領先同業，Bank 3.0 佈局完整"
-  "1216":
-    "0": "統一集團橫跨食品、零售、物流的綜合企業集團"
-    "1": "統一超商（7-11）是台灣最大的便利商店網絡"
-    "2": "多角化經營穩定，現金流充沛"
-    "3": "東南亞和中國市場是未來成長重點"
-  "2912":
-    "0": "台灣便利商店龍頭，市佔率超過 50%"
-    "1": "據點密度全球最高（平均每 500 公尺一家）"
-    "2": "從零售延伸到物流、金融、電商等生態系"
-    "3": "單店營收成長趨緩，但多元服務提升客單價"
-  "2303":
-    "0": "台灣第二大晶圓代工廠，專注成熟製程"
-    "1": "成熟製程（28nm 以上）需求穩定，車用、IoT 是主力"
-    "2": "與台積電互補，不直接競爭先進製程"
-    "3": "產能利用率是觀察營運的關鍵指標"
-  "2345":
-    "0": "網路交換器大廠，資料中心關鍵設備供應商"
-    "1": "受惠於 AI 資料中心建置潮，400G/800G 交換器需求爆發"
-    "2": "白牌交換器趨勢有利於獨立供應商"
-    "3": "客戶涵蓋全球主要雲端服務業者"
-  "3008":
-    "0": "手機鏡頭霸主，全球市佔率超過 30%"
-    "1": "技術門檻高，鏡片數持續增加（7P→8P）提升單價"
-    "2": "蘋果和 Android 陣營雙引擎驅動"
-    "3": "風險：中國競爭者（舜宇、瑞聲）持續追趕"
-  "2412":
-    "0": "台灣最大電信業者，行動用戶數超過 1,000 萬"
-    "1": "電信產業穩定，現金流充沛，配息大方"
-    "2": "5G 資費提升 ARPU，但資本支出也增加"
-    "3": "積極發展企業客戶和數位加值服務"
-  "3711":
-    "0": "全球最大封裝測試廠，與台積電緊密合作"
-    "1": "先進封裝（CoWoS、InFO）是 AI 晶片關鍵製程"
-    "2": "受惠於 AI 晶片封裝需求爆發，產能供不應求"
-    "3": "資本支出持續增加以滿足客戶需求"
-  "2324":
-    "0": "全球第二大筆記型電腦代工廠，戴爾、惠普主要夥伴"
-    "1": "積極拓展伺服器業務，降低對筆電依賴"
-    "2": "毛利率偏低，靠規模和效率維持競爭力"
-    "3": "越南、墨西哥等海外產能佈局分散風險"
-
+  one_liner: '{first_sentence}，是 {industry} 的重要成員'
+  gm_high: 毛利率 {gm:.1f}%，獲利能力在同產業中屬於前段班
+  gm_medium: 毛利率 {gm:.1f}%，利潤空間穩定
+  gm_low: 毛利率 {gm:.1f}%，屬於薄利多銷的經營模式
+  gm_very_low: 毛利率僅 {gm:.1f}%，獲利空間有限，需靠規模取勝
+  yoy_high: 營收年增 {yoy:.0f}%，成長動能強勁
+  yoy_medium: 營收年增 {yoy:.0f}%，穩定成長中
+  yoy_flat: 營收年增 {yoy:.0f}%，與去年持平
+  yoy_negative: 營收年減 {yoy:.0f}%，需留意衰退原因
+  per_high: 本益比 {per:.1f} 倍，市場給予高度成長預期
+  per_medium: 本益比 {per:.1f} 倍，評價合理
+  per_low: 本益比 {per:.1f} 倍，市場評價相對保守
+  per_negative: 目前處於虧損狀態，本益比無參考意義
+  dy_high: 殖利率 {dy:.2f}%，是熱門的存股選擇
+  dy_medium: 殖利率 {dy:.2f}%，配息穩健
+  dy_low: 殖利率 {dy:.2f}%，配息較少，成長優先
+  dy_none: 目前不配息，公司將盈餘保留再投資
+  roe_high: ROE {roe:.1f}%，股東報酬率優異
+  roe_medium: ROE {roe:.1f}%，資本運用效率良好
+  roe_low: ROE {roe:.1f}%，資本運用效率有改善空間
+  roe_negative: 目前 ROE 為負，公司尚未為股東創造報酬
+  debt_high: 負債比 {debt:.0f}%，財務槓桿較高，需留意償債風險
+  debt_medium: 負債比 {debt:.0f}%，適度運用槓桿
+  debt_low: 負債比 {debt:.0f}%，財務結構穩健
+  '2330':
+    '0': 全球晶圓代工龍頭，市佔率超過 55%，技術領先優勢明顯
+    '1': 先進製程（5nm/3nm）持續滿載，是蘋果、輝達等巨頭的唯一選擇
+    '2': 護城河極深：高資本支出門檻讓競爭者難以追上
+    '3': 長期受惠於 AI、HPC、電動車等結構性成長趨勢
+  '2317':
+    '0': 全球最大的電子代工帝國，iPhone 主要組裝廠
+    '1': 營收規模巨大但毛利率偏低（約 5-6%），靠量取勝
+    '2': 積極佈局電動車、伺服器、機器人等新領域
+    '3': 風險：過度依賴蘋果訂單，地緣政治影響產能配置
+  '2454':
+    '0': 手機晶片設計龍頭，聯發科天系列在 Android 陣營市佔率第一
+    '1': 輕資產模式（無晶圓廠），毛利率高達 45% 以上
+    '2': 積極拓展車用、AIoT、Wi-Fi 7 等新市場
+    '3': 與高通競爭激烈，但性價比優勢在中低階市場明顯
+  '2308':
+    '0': 電源供應器隱形冠軍，從消費電子到資料中心都有佈局
+    '1': 毛利率穩定在 25-30%，獲利能力優於同業
+    '2': 受惠於 AI 伺服器電源需求爆發，成長動能強勁
+    '3': 產品線多元，分散單一客戶風險
+  '2881':
+    '0': 台灣最大泛公股金控之一，旗下涵蓋銀行、證券、壽險
+    '1': 獲利穩健，配息大方，是存股族熱門選擇
+    '2': 房貸比重較高，需留意房地產市場波動風險
+    '3': 數位金融轉型積極，但進展相對民營金控緩慢
+  '1101':
+    '0': 台灣最老牌水泥廠，深耕市場超過 70 年
+    '1': 水泥產業景氣與公共建設高度相關
+    '2': 多角化經營（電力、化工、運輸）降低單一產業風險
+    '3': 獲利穩定但成長性有限，適合保守型投資人
+  '2002':
+    '0': 台灣鋼鐵業龍頭，產品線完整（鋼筋、型鋼、鋼板）
+    '1': 鋼鐵景氣循環明顯，獲利波動較大
+    '2': 積極發展高附加價值產品（汽車板、電磁鋼片）
+    '3': 受惠於公共建設與製造業回溫
+  '1301':
+    '0': 台灣最大塑膠集團，產品遍及民生與工業用途
+    '1': 上游原料（乙烯）價格波動影響獲利甚鉅
+    '2': 兩岸佈局完整，但中國市場競爭加劇
+    '3': 朝高值化、環保材料方向轉型
+  '2357':
+    '0': 華碩品牌價值高，ROG 電競系列在全球市佔率領先
+    '1': PC 產業成熟，但電競與創作者市場仍有成長空間
+    '2': AI PC 換機潮是未來重要成長動能
+    '3': 伺服器業務快速成長，成為第二成長曲線
+  '2382':
+    '0': 全球最大筆記型電腦代工廠，蘋果 MacBook 主要製造商
+    '1': 積極轉型伺服器/雲端業務，AI 伺服器訂單暢旺
+    '2': 毛利率約 3-4%，靠規模經濟維持獲利
+    '3': 風險：筆電市場飽和，成長依賴伺服器業務
+  '2886':
+    '0': 台灣最大公股金控，外匯業務市場領導者
+    '1': 海外據點最多，跨境金融業務是核心優勢
+    '2': 獲利穩健，殖利率約 3-4%，適合存股
+    '3': 公股背景讓其經營相對保守穩健
+  '2891':
+    '0': 台灣最大民營金控，信用卡與消費金融領導品牌
+    '1': 中信銀行是台灣最大的信用卡發卡行
+    '2': 海外佈局積極，尤其在中國和東南亞
+    '3': 數位金融發展領先同業，Bank 3.0 佈局完整
+  '1216':
+    '0': 統一集團橫跨食品、零售、物流的綜合企業集團
+    '1': 統一超商（7-11）是台灣最大的便利商店網絡
+    '2': 多角化經營穩定，現金流充沛
+    '3': 東南亞和中國市場是未來成長重點
+  '2912':
+    '0': 台灣便利商店龍頭，市佔率超過 50%
+    '1': 據點密度全球最高（平均每 500 公尺一家）
+    '2': 從零售延伸到物流、金融、電商等生態系
+    '3': 單店營收成長趨緩，但多元服務提升客單價
+  '2303':
+    '0': 台灣第二大晶圓代工廠，專注成熟製程
+    '1': 成熟製程（28nm 以上）需求穩定，車用、IoT 是主力
+    '2': 與台積電互補，不直接競爭先進製程
+    '3': 產能利用率是觀察營運的關鍵指標
+  '2345':
+    '0': 網路交換器大廠，資料中心關鍵設備供應商
+    '1': 受惠於 AI 資料中心建置潮，400G/800G 交換器需求爆發
+    '2': 白牌交換器趨勢有利於獨立供應商
+    '3': 客戶涵蓋全球主要雲端服務業者
+  '3008':
+    '0': 手機鏡頭霸主，全球市佔率超過 30%
+    '1': 技術門檻高，鏡片數持續增加（7P→8P）提升單價
+    '2': 蘋果和 Android 陣營雙引擎驅動
+    '3': 風險：中國競爭者（舜宇、瑞聲）持續追趕
+  '2412':
+    '0': 台灣最大電信業者，行動用戶數超過 1,000 萬
+    '1': 電信產業穩定，現金流充沛，配息大方
+    '2': 5G 資費提升 ARPU，但資本支出也增加
+    '3': 積極發展企業客戶和數位加值服務
+  '3711':
+    '0': 全球最大封裝測試廠，與台積電緊密合作
+    '1': 先進封裝（CoWoS、InFO）是 AI 晶片關鍵製程
+    '2': 受惠於 AI 晶片封裝需求爆發，產能供不應求
+    '3': 資本支出持續增加以滿足客戶需求
+  '2324':
+    '0': 全球第二大筆記型電腦代工廠，戴爾、惠普主要夥伴
+    '1': 積極拓展伺服器業務，降低對筆電依賴
+    '2': 毛利率偏低，靠規模和效率維持競爭力
+    '3': 越南、墨西哥等海外產能佈局分散風險
 chart:
-  unit_hundred_million: 億
-  valuation:
-    no_price_data: 暫無股價資料
-    no_financial_data_per: 暫無財務資料，無法計算本益比
-    no_per_data: 目前無法取得本益比資料
-    no_price_data_5y: 近五年無股價資料
-    data_less_than_5y: "（資料不足 5 年，顯示全部可用資料）"
-    cannot_extract_eps: 無法從財務資料中提取 EPS
-    eps_negative_or_zero: EPS 為負或零，無法計算本益比
-    valuation_low: "📉 目前估值偏低，比過去 75% 的時候都便宜"
-    valuation_high: "📈 目前估值偏高，比過去 75% 的時候都貴"
-    valuation_middle: "📊 目前估值在中間範圍"
-    percentile_band: 25th-75th 百分位
-    historical_per: 歷史 PER
-    hover_template: "日期: %{x|%Y/%m/%d}<br>PER: %{y:.1f}<extra></extra>"
-    current_per: "目前 PER: {value:.1f}"
-    chart_title: "{name} 估值區間（歷史 P/E 範圍）"
-    chart_subtitle: " <sub style='font-size:0.7rem;color:#7F8C8D;'>💡 PER = 本益比</sub>"
-    xaxis_title: 日期
-    yaxis_title: "本益比 (PER)"
-    chart_failed: 估值區間圖計算失敗
-  stock_financial:
-    revenue_source: 營收來源
-    no_revenue_composition: 暫無營收組成資料
-    proportion: 佔比
-    revenue_trend: 月營收趨勢
-    no_revenue_data: 暫無營收資料
-    monthly_revenue: 月營收
-    yoy_rate: 年增率
-    revenue: 營收
-    price_trend: 股價走勢
-    no_price_data: 暫無股價資料
-    open: 開盤
-    high: 最高
-    low: 最低
-    close: 收盤
-    single_day_only: 僅單日資料
-    price: 價格
-    single_day_note: 只有1天的資料，改用長條圖顯示
-    candlestick: K線
-    volume: 成交量
-    thousand_shares: 張數(千)
-    profit_funnel: 利潤漏斗
-    revenue_stage: 營收
-    gross_profit: 毛利
-    operating_income: 營業利益
-    net_income: 淨利
-    no_financial_data: 暫無財務資料
-    no_comparison_data: 暫無比較資料
-    institutional_trading: 三大法人買賣超
-    no_institutional_data: 暫無法人資料
-    net_buy_sell: 買賣超
-    shares: 張
-
+  health:
+    no_data: 暫無健康評分資料
+    current_score: 目前評分
+    pass_line: 及格線 (40)
+    good_line: 良好線 (70)
+    title: '{stock_name} 公司健康狀況'
+    score_tooltip: '<b>{category}: {score:.0f}分</b>'
+    benchmark_tooltip: '<b>{label} — {category}: {score:.0f}分</b>'
 risk:
   customer_concentration_title: 客戶集中風險
-  customer_high_concentration: "根據最近一期財報，前三大客戶合計佔營收約 {pct:.0f}%。"
-  customer_medium_concentration: "近月營收主要來自 2–3 個業務線，最大業務線佔營收約 {pct:.0f}%。"
-  customer_low_concentration: "公司營收來源分散在多個業務線，最大業務線佔營收不到 {pct:.0f}%。"
-  revenue_unstable: "過去 12 個月營收波動幅度（變異係數為 {cv:.2f}），顯示收入來源較不穩定。"
-  revenue_unstable_note: "這意味著少數客戶的訂單變化會顯著影響公司營收。"
-  revenue_normal: "過去 12 個月營收波動幅度為 {cv:.2f}，屬於正常範圍。"
-  revenue_normal_note: "公司營收來源有一定集中，但仍在可控範圍。"
-  revenue_stable: "過去 12 月營收波動幅度為 {cv:.2f}，收入來源穩定多元。"
+  customer_high_concentration: 根據最近一期財報，前三大客戶合計佔營收約 {pct:.0f}%。
+  customer_medium_concentration: 近月營收主要來自 2–3 個業務線，最大業務線佔營收約 {pct:.0f}%。
+  customer_low_concentration: 公司營收來源分散在多個業務線，最大業務線佔營收不到 {pct:.0f}%。
+  revenue_unstable: 過去 12 個月營收波動幅度（變異係數為 {cv:.2f}），顯示收入來源較不穩定。
+  revenue_unstable_note: 這意味著少數客戶的訂單變化會顯著影響公司營收。
+  revenue_normal: 過去 12 個月營收波動幅度為 {cv:.2f}，屬於正常範圍。
+  revenue_normal_note: 公司營收來源有一定集中，但仍在可控範圍。
+  revenue_stable: 過去 12 月營收波動幅度為 {cv:.2f}，收入來源穩定多元。
   financial_health_title: 財務健康風險
-  debt_high: "最近一期負債比為 {ratio:.0f}%，高於一般認為的警戒線 65%。"
-  debt_medium: "負債比為 {ratio:.0f}%，屬於適度槓桿範圍。"
-  debt_low: "負債比僅 {ratio:.0f}%，財務結構穩健。"
-  cashflow_negative: "過去 4 季營業現金流有 2 季為負數，表示本業賺取的現金不足以支應營運所需。"
-  cashflow_mixed: "過去 4 季營業現金流有 1 季為負，需留意後續是否改善。"
-  cashflow_positive: "過去 4 季營業現金流均為正數，本業現金創造能力良好。"
-  margin_very_low: "淨利率僅 {margin:.1f}%，獲利空間極為有限。"
-  margin_medium: "淨利率為 {margin:.1f}%，獲利穩定但不算突出。"
-  margin_high: "淨利率維持在 {margin:.1f}% 以上，獲利能力在同產業中屬於前段班。"
+  debt_high: 最近一期負債比為 {ratio:.0f}%，高於一般認為的警戒線 65%。
+  debt_medium: 負債比為 {ratio:.0f}%，屬於適度槓桿範圍。
+  debt_low: 負債比僅 {ratio:.0f}%，財務結構穩健。
+  cashflow_negative: 過去 4 季營業現金流有 2 季為負數，表示本業賺取的現金不足以支應營運所需。
+  cashflow_mixed: 過去 4 季營業現金流有 1 季為負，需留意後續是否改善。
+  cashflow_positive: 過去 4 季營業現金流均為正數，本業現金創造能力良好。
+  margin_very_low: 淨利率僅 {margin:.1f}%，獲利空間極為有限。
+  margin_medium: 淨利率為 {margin:.1f}%，獲利穩定但不算突出。
+  margin_high: 淨利率維持在 {margin:.1f}% 以上，獲利能力在同產業中屬於前段班。
   event_risk_title: 事件型風險
-  event_high_count: "近 90 天內有 {count} 則重大消息"
-  event_includes: "，包含{events}"
-  event_high_impact: "其中 {count} 則被列為高度關注事件。"
-  event_foreign_selling: "同期外資累計賣超，法人態度偏向保守。"
-  event_medium_count: "近 90 天內有 {count} 則中度關注消息，涉及產品認證與供應鏈調整。"
-  event_foreign_neutral: "同期外資買賣互見，法人態度中性。"
-  event_low: "近 90 天內未有重大消息，新聞多為例行性公告。"
-  event_foreign_buying: "同期外資小幅買超，法人態度穩定。"
+  event_high_count: 近 90 天內有 {count} 則重大消息
+  event_includes: ，包含{events}
+  event_high_impact: 其中 {count} 則被列為高度關注事件。
+  event_foreign_selling: 同期外資累計賣超，法人態度偏向保守。
+  event_medium_count: 近 90 天內有 {count} 則中度關注消息，涉及產品認證與供應鏈調整。
+  event_foreign_neutral: 同期外資買賣互見，法人態度中性。
+  event_low: 近 90 天內未有重大消息，新聞多為例行性公告。
+  event_foreign_buying: 同期外資小幅買超，法人態度穩定。
   insufficient_data: 風險分析資料不足
   dim_customer: 客戶集中
   dim_financial: 財務健康
   dim_event: 事件型
-  summary_high_risk: "分析顯示 {dims} 面向存在較高風險，以下為各維度詳細說明。"
-  summary_normal: "以下為各風險維度分析，資料來源為近期公開資訊。"
+  summary_high_risk: 分析顯示 {dims} 面向存在較高風險，以下為各維度詳細說明。
+  summary_normal: 以下為各風險維度分析，資料來源為近期公開資訊。
   simplifier:
     level:
       1:
-        label: "非常低風險"
-        description: "這家公司目前風險很低，財務健康狀況良好（平均 {health_avg:.0f} 分）。各項風險指標都在安全範圍內，適合保守型投資人關注。"
+        label: 非常低風險
+        description: 這家公司目前風險很低，財務健康狀況良好（平均 {health_avg:.0f} 分）。各項風險指標都在安全範圍內，適合保守型投資人關注。
       2:
-        label: "低風險"
-        description: "這家公司風險偏低，財務健康狀況尚可（平均 {health_avg:.0f} 分）。雖然有些小地方可以留意，但整體來說問題不大。"
+        label: 低風險
+        description: 這家公司風險偏低，財務健康狀況尚可（平均 {health_avg:.0f} 分）。雖然有些小地方可以留意，但整體來說問題不大。
       3:
-        label: "中等風險"
+        label: 中等風險
         description:
-          weak: "這家公司有中等程度的風險，財務健康狀況普通（平均 {health_avg:.0f} 分）。其中 {weak_dims} 面向需要特別留意。"
-          mixed: "這家公司有中等程度的風險，財務健康狀況普通（平均 {health_avg:.0f} 分）。部分指標表現不均，建議持續觀察。"
+          weak: 這家公司有中等程度的風險，財務健康狀況普通（平均 {health_avg:.0f} 分）。其中 {weak_dims} 面向需要特別留意。
+          mixed: 這家公司有中等程度的風險，財務健康狀況普通（平均 {health_avg:.0f} 分）。部分指標表現不均，建議持續觀察。
       4:
-        label: "高風險"
-        description: "這家公司風險較高，財務健康狀況偏弱（平均 {health_avg:.0f} 分）。有明顯的高風險面向，投資前請做好功課並評估自身風險承受能力。"
+        label: 高風險
+        description: 這家公司風險較高，財務健康狀況偏弱（平均 {health_avg:.0f} 分）。有明顯的高風險面向，投資前請做好功課並評估自身風險承受能力。
       5:
-        label: "非常高風險"
-        description: "這家公司風險非常高，財務健康狀況較差（平均 {health_avg:.0f} 分）。多個風險指標亮紅燈，建議謹慎評估，不適合風險承受度較低的投資人。"
-
-story:
-  feed:
-    historian:
-      1: "這位歷史學者追溯過往類似的市場訊號…"
-      2: "翻開歷史的篇章，這位史官發現類似的情境…"
-      3: "從歷史的角度來看，這樣的走勢往往…"
-      4: "回顧過去十年，類似的事件曾導致…"
-    event:
-      unknown: "未知事件"
-    analogy:
-      revenue_surge: "營收的變化就像觀察一家餐廳的每日來客數。"
-      price_abnormal: "股價劇烈波動就像氣溫骤變，可能有暴風雨要來了。"
-      news: "市場新聞就像天氣預報，提醒我們要帶傘還是穿短袖。"
-      institutional_shift: "法人買賣就像大戶在牌桌上的下注，值得留意。"
-      default: "每一個市場事件背後，都有值得關注的故事。"
-    sector:
-      direction:
-        up: "走強"
-        down: "走弱"
-        flat: "盤整"
-      title: "{sector} {direction}（平均 {avg:+.1f}%）"
-      summary: "本日 {sector} 共有 {count} 檔有數據，其中 {up} 檔上漲、{down} 檔下跌。"
-      analogy:
-        top_mover: "領頭羊 {stock_name} 變動 {top_chg:+.1f}%，像龍捲風的風眼帶領方向。"
-        general: "{sector} 的整體表現，就像觀察一整片森林的季節變化。"
-      historian_note: "📜 從歷史來看，{sector} 的平均報酬率與整體景氣循環密切相關。"
-    education:
-      title: "📚 今日指標教室：{display_name}"
-      analogy_default: "每天學一個指標，就像每天多認識一位新朋友。"
-
+        label: 非常高風險
+        description: 這家公司風險非常高，財務健康狀況較差（平均 {health_avg:.0f} 分）。多個風險指標亮紅燈，建議謹慎評估，不適合風險承受度較低的投資人。
 pattern:
-  outcome_positive: "{count} 次偏向正面"
-  outcome_mixed: "{count} 次結果不一"
-  outcome_negative: "{count} 次偏向負面"
-  history_total: "共 {total} 筆歷史記錄"
-  history_summary: "歷史共 {total} 次類似事件：{parts}"
-
+  outcome_positive: '{count} 次偏向正面'
+  outcome_mixed: '{count} 次結果不一'
+  outcome_negative: '{count} 次偏向負面'
+  history_total: 共 {total} 筆歷史記錄
+  history_summary: 歷史共 {total} 次類似事件：{parts}
 event:
-  fallback_short: "\"{title}\" 代表市場出現了值得關注的變化。"
-  fallback_detail: "這筆事件記錄顯示 \"{title}\"。建議搭配其他資訊一起觀察，不要僅憑單一事件做判斷。"
-  fallback_key_concept: "單一事件不足以判斷，要搭配整體分析"
-  severity_high: "重大"
-  severity_medium: "注意"
-  severity_low: "參考"
-  severity_unknown: "未知"
-  interpretation_header: "【事件解讀】\n\n"
-  interpretation_severity: "這是一則「{severity_label}」等級的「{event_type}」事件。\n\n"
-  interpretation_key_concept: "📌 核心概念：{key_concept}\n\n"
-  interpretation_detail: "📖 詳細說明：{detail}\n\n"
-  interpretation_summary: "📋 原始摘要：{summary}\n\n"
-  interpretation_disclaimer: "⚠️ 歷史學家觀點：以上解讀僅說明事件背景與可能意涵，不構成任何投資建議。"
+  fallback_short: '"{title}" 代表市場出現了值得關注的變化。'
+  fallback_detail: 這筆事件記錄顯示 "{title}"。建議搭配其他資訊一起觀察，不要僅憑單一事件做判斷。
+  fallback_key_concept: 單一事件不足以判斷，要搭配整體分析
+  severity_high: 重大
+  severity_medium: 注意
+  severity_low: 參考
+  severity_unknown: 未知
+  interpretation_header: '【事件解讀】
 
-chart:
-  health:
-    no_data: "暫無健康評分資料"
-    current_score: "目前評分"
-    pass_line: "及格線 (40)"
-    good_line: "良好線 (70)"
-    title: "{stock_name} 公司健康狀況"
-    score_tooltip: "<b>{category}: {score:.0f}分</b>"
-    benchmark_tooltip: "<b>{label} — {category}: {score:.0f}分</b>"
+
+    '
+  interpretation_severity: '這是一則「{severity_label}」等級的「{event_type}」事件。
+
+
+    '
+  interpretation_key_concept: '📌 核心概念：{key_concept}
+
+
+    '
+  interpretation_detail: '📖 詳細說明：{detail}
+
+
+    '
+  interpretation_summary: '📋 原始摘要：{summary}
+
+
+    '
+  interpretation_disclaimer: ⚠️ 歷史學家觀點：以上解讀僅說明事件背景與可能意涵，不構成任何投資建議。
 moat:
   type:
     none: 無明顯護城河
@@ -2010,7 +1911,7 @@ moat:
     switching: 客戶轉換至高競爭對手的成本高，形成自然鎖定
     scale: 公司因規模龐大而享有單位成本優勢，新進入者難以競爭
   evidence:
-    auto_score: "系統自動評分：{moat_type}"
+    auto_score: 系統自動評分：{moat_type}
 delta:
   metric:
     revenue_monthly: 月營收
@@ -2018,4 +1919,4 @@ delta:
     revenue_yoy: 營收年增率
   previous_year_same_period: 去年同期
 metric_education:
-  roe_display_name: "ROE（股東權益報酬率）"
+  roe_display_name: ROE（股東權益報酬率）

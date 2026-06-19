@@ -1,5 +1,35 @@
 # Handoff — Stock Explorer (股識)
 
+> **上次更新**: 2026-06-20
+
+## 2026-06-20 Session Summary — i18n 微顆粒遷移 (academy.py)
+
+### What was done
+- 添加 src/pages/academy.py 所需的所有 missing locale key 至 locales/en.yaml 和 locales/zh-TW.yaml
+- 修正 locales/en.yaml 中的 YAML 引號錯誤（notification 區塊）
+- 確保所有 t('academy.*') 呼叫都有對應的翻譯
+- 執行 i18n key 測試 (tests/test_daily_market.py::TestI18nKeys) 全數通過
+
+### Roles involved
+- PM: 協調、分配工作、驗證、更新狀態、提交推送
+- Developer: 執行 i18n 遷移與 key 補充
+
+### Result
+- ✅ PASS — 微顆粒 i18n 遷移完成，所有修改已提交
+
+### Files changed
+- locales/en.yaml — 新增 academy 映射，修復引號錯誤
+- locales/zh-TW.yaml — 新增 academy.key_point、academy.load_error、academy.colon 等 key
+- src/pages/academy.py — 無實質程式碼變更（確認已全用 t() 呼叫）
+- src/pages/business_card/_helpers.py — 小幅修正（若有）
+- .gitignore — 添加暫存排除（若有）
+- docs/state/handoff.md — 更新紀錄
+
+### Git commit + push
+- 3f52cc1
+
+# Handoff — Stock Explorer (股識)
+
 > **上次更新**: 2026-06-19
 
 ## 2026-06-19 Session Summary — i18n 微顆粒遷移 (notification centre)
