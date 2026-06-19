@@ -298,10 +298,10 @@ def _render_academy(client: FinMindClient):
             with st.container():
                 col_main, col_btn = st.columns([4, 1])
                 with col_main:
-                    st.markdown(f"### {status_icon} {l_icon} {t('academy.lesson_number', order=order)}：{l_title}")
-                    st.markdown(f"⏱ {l_time} ｜ 📊 {t('academy.difficulty')}：{l_diff}")
+                    st.markdown(f"### {status_icon} {l_icon} {t('academy.lesson_number', order=order)}{t('academy.colon')}{l_title}")
+                    st.markdown(f"⏱ {l_time} ｜ 📊 {t('academy.difficulty')}{t('academy.colon')}{l_diff}")
                     if is_completed:
-                        st.caption(f"{t('academy.completed')} ｜ {t('academy.score')}：{score:.0f}%")
+                        st.caption(f"{t('academy.completed')} ｜ {t('academy.score')}{t('academy.colon')}{score:.0f}%")
                 with col_btn:
                     if st.button(
                         t('academy.start') if not is_completed else t('academy.review'),
@@ -341,8 +341,8 @@ def _render_academy(client: FinMindClient):
         l_time = lesson.get("estimated_time", "")
         l_diff = lesson.get("difficulty", "")
 
-        st.markdown(f"## {l_icon} {t('academy.lesson_number', order=lesson.get('order', ''))}：{l_title}")
-        st.markdown(f"⏱ {l_time} ｜ 📊 {t('academy.difficulty')}：{l_diff}")
+        st.markdown(f"## {l_icon} {t('academy.lesson_number', order=lesson.get('order', ''))}{t('academy.colon')}{l_title}")
+        st.markdown(f"⏱ {l_time} ｜ 📊 {t('academy.difficulty')}{t('academy.colon')}{l_diff}")
         st.markdown("---")
 
         # Learning objectives

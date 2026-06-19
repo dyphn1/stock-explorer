@@ -1,16 +1,16 @@
 # Graph Report - stock-explorer  (2026-06-19)
 
 ## Corpus Check
-- 214 files · ~144,658 words
+- 215 files · ~145,055 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2707 nodes · 5586 edges · 208 communities (152 shown, 56 thin omitted)
-- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 307 edges (avg confidence: 0.52)
+- 2707 nodes · 5585 edges · 204 communities (146 shown, 58 thin omitted)
+- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 306 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7c31d527`
+- Built from commit: `1467644c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -132,14 +132,11 @@
 - [[_COMMUNITY_Feedback Service Management|Feedback Service Management]]
 - [[_COMMUNITY_URL and Session Sync|URL and Session Sync]]
 - [[_COMMUNITY_Company Facts Service|Company Facts Service]]
-- [[_COMMUNITY_Dividend and Price Data Checks|Dividend and Price Data Checks]]
 - [[_COMMUNITY_Cache Cleanup Utilities|Cache Cleanup Utilities]]
 - [[_COMMUNITY_Company Health Charts|Company Health Charts]]
 - [[_COMMUNITY_Stock Valuation Charts|Stock Valuation Charts]]
 - [[_COMMUNITY_Arc Key I18n Validation|Arc Key I18n Validation]]
-- [[_COMMUNITY_Shared Utility Functions|Shared Utility Functions]]
 - [[_COMMUNITY_Page Router Integration Tests|Page Router Integration Tests]]
-- [[_COMMUNITY_Daily Story Plugin Adapter|Daily Story Plugin Adapter]]
 - [[_COMMUNITY_Screener Template Loading|Screener Template Loading]]
 - [[_COMMUNITY_Timeline Entry Construction|Timeline Entry Construction]]
 - [[_COMMUNITY_Company Stock Group|Company Stock Group]]
@@ -208,14 +205,12 @@
 - [[_COMMUNITY_Advantech|Advantech]]
 - [[_COMMUNITY_Taiwan Cement Stock|Taiwan Cement Stock]]
 - [[_COMMUNITY_Fubon Financial Stock|Fubon Financial Stock]]
-- [[_COMMUNITY_Community 201|Community 201]]
-- [[_COMMUNITY_Community 202|Community 202]]
 - [[_COMMUNITY_Community 206|Community 206]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `t()` - 246 edges
 2. `_info_card()` - 85 edges
-3. `FinMindClient` - 82 edges
+3. `FinMindClient` - 81 edges
 4. `_section_title()` - 68 edges
 5. `ExplanationRequest` - 64 edges
 6. `LegacyPageAdapter` - 58 edges
@@ -229,37 +224,37 @@
   tests/test_plugin_chassis.py → src/core/plugin_protocol.py
 - `TestLegacyPageAdapter` --uses--> `PluginMetadata`  [INFERRED]
   tests/test_plugin_chassis.py → src/core/plugin_protocol.py
-- `TestPhase1Plugins` --uses--> `PluginMetadata`  [INFERRED]
-  tests/test_plugin_chassis.py → src/core/plugin_protocol.py
 - `TestPluginRegistry` --uses--> `PluginMetadata`  [INFERRED]
   tests/test_plugin_chassis.py → src/core/plugin_protocol.py
 - `TestPluginRenderContext` --uses--> `PluginMetadata`  [INFERRED]
+  tests/test_plugin_chassis.py → src/core/plugin_protocol.py
+- `RegistryWithOverride` --uses--> `PluginRenderContext`  [INFERRED]
   tests/test_plugin_chassis.py → src/core/plugin_protocol.py
 
 ## Import Cycles
 - 1-file cycle: `src/services/scenario_calculator.py -> src/services/scenario_calculator.py`
 
-## Communities (208 total, 56 thin omitted)
+## Communities (204 total, 58 thin omitted)
 
 ### Community 0 - "Business Card Rendering"
 Cohesion: 0.08
-Nodes (54): 財務體質頁 — M2 第二頁 目標：用生活化比喻理解財務數據, _render_financial_health(), 營運健檢頁 — M2 第一頁 目標：理解這家公司的商業模式, _render_operation_checkup(), Revenue Tree page (C36) — detailed revenue breakdown with tree visualization.  T, C36 Revenue Tree V2 — deep dive into revenue structure and product mix.      Sho, _render_revenue_tree(), _白话_card() (+46 more)
+Nodes (58): 財務體質頁 — M2 第二頁 目標：用生活化比喻理解財務數據, _render_financial_health(), 營運健檢頁 — M2 第一頁 目標：理解這家公司的商業模式, _render_operation_checkup(), _confidence_badge(), _glossary_tooltip(), Render a section title with an inline read time badge.      C205: Only shows the, Render a clickable ℹ️ tooltip that shows glossary definition.      Uses st.popov (+50 more)
 
 ### Community 1 - "Legacy Plugin Adapters"
-Cohesion: 0.05
-Nodes (33): src/plugins/academy/plugin.py Phase 2: LegacyPageAdapter for academy (standalone, src/plugins/business_card/plugin.py Phase 2: LegacyPageAdapter for business_card, src/plugins/case_study_library/plugin.py — Phase 2: LegacyPageAdapter for case_s, src/plugins/case_study/plugin.py — Phase 2: LegacyPageAdapter for case_study., src/plugins/category_browser/plugin.py Phase 1: LegacyPageAdapter for category_b, src/plugins/compare_stories/plugin.py Phase 2: LegacyPageAdapter for compare_sto, src/plugins/comprehension_check/plugin.py — Phase 2: LegacyPageAdapter for compr, PluginCategory (+25 more)
+Cohesion: 0.04
+Nodes (36): src/plugins/academy/plugin.py Phase 2: LegacyPageAdapter for academy (standalone, src/plugins/business_card/plugin.py Phase 2: LegacyPageAdapter for business_card, src/plugins/case_study_library/plugin.py — Phase 2: LegacyPageAdapter for case_s, src/plugins/case_study/plugin.py — Phase 2: LegacyPageAdapter for case_study., src/plugins/category_browser/plugin.py Phase 1: LegacyPageAdapter for category_b, src/plugins/compare_stories/plugin.py Phase 2: LegacyPageAdapter for compare_sto, src/plugins/comprehension_check/plugin.py — Phase 2: LegacyPageAdapter for compr, PluginCategory (+28 more)
 
 ### Community 2 - "Expert Analysis & Case Studies"
-Cohesion: 0.23
-Nodes (11): Market Event Case Study — C84 Interactive historical market event explorer with, Render a related stock card using shared _subsidiary_card component., Market Event Case Study main page — historian perspective., _render_market_event_case_study(), _render_related_stock_card(), _severity_badge(), get_case_studies(), get_case_study() (+3 more)
+Cohesion: 0.20
+Nodes (12): Investment Memo Template — C83 A structured reflection tool where users write th, Investment Memo main page — write your own investment thesis., _render_investment_memo(), format_memo_summary(), get_stock_suggestions(), Investment Memo Service — C83 Business logic for investment memo template featur, Search stocks by name or ID for memo stock selector.      Args:         client:, Validate investment memo form input.      Args:         data: Dict with memo fie (+4 more)
 
 ### Community 3 - "Group Structure & Onboarding"
-Cohesion: 0.05
-Nodes (73): get_health_dimension_explanation(), _get_health_metric_values(), Return a plain-language explanation for a health dimension score., Return dict mapping dimension names to list of metric value strings., Render a simplified beginner-friendly summary of the key detail sections.      T, _render_simple_overview(), Debate Cards Page — C199 Bear vs Bull debate cards for a stock.  Two-column layo, C199 Bear vs Bull Debate Cards page.      Shows bull and bear arguments side by (+65 more)
+Cohesion: 0.06
+Nodes (50): get_health_dimension_explanation(), _get_health_metric_values(), Return a plain-language explanation for a health dimension score., Return dict mapping dimension names to list of metric value strings., Render a simplified beginner-friendly summary of the key detail sections.      T, _render_simple_overview(), Debate Cards Page — C199 Bear vs Bull debate cards for a stock.  Two-column layo, C199 Bear vs Bull Debate Cards page.      Shows bull and bear arguments side by (+42 more)
 
 ### Community 4 - "Explanation Generation Protocol"
-Cohesion: 0.08
-Nodes (33): ExplanationProvider, ExplanationProvider, ExplanationResponse, LLM Abstraction Layer — Base Protocol & Data Classes  Defines the protocol that, Response containing the generated explanation., Protocol for explanation generation providers., Generate a plain-language explanation for a metric or change., Check if this provider is currently available. (+25 more)
+Cohesion: 0.07
+Nodes (40): ExplanationProvider, ExplanationProvider, ExplanationRequest, ExplanationResponse, LLM Abstraction Layer — Base Protocol & Data Classes  Defines the protocol that, Request for generating an explanation., Response containing the generated explanation., Protocol for explanation generation providers. (+32 more)
 
 ### Community 5 - "Page Routing & Plugin Registry"
 Cohesion: 0.10
@@ -287,27 +282,27 @@ Nodes (22): detect_arcs(), Detect story arc labels from a list of timeline entri
 
 ### Community 11 - "Explanation Response Tests"
 Cohesion: 0.07
-Nodes (20): _ctx(), Unit tests for ScreenerExplanationProvider — D-124  Tests the ScreenerExplanatio, Verify that '僅供學習參考' appears in all explanations., The disclaimer constant should contain the expected text., Test dividend preset explanation paths., Test growth preset explanation paths., Test value preset explanation paths., Test custom filter explanation paths. (+12 more)
+Nodes (15): Verify that '僅供學習參考' appears in all explanations., The disclaimer constant should contain the expected text., Test dividend preset explanation paths., Test growth preset explanation paths., Test value preset explanation paths., Test custom filter explanation paths., Test that ExplanationResponse has correct structure., Build an ExplanationRequest with screener context. (+7 more)
 
 ### Community 12 - "Watchlist Management"
-Cohesion: 0.11
-Nodes (34): FinMindClient, 關注列表頁 — 顯示使用者關注的股票與 ETF 提供摘要卡片、價格列表、警示狀態與移除功能 支援多個命名清單, _render_watchlist_page(), add_to_watchlist(), create_list(), delete_list(), get_watchlist_summary(), is_in_any_list() (+26 more)
+Cohesion: 0.09
+Nodes (42): 股識 Stock Explorer — C116: 每日故事 Feed Personalized Daily Narrative Feed with AI Co, Generate a one-line plain-language 'why this matters' explanation., 每日故事 Feed 主頁面。      Layout:         1. Hero card: today's top story (highest sev, render_investor_story_feed(), _why_matters(), 關注列表頁 — 顯示使用者關注的股票與 ETF 提供摘要卡片、價格列表、警示狀態與移除功能 支援多個命名清單, _render_watchlist_page(), Watchlist header with stock name, price, watchlist buttons. (+34 more)
 
 ### Community 13 - "Plugin Discovery & Registration"
-Cohesion: 0.07
-Nodes (19): PluginRegistry, discover() on empty dir should return 0., discover() should find plugins in subdirectories., discover() with 'log and skip' should skip broken plugins., all_plugins should be sorted by (category, order, key)., all_keys should only include enabled plugins., Test that Phase 1 plugin.py files can be imported and their plugins registered., category_browser plugin.py should be importable and create a valid plugin. (+11 more)
+Cohesion: 0.10
+Nodes (12): PluginRegistry, discover() on empty dir should return 0., discover() should find plugins in subdirectories., discover() with 'log and skip' should skip broken plugins., all_plugins should be sorted by (category, order, key)., all_keys should only include enabled plugins., PluginRegistry.discover() should find all Phase 1 plugins from src/plugins/., Phase 1 plugins should have correct metadata after discovery. (+4 more)
 
 ### Community 14 - "Screener Explanation Provider"
 Cohesion: 0.07
 Nodes (24): ExplanationProvider for stock screener results.      Implements the ExplanationP, Initialize with a TemplateExplanationProvider for composition., Generate a historian-tone explanation for a screener result.          Uses prese, Always available — no external dependencies., ScreenerExplanationProvider, FinMindClient, provider(), Generate all explanation variants from the provider. (+16 more)
 
 ### Community 15 - "Investment Scenario Calculation"
-Cohesion: 0.10
-Nodes (21): calculate_scenario(), Calculate what-if investment scenario.      Pure calculation — no LLM.     Uses, _mock_client(), Buy at 100, sell at 151.9, 100000 TWD → 1000 shares, 51.9% return., Positive return over ~2 years → positive annualized return., Dividend income should be included in absolute return., When include_dividends=False, dividend_income should be 0., Max drawdown should be negative when price drops. (+13 more)
+Cohesion: 0.09
+Nodes (23): calculate_scenario(), Calculate what-if investment scenario.      Pure calculation — no LLM.     Uses, _mock_client(), Buy at 100, sell at 151.9, 100000 TWD → 1000 shares, 51.9% return., Positive return over ~2 years → positive annualized return., Dividend income should be included in absolute return., When include_dividends=False, dividend_income should be 0., Max drawdown should be negative when price drops. (+15 more)
 
 ### Community 16 - "FinMind API Client"
 Cohesion: 0.13
-Nodes (10): FinMindClient, 先查快取，沒有才 fetch。追蹤連續失敗以偵測 rate limit。, 取得全部股票基本資訊，使用單一快取 key（不含 stock_id）。          解決 P0-3 問題：避免每次 get_stock_info(stoc, 取得股票基本資訊（先取全量資料再記憶體內過濾）, 搜尋股票：完全比對 stock_id 或部分比對 stock_name（中文名稱）。          Args:             query: 搜尋關, 生成快取 key，並標準化滑動窗口開始日期以防止每日快取失效, DataFrame, FinMindClient (+2 more)
+Nodes (11): FinMindClient, 先查快取，沒有才 fetch。追蹤連續失敗以偵測 rate limit。, 取得全部股票基本資訊，使用單一快取 key（不含 stock_id）。          解決 P0-3 問題：避免每次 get_stock_info(stoc, 取得股票基本資訊（先取全量資料再記憶體內過濾）, 搜尋股票：完全比對 stock_id 或部分比對 stock_name（中文名稱）。          Args:             query: 搜尋關, 生成快取 key，並標準化滑動窗口開始日期以防止每日快取失效, DataFrame, FinMindClient (+3 more)
 
 ### Community 17 - "Education Academy & Quizzes"
 Cohesion: 0.12
@@ -318,20 +313,20 @@ Cohesion: 0.10
 Nodes (31): Compare Stories page (C38) — narrative comparison with peer companies.  This pag, C38 Compare Stories — detailed narrative comparison with peer companies.      Sh, _render_compare_stories_page(), _cached_get_stock_info(), _classify_etf(), _fetch_one_dividend(), _fetch_one_etf_price(), _get_all_etf_prices() (+23 more)
 
 ### Community 19 - "Company Type Detection"
-Cohesion: 0.10
-Nodes (11): Industry contains 'ETF' → 'etf'., Industry 'etf' lowercase → 'etf'., Industry empty + 00xx ID → 'etf'., Name contains '集團' → 'group'., Name contains '控股' → 'group'., Name contains '股份' → 'group'., Regular company → 'default'., Non-ETF, non-group → 'default'. (+3 more)
+Cohesion: 0.11
+Nodes (10): Industry contains 'ETF' → 'etf'., Industry 'etf' lowercase → 'etf'., Name contains '集團' → 'group'., Name contains '控股' → 'group'., Name contains '股份' → 'group'., Regular company → 'default'., Non-ETF, non-group → 'default'., ETF industry takes priority over group name. (+2 more)
 
 ### Community 20 - "Recent Delta Computation"
 Cohesion: 0.11
 Nodes (15): compute_recent_deltas(), 計算最近的重要變化（C39）      比較：營收（最近月 vs 前一月）、股價（近 30 日 vs 前 30 日）、           毛利率（最近季 vs, compute_recent_deltas() threshold (>10% filter) and max-2-deltas behavior., Build monthly_revenue DataFrame with 'revenue' column., Build daily_price DataFrame with 'close' column., 月營收變化 exactly 10% 不應出現（條件是 >10%，不是 ≥10%）。, 營收年增率 -25% (abs >10%) 應出現在結果中。, 營收年增率 exactly 10% 不應出現。 (+7 more)
 
 ### Community 21 - "News Summarization & Risk Analysis"
-Cohesion: 0.10
-Nodes (27): assess_customer_concentration(), assess_event_risk(), assess_financial_health(), assess_risk(), _classify_cashflow_risk(), _classify_concentration_risk(), _classify_debt_risk(), _classify_margin_risk() (+19 more)
+Cohesion: 0.11
+Nodes (22): assess_customer_concentration(), assess_event_risk(), assess_financial_health(), _classify_cashflow_risk(), _classify_concentration_risk(), _classify_debt_risk(), _classify_margin_risk(), _combine_sub_dimensions() (+14 more)
 
 ### Community 22 - "Plugin Metadata & Protocol"
-Cohesion: 0.13
-Nodes (21): PluginMetadata, PluginProtocol, Plugin 協議 — 用於靜態類型檢查。      任何實現了以下屬性和方法的對象都符合此協議：     - metadata: PluginMetadata, 插件元數據 — 描述插件的基本屬性。      Attributes:         key: 唯一標識符（對應 session_state['page_ke, Validate key format: lowercase letters, digits, underscores only., PluginError, PluginNotFoundError, PluginRegistrationError (+13 more)
+Cohesion: 0.07
+Nodes (32): ABC, BasePlugin, PluginMetadata, PluginProtocol, src/core/plugin_protocol.py Plugin Protocol 定義 — 所有頁面 Plugin 必須實現的介面。  此模組定義了 Pl, Plugin 協議 — 用於靜態類型檢查。      任何實現了以下屬性和方法的對象都符合此協議：     - metadata: PluginMetadata, Plugin 抽象基類 — 提供默認實現，子類只需 override 必要方法。      使用方式：         class BusinessCardPl, 插件元數據 — 描述插件的基本屬性。      Attributes:         key: 唯一標識符（對應 session_state['page_ke (+24 more)
 
 ### Community 23 - "Data Freshness Checking"
 Cohesion: 0.12
@@ -342,24 +337,24 @@ Cohesion: 0.13
 Nodes (14): detect_revenue_event(), 偵測營收異動事件     YoY 變化超過 ±threshold% 視為異常（預設 30%）, _make_revenue_df(), Build monthly_revenue DataFrame with 'revenue' column., TestDetectRevenueEvent, _make_revenue_df(), Helper: build a monthly_revenue DataFrame with 'revenue' column., Revenue YoY +50% → should trigger event (above +30% threshold). (+6 more)
 
 ### Community 25 - "Plugin Base & Registry"
-Cohesion: 0.09
-Nodes (15): BasePlugin, PluginRegistry, 自動掃描插件目錄，註冊所有發現的 Plugin。          掃描策略（「記錄並跳過」）：         1. 遍歷 plugin_dir 下的所有子目, 導入插件模塊。          Args:             name: 插件目錄名稱（用作模塊名）。             path: plugin, 在模塊中查找所有 BasePlugin 子類。          只返回在該模塊中定義的類（通過檢查 __module__ 屬性），         避免將從其, 在模塊中查找 module-level BasePlugin 實例（非類）。          用於支持 LegacyPageAdapter 實例直接定義在 p, 手動註冊一個 plugin 實例。          Args:             plugin: 要註冊的 plugin 實例。          Ra, 根據 key 查找 plugin。          Args:             key: 插件 key。          Returns: (+7 more)
+Cohesion: 0.10
+Nodes (14): BasePlugin, PluginRegistry, 自動掃描插件目錄，註冊所有發現的 Plugin。          掃描策略（「記錄並跳過」）：         1. 遍歷 plugin_dir 下的所有子目, 導入插件模塊。          Args:             name: 插件目錄名稱（用作模塊名）。             path: plugin, 在模塊中查找所有 BasePlugin 子類。          只返回在該模塊中定義的類（通過檢查 __module__ 屬性），         避免將從其, 在模塊中查找 module-level BasePlugin 實例（非類）。          用於支持 LegacyPageAdapter 實例直接定義在 p, 手動註冊一個 plugin 實例。          Args:             plugin: 要註冊的 plugin 實例。          Ra, 根據 key 查找 plugin。          Args:             key: 插件 key。          Returns: (+6 more)
 
 ### Community 26 - "Plugin Render Context & Middleware"
-Cohesion: 0.09
-Nodes (15): PluginRenderContext, 渲染中介層協議 — 用於 cross-cutting concerns。      中介層在 plugin render() 前後執行，可實現：     - E, 在 plugin render() 之前執行。          Args:             ctx: 渲染上下文             plugin, 渲染插件內容。          Args:             ctx: 渲染上下文，包含 data、client、page_key 等。, 檢查當前上下文是否允許渲染。          默認實現：如果 requires_stock_id=True 但 stock_id 為 None，返回 Fals, 傳遞給插件 render() 方法的上下文。      Attributes:         page_key: 當前頁面 key         data:, RenderMiddleware, Protocol (+7 more)
+Cohesion: 0.08
+Nodes (16): PluginRenderContext, 渲染中介層協議 — 用於 cross-cutting concerns。      中介層在 plugin render() 前後執行，可實現：     - E, 在 plugin render() 之前執行。          Args:             ctx: 渲染上下文             plugin, 渲染插件內容。          Args:             ctx: 渲染上下文，包含 data、client、page_key 等。, 檢查當前上下文是否允許渲染。          默認實現：如果 requires_stock_id=True 但 stock_id 為 None，返回 Fals, 傳遞給插件 render() 方法的上下文。      Attributes:         page_key: 當前頁面 key         data:, RenderMiddleware, Protocol (+8 more)
 
 ### Community 27 - "Screener Explanation Builder"
-Cohesion: 0.13
-Nodes (6): _build_screener_explanation(), Build a plain-language explanation for why a stock passed the screener.      Use, Direct tests for the _build_screener_explanation function., TestBuildScreenerExplanation, Tests for the _build_screener_explanation function., TestBuildScreenerExplanation
+Cohesion: 0.12
+Nodes (7): _build_screener_explanation(), Build a plain-language explanation for why a stock passed the screener.      Use, Direct tests for the _build_screener_explanation function., TestBuildScreenerExplanation, Unit tests for ScreenerExplanationProvider — C167 Tests the historian-tone scree, Tests for the _build_screener_explanation function., TestBuildScreenerExplanation
 
 ### Community 28 - "Explanation Template Selection"
 Cohesion: 0.13
 Nodes (6): _pick_template(), Pick the appropriate explanation template for a delta.      Uses the tiered temp, _pick_template() at exact threshold boundaries., _pick_template() stock_name prefix behavior., TestPickTemplateBoundaries, TestPickTemplateStockName
 
 ### Community 29 - "Investor Story Feed & Timeline Controls"
-Cohesion: 0.18
-Nodes (18): _render_adaptive_banner(), _render_event_alerts(), get_client(), _get_label_to_key_map(), _get_localized_page_labels(), _get_registry(), load_and_render_page(), 股識 Stock Explorer — M5 自適應更新 頁面路由器：根據 session_state['page'] 顯示不同頁面  TD-01 Phase (+10 more)
+Cohesion: 0.13
+Nodes (22): _render_adaptive_banner(), _render_event_alerts(), get_client(), _get_label_to_key_map(), _get_localized_page_labels(), _get_registry(), load_and_render_page(), 股識 Stock Explorer — M5 自適應更新 頁面路由器：根據 session_state['page'] 顯示不同頁面  TD-01 Phase (+14 more)
 
 ### Community 30 - "Financial DataFrame Builders"
 Cohesion: 0.13
@@ -370,24 +365,24 @@ Cohesion: 0.30
 Nodes (5): extract_dividend_summary(), Extract dividend summary from FinMind dividend DataFrame.      FinMind TaiwanSto, DataFrame, Quarterly company with incomplete current year → is_estimated=True., TestExtractDividendSummary
 
 ### Community 32 - "Peer Comparison Analysis"
-Cohesion: 0.09
-Nodes (34): Translation function.      Usage:         t("page.title")                    # ", t(), _event_type_label(), 股識 Stock Explorer — M5 公司故事時間軸 顯示特定股票近一年內的事件時間軸，以卡片形式呈現。, Render a single timeline event as a card.      Uses the existing _summary_card p, 公司故事時間軸頁面      Args:         data: dict 包含 stock_id, stock_name 等標準頁面資料, render_company_timeline(), _severity_badge() (+26 more)
+Cohesion: 0.06
+Nodes (51): C73 Expert Analysis (專家分析) — curated expert analysis for major Taiwan stocks., Translation function.      Usage:         t("page.title")                    # ", t(), _event_type_label(), 股識 Stock Explorer — M5 公司故事時間軸 顯示特定股票近一年內的事件時間軸，以卡片形式呈現。, Render a single timeline event as a card.      Uses the existing _summary_card p, 公司故事時間軸頁面      Args:         data: dict 包含 stock_id, stock_name 等標準頁面資料, render_company_timeline() (+43 more)
 
 ### Community 33 - "Quiz Service"
 Cohesion: 0.13
 Nodes (22): check_quiz_answer(), _collect_quiz_files(), get_quiz_question(), _get_quiz_questions_raw(), get_quiz_score(), initialize_quiz_service(), _load_quiz_config(), _quiz_dir() (+14 more)
 
 ### Community 34 - "Screener Implication Builder"
-Cohesion: 0.11
-Nodes (12): _build_screener_implication(), Build a one-sentence implication for the screener results.      Historian tone,, Direct tests for the _build_screener_implication function., TestBuildScreenerImplication, Unit tests for ScreenerExplanationProvider — C167 Tests the historian-tone scree, Tests for the _build_screener_implication function., Verify that explanations avoid prescriptive language., Generate all possible explanation variants. (+4 more)
+Cohesion: 0.12
+Nodes (11): _build_screener_implication(), Build a one-sentence implication for the screener results.      Historian tone,, _ctx(), Unit tests for ScreenerExplanationProvider — D-124  Tests the ScreenerExplanatio, Test fallback when no preset or filters are set., Build a context dict for ExplanationRequest., Direct tests for the _build_screener_implication function., TestBuildScreenerImplication (+3 more)
 
 ### Community 35 - "Stock ID Validation"
 Cohesion: 0.12
 Nodes (13): Input validation utilities for Stock Explorer., Validate a Taiwanese stock ID.      Args:         raw: User-provided stock ID st, validate_stock_id(), Standard 4-digit stock IDs → valid., Stock ID with leading/trailing whitespace → valid after strip., Empty string → invalid., Non-numeric string → invalid., More than 4 digits → invalid. (+5 more)
 
 ### Community 36 - "Screener Explanation Tests"
-Cohesion: 0.07
-Nodes (23): ExplanationRequest, Request for generating an explanation., Generate an explanation using predefined templates.          Args:             r, Resolve a delta string to a direction key.      Args:         delta: Human-reada, _resolve_direction(), explain_delta_full(), 變化量（Delta）引擎 計算最近的重要變化並生成白話解釋, 為變化量生成白話解釋 + 暗示句（C143）      Like explain_delta() but returns a tuple of (explana (+15 more)
+Cohesion: 0.09
+Nodes (12): Custom filters should produce filter-specific explanation., Response should include an implication sentence., Template-based provider should have confidence=1.0., Without preset or filters, should use fallback template., Tests for the ScreenerExplanationProvider class., Provider should always be available (no external deps)., Response source should be 'screener_template'., All explanations must include the mandatory disclaimer. (+4 more)
 
 ### Community 37 - "Batch API Utilities"
 Cohesion: 0.12
@@ -402,8 +397,8 @@ Cohesion: 0.13
 Nodes (16): _build_yearly_dividends(), _compute_historical_yields(), _estimate_annual_proper(), _generate_summary(), Dividend analysis service for Stock Explorer.  Implements proper annualized proj, Build list of yearly dividend dicts from raw rows., Safely sum cash dividend column, returning a scalar float., Estimate annual dividend using proper annualization logic.      Returns (estimat (+8 more)
 
 ### Community 40 - "Scenario Calculator"
-Cohesion: 0.23
-Nodes (7): _get_first_trading_date(), _parse_date(), Get the first trading date in the DataFrame.      Args:         price_df: DataFr, Parse date string to datetime object.          Handles formats like "YYYY-MM-DD", Unit tests for scenario_calculator.py (C200).  Tests cover: - calculate_scenario, TestGetFirstTradingDate, TestParseDate
+Cohesion: 0.18
+Nodes (9): datetime, 時間軸控制元件 — M3 提供時間範圍選擇器與資料過濾功能, _get_first_trading_date(), _parse_date(), Get the first trading date in the DataFrame.      Args:         price_df: DataFr, Parse date string to datetime object.          Handles formats like "YYYY-MM-DD", Unit tests for scenario_calculator.py (C200).  Tests cover: - calculate_scenario, TestGetFirstTradingDate (+1 more)
 
 ### Community 41 - "Delta Boundary Value Tests"
 Cohesion: 0.11
@@ -430,8 +425,8 @@ Cohesion: 0.16
 Nodes (16): Learn First Gate — C163 4-lesson interactive onboarding for first-time users. Re, Learn First Gate — 4-lesson interactive onboarding., Skip button for coming-soon state., _render_learn_first_gate(), _render_skip_button(), _advanced_content_expander(), _lesson_card(), _progress_dots() (+8 more)
 
 ### Community 47 - "News Event Detection"
-Cohesion: 0.23
-Nodes (9): detect_news_event(), Check that all *logical_names* can be resolved in *df*.     Returns a dict mappi, Return the actual column name in *df* for *logical_name*, or None., _require_columns(), _resolve_column(), _make_news_df(), Build a news DataFrame with 'title' column., TestDetectNewsEvent (+1 more)
+Cohesion: 0.19
+Nodes (11): detect_news_event(), _is_false_positive(), Check that all *logical_names* can be resolved in *df*.     Returns a dict mappi, Check if *keyword* matched in *title* is actually a false positive.      Handles, Return the actual column name in *df* for *logical_name*, or None., _require_columns(), _resolve_column(), _make_news_df() (+3 more)
 
 ### Community 48 - "Comprehension Quiz Service"
 Cohesion: 0.16
@@ -446,8 +441,8 @@ Cohesion: 0.14
 Nodes (11): _make_price_df(), Unit tests for core business logic: - calc_roe_ttm() - _is_etf() - filter_by_tim, Helper: build a daily_prices DataFrame with 'close' column., Price change +10% → should trigger (above +7% threshold)., Price change -10% → should trigger (below -7% threshold)., Price change +3% → should NOT trigger (within ±7% range)., Custom threshold of 2% → +3% should trigger., Only 1 row → returns None (need at least 2). (+3 more)
 
 ### Community 51 - "Notification Center Rendering"
-Cohesion: 0.15
-Nodes (27): _expert_card(), Render a study log card with consistent styling., Render an expert analysis card with consistent styling., _study_card(), _event_type_label(), 股識 Stock Explorer — C02 通知中心 獨立頁面：顯示所有訂閱股票的待處理通知, _render_notification_center(), _severity_badge() (+19 more)
+Cohesion: 0.07
+Nodes (52): _expert_card(), Render a study log card with consistent styling., Render an expert analysis card with consistent styling., _study_card(), FinMindClient, _event_type_label(), 股識 Stock Explorer — C02 通知中心 獨立頁面：顯示所有訂閱股票的待處理通知, _render_notification_center() (+44 more)
 
 ### Community 52 - "Historical Market Events & Group Structures"
 Cohesion: 0.11
@@ -466,8 +461,8 @@ Cohesion: 0.18
 Nodes (6): Map a display metric name to a template key., _resolve_template_key(), Chinese display names map to correct lowercase English template keys., 淨值比 falls back to pe_ratio template., PBR falls back to pe_ratio template., TestResolveTemplateKeyChineseMappings
 
 ### Community 56 - "Business Card Helpers"
-Cohesion: 0.12
-Nodes (20): C73 Expert Analysis (專家分析) — curated expert analysis for major Taiwan stocks., C73 Expert Analysis: curated expert analysis for major Taiwan stocks.      For 1, _render_expert_analysis(), _historian_disclaimer(), Business card shared helpers and constants., Render a standardized section header.      If collapsed=False: renders a markdow, Render a standardized disclaimer caption.      Types:         'expert'   — for e, Render a historical scenario card with consistent styling. (+12 more)
+Cohesion: 0.09
+Nodes (27): _historian_disclaimer(), Business card shared helpers and constants., Render a standardized section header.      If collapsed=False: renders a markdow, Render a standardized disclaimer caption.      Types:         'expert'   — for e, Render a historical scenario card with consistent styling., Render a single risk dimension as an expandable info card., _render_risk_dimension(), _scenario_card() (+19 more)
 
 ### Community 57 - "Timeline Data Filtering"
 Cohesion: 0.15
@@ -494,8 +489,8 @@ Cohesion: 0.18
 Nodes (15): _event_type_label(), 股識 Stock Explorer — M5 事件儀表板 顯示近期重大事件、資料新鮮度、自適應框架推薦, _render_event_dashboard(), _severity_badge(), Render a collapsible source transparency section.      C209: Collapsible Source, _source_section(), get_all_recent_events(), get_drilldown_interpretation() (+7 more)
 
 ### Community 63 - "Adaptive Event Detection Engine"
-Cohesion: 0.18
-Nodes (16): get_adaptive_framework(), get_events_for_stock(), _is_false_positive(), _load_events(), _normalize_title(), prune_old_events(), 股識 Stock Explorer — M5 自適應更新引擎 事件偵測 + 公司類型判斷 + 分析框架推薦, 載入事件記錄 (with in-memory cache + mtime checking). (+8 more)
+Cohesion: 0.32
+Nodes (5): Verify that explanations avoid prescriptive language., Generate all possible explanation variants., No explanation template should contain prescriptive/blocked words.          Note, Every explanation must end with the disclaimer., TestHistorianToneCompliance
 
 ### Community 64 - "Stock Movement Explanation"
 Cohesion: 0.20
@@ -514,20 +509,16 @@ Cohesion: 0.20
 Nodes (14): _fetch_latest_daily_prices(), _format_money(), _format_volume(), 分類瀏覽頁 — M3 提供權值股列表、產業分類瀏覽、熱門列表三大區塊, 權值股列表：取最近一日成交金額最高的前 20 檔, 產業分類瀏覽：左側產業列表，右側該產業個股, 批量取得多檔股票的最新日收盤價（平行 API 呼叫）。      Args:         client: FinMindClient 實例, 熱門列表：取最近一日成交量最高的前 20 檔 (+6 more)
 
 ### Community 69 - "Daily Market Dashboard Tests"
-Cohesion: 0.28
-Nodes (5): _get_nested(), _load_yaml(), Verify all required i18n keys exist in both locale files., Safely traverse nested dicts; returns None if any key is missing., TestI18nKeys
+Cohesion: 0.24
+Nodes (6): _get_nested(), _load_yaml(), Path, Verify all required i18n keys exist in both locale files., Safely traverse nested dicts; returns None if any key is missing., TestI18nKeys
 
 ### Community 70 - "Template String Tone QA"
 Cohesion: 0.21
 Nodes (14): _check_string(), _collect_py_files(), _extract_strings(), _is_allowed_context(), _is_module_docstring(), Path, Tone QA — Automated blocklist scanner for template strings.  Scans template stri, Return all .py files under SCAN_DIRS, excluding _EXCLUDED_FILES. (+6 more)
 
-### Community 71 - "Plugin Protocol & Base Classes"
-Cohesion: 0.15
-Nodes (7): ABC, BasePlugin, src/core/plugin_protocol.py Plugin Protocol 定義 — 所有頁面 Plugin 必須實現的介面。  此模組定義了 Pl, Plugin 抽象基類 — 提供默認實現，子類只需 override 必要方法。      使用方式：         class BusinessCardPl, 調用原有的渲染函數，根據簽名類型傳遞正確參數。, PluginRenderContext, BasePlugin is abstract — cannot instantiate directly.
-
 ### Community 72 - "Study Log Tracking"
-Cohesion: 0.16
-Nodes (15): _compute_streak(), _get_recent_history(), _get_study_log(), _get_total_stocks(), C71 Study Log (學習日誌) — track user's study streak and history., Get the study log from session state, initializing if needed.      Returns a dic, Record that the user studied a stock today., Compute the current consecutive-day study streak. (+7 more)
+Cohesion: 0.21
+Nodes (13): _compute_streak(), _get_recent_history(), _get_study_log(), _get_total_stocks(), C71 Study Log (學習日誌) — track user's study streak and history., Get the study log from session state, initializing if needed.      Returns a dic, Record that the user studied a stock today., Compute the current consecutive-day study streak. (+5 more)
 
 ### Community 73 - "Financial Health Scoring"
 Cohesion: 0.14
@@ -539,7 +530,7 @@ Nodes (11): get_event_types_for_stock(), get_events_by_type(), get_events_for_st
 
 ### Community 75 - "Notification Service Management"
 Cohesion: 0.50
-Nodes (4): _invalidate_cache(), Invalidate the in-memory cache after writes., Force reload notifications from YAML (for testing purposes)., reload_notifications()
+Nodes (4): _config_dir(), _load_templates_from_yaml(), Return the absolute path to the src/data/ directory., Load screener explanation templates from the YAML config file.      Returns a di
 
 ### Community 76 - "ROE Calculation Service"
 Cohesion: 0.34
@@ -558,8 +549,8 @@ Cohesion: 0.33
 Nodes (3): is_seasonal_industry(), ROE 計算服務 支援 TTM（近四季）計算，處理季節性產業  For seasonal industries (retail, semiconductors,, TestIsSeasonalIndustry
 
 ### Community 80 - "Dividend Income Calculation"
-Cohesion: 0.27
-Nodes (7): _calc_dividend_income(), Calculate accumulated dividends between two dates.      Args:         dividend_d, _make_dividend_df(), Zero shares → no dividend income., Support alternative column name 'cash_earnings_distributions'., Build a minimal dividend DataFrame., TestCalculateDividendIncome
+Cohesion: 0.24
+Nodes (8): _calc_dividend_income(), Calculate accumulated dividends between two dates.      Args:         dividend_d, _make_dividend_df(), Zero shares → no dividend income., Support alternative column name 'cash_earnings_distributions'., Build a minimal dividend DataFrame., TestCalculateDividendIncome, DataFrame
 
 ### Community 81 - "Monthly Revenue Threshold Tests"
 Cohesion: 0.17
@@ -646,8 +637,8 @@ Cohesion: 0.36
 Nodes (3): _classify_bucket(), Classify a bucket into an arc type key.      Thresholds designed to require mean, TestClassifyBucket
 
 ### Community 102 - "Chinese String I18n Compliance"
-Cohesion: 0.17
-Nodes (7): Path, Verify no hardcoded Chinese strings outside of t() calls., Check if a Chinese character at match_start is inside a t() call., String literals containing Chinese must be wrapped in t()., F-strings with Chinese characters should use t() for the Chinese parts., _read_source(), TestI18nCompliance
+Cohesion: 0.18
+Nodes (6): Verify no hardcoded Chinese strings outside of t() calls., Check if a Chinese character at match_start is inside a t() call., String literals containing Chinese must be wrapped in t()., F-strings with Chinese characters should use t() for the Chinese parts., _read_source(), TestI18nCompliance
 
 ### Community 104 - "Verification Shell Script"
 Cohesion: 0.46
@@ -660,10 +651,6 @@ Nodes (6): create_price_area_chart(), 圖表生成器 — 市場/ETF 相關圖�
 ### Community 106 - "Sector Story Generation"
 Cohesion: 0.40
 Nodes (6): generate_daily_stories(), Build a story dict from a sector performance summary., Fetch recent events for compose a list of story dicts.      Args:         client, Map severity string to numeric rank (higher = more important)., _sector_story(), _severity_level()
-
-### Community 107 - "Revenue Breakdown Analysis"
-Cohesion: 0.39
-Nodes (7): analyze_revenue_breakdown(), _auto_describe_segment(), _create_generic_breakdown(), _parse_financial_for_segments(), 營收組成分析器 從損益表解析營收來源組成，用於生成圓餅圖, 分析營收組成     返回: [{"name": "...", "value": 百分比, "description": "..."}], DataFrame
 
 ### Community 108 - "Price Retrieval Tests"
 Cohesion: 0.39
@@ -682,8 +669,8 @@ Cohesion: 0.23
 Nodes (6): _classify_frequency(), _empty_result(), Classify dividend payment frequency., Return an empty dividend result., Tests for dividend_analyzer and roe_calculator services., TestClassifyFrequency
 
 ### Community 112 - "User Feedback Handling"
-Cohesion: 0.06
-Nodes (58): Business card page — sub-directory extraction (D24)., _feedback_session_key(), _has_feedbacked(), _mark_feedbacked(), Business card main orchestrator — Sprint 12 Info Hierarchy., 公司名片主頁（M1）— Sprint 12 Info Hierarchy      Above-fold (first 720px): C37 Key Take, Binary 👍/👎 feedback UI at the bottom of the business card.      Uses st.session_, _render_business_card() (+50 more)
+Cohesion: 0.07
+Nodes (54): C73 Expert Analysis: curated expert analysis for major Taiwan stocks.      For 1, _render_expert_analysis(), Business card page — sub-directory extraction (D24)., _feedback_session_key(), _has_feedbacked(), _mark_feedbacked(), Business card main orchestrator — Sprint 12 Info Hierarchy., 公司名片主頁（M1）— Sprint 12 Info Hierarchy      Above-fold (first 720px): C37 Key Take (+46 more)
 
 ### Community 113 - "Chart Theme Utilities"
 Cohesion: 0.33
@@ -701,10 +688,6 @@ Nodes (5): URL ↔ session_state synchronization for browser back/forward suppor
 Cohesion: 0.33
 Nodes (5): get_random_fact(), _load_data(), Company Facts service — loads fun/educational facts from YAML data file.  Provid, Load and cache the company facts YAML file., Return a random fact for a given stock_id, or None if no facts exist.
 
-### Community 117 - "Dividend and Price Data Checks"
-Cohesion: 0.33
-Nodes (3): Empty price DataFrame → error_key 'scenario.no_data'., When dividend data is empty and end_date is in the past, is_estimated should be, DataFrame
-
 ### Community 119 - "Company Health Charts"
 Cohesion: 0.40
 Nodes (4): create_health_snowflake(), 圖表生成器 — 健康/雷達相關圖表 用 Plotly 生成公司健康狀況雷達圖等視覺化圖表, 公司健康狀況雷達圖（雪花圖）     health_scores: {"獲利能力": 85, "成長性": 72, "財務健康": 90, "股利品質": 65, Figure
@@ -717,17 +700,9 @@ Nodes (4): create_valuation_band_chart(), 圖表生成器 — 估值相關圖表
 Cohesion: 0.40
 Nodes (3): Arc constants must be English i18n keys, not Chinese text., Arc constants must NOT contain Chinese characters., TestArcKeyConstants
 
-### Community 122 - "Shared Utility Functions"
-Cohesion: 0.40
-Nodes (4): Path, _atomic_write(), Shared utility functions., Write to temp file then atomically replace — prevents partial writes.
-
 ### Community 123 - "Page Router Integration Tests"
 Cohesion: 0.40
 Nodes (3): Router module should import without errors (covers all page imports)., Test that daily_market is wired into the page router., TestRouterIntegration
-
-### Community 124 - "Daily Story Plugin Adapter"
-Cohesion: 0.50
-Nodes (3): src/plugins/daily_story/plugin.py — Phase 2: LegacyPageAdapter for daily_story (, Adapter: render_investor_story_feed expects (data, client) but data is unused., _render_daily_story_adapter()
 
 ### Community 125 - "Screener Template Loading"
 Cohesion: 0.25
@@ -793,33 +768,25 @@ Nodes (6): Verify that _get_benchmark_data uses calc_roe_ttm (not naive *4)., Wh
 Cohesion: 0.39
 Nodes (8): _apply_template(), _generic_summary(), _get_implication(), _match_keywords(), 新聞白話摘要器 將財新聞標題轉化為新手能理解的白話摘要 使用模板方法（不依賴 LLM），確保穩定性和速度, 將新聞標題轉化為白話摘要     返回: 白話摘要字串（1-2 句話）, _simplify_title(), summarize_news()
 
-### Community 201 - "Community 201"
-Cohesion: 0.50
-Nodes (3): get_threshold(), Settings service — threshold access helper., Get threshold from settings dict/session_state, falling back to default.
-
-### Community 202 - "Community 202"
-Cohesion: 0.67
-Nodes (3): Safely get a value from a pandas Series (row) using column alias mapping.     Re, _safe_get(), Series
-
 ## Knowledge Gaps
-- **115 isolated node(s):** `graphify`, `1. Team Roster`, `2. Visual Flow Reference`, `Step 0: Restore Context`, `Step 0.5: PM Role Definition (CRITICAL)` (+110 more)
+- **114 isolated node(s):** `graphify`, `1. Team Roster`, `2. Visual Flow Reference`, `Step 0: Restore Context`, `Step 0.5: PM Role Definition (CRITICAL)` (+109 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **56 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **58 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `t()` connect `Peer Comparison Analysis` to `Business Card Rendering`, `Expert Analysis & Case Studies`, `Group Structure & Onboarding`, `Explanation Generation Protocol`, `Internationalization Utilities`, `Company Timeline & Market Narrative`, `Watchlist Management`, `Education Academy & Quizzes`, `Case Study Library & ETF Browser`, `Recent Delta Computation`, `News Summarization & Risk Analysis`, `Investor Story Feed & Timeline Controls`, `Dividend Frequency Classification`, `Screener Implication Builder`, `Stock ID Validation`, `Screener Explanation Tests`, `Financial Chart Generation`, `Dividend Analysis Service`, `Story Arc & Timeline Services`, `Narrative Peer Comparison`, `Notification Center Rendering`, `Business Card Helpers`, `Timeline Data Filtering`, `Sector Heatmap Visualization`, `Market Data Aggregation`, `Event Dashboard Rendering`, `Category Browser & Industry Lists`, `Study Log Tracking`, `Market Event Case Studies`, `Historical Case Study Library`, `Stock Screener Service`, `Main App & Rate Limit Status`, `Settings Page & Thresholds`, `Debate Engine & Rendering`, `ETF Detail Page`, `Market Chart Generation`, `Sector Story Generation`, `Project Role Definitions`, `User Feedback Handling`, `Company Health Charts`, `Stock Valuation Charts`, `Screener Template Loading`?**
-  _High betweenness centrality (0.432) - this node is a cross-community bridge._
-- **Why does `FinMindClient` connect `FinMind API Client` to `Legacy Plugin Adapters`, `Expert Analysis & Case Studies`, `Group Structure & Onboarding`, `Session State Management`, `Watchlist Management`, `Screener Explanation Provider`, `Education Academy & Quizzes`, `Case Study Library & ETF Browser`, `Plugin Metadata & Protocol`, `Plugin Base & Registry`, `Plugin Render Context & Middleware`, `Investor Story Feed & Timeline Controls`, `Peer Comparison Analysis`, `Notification Center Rendering`, `Business Card Helpers`, `Timeline Data Filtering`, `Category Browser & Industry Lists`, `Plugin Protocol & Base Classes`, `Historical Case Study Library`, `Stock Screener Service`, `Main App & Rate Limit Status`, `FinMind API Client & Errors`, `ETF Detail Page`, `Cache Cleanup Utilities`?**
+- **Why does `t()` connect `Peer Comparison Analysis` to `Business Card Rendering`, `Expert Analysis & Case Studies`, `Group Structure & Onboarding`, `Explanation Generation Protocol`, `Internationalization Utilities`, `Company Timeline & Market Narrative`, `Watchlist Management`, `Education Academy & Quizzes`, `Case Study Library & ETF Browser`, `Recent Delta Computation`, `News Summarization & Risk Analysis`, `Investor Story Feed & Timeline Controls`, `Dividend Frequency Classification`, `Screener Implication Builder`, `Stock ID Validation`, `Financial Chart Generation`, `Dividend Analysis Service`, `Scenario Calculator`, `Story Arc & Timeline Services`, `Narrative Peer Comparison`, `Notification Center Rendering`, `Business Card Helpers`, `Timeline Data Filtering`, `Sector Heatmap Visualization`, `Market Data Aggregation`, `Event Dashboard Rendering`, `Category Browser & Industry Lists`, `Study Log Tracking`, `Market Event Case Studies`, `Historical Case Study Library`, `Stock Screener Service`, `Main App & Rate Limit Status`, `Settings Page & Thresholds`, `Debate Engine & Rendering`, `ETF Detail Page`, `Market Chart Generation`, `Sector Story Generation`, `Project Role Definitions`, `User Feedback Handling`, `Company Health Charts`, `Stock Valuation Charts`, `Screener Template Loading`?**
+  _High betweenness centrality (0.440) - this node is a cross-community bridge._
+- **Why does `ExplanationRequest` connect `Explanation Generation Protocol` to `Screener Implication Builder`, `Screener Explanation Tests`, `Delta Explanation Tests`, `Screener Explanation Builder`, `Metric Explanation Popovers`, `Explanation Response Tests`, `Screener Explanation Provider`, `Stock Screener Service`, `Delta Explanation Engine`, `Explanation Template Selection`, `Adaptive Event Detection Engine`?**
   _High betweenness centrality (0.109) - this node is a cross-community bridge._
-- **Why does `ExplanationRequest` connect `Screener Explanation Tests` to `Screener Implication Builder`, `Explanation Generation Protocol`, `Delta Explanation Tests`, `Screener Explanation Builder`, `Metric Explanation Popovers`, `Explanation Response Tests`, `Screener Explanation Provider`, `Stock Screener Service`, `Delta Explanation Engine`, `Explanation Template Selection`?**
-  _High betweenness centrality (0.101) - this node is a cross-community bridge._
-- **Are the 35 inferred relationships involving `FinMindClient` (e.g. with `BasePlugin` and `BasePlugin`) actually correct?**
-  _`FinMindClient` has 35 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `FinMindClient` connect `FinMind API Client` to `Legacy Plugin Adapters`, `Expert Analysis & Case Studies`, `Group Structure & Onboarding`, `Session State Management`, `Watchlist Management`, `Screener Explanation Provider`, `Education Academy & Quizzes`, `Case Study Library & ETF Browser`, `Plugin Metadata & Protocol`, `Plugin Base & Registry`, `Plugin Render Context & Middleware`, `Investor Story Feed & Timeline Controls`, `Peer Comparison Analysis`, `Notification Center Rendering`, `Timeline Data Filtering`, `Category Browser & Industry Lists`, `Plugin Protocol & Base Classes`, `Historical Case Study Library`, `Stock Screener Service`, `Main App & Rate Limit Status`, `FinMind API Client & Errors`, `ETF Detail Page`, `Cache Cleanup Utilities`?**
+  _High betweenness centrality (0.099) - this node is a cross-community bridge._
+- **Are the 34 inferred relationships involving `FinMindClient` (e.g. with `BasePlugin` and `BasePlugin`) actually correct?**
+  _`FinMindClient` has 34 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 35 inferred relationships involving `ExplanationRequest` (e.g. with `TemplateExplanationProvider` and `DeltaExplanationProvider`) actually correct?**
   _`ExplanationRequest` has 35 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `graphify`, `1. Team Roster`, `2. Visual Flow Reference` to the rest of the system?**
-  _1058 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `股識 Stock Explorer — C02 通知中心 獨立頁面：顯示所有訂閱股票的待處理通知`, `Metric Education Service 將財務指標轉化為新手能秒懂的解釋 + 比喻 No Streamlit imports — pure data`, `取得單一財務指標的完整解釋。      Args:         metric_name: 指標代碼（如 "ROE", "gross_margin", "PE` to the rest of the system?**
+  _1057 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Business Card Rendering` be split into smaller, more focused modules?**
-  _Cohesion score 0.07884615384615384 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07553143374038897 - nodes in this community are weakly interconnected._

@@ -22,7 +22,41 @@ page:
   sector_heatmap: Sector Heatmap
   case_study: Case Study
   comprehension_check: Quiz
-  academy: Academy
+  academy:
+    title: Academy
+    lesson_list: Lesson List
+    lesson_number: Lesson {order}
+    difficulty: Difficulty
+    score: Score
+    completed: Completed
+    start: Start
+    review: Review
+    lesson_not_found: Lesson not found.
+    back_to_list: ← Back to Lesson List
+    learning_objectives: Learning Objectives
+    lesson_quiz: Lesson Quiz
+    quiz_instruction: Complete the following questions to test your understanding.
+    submit_answers: ✅ Submit Answers
+    no_answer_error: No answer found. Please restart.
+    quiz_results: Quiz Results
+    correct_count: Correct Answers
+    accuracy: Accuracy
+    question_explanations: Question Explanations
+    correct: ✅ Correct
+    incorrect: ❌ Incorrect
+    question_n: Question {n}
+    congrats_complete: 🎉 Congratulations on completing this lesson!
+    next_lesson: ➡️ Next Lesson
+    retake_quiz: 🔄 Retake Quiz
+    score_excellent: Excellent!
+    score_excellent_desc: You have a great understanding of this lesson's content — keep it up!
+    score_good: Not bad!
+    score_good_desc: You have the basic concepts, but there are some areas for improvement.
+    score_needs_work: Keep going!
+    score_needs_work_desc: Don't worry, review the explanations and you'll improve!
+    colon: ":"
+    key_point: Key Point
+    load_error: Failed to load data.
   case_study_library: Case Library
   first_visit_guide: First Visit Guide
   story_timeline: Story Timeline
@@ -284,7 +318,7 @@ notification:
     weekly: "Weekly"
   save_settings_btn: "Save Settings"
   default_list: "Default Watchlist"
-  settings_saved: "Settings saved successfully
+  settings_saved: "Settings saved successfully"
 memo:
   title: Investment Memo
   add: Add Memo

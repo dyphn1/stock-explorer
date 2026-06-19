@@ -10,7 +10,7 @@ def _get_health_metric_values(extra_metrics: dict, latest_per_pbr: dict | None) 
     # 獲利能力: ROE, 毛利率, 淨利率
     profit = []
     if extra_metrics.get("roe") is not None:
-        profit.append(f"ROE {extra_metrics['roe']:.1f}%")
+        profit.append(t("helpers:roe_value", value=f"{extra_metrics['roe']:.1f}%"))
     if extra_metrics.get("gross_margin") is not None:
         profit.append(t("helpers:gross_margin_value", value=f"{extra_metrics['gross_margin']:.1f}"))
     if extra_metrics.get("net_margin") is not None:

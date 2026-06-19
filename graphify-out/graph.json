@@ -4,14 +4,164 @@
   "graph": {},
   "nodes": [
     {
+      "label": "notification_center.py",
+      "file_type": "code",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pages_notification_center",
+      "community": 51,
+      "norm_label": "notification_center.py"
+    },
+    {
+      "label": "_severity_badge()",
+      "file_type": "code",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "pages_notification_center_severity_badge",
+      "community": 51,
+      "norm_label": "_severity_badge()"
+    },
+    {
+      "label": "_event_type_label()",
+      "file_type": "code",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "pages_notification_center_event_type_label",
+      "community": 51,
+      "norm_label": "_event_type_label()"
+    },
+    {
+      "label": "_severity_color()",
+      "file_type": "code",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "pages_notification_center_severity_color",
+      "community": 51,
+      "norm_label": "_severity_color()"
+    },
+    {
+      "label": "_render_notification_center()",
+      "file_type": "code",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "pages_notification_center_render_notification_center",
+      "community": 51,
+      "norm_label": "_render_notification_center()"
+    },
+    {
+      "label": "FinMindClient",
+      "file_type": "code",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "finmindclient",
+      "community": 51,
+      "norm_label": "finmindclient"
+    },
+    {
+      "label": "\u80a1\u8b58 Stock Explorer \u2014 C02 \u901a\u77e5\u4e2d\u5fc3 \u7368\u7acb\u9801\u9762\uff1a\u986f\u793a\u6240\u6709\u8a02\u95b1\u80a1\u7968\u7684\u5f85\u8655\u7406\u901a\u77e5",
+      "file_type": "rationale",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pages_notification_center_rationale_1",
+      "community": 51,
+      "norm_label": "\u80a1\u8b58 stock explorer \u2014 c02 \u901a\u77e5\u4e2d\u5fc3 \u7368\u7acb\u9801\u9762:\u986f\u793a\u6240\u6709\u8a02\u95b1\u80a1\u7968\u7684\u5f85\u8655\u7406\u901a\u77e5"
+    },
+    {
+      "label": "fix_imports.py",
+      "file_type": "code",
+      "source_file": "fix_imports.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 208,
+      "norm_label": "fix_imports.py",
+      "id": "fix_imports"
+    },
+    {
+      "label": "metric_education.py",
+      "file_type": "code",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "metric_education.py",
+      "id": "services_metric_education"
+    },
+    {
+      "label": "get_metric_explanation()",
+      "file_type": "code",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L151",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "get_metric_explanation()",
+      "id": "services_metric_education_get_metric_explanation"
+    },
+    {
+      "label": "get_supported_metrics()",
+      "file_type": "code",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L199",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "get_supported_metrics()",
+      "id": "services_metric_education_get_supported_metrics"
+    },
+    {
+      "label": "get_top_metrics_for_education()",
+      "file_type": "code",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L204",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "get_top_metrics_for_education()",
+      "id": "services_metric_education_get_top_metrics_for_education"
+    },
+    {
+      "label": "Metric Education Service \u5c07\u8ca1\u52d9\u6307\u6a19\u8f49\u5316\u70ba\u65b0\u624b\u80fd\u79d2\u61c2\u7684\u89e3\u91cb + \u6bd4\u55bb No Streamlit imports \u2014 pure data",
+      "file_type": "rationale",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "metric education service \u5c07\u8ca1\u52d9\u6307\u6a19\u8f49\u5316\u70ba\u65b0\u624b\u80fd\u79d2\u61c2\u7684\u89e3\u91cb + \u6bd4\u55bb no streamlit imports \u2014 pure data",
+      "id": "services_metric_education_rationale_1"
+    },
+    {
+      "label": "\u53d6\u5f97\u55ae\u4e00\u8ca1\u52d9\u6307\u6a19\u7684\u5b8c\u6574\u89e3\u91cb\u3002      Args:         metric_name: \u6307\u6a19\u4ee3\u78bc\uff08\u5982 \"ROE\", \"gross_margin\", \"PE",
+      "file_type": "rationale",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L152",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "\u53d6\u5f97\u55ae\u4e00\u8ca1\u52d9\u6307\u6a19\u7684\u5b8c\u6574\u89e3\u91cb\u3002      args:         metric_name: \u6307\u6a19\u4ee3\u78bc(\u5982 \"roe\", \"gross_margin\", \"pe",
+      "id": "services_metric_education_rationale_152"
+    },
+    {
+      "label": "\u5f9e\u80a1\u7968\u8cc7\u6599\u4e2d\u9078\u51fa\u6700\u91cd\u8981\u7684 3 \u500b\u6307\u6a19\u7528\u65bc\u6559\u80b2\u5c55\u793a\u3002      \u512a\u5148\u9806\u5e8f\uff1aROE > \u6bdb\u5229\u7387 > \u672c\u76ca\u6bd4 > \u6b96\u5229\u7387 > \u8ca0\u50b5\u6bd4 > \u71df\u6536\u5e74\u589e\u7387 > \u6de8\u503c\u6bd4 >",
+      "file_type": "rationale",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L205",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "\u5f9e\u80a1\u7968\u8cc7\u6599\u4e2d\u9078\u51fa\u6700\u91cd\u8981\u7684 3 \u500b\u6307\u6a19\u7528\u65bc\u6559\u80b2\u5c55\u793a\u3002      \u512a\u5148\u9806\u5e8f:roe > \u6bdb\u5229\u7387 > \u672c\u76ca\u6bd4 > \u6b96\u5229\u7387 > \u8ca0\u50b5\u6bd4 > \u71df\u6536\u5e74\u589e\u7387 > \u6de8\u503c\u6bd4 >",
+      "id": "services_metric_education_rationale_205"
+    },
+    {
       "label": "copilot-instructions.md",
       "file_type": "document",
       "source_file": ".github/copilot-instructions.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "github_copilot_instructions",
       "community": 206,
-      "norm_label": "copilot-instructions.md"
+      "norm_label": "copilot-instructions.md",
+      "id": "github_copilot_instructions"
     },
     {
       "label": "graphify",
@@ -19,9 +169,9 @@
       "source_file": ".github/copilot-instructions.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "github_copilot_instructions_graphify",
       "community": 206,
-      "norm_label": "graphify"
+      "norm_label": "graphify",
+      "id": "github_copilot_instructions_graphify"
     },
     {
       "label": "AGENTS.md",
@@ -29,9 +179,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents",
       "community": 89,
-      "norm_label": "agents.md"
+      "norm_label": "agents.md",
+      "id": "agents"
     },
     {
       "label": "Stock Explorer AI Team Router",
@@ -39,9 +189,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "agents_stock_explorer_ai_team_router",
       "community": 89,
-      "norm_label": "stock explorer ai team router"
+      "norm_label": "stock explorer ai team router",
+      "id": "agents_stock_explorer_ai_team_router"
     },
     {
       "label": "1. Team Roster",
@@ -49,9 +199,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "agents_1_team_roster",
       "community": 89,
-      "norm_label": "1. team roster"
+      "norm_label": "1. team roster",
+      "id": "agents_1_team_roster"
     },
     {
       "label": "2. Visual Flow Reference",
@@ -59,9 +209,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "agents_2_visual_flow_reference",
       "community": 89,
-      "norm_label": "2. visual flow reference"
+      "norm_label": "2. visual flow reference",
+      "id": "agents_2_visual_flow_reference"
     },
     {
       "label": "3. Bootstrap Protocol",
@@ -69,9 +219,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L45",
       "_origin": "ast",
-      "id": "agents_3_bootstrap_protocol",
       "community": 89,
-      "norm_label": "3. bootstrap protocol"
+      "norm_label": "3. bootstrap protocol",
+      "id": "agents_3_bootstrap_protocol"
     },
     {
       "label": "Step 0: Restore Context",
@@ -79,9 +229,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L47",
       "_origin": "ast",
-      "id": "agents_step_0_restore_context",
       "community": 89,
-      "norm_label": "step 0: restore context"
+      "norm_label": "step 0: restore context",
+      "id": "agents_step_0_restore_context"
     },
     {
       "label": "Step 0.5: PM Role Definition (CRITICAL)",
@@ -89,9 +239,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L54",
       "_origin": "ast",
-      "id": "agents_step_0_5_pm_role_definition_critical",
       "community": 89,
-      "norm_label": "step 0.5: pm role definition (critical)"
+      "norm_label": "step 0.5: pm role definition (critical)",
+      "id": "agents_step_0_5_pm_role_definition_critical"
     },
     {
       "label": "Step 1: Determine Current TODO",
@@ -99,9 +249,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L82",
       "_origin": "ast",
-      "id": "agents_step_1_determine_current_todo",
       "community": 89,
-      "norm_label": "step 1: determine current todo"
+      "norm_label": "step 1: determine current todo",
+      "id": "agents_step_1_determine_current_todo"
     },
     {
       "label": "Step 2: Execute via delegate_task",
@@ -109,9 +259,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L93",
       "_origin": "ast",
-      "id": "agents_step_2_execute_via_delegate_task",
       "community": 89,
-      "norm_label": "step 2: execute via delegate_task"
+      "norm_label": "step 2: execute via delegate_task",
+      "id": "agents_step_2_execute_via_delegate_task"
     },
     {
       "label": "Step 3: Gate Check",
@@ -119,9 +269,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L103",
       "_origin": "ast",
-      "id": "agents_step_3_gate_check",
       "community": 89,
-      "norm_label": "step 3: gate check"
+      "norm_label": "step 3: gate check",
+      "id": "agents_step_3_gate_check"
     },
     {
       "label": "Step 4: Release (PM only)",
@@ -129,9 +279,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L113",
       "_origin": "ast",
-      "id": "agents_step_4_release_pm_only",
       "community": 89,
-      "norm_label": "step 4: release (pm only)"
+      "norm_label": "step 4: release (pm only)",
+      "id": "agents_step_4_release_pm_only"
     },
     {
       "label": "4. Task Routing by Priority",
@@ -139,9 +289,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L124",
       "_origin": "ast",
-      "id": "agents_4_task_routing_by_priority",
       "community": 89,
-      "norm_label": "4. task routing by priority"
+      "norm_label": "4. task routing by priority",
+      "id": "agents_4_task_routing_by_priority"
     },
     {
       "label": "5. State Management",
@@ -149,9 +299,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L135",
       "_origin": "ast",
-      "id": "agents_5_state_management",
       "community": 89,
-      "norm_label": "5. state management"
+      "norm_label": "5. state management",
+      "id": "agents_5_state_management"
     },
     {
       "label": "Problem Record Format",
@@ -159,9 +309,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L143",
       "_origin": "ast",
-      "id": "agents_problem_record_format",
       "community": 89,
-      "norm_label": "problem record format"
+      "norm_label": "problem record format",
+      "id": "agents_problem_record_format"
     },
     {
       "label": "6. Cognitive Metabolism",
@@ -169,9 +319,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L158",
       "_origin": "ast",
-      "id": "agents_6_cognitive_metabolism",
       "community": 89,
-      "norm_label": "6. cognitive metabolism"
+      "norm_label": "6. cognitive metabolism",
+      "id": "agents_6_cognitive_metabolism"
     },
     {
       "label": "7. Development Rules (Quick Reference)",
@@ -179,9 +329,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L170",
       "_origin": "ast",
-      "id": "agents_7_development_rules_quick_reference",
       "community": 89,
-      "norm_label": "7. development rules (quick reference)"
+      "norm_label": "7. development rules (quick reference)",
+      "id": "agents_7_development_rules_quick_reference"
     },
     {
       "label": "graphify",
@@ -189,9 +339,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L182",
       "_origin": "ast",
-      "id": "agents_graphify",
       "community": 89,
-      "norm_label": "graphify"
+      "norm_label": "graphify",
+      "id": "agents_graphify"
     },
     {
       "label": "count_dict.py",
@@ -199,9 +349,9 @@
       "source_file": "count_dict.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "count_dict",
       "community": 207,
-      "norm_label": "count_dict.py"
+      "norm_label": "count_dict.py",
+      "id": "count_dict"
     },
     {
       "label": "count_dict2.py",
@@ -209,9 +359,9 @@
       "source_file": "count_dict2.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "count_dict2",
       "community": 203,
-      "norm_label": "count_dict2.py"
+      "norm_label": "count_dict2.py",
+      "id": "count_dict2"
     },
     {
       "label": "replace_t()",
@@ -219,9 +369,9 @@
       "source_file": "count_dict2.py",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "count_dict2_replace_t",
       "community": 203,
-      "norm_label": "replace_t()"
+      "norm_label": "replace_t()",
+      "id": "count_dict2_replace_t"
     },
     {
       "label": "find_strings.py",
@@ -229,9 +379,9 @@
       "source_file": "find_strings.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "find_strings",
       "community": 204,
-      "norm_label": "find_strings.py"
+      "norm_label": "find_strings.py",
+      "id": "find_strings"
     },
     {
       "label": "find_chinese_strings()",
@@ -239,9 +389,9 @@
       "source_file": "find_strings.py",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "find_strings_find_chinese_strings",
       "community": 204,
-      "norm_label": "find_chinese_strings()"
+      "norm_label": "find_chinese_strings()",
+      "id": "find_strings_find_chinese_strings"
     },
     {
       "label": "find_strings2.py",
@@ -249,9 +399,9 @@
       "source_file": "find_strings2.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "find_strings2",
       "community": 205,
-      "norm_label": "find_strings2.py"
+      "norm_label": "find_strings2.py",
+      "id": "find_strings2"
     },
     {
       "label": "find_chinese_strings()",
@@ -259,9 +409,9 @@
       "source_file": "find_strings2.py",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "find_strings2_find_chinese_strings",
       "community": 205,
-      "norm_label": "find_chinese_strings()"
+      "norm_label": "find_chinese_strings()",
+      "id": "find_strings2_find_chinese_strings"
     },
     {
       "label": "migrate_expert_analysis.py",
@@ -269,9 +419,9 @@
       "source_file": "scripts/migrate_expert_analysis.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_migrate_expert_analysis",
       "community": 150,
-      "norm_label": "migrate_expert_analysis.py"
+      "norm_label": "migrate_expert_analysis.py",
+      "id": "scripts_migrate_expert_analysis"
     },
     {
       "label": "One-time migration script: move hardcoded Chinese stock names to t() calls.",
@@ -279,9 +429,9 @@
       "source_file": "scripts/migrate_expert_analysis.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_migrate_expert_analysis_rationale_1",
       "community": 150,
-      "norm_label": "one-time migration script: move hardcoded chinese stock names to t() calls."
+      "norm_label": "one-time migration script: move hardcoded chinese stock names to t() calls.",
+      "id": "scripts_migrate_expert_analysis_rationale_1"
     },
     {
       "label": "update_locales.py",
@@ -289,9 +439,9 @@
       "source_file": "scripts/update_locales.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_locales",
       "community": 152,
-      "norm_label": "update_locales.py"
+      "norm_label": "update_locales.py",
+      "id": "scripts_update_locales"
     },
     {
       "label": "One-time migration: update locale YAML files for expert_analysis i18n.",
@@ -299,9 +449,9 @@
       "source_file": "scripts/update_locales.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_locales_rationale_1",
       "community": 152,
-      "norm_label": "one-time migration: update locale yaml files for expert_analysis i18n."
+      "norm_label": "one-time migration: update locale yaml files for expert_analysis i18n.",
+      "id": "scripts_update_locales_rationale_1"
     },
     {
       "label": "_expert_analysis.py",
@@ -309,9 +459,9 @@
       "source_file": "src/pages/business_card/_expert_analysis.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "business_card_expert_analysis",
-      "community": 56,
-      "norm_label": "_expert_analysis.py"
+      "community": 32,
+      "norm_label": "_expert_analysis.py",
+      "id": "business_card_expert_analysis"
     },
     {
       "label": "_render_expert_analysis()",
@@ -319,9 +469,9 @@
       "source_file": "src/pages/business_card/_expert_analysis.py",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "business_card_expert_analysis_render_expert_analysis",
-      "community": 56,
-      "norm_label": "_render_expert_analysis()"
+      "community": 112,
+      "norm_label": "_render_expert_analysis()",
+      "id": "business_card_expert_analysis_render_expert_analysis"
     },
     {
       "label": "C73 Expert Analysis (\u5c08\u5bb6\u5206\u6790) \u2014 curated expert analysis for major Taiwan stocks.",
@@ -329,9 +479,9 @@
       "source_file": "src/pages/business_card/_expert_analysis.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "business_card_expert_analysis_rationale_1",
-      "community": 56,
-      "norm_label": "c73 expert analysis (\u5c08\u5bb6\u5206\u6790) \u2014 curated expert analysis for major taiwan stocks."
+      "community": 32,
+      "norm_label": "c73 expert analysis (\u5c08\u5bb6\u5206\u6790) \u2014 curated expert analysis for major taiwan stocks.",
+      "id": "business_card_expert_analysis_rationale_1"
     },
     {
       "label": "C73 Expert Analysis: curated expert analysis for major Taiwan stocks.      For 1",
@@ -339,9 +489,9 @@
       "source_file": "src/pages/business_card/_expert_analysis.py",
       "source_location": "L96",
       "_origin": "ast",
-      "id": "business_card_expert_analysis_rationale_96",
-      "community": 56,
-      "norm_label": "c73 expert analysis: curated expert analysis for major taiwan stocks.      for 1"
+      "community": 112,
+      "norm_label": "c73 expert analysis: curated expert analysis for major taiwan stocks.      for 1",
+      "id": "business_card_expert_analysis_rationale_96"
     },
     {
       "label": "_moat.py",
@@ -349,9 +499,9 @@
       "source_file": "src/pages/business_card/_sections/_moat.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "sections_moat",
       "community": 3,
-      "norm_label": "_moat.py"
+      "norm_label": "_moat.py",
+      "id": "sections_moat"
     },
     {
       "label": "_score_color()",
@@ -359,9 +509,9 @@
       "source_file": "src/pages/business_card/_sections/_moat.py",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "sections_moat_score_color",
       "community": 3,
-      "norm_label": "_score_color()"
+      "norm_label": "_score_color()",
+      "id": "sections_moat_score_color"
     },
     {
       "label": "_render_moat()",
@@ -369,9 +519,9 @@
       "source_file": "src/pages/business_card/_sections/_moat.py",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "sections_moat_render_moat",
       "community": 3,
-      "norm_label": "_render_moat()"
+      "norm_label": "_render_moat()",
+      "id": "sections_moat_render_moat"
     },
     {
       "label": "Business card section: Moat Analysis (C46 + C124).",
@@ -379,9 +529,9 @@
       "source_file": "src/pages/business_card/_sections/_moat.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "sections_moat_rationale_1",
       "community": 3,
-      "norm_label": "business card section: moat analysis (c46 + c124)."
+      "norm_label": "business card section: moat analysis (c46 + c124).",
+      "id": "sections_moat_rationale_1"
     },
     {
       "label": "C46 Moat Analysis section \u2014 competitive advantage assessment.",
@@ -389,9 +539,9 @@
       "source_file": "src/pages/business_card/_sections/_moat.py",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "sections_moat_rationale_18",
       "community": 3,
-      "norm_label": "c46 moat analysis section \u2014 competitive advantage assessment."
+      "norm_label": "c46 moat analysis section \u2014 competitive advantage assessment.",
+      "id": "sections_moat_rationale_18"
     },
     {
       "label": "_study_log.py",
@@ -399,9 +549,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "business_card_study_log",
       "community": 72,
-      "norm_label": "_study_log.py"
+      "norm_label": "_study_log.py",
+      "id": "business_card_study_log"
     },
     {
       "label": "_get_study_log()",
@@ -409,9 +559,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "business_card_study_log_get_study_log",
       "community": 72,
-      "norm_label": "_get_study_log()"
+      "norm_label": "_get_study_log()",
+      "id": "business_card_study_log_get_study_log"
     },
     {
       "label": "_record_study()",
@@ -419,9 +569,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "business_card_study_log_record_study",
       "community": 72,
-      "norm_label": "_record_study()"
+      "norm_label": "_record_study()",
+      "id": "business_card_study_log_record_study"
     },
     {
       "label": "_compute_streak()",
@@ -429,9 +579,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L42",
       "_origin": "ast",
-      "id": "business_card_study_log_compute_streak",
       "community": 72,
-      "norm_label": "_compute_streak()"
+      "norm_label": "_compute_streak()",
+      "id": "business_card_study_log_compute_streak"
     },
     {
       "label": "_get_recent_history()",
@@ -439,9 +589,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "business_card_study_log_get_recent_history",
       "community": 72,
-      "norm_label": "_get_recent_history()"
+      "norm_label": "_get_recent_history()",
+      "id": "business_card_study_log_get_recent_history"
     },
     {
       "label": "_get_total_stocks()",
@@ -449,9 +599,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "business_card_study_log_get_total_stocks",
       "community": 72,
-      "norm_label": "_get_total_stocks()"
+      "norm_label": "_get_total_stocks()",
+      "id": "business_card_study_log_get_total_stocks"
     },
     {
       "label": "_render_study_log()",
@@ -459,9 +609,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L82",
       "_origin": "ast",
-      "id": "business_card_study_log_render_study_log",
       "community": 72,
-      "norm_label": "_render_study_log()"
+      "norm_label": "_render_study_log()",
+      "id": "business_card_study_log_render_study_log"
     },
     {
       "label": "C71 Study Log (\u5b78\u7fd2\u65e5\u8a8c) \u2014 track user's study streak and history.",
@@ -469,9 +619,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "business_card_study_log_rationale_1",
       "community": 72,
-      "norm_label": "c71 study log (\u5b78\u7fd2\u65e5\u8a8c) \u2014 track user's study streak and history."
+      "norm_label": "c71 study log (\u5b78\u7fd2\u65e5\u8a8c) \u2014 track user's study streak and history.",
+      "id": "business_card_study_log_rationale_1"
     },
     {
       "label": "Get the study log from session state, initializing if needed.      Returns a dic",
@@ -479,9 +629,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "business_card_study_log_rationale_16",
       "community": 72,
-      "norm_label": "get the study log from session state, initializing if needed.      returns a dic"
+      "norm_label": "get the study log from session state, initializing if needed.      returns a dic",
+      "id": "business_card_study_log_rationale_16"
     },
     {
       "label": "Record that the user studied a stock today.",
@@ -489,9 +639,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L28",
       "_origin": "ast",
-      "id": "business_card_study_log_rationale_28",
       "community": 72,
-      "norm_label": "record that the user studied a stock today."
+      "norm_label": "record that the user studied a stock today.",
+      "id": "business_card_study_log_rationale_28"
     },
     {
       "label": "Compute the current consecutive-day study streak.",
@@ -499,9 +649,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L43",
       "_origin": "ast",
-      "id": "business_card_study_log_rationale_43",
       "community": 72,
-      "norm_label": "compute the current consecutive-day study streak."
+      "norm_label": "compute the current consecutive-day study streak.",
+      "id": "business_card_study_log_rationale_43"
     },
     {
       "label": "Return study history for the last N days.      Returns list of (date_str, count)",
@@ -509,9 +659,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L60",
       "_origin": "ast",
-      "id": "business_card_study_log_rationale_60",
       "community": 72,
-      "norm_label": "return study history for the last n days.      returns list of (date_str, count)"
+      "norm_label": "return study history for the last n days.      returns list of (date_str, count)",
+      "id": "business_card_study_log_rationale_60"
     },
     {
       "label": "Return total unique stocks studied across all dates.",
@@ -519,9 +669,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L75",
       "_origin": "ast",
-      "id": "business_card_study_log_rationale_75",
       "community": 72,
-      "norm_label": "return total unique stocks studied across all dates."
+      "norm_label": "return total unique stocks studied across all dates.",
+      "id": "business_card_study_log_rationale_75"
     },
     {
       "label": "C71 Study Log: track user's study streak and history.      Shows:     - Current",
@@ -529,9 +679,9 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L83",
       "_origin": "ast",
-      "id": "business_card_study_log_rationale_83",
       "community": 72,
-      "norm_label": "c71 study log: track user's study streak and history.      shows:     - current"
+      "norm_label": "c71 study log: track user's study streak and history.      shows:     - current",
+      "id": "business_card_study_log_rationale_83"
     },
     {
       "label": "watchlist_page.py",
@@ -539,9 +689,9 @@
       "source_file": "src/pages/watchlist_page.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_watchlist_page",
       "community": 12,
-      "norm_label": "watchlist_page.py"
+      "norm_label": "watchlist_page.py",
+      "id": "pages_watchlist_page"
     },
     {
       "label": "_render_watchlist_page()",
@@ -549,19 +699,9 @@
       "source_file": "src/pages/watchlist_page.py",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "pages_watchlist_page_render_watchlist_page",
       "community": 12,
-      "norm_label": "_render_watchlist_page()"
-    },
-    {
-      "label": "FinMindClient",
-      "file_type": "code",
-      "source_file": "src/pages/watchlist_page.py",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "finmindclient",
-      "community": 12,
-      "norm_label": "finmindclient"
+      "norm_label": "_render_watchlist_page()",
+      "id": "pages_watchlist_page_render_watchlist_page"
     },
     {
       "label": "\u95dc\u6ce8\u5217\u8868\u9801 \u2014 \u986f\u793a\u4f7f\u7528\u8005\u95dc\u6ce8\u7684\u80a1\u7968\u8207 ETF \u63d0\u4f9b\u6458\u8981\u5361\u7247\u3001\u50f9\u683c\u5217\u8868\u3001\u8b66\u793a\u72c0\u614b\u8207\u79fb\u9664\u529f\u80fd \u652f\u63f4\u591a\u500b\u547d\u540d\u6e05\u55ae",
@@ -569,9 +709,9 @@
       "source_file": "src/pages/watchlist_page.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_watchlist_page_rationale_1",
       "community": 12,
-      "norm_label": "\u95dc\u6ce8\u5217\u8868\u9801 \u2014 \u986f\u793a\u4f7f\u7528\u8005\u95dc\u6ce8\u7684\u80a1\u7968\u8207 etf \u63d0\u4f9b\u6458\u8981\u5361\u7247\u3001\u50f9\u683c\u5217\u8868\u3001\u8b66\u793a\u72c0\u614b\u8207\u79fb\u9664\u529f\u80fd \u652f\u63f4\u591a\u500b\u547d\u540d\u6e05\u55ae"
+      "norm_label": "\u95dc\u6ce8\u5217\u8868\u9801 \u2014 \u986f\u793a\u4f7f\u7528\u8005\u95dc\u6ce8\u7684\u80a1\u7968\u8207 etf \u63d0\u4f9b\u6458\u8981\u5361\u7247\u3001\u50f9\u683c\u5217\u8868\u3001\u8b66\u793a\u72c0\u614b\u8207\u79fb\u9664\u529f\u80fd \u652f\u63f4\u591a\u500b\u547d\u540d\u6e05\u55ae",
+      "id": "pages_watchlist_page_rationale_1"
     },
     {
       "label": "main.py",
@@ -938,7 +1078,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 71,
+      "community": 22,
       "norm_label": "plugin_protocol.py",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol"
@@ -1092,7 +1232,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L203",
       "_origin": "ast",
-      "community": 71,
+      "community": 22,
       "norm_label": "baseplugin",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin"
@@ -1103,7 +1243,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 71,
+      "community": 22,
       "norm_label": "abc",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "abc"
@@ -1114,7 +1254,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L222",
       "_origin": "ast",
-      "community": 71,
+      "community": 22,
       "norm_label": ".metadata()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin_metadata"
@@ -1125,7 +1265,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L227",
       "_origin": "ast",
-      "community": 71,
+      "community": 22,
       "norm_label": ".render()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin_render"
@@ -1136,7 +1276,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L231",
       "_origin": "ast",
-      "community": 71,
+      "community": 22,
       "norm_label": ".can_render()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin_can_render"
@@ -1147,7 +1287,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L239",
       "_origin": "ast",
-      "community": 71,
+      "community": 22,
       "norm_label": ".__repr__()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin_repr"
@@ -1169,7 +1309,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 71,
+      "community": 22,
       "norm_label": "src/core/plugin_protocol.py plugin protocol \u5b9a\u7fa9 \u2014 \u6240\u6709\u9801\u9762 plugin \u5fc5\u9808\u5be6\u73fe\u7684\u4ecb\u9762\u3002  \u6b64\u6a21\u7d44\u5b9a\u7fa9\u4e86 pl",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_rationale_1"
@@ -1279,7 +1419,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L204",
       "_origin": "ast",
-      "community": 71,
+      "community": 22,
       "norm_label": "plugin \u62bd\u8c61\u57fa\u985e \u2014 \u63d0\u4f9b\u9ed8\u8a8d\u5be6\u73fe,\u5b50\u985e\u53ea\u9700 override \u5fc5\u8981\u65b9\u6cd5\u3002      \u4f7f\u7528\u65b9\u5f0f:         class businesscardpl",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_rationale_204"
@@ -2665,7 +2805,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_section_title()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_router_base_section_title"
@@ -2676,7 +2816,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L85",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "_confidence_badge()",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_confidence_badge"
@@ -2687,7 +2827,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L106",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_read_time()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_read_time"
@@ -2698,7 +2838,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L122",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "_section_title_with_read_time()",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_section_title_with_read_time"
@@ -2775,7 +2915,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L275",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_subsidiary_card()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_subsidiary_card"
@@ -2797,7 +2937,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L325",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "_glossary_tooltip()",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_glossary_tooltip"
@@ -2929,7 +3069,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L86",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "return an emoji confidence badge based on the confidence score.      c204: emoji",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_rationale_86"
@@ -2940,7 +3080,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L107",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "estimate reading time for chinese text.      c205: read time indicator based on",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_rationale_107"
@@ -2951,7 +3091,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L123",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "render a section title with an inline read time badge.      c205: only shows the",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_rationale_123"
@@ -2995,7 +3135,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L277",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "render a subsidiary card with holding badge, business description, and relation.",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_rationale_277"
@@ -3017,7 +3157,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L326",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "render a clickable i\ufe0f tooltip that shows glossary definition.      uses st.popov",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_rationale_326"
@@ -3809,7 +3949,7 @@
       "source_file": "src/pages/business_card/_sections/_financial.py",
       "source_location": "L154",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "_render_dividend()",
       "community_name": "Business Card Rendering",
       "id": "sections_financial_render_dividend"
@@ -3842,7 +3982,7 @@
       "source_file": "src/pages/business_card/_sections/_financial.py",
       "source_location": "L325",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "_render_valuation()",
       "community_name": "Business Card Rendering",
       "id": "sections_financial_render_valuation"
@@ -3886,7 +4026,7 @@
       "source_file": "src/pages/business_card/_sections/_financial.py",
       "source_location": "L155",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "dividend story: countdown, summary, mini-cards, expandable history table.",
       "community_name": "Business Card Rendering",
       "id": "sections_financial_rationale_155"
@@ -3919,7 +4059,7 @@
       "source_file": "src/pages/business_card/_sections/_financial.py",
       "source_location": "L326",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "valuation band chart + interpretation card.",
       "community_name": "Business Card Rendering",
       "id": "sections_financial_rationale_326"
@@ -3996,7 +4136,7 @@
       "source_file": "src/pages/business_card/_sections/_historical_pattern.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "_historical_pattern.py",
       "community_name": "Case Study Library & ETF Browser",
       "id": "sections_historical_pattern"
@@ -4007,7 +4147,7 @@
       "source_file": "src/pages/business_card/_sections/_historical_pattern.py",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "_render_historical_pattern()",
       "community_name": "Case Study Library & ETF Browser",
       "id": "sections_historical_pattern_render_historical_pattern"
@@ -4018,7 +4158,7 @@
       "source_file": "src/pages/business_card/_sections/_historical_pattern.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "business card section: c147 \u6b77\u53f2\u6a21\u5f0f \u2014 \u7576\u985e\u4f3c\u4e8b\u4ef6\u767c\u751f\u904e,\u7d50\u679c\u5982\u4f55\u3002",
       "community_name": "Case Study Library & ETF Browser",
       "id": "sections_historical_pattern_rationale_1"
@@ -4029,7 +4169,7 @@
       "source_file": "src/pages/business_card/_sections/_historical_pattern.py",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "c147 \u6b77\u53f2\u6a21\u5f0f:\u986f\u793a\u904e\u53bb\u985e\u4f3c\u4e8b\u4ef6\u7684\u7d50\u679c\u7bc4\u570d\u3002      \u4f7f\u7528\u6b77\u53f2\u6a21\u5f0f\u5075\u6e2c\u5668\u641c\u5c0b\u904e\u53bb\u76f8\u4f3c\u4e8b\u4ef6,     \u4ee5\u5361\u7247\u5f62\u5f0f\u5448\u73fe\u65e5\u671f\u3001\u63cf\u8ff0\u8207\u7d50\u679c\u3002     \u5305\u542b\u6b77\u53f2\u514d\u8cac",
       "community_name": "Case Study Library & ETF Browser",
       "id": "sections_historical_pattern_rationale_9"
@@ -4238,7 +4378,7 @@
       "source_file": "src/pages/business_card/_sections/_summary_hero.py",
       "source_location": "L203",
       "_origin": "ast",
-      "community": 112,
+      "community": 12,
       "norm_label": "_render_header()",
       "community_name": "Watchlist Management",
       "id": "sections_summary_hero_render_header"
@@ -4271,7 +4411,7 @@
       "source_file": "src/pages/business_card/_sections/_summary_hero.py",
       "source_location": "L204",
       "_origin": "ast",
-      "community": 112,
+      "community": 12,
       "norm_label": "watchlist header with stock name, price, watchlist buttons.",
       "community_name": "Watchlist Management",
       "id": "sections_summary_hero_rationale_204"
@@ -4282,7 +4422,7 @@
       "source_file": "src/pages/business_card/_sections/_why_moved.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "_why_moved.py",
       "community_name": "Business Card Rendering",
       "id": "sections_why_moved"
@@ -4293,7 +4433,7 @@
       "source_file": "src/pages/business_card/_sections/_why_moved.py",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 3,
+      "community": 112,
       "norm_label": "_render_why_moved()",
       "community_name": "Business Card Rendering",
       "id": "sections_why_moved_render_why_moved"
@@ -4304,7 +4444,7 @@
       "source_file": "src/pages/business_card/_sections/_why_moved.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "business card section: why did this move? (c188).  renders an inline explanation",
       "community_name": "Business Card Rendering",
       "id": "sections_why_moved_rationale_1"
@@ -4315,7 +4455,7 @@
       "source_file": "src/pages/business_card/_sections/_why_moved.py",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 3,
+      "community": 112,
       "norm_label": "c188: why did this move? \u2014 plain-language movement explanation.      shows direc",
       "community_name": "Business Card Rendering",
       "id": "sections_why_moved_rationale_13"
@@ -4722,7 +4862,7 @@
       "source_file": "src/pages/comprehension_check.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 56,
+      "community": 32,
       "norm_label": "comprehension_check.py",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_comprehension_check"
@@ -4733,7 +4873,7 @@
       "source_file": "src/pages/comprehension_check.py",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 56,
+      "community": 32,
       "norm_label": "_render_comprehension_check()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_comprehension_check_render_comprehension_check"
@@ -4755,7 +4895,7 @@
       "source_file": "src/pages/comprehension_check.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 56,
+      "community": 32,
       "norm_label": "comprehension check quiz \u2014 c101 generic investing literacy comprehension check q",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_comprehension_check_rationale_1"
@@ -4766,7 +4906,7 @@
       "source_file": "src/pages/comprehension_check.py",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 56,
+      "community": 32,
       "norm_label": "comprehension check quiz main page \u2014 investing literacy questions.",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_comprehension_check_rationale_22"
@@ -5591,7 +5731,7 @@
       "source_file": "src/pages/group_structure.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "group_structure.py",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_group_structure"
@@ -5602,7 +5742,7 @@
       "source_file": "src/pages/group_structure.py",
       "source_location": "L178",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_render_group_structure()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_group_structure_render_group_structure"
@@ -5613,7 +5753,7 @@
       "source_file": "src/pages/group_structure.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "\u96c6\u5718\u67b6\u69cb\u9801 \u2014 m2 \u7b2c\u56db\u9801 \u76ee\u6a19:\u8a8d\u8b58\u96c6\u5718\u5167\u90e8\u7684\u95dc\u4fc2(\u9ede\u5c0d\u9ede) \u7b2c\u4e00\u968e\u6bb5:\u986f\u793a\u6301\u80a1 > 50% \u6216\u71df\u6536\u8ca2\u737b > 10% \u7684\u5b50\u516c\u53f8",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_group_structure_rationale_1"
@@ -5624,7 +5764,7 @@
       "source_file": "src/pages/investment_memo.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "investment_memo.py",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_investment_memo"
@@ -5635,7 +5775,7 @@
       "source_file": "src/pages/investment_memo.py",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "_render_investment_memo()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_investment_memo_render_investment_memo"
@@ -5657,7 +5797,7 @@
       "source_file": "src/pages/investment_memo.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "investment memo template \u2014 c83 a structured reflection tool where users write th",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_investment_memo_rationale_1"
@@ -5668,7 +5808,7 @@
       "source_file": "src/pages/investment_memo.py",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "investment memo main page \u2014 write your own investment thesis.",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_investment_memo_rationale_23"
@@ -5679,7 +5819,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 12,
       "norm_label": "investor_story_feed.py",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed"
@@ -5690,7 +5830,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L32",
       "_origin": "ast",
-      "community": 3,
+      "community": 12,
       "norm_label": "_why_matters()",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_why_matters"
@@ -5701,7 +5841,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 3,
+      "community": 12,
       "norm_label": "render_investor_story_feed()",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_render_investor_story_feed"
@@ -5712,7 +5852,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 12,
       "norm_label": "\u80a1\u8b58 stock explorer \u2014 c116: \u6bcf\u65e5\u6545\u4e8b feed personalized daily narrative feed with ai co",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_rationale_1"
@@ -5723,7 +5863,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 3,
+      "community": 12,
       "norm_label": "generate a one-line plain-language 'why this matters' explanation.",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_rationale_33"
@@ -5734,7 +5874,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L52",
       "_origin": "ast",
-      "community": 3,
+      "community": 12,
       "norm_label": "\u6bcf\u65e5\u6545\u4e8b feed \u4e3b\u9801\u9762\u3002      layout:         1. hero card: today's top story (highest sev",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_rationale_52"
@@ -5811,7 +5951,7 @@
       "source_file": "src/pages/market_event_case_study.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "market_event_case_study.py",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_market_event_case_study"
@@ -5822,7 +5962,7 @@
       "source_file": "src/pages/market_event_case_study.py",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "_severity_badge()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_market_event_case_study_severity_badge"
@@ -5833,7 +5973,7 @@
       "source_file": "src/pages/market_event_case_study.py",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "_render_related_stock_card()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_market_event_case_study_render_related_stock_card"
@@ -5844,7 +5984,7 @@
       "source_file": "src/pages/market_event_case_study.py",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "_render_market_event_case_study()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_market_event_case_study_render_market_event_case_study"
@@ -5855,7 +5995,7 @@
       "source_file": "src/pages/market_event_case_study.py",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 2,
+      "community": 16,
       "norm_label": "finmindclient",
       "community_name": "FinMind API Client",
       "id": "src_pages_market_event_case_study_py_finmindclient"
@@ -5866,7 +6006,7 @@
       "source_file": "src/pages/market_event_case_study.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "market event case study \u2014 c84 interactive historical market event explorer with",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_market_event_case_study_rationale_1"
@@ -5877,7 +6017,7 @@
       "source_file": "src/pages/market_event_case_study.py",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "render a related stock card using shared _subsidiary_card component.",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_market_event_case_study_rationale_31"
@@ -5888,7 +6028,7 @@
       "source_file": "src/pages/market_event_case_study.py",
       "source_location": "L44",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "market event case study main page \u2014 historian perspective.",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_market_event_case_study_rationale_44"
@@ -5936,83 +6076,6 @@
       "norm_label": "c126 moat comparison \u2014 side-by-side moat comparison with peer companies.      sh",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_moat_comparison_rationale_17"
-    },
-    {
-      "label": "notification_center.py",
-      "file_type": "code",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 51,
-      "norm_label": "notification_center.py",
-      "community_name": "Notification Center Rendering",
-      "id": "pages_notification_center"
-    },
-    {
-      "label": "_severity_badge()",
-      "file_type": "code",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L31",
-      "_origin": "ast",
-      "community": 51,
-      "norm_label": "_severity_badge()",
-      "community_name": "Notification Center Rendering",
-      "id": "pages_notification_center_severity_badge"
-    },
-    {
-      "label": "_event_type_label()",
-      "file_type": "code",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L41",
-      "_origin": "ast",
-      "community": 51,
-      "norm_label": "_event_type_label()",
-      "community_name": "Notification Center Rendering",
-      "id": "pages_notification_center_event_type_label"
-    },
-    {
-      "label": "_severity_color()",
-      "file_type": "code",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L54",
-      "_origin": "ast",
-      "community": 51,
-      "norm_label": "_severity_color()",
-      "community_name": "Notification Center Rendering",
-      "id": "pages_notification_center_severity_color"
-    },
-    {
-      "label": "_render_notification_center()",
-      "file_type": "code",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L63",
-      "_origin": "ast",
-      "community": 51,
-      "norm_label": "_render_notification_center()",
-      "community_name": "Notification Center Rendering",
-      "id": "pages_notification_center_render_notification_center"
-    },
-    {
-      "label": "FinMindClient",
-      "file_type": "code",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L63",
-      "_origin": "ast",
-      "community": 51,
-      "norm_label": "finmindclient",
-      "community_name": "Notification Center Rendering",
-      "id": "src_pages_notification_center_py_finmindclient"
-    },
-    {
-      "label": "\u80a1\u8b58 Stock Explorer \u2014 C02 \u901a\u77e5\u4e2d\u5fc3 \u7368\u7acb\u9801\u9762\uff1a\u986f\u793a\u6240\u6709\u8a02\u95b1\u80a1\u7968\u7684\u5f85\u8655\u7406\u901a\u77e5",
-      "file_type": "rationale",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 51,
-      "norm_label": "\u80a1\u8b58 stock explorer \u2014 c02 \u901a\u77e5\u4e2d\u5fc3 \u7368\u7acb\u9801\u9762:\u986f\u793a\u6240\u6709\u8a02\u95b1\u80a1\u7968\u7684\u5f85\u8655\u7406\u901a\u77e5",
-      "community_name": "Notification Center Rendering",
-      "id": "pages_notification_center_rationale_1"
     },
     {
       "label": "operation_checkup.py",
@@ -6185,7 +6248,7 @@
       "source_file": "src/pages/revenue_tree.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 56,
       "norm_label": "revenue_tree.py",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_revenue_tree"
@@ -6196,7 +6259,7 @@
       "source_file": "src/pages/revenue_tree.py",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 0,
+      "community": 56,
       "norm_label": "_render_revenue_tree()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_revenue_tree_render_revenue_tree"
@@ -6207,7 +6270,7 @@
       "source_file": "src/pages/revenue_tree.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 56,
       "norm_label": "revenue tree page (c36) \u2014 detailed revenue breakdown with tree visualization.  t",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_revenue_tree_rationale_1"
@@ -6218,7 +6281,7 @@
       "source_file": "src/pages/revenue_tree.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 0,
+      "community": 56,
       "norm_label": "c36 revenue tree v2 \u2014 deep dive into revenue structure and product mix.      sho",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_revenue_tree_rationale_19"
@@ -6273,7 +6336,7 @@
       "source_file": "src/pages/router.py",
       "source_location": "L124",
       "_origin": "ast",
-      "community": 25,
+      "community": 29,
       "norm_label": "pluginregistry",
       "community_name": "Plugin Base & Registry",
       "id": "src_pages_router_py_pluginregistry"
@@ -7021,7 +7084,7 @@
       "source_file": "src/pages/timeline_controls.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 72,
+      "community": 40,
       "norm_label": "timeline_controls.py",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_timeline_controls"
@@ -7043,7 +7106,7 @@
       "source_file": "src/pages/timeline_controls.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 72,
+      "community": 40,
       "norm_label": "\u6642\u9593\u8ef8\u63a7\u5236\u5143\u4ef6 \u2014 m3 \u63d0\u4f9b\u6642\u9593\u7bc4\u570d\u9078\u64c7\u5668\u8207\u8cc7\u6599\u904e\u6ffe\u529f\u80fd",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_timeline_controls_rationale_1"
@@ -7351,7 +7414,7 @@
       "source_file": "src/plugins/daily_story/plugin.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 124,
+      "community": 1,
       "norm_label": "plugin.py",
       "community_name": "Daily Story Plugin Adapter",
       "id": "daily_story_plugin"
@@ -7362,7 +7425,7 @@
       "source_file": "src/plugins/daily_story/plugin.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 124,
+      "community": 1,
       "norm_label": "_render_daily_story_adapter()",
       "community_name": "Daily Story Plugin Adapter",
       "id": "daily_story_plugin_render_daily_story_adapter"
@@ -7373,7 +7436,7 @@
       "source_file": "src/plugins/daily_story/plugin.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 124,
+      "community": 1,
       "norm_label": "src/plugins/daily_story/plugin.py \u2014 phase 2: legacypageadapter for daily_story (",
       "community_name": "Daily Story Plugin Adapter",
       "id": "daily_story_plugin_rationale_1"
@@ -7384,7 +7447,7 @@
       "source_file": "src/plugins/daily_story/plugin.py",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 124,
+      "community": 1,
       "norm_label": "adapter: render_investor_story_feed expects (data, client) but data is unused.",
       "community_name": "Daily Story Plugin Adapter",
       "id": "daily_story_plugin_rationale_7"
@@ -7923,7 +7986,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "adaptive_engine.py",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine"
@@ -7956,7 +8019,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L92",
       "_origin": "ast",
-      "community": 202,
+      "community": 51,
       "norm_label": "_safe_get()",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_safe_get"
@@ -7967,7 +8030,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L92",
       "_origin": "ast",
-      "community": 202,
+      "community": 51,
       "norm_label": "series",
       "community_name": "Adaptive Event Detection Engine",
       "id": "src_services_adaptive_engine_py_series"
@@ -7989,7 +8052,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L152",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "_load_events()",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_load_events"
@@ -8000,7 +8063,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L181",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "_save_events()",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_save_events"
@@ -8011,7 +8074,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L197",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "prune_old_events()",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_prune_old_events"
@@ -8022,7 +8085,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L220",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "record_event()",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_record_event"
@@ -8033,7 +8096,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L243",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "get_events_for_stock()",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_get_events_for_stock"
@@ -8066,7 +8129,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L321",
       "_origin": "ast",
-      "community": 63,
+      "community": 47,
       "norm_label": "_is_false_positive()",
       "community_name": "News Event Detection",
       "id": "services_adaptive_engine_is_false_positive"
@@ -8077,7 +8140,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L336",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "_normalize_title()",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_normalize_title"
@@ -8121,7 +8184,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L473",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "get_adaptive_framework()",
       "community_name": "Event Dashboard Rendering",
       "id": "services_adaptive_engine_get_adaptive_framework"
@@ -8143,7 +8206,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L572",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "run_auto_detection()",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_run_auto_detection"
@@ -8154,7 +8217,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "\u80a1\u8b58 stock explorer \u2014 m5 \u81ea\u9069\u61c9\u66f4\u65b0\u5f15\u64ce \u4e8b\u4ef6\u5075\u6e2c + \u516c\u53f8\u985e\u578b\u5224\u65b7 + \u5206\u6790\u6846\u67b6\u63a8\u85a6",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_rationale_1"
@@ -8176,7 +8239,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L93",
       "_origin": "ast",
-      "community": 202,
+      "community": 51,
       "norm_label": "safely get a value from a pandas series (row) using column alias mapping.     re",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_rationale_93"
@@ -8198,7 +8261,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L153",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "\u8f09\u5165\u4e8b\u4ef6\u8a18\u9304 (with in-memory cache + mtime checking).",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_rationale_153"
@@ -8209,7 +8272,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L182",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "\u5132\u5b58\u4e8b\u4ef6\u8a18\u9304(atomic write under file lock)",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_rationale_182"
@@ -8220,7 +8283,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L198",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "\u79fb\u9664\u8d85\u904e days \u5929\u7684\u4e8b\u4ef6,\u63a7\u5236 events.yaml \u6a94\u6848\u5927\u5c0f",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_rationale_198"
@@ -8242,7 +8305,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L322",
       "_origin": "ast",
-      "community": 63,
+      "community": 47,
       "norm_label": "check if *keyword* matched in *title* is actually a false positive.      handles",
       "community_name": "News Event Detection",
       "id": "services_adaptive_engine_rationale_322"
@@ -8253,7 +8316,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L337",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "normalize a news title for dedup comparison.      - strip leading/trailing white",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_rationale_337"
@@ -8297,7 +8360,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L573",
       "_origin": "ast",
-      "community": 63,
+      "community": 51,
       "norm_label": "\u81ea\u52d5\u5075\u6e2c\u8a72\u80a1\u7968\u7684\u6240\u6709\u4e8b\u4ef6,\u4e26\u8a18\u9304\u5230 events.yaml     \u56de\u50b3\u65b0\u5075\u6e2c\u5230\u7684\u4e8b\u4ef6\u5217\u8868",
       "community_name": "Adaptive Event Detection Engine",
       "id": "services_adaptive_engine_rationale_573"
@@ -8429,7 +8492,7 @@
       "source_file": "src/services/analogy_engine.py",
       "source_location": "L153",
       "_origin": "ast",
-      "community": 0,
+      "community": 112,
       "norm_label": "get_one_liner()",
       "community_name": "Business Card Rendering",
       "id": "services_analogy_engine_get_one_liner"
@@ -8572,7 +8635,7 @@
       "source_file": "src/services/benchmarks.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "benchmarks.py",
       "community_name": "Business Card Rendering",
       "id": "services_benchmarks"
@@ -8583,7 +8646,7 @@
       "source_file": "src/services/benchmarks.py",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "get_industry_benchmarks()",
       "community_name": "Business Card Rendering",
       "id": "services_benchmarks_get_industry_benchmarks"
@@ -8594,7 +8657,7 @@
       "source_file": "src/services/benchmarks.py",
       "source_location": "L44",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "fetch_benchmark_health_scores()",
       "community_name": "Business Card Rendering",
       "id": "services_benchmarks_fetch_benchmark_health_scores"
@@ -8605,7 +8668,7 @@
       "source_file": "src/services/benchmarks.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "industry benchmark data and shared benchmark-fetching utilities.  provides: - ge",
       "community_name": "Business Card Rendering",
       "id": "services_benchmarks_rationale_1"
@@ -8616,7 +8679,7 @@
       "source_file": "src/services/benchmarks.py",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "load industry \u2192 (stock_id, stock_name) mapping from yaml.      returns a dict li",
       "community_name": "Business Card Rendering",
       "id": "services_benchmarks_rationale_23"
@@ -8627,7 +8690,7 @@
       "source_file": "src/services/benchmarks.py",
       "source_location": "L45",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "fetch health scores for the industry benchmark company.      this is the shared",
       "community_name": "Business Card Rendering",
       "id": "services_benchmarks_rationale_45"
@@ -9320,7 +9383,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L79",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "_compare_metric_story()",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_compare_metric_story"
@@ -9331,7 +9394,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L119",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "_build_peer_narrative()",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_build_peer_narrative"
@@ -9342,7 +9405,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L218",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "_latest_revenue_billion()",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_latest_revenue_billion"
@@ -9353,7 +9416,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L226",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "revs_desc()",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_revs_desc"
@@ -9397,7 +9460,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L87",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "\u6bd4\u8f03\u55ae\u4e00\u6307\u6a19,\u7522\u751f\u4e00\u53e5\u767d\u8a71\u63cf\u8ff0\u3002      returns:         \u6bd4\u8f03\u63cf\u8ff0\u5b57\u4e32,\u6216 none(\u7576\u5169\u908a\u90fd\u7121\u8cc7\u6599\u6642)",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_rationale_87"
@@ -9408,7 +9471,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L127",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "\u5efa\u7acb\u5169\u5bb6\u516c\u53f8\u7684\u6558\u4e8b\u6bd4\u8f03\u6bb5\u843d\u3002      returns:         \u6bd4\u8f03\u6587\u672c\u884c\u5217\u8868(3-5 \u53e5)",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_rationale_127"
@@ -9419,7 +9482,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L219",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "\u5f9e extra_metrics \u53d6\u5f97\u6700\u8fd1\u6708\u71df\u6536(\u5104)\u3002",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_rationale_219"
@@ -9749,7 +9812,7 @@
       "source_file": "src/services/delta_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "delta_engine.py",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_engine"
@@ -9782,7 +9845,7 @@
       "source_file": "src/services/delta_engine.py",
       "source_location": "L140",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "explain_delta_full()",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_engine_explain_delta_full"
@@ -9793,7 +9856,7 @@
       "source_file": "src/services/delta_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "\u8b8a\u5316\u91cf(delta)\u5f15\u64ce \u8a08\u7b97\u6700\u8fd1\u7684\u91cd\u8981\u8b8a\u5316\u4e26\u751f\u6210\u767d\u8a71\u89e3\u91cb",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_engine_rationale_1"
@@ -9826,7 +9889,7 @@
       "source_file": "src/services/delta_engine.py",
       "source_location": "L147",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "\u70ba\u8b8a\u5316\u91cf\u751f\u6210\u767d\u8a71\u89e3\u91cb + \u6697\u793a\u53e5(c143)      like explain_delta() but returns a tuple of (explana",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_engine_rationale_147"
@@ -10937,7 +11000,7 @@
       "source_file": "src/services/glossary_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 56,
       "norm_label": "glossary_service.py",
       "community_name": "Business Card Rendering",
       "id": "services_glossary_service"
@@ -11003,7 +11066,7 @@
       "source_file": "src/services/glossary_service.py",
       "source_location": "L158",
       "_origin": "ast",
-      "community": 0,
+      "community": 56,
       "norm_label": "get_term_map()",
       "community_name": "Business Card Rendering",
       "id": "services_glossary_service_get_term_map"
@@ -11014,7 +11077,7 @@
       "source_file": "src/services/glossary_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 56,
       "norm_label": "glossary service \u2014 loads financial term definitions from yaml data file.  provid",
       "community_name": "Business Card Rendering",
       "id": "services_glossary_service_rationale_1"
@@ -11080,7 +11143,7 @@
       "source_file": "src/services/glossary_service.py",
       "source_location": "L159",
       "_origin": "ast",
-      "community": 0,
+      "community": 56,
       "norm_label": "return a copy of the full display-term \u2192 glossary-key mapping.",
       "community_name": "Business Card Rendering",
       "id": "services_glossary_service_rationale_159"
@@ -11168,7 +11231,7 @@
       "source_file": "src/services/health_scoring.py",
       "source_location": "L114",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "compute_health_scores()",
       "community_name": "Business Card Rendering",
       "id": "services_health_scoring_compute_health_scores"
@@ -11267,7 +11330,7 @@
       "source_file": "src/services/health_scoring.py",
       "source_location": "L120",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "\u8a08\u7b97\u516c\u53f8\u5065\u5eb7\u72c0\u6cc1\u4e94\u7dad\u5ea6\u8a55\u5206(c43)      args:         extra_metrics: dict,\u5305\u542b gross_margin, net_m",
       "community_name": "Business Card Rendering",
       "id": "services_health_scoring_rationale_120"
@@ -11289,7 +11352,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "investment_memo_service.py",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_investment_memo_service"
@@ -11300,7 +11363,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "get_stock_suggestions()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_investment_memo_service_get_stock_suggestions"
@@ -11311,7 +11374,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "any",
       "community_name": "Expert Analysis & Case Studies",
       "id": "src_services_investment_memo_service_py_any"
@@ -11322,7 +11385,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "dataframe",
       "community_name": "Expert Analysis & Case Studies",
       "id": "src_services_investment_memo_service_py_dataframe"
@@ -11333,7 +11396,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "validate_memo_input()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_investment_memo_service_validate_memo_input"
@@ -11344,7 +11407,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L62",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "format_memo_summary()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_investment_memo_service_format_memo_summary"
@@ -11355,7 +11418,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "investment memo service \u2014 c83 business logic for investment memo template featur",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_investment_memo_service_rationale_1"
@@ -11366,7 +11429,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "search stocks by name or id for memo stock selector.      args:         client:",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_investment_memo_service_rationale_18"
@@ -11377,7 +11440,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L37",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "validate investment memo form input.      args:         data: dict with memo fie",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_investment_memo_service_rationale_37"
@@ -11388,7 +11451,7 @@
       "source_file": "src/services/investment_memo_service.py",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "format saved memo data for display in _summary_card components.      args:",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_investment_memo_service_rationale_63"
@@ -11399,7 +11462,7 @@
       "source_file": "src/services/key_takeaways.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 32,
+      "community": 112,
       "norm_label": "key_takeaways.py",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_key_takeaways"
@@ -11421,7 +11484,7 @@
       "source_file": "src/services/key_takeaways.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 32,
+      "community": 112,
       "norm_label": "\u91cd\u9ede\u6458\u8981(key takeaways)\u6a21\u7d44 \u7cbe\u9078 + \u81ea\u52d5\u751f\u6210\u91cd\u9ede\u6458\u8981",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_key_takeaways_rationale_1"
@@ -11707,7 +11770,7 @@
       "source_file": "src/services/llm/base.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "explanationrequest",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_base_explanationrequest"
@@ -11773,7 +11836,7 @@
       "source_file": "src/services/llm/base.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "request for generating an explanation.",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_base_rationale_16"
@@ -11894,7 +11957,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L75",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "_resolve_direction()",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_template_provider_resolve_direction"
@@ -11916,7 +11979,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": ".explain()",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_template_provider_templateexplanationprovider_explain"
@@ -11927,7 +11990,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "explanationrequest",
       "community_name": "Explanation Generation Protocol",
       "id": "src_services_llm_template_provider_py_explanationrequest"
@@ -11938,7 +12001,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "explanationresponse",
       "community_name": "Explanation Generation Protocol",
       "id": "src_services_llm_template_provider_py_explanationresponse"
@@ -11971,7 +12034,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L76",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "resolve a delta string to a direction key.      args:         delta: human-reada",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_template_provider_rationale_76"
@@ -11993,7 +12056,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "generate an explanation using predefined templates.          args:             r",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_template_provider_rationale_102"
@@ -12246,7 +12309,7 @@
       "source_file": "src/services/market_event_service.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "get_case_studies()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_market_event_service_get_case_studies"
@@ -12257,7 +12320,7 @@
       "source_file": "src/services/market_event_service.py",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "get_case_study()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_market_event_service_get_case_study"
@@ -12334,7 +12397,7 @@
       "source_file": "src/services/market_event_service.py",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "returns list of all case studies (summary info only).",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_market_event_service_rationale_27"
@@ -12345,7 +12408,7 @@
       "source_file": "src/services/market_event_service.py",
       "source_location": "L41",
       "_origin": "ast",
-      "community": 2,
+      "community": 32,
       "norm_label": "returns a single case study with full details by event_id.",
       "community_name": "Expert Analysis & Case Studies",
       "id": "services_market_event_service_rationale_41"
@@ -12362,89 +12425,12 @@
       "id": "services_market_event_service_rationale_49"
     },
     {
-      "label": "metric_education.py",
-      "file_type": "code",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "metric_education.py",
-      "community_name": "Business Card Rendering",
-      "id": "services_metric_education"
-    },
-    {
-      "label": "get_metric_explanation()",
-      "file_type": "code",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L148",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "get_metric_explanation()",
-      "community_name": "Business Card Rendering",
-      "id": "services_metric_education_get_metric_explanation"
-    },
-    {
-      "label": "get_supported_metrics()",
-      "file_type": "code",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L196",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "get_supported_metrics()",
-      "community_name": "Investor Story Feed & Timeline Controls",
-      "id": "services_metric_education_get_supported_metrics"
-    },
-    {
-      "label": "get_top_metrics_for_education()",
-      "file_type": "code",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L201",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "get_top_metrics_for_education()",
-      "community_name": "Business Card Rendering",
-      "id": "services_metric_education_get_top_metrics_for_education"
-    },
-    {
-      "label": "Metric Education Service \u5c07\u8ca1\u52d9\u6307\u6a19\u8f49\u5316\u70ba\u65b0\u624b\u80fd\u79d2\u61c2\u7684\u89e3\u91cb + \u6bd4\u55bb No Streamlit imports \u2014 pure data",
-      "file_type": "rationale",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "metric education service \u5c07\u8ca1\u52d9\u6307\u6a19\u8f49\u5316\u70ba\u65b0\u624b\u80fd\u79d2\u61c2\u7684\u89e3\u91cb + \u6bd4\u55bb no streamlit imports \u2014 pure data",
-      "community_name": "Business Card Rendering",
-      "id": "services_metric_education_rationale_1"
-    },
-    {
-      "label": "\u53d6\u5f97\u55ae\u4e00\u8ca1\u52d9\u6307\u6a19\u7684\u5b8c\u6574\u89e3\u91cb\u3002      Args:         metric_name: \u6307\u6a19\u4ee3\u78bc\uff08\u5982 \"ROE\", \"gross_margin\", \"PE",
-      "file_type": "rationale",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L149",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "\u53d6\u5f97\u55ae\u4e00\u8ca1\u52d9\u6307\u6a19\u7684\u5b8c\u6574\u89e3\u91cb\u3002      args:         metric_name: \u6307\u6a19\u4ee3\u78bc(\u5982 \"roe\", \"gross_margin\", \"pe",
-      "community_name": "Business Card Rendering",
-      "id": "services_metric_education_rationale_149"
-    },
-    {
-      "label": "\u5f9e\u80a1\u7968\u8cc7\u6599\u4e2d\u9078\u51fa\u6700\u91cd\u8981\u7684 3 \u500b\u6307\u6a19\u7528\u65bc\u6559\u80b2\u5c55\u793a\u3002      \u512a\u5148\u9806\u5e8f\uff1aROE > \u6bdb\u5229\u7387 > \u672c\u76ca\u6bd4 > \u6b96\u5229\u7387 > \u8ca0\u50b5\u6bd4 > \u71df\u6536\u5e74\u589e\u7387 > \u6de8\u503c\u6bd4 >",
-      "file_type": "rationale",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L202",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "\u5f9e\u80a1\u7968\u8cc7\u6599\u4e2d\u9078\u51fa\u6700\u91cd\u8981\u7684 3 \u500b\u6307\u6a19\u7528\u65bc\u6559\u80b2\u5c55\u793a\u3002      \u512a\u5148\u9806\u5e8f:roe > \u6bdb\u5229\u7387 > \u672c\u76ca\u6bd4 > \u6b96\u5229\u7387 > \u8ca0\u50b5\u6bd4 > \u71df\u6536\u5e74\u589e\u7387 > \u6de8\u503c\u6bd4 >",
-      "community_name": "Business Card Rendering",
-      "id": "services_metric_education_rationale_202"
-    },
-    {
       "label": "metric_explainer.py",
       "file_type": "code",
       "source_file": "src/services/metric_explainer.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "metric_explainer.py",
       "community_name": "Explanation Generation Protocol",
       "id": "services_metric_explainer"
@@ -12477,7 +12463,7 @@
       "source_file": "src/services/metric_explainer.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 36,
+      "community": 4,
       "norm_label": "metric explainer \u2014 convenience function for c139 \"explain this number\".  compose",
       "community_name": "Explanation Generation Protocol",
       "id": "services_metric_explainer_rationale_1"
@@ -12774,7 +12760,7 @@
       "source_file": "src/services/notification_service.py",
       "source_location": "L60",
       "_origin": "ast",
-      "community": 75,
+      "community": 51,
       "norm_label": "_invalidate_cache()",
       "community_name": "Notification Service Management",
       "id": "services_notification_service_invalidate_cache"
@@ -12785,7 +12771,7 @@
       "source_file": "src/services/notification_service.py",
       "source_location": "L66",
       "_origin": "ast",
-      "community": 75,
+      "community": 51,
       "norm_label": "reload_notifications()",
       "community_name": "Notification Service Management",
       "id": "services_notification_service_reload_notifications"
@@ -12928,7 +12914,7 @@
       "source_file": "src/services/notification_service.py",
       "source_location": "L61",
       "_origin": "ast",
-      "community": 75,
+      "community": 51,
       "norm_label": "invalidate the in-memory cache after writes.",
       "community_name": "Notification Service Management",
       "id": "services_notification_service_rationale_61"
@@ -12939,7 +12925,7 @@
       "source_file": "src/services/notification_service.py",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 75,
+      "community": 51,
       "norm_label": "force reload notifications from yaml (for testing purposes).",
       "community_name": "Notification Service Management",
       "id": "services_notification_service_rationale_67"
@@ -13038,7 +13024,7 @@
       "source_file": "src/services/pattern_detector.py",
       "source_location": "L66",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "get_available_types()",
       "community_name": "Case Study Library & ETF Browser",
       "id": "services_pattern_detector_get_available_types"
@@ -13478,7 +13464,7 @@
       "source_file": "src/services/revenue_analyzer.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 107,
+      "community": 56,
       "norm_label": "revenue_analyzer.py",
       "community_name": "Revenue Breakdown Analysis",
       "id": "services_revenue_analyzer"
@@ -13489,7 +13475,7 @@
       "source_file": "src/services/revenue_analyzer.py",
       "source_location": "L66",
       "_origin": "ast",
-      "community": 107,
+      "community": 56,
       "norm_label": "analyze_revenue_breakdown()",
       "community_name": "Revenue Breakdown Analysis",
       "id": "services_revenue_analyzer_analyze_revenue_breakdown"
@@ -13500,7 +13486,7 @@
       "source_file": "src/services/revenue_analyzer.py",
       "source_location": "L66",
       "_origin": "ast",
-      "community": 107,
+      "community": 56,
       "norm_label": "dataframe",
       "community_name": "Revenue Breakdown Analysis",
       "id": "src_services_revenue_analyzer_py_dataframe"
@@ -13511,7 +13497,7 @@
       "source_file": "src/services/revenue_analyzer.py",
       "source_location": "L87",
       "_origin": "ast",
-      "community": 107,
+      "community": 56,
       "norm_label": "_parse_financial_for_segments()",
       "community_name": "Revenue Breakdown Analysis",
       "id": "services_revenue_analyzer_parse_financial_for_segments"
@@ -13522,7 +13508,7 @@
       "source_file": "src/services/revenue_analyzer.py",
       "source_location": "L118",
       "_origin": "ast",
-      "community": 107,
+      "community": 56,
       "norm_label": "_auto_describe_segment()",
       "community_name": "Revenue Breakdown Analysis",
       "id": "services_revenue_analyzer_auto_describe_segment"
@@ -13533,7 +13519,7 @@
       "source_file": "src/services/revenue_analyzer.py",
       "source_location": "L139",
       "_origin": "ast",
-      "community": 107,
+      "community": 56,
       "norm_label": "_create_generic_breakdown()",
       "community_name": "Revenue Breakdown Analysis",
       "id": "services_revenue_analyzer_create_generic_breakdown"
@@ -13544,7 +13530,7 @@
       "source_file": "src/services/revenue_analyzer.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 107,
+      "community": 56,
       "norm_label": "\u71df\u6536\u7d44\u6210\u5206\u6790\u5668 \u5f9e\u640d\u76ca\u8868\u89e3\u6790\u71df\u6536\u4f86\u6e90\u7d44\u6210,\u7528\u65bc\u751f\u6210\u5713\u9905\u5716",
       "community_name": "Revenue Breakdown Analysis",
       "id": "services_revenue_analyzer_rationale_1"
@@ -13555,7 +13541,7 @@
       "source_file": "src/services/revenue_analyzer.py",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 107,
+      "community": 56,
       "norm_label": "\u5206\u6790\u71df\u6536\u7d44\u6210     \u8fd4\u56de: [{\"name\": \"...\", \"value\": \u767e\u5206\u6bd4, \"description\": \"...\"}]",
       "community_name": "Revenue Breakdown Analysis",
       "id": "services_revenue_analyzer_rationale_67"
@@ -13698,7 +13684,7 @@
       "source_file": "src/services/risk_analyzer.py",
       "source_location": "L518",
       "_origin": "ast",
-      "community": 21,
+      "community": 3,
       "norm_label": "assess_risk()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_risk_analyzer_assess_risk"
@@ -13830,7 +13816,7 @@
       "source_file": "src/services/risk_analyzer.py",
       "source_location": "L519",
       "_origin": "ast",
-      "community": 21,
+      "community": 3,
       "norm_label": "complete risk assessment \u2014 top-level entry point.      orchestrates the three ri",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_risk_analyzer_rationale_519"
@@ -13841,7 +13827,7 @@
       "source_file": "src/services/risk_simplifier.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 21,
+      "community": 3,
       "norm_label": "risk_simplifier.py",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_risk_simplifier"
@@ -13852,7 +13838,7 @@
       "source_file": "src/services/risk_simplifier.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 21,
+      "community": 3,
       "norm_label": "get_risk_level()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_risk_simplifier_get_risk_level"
@@ -13863,7 +13849,7 @@
       "source_file": "src/services/risk_simplifier.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 21,
+      "community": 3,
       "norm_label": "\u98a8\u96aa\u7c21\u5316\u5668 \u2014 1-5 \u98a8\u96aa\u7b49\u7d1a \u5c07\u8907\u96dc\u7684\u98a8\u96aa\u5206\u6790\u7d50\u679c\u8f49\u63db\u70ba\u65b0\u624b\u53cb\u5584\u7684 1-5 \u7d1a\u98a8\u96aa\u6307\u6a19",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_risk_simplifier_rationale_1"
@@ -13874,7 +13860,7 @@
       "source_file": "src/services/risk_simplifier.py",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 21,
+      "community": 3,
       "norm_label": "\u6839\u64da\u98a8\u96aa\u5206\u6790\u8207\u5065\u5eb7\u8a55\u5206,\u7522\u751f 1-5 \u7d1a\u7c21\u5316\u98a8\u96aa\u6307\u6a19\u3002      args:         data: \u516c\u53f8\u540d\u7247\u8cc7\u6599 dict(\u8207 business card",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_risk_simplifier_rationale_12"
@@ -14050,7 +14036,7 @@
       "source_file": "src/services/scenario_calculator.py",
       "source_location": "L190",
       "_origin": "ast",
-      "community": 72,
+      "community": 40,
       "norm_label": "datetime",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "datetime"
@@ -14182,7 +14168,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 4,
+      "community": 75,
       "norm_label": "_config_dir()",
       "community_name": "Screener Template Loading",
       "id": "services_screener_explanation_provider_config_dir"
@@ -14193,7 +14179,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L32",
       "_origin": "ast",
-      "community": 4,
+      "community": 75,
       "norm_label": "_load_templates_from_yaml()",
       "community_name": "Screener Template Loading",
       "id": "services_screener_explanation_provider_load_templates_from_yaml"
@@ -14303,7 +14289,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 4,
+      "community": 75,
       "norm_label": "return the absolute path to the src/data/ directory.",
       "community_name": "Screener Template Loading",
       "id": "services_screener_explanation_provider_rationale_28"
@@ -14314,7 +14300,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 4,
+      "community": 75,
       "norm_label": "load screener explanation templates from the yaml config file.      returns a di",
       "community_name": "Screener Template Loading",
       "id": "services_screener_explanation_provider_rationale_33"
@@ -14391,7 +14377,7 @@
       "source_file": "src/services/settings_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 201,
+      "community": 29,
       "norm_label": "settings_service.py",
       "community_name": "Page Routing & Plugin Registry",
       "id": "services_settings_service"
@@ -14402,7 +14388,7 @@
       "source_file": "src/services/settings_service.py",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 201,
+      "community": 29,
       "norm_label": "get_threshold()",
       "community_name": "Page Routing & Plugin Registry",
       "id": "services_settings_service_get_threshold"
@@ -14413,7 +14399,7 @@
       "source_file": "src/services/settings_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 201,
+      "community": 29,
       "norm_label": "settings service \u2014 threshold access helper.",
       "community_name": "Page Routing & Plugin Registry",
       "id": "services_settings_service_rationale_1"
@@ -14424,7 +14410,7 @@
       "source_file": "src/services/settings_service.py",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 201,
+      "community": 29,
       "norm_label": "get threshold from settings dict/session_state, falling back to default.",
       "community_name": "Page Routing & Plugin Registry",
       "id": "services_settings_service_rationale_9"
@@ -15392,7 +15378,7 @@
       "source_file": "src/services/watchlist.py",
       "source_location": "L218",
       "_origin": "ast",
-      "community": 112,
+      "community": 12,
       "norm_label": "get_lists_for_stock()",
       "community_name": "Watchlist Management",
       "id": "services_watchlist_get_lists_for_stock"
@@ -15590,7 +15576,7 @@
       "source_file": "src/services/watchlist.py",
       "source_location": "L219",
       "_origin": "ast",
-      "community": 112,
+      "community": 12,
       "norm_label": "return a list of list names that contain the given stock.",
       "community_name": "Watchlist Management",
       "id": "services_watchlist_rationale_219"
@@ -15667,7 +15653,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 122,
+      "community": 51,
       "norm_label": "__init__.py",
       "community_name": "Shared Utility Functions",
       "id": "utils_init"
@@ -15678,7 +15664,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 122,
+      "community": 51,
       "norm_label": "_atomic_write()",
       "community_name": "Shared Utility Functions",
       "id": "utils_init_atomic_write"
@@ -15689,7 +15675,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 122,
+      "community": 51,
       "norm_label": "path",
       "community_name": "Shared Utility Functions",
       "id": "src_utils_init_py_path"
@@ -15700,7 +15686,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 122,
+      "community": 51,
       "norm_label": "shared utility functions.",
       "community_name": "Shared Utility Functions",
       "id": "utils_init_rationale_1"
@@ -15711,7 +15697,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 122,
+      "community": 51,
       "norm_label": "write to temp file then atomically replace \u2014 prevents partial writes.",
       "community_name": "Shared Utility Functions",
       "id": "utils_init_rationale_12"
@@ -20507,7 +20493,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 117,
+      "community": 80,
       "norm_label": "dataframe",
       "community_name": "Dividend and Price Data Checks",
       "id": "tests_services_test_scenario_calculator_py_dataframe"
@@ -20815,7 +20801,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L193",
       "_origin": "ast",
-      "community": 117,
+      "community": 80,
       "norm_label": ".test_empty_df()",
       "community_name": "Dividend and Price Data Checks",
       "id": "services_test_scenario_calculator_testcalculatedividendincome_test_empty_df"
@@ -20980,7 +20966,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L365",
       "_origin": "ast",
-      "community": 117,
+      "community": 15,
       "norm_label": ".test_no_price_data()",
       "community_name": "Dividend and Price Data Checks",
       "id": "services_test_scenario_calculator_testedgecases_test_no_price_data"
@@ -21002,7 +20988,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L388",
       "_origin": "ast",
-      "community": 117,
+      "community": 15,
       "norm_label": ".test_missing_dividend_data_no_estimate()",
       "community_name": "Dividend and Price Data Checks",
       "id": "services_test_scenario_calculator_testedgecases_test_missing_dividend_data_no_estimate"
@@ -21266,7 +21252,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L366",
       "_origin": "ast",
-      "community": 117,
+      "community": 15,
       "norm_label": "empty price dataframe \u2192 error_key 'scenario.no_data'.",
       "community_name": "Dividend and Price Data Checks",
       "id": "services_test_scenario_calculator_rationale_366"
@@ -21288,7 +21274,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L389",
       "_origin": "ast",
-      "community": 117,
+      "community": 15,
       "norm_label": "when dividend data is empty and end_date is in the past, is_estimated should be",
       "community_name": "Dividend and Price Data Checks",
       "id": "services_test_scenario_calculator_rationale_389"
@@ -23169,7 +23155,7 @@
       "source_file": "tests/test_business_logic.py",
       "source_location": "L657",
       "_origin": "ast",
-      "community": 19,
+      "community": 107,
       "norm_label": ".test_etf_by_id_pattern()",
       "community_name": "Company Type Detection",
       "id": "tests_test_business_logic_testdetectcompanytype_test_etf_by_id_pattern"
@@ -24236,7 +24222,7 @@
       "source_file": "tests/test_business_logic.py",
       "source_location": "L658",
       "_origin": "ast",
-      "community": 19,
+      "community": 107,
       "norm_label": "industry empty + 00xx id \u2192 'etf'.",
       "community_name": "Company Type Detection",
       "id": "tests_test_business_logic_rationale_658"
@@ -24456,7 +24442,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 102,
+      "community": 69,
       "norm_label": "path",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_py_path"
@@ -26073,7 +26059,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L178",
       "_origin": "ast",
-      "community": 71,
+      "community": 26,
       "norm_label": ".test_cannot_instantiate_abc()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "tests_test_plugin_chassis_testbaseplugin_test_cannot_instantiate_abc"
@@ -26337,7 +26323,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L571",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "testphase1plugins",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins"
@@ -26348,7 +26334,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L574",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_category_browser_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_category_browser_plugin_import"
@@ -26359,7 +26345,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L584",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_settings_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_settings_plugin_import"
@@ -26370,7 +26356,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L594",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_event_dashboard_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_event_dashboard_plugin_import"
@@ -26381,7 +26367,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L602",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_notification_center_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_notification_center_plugin_import"
@@ -26392,7 +26378,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L610",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_daily_market_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_daily_market_plugin_import"
@@ -26568,7 +26554,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L179",
       "_origin": "ast",
-      "community": 71,
+      "community": 26,
       "norm_label": "baseplugin is abstract \u2014 cannot instantiate directly.",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "tests_test_plugin_chassis_rationale_179"
@@ -26678,7 +26664,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L572",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "test that phase 1 plugin.py files can be imported and their plugins registered.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_572"
@@ -26689,7 +26675,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L575",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "category_browser plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_575"
@@ -26700,7 +26686,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L585",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "settings plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_585"
@@ -26711,7 +26697,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L595",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "event_dashboard plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_595"
@@ -26722,7 +26708,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L603",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "notification_center plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_603"
@@ -26733,7 +26719,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L611",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "daily_market plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_611"
@@ -26810,7 +26796,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 34,
+      "community": 27,
       "norm_label": "test_screener_explanation.py",
       "community_name": "Screener Explanation Builder",
       "id": "tests_test_screener_explanation"
@@ -27140,7 +27126,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L301",
       "_origin": "ast",
-      "community": 34,
+      "community": 63,
       "norm_label": "testhistoriantonecompliance",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_testhistoriantonecompliance"
@@ -27151,7 +27137,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L310",
       "_origin": "ast",
-      "community": 34,
+      "community": 63,
       "norm_label": "._get_all_explanations()",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_testhistoriantonecompliance_get_all_explanations"
@@ -27162,7 +27148,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L354",
       "_origin": "ast",
-      "community": 34,
+      "community": 63,
       "norm_label": ".test_no_blocked_words_in_explanations()",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_testhistoriantonecompliance_test_no_blocked_words_in_explanations"
@@ -27173,7 +27159,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L369",
       "_origin": "ast",
-      "community": 34,
+      "community": 63,
       "norm_label": ".test_all_explanations_end_with_disclaimer()",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_testhistoriantonecompliance_test_all_explanations_end_with_disclaimer"
@@ -27184,7 +27170,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 34,
+      "community": 27,
       "norm_label": "unit tests for screenerexplanationprovider \u2014 c167 tests the historian-tone scree",
       "community_name": "Screener Explanation Builder",
       "id": "tests_test_screener_explanation_rationale_1"
@@ -27338,7 +27324,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L302",
       "_origin": "ast",
-      "community": 34,
+      "community": 63,
       "norm_label": "verify that explanations avoid prescriptive language.",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_rationale_302"
@@ -27349,7 +27335,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L311",
       "_origin": "ast",
-      "community": 34,
+      "community": 63,
       "norm_label": "generate all possible explanation variants.",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_rationale_311"
@@ -27360,7 +27346,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L355",
       "_origin": "ast",
-      "community": 34,
+      "community": 63,
       "norm_label": "no explanation template should contain prescriptive/blocked words.          note",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_rationale_355"
@@ -27371,7 +27357,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L370",
       "_origin": "ast",
-      "community": 34,
+      "community": 63,
       "norm_label": "every explanation must end with the disclaimer.",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_rationale_370"
@@ -27382,7 +27368,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 34,
       "norm_label": "test_screener_explanation_provider.py",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider"
@@ -27404,7 +27390,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 11,
+      "community": 34,
       "norm_label": "_ctx()",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider_ctx"
@@ -27811,7 +27797,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L270",
       "_origin": "ast",
-      "community": 11,
+      "community": 34,
       "norm_label": "testfallbackexplanationpath",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider_testfallbackexplanationpath"
@@ -27822,7 +27808,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L273",
       "_origin": "ast",
-      "community": 11,
+      "community": 34,
       "norm_label": ".test_no_preset_no_filters()",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider_testfallbackexplanationpath_test_no_preset_no_filters"
@@ -28119,7 +28105,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 34,
       "norm_label": "unit tests for screenerexplanationprovider \u2014 d-124  tests the screenerexplanatio",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider_rationale_1"
@@ -28141,7 +28127,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 11,
+      "community": 34,
       "norm_label": "build a context dict for explanationrequest.",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider_rationale_34"
@@ -28339,7 +28325,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L271",
       "_origin": "ast",
-      "community": 11,
+      "community": 34,
       "norm_label": "test fallback when no preset or filters are set.",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider_rationale_271"
@@ -30090,14 +30076,751 @@
   ],
   "links": [
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "business_card_helpers_expert_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "business_card_helpers_historian_disclaimer"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "business_card_helpers_study_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "core_i18n_t"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "data_finmind_client_finmindclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "pages_notification_center_event_type_label"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "pages_notification_center_render_notification_center"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "pages_notification_center_severity_badge"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "pages_notification_center_severity_color"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "pages_router_base_info_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "pages_router_base_section_title"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "pages_router_base_summary_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "pages_url_sync_navigate_to"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "services_notification_service_acknowledge_all_notifications"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "services_notification_service_acknowledge_notification"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "services_notification_service_get_notification_settings"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "services_notification_service_get_notification_summary"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "services_notification_service_get_pending_notifications"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "services_notification_service_get_subscribed_stocks"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "services_notification_service_make_event_id"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center",
+      "target": "services_notification_service_update_notification_settings"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_rationale_1",
+      "target": "pages_notification_center"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L149",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "pages_notification_center_severity_badge"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_severity_badge",
+      "target": "core_i18n_t"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_event_type_label",
+      "target": "core_i18n_t"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L150",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "pages_notification_center_event_type_label"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L154",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "pages_notification_center_severity_color"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/plugins/notification_center/plugin.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "notification_center_plugin",
+      "target": "pages_notification_center_render_notification_center"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "business_card_helpers_expert_card"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L79",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "business_card_helpers_historian_disclaimer"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L166",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "business_card_helpers_study_card"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "core_i18n_t"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "finmindclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L73",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "pages_router_base_info_card"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L121",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "pages_router_base_section_title"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L100",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "pages_router_base_summary_card"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L178",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "pages_url_sync_navigate_to"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L114",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "services_notification_service_acknowledge_all_notifications"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L186",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "services_notification_service_acknowledge_notification"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L197",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "services_notification_service_get_notification_settings"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L84",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "services_notification_service_get_notification_summary"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "services_notification_service_get_pending_notifications"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L70",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "services_notification_service_get_subscribed_stocks"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L113",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "services_notification_service_make_event_id"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/notification_center.py",
+      "source_location": "L244",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_notification_center_render_notification_center",
+      "target": "services_notification_service_update_notification_settings"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/watchlist_page.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_watchlist_page_render_watchlist_page",
+      "target": "finmindclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_analogy_engine_get_debt_ratio_analogy"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_analogy_engine_get_dividend_analogy"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_analogy_engine_get_gross_margin_analogy"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_analogy_engine_get_pbr_analogy"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_analogy_engine_get_per_analogy"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_analogy_engine_get_roe_analogy"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_analogy_engine_get_yoy_analogy"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L148",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_metric_education_get_metric_explanation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L196",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_metric_education_get_supported_metrics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L201",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education",
+      "target": "services_metric_education_get_top_metrics_for_education"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education_rationale_1",
+      "target": "services_metric_education"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/business_card/_sections/_financial.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_financial",
+      "target": "services_metric_education_get_metric_explanation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/business_card/_sections/_financial.py",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_financial_render_metric_popover",
+      "target": "services_metric_education_get_metric_explanation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L243",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education_get_top_metrics_for_education",
+      "target": "services_metric_education_get_metric_explanation"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L152",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education_rationale_152",
+      "target": "services_metric_education_get_metric_explanation"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/story_feed.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_story_feed",
+      "target": "services_metric_education_get_metric_explanation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/story_feed.py",
+      "source_location": "L262",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_story_feed_generate_education_story",
+      "target": "services_metric_education_get_metric_explanation"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/story_feed.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_story_feed",
+      "target": "services_metric_education_get_supported_metrics"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/story_feed.py",
+      "source_location": "L257",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_story_feed_generate_education_story",
+      "target": "services_metric_education_get_supported_metrics"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/business_card/_sections/_financial.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_financial",
+      "target": "services_metric_education_get_top_metrics_for_education"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/business_card/_sections/_financial.py",
+      "source_location": "L131",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_financial_render_key_metrics",
+      "target": "services_metric_education_get_top_metrics_for_education"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metric_education.py",
+      "source_location": "L205",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metric_education_rationale_205",
+      "target": "services_metric_education_get_top_metrics_for_education"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": ".github/copilot-instructions.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "github_copilot_instructions",
-      "target": "github_copilot_instructions_graphify",
-      "confidence_score": 1.0
+      "target": "github_copilot_instructions_graphify"
     },
     {
       "relation": "contains",
@@ -30105,9 +30828,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents",
-      "target": "agents_stock_explorer_ai_team_router",
-      "confidence_score": 1.0
+      "target": "agents_stock_explorer_ai_team_router"
     },
     {
       "relation": "contains",
@@ -30115,9 +30838,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_stock_explorer_ai_team_router",
-      "target": "agents_1_team_roster",
-      "confidence_score": 1.0
+      "target": "agents_1_team_roster"
     },
     {
       "relation": "contains",
@@ -30125,9 +30848,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_stock_explorer_ai_team_router",
-      "target": "agents_2_visual_flow_reference",
-      "confidence_score": 1.0
+      "target": "agents_2_visual_flow_reference"
     },
     {
       "relation": "contains",
@@ -30135,9 +30858,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_stock_explorer_ai_team_router",
-      "target": "agents_3_bootstrap_protocol",
-      "confidence_score": 1.0
+      "target": "agents_3_bootstrap_protocol"
     },
     {
       "relation": "contains",
@@ -30145,9 +30868,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L124",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_stock_explorer_ai_team_router",
-      "target": "agents_4_task_routing_by_priority",
-      "confidence_score": 1.0
+      "target": "agents_4_task_routing_by_priority"
     },
     {
       "relation": "contains",
@@ -30155,9 +30878,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L135",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_stock_explorer_ai_team_router",
-      "target": "agents_5_state_management",
-      "confidence_score": 1.0
+      "target": "agents_5_state_management"
     },
     {
       "relation": "contains",
@@ -30165,9 +30888,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L158",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_stock_explorer_ai_team_router",
-      "target": "agents_6_cognitive_metabolism",
-      "confidence_score": 1.0
+      "target": "agents_6_cognitive_metabolism"
     },
     {
       "relation": "contains",
@@ -30175,9 +30898,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L170",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_stock_explorer_ai_team_router",
-      "target": "agents_7_development_rules_quick_reference",
-      "confidence_score": 1.0
+      "target": "agents_7_development_rules_quick_reference"
     },
     {
       "relation": "contains",
@@ -30185,9 +30908,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L182",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_stock_explorer_ai_team_router",
-      "target": "agents_graphify",
-      "confidence_score": 1.0
+      "target": "agents_graphify"
     },
     {
       "relation": "contains",
@@ -30195,9 +30918,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_3_bootstrap_protocol",
-      "target": "agents_step_0_5_pm_role_definition_critical",
-      "confidence_score": 1.0
+      "target": "agents_step_0_5_pm_role_definition_critical"
     },
     {
       "relation": "contains",
@@ -30205,9 +30928,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_3_bootstrap_protocol",
-      "target": "agents_step_0_restore_context",
-      "confidence_score": 1.0
+      "target": "agents_step_0_restore_context"
     },
     {
       "relation": "contains",
@@ -30215,9 +30938,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L82",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_3_bootstrap_protocol",
-      "target": "agents_step_1_determine_current_todo",
-      "confidence_score": 1.0
+      "target": "agents_step_1_determine_current_todo"
     },
     {
       "relation": "contains",
@@ -30225,9 +30948,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_3_bootstrap_protocol",
-      "target": "agents_step_2_execute_via_delegate_task",
-      "confidence_score": 1.0
+      "target": "agents_step_2_execute_via_delegate_task"
     },
     {
       "relation": "contains",
@@ -30235,9 +30958,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_3_bootstrap_protocol",
-      "target": "agents_step_3_gate_check",
-      "confidence_score": 1.0
+      "target": "agents_step_3_gate_check"
     },
     {
       "relation": "contains",
@@ -30245,9 +30968,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_3_bootstrap_protocol",
-      "target": "agents_step_4_release_pm_only",
-      "confidence_score": 1.0
+      "target": "agents_step_4_release_pm_only"
     },
     {
       "relation": "contains",
@@ -30255,9 +30978,9 @@
       "source_file": "AGENTS.md",
       "source_location": "L143",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_5_state_management",
-      "target": "agents_problem_record_format",
-      "confidence_score": 1.0
+      "target": "agents_problem_record_format"
     },
     {
       "relation": "contains",
@@ -30265,9 +30988,9 @@
       "source_file": "count_dict2.py",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "count_dict2",
-      "target": "count_dict2_replace_t",
-      "confidence_score": 1.0
+      "target": "count_dict2_replace_t"
     },
     {
       "relation": "contains",
@@ -30275,9 +30998,9 @@
       "source_file": "find_strings.py",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "find_strings",
-      "target": "find_strings_find_chinese_strings",
-      "confidence_score": 1.0
+      "target": "find_strings_find_chinese_strings"
     },
     {
       "relation": "contains",
@@ -30285,9 +31008,9 @@
       "source_file": "find_strings2.py",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "find_strings2",
-      "target": "find_strings2_find_chinese_strings",
-      "confidence_score": 1.0
+      "target": "find_strings2_find_chinese_strings"
     },
     {
       "relation": "rationale_for",
@@ -31144,17 +31867,6 @@
       "confidence_score": 1.0,
       "source": "pages_watchlist_page_render_watchlist_page",
       "target": "core_i18n_t"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/watchlist_page.py",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "pages_watchlist_page_render_watchlist_page",
-      "target": "finmindclient",
-      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -32543,50 +33255,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "pages_moat_comparison_render_moat_comparison_page",
-      "target": "core_i18n_t"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "core_i18n_t"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L44",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_event_type_label",
-      "target": "core_i18n_t"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L65",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "core_i18n_t"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_severity_badge",
       "target": "core_i18n_t"
     },
     {
@@ -38933,17 +39601,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "data_finmind_client_finmindclient"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L9",
       "weight": 1.0,
@@ -39135,16 +39792,6 @@
       "weight": 0.8,
       "confidence_score": 0.5,
       "source": "src_pages_market_event_case_study_py_finmindclient",
-      "target": "data_finmind_client_finmindclient"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L9",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "src_pages_notification_center_py_finmindclient",
       "target": "data_finmind_client_finmindclient"
     },
     {
@@ -40724,28 +41371,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "pages_router_base_section_title"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L121",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "pages_router_base_section_title"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/pages/operation_checkup.py",
       "source_location": "L10",
       "weight": 1.0,
@@ -41974,28 +42599,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "pages_router_base_summary_card"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L100",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "pages_router_base_summary_card"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/pages/stock_screener.py",
       "source_location": "L13",
       "weight": 1.0,
@@ -42594,28 +43197,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "pages_moat_comparison_render_moat_comparison_page",
-      "target": "pages_router_base_info_card"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "pages_router_base_info_card"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L73",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
       "target": "pages_router_base_info_card"
     },
     {
@@ -44497,28 +45078,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "business_card_helpers_historian_disclaimer"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L79",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "business_card_helpers_historian_disclaimer"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/pages/revenue_tree.py",
       "source_location": "L14",
       "weight": 1.0,
@@ -44570,28 +45129,6 @@
       "target": "business_card_helpers_study_card"
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "business_card_helpers_study_card"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L166",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "business_card_helpers_study_card"
-    },
-    {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/business_card/_helpers.py",
@@ -44599,28 +45136,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "business_card_helpers_rationale_151",
-      "target": "business_card_helpers_expert_card"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "business_card_helpers_expert_card"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L164",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
       "target": "business_card_helpers_expert_card"
     },
     {
@@ -46558,28 +47073,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/business_card/_sections/_financial.py",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_financial",
-      "target": "services_metric_education_get_metric_explanation"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/business_card/_sections/_financial.py",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_financial",
-      "target": "services_metric_education_get_top_metrics_for_education"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/business_card/_sections/_financial.py",
       "source_location": "L6",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -46616,17 +47109,6 @@
       "confidence_score": 1.0,
       "source": "sections_financial_render_key_metrics",
       "target": "sections_financial_render_metric_popover"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/business_card/_sections/_financial.py",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_financial_render_metric_popover",
-      "target": "services_metric_education_get_metric_explanation"
     },
     {
       "relation": "rationale_for",
@@ -46714,17 +47196,6 @@
       "confidence_score": 1.0,
       "source": "sections_financial_render_key_metrics",
       "target": "services_analogy_engine_get_yoy_analogy"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/business_card/_sections/_financial.py",
-      "source_location": "L131",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_financial_render_key_metrics",
-      "target": "services_metric_education_get_top_metrics_for_education"
     },
     {
       "relation": "rationale_for",
@@ -51500,309 +51971,6 @@
       "confidence_score": 1.0,
       "source": "pages_moat_comparison_render_moat_comparison_page",
       "target": "services_moat_analyzer_get_moat_summary"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "pages_notification_center_event_type_label"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L63",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "pages_notification_center_render_notification_center"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L31",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "pages_notification_center_severity_badge"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L54",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "pages_notification_center_severity_color"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "pages_url_sync_navigate_to"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "services_notification_service_acknowledge_all_notifications"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "services_notification_service_acknowledge_notification"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "services_notification_service_get_notification_settings"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "services_notification_service_get_notification_summary"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "services_notification_service_get_pending_notifications"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "services_notification_service_get_subscribed_stocks"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "services_notification_service_make_event_id"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center",
-      "target": "services_notification_service_update_notification_settings"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_rationale_1",
-      "target": "pages_notification_center"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L149",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "pages_notification_center_severity_badge"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L150",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "pages_notification_center_event_type_label"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L154",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "pages_notification_center_severity_color"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/plugins/notification_center/plugin.py",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "notification_center_plugin",
-      "target": "pages_notification_center_render_notification_center"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L178",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "pages_url_sync_navigate_to"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L114",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "services_notification_service_acknowledge_all_notifications"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L186",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "services_notification_service_acknowledge_notification"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L197",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "services_notification_service_get_notification_settings"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L84",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "services_notification_service_get_notification_summary"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L112",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "services_notification_service_get_pending_notifications"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L70",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "services_notification_service_get_subscribed_stocks"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L113",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "services_notification_service_make_event_id"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L244",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "services_notification_service_update_notification_settings"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/notification_center.py",
-      "source_location": "L63",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_notification_center_render_notification_center",
-      "target": "src_pages_notification_center_py_finmindclient"
     },
     {
       "relation": "contains",
@@ -56647,17 +56815,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
-      "target": "services_analogy_engine_get_gross_margin_analogy"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/services/story_feed.py",
       "source_location": "L19",
       "weight": 1.0,
@@ -56674,17 +56831,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "services_compare_stories",
-      "target": "services_analogy_engine_get_per_analogy"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
       "target": "services_analogy_engine_get_per_analogy"
     },
     {
@@ -56713,33 +56859,11 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
-      "target": "services_analogy_engine_get_pbr_analogy"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/services/compare_stories.py",
       "source_location": "L16",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "services_compare_stories",
-      "target": "services_analogy_engine_get_dividend_analogy"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
       "target": "services_analogy_engine_get_dividend_analogy"
     },
     {
@@ -56768,34 +56892,12 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
-      "target": "services_analogy_engine_get_roe_analogy"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/services/story_feed.py",
       "source_location": "L19",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "services_story_feed",
       "target": "services_analogy_engine_get_roe_analogy"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
-      "target": "services_analogy_engine_get_debt_ratio_analogy"
     },
     {
       "relation": "imports",
@@ -56828,17 +56930,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "services_compare_stories",
-      "target": "services_analogy_engine_get_yoy_analogy"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
       "target": "services_analogy_engine_get_yoy_analogy"
     },
     {
@@ -65871,121 +65962,6 @@
       "confidence_score": 1.0,
       "source": "services_pattern_detector_get_available_types",
       "target": "services_market_event_service_get_event_types_for_stock"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L148",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
-      "target": "services_metric_education_get_metric_explanation"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L196",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
-      "target": "services_metric_education_get_supported_metrics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L201",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education",
-      "target": "services_metric_education_get_top_metrics_for_education"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education_rationale_1",
-      "target": "services_metric_education"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L243",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education_get_top_metrics_for_education",
-      "target": "services_metric_education_get_metric_explanation"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L149",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education_rationale_149",
-      "target": "services_metric_education_get_metric_explanation"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/story_feed.py",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_story_feed",
-      "target": "services_metric_education_get_metric_explanation"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/story_feed.py",
-      "source_location": "L262",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_story_feed_generate_education_story",
-      "target": "services_metric_education_get_metric_explanation"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/story_feed.py",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_story_feed",
-      "target": "services_metric_education_get_supported_metrics"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/story_feed.py",
-      "source_location": "L257",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_story_feed_generate_education_story",
-      "target": "services_metric_education_get_supported_metrics"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metric_education.py",
-      "source_location": "L202",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metric_education_rationale_202",
-      "target": "services_metric_education_get_top_metrics_for_education"
     },
     {
       "relation": "contains",
@@ -88823,5 +88799,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7c31d527e1cd4ccf1efa1e1204e2b7643c4b912b"
+  "built_at_commit": "1467644c144e4338f9c955b000faddc9c825651b"
 }

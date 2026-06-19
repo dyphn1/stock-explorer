@@ -355,6 +355,9 @@ academy:
   score_good_desc: 你有基本的概念，但還有一些地方可以加強。
   score_needs_work: 加油！
   score_needs_work_desc: 別擔心，回頭看看解說，你會進步的！
+  colon: ":"
+  key_point: 重點
+  load_error: 載入失敗。
 disclaimer:
   general: ⚠️ 本工具僅供認識公司使用，所有數據來自公開資訊觀測站與 FinMind。不構成任何投資建議。投資有風險，請自行評估。
   expert: ⚠️ 專家分析由 AI 輔助整理，僅供參考，不構成投資建議。

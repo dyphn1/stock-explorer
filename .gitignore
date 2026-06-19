@@ -73,3 +73,4 @@ scripts/fix_path.py
 scripts/index_memory.py
 scripts/restore_syspath.py
 scripts/screenshot.py
+.worktrees/
