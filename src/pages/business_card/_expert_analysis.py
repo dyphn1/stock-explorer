@@ -10,7 +10,7 @@ from src.pages._router_base import _section_title
 # Curated expert analysis for 10 major Taiwan stocks
 _EXPERT_ANALYSIS = {
     "2330": {
-        "title": t("expert_analysis.title", name="台積電", id="2330"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.tsmc.stock_name"), id="2330"),
         "content": (
             f"🌍 {t('expert_analysis.tsmc.global_leader')}\n\n"
             f"📈 {t('expert_analysis.tsmc.growth')}\n\n"
@@ -18,7 +18,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2317": {
-        "title": t("expert_analysis.title", name="鴻海", id="2317"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.foxconn.stock_name"), id="2317"),
         "content": (
             f"🔧 {t('expert_analysis.foxconn.ems_leader')}\n\n"
             f"🤖 {t('expert_analysis.foxconn.transformation')}\n\n"
@@ -26,7 +26,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2454": {
-        "title": t("expert_analysis.title", name="聯發科", id="2454"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.mediatek.stock_name"), id="2454"),
         "content": (
             f"📱 {t('expert_analysis.mediatek.ic_leader')}\n\n"
             f"🚀 {t('expert_analysis.mediatek.ai_edge')}\n\n"
@@ -34,7 +34,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2308": {
-        "title": t("expert_analysis.title", name="台達電", id="2308"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.delta.stock_name"), id="2308"),
         "content": (
             f"🔋 {t('expert_analysis.delta.power_expert')}\n\n"
             f"🌱 {t('expert_analysis.delta.esg')}\n\n"
@@ -42,7 +42,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2881": {
-        "title": t("expert_analysis.title", name="富邦金", id="2881"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.fubon_finance.stock_name"), id="2881"),
         "content": (
             f"🏦 {t('expert_analysis.fubon_finance.financial_giant')}\n\n"
             f"💰 {t('expert_analysis.fubon_finance.profit_stable')}\n\n"
@@ -50,7 +50,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2882": {
-        "title": t("expert_analysis.title", name="國泰金", id="2882"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.cathay_finance.stock_name"), id="2882"),
         "content": (
             f"🏦 {t('expert_analysis.cathay_finance.financial_duo')}\n\n"
             f"📊 {t('expert_analysis.cathay_finance.digital_transform')}\n\n"
@@ -58,7 +58,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "1301": {
-        "title": t("expert_analysis.title", name="台塑", id="1301"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.formosa_plastics.stock_name"), id="1301"),
         "content": (
             f"🧪 {t('expert_analysis.formosa_plastics.petro_leader')}\n\n"
             f"🔄 {t('expert_analysis.formosa_plastics.transformation')}\n\n"
@@ -66,7 +66,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2002": {
-        "title": t("expert_analysis.title", name="中鋼", id="2002"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.china_steel.stock_name"), id="2002"),
         "content": (
             f"🏗️ {t('expert_analysis.china_steel.steel_leader')}\n\n"
             f"🌱 {t('expert_analysis.china_steel.green_transform')}\n\n"
@@ -74,7 +74,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "2382": {
-        "title": t("expert_analysis.title", name="廣達", id="2382"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.quanta.stock_name"), id="2382"),
         "content": (
             f"💻 {t('expert_analysis.quanta.server_leader')}\n\n"
             f"🤖 {t('expert_analysis.quanta.ai_server')}\n\n"
@@ -82,7 +82,7 @@ _EXPERT_ANALYSIS = {
         ),
     },
     "3045": {
-        "title": t("expert_analysis.title", name="大立光", id="3045"),
+        "title": t("expert_analysis.title", name=t("expert_analysis.largan.stock_name"), id="3045"),
         "content": (
             f"📷 {t('expert_analysis.largan.optical_leader')}\n\n"
             f"🔬 {t('expert_analysis.largan.tech_lead')}\n\n"

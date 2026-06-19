@@ -52,7 +52,7 @@ def _render_moat(data: dict, client) -> None:
                 metric_name=dim_name,
                 metric_value=f"{score_val:.0f} 分",
                 key_prefix=f"moat_{stock_id}",
-                source_label="📊 系統估算",
+                source_label=t("moat.system_estimate"),
             )
 
     # Evidence list

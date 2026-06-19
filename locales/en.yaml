@@ -295,6 +295,22 @@ stock_screener:
   no_matching_stocks_desc: Try relaxing the filters or choosing a different investment style.
   explanation_title: Explanation
   btn_view: View
+  explanation:
+    disclaimer: "⚠️ This is for educational purposes only and does not constitute investment advice. Please consult a certified financial advisor before making investment decisions."
+    fallback: "No explanation available for the current filter combination."
+    implication:
+      dividend: "The selected stocks have higher dividend yields and relatively lower volatility — suitable for income-oriented investors."
+      growth: "The selected stocks show strong revenue growth momentum — watch for potential and risk."
+      value: "The selected stocks have low PER and PBR — may be undervalued but beware of value traps."
+      custom_many: "Multiple active filters — results match a narrow criteria set."
+      custom_fallback: "Active filters applied — results match your custom criteria."
+      default: "No filters applied — showing all available stocks."
+    filter:
+      revenue_positive: "Positive revenue growth"
+      industry_match: "Industry: {industry}"
+      all_industries: "All"
+      per_range: "PER range"
+      div_range: "Dividend yield range"
 comprehension_check:
   title: Comprehension Check
   subtitle: Test your understanding of basic investing concepts — 5 multiple-choice questions
@@ -1071,6 +1087,7 @@ group:
     strategy_reading_content: "A group's investment strategy can be understood through holding ratios and revenue distribution. High-holding subsidiaries represent the core business, while low-holding, high-revenue subsidiaries indicate strategic ecosystem investments."
     no_data: No group structure data available for {name}.
     tsmc:
+      stock_name: "TSMC"
       desc: World's largest dedicated semiconductor foundry
       sub:
         china:
@@ -1090,6 +1107,7 @@ group:
           business: Mixed-signal and RF chip manufacturing
           relation: Joint venture providing specialty process capacity
     foxconn:
+      stock_name: "Foxconn"
       desc: World's largest electronics contract manufacturer
       sub:
         fii:
@@ -1427,13 +1445,12 @@ category_browser:
   col_volume: Volume
   top_20_hot: Top 20 Hot Stocks
 
-expert_analysis:
-  title: "{name} ({id}) Expert Analysis"
-  coming_soon: "📋 Expert analysis coming soon!\n\nWe are preparing in-depth expert analysis for this stock.\nIn the meantime, check out other available stocks!"
-
 watchlist:
   title: My Watchlist
   subtitle: "Manage your watched stocks and ETFs, track latest prices and alert status"
+  default_list_name: "Default List"
+  type_stock_badge: "Stock"
+  type_etf_badge: "ETF"
   list_selection: List Selection
   new_list_btn: "➕ New List"
   new_list_popover: New List
@@ -1446,6 +1463,23 @@ watchlist:
   select_list_label: Select a list to view
   no_lists: No lists available
   total_label: Total Watched
+  stocks_label: Stocks
+  etfs_label: ETFs
+  total_help: Total number of items in the watchlist
+  stocks_help: Number of stock items
+  etfs_help: Number of ETF items
+  empty_title: No items yet
+  empty_message: Start by adding stocks or ETFs to your watchlist
+  alert_above: Alert when price goes above {price}
+  alert_below: Alert when price goes below {price}
+
+moat:
+  system_estimate: 📊 System Estimate
+
+study_log:
+  progress_title: Study Progress
+  today_suffix: (Today)
+  recent_7_days: Recent 7-Day History
   total_help: All watched items
   stocks_label: Stocks
   stocks_help: Number of stocks
@@ -1647,42 +1681,52 @@ expert_analysis:
   title: "{name} ({id}) Expert Analysis"
   coming_soon: "📋 Expert analysis coming soon!\n\nWe are preparing in-depth expert analysis for this stock.\nIn the meantime, check out other available stocks!"
   tsmc:
+    stock_name: "TSMC"
     global_leader: "**Global Semiconductor Leader**: TSMC has over 90% market share in advanced processes (below 7nm) and is a core supplier to Apple, NVIDIA, AMD, and other tech giants."
     growth: "**Growth Momentum**: AI and HPC (High-Performance Computing) demand continues to surge. CoWoS advanced packaging capacity is in short supply, with revenue expected to maintain double-digit growth in 2025-2026."
     risk: "**Risk Warning**: Overseas expansion (US, Japan) involves massive capital expenditure. Rising depreciation costs may temporarily compress margins. Geopolitical risks also require ongoing attention."
   foxconn:
+    stock_name: "Foxconn"
     ems_leader: "**EMS Dominance**: Foxconn is the world's largest electronics contract manufacturer, with major clients including Apple, Dell, HP, and other international brands."
     transformation: "**Accelerating Transformation**: Actively expanding into AI servers, electric vehicles (MIH platform), and semiconductors. AI server business benefits from data center expansion demand."
     risk: "**Risk Warning**: Traditional consumer electronics manufacturing is highly competitive with thin margins. Transformation results still need time to verify."
   mediatek:
+    stock_name: "MediaTek"
     ic_leader: "**IC Design Leader**: MediaTek is one of the world's major smartphone chipset suppliers, with its Dimensity 5G series gaining traction in both flagship and mid-range segments."
     ai_edge: "**AI Edge Computing**: Actively expanding into AI PC and automotive chip markets. The automotive chip solution developed with NVIDIA has drawn significant attention."
     risk: "**Risk Warning**: Smartphone market recovery is uneven, and competitive pressure from Qualcomm persists."
   delta:
+    stock_name: "Delta Electronics"
     power_expert: "**Power Management Expert**: Delta Electronics is a global leader in power and thermal management solutions, with presence in data centers, EV charging, and industrial automation."
     esg: "**ESG Pioneer**: Actively investing in energy efficiency and carbon reduction. Data center power and thermal demand benefits from the AI infrastructure wave."
     risk: "**Risk Warning**: Raw material price volatility and supply chain management are key challenges."
   fubon_finance:
+    stock_name: "Fubon Financial"
     financial_giant: "**Financial Holding Giant**: Fubon Financial is one of Taiwan's largest financial holding companies, with businesses spanning banking, life insurance, and securities."
     profit_stable: "**Stable Profitability**: Benefiting from the rate hike cycle and capital market recovery. Life insurance spread loss pressure has eased, and net interest income on the banking side has grown."
     risk: "**Risk Warning**: Financial market volatility and currency risks require ongoing attention."
   cathay_finance:
+    stock_name: "Cathay Financial"
     financial_duo: "**One of the Financial Duo**: Cathay Financial is Taiwan's largest financial holding company. Cathay Life is Taiwan's largest life insurer, and Cathay United Bank is a leading commercial bank."
     digital_transform: "**Digital Transformation**: Actively promoting digital financial services, with growing users on mobile banking and online insurance platforms."
     risk: "**Risk Warning**: The life insurance industry faces IFRS 17 accounting standard transition challenges, and capital market volatility affects investment returns."
   formosa_plastics:
+    stock_name: "Formosa Plastics"
     petro_leader: "**Petrochemical Industry Leader**: Formosa Plastics is a major global petrochemical producer, with products covering PVC, PE, PP, and other general-purpose plastics and chemicals."
     transformation: "**Transformation Strategy**: Actively developing green energy, semiconductor materials, and high-grade application materials to reduce dependence on traditional petrochemical cycles."
     risk: "**Risk Warning**: Global petrochemical overcapacity pressure continues, and Chinese competitors' expansion intensifies competition."
   china_steel:
+    stock_name: "China Steel"
     steel_leader: "**Steel Industry Leader**: China Steel is Taiwan's largest steel manufacturer, with products widely used in construction, machinery, and automotive industries."
     green_transform: "**Green Transformation**: Actively promoting carbon-reduction processes and developing high-value-added steel products."
     risk: "**Risk Warning**: Steel cycles are pronounced. Chinese steel export dumping pressure and raw material price volatility are key risks."
   quanta:
+    stock_name: "Quanta Computer"
     server_leader: "**Server Contract Manufacturing Leader**: Quanta Computer is the world's largest notebook contract manufacturer and a major AI server supplier."
     ai_server: "**AI Server Boom**: Benefiting from CSP (Cloud Service Provider) capital expenditure expansion, AI server revenue share is rapidly increasing."
     risk: "**Risk Warning**: PC/NB market demand is weak. While AI server order visibility is high, competition is intensifying."
   largan:
+    stock_name: "Largan Precision"
     optical_leader: "**Optical Lens Leader**: Largan Precision is the global leader in smartphone optical lenses, with high technical barriers and customers including Apple, Samsung, and Huawei."
     tech_lead: "**Technology Leadership**: Maintains leadership in advanced optical technologies such as periscope lenses and free-form lenses, continuing to benefit from the multi-camera trend."
     risk: "**Risk Warning**: Smartphone market growth is slowing, and Chinese competitors (Sunny, AAC Technologies) continue to catch up."

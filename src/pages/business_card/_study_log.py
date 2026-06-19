@@ -104,7 +104,7 @@ def _render_study_log(data: dict, client) -> None:
     total_text = ft("study_log:total_studied", total=total)
 
     _study_card(
-        "學習進度",
+        t("study_log.progress_title"),
         f"{streak_text}\n\n{total_text}",
         "📚",
     )
@@ -117,14 +117,14 @@ def _render_study_log(data: dict, client) -> None:
         day_label = d.strftime("%m/%d")
         # Mark today
         if d == today:
-            day_label += " (今天)"
+            day_label += t("study_log.today_suffix")
         bar = "█" * min(count, 10) + ("…" if count > 10 else "")
         if count == 0:
             bar = "—"
         history_lines.append(f"{day_label}　{bar} ({count})")
 
     _study_card(
-        "最近 7 天學習紀錄",
+        t("study_log.recent_7_days"),
         "\n".join(history_lines),
         "📅",
     )

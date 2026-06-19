@@ -55,8 +55,8 @@ def _render_watchlist_page(client: FinMindClient):
     # Ensure there's always at least one list (預設清單)
     if not list_name_options:
         # If no lists exist, create default list
-        create_list("預設清單")
-        list_name_options = ["預設清單"]
+        create_list(t("watchlist.default_list_name"))
+        list_name_options = [t("watchlist.default_list_name")]
 
     # Let user select a list to view/edit
     selected_list = st.selectbox(
@@ -129,9 +129,9 @@ def _render_watchlist_page(client: FinMindClient):
 
                 # Type badge
                 if etf_type == "etf":
-                    badge = '<span style="background:#27AE60;color:white;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;margin-right:0.4rem;">ETF</span>'
+                    badge = f'<span style="background:#27AE60;color:white;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;margin-right:0.4rem;">{t("watchlist.type_etf_badge")}</span>'
                 else:
-                    badge = '<span style="background:#3498DB;color:white;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;margin-right:0.4rem;">股票</span>'
+                    badge = '<span style="background:#3498DB;color:white;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;margin-right:0.4rem;">{t("watchlist.type_stock_badge")}</span>'
 
                 # Price and change formatting
                 if latest_price is not None:
