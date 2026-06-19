@@ -235,6 +235,54 @@ notification:
   no_notification: 目前沒有通知
   event_type.unknown: '未知事件類型：{event_type}'
   business_card: 名片
+  summary:
+    high_events: "重大事件"
+    medium_events: "顯著事件"
+    low_events: "參考事件"
+    business_card: 名片
+  pending_section: 待處理通知
+  settings_section: 設定
+  severity:
+    high: 高
+    medium: 中
+    low: 低
+    unknown: 未知
+  event_type:
+    revenue_surge: 營收激增
+    news_major: 重大新聞
+    news_medium: 一般新聞
+    price_abnormal: 股價異常
+    dividend_change: 股利變動
+    institutional_shift: 法人動向
+  no_watchlist:
+    title: 尚未加入關注股票
+    body: 您尚未將任何股票加入關注清單。請加入一些股票以開始接收通知。
+  checking: 正在檢查通知...
+  unread: 未讀
+  empty:
+    title: 無通知
+    body: 您目前沒有任何待處理通知。
+  mark_all_read_btn: 全部標為已讀
+  marking: 正在標記為已讀...
+  all_marked_read: 所有通知已標記為已讀
+  loading_notifications: 正在載入通知...
+  unknown_stock: 未知股票
+  view_card_btn: 查看名片
+  mark_read_btn: 標為已讀
+  settings_expander: 通知設定
+  toggle:
+    enable: 啟用通知
+    high_severity: 通知高嚴重度事件
+    medium_severity: 通知中等嚴重度事件
+    low_severity: 通知低嚴重度事件
+  digest_label: 摘要頻率
+  digest:
+    realtime: 即時
+    daily: 每日
+    weekly: 每週
+  save_settings_btn: 儲存設定
+  default_list: 預設關注清單
+  settings_saved: 設定已成功儲存
 memo:
   title: 投資備忘錄
   add: 新增備忘
