@@ -48,7 +48,7 @@ def _event_type_label(event_type: str) -> str:
         "dividend_change": t("notification.event_type.dividend_change"),
         "institutional_shift": t("notification.event_type.institutional_shift"),
     }
-    return labels.get(event_type, f"📌 {event_type}")
+    return labels.get(event_type, t("notification.event_type.unknown", event_type=event_type))
 
 
 def _severity_color(severity: str) -> str:

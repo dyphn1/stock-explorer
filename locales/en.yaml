@@ -237,6 +237,54 @@ notification:
   no_notification: No notifications
   event_type.unknown: 'Unknown event type: {event_type}'
   business_card: Business Card
+  summary:
+    high_events: "major events"
+    medium_events: "notable events"
+    low_events: "reference events"
+    business_card: Business Card
+  pending_section: Pending Notifications
+  settings_section: Settings
+  severity:
+    high: "High"
+    medium: "Medium"
+    low: "Low"
+    unknown: "Unknown"
+  event_type:
+    revenue_surge: "Revenue Surge"
+    news_major: "Major News"
+    news_medium: "General News"
+    price_abnormal: "Price Abnormality"
+    dividend_change: "Dividend Change"
+    institutional_shift: "Institutional Flow"
+  no_watchlist:
+    title: "No Stocks Watchlisted"
+    body: "You haven't added any stocks to your watchlist yet. Add some stocks to start receiving notifications."
+  checking: "Checking for notifications..."
+  unread: "Unread"
+  empty:
+    title: "No Notifications"
+    body: "You have no pending notifications."
+  mark_all_read_btn: "Mark All as Read"
+  marking: "Marking as read..."
+  all_marked_read: "All notifications marked as read"
+  loading_notifications: "Loading notifications..."
+  unknown_stock: "Unknown Stock"
+  view_card_btn: "View Business Card"
+  mark_read_btn: "Mark as Read"
+  settings_expander: "Notification Settings"
+  toggle:
+    enable: "Enable Notifications"
+    high_severity: "Notify on High Severity Events"
+    medium_severity: "Notify on Medium Severity Events"
+    low_severity: "Notify on Low Severity Events"
+  digest_label: "Digest Frequency"
+  digest:
+    realtime: "Real-time"
+    daily: "Daily"
+    weekly: "Weekly"
+  save_settings_btn: "Save Settings"
+  default_list: "Default Watchlist"
+  settings_saved: "Settings saved successfully
 memo:
   title: Investment Memo
   add: Add Memo
@@ -1302,9 +1350,10 @@ notification:
     body: "When major events occur for stocks you follow, they will appear here."
   unread: "Unread Notifications"
   summary:
-    high_events: "high severity events"
-    medium_events: "medium severity events"
+    high_events: "major events"
+    medium_events: "notable events"
     low_events: "reference events"
+    business_card: Business Card
   mark_all_read_btn: "✅ Mark All as Read"
   all_marked_read: "All notifications marked as read"
   pending_section: "Pending Notifications"
