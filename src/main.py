@@ -12,12 +12,12 @@ if _project_root not in sys.path:
     sys.path.insert(0, _project_root)
 
 import streamlit as st
-from src.services.validation = validate_stock_id
+from src.services.validation import validate_stock_id
 from src.core.i18n import t
-from src.pages.router = load_and_render_page
-from src.services.benchmarks = get_industry_benchmarks
-from src.services.benchmarks = get_industry_benchmarks
+from src.pages.router import load_and_render_page
+from src.services.benchmarks import get_industry_benchmarks
 
+# ── 頁面設定 ──────────────────────────────────────────
 # ── 頁面設定 ──────────────────────────────────────────
 st.set_page_config(
     page_title=t("app.title"),
@@ -76,7 +76,23 @@ def get_client():
 
 
 client = get_client()
-
+# Chinese name to stock ID mapping for common stocks
+CHINESE_NAME_TO_STOCK_ID = {
+    "台積電": "2330",
+    "鴻海": "2317",
+    "聯發科": "2454",
+    "台達電": "2308",
+    "富邦金": "2881",
+    "台泥": "1101",
+    "中鋼": "2002",
+    "台塑": "1301",
+    "元大台灣50": "0050",
+    "元大高股息": "0056",
+    "國泰永續高股息": "00878",
+    "群益台灣精選高息": "00919",
+    "富邦台50": "006208",
+}
+ 
 # ── 側邊欄 ──────────────────────────────────────────────
 
 def _render_sidebar_hot_stocks(client):
@@ -184,7 +200,11 @@ if search_input and search_input.strip():
             st.sidebar.error(f"❌ {result}")
     else:
         # 可能是中文名稱，使用搜尋
-        matches = client.search_stocks(query)
+        # First check hardcoded mapping for exact match
+        if query in CHINESE_NAME_TO_STOCK_ID:
+            stock_id = CHINESE_NAME_TO_STOCK_ID[query]
+        else:
+            matches = client.search_stocks(query)
         if len(matches) == 1:
             # 只有 1 筆符合，自動導航
             stock_id = matches.iloc[0]["stock_id"]

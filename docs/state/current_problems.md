@@ -44,8 +44,8 @@
 - **日期**: 2026-06-18
 - **描述**: `get_stock_info` 每次全表拉取，未使用快取。切換股票時重複呼叫浪費 API quota。
 - **影響檔案**: `src/pages/_router_base.py`, `src/data/finmind_client.py`
-- **狀態**: Open
-- **解決方案**: 加入 LRU 快取或 session state 快取機制。
+- **狀態**: Fixed
+- **解決方案**: 2320ce0 — `get_stock_info` 加入 `@lru_cache(maxsize=128)`，避免重複 API 呼叫。698/699 測試通過。
 
 ### TD-06: 色彩系統統一
 - **嚴重度**: P1
@@ -53,9 +53,9 @@
 - **報告者**: Design Reviewer
 - **日期**: 2026-06-18
 - **描述**: 多處使用非設計系統色（如 `#F39C12`、`#2E86C1`、`#8E44AD`），違反設計系統規範。
-- **影響檔案**: `src/pages/financial_health.py`, `src/pages/etf_browser.py`, `src/pages/watchlist_page.py`
-- **狀態**: Open
-- **解決方案**: 統一使用設計系統色彩變數。
+- **影響檔案**: 全域（已修復）
+- **狀態**: Fixed
+- **解決方案**: b53546d 修復 8 個檔案（pages + story_timeline），6d8d691 修復剩餘 7 個檔案（sector_heatmap, business_card sections/helpers, timeline_service, financial_wellness_service）。所有 src/ 檔案已統一使用標準色彩 token。
 
 ### TD-07: 元件一致性
 - **嚴重度**: P1
@@ -64,8 +64,8 @@
 - **日期**: 2026-06-18
 - **描述**: 部分頁面使用 `st.metric()` 或 raw HTML 而非 `_白话_card()`，導致視覺不一致。
 - **影響檔案**: `src/pages/peer_comparison.py`, `src/pages/watchlist_page.py`
-- **狀態**: Open
-- **解決方案**: 統一使用 `_白话_card()` 元件。
+- **狀態**: Fixed
+- **解決方案**: b53546d 已將 peer_comparison.py 中的 st.metric() 替換為 _白话_card()。驗證 src/ 下無 bare st.metric() 呼叫。
 
 ---
 
@@ -116,4 +116,6 @@
 | D-125 | chart_stock.py 拆分 | 2026-06-17 | 已拆分至 chart_stock_financial/health/valuation.py |
 | TD-04 | business_card.py 拆分 | 2026-06-17 | 已拆分至 business_card/ 子目錄 |
 | UX-05 | ROE TTM 修正 | 2026-06-18 | `roe_calculator.py` 已實作 TTM，`financial_health.py` + `peer_comparison.py` 已正確使用 |
-| UX-07 | 關注列表視覺反饋 | 2026-06-18 | `_summary_hero.py` + `watchlist_page.py` 已有 `st.toast()` |
+|| UX-07 | 關注列表視覺反饋 | 2026-06-18 | `_summary_hero.py` + `watchlist_page.py` 已有 `st.toast()` |
+|| TD-06 | 色彩系統統一 | 2026-06-20 | 所有 src/ 檔案已統一使用標準色彩 token（b53546d + 6d8d691） |
+|| TD-07 | 元件一致性 | 2026-06-20 | 無 bare st.metric() 呼叫，全部使用 _白话_card()（b53546d） |

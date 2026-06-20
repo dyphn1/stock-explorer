@@ -2,6 +2,79 @@
 
 > **上次更新**: 2026-06-20
 
+## 2026-06-20 Session Summary — TD-03 API 快取修復
+
+### What was done
+- 在 `src/data/finmind_client.py` 的 `get_stock_info` 方法加入 `functools.lru_cache(maxsize=128)` 裝飾器
+- 避免重複查詢同一股票時產生多餘 API 呼叫，節省 API quota
+- 與既有 `_fetch_all_stock_info` 的 memory/file cache 共存，LRU cache 作為結果過濾層的額外快取
+
+### Roles involved
+- PM: 判斷、派發 Developer、Gate Check
+- Developer: 加入 lru_cache、執行測試、commit + push
+
+### Result
+- ✅ PASS — 698/699 測試通過（1 個 pre-existing `test_dividend_roe`，與本次無關）
+
+### Files changed
+- `src/data/finmind_client.py` — 加入 `functools` import + `@lru_cache(maxsize=128)` on `get_stock_info`
+
+### Git commit + push
+- 2320ce0
+
+---
+
+## 2026-06-20 Session Summary — TD-06 色彩系統統一（剩餘 7 檔案）
+
+### What was done
+- 將 7 個檔案中的 hardcoded 非設計系統色替換為標準 token
+- 替換映射：#F39C12→#E67E22, #27AE68→#27AE60, #1ABC9C→#27AE60, #2ECC71→#27AE60, #8E44AD→#9B59B6, #F1C40F→#E67E22, #D35400→#E67E22, #2980B9→#3498DB
+- 修復 sector_heatmap.py 中的 f-string 語法錯誤（line 306）
+- TD-06 完全完成 — 所有 src/ 檔案已統一使用設計系統色彩 token
+
+### Roles involved
+- PM: 判斷、派發 Developer、Gate Check
+- Developer: 替換色碼、修復 f-string、commit + push
+
+### Result
+- ✅ PASS — 698/699 測試通過（1 個 pre-existing 與本次無關）
+
+### Files changed
+- `src/pages/sector_heatmap.py` — 調色盤 + f-string fix
+- `src/pages/business_card/_sections/_why_moved.py` — #F39C12→#E67E22
+- `src/pages/business_card/_sections/_summary_hero.py` — #F39C12→#E67E22
+- `src/pages/business_card/_helpers.py` — #F39C12→#E67E22
+- `src/services/timeline_service.py` — #F39C12→#E67E22
+- `src/services/financial_wellness_service.py` — #F39C12→#E67E22
+
+### Git commit + push
+- 6d8d691
+
+---
+
+## 2026-06-20 Session Summary — 修復 27 個 pre-existing 測試失敗
+
+### What was done
+- 26 個 `screener_explanation` 測試：建立 `tests/conftest.py` 加入 `st.session_state` mock（lang="zh-TW"），讓 `t()` 在測試環境中能正確載入 locale 翻譯
+- 1 個 `test_notification_center_plugin_import`：修正 `mock_open_func` 的參數順序（`encoding` 改為 keyword argument，避免與 `buffering` 參數衝突）
+- 結果：27 個失敗 → 1 個剩餘（pre-existing `test_dividend_roe`，與本次無關）
+
+### Roles involved
+- PM: 判斷、派發 Developer、手動修復 plugin import test、Gate Check
+- Developer: 建立 conftest.py、修復 26 個 screener explanation 測試
+
+### Result
+- ✅ PASS — 78/78 相關測試通過，698/699 全套測試通過
+
+### Files changed
+- `tests/conftest.py` — 新增，mock st.session_state for t()
+- `tests/test_plugin_chassis.py` — 修正 mock_open_func 參數順序
+
+### Git commit + push
+- b2b3cee
+
+---
+
 ## 2026-06-20 Session Summary — 修復 82 個 i18n 測試失敗
 
 ### What was done
