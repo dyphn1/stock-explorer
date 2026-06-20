@@ -1,6 +1,6 @@
 # Development Roadmap — Stock Explorer
 
-> **Current Phase**: Sprint 21 in progress | **Last Updated**: 2026-06-20
+> **Current Phase**: Sprint 21 in progress | **Last Updated**: 2026-06-21
 
 ---
 
@@ -35,8 +35,8 @@
 | ID | Item | Description |
 |----|------|-------------|
 | TD-02 | Full i18n | Phase 1 complete (5 major pages, ~300 strings), remaining ~42 files with ~1,200 strings |
-| D-125 | chart_stock.py split | Split chart_stock.py into smaller modules |
-| D-126 | INDUSTRY_BENCHMARKS dedup | Remove duplicate industry benchmark data |
+|| D-125 | chart_stock.py split | ~~Split chart_stock.py into smaller modules~~ ✅ Already done (split into chart_stock_financial.py, chart_stock_health.py, chart_stock_valuation.py) |
+|| D-126 | INDUSTRY_BENCHMARKS dedup | Remove duplicate industry benchmark data ✅ Complete (2026-06-21) |
 
 ### P1 — High
 | ID | Item | Description |
