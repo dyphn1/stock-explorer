@@ -67,6 +67,19 @@ Pages are strictly divided into three zones that must not be mixed:
 | Primary text | Dark gray | `#2C3E50` |
 | Secondary text | Gray | `#7F8C8D` |
 
+### Extended Color Tokens
+
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `medium` | `#E67E22` | Amber/orange for medium-priority items |
+| `border_light` | `#E1E4E8` | Structural borders/dividers |
+| `accent_purple` | `#9B59B6` | Sector heatmap accent |
+| `white` | `#FFFFFF` | Pure white |
+| `positive_bg` | `#E8F8F0` | Light positive bg tint |
+| `negative_bg` | `#FDEDEC` | Light negative bg tint |
+| `teal` | `#16A085` | Sector heatmap accent |
+| `card_bg_alt` | `#ECF0F1` | Alternate card bg |
+
 **Rules**:
 - Red/green only used for price change context, never for decoration
 - All text-to-background contrast must meet WCAG AA standards

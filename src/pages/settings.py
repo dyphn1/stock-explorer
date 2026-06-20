@@ -97,7 +97,7 @@ def render_settings_page() -> None:
 
     # ── Visual feedback: price threshold ──
     st.markdown(
-        f"<div style='background-color:#F4F6F8; border-radius:8px; padding:12px 16px; "
+        f"<div style='background-color:#F8F9FA; border-radius:8px; padding:12px 16px; "
         f"font-size:14px;'>"
         f"✅ <b>{t('settings.price.current_threshold', value=price_threshold)}</b> &nbsp;│&nbsp; "
         f"{t('settings.price.trigger_when', value=price_threshold)}"
@@ -165,7 +165,7 @@ def render_settings_page() -> None:
 
     # ── Visual feedback: revenue threshold ──
     st.markdown(
-        f"<div style='background-color:#F4F6F8; border-radius:8px; padding:12px 16px; "
+        f"<div style='background-color:#F8F9FA; border-radius:8px; padding:12px 16px; "
         f"font-size:14px;'>"
         f"✅ <b>{t('settings.revenue.current_threshold', value=revenue_threshold)}</b> &nbsp;│&nbsp; "
         f"{t('settings.revenue.trigger_when', value=revenue_threshold)}"

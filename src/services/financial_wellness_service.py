@@ -17,6 +17,8 @@ from src.services.quiz_engine import (
     normalize_questions,
 )
 
+from src.core.i18n import t
+
 logger = logging.getLogger(__name__)
 
 # ── Load quiz config once at module level ──────────────────
@@ -116,24 +118,24 @@ def get_interpretation(score: int) -> dict[str, Any]:
         return {
             "level": "healthy",
             "emoji": "🟢",
-            "title": "理財健康",
-            "description": "你的理財習慣整體來說很不錯！有基本的財務紀律和風險意識。繼續保持，並持續學習。",
+            "title": t("financial_wellness_interpretation_healthy_title"),
+            "description": t("financial_wellness_interpretation_healthy_description"),
             "color": "#27AE60",
         }
     elif score >= 20:
         return {
             "level": "average",
             "emoji": "🟡",
-            "title": "理財一般",
-            "description": "你的理財習慣有基本的概念，但還有一些地方可以加強。參考下方的建議，逐步改善。",
+            "title": t("financial_wellness_interpretation_average_title"),
+            "description": t("financial_wellness_interpretation_average_description"),
             "color": "#E67E22",
         }
     else:
         return {
             "level": "attention",
             "emoji": "🔴",
-            "title": "需要留意",
-            "description": "你的理財習慣還有不少改善空間。別擔心，每個人都是從零開始。先從最簡單的步驟做起。",
+            "title": t("financial_wellness_interpretation_attention_title"),
+            "description": t("financial_wellness_interpretation_attention_description"),
             "color": "#E74C3C",
         }
 
@@ -161,6 +163,6 @@ def get_tips(answers: dict[str, str]) -> list[dict[str, str]]:
                 break
         tip_text = category_tips.get(qid, "") if qid else ""
         if not tip_text:
-            tip_text = f'"{cat}" 是你最需要加強的部分，建議多了解相關知識。'
+            tip_text = t("financial_wellness_tips_need_improvement", category=cat)
         tips.append({"category": cat, "tip": tip_text})
     return tips

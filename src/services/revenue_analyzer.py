@@ -5,7 +5,7 @@
 
 from typing import Optional
 import pandas as pd
-
+from src.core.i18n import t
 
 # 已知公司的營收組成（當 FinMind 無法提供細項時使用）
 # 這些是公開資訊，來自各公司財報
@@ -117,29 +117,27 @@ def _parse_financial_for_segments(financial_df: pd.DataFrame, industry: str) -> 
 
 def _auto_describe_segment(segment_name: str) -> str:
     """自動生成業務線描述"""
-    descriptions = {
-        "晶圓代工": "幫客戶設計和製造晶片",
-        "IC設計": "設計晶片電路，不自己製造",
-        "封裝測試": "幫晶片穿上外殼並測試",
-        "代工製造": "幫品牌客戶組裝產品",
-        "消費電子": "手機、電腦等消費性電子產品",
-        "銀行": "存放款、信用卡等金融服務",
-        "保險": "人壽保險和產物保險業務",
-        "證券": "證券經紀和承銷業務",
-        "水泥": "建築用水泥和預拌混凝土",
-        "藥物": "處方藥和成藥製造",
-        "醫療器材": "醫療設備和耗材",
+    segment_map = {
+        "晶圓代工": "revenue_analyzer_auto_describe_wafer_foundry",
+        "IC設計": "revenue_analyzer_auto_describe_ic_design",
+        "封裝測試": "revenue_analyzer_auto_describe_packaging_testing",
+        "代工製造": "revenue_analyzer_auto_describe_contract_manufacturing",
+        "消費電子": "revenue_analyzer_auto_describe_consumer_electronics",
+        "銀行": "revenue_analyzer_auto_describe_bank",
+        "保險": "revenue_analyzer_auto_describe_insurance",
+        "證券": "revenue_analyzer_auto_describe_securities",
+        "水泥": "revenue_analyzer_auto_describe_cement",
+        "藥物": "revenue_analyzer_auto_describe_pharmaceuticals",
+        "醫療器材": "revenue_analyzer_auto_describe_medical_equipment",
     }
-    for key, desc in descriptions.items():
+    for key, locale_key in segment_map.items():
         if key in segment_name:
-            return desc
-    return f"{segment_name}業務"
-
-
+            return t(locale_key)
+    return t("revenue_analyzer_auto_describe_fallback", segment=segment_name)
 def _create_generic_breakdown(industry: str) -> list:
     """建立通用的營收組成（當沒有詳細資料時）"""
     return [
-        {"name": "主要業務", "value": 70.0, "description": f"{industry}的核心業務收入"},
-        {"name": "其他投資", "value": 15.0, "description": "轉投資公司股息或業外收入"},
-        {"name": "新事業", "value": 15.0, "description": "正在發展的新業務領域"},
+        {"name": t("revenue_analyzer_generic_breakdown_primary_business"), "value": 70.0, "description": t("revenue_analyzer_generic_breakdown_primary_business_description", industry=industry)},
+        {"name": t("revenue_analyzer_generic_breakdown_other_investments"), "value": 15.0, "description": t("revenue_analyzer_generic_breakdown_other_investments_description")},
+        {"name": t("revenue_analyzer_generic_breakdown_new_business"), "value": 15.0, "description": t("revenue_analyzer_generic_breakdown_new_business_description")},
     ]

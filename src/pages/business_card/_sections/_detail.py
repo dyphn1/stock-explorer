@@ -87,7 +87,7 @@ def _render_share_section(data: dict, client) -> None:
         <a id="share-copy-btn" onclick="copyShareUrl(); return false;"
            style="cursor:pointer;text-decoration:none;font-size:1.4rem;
                   display:inline-block;padding:0.3rem 0.6rem;
-                  background:#F0F0F0;border-radius:8px;
+                  background:#F8F9FA;border-radius:8px;
                   text-align:center;min-width:2.2rem;"
            title=t("detail:share_link_title")>
             <span id="share-copy-icon">📋</span>

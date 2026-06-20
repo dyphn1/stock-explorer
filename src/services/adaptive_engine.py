@@ -7,8 +7,9 @@ import logging
 import re
 import yaml
 import os
-from datetime import datetime, timedelta
+from src.core.i18n import t
 from pathlib import Path
+from datetime import datetime, timedelta
 from typing import Optional
 
 import pandas as pd
@@ -302,21 +303,27 @@ def detect_revenue_event(monthly_revenue: pd.DataFrame, threshold: float = 30.0)
             return None
 
         severity = "high" if abs(yoy_pct) >= 50 else "medium"
-        direction = "成長" if yoy_pct > 0 else "衰退"
+        direction_word = t("adaptive_engine_direction_growth") if yoy_pct > 0 else t("adaptive_engine_direction_decline")
+        title = t("adaptive_engine_title_revenue_surge", direction=direction_word, yoy_pct=abs(yoy_pct))
+
+        # Summary parts
+        part1 = t("adaptive_engine_summary_part1", latest_rev=latest_rev/1e8)
+        if yoy_pct > 0:
+            part2 = t("adaptive_engine_summary_part2_increase", yoy_pct=abs(yoy_pct))
+            part3 = t("adaptive_engine_summary_part3_increase")
+        else:
+            part2 = t("adaptive_engine_summary_part2_decrease", yoy_pct=abs(yoy_pct))
+            part3 = t("adaptive_engine_summary_part3_decrease")
+        summary = f"{part1}{part2}{part3}"
 
         return {
             "type": "revenue_surge",
             "severity": severity,
-            "title": f"營收 YoY {direction} {abs(yoy_pct):.0f}%",
-            "summary": (
-                f"最近月營收 {latest_rev/1e8:.0f} 億元，"
-                f"較去年同期{'增加' if yoy_pct > 0 else '減少'} {abs(yoy_pct):.0f}%。"
-                f"{'表現亮眼，關注後續動能。' if yoy_pct > 0 else '需留意是否為短期因素影響。'}"
-            ),
+            "title": title,
+            "summary": summary,
         }
     except (KeyError, IndexError, ZeroDivisionError):
         return None
-
 
 def _is_false_positive(title: str, keyword: str) -> bool:
     """Check if *keyword* matched in *title* is actually a false positive.

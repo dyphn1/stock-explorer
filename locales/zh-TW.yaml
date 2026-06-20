@@ -119,3 +119,47 @@ validation:
 
 page:
   daily_market: "今日市場動態"
+adaptive_engine_severity_high: "高"
+adaptive_engine_severity_medium: "中"
+adaptive_engine_direction_growth: "成長"
+adaptive_engine_direction_decline: "衰退"
+adaptive_engine_title_revenue_surge: "營收 YoY {direction} {yoy_pct}%"
+adaptive_engine_summary_part1: "最近月營收：{latest_rev} 億元，"
+adaptive_engine_summary_part2_increase: "較去年同期成長 {yoy_pct}%。"
+adaptive_engine_summary_part2_decrease: "較去年同期衰退 {yoy_pct}%。"
+adaptive_engine_summary_part3_increase: "表現強勁，留意後續動能。"
+adaptive_engine_summary_part3_decrease: "需留意是否為短期因素。"
+
+dividend:
+  no_record: "無股息紀錄"
+  no_record_recent: "無近期股息紀錄"
+  stable_years: "穩定年數: {n_years}"
+  quarterly_dividend: "每季股息: {amount}"
+  quarterly_yield: "{label} 每季殖利率: {yield_pct}%"
+  annual_dividend: "每年股息: {amount}"
+  annual_yield: "{label} 每年殖利率: {yield_pct}%"
+  irregular: "不定期股息: {amount}"
+  record_years: "紀錄年數: {n_years}"
+  estimated_label: "(預估)"
+
+revenue_analyzer:
+  auto_describe:
+    wafer_foundry: "晶圓代工服務"
+    ic_design: "IC 設計服務"
+    packaging_testing: "IC 封裝測試服務"
+    contract_manufacturing: "代工製造"
+    consumer_electronics: "消費性電子"
+    bank: "銀行業務"
+    insurance: "保險業務"
+    securities: "證券業務"
+    cement: "水泥生產"
+    pharmaceuticals: "藥物"
+    medical_equipment: "醫療器材"
+    fallback: "未知業務線：{segment}"
+  generic_breakdown:
+    primary_business: "主要業務"
+    primary_business_description: "{industry} 的核心業務收入"
+    other_investments: "其他投資"
+    other_investments_description: "投資收益或非營業收入"
+    new_business: "新業務"
+    new_business_description: "新興發展中的業務線"
