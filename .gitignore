@@ -47,6 +47,24 @@ analysis_summary.md
 response_summary.txt
 summary_output.txt
 
+# Root-level tool scripts (one-off utilities, not part of the project)
+_verify_layer0.py
+_verify_layer1.py
+append_en.py
+check_locale_keys.py
+check_locale_keys_detail.py
+count_dict.py
+count_dict2.py
+find_strings.py
+find_strings2.py
+fix_en.py
+fix_imports.py
+fix_zh_tw.py
+tmp_update_home.py
+tmp_update_main.py
+tmp_update_main2.py
+update_en.py
+
 # Streamlit
 .streamlit/
 
