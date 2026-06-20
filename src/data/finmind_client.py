@@ -10,6 +10,7 @@ import hashlib
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
+import functools
 
 import pandas as pd
 
@@ -251,6 +252,7 @@ class FinMindClient:
 
     # ── 公開 API ──────────────────────────────────────
 
+    @functools.lru_cache(maxsize=128)
     def get_stock_info(self, stock_id: str = None) -> pd.DataFrame:
         """取得股票基本資訊（先取全量資料再記憶體內過濾）"""
         df = self._fetch_all_stock_info()
