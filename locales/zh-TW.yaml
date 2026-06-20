@@ -17,27 +17,26 @@ screener:
         moderate_value: "{stock_name} 本益比為 {per:.1f}、淨值比為 {pbr:.2f}，估值處於合理範圍"
         fallback: "{stock_name}（{stock_id}）符合便宜估值篩選條件"
         implication: "低估值公司可能存在市場低估，可進一步評估其基本面是否穩健"
-    custom_filter:
-      revenue_positive: "{stock_name} 營收年增率為 {revenue_yoy:.1f}%，營收較去年同期成長"
-      industry_match: "{stock_name} 屬於 {industry} 產業，符合所選產業分類"
-      per_range: "{stock_name} 本益比為 {per:.1f}，落在所選範圍內"
-      div_range: "{stock_name} 殖利率為 {dividend_yield:.2f}%，落在所選範圍內"
-      fallback: "{stock_name}（{stock_id}）符合所設篩選條件"
-      implication: "符合多項篩選條件的公司，可進一步比較其財務面與評價面"
-    implication:
-      dividend: "高殖利率公司通常具穩定現金流，可留意其配息持續性"
-      growth: "營收成長公司可能具擴張動能，可觀察其獲利是否同步提升"
-      value: "低估值公司可能存在市場低估，可進一步評估其基本面是否穩健"
-      custom_many: "符合多項篩選條件的公司，可進一步比較其財務面與評價面"
-      custom_fallback: "股票符合所選篩選條件"
-      default: "進一步研究"
-    filter:
-      revenue_positive: "營收成長"
-      industry_match: "產業匹配"
-      per_range: "本益比範圍"
-      div_range: "殖利率範圍"
-      all_industries: "所有產業"
-
+      custom_filter:
+        revenue_positive: "{stock_name} 營收年增率為 {revenue_yoy:.1f}%，營收較去年同期成長"
+        industry_match: "{stock_name} 屬於 {industry} 產業，符合所選產業分類"
+        per_range: "{stock_name} 本益比為 {per:.1f}，落在所選範圍內"
+        div_range: "{stock_name} 殖利率為 {dividend_yield:.2f}%，落在所選範圍內"
+        fallback: "{stock_name}（{stock_id}）符合所設篩選條件"
+        implication: "符合多項篩選條件的公司，可進一步比較其財務面與評價面"
+      implication:
+        dividend: "高殖利率公司通常具穩定現金流，可留意其配息持續性"
+        growth: "營收成長公司可能具擴張動能，可觀察其獲利是否同步提升"
+        value: "低估值公司可能存在市場低估，可進一步評估其基本面是否穩健"
+        custom_many: "符合多項篩選條件的公司，可進一步比較其財務面與評價面"
+        custom_fallback: "股票符合所選篩選條件"
+        default: "進一步研究"
+      filter:
+        revenue_positive: "營收成長"
+        industry_match: "產業匹配"
+        per_range: "本益比範圍"
+        div_range: "殖利率範圍"
+        all_industries: "所有產業"
 delta:
   metric:
     revenue_monthly: 月營收
@@ -66,8 +65,57 @@ main:
     lead1: "認識一家公司，從這裡開始"
     lead2: "在左側輸入股票代號或名稱，開始認識一家公司"
   disclaimer: |-
-        <div class="disclaimer">
-        ⚠️ 本工具僅供認識公司使用，<br>
-        不構成任何投資建議。<br>
-        投資有風險，請自行評估。
-        </div>
+        <div class=\\\"disclaimer\\\">\\n        ⚠️ 本工具僅供認識公司使用，<br>\\n        不構成任何投資建議。<br>\\n        投資有風險，請自行評估。\\n        </div>
+
+daily_market:
+  title: "今日市場動態"
+  subtitle: "今日台灣市場動態概覽"
+  last_updated: "最後更新"
+  freshness_fresh: "最新"
+  freshness_stale: "過時"
+  freshness_unknown: "未知"
+  overview:
+    title: "市場概覽"
+    template_bull: "看漲模板"
+    template_bear: "看跌模板"
+    template_flat: "盤整模板"
+    volume_above: "成交量異常放大"
+    volume_below: "成交量異常縮小"
+    volume_normal: "成交量正常"
+    sector_lead_up: "領先產業：{sector} (+{pct}%)"
+    sector_lead_down: "落後產業：{sector} ({pct}%)"
+  sentiment:
+    title: "市場情緒"
+    ad_ratio: "漲跌家數比"
+    ad_ratio_value: "{up} 上漲，{down} 下跌"
+    volume: "總成交量"
+    volume_unit: "檔"
+    mood: "市場情緒"
+    mood_bullish: "看漲"
+    mood_neutral: "中性"
+    mood_bearish: "看跌"
+    up_count: "上漲家數"
+    down_count: "下跌家數"
+  sectors:
+    title: "產業表現"
+    top_n: "前 {n} 名產業"
+  movers:
+    title: "漲跌幅排名"
+    gainers: "漲幅榜"
+    losers: "跌幅榜"
+    rank: "排名 {rank}"
+    price: "價格：{price}"
+  events:
+    title: "今日事件"
+    empty: "今日無重大事件"
+  disclaimer: "⚠️ 本工具僅供公司教育使用，<br>不構成任何投資建議。<br>投資有風險，請自行評估。"
+
+validation:
+  error:
+    empty: "請輸入股票代號"
+    not_digit: "股票代號必須為數字：{input}"
+    not_four_digit: "股票代號必須為 4 位數字：{input}（目前長度：{length}）"
+    format: "股票代號格式不正確：{input}"
+
+page:
+  daily_market: "今日市場動態"
