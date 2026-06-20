@@ -51,7 +51,7 @@
 | C205 | Reading Time Indicator | Estimated reading time |
 | TD-03 | API cache fix | get_stock_info full table fetch issue |
 | TD-05 | Unit test coverage improvement | Currently 699 passing but insufficient coverage |
-| TD-06 | Color system unification | All pages use design system colors |
+|| TD-06 | Color system unification | All pages use design system colors | ✅ Complete (2026-06-21) |
 | TD-07 | Component consistency | Standardize on `_plain_card()` |
 | SB-01~03 | Sidebar core | Inline data, multi-list, market overview |
 | SB-05~08 | Sidebar improvements | Category entry, history, width adjustment |
