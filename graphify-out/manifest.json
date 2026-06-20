@@ -865,8 +865,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1781960768.48538,
-    "ast_hash": "144422c40e4d7c7ecf184d7eb07d613e",
+    "mtime": 1781962000.884872,
+    "ast_hash": "32e46c83c7dabaab098d1e1417927241",
     "semantic_hash": ""
   },
   "README.md": {
@@ -875,8 +875,8 @@
     "semantic_hash": ""
   },
   "STATUS.md": {
-    "mtime": 1781960768.4857574,
-    "ast_hash": "f3961320598d8625c9b31b4d8dcfd1bd",
+    "mtime": 1781961752.5813053,
+    "ast_hash": "7659b801d75b88b244473dc4d240795a",
     "semantic_hash": ""
   },
   "config/comprehension_quiz.yaml": {
@@ -965,123 +965,123 @@
     "semantic_hash": ""
   },
   "docs/adr/000-index.md": {
-    "mtime": 1781744598.7305694,
-    "ast_hash": "817956e2d1d0b11e507e1efe25523ae8",
+    "mtime": 1781962467.133305,
+    "ast_hash": "68bc2e512000f4e941f59ed77fcc4e92",
     "semantic_hash": ""
   },
   "docs/adr/001-streamlit-as-frontend.md": {
-    "mtime": 1781709366.6929405,
-    "ast_hash": "1f6688f3bdee06c139639644f53a3895",
+    "mtime": 1781962468.7749557,
+    "ast_hash": "78281d1152a3c5239f5a4a0208915fb6",
     "semantic_hash": ""
   },
   "docs/adr/002-finmind-as-data-source.md": {
-    "mtime": 1781709366.6930213,
-    "ast_hash": "04c2487c740e565366db4f262d2d9e51",
+    "mtime": 1781962470.4758444,
+    "ast_hash": "b2cc00315efe937d41a1202f36f83fe7",
     "semantic_hash": ""
   },
   "docs/adr/003-layered-architecture.md": {
-    "mtime": 1781709366.6931033,
-    "ast_hash": "51a971b8f774e2e418d053d8880d2c57",
+    "mtime": 1781962472.2168474,
+    "ast_hash": "69c172f9e5f61c948ae8ea016c9aaf00",
     "semantic_hash": ""
   },
   "docs/adr/004-phase2-migration-plan.md": {
-    "mtime": 1781743399.5682678,
-    "ast_hash": "d8c23d296f33fe2e32df8fa2d4d90ae8",
+    "mtime": 1781962478.0831048,
+    "ast_hash": "5d78eae0ac0e0d82af064d4d9bb57bd0",
     "semantic_hash": ""
   },
   "docs/adr/004-plugin-chassis.md": {
-    "mtime": 1781728789.6008215,
-    "ast_hash": "b6dc6f9dfd981f66633dfc4a50f67426",
+    "mtime": 1781962484.131382,
+    "ast_hash": "208e88b1b93d9509e238472edb9e930c",
     "semantic_hash": ""
   },
   "docs/adr/005-i18n-yaml.md": {
-    "mtime": 1781709366.693142,
-    "ast_hash": "d185672b46c7067e473e8d14ad206224",
+    "mtime": 1781962485.766603,
+    "ast_hash": "bd003fa1c789caa5948c68cb2fedee70",
     "semantic_hash": ""
   },
   "docs/adr/006-browser-back-button.md": {
-    "mtime": 1781709366.6984508,
-    "ast_hash": "282f03a761c19af826e62aac644fc63e",
+    "mtime": 1781962487.3796637,
+    "ast_hash": "5d35fe8ebd0216167c7c959bfa5ad439",
     "semantic_hash": ""
   },
   "docs/adr/007-llm-safety-boundary.md": {
-    "mtime": 1781709366.6984332,
-    "ast_hash": "bdd2d7698ab19f510ad066682551e3d9",
+    "mtime": 1781962488.9953742,
+    "ast_hash": "fe527195fde011d56827275d579541ce",
     "semantic_hash": ""
   },
   "docs/adr/008-yaml-config-driven.md": {
-    "mtime": 1781709366.7067544,
-    "ast_hash": "50c72a89128ae256978d39696cbcfb8d",
+    "mtime": 1781962490.5602896,
+    "ast_hash": "f55900013b59fa13ad1c93d7f0c08122",
     "semantic_hash": ""
   },
   "docs/adr/009-layout-restructure.md": {
-    "mtime": 1781710184.2500827,
-    "ast_hash": "ee5bce97c063132b9ea9ecd3f9b555a6",
+    "mtime": 1781962492.9329321,
+    "ast_hash": "d038e6b8c39dfab0b83a84ca927991b2",
     "semantic_hash": ""
   },
   "docs/adr/010-ppt-style-design.md": {
-    "mtime": 1781710184.2500823,
-    "ast_hash": "1fd8e99350c382c95762f593696513fa",
+    "mtime": 1781962494.5760207,
+    "ast_hash": "bb8b7a3a5901d48021cdcf88e6bad98f",
     "semantic_hash": ""
   },
   "docs/diagrams/flow.md": {
-    "mtime": 1781794167.0587678,
-    "ast_hash": "79ecce822149dcb1038c23446b4353ff",
+    "mtime": 1781963284.7555208,
+    "ast_hash": "a2739799b70ce3e2f2b8cf1214146a3a",
     "semantic_hash": ""
   },
   "docs/overview/00-index.md": {
-    "mtime": 1781708596.733604,
-    "ast_hash": "abff00893a02b0ffb650619e876a11db",
+    "mtime": 1781963397.1960227,
+    "ast_hash": "f3ef09d2571abd08775218dcd10b2d21",
     "semantic_hash": ""
   },
   "docs/overview/01-product-vision.md": {
-    "mtime": 1781708596.7336104,
-    "ast_hash": "1abbae12a8942df0686da8439f5e028e",
+    "mtime": 1781963601.6518536,
+    "ast_hash": "78446bbfea8f9729a4d57125b1a7cb74",
     "semantic_hash": ""
   },
   "docs/overview/02-architecture.md": {
-    "mtime": 1781708596.7336915,
-    "ast_hash": "9a30ed7beaab361ac39c930b254519e1",
+    "mtime": 1781963192.091117,
+    "ast_hash": "dd78e7926ef7e074b4874b23f04d6ee5",
     "semantic_hash": ""
   },
   "docs/overview/03-design-system.md": {
-    "mtime": 1781711817.304811,
-    "ast_hash": "f3394330c33581a6b38147a2c9e9c3a2",
+    "mtime": 1781963195.531699,
+    "ast_hash": "dd989bf739cf3e6edb513140fe995ff4",
     "semantic_hash": ""
   },
   "docs/overview/04-tech-stack.md": {
-    "mtime": 1781708594.7030985,
-    "ast_hash": "89243b4914cff9423dcfd62563de6896",
+    "mtime": 1781963198.1148138,
+    "ast_hash": "6ae9a94c4472f2861682533547615126",
     "semantic_hash": ""
   },
   "docs/overview/05-roadmap.md": {
-    "mtime": 1781751681.7037776,
-    "ast_hash": "a1d1631dca7e9547a832e3d9a37fb37b",
+    "mtime": 1781963201.076895,
+    "ast_hash": "39c667c25c9c2a3627fe2bb97c9dfba1",
     "semantic_hash": ""
   },
   "docs/overview/06-development-guide.md": {
-    "mtime": 1781709366.6929286,
-    "ast_hash": "816357a49eb5cc25da8fa9826d5fa32b",
+    "mtime": 1781963203.9285438,
+    "ast_hash": "0bb01be068ad6582ba87d37b75f3541b",
     "semantic_hash": ""
   },
   "docs/roadmap/00-index.md": {
-    "mtime": 1781710184.2572427,
-    "ast_hash": "6bca4fc1c9a164238ce027e7d992873d",
+    "mtime": 1781962853.6913981,
+    "ast_hash": "3a62d2214bbc66ef94c90becca9eb36a",
     "semantic_hash": ""
   },
   "docs/roadmap/competitor-research-summary.md": {
-    "mtime": 1781710184.2461634,
-    "ast_hash": "80b5b4bd2688b0c4146421669e421f89",
+    "mtime": 1781962855.919954,
+    "ast_hash": "3146a13e00db768799e2c8416a40dd5c",
     "semantic_hash": ""
   },
   "docs/roadmap/cost-estimation.md": {
-    "mtime": 1781710184.2462285,
-    "ast_hash": "8979d82a08390c2e8a14329ddf01b15c",
+    "mtime": 1781962857.969422,
+    "ast_hash": "d57fe8e9fe30eaffff53b86311d28313",
     "semantic_hash": ""
   },
   "docs/roadmap/ux-improvements.md": {
-    "mtime": 1781710184.2400582,
-    "ast_hash": "87101329f864f6eeef617c18c41929d6",
+    "mtime": 1781962860.984872,
+    "ast_hash": "402b05277e881e6af71ef04f5ff5c604",
     "semantic_hash": ""
   },
   "docs/roles/architect.md": {
@@ -1110,8 +1110,8 @@
     "semantic_hash": ""
   },
   "docs/roles/qa.md": {
-    "mtime": 1781709366.7206633,
-    "ast_hash": "e376ed2a36791898c753835b993ee168",
+    "mtime": 1781963026.693523,
+    "ast_hash": "72a0d367462b5ac7f07267c5167e40e5",
     "semantic_hash": ""
   },
   "docs/roles/security-architect.md": {
@@ -1125,12 +1125,12 @@
     "semantic_hash": ""
   },
   "docs/roles/ux-designer.md": {
-    "mtime": 1781711389.2099648,
-    "ast_hash": "f4aabb8bcbe8cdd1bf0f295e302786c5",
+    "mtime": 1781963026.693499,
+    "ast_hash": "c3a0d2f051ada21dca02affd0dc706a3",
     "semantic_hash": ""
   },
   "docs/security-review-td01.md": {
-    "mtime": 1781730232.3893542,
+    "mtime": 1781963601.6519008,
     "ast_hash": "2a5c35c123b7245c3301fc5b273acfba",
     "semantic_hash": ""
   },

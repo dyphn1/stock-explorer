@@ -9,9 +9,9 @@
       "source_file": "src/main.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_main",
       "community": 87,
-      "norm_label": "main.py"
+      "norm_label": "main.py",
+      "id": "src_main"
     },
     {
       "label": "get_client()",
@@ -19,9 +19,9 @@
       "source_file": "src/main.py",
       "source_location": "L73",
       "_origin": "ast",
-      "id": "src_main_get_client",
       "community": 87,
-      "norm_label": "get_client()"
+      "norm_label": "get_client()",
+      "id": "src_main_get_client"
     },
     {
       "label": "_render_sidebar_hot_stocks()",
@@ -29,9 +29,9 @@
       "source_file": "src/main.py",
       "source_location": "L82",
       "_origin": "ast",
-      "id": "src_main_render_sidebar_hot_stocks",
       "community": 87,
-      "norm_label": "_render_sidebar_hot_stocks()"
+      "norm_label": "_render_sidebar_hot_stocks()",
+      "id": "src_main_render_sidebar_hot_stocks"
     },
     {
       "label": "_render_sidebar_hot_etfs()",
@@ -39,9 +39,9 @@
       "source_file": "src/main.py",
       "source_location": "L98",
       "_origin": "ast",
-      "id": "src_main_render_sidebar_hot_etfs",
       "community": 87,
-      "norm_label": "_render_sidebar_hot_etfs()"
+      "norm_label": "_render_sidebar_hot_etfs()",
+      "id": "src_main_render_sidebar_hot_etfs"
     },
     {
       "label": "_render_sidebar()",
@@ -49,9 +49,9 @@
       "source_file": "src/main.py",
       "source_location": "L111",
       "_origin": "ast",
-      "id": "src_main_render_sidebar",
       "community": 87,
-      "norm_label": "_render_sidebar()"
+      "norm_label": "_render_sidebar()",
+      "id": "src_main_render_sidebar"
     },
     {
       "label": "\u80a1\u8b58 Stock Explorer Streamlit \u5165\u53e3 \u2014 M2 \u5b8c\u6574\u7248",
@@ -59,9 +59,9 @@
       "source_file": "src/main.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_main_rationale_1",
       "community": 87,
-      "norm_label": "\u80a1\u8b58 stock explorer streamlit \u5165\u53e3 \u2014 m2 \u5b8c\u6574\u7248"
+      "norm_label": "\u80a1\u8b58 stock explorer streamlit \u5165\u53e3 \u2014 m2 \u5b8c\u6574\u7248",
+      "id": "src_main_rationale_1"
     },
     {
       "label": "Render hot stocks section with collapsible behavior.",
@@ -69,9 +69,9 @@
       "source_file": "src/main.py",
       "source_location": "L83",
       "_origin": "ast",
-      "id": "src_main_rationale_83",
       "community": 87,
-      "norm_label": "render hot stocks section with collapsible behavior."
+      "norm_label": "render hot stocks section with collapsible behavior.",
+      "id": "src_main_rationale_83"
     },
     {
       "label": "Render hot ETFs section.",
@@ -79,9 +79,9 @@
       "source_file": "src/main.py",
       "source_location": "L99",
       "_origin": "ast",
-      "id": "src_main_rationale_99",
       "community": 87,
-      "norm_label": "render hot etfs section."
+      "norm_label": "render hot etfs section.",
+      "id": "src_main_rationale_99"
     },
     {
       "label": "Main sidebar rendering function.",
@@ -89,9 +89,9 @@
       "source_file": "src/main.py",
       "source_location": "L112",
       "_origin": "ast",
-      "id": "src_main_rationale_112",
       "community": 87,
-      "norm_label": "main sidebar rendering function."
+      "norm_label": "main sidebar rendering function.",
+      "id": "src_main_rationale_112"
     },
     {
       "label": "academy.py",
@@ -229,7 +229,7 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 56,
+      "community": 51,
       "norm_label": "_helpers.py",
       "id": "business_card_helpers"
     },
@@ -239,7 +239,7 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 56,
+      "community": 3,
       "norm_label": "_get_health_metric_values()",
       "id": "business_card_helpers_get_health_metric_values"
     },
@@ -249,7 +249,7 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L58",
       "_origin": "ast",
-      "community": 56,
+      "community": 3,
       "norm_label": "get_health_dimension_explanation()",
       "id": "business_card_helpers_get_health_dimension_explanation"
     },
@@ -259,7 +259,7 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 56,
+      "community": 112,
       "norm_label": "_render_risk_dimension()",
       "id": "business_card_helpers_render_risk_dimension"
     },
@@ -319,7 +319,7 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 56,
+      "community": 51,
       "norm_label": "business card shared helpers and constants.",
       "id": "business_card_helpers_rationale_1"
     },
@@ -329,7 +329,7 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 56,
+      "community": 3,
       "norm_label": "return dict mapping dimension names to list of metric value strings.",
       "id": "business_card_helpers_rationale_7"
     },
@@ -339,7 +339,7 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L59",
       "_origin": "ast",
-      "community": 56,
+      "community": 3,
       "norm_label": "return a plain-language explanation for a health dimension score.",
       "id": "business_card_helpers_rationale_59"
     },
@@ -349,7 +349,7 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 56,
+      "community": 112,
       "norm_label": "render a single risk dimension as an expandable info card.",
       "id": "business_card_helpers_rationale_82"
     },
@@ -462,16 +462,6 @@
       "community": 51,
       "norm_label": "\u80a1\u8b58 stock explorer \u2014 c02 \u901a\u77e5\u4e2d\u5fc3 \u7368\u7acb\u9801\u9762:\u986f\u793a\u6240\u6709\u8a02\u95b1\u80a1\u7968\u7684\u5f85\u8655\u7406\u901a\u77e5",
       "id": "pages_notification_center_rationale_1"
-    },
-    {
-      "label": "fix_imports.py",
-      "file_type": "code",
-      "source_file": "fix_imports.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 208,
-      "norm_label": "fix_imports.py",
-      "id": "fix_imports"
     },
     {
       "label": "metric_education.py",
@@ -734,76 +724,6 @@
       "id": "agents_graphify"
     },
     {
-      "label": "count_dict.py",
-      "file_type": "code",
-      "source_file": "count_dict.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 207,
-      "norm_label": "count_dict.py",
-      "id": "count_dict"
-    },
-    {
-      "label": "count_dict2.py",
-      "file_type": "code",
-      "source_file": "count_dict2.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 203,
-      "norm_label": "count_dict2.py",
-      "id": "count_dict2"
-    },
-    {
-      "label": "replace_t()",
-      "file_type": "code",
-      "source_file": "count_dict2.py",
-      "source_location": "L4",
-      "_origin": "ast",
-      "community": 203,
-      "norm_label": "replace_t()",
-      "id": "count_dict2_replace_t"
-    },
-    {
-      "label": "find_strings.py",
-      "file_type": "code",
-      "source_file": "find_strings.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 204,
-      "norm_label": "find_strings.py",
-      "id": "find_strings"
-    },
-    {
-      "label": "find_chinese_strings()",
-      "file_type": "code",
-      "source_file": "find_strings.py",
-      "source_location": "L4",
-      "_origin": "ast",
-      "community": 204,
-      "norm_label": "find_chinese_strings()",
-      "id": "find_strings_find_chinese_strings"
-    },
-    {
-      "label": "find_strings2.py",
-      "file_type": "code",
-      "source_file": "find_strings2.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 205,
-      "norm_label": "find_strings2.py",
-      "id": "find_strings2"
-    },
-    {
-      "label": "find_chinese_strings()",
-      "file_type": "code",
-      "source_file": "find_strings2.py",
-      "source_location": "L4",
-      "_origin": "ast",
-      "community": 205,
-      "norm_label": "find_chinese_strings()",
-      "id": "find_strings2_find_chinese_strings"
-    },
-    {
       "label": "migrate_expert_analysis.py",
       "file_type": "code",
       "source_file": "scripts/migrate_expert_analysis.py",
@@ -999,7 +919,7 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 32,
+      "community": 112,
       "norm_label": "_render_study_log()",
       "id": "business_card_study_log_render_study_log"
     },
@@ -1069,7 +989,7 @@
       "source_file": "src/pages/business_card/_study_log.py",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 32,
+      "community": 112,
       "norm_label": "c71 study log: track user's study streak and history.      shows:     - current",
       "id": "business_card_study_log_rationale_83"
     },
@@ -1336,7 +1256,7 @@
       "source_file": "src/core/i18n.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 32,
+      "community": 38,
       "norm_label": "t()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "core_i18n_t"
@@ -1413,7 +1333,7 @@
       "source_file": "src/core/i18n.py",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 32,
+      "community": 38,
       "norm_label": "translation function.      usage:         t(\"page.title\")                    # \"",
       "community_name": "Company Timeline & Market Narrative",
       "id": "core_i18n_rationale_29"
@@ -1468,7 +1388,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": "plugin_protocol.py",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol"
@@ -1622,7 +1542,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L203",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": "baseplugin",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin"
@@ -1633,7 +1553,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": "abc",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "abc"
@@ -1644,7 +1564,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L222",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": ".metadata()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin_metadata"
@@ -1655,7 +1575,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L227",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": ".render()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin_render"
@@ -1666,7 +1586,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L231",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": ".can_render()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin_can_render"
@@ -1677,7 +1597,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L239",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": ".__repr__()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_baseplugin_repr"
@@ -1699,7 +1619,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": "src/core/plugin_protocol.py plugin protocol \u5b9a\u7fa9 \u2014 \u6240\u6709\u9801\u9762 plugin \u5fc5\u9808\u5be6\u73fe\u7684\u4ecb\u9762\u3002  \u6b64\u6a21\u7d44\u5b9a\u7fa9\u4e86 pl",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_rationale_1"
@@ -1809,7 +1729,7 @@
       "source_file": "src/core/plugin_protocol.py",
       "source_location": "L204",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": "plugin \u62bd\u8c61\u57fa\u985e \u2014 \u63d0\u4f9b\u9ed8\u8a8d\u5be6\u73fe,\u5b50\u985e\u53ea\u9700 override \u5fc5\u8981\u65b9\u6cd5\u3002      \u4f7f\u7528\u65b9\u5f0f:         class businesscardpl",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_protocol_rationale_204"
@@ -2117,7 +2037,7 @@
       "source_file": "src/core/plugin_registry.py",
       "source_location": "L456",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": ".render()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_registry_legacypageadapter_render"
@@ -2128,7 +2048,7 @@
       "source_file": "src/core/plugin_registry.py",
       "source_location": "L456",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": "pluginrendercontext",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "pluginrendercontext"
@@ -2293,7 +2213,7 @@
       "source_file": "src/core/plugin_registry.py",
       "source_location": "L457",
       "_origin": "ast",
-      "community": 22,
+      "community": 2,
       "norm_label": "\u8abf\u7528\u539f\u6709\u7684\u6e32\u67d3\u51fd\u6578,\u6839\u64da\u7c3d\u540d\u985e\u578b\u50b3\u905e\u6b63\u78ba\u53c3\u6578\u3002",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "core_plugin_registry_rationale_457"
@@ -3063,7 +2983,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_router_base.py",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base"
@@ -3074,7 +2994,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "get_stock_data()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_get_stock_data"
@@ -3107,7 +3027,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L85",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "_confidence_badge()",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_confidence_badge"
@@ -3118,7 +3038,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L106",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_read_time()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_read_time"
@@ -3129,7 +3049,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L122",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "_section_title_with_read_time()",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_section_title_with_read_time"
@@ -3151,7 +3071,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L189",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "_\u767d\u8bdd_card()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_router_base_\u767d\u8bdd_card"
@@ -3162,7 +3082,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L198",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_summary_card()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_summary_card"
@@ -3184,7 +3104,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L231",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "_info_card()",
       "community_name": "Case Study Library & ETF Browser",
       "id": "pages_router_base_info_card"
@@ -3195,7 +3115,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L240",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_so_what_box()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_so_what_box"
@@ -3228,7 +3148,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L325",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "_glossary_tooltip()",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_glossary_tooltip"
@@ -3239,7 +3159,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L360",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "_glossary_label()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_glossary_label"
@@ -3250,7 +3170,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L387",
       "_origin": "ast",
-      "community": 3,
+      "community": 38,
       "norm_label": "_glossary_annotated_metric()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_glossary_annotated_metric"
@@ -3261,7 +3181,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L444",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_glossary_help_text()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_glossary_help_text"
@@ -3272,7 +3192,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L481",
       "_origin": "ast",
-      "community": 57,
+      "community": 0,
       "norm_label": "filter_by_timeline()",
       "community_name": "Timeline Data Filtering",
       "id": "pages_router_base_filter_by_timeline"
@@ -3283,7 +3203,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L481",
       "_origin": "ast",
-      "community": 57,
+      "community": 94,
       "norm_label": "dataframe",
       "community_name": "Timeline Data Filtering",
       "id": "src_pages_router_base_py_dataframe"
@@ -3316,7 +3236,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L557",
       "_origin": "ast",
-      "community": 46,
+      "community": 112,
       "norm_label": "_beginner_banner()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_beginner_banner"
@@ -3338,7 +3258,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L574",
       "_origin": "ast",
-      "community": 62,
+      "community": 32,
       "norm_label": "_source_section()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_router_base_source_section"
@@ -3349,7 +3269,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "\u8f09\u5165\u4e00\u652f\u80a1\u7968\u7684\u6240\u6709\u8cc7\u6599,\u56de\u50b3 dict\u3002gate check sequential,\u5176\u9918\u8cc7\u6599\u5e73\u884c\u8f09\u5165\u3002",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_rationale_16"
@@ -3360,7 +3280,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L86",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "return an emoji confidence badge based on the confidence score.      c204: emoji",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_rationale_86"
@@ -3371,7 +3291,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L107",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "estimate reading time for chinese text.      c205: read time indicator based on",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_rationale_107"
@@ -3382,7 +3302,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L123",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "render a section title with an inline read time badge.      c205: only shows the",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_rationale_123"
@@ -3415,7 +3335,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L241",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "render a 'so what?' implication box summarizing all deltas.      c149: a dedicat",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_rationale_241"
@@ -3448,7 +3368,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L326",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "render a clickable i\ufe0f tooltip that shows glossary definition.      uses st.popov",
       "community_name": "Business Card Rendering",
       "id": "pages_router_base_rationale_326"
@@ -3459,7 +3379,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L361",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "render a label with an inline glossary i\ufe0f icon.      the label text is shown as",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_rationale_361"
@@ -3470,7 +3390,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L396",
       "_origin": "ast",
-      "community": 3,
+      "community": 38,
       "norm_label": "render a metric card with an inline glossary tooltip (c170 pattern).      wraps",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_rationale_396"
@@ -3481,7 +3401,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L445",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "return an html string with an inline i\ufe0f-style popover trigger for use in st.mark",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_rationale_445"
@@ -3492,7 +3412,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L484",
       "_origin": "ast",
-      "community": 57,
+      "community": 0,
       "norm_label": "\u6839\u64da session_state[timeline_key] \u904e\u6ffe dataframe\u3002      args:         df: \u8981\u904e\u6ffe\u7684 datafra",
       "community_name": "Timeline Data Filtering",
       "id": "pages_router_base_rationale_484"
@@ -3525,7 +3445,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L558",
       "_origin": "ast",
-      "community": 46,
+      "community": 112,
       "norm_label": "in-page banner for beginner mode.",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_router_base_rationale_558"
@@ -3547,7 +3467,7 @@
       "source_file": "src/pages/_router_base.py",
       "source_location": "L580",
       "_origin": "ast",
-      "community": 62,
+      "community": 32,
       "norm_label": "render a collapsible source transparency section.      c209: collapsible source",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_router_base_rationale_580"
@@ -3899,7 +3819,7 @@
       "source_file": "src/pages/business_card/_sections/_financial.py",
       "source_location": "L154",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "_render_dividend()",
       "community_name": "Business Card Rendering",
       "id": "sections_financial_render_dividend"
@@ -3932,7 +3852,7 @@
       "source_file": "src/pages/business_card/_sections/_financial.py",
       "source_location": "L325",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "_render_valuation()",
       "community_name": "Business Card Rendering",
       "id": "sections_financial_render_valuation"
@@ -3976,7 +3896,7 @@
       "source_file": "src/pages/business_card/_sections/_financial.py",
       "source_location": "L155",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "dividend story: countdown, summary, mini-cards, expandable history table.",
       "community_name": "Business Card Rendering",
       "id": "sections_financial_rationale_155"
@@ -4009,7 +3929,7 @@
       "source_file": "src/pages/business_card/_sections/_financial.py",
       "source_location": "L326",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "valuation band chart + interpretation card.",
       "community_name": "Business Card Rendering",
       "id": "sections_financial_rationale_326"
@@ -4020,7 +3940,7 @@
       "source_file": "src/pages/business_card/_sections/_health.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "_health.py",
       "community_name": "Business Card Rendering",
       "id": "sections_health"
@@ -4031,7 +3951,7 @@
       "source_file": "src/pages/business_card/_sections/_health.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 112,
+      "community": 3,
       "norm_label": "_render_health()",
       "community_name": "Business Card Rendering",
       "id": "sections_health_render_health"
@@ -4053,7 +3973,7 @@
       "source_file": "src/pages/business_card/_sections/_health.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 112,
+      "community": 0,
       "norm_label": "business card section: health and risk sections.",
       "community_name": "Business Card Rendering",
       "id": "sections_health_rationale_1"
@@ -4064,7 +3984,7 @@
       "source_file": "src/pages/business_card/_sections/_health.py",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 112,
+      "community": 3,
       "norm_label": "c43 health snowflake chart + 5-dimension score cards + summary.",
       "community_name": "Business Card Rendering",
       "id": "sections_health_rationale_27"
@@ -4130,7 +4050,7 @@
       "source_file": "src/pages/business_card/_sections/_story.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "_story.py",
       "community_name": "Business Card Rendering",
       "id": "sections_story"
@@ -4163,7 +4083,7 @@
       "source_file": "src/pages/business_card/_sections/_story.py",
       "source_location": "L163",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "_render_read_next()",
       "community_name": "Business Card Rendering",
       "id": "sections_story_render_read_next"
@@ -4174,7 +4094,7 @@
       "source_file": "src/pages/business_card/_sections/_story.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "business card section: story/delta sections (deltas, compare stories, read next)",
       "community_name": "Business Card Rendering",
       "id": "sections_story_rationale_1"
@@ -4207,7 +4127,7 @@
       "source_file": "src/pages/business_card/_sections/_story.py",
       "source_location": "L164",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "c41 read next: peer stocks + curated fun facts.",
       "community_name": "Business Card Rendering",
       "id": "sections_story_rationale_164"
@@ -4372,7 +4292,7 @@
       "source_file": "src/pages/business_card/_sections/_why_moved.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "_why_moved.py",
       "community_name": "Business Card Rendering",
       "id": "sections_why_moved"
@@ -4383,7 +4303,7 @@
       "source_file": "src/pages/business_card/_sections/_why_moved.py",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "_render_why_moved()",
       "community_name": "Business Card Rendering",
       "id": "sections_why_moved_render_why_moved"
@@ -4394,7 +4314,7 @@
       "source_file": "src/pages/business_card/_sections/_why_moved.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "business card section: why did this move? (c188).  renders an inline explanation",
       "community_name": "Business Card Rendering",
       "id": "sections_why_moved_rationale_1"
@@ -4405,7 +4325,7 @@
       "source_file": "src/pages/business_card/_sections/_why_moved.py",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 112,
+      "community": 32,
       "norm_label": "c188: why did this move? \u2014 plain-language movement explanation.      shows direc",
       "community_name": "Business Card Rendering",
       "id": "sections_why_moved_rationale_13"
@@ -4680,7 +4600,7 @@
       "source_file": "src/pages/company_timeline.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 69,
       "norm_label": "company_timeline.py",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_company_timeline"
@@ -4691,7 +4611,7 @@
       "source_file": "src/pages/company_timeline.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 3,
+      "community": 69,
       "norm_label": "_event_type_label()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_company_timeline_event_type_label"
@@ -4702,7 +4622,7 @@
       "source_file": "src/pages/company_timeline.py",
       "source_location": "L38",
       "_origin": "ast",
-      "community": 3,
+      "community": 69,
       "norm_label": "_severity_badge()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_company_timeline_severity_badge"
@@ -4713,7 +4633,7 @@
       "source_file": "src/pages/company_timeline.py",
       "source_location": "L45",
       "_origin": "ast",
-      "community": 3,
+      "community": 69,
       "norm_label": "_timeline_event_card()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_company_timeline_timeline_event_card"
@@ -4724,7 +4644,7 @@
       "source_file": "src/pages/company_timeline.py",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 3,
+      "community": 69,
       "norm_label": "render_company_timeline()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_company_timeline_render_company_timeline"
@@ -4735,7 +4655,7 @@
       "source_file": "src/pages/company_timeline.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 69,
       "norm_label": "\u80a1\u8b58 stock explorer \u2014 m5 \u516c\u53f8\u6545\u4e8b\u6642\u9593\u8ef8 \u986f\u793a\u7279\u5b9a\u80a1\u7968\u8fd1\u4e00\u5e74\u5167\u7684\u4e8b\u4ef6\u6642\u9593\u8ef8,\u4ee5\u5361\u7247\u5f62\u5f0f\u5448\u73fe\u3002",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_company_timeline_rationale_1"
@@ -4746,7 +4666,7 @@
       "source_file": "src/pages/company_timeline.py",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 3,
+      "community": 69,
       "norm_label": "render a single timeline event as a card.      uses the existing _summary_card p",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_company_timeline_rationale_46"
@@ -4757,7 +4677,7 @@
       "source_file": "src/pages/company_timeline.py",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 3,
+      "community": 69,
       "norm_label": "\u516c\u53f8\u6545\u4e8b\u6642\u9593\u8ef8\u9801\u9762      args:         data: dict \u5305\u542b stock_id, stock_name \u7b49\u6a19\u6e96\u9801\u9762\u8cc7\u6599",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_company_timeline_rationale_64"
@@ -4768,7 +4688,7 @@
       "source_file": "src/pages/compare_stories.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 97,
+      "community": 32,
       "norm_label": "compare_stories.py",
       "community_name": "Narrative Peer Comparison",
       "id": "pages_compare_stories"
@@ -4779,7 +4699,7 @@
       "source_file": "src/pages/compare_stories.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 97,
+      "community": 32,
       "norm_label": "_render_compare_stories_page()",
       "community_name": "Narrative Peer Comparison",
       "id": "pages_compare_stories_render_compare_stories_page"
@@ -4790,7 +4710,7 @@
       "source_file": "src/pages/compare_stories.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 97,
+      "community": 32,
       "norm_label": "compare stories page (c38) \u2014 narrative comparison with peer companies.  this pag",
       "community_name": "Narrative Peer Comparison",
       "id": "pages_compare_stories_rationale_1"
@@ -4801,7 +4721,7 @@
       "source_file": "src/pages/compare_stories.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 97,
+      "community": 32,
       "norm_label": "c38 compare stories \u2014 detailed narrative comparison with peer companies.      sh",
       "community_name": "Narrative Peer Comparison",
       "id": "pages_compare_stories_rationale_16"
@@ -4867,7 +4787,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "daily_market.py",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market"
@@ -4878,7 +4798,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "_render_daily_market()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_render_daily_market"
@@ -4889,7 +4809,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L78",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "_render_overview()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_render_overview"
@@ -4900,7 +4820,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L130",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "_render_sentiment()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_render_sentiment"
@@ -4911,7 +4831,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L183",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "_render_sector_strip()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_render_sector_strip"
@@ -4922,7 +4842,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L214",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "_render_top_movers()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_render_top_movers"
@@ -4933,7 +4853,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L256",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "_render_mover_row()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_render_mover_row"
@@ -4944,7 +4864,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L271",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "_render_key_events()",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_render_key_events"
@@ -4955,7 +4875,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "c201 \u4eca\u65e5\u5e02\u5834\u52d5\u614b \u2014 daily market dashboard narrative-driven market overview: what happ",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_rationale_1"
@@ -4966,7 +4886,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "daily market dashboard \u2014 main entry point.",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_rationale_16"
@@ -4977,7 +4897,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L79",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "section 1: one-paragraph market overview.",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_rationale_79"
@@ -4988,7 +4908,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L131",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "section 2: market sentiment indicators.",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_rationale_131"
@@ -4999,7 +4919,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L184",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "section 3: horizontal sector performance strip.",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_rationale_184"
@@ -5010,7 +4930,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L215",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "section 4: top 5 gainers and losers.",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_rationale_215"
@@ -5021,7 +4941,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L257",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "render a single mover row.",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_rationale_257"
@@ -5032,7 +4952,7 @@
       "source_file": "src/pages/daily_market.py",
       "source_location": "L272",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "section 5: key market events from adaptive engine.",
       "community_name": "Company Timeline & Market Narrative",
       "id": "pages_daily_market_rationale_272"
@@ -5054,7 +4974,7 @@
       "source_file": "src/pages/debate_cards.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 32,
+      "community": 99,
       "norm_label": "_render_verdict_banner()",
       "community_name": "Debate Engine & Rendering",
       "id": "pages_debate_cards_render_verdict_banner"
@@ -5120,7 +5040,7 @@
       "source_file": "src/pages/debate_cards.py",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 32,
+      "community": 99,
       "norm_label": "render the evidence balance indicator at the top.",
       "community_name": "Debate Engine & Rendering",
       "id": "pages_debate_cards_rationale_25"
@@ -5373,7 +5293,7 @@
       "source_file": "src/pages/etf_detail.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 100,
+      "community": 38,
       "norm_label": "etf_detail.py",
       "community_name": "ETF Detail Page",
       "id": "pages_etf_detail"
@@ -5384,7 +5304,7 @@
       "source_file": "src/pages/etf_detail.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 100,
+      "community": 38,
       "norm_label": "_get_etf_one_liner()",
       "community_name": "ETF Detail Page",
       "id": "pages_etf_detail_get_etf_one_liner"
@@ -5395,7 +5315,7 @@
       "source_file": "src/pages/etf_detail.py",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 100,
+      "community": 38,
       "norm_label": "_get_etf_knowledge()",
       "community_name": "ETF Detail Page",
       "id": "pages_etf_detail_get_etf_knowledge"
@@ -5406,7 +5326,7 @@
       "source_file": "src/pages/etf_detail.py",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 100,
+      "community": 38,
       "norm_label": "_get_dividend_frequency_analogy()",
       "community_name": "ETF Detail Page",
       "id": "pages_etf_detail_get_dividend_frequency_analogy"
@@ -5417,7 +5337,7 @@
       "source_file": "src/pages/etf_detail.py",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 100,
+      "community": 38,
       "norm_label": "dataframe",
       "community_name": "ETF Detail Page",
       "id": "src_pages_etf_detail_py_dataframe"
@@ -5428,7 +5348,7 @@
       "source_file": "src/pages/etf_detail.py",
       "source_location": "L69",
       "_origin": "ast",
-      "community": 100,
+      "community": 38,
       "norm_label": "_render_etf_detail()",
       "community_name": "ETF Detail Page",
       "id": "pages_etf_detail_render_etf_detail"
@@ -5439,7 +5359,7 @@
       "source_file": "src/pages/etf_detail.py",
       "source_location": "L69",
       "_origin": "ast",
-      "community": 100,
+      "community": 38,
       "norm_label": "finmindclient",
       "community_name": "ETF Detail Page",
       "id": "src_pages_etf_detail_py_finmindclient"
@@ -5450,7 +5370,7 @@
       "source_file": "src/pages/etf_detail.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 100,
+      "community": 38,
       "norm_label": "etf \u8a73\u60c5\u9801 \u2014 m1 mvp \u76ee\u6a19:\u4f7f\u7528\u8005\u5728 10 \u79d2\u5167\u77e5\u9053\u9019\u6a94 etf \u7684\u6295\u8cc7\u5b9a\u4f4d\u8207\u7279\u8272",
       "community_name": "ETF Detail Page",
       "id": "pages_etf_detail_rationale_1"
@@ -5461,7 +5381,7 @@
       "source_file": "src/pages/etf_detail.py",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 100,
+      "community": 38,
       "norm_label": "\u6839\u64da etf \u985e\u578b\u56de\u50b3\u5c0d\u61c9\u7684 etf \u5c0f\u77e5\u8b58",
       "community_name": "ETF Detail Page",
       "id": "pages_etf_detail_rationale_30"
@@ -5527,7 +5447,7 @@
       "source_file": "src/pages/event_dashboard.py",
       "source_location": "L156",
       "_origin": "ast",
-      "community": 3,
+      "community": 29,
       "norm_label": "_render_event_alerts()",
       "community_name": "Page Routing & Plugin Registry",
       "id": "pages_event_dashboard_render_event_alerts"
@@ -5637,7 +5557,7 @@
       "source_file": "src/pages/first_visit_guide.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 32,
+      "community": 100,
       "norm_label": "first_visit_guide.py",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_first_visit_guide"
@@ -5648,7 +5568,7 @@
       "source_file": "src/pages/first_visit_guide.py",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 32,
+      "community": 100,
       "norm_label": "_render_first_visit_guide()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_first_visit_guide_render_first_visit_guide"
@@ -5659,7 +5579,7 @@
       "source_file": "src/pages/first_visit_guide.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 32,
+      "community": 100,
       "norm_label": "first visit guide \u2014 c103 lite 2-card dismissible primer shown on first visit to",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_first_visit_guide_rationale_1"
@@ -5670,7 +5590,7 @@
       "source_file": "src/pages/first_visit_guide.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 32,
+      "community": 100,
       "norm_label": "first visit guide \u2014 2-card dismissible primer for new users.",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_first_visit_guide_rationale_14"
@@ -5769,7 +5689,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 18,
+      "community": 32,
       "norm_label": "investor_story_feed.py",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed"
@@ -5780,7 +5700,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L32",
       "_origin": "ast",
-      "community": 18,
+      "community": 32,
       "norm_label": "_why_matters()",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_why_matters"
@@ -5791,7 +5711,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 18,
+      "community": 32,
       "norm_label": "render_investor_story_feed()",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_render_investor_story_feed"
@@ -5802,7 +5722,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 18,
+      "community": 32,
       "norm_label": "\u80a1\u8b58 stock explorer \u2014 c116: \u6bcf\u65e5\u6545\u4e8b feed personalized daily narrative feed with ai co",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_rationale_1"
@@ -5813,7 +5733,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 18,
+      "community": 32,
       "norm_label": "generate a one-line plain-language 'why this matters' explanation.",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_rationale_33"
@@ -5824,7 +5744,7 @@
       "source_file": "src/pages/investor_story_feed.py",
       "source_location": "L52",
       "_origin": "ast",
-      "community": 18,
+      "community": 32,
       "norm_label": "\u6bcf\u65e5\u6545\u4e8b feed \u4e3b\u9801\u9762\u3002      layout:         1. hero card: today's top story (highest sev",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_investor_story_feed_rationale_52"
@@ -5989,7 +5909,7 @@
       "source_file": "src/pages/moat_comparison.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "moat_comparison.py",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_moat_comparison"
@@ -6000,7 +5920,7 @@
       "source_file": "src/pages/moat_comparison.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "_render_moat_comparison_page()",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_moat_comparison_render_moat_comparison_page"
@@ -6011,7 +5931,7 @@
       "source_file": "src/pages/moat_comparison.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "moat comparison page (c126) \u2014 side-by-side moat comparison with peer companies.",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_moat_comparison_rationale_1"
@@ -6022,7 +5942,7 @@
       "source_file": "src/pages/moat_comparison.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "c126 moat comparison \u2014 side-by-side moat comparison with peer companies.      sh",
       "community_name": "Group Structure & Onboarding",
       "id": "pages_moat_comparison_rationale_17"
@@ -6033,7 +5953,7 @@
       "source_file": "src/pages/operation_checkup.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "operation_checkup.py",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_operation_checkup"
@@ -6044,7 +5964,7 @@
       "source_file": "src/pages/operation_checkup.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "_render_operation_checkup()",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_operation_checkup_render_operation_checkup"
@@ -6055,7 +5975,7 @@
       "source_file": "src/pages/operation_checkup.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "\u71df\u904b\u5065\u6aa2\u9801 \u2014 m2 \u7b2c\u4e00\u9801 \u76ee\u6a19:\u7406\u89e3\u9019\u5bb6\u516c\u53f8\u7684\u5546\u696d\u6a21\u5f0f",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_operation_checkup_rationale_1"
@@ -6066,7 +5986,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "peer_comparison.py",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison"
@@ -6077,7 +5997,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "_find_fallback_benchmark()",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_find_fallback_benchmark"
@@ -6088,7 +6008,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L47",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "_render_single_company_view()",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_render_single_company_view"
@@ -6099,7 +6019,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L72",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "_render_peer_comparison()",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_render_peer_comparison"
@@ -6110,7 +6030,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L174",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "_get_benchmark_data()",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_get_benchmark_data"
@@ -6121,7 +6041,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L235",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "_collect_comparison_metrics()",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_collect_comparison_metrics"
@@ -6132,7 +6052,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L278",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "_prepare_radar_data()",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_prepare_radar_data"
@@ -6143,7 +6063,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L300",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "_render_metric_analysis()",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_render_metric_analysis"
@@ -6154,7 +6074,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L341",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "_render_difference_analysis()",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_render_difference_analysis"
@@ -6165,7 +6085,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "\u540c\u696d\u6bd4\u8f03\u9801 \u2014 m2 \u7b2c\u4e09\u9801 \u76ee\u6a19:\u8ddf\u7522\u696d\u7b2c\u4e00\u540d\u5dee\u5728\u54ea?",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_rationale_1"
@@ -6176,7 +6096,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "find the largest company in the same industry as a fallback benchmark.",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_rationale_26"
@@ -6187,7 +6107,7 @@
       "source_file": "src/pages/peer_comparison.py",
       "source_location": "L48",
       "_origin": "ast",
-      "community": 71,
+      "community": 38,
       "norm_label": "show single-company data when no benchmark is available.",
       "community_name": "Peer Comparison Analysis",
       "id": "pages_peer_comparison_rationale_48"
@@ -6198,7 +6118,7 @@
       "source_file": "src/pages/revenue_tree.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "revenue_tree.py",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_revenue_tree"
@@ -6209,7 +6129,7 @@
       "source_file": "src/pages/revenue_tree.py",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "_render_revenue_tree()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_revenue_tree_render_revenue_tree"
@@ -6220,7 +6140,7 @@
       "source_file": "src/pages/revenue_tree.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "revenue tree page (c36) \u2014 detailed revenue breakdown with tree visualization.  t",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_revenue_tree_rationale_1"
@@ -6231,7 +6151,7 @@
       "source_file": "src/pages/revenue_tree.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "c36 revenue tree v2 \u2014 deep dive into revenue structure and product mix.      sho",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_revenue_tree_rationale_19"
@@ -6297,7 +6217,7 @@
       "source_file": "src/pages/router.py",
       "source_location": "L134",
       "_origin": "ast",
-      "community": 29,
+      "community": 25,
       "norm_label": "_render_via_plugin()",
       "community_name": "Page Routing & Plugin Registry",
       "id": "pages_router_render_via_plugin"
@@ -6308,7 +6228,7 @@
       "source_file": "src/pages/router.py",
       "source_location": "L134",
       "_origin": "ast",
-      "community": 29,
+      "community": 25,
       "norm_label": "finmindclient",
       "community_name": "Page Routing & Plugin Registry",
       "id": "src_pages_router_py_finmindclient"
@@ -6407,7 +6327,7 @@
       "source_file": "src/pages/router.py",
       "source_location": "L140",
       "_origin": "ast",
-      "community": 29,
+      "community": 25,
       "norm_label": "try to render a page via the pluginregistry.      returns true if the page was h",
       "community_name": "Page Routing & Plugin Registry",
       "id": "pages_router_rationale_140"
@@ -6440,7 +6360,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "sector_heatmap.py",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap"
@@ -6451,7 +6371,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 58,
+      "community": 105,
       "norm_label": "_perf_color()",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_perf_color"
@@ -6462,7 +6382,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L44",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "_perf_bg_color()",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_perf_bg_color"
@@ -6473,7 +6393,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L55",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "_format_pct()",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_format_pct"
@@ -6495,7 +6415,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L182",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "_render_treemap()",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_render_treemap"
@@ -6506,7 +6426,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L266",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "_render_sector_grid()",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_render_sector_grid"
@@ -6539,7 +6459,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "sector heatmap \u2014 c51 visual market overview displays a color-coded grid of taiwa",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_rationale_1"
@@ -6550,7 +6470,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L32",
       "_origin": "ast",
-      "community": 58,
+      "community": 105,
       "norm_label": "return ppt-style color for a performance value.     \u53f0\u80a1\u6163\u4f8b:\u7d05\u6f32\u7da0\u8dcc",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_rationale_32"
@@ -6561,7 +6481,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L45",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "return semi-transparent bg color for heatmap cells.",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_rationale_45"
@@ -6572,7 +6492,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "format percentage with sign.",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_rationale_56"
@@ -6594,7 +6514,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L183",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "render a treemap showing sector performance.",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_rationale_183"
@@ -6605,7 +6525,7 @@
       "source_file": "src/pages/sector_heatmap.py",
       "source_location": "L267",
       "_origin": "ast",
-      "community": 58,
+      "community": 61,
       "norm_label": "render a detailed grid table of sector performance.",
       "community_name": "Sector Heatmap Visualization",
       "id": "pages_sector_heatmap_rationale_267"
@@ -6781,7 +6701,7 @@
       "source_file": "src/pages/stock_screener.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "finmindclient",
       "community_name": "Screener Explanation Provider",
       "id": "src_pages_stock_screener_py_finmindclient"
@@ -6924,7 +6844,7 @@
       "source_file": "src/pages/story_timeline.py",
       "source_location": "L38",
       "_origin": "ast",
-      "community": 45,
+      "community": 72,
       "norm_label": "arclabel",
       "community_name": "Story Arc & Timeline Services",
       "id": "arclabel"
@@ -6957,7 +6877,7 @@
       "source_file": "src/pages/story_timeline.py",
       "source_location": "L93",
       "_origin": "ast",
-      "community": 45,
+      "community": 72,
       "norm_label": "timelineentry",
       "community_name": "Story Arc & Timeline Services",
       "id": "src_pages_story_timeline_py_timelineentry"
@@ -7034,7 +6954,7 @@
       "source_file": "src/pages/timeline_controls.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 40,
+      "community": 38,
       "norm_label": "timeline_controls.py",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_timeline_controls"
@@ -7056,7 +6976,7 @@
       "source_file": "src/pages/timeline_controls.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 40,
+      "community": 38,
       "norm_label": "\u6642\u9593\u8ef8\u63a7\u5236\u5143\u4ef6 \u2014 m3 \u63d0\u4f9b\u6642\u9593\u7bc4\u570d\u9078\u64c7\u5668\u8207\u8cc7\u6599\u904e\u6ffe\u529f\u80fd",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "pages_timeline_controls_rationale_1"
@@ -7111,7 +7031,7 @@
       "source_file": "src/pages/url_sync.py",
       "source_location": "L76",
       "_origin": "ast",
-      "community": 18,
+      "community": 32,
       "norm_label": "navigate_to()",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_url_sync_navigate_to"
@@ -7155,7 +7075,7 @@
       "source_file": "src/pages/url_sync.py",
       "source_location": "L77",
       "_origin": "ast",
-      "community": 18,
+      "community": 32,
       "norm_label": "navigation helper: update session_state + url + trigger rerun.     use this inst",
       "community_name": "Expert Analysis & Case Studies",
       "id": "pages_url_sync_rationale_77"
@@ -7364,7 +7284,7 @@
       "source_file": "src/plugins/daily_story/plugin.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 92,
       "norm_label": "plugin.py",
       "community_name": "Daily Story Plugin Adapter",
       "id": "daily_story_plugin"
@@ -7375,7 +7295,7 @@
       "source_file": "src/plugins/daily_story/plugin.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 1,
+      "community": 92,
       "norm_label": "_render_daily_story_adapter()",
       "community_name": "Daily Story Plugin Adapter",
       "id": "daily_story_plugin_render_daily_story_adapter"
@@ -7386,7 +7306,7 @@
       "source_file": "src/plugins/daily_story/plugin.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 92,
       "norm_label": "src/plugins/daily_story/plugin.py \u2014 phase 2: legacypageadapter for daily_story (",
       "community_name": "Daily Story Plugin Adapter",
       "id": "daily_story_plugin_rationale_1"
@@ -7397,7 +7317,7 @@
       "source_file": "src/plugins/daily_story/plugin.py",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 1,
+      "community": 92,
       "norm_label": "adapter: render_investor_story_feed expects (data, client) but data is unused.",
       "community_name": "Daily Story Plugin Adapter",
       "id": "daily_story_plugin_rationale_7"
@@ -7947,7 +7867,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 47,
+      "community": 71,
       "norm_label": "_resolve_column()",
       "community_name": "News Event Detection",
       "id": "services_adaptive_engine_resolve_column"
@@ -7958,7 +7878,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 47,
+      "community": 71,
       "norm_label": "dataframe",
       "community_name": "News Event Detection",
       "id": "src_services_adaptive_engine_py_dataframe"
@@ -7991,7 +7911,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L128",
       "_origin": "ast",
-      "community": 47,
+      "community": 71,
       "norm_label": "_require_columns()",
       "community_name": "News Event Detection",
       "id": "services_adaptive_engine_require_columns"
@@ -8123,7 +8043,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L452",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": "detect_company_type()",
       "community_name": "Company Type Detection",
       "id": "services_adaptive_engine_detect_company_type"
@@ -8134,7 +8054,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L473",
       "_origin": "ast",
-      "community": 47,
+      "community": 62,
       "norm_label": "get_adaptive_framework()",
       "community_name": "Event Dashboard Rendering",
       "id": "services_adaptive_engine_get_adaptive_framework"
@@ -8178,7 +8098,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 47,
+      "community": 71,
       "norm_label": "return the actual column name in *df* for *logical_name*, or none.",
       "community_name": "News Event Detection",
       "id": "services_adaptive_engine_rationale_83"
@@ -8200,7 +8120,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L129",
       "_origin": "ast",
-      "community": 47,
+      "community": 71,
       "norm_label": "check that all *logical_names* can be resolved in *df*.     returns a dict mappi",
       "community_name": "News Event Detection",
       "id": "services_adaptive_engine_rationale_129"
@@ -8288,7 +8208,7 @@
       "source_file": "src/services/adaptive_engine.py",
       "source_location": "L453",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": "\u5224\u65b7\u516c\u53f8\u985e\u578b\u4ee5\u81ea\u9069\u61c9\u5206\u6790\u6846\u67b6     \u56de\u50b3: \"group\" | \"etf\" | \"default\"",
       "community_name": "Company Type Detection",
       "id": "services_adaptive_engine_rationale_453"
@@ -8409,7 +8329,7 @@
       "source_file": "src/services/analogy_engine.py",
       "source_location": "L109",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "get_volume_analogy()",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "services_analogy_engine_get_volume_analogy"
@@ -8420,7 +8340,7 @@
       "source_file": "src/services/analogy_engine.py",
       "source_location": "L123",
       "_origin": "ast",
-      "community": 32,
+      "community": 0,
       "norm_label": "get_institutional_analogy()",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "services_analogy_engine_get_institutional_analogy"
@@ -8442,7 +8362,7 @@
       "source_file": "src/services/analogy_engine.py",
       "source_location": "L153",
       "_origin": "ast",
-      "community": 0,
+      "community": 112,
       "norm_label": "get_one_liner()",
       "community_name": "Business Card Rendering",
       "id": "services_analogy_engine_get_one_liner"
@@ -8750,7 +8670,7 @@
       "source_file": "src/services/chart.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 105,
+      "community": 38,
       "norm_label": "chart.py",
       "community_name": "Market Chart Generation",
       "id": "services_chart"
@@ -8761,7 +8681,7 @@
       "source_file": "src/services/chart.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 105,
+      "community": 38,
       "norm_label": "\u5716\u8868\u751f\u6210\u5668 \u7528 plotly \u751f\u6210\u6240\u6709\u8996\u89ba\u5316\u5716\u8868  \u6b64\u6a21\u7d44\u70ba re-export shim,\u5be6\u969b\u529f\u80fd\u62c6\u5206\u81f3: - chart_stock.py:\u500b\u80a1\u76f8\u95dc\u5716\u8868(\u71df",
       "community_name": "Market Chart Generation",
       "id": "services_chart_rationale_1"
@@ -8772,7 +8692,7 @@
       "source_file": "src/services/chart_market.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 105,
+      "community": 38,
       "norm_label": "chart_market.py",
       "community_name": "Market Chart Generation",
       "id": "services_chart_market"
@@ -8783,7 +8703,7 @@
       "source_file": "src/services/chart_market.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 105,
+      "community": 38,
       "norm_label": "create_price_area_chart()",
       "community_name": "Market Chart Generation",
       "id": "services_chart_market_create_price_area_chart"
@@ -8794,7 +8714,7 @@
       "source_file": "src/services/chart_market.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 105,
+      "community": 38,
       "norm_label": "dataframe",
       "community_name": "Market Chart Generation",
       "id": "src_services_chart_market_py_dataframe"
@@ -8805,7 +8725,7 @@
       "source_file": "src/services/chart_market.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 105,
+      "community": 38,
       "norm_label": "figure",
       "community_name": "Market Chart Generation",
       "id": "src_services_chart_market_py_figure"
@@ -8816,7 +8736,7 @@
       "source_file": "src/services/chart_market.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 105,
+      "community": 38,
       "norm_label": "\u5716\u8868\u751f\u6210\u5668 \u2014 \u5e02\u5834/etf \u76f8\u95dc\u5716\u8868 \u7528 plotly \u751f\u6210\u5e02\u5834\u8207 etf \u76f8\u95dc\u7684\u8996\u89ba\u5316\u5716\u8868",
       "community_name": "Market Chart Generation",
       "id": "services_chart_market_rationale_1"
@@ -8827,7 +8747,7 @@
       "source_file": "src/services/chart_market.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 105,
+      "community": 38,
       "norm_label": "etf \u50f9\u683c\u9762\u7a4d\u5716;\u55ae\u4e00\u671f\u9593 fallback \u70ba\u55ae\u6839\u9577\u689d\u5716",
       "community_name": "Market Chart Generation",
       "id": "services_chart_market_rationale_16"
@@ -8904,7 +8824,7 @@
       "source_file": "src/services/chart_stock_financial.py",
       "source_location": "L80",
       "_origin": "ast",
-      "community": 32,
+      "community": 38,
       "norm_label": "create_revenue_pie_chart()",
       "community_name": "Financial Chart Generation",
       "id": "services_chart_stock_financial_create_revenue_pie_chart"
@@ -8915,7 +8835,7 @@
       "source_file": "src/services/chart_stock_financial.py",
       "source_location": "L127",
       "_origin": "ast",
-      "community": 32,
+      "community": 38,
       "norm_label": "create_revenue_trend_chart()",
       "community_name": "Financial Chart Generation",
       "id": "services_chart_stock_financial_create_revenue_trend_chart"
@@ -9025,7 +8945,7 @@
       "source_file": "src/services/chart_stock_financial.py",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 32,
+      "community": 38,
       "norm_label": "\u71df\u6536\u4f86\u6e90\u5713\u9905\u5716     revenue_items: [{\"name\": \"\u624b\u6a5f\u6676\u7247\", \"value\": 40.0, \"description\": \"...\"",
       "community_name": "Financial Chart Generation",
       "id": "services_chart_stock_financial_rationale_81"
@@ -9135,7 +9055,7 @@
       "source_file": "src/services/chart_stock_valuation.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 120,
+      "community": 38,
       "norm_label": "chart_stock_valuation.py",
       "community_name": "Stock Valuation Charts",
       "id": "services_chart_stock_valuation"
@@ -9146,7 +9066,7 @@
       "source_file": "src/services/chart_stock_valuation.py",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 120,
+      "community": 38,
       "norm_label": "create_valuation_band_chart()",
       "community_name": "Stock Valuation Charts",
       "id": "services_chart_stock_valuation_create_valuation_band_chart"
@@ -9157,7 +9077,7 @@
       "source_file": "src/services/chart_stock_valuation.py",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 120,
+      "community": 38,
       "norm_label": "dataframe",
       "community_name": "Stock Valuation Charts",
       "id": "src_services_chart_stock_valuation_py_dataframe"
@@ -9168,7 +9088,7 @@
       "source_file": "src/services/chart_stock_valuation.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 120,
+      "community": 38,
       "norm_label": "\u5716\u8868\u751f\u6210\u5668 \u2014 \u4f30\u503c\u76f8\u95dc\u5716\u8868 \u7528 plotly \u751f\u6210\u4f30\u503c\u5340\u9593\u5716\u7b49\u8996\u89ba\u5316\u5716\u8868",
       "community_name": "Stock Valuation Charts",
       "id": "services_chart_stock_valuation_rationale_1"
@@ -9179,7 +9099,7 @@
       "source_file": "src/services/chart_stock_valuation.py",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 120,
+      "community": 38,
       "norm_label": "\u4f30\u503c\u5340\u9593\u5716(\u6b77\u53f2 p/e \u7bc4\u570d)     \u986f\u793a\u7576\u524d per \u5728\u6b77\u53f2\u767e\u5206\u4f4d\u4e2d\u7684\u4f4d\u7f6e,\u542b 25th-75th \u767e\u5206\u4f4d\u5e36     returns: (fig, int",
       "community_name": "Stock Valuation Charts",
       "id": "services_chart_stock_valuation_rationale_20"
@@ -9278,7 +9198,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 97,
       "norm_label": "compare_stories.py",
       "community_name": "Business Card Rendering",
       "id": "services_compare_stories"
@@ -9333,7 +9253,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L79",
       "_origin": "ast",
-      "community": 0,
+      "community": 97,
       "norm_label": "_compare_metric_story()",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_compare_metric_story"
@@ -9344,7 +9264,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L119",
       "_origin": "ast",
-      "community": 0,
+      "community": 97,
       "norm_label": "_build_peer_narrative()",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_build_peer_narrative"
@@ -9355,7 +9275,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L218",
       "_origin": "ast",
-      "community": 0,
+      "community": 97,
       "norm_label": "_latest_revenue_billion()",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_latest_revenue_billion"
@@ -9366,7 +9286,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L226",
       "_origin": "ast",
-      "community": 0,
+      "community": 97,
       "norm_label": "revs_desc()",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_revs_desc"
@@ -9388,7 +9308,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 97,
       "norm_label": "compare stories (\u540c\u696d\u6bd4\u8f03\u6545\u4e8b) \u6a21\u7d44 \u751f\u6210\u516c\u53f8\u8207\u540c\u696d\u7684\u6558\u4e8b\u5f0f\u6bd4\u8f03(c38 phase 1)  \u4f7f\u7528\u6bd4\u55bb\u5f15\u64ce(analogy_engine)\u548c\u91cd",
       "community_name": "Business Card Rendering",
       "id": "services_compare_stories_rationale_1"
@@ -9410,7 +9330,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L87",
       "_origin": "ast",
-      "community": 0,
+      "community": 97,
       "norm_label": "\u6bd4\u8f03\u55ae\u4e00\u6307\u6a19,\u7522\u751f\u4e00\u53e5\u767d\u8a71\u63cf\u8ff0\u3002      returns:         \u6bd4\u8f03\u63cf\u8ff0\u5b57\u4e32,\u6216 none(\u7576\u5169\u908a\u90fd\u7121\u8cc7\u6599\u6642)",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_rationale_87"
@@ -9421,7 +9341,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L127",
       "_origin": "ast",
-      "community": 0,
+      "community": 97,
       "norm_label": "\u5efa\u7acb\u5169\u5bb6\u516c\u53f8\u7684\u6558\u4e8b\u6bd4\u8f03\u6bb5\u843d\u3002      returns:         \u6bd4\u8f03\u6587\u672c\u884c\u5217\u8868(3-5 \u53e5)",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_rationale_127"
@@ -9432,7 +9352,7 @@
       "source_file": "src/services/compare_stories.py",
       "source_location": "L219",
       "_origin": "ast",
-      "community": 0,
+      "community": 97,
       "norm_label": "\u5f9e extra_metrics \u53d6\u5f97\u6700\u8fd1\u6708\u71df\u6536(\u5104)\u3002",
       "community_name": "Narrative Peer Comparison",
       "id": "services_compare_stories_rationale_219"
@@ -9619,7 +9539,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 99,
+      "community": 72,
       "norm_label": "typeddict",
       "community_name": "Story Arc & Timeline Services",
       "id": "typeddict"
@@ -9685,7 +9605,7 @@
       "source_file": "src/services/debate_engine.py",
       "source_location": "L167",
       "_origin": "ast",
-      "community": 106,
+      "community": 99,
       "norm_label": "get_debate_summary()",
       "community_name": "Debate Summary Generation",
       "id": "services_debate_engine_get_debate_summary"
@@ -9751,7 +9671,7 @@
       "source_file": "src/services/debate_engine.py",
       "source_location": "L168",
       "_origin": "ast",
-      "community": 106,
+      "community": 99,
       "norm_label": "summarize a debate from generated points.      args:         points: list of deb",
       "community_name": "Debate Summary Generation",
       "id": "services_debate_engine_rationale_168"
@@ -9762,7 +9682,7 @@
       "source_file": "src/services/delta_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 36,
       "norm_label": "delta_engine.py",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_engine"
@@ -9795,7 +9715,7 @@
       "source_file": "src/services/delta_engine.py",
       "source_location": "L140",
       "_origin": "ast",
-      "community": 20,
+      "community": 36,
       "norm_label": "explain_delta_full()",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_engine_explain_delta_full"
@@ -9806,7 +9726,7 @@
       "source_file": "src/services/delta_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 36,
       "norm_label": "\u8b8a\u5316\u91cf(delta)\u5f15\u64ce \u8a08\u7b97\u6700\u8fd1\u7684\u91cd\u8981\u8b8a\u5316\u4e26\u751f\u6210\u767d\u8a71\u89e3\u91cb",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_engine_rationale_1"
@@ -9839,7 +9759,7 @@
       "source_file": "src/services/delta_engine.py",
       "source_location": "L147",
       "_origin": "ast",
-      "community": 20,
+      "community": 36,
       "norm_label": "\u70ba\u8b8a\u5316\u91cf\u751f\u6210\u767d\u8a71\u89e3\u91cb + \u6697\u793a\u53e5(c143)      like explain_delta() but returns a tuple of (explana",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_engine_rationale_147"
@@ -9883,7 +9803,7 @@
       "source_file": "src/services/delta_explanation_provider.py",
       "source_location": "L204",
       "_origin": "ast",
-      "community": 2,
+      "community": 4,
       "norm_label": "deltaexplanationprovider",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_explanation_provider_deltaexplanationprovider"
@@ -9894,7 +9814,7 @@
       "source_file": "src/services/delta_explanation_provider.py",
       "source_location": "L215",
       "_origin": "ast",
-      "community": 2,
+      "community": 4,
       "norm_label": ".__init__()",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_explanation_provider_deltaexplanationprovider_init"
@@ -9938,7 +9858,7 @@
       "source_file": "src/services/delta_explanation_provider.py",
       "source_location": "L268",
       "_origin": "ast",
-      "community": 2,
+      "community": 4,
       "norm_label": ".is_available()",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_explanation_provider_deltaexplanationprovider_is_available"
@@ -9982,7 +9902,7 @@
       "source_file": "src/services/delta_explanation_provider.py",
       "source_location": "L205",
       "_origin": "ast",
-      "community": 2,
+      "community": 4,
       "norm_label": "explanationprovider for delta (change) metrics.      implements the explanationp",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_explanation_provider_rationale_205"
@@ -9993,7 +9913,7 @@
       "source_file": "src/services/delta_explanation_provider.py",
       "source_location": "L216",
       "_origin": "ast",
-      "community": 2,
+      "community": 4,
       "norm_label": "initialize with a templateexplanationprovider for composition.",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_explanation_provider_rationale_216"
@@ -10015,7 +9935,7 @@
       "source_file": "src/services/delta_explanation_provider.py",
       "source_location": "L269",
       "_origin": "ast",
-      "community": 2,
+      "community": 4,
       "norm_label": "always available \u2014 no external dependencies.",
       "community_name": "Explanation Generation Protocol",
       "id": "services_delta_explanation_provider_rationale_269"
@@ -10235,7 +10155,7 @@
       "source_file": "src/services/event_interpretation_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 62,
+      "community": 64,
       "norm_label": "event_interpretation_service.py",
       "community_name": "Event Dashboard Rendering",
       "id": "services_event_interpretation_service"
@@ -10246,7 +10166,7 @@
       "source_file": "src/services/event_interpretation_service.py",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 62,
+      "community": 64,
       "norm_label": "_load_templates()",
       "community_name": "Event Dashboard Rendering",
       "id": "services_event_interpretation_service_load_templates"
@@ -10257,7 +10177,7 @@
       "source_file": "src/services/event_interpretation_service.py",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 62,
+      "community": 64,
       "norm_label": "get_interpretation()",
       "community_name": "Event Dashboard Rendering",
       "id": "services_event_interpretation_service_get_interpretation"
@@ -10290,7 +10210,7 @@
       "source_file": "src/services/event_interpretation_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 62,
+      "community": 64,
       "norm_label": "event interpretation service \u2014 c98 hybrid template+llm system for explaining \"wh",
       "community_name": "Event Dashboard Rendering",
       "id": "services_event_interpretation_service_rationale_1"
@@ -10301,7 +10221,7 @@
       "source_file": "src/services/event_interpretation_service.py",
       "source_location": "L32",
       "_origin": "ast",
-      "community": 62,
+      "community": 64,
       "norm_label": "load interpretation templates from yaml, cached in memory.",
       "community_name": "Event Dashboard Rendering",
       "id": "services_event_interpretation_service_rationale_32"
@@ -10312,7 +10232,7 @@
       "source_file": "src/services/event_interpretation_service.py",
       "source_location": "L52",
       "_origin": "ast",
-      "community": 62,
+      "community": 64,
       "norm_label": "return interpretation dict for a given event type.      args:         event_type",
       "community_name": "Event Dashboard Rendering",
       "id": "services_event_interpretation_service_rationale_52"
@@ -10444,7 +10364,7 @@
       "source_file": "src/services/feedback_service.py",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 112,
+      "community": 114,
       "norm_label": "record_feedback()",
       "community_name": "User Feedback Handling",
       "id": "services_feedback_service_record_feedback"
@@ -10488,7 +10408,7 @@
       "source_file": "src/services/feedback_service.py",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 112,
+      "community": 114,
       "norm_label": "record a single feedback entry as a jsonl line.      args:         stock_id: the",
       "community_name": "User Feedback Handling",
       "id": "services_feedback_service_rationale_31"
@@ -10521,7 +10441,7 @@
       "source_file": "src/services/financial_metrics.py",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 71,
+      "community": 0,
       "norm_label": "find_financial_value()",
       "community_name": "Peer Comparison Analysis",
       "id": "services_financial_metrics_find_financial_value"
@@ -10554,7 +10474,7 @@
       "source_file": "src/services/financial_metrics.py",
       "source_location": "L49",
       "_origin": "ast",
-      "community": 60,
+      "community": 38,
       "norm_label": "extract_quarterly_eps()",
       "community_name": "Financial Metrics Calculations",
       "id": "services_financial_metrics_extract_quarterly_eps"
@@ -10631,7 +10551,7 @@
       "source_file": "src/services/financial_metrics.py",
       "source_location": "L135",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "calc_extra_metrics()",
       "community_name": "Group Structure & Onboarding",
       "id": "services_financial_metrics_calc_extra_metrics"
@@ -10664,7 +10584,7 @@
       "source_file": "src/services/financial_metrics.py",
       "source_location": "L50",
       "_origin": "ast",
-      "community": 60,
+      "community": 38,
       "norm_label": "extract and clean quarterly eps data from financial statements.      returns a d",
       "community_name": "Financial Metrics Calculations",
       "id": "services_financial_metrics_rationale_50"
@@ -10730,7 +10650,7 @@
       "source_file": "src/services/financial_metrics.py",
       "source_location": "L136",
       "_origin": "ast",
-      "community": 3,
+      "community": 32,
       "norm_label": "calculate all extra metrics (consolidated version of _calc_extra_metrics from _r",
       "community_name": "Group Structure & Onboarding",
       "id": "services_financial_metrics_rationale_136"
@@ -11412,7 +11332,7 @@
       "source_file": "src/services/key_takeaways.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 112,
       "norm_label": "key_takeaways.py",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_key_takeaways"
@@ -11423,7 +11343,7 @@
       "source_file": "src/services/key_takeaways.py",
       "source_location": "L134",
       "_origin": "ast",
-      "community": 0,
+      "community": 112,
       "norm_label": "generate_key_takeaways()",
       "community_name": "Business Card Rendering",
       "id": "services_key_takeaways_generate_key_takeaways"
@@ -11434,7 +11354,7 @@
       "source_file": "src/services/key_takeaways.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 112,
       "norm_label": "\u91cd\u9ede\u6458\u8981(key takeaways)\u6a21\u7d44 \u7cbe\u9078 + \u81ea\u52d5\u751f\u6210\u91cd\u9ede\u6458\u8981",
       "community_name": "Company Timeline & Market Narrative",
       "id": "services_key_takeaways_rationale_1"
@@ -11445,7 +11365,7 @@
       "source_file": "src/services/key_takeaways.py",
       "source_location": "L143",
       "_origin": "ast",
-      "community": 0,
+      "community": 112,
       "norm_label": "\u751f\u6210 3-5 \u689d\u91cd\u9ede\u6458\u8981(c37)      \u512a\u5148\u4f7f\u7528\u7cbe\u9078\u5167\u5bb9(curated),\u82e5\u7121\u5247\u6839\u64da\u8ca1\u52d9\u6578\u64da\u81ea\u52d5\u751f\u6210\u3002     \u56de\u50b3\u4e2d\u6587(zh-tw)\u7684\u91cd\u9ede\u6458\u8981\u5217\u8868\u3002",
       "community_name": "Business Card Rendering",
       "id": "services_key_takeaways_rationale_143"
@@ -11720,7 +11640,7 @@
       "source_file": "src/services/llm/base.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": "explanationrequest",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_base_explanationrequest"
@@ -11786,7 +11706,7 @@
       "source_file": "src/services/llm/base.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": "request for generating an explanation.",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_base_rationale_16"
@@ -11907,7 +11827,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L75",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": "_resolve_direction()",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_template_provider_resolve_direction"
@@ -11929,7 +11849,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": ".explain()",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_template_provider_templateexplanationprovider_explain"
@@ -11940,7 +11860,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": "explanationrequest",
       "community_name": "Explanation Generation Protocol",
       "id": "src_services_llm_template_provider_py_explanationrequest"
@@ -11951,7 +11871,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": "explanationresponse",
       "community_name": "Explanation Generation Protocol",
       "id": "src_services_llm_template_provider_py_explanationresponse"
@@ -11984,7 +11904,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L76",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": "resolve a delta string to a direction key.      args:         delta: human-reada",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_template_provider_rationale_76"
@@ -12006,7 +11926,7 @@
       "source_file": "src/services/llm/template_provider.py",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": "generate an explanation using predefined templates.          args:             r",
       "community_name": "Explanation Generation Protocol",
       "id": "llm_template_provider_rationale_102"
@@ -12061,7 +11981,7 @@
       "source_file": "src/services/market_data.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 61,
+      "community": 63,
       "norm_label": "get_sector_list()",
       "community_name": "Sector Story Generation",
       "id": "services_market_data_get_sector_list"
@@ -12171,7 +12091,7 @@
       "source_file": "src/services/market_data.py",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 61,
+      "community": 63,
       "norm_label": "return a sorted list of all distinct industry categories (sectors).      args:",
       "community_name": "Sector Story Generation",
       "id": "services_market_data_rationale_29"
@@ -12380,7 +12300,7 @@
       "source_file": "src/services/metric_explainer.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": "metric_explainer.py",
       "community_name": "Explanation Generation Protocol",
       "id": "services_metric_explainer"
@@ -12413,7 +12333,7 @@
       "source_file": "src/services/metric_explainer.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 36,
       "norm_label": "metric explainer \u2014 convenience function for c139 \"explain this number\".  compose",
       "community_name": "Explanation Generation Protocol",
       "id": "services_metric_explainer_rationale_1"
@@ -12578,7 +12498,7 @@
       "source_file": "src/services/news_summarizer.py",
       "source_location": "L62",
       "_origin": "ast",
-      "community": 178,
+      "community": 112,
       "norm_label": "summarize_news()",
       "community_name": "News Summarization & Risk Analysis",
       "id": "services_news_summarizer_summarize_news"
@@ -12666,7 +12586,7 @@
       "source_file": "src/services/news_summarizer.py",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 178,
+      "community": 112,
       "norm_label": "\u5c07\u65b0\u805e\u6a19\u984c\u8f49\u5316\u70ba\u767d\u8a71\u6458\u8981     \u8fd4\u56de: \u767d\u8a71\u6458\u8981\u5b57\u4e32(1-2 \u53e5\u8a71)",
       "community_name": "News Summarization & Risk Analysis",
       "id": "services_news_summarizer_rationale_63"
@@ -12974,7 +12894,7 @@
       "source_file": "src/services/pattern_detector.py",
       "source_location": "L66",
       "_origin": "ast",
-      "community": 112,
+      "community": 74,
       "norm_label": "get_available_types()",
       "community_name": "Case Study Library & ETF Browser",
       "id": "services_pattern_detector_get_available_types"
@@ -13876,7 +13796,7 @@
       "source_file": "src/services/scenario_calculator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 78,
+      "community": 40,
       "norm_label": "scenario_calculator.py",
       "community_name": "Scenario Calculator",
       "id": "services_scenario_calculator"
@@ -13887,7 +13807,7 @@
       "source_file": "src/services/scenario_calculator.py",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 99,
+      "community": 40,
       "norm_label": "scenarioresult",
       "community_name": "Scenario Calculator",
       "id": "services_scenario_calculator_scenarioresult"
@@ -13964,7 +13884,7 @@
       "source_file": "src/services/scenario_calculator.py",
       "source_location": "L173",
       "_origin": "ast",
-      "community": 40,
+      "community": 78,
       "norm_label": "_get_first_trading_date()",
       "community_name": "Scenario Calculator",
       "id": "services_scenario_calculator_get_first_trading_date"
@@ -14008,7 +13928,7 @@
       "source_file": "src/services/scenario_calculator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 78,
+      "community": 40,
       "norm_label": "scenario calculator \u2014 c200 calculate what-if investment scenarios.  pure python",
       "community_name": "Scenario Calculator",
       "id": "services_scenario_calculator_rationale_1"
@@ -14019,7 +13939,7 @@
       "source_file": "src/services/scenario_calculator.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 99,
+      "community": 40,
       "norm_label": "result of a what-if calculation.",
       "community_name": "Scenario Calculator",
       "id": "services_scenario_calculator_rationale_24"
@@ -14074,7 +13994,7 @@
       "source_file": "src/services/scenario_calculator.py",
       "source_location": "L174",
       "_origin": "ast",
-      "community": 40,
+      "community": 78,
       "norm_label": "get the first trading date in the dataframe.      args:         price_df: datafr",
       "community_name": "Scenario Calculator",
       "id": "services_scenario_calculator_rationale_174"
@@ -14118,7 +14038,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 75,
+      "community": 4,
       "norm_label": "_config_dir()",
       "community_name": "Screener Template Loading",
       "id": "services_screener_explanation_provider_config_dir"
@@ -14129,7 +14049,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L32",
       "_origin": "ast",
-      "community": 75,
+      "community": 4,
       "norm_label": "_load_templates_from_yaml()",
       "community_name": "Screener Template Loading",
       "id": "services_screener_explanation_provider_load_templates_from_yaml"
@@ -14162,7 +14082,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L279",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "screenerexplanationprovider",
       "community_name": "Screener Explanation Provider",
       "id": "services_screener_explanation_provider_screenerexplanationprovider"
@@ -14173,7 +14093,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L290",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": ".__init__()",
       "community_name": "Screener Explanation Provider",
       "id": "services_screener_explanation_provider_screenerexplanationprovider_init"
@@ -14184,7 +14104,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L294",
       "_origin": "ast",
-      "community": 122,
+      "community": 14,
       "norm_label": ".explain()",
       "community_name": "Screener Explanation Provider",
       "id": "services_screener_explanation_provider_screenerexplanationprovider_explain"
@@ -14217,7 +14137,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L347",
       "_origin": "ast",
-      "community": 122,
+      "community": 14,
       "norm_label": ".is_available()",
       "community_name": "Screener Explanation Provider",
       "id": "services_screener_explanation_provider_screenerexplanationprovider_is_available"
@@ -14239,7 +14159,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 75,
+      "community": 4,
       "norm_label": "return the absolute path to the src/data/ directory.",
       "community_name": "Screener Template Loading",
       "id": "services_screener_explanation_provider_rationale_28"
@@ -14250,7 +14170,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 75,
+      "community": 4,
       "norm_label": "load screener explanation templates from the yaml config file.      returns a di",
       "community_name": "Screener Template Loading",
       "id": "services_screener_explanation_provider_rationale_33"
@@ -14283,7 +14203,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L280",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "explanationprovider for stock screener results.      implements the explanationp",
       "community_name": "Screener Explanation Provider",
       "id": "services_screener_explanation_provider_rationale_280"
@@ -14294,7 +14214,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L291",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "initialize with a templateexplanationprovider for composition.",
       "community_name": "Screener Explanation Provider",
       "id": "services_screener_explanation_provider_rationale_291"
@@ -14305,7 +14225,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L295",
       "_origin": "ast",
-      "community": 122,
+      "community": 14,
       "norm_label": "generate a historian-tone explanation for a screener result.          uses prese",
       "community_name": "Screener Explanation Provider",
       "id": "services_screener_explanation_provider_rationale_295"
@@ -14316,7 +14236,7 @@
       "source_file": "src/services/screener_explanation_provider.py",
       "source_location": "L348",
       "_origin": "ast",
-      "community": 122,
+      "community": 14,
       "norm_label": "always available \u2014 no external dependencies.",
       "community_name": "Screener Explanation Provider",
       "id": "services_screener_explanation_provider_rationale_348"
@@ -14690,7 +14610,7 @@
       "source_file": "src/services/story_arc_detector.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 10,
+      "community": 72,
       "norm_label": "story_arc_detector.py",
       "community_name": "Story Arc & Timeline Services",
       "id": "services_story_arc_detector"
@@ -14701,7 +14621,7 @@
       "source_file": "src/services/story_arc_detector.py",
       "source_location": "L54",
       "_origin": "ast",
-      "community": 10,
+      "community": 72,
       "norm_label": "arclabel",
       "community_name": "Story Arc & Timeline Services",
       "id": "services_story_arc_detector_arclabel"
@@ -14723,7 +14643,7 @@
       "source_file": "src/services/story_arc_detector.py",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 117,
+      "community": 65,
       "norm_label": "_bucket_label()",
       "community_name": "Date Bucketing for Story Arcs",
       "id": "services_story_arc_detector_bucket_label"
@@ -14789,7 +14709,7 @@
       "source_file": "src/services/story_arc_detector.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 10,
+      "community": 72,
       "norm_label": "story arc detector \u2014 c202 auto-detect narrative arcs on company event timeline.",
       "community_name": "Story Arc & Timeline Services",
       "id": "services_story_arc_detector_rationale_1"
@@ -14800,7 +14720,7 @@
       "source_file": "src/services/story_arc_detector.py",
       "source_location": "L55",
       "_origin": "ast",
-      "community": 10,
+      "community": 72,
       "norm_label": "a detected story arc label for a time bucket.",
       "community_name": "Story Arc & Timeline Services",
       "id": "services_story_arc_detector_rationale_55"
@@ -14822,7 +14742,7 @@
       "source_file": "src/services/story_arc_detector.py",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 117,
+      "community": 65,
       "norm_label": "return i18n key for bucket label like 'story_arc.period_h1' / 'story_arc.period_",
       "community_name": "Date Bucketing for Story Arcs",
       "id": "services_story_arc_detector_rationale_83"
@@ -14888,7 +14808,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L52",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "_severity_level()",
       "community_name": "Sector Story Generation",
       "id": "services_story_feed_severity_level"
@@ -14899,7 +14819,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L57",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "_event_to_story()",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "services_story_feed_event_to_story"
@@ -14910,7 +14830,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "_historian_note_for_event()",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "services_story_feed_historian_note_for_event"
@@ -14921,7 +14841,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L111",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "_sector_story()",
       "community_name": "Sector Story Generation",
       "id": "services_story_feed_sector_story"
@@ -14932,7 +14852,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L159",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "generate_daily_stories()",
       "community_name": "Sector Story Generation",
       "id": "services_story_feed_generate_daily_stories"
@@ -14965,7 +14885,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L53",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "map severity string to numeric rank (higher = more important).",
       "community_name": "Sector Story Generation",
       "id": "services_story_feed_rationale_53"
@@ -14976,7 +14896,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L58",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "convert a raw event dict into a story dict.",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "services_story_feed_rationale_58"
@@ -14987,7 +14907,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "generate a short historian-style footnote for an event.",
       "community_name": "Investor Story Feed & Timeline Controls",
       "id": "services_story_feed_rationale_103"
@@ -14998,7 +14918,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L112",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "build a story dict from a sector performance summary.",
       "community_name": "Sector Story Generation",
       "id": "services_story_feed_rationale_112"
@@ -15009,7 +14929,7 @@
       "source_file": "src/services/story_feed.py",
       "source_location": "L160",
       "_origin": "ast",
-      "community": 0,
+      "community": 63,
       "norm_label": "fetch recent events for compose a list of story dicts.      args:         client",
       "community_name": "Sector Story Generation",
       "id": "services_story_feed_rationale_160"
@@ -15603,7 +15523,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 51,
+      "community": 47,
       "norm_label": "__init__.py",
       "community_name": "Shared Utility Functions",
       "id": "utils_init"
@@ -15614,7 +15534,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 51,
+      "community": 47,
       "norm_label": "_atomic_write()",
       "community_name": "Shared Utility Functions",
       "id": "utils_init_atomic_write"
@@ -15625,7 +15545,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 51,
+      "community": 47,
       "norm_label": "path",
       "community_name": "Shared Utility Functions",
       "id": "src_utils_init_py_path"
@@ -15636,7 +15556,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 51,
+      "community": 47,
       "norm_label": "shared utility functions.",
       "community_name": "Shared Utility Functions",
       "id": "utils_init_rationale_1"
@@ -15647,7 +15567,7 @@
       "source_file": "src/utils/__init__.py",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 51,
+      "community": 47,
       "norm_label": "write to temp file then atomically replace \u2014 prevents partial writes.",
       "community_name": "Shared Utility Functions",
       "id": "utils_init_rationale_12"
@@ -15680,7 +15600,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 50,
+      "community": 24,
       "norm_label": "test_adaptive_engine.py",
       "community_name": "News Event Detection",
       "id": "services_test_adaptive_engine"
@@ -16142,7 +16062,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L284",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": "testdetectcompanytype",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype"
@@ -16153,7 +16073,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L285",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_etf_by_industry()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_etf_by_industry"
@@ -16164,7 +16084,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L289",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_etf_by_industry_case_insensitive()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_etf_by_industry_case_insensitive"
@@ -16175,7 +16095,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L293",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_etf_by_id_pattern()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_etf_by_id_pattern"
@@ -16186,7 +16106,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L297",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_group_by_keyword_jituan()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_group_by_keyword_jituan"
@@ -16197,7 +16117,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L301",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_group_by_keyword_konggu()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_group_by_keyword_konggu"
@@ -16208,7 +16128,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L305",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_group_by_keyword_gufen()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_group_by_keyword_gufen"
@@ -16219,7 +16139,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L309",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_default_regular_company()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_default_regular_company"
@@ -16230,7 +16150,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L313",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_default_non_etf_non_group()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_default_non_etf_non_group"
@@ -16241,7 +16161,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L317",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_etf_industry_takes_priority()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_etf_industry_takes_priority"
@@ -16252,7 +16172,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L321",
       "_origin": "ast",
-      "community": 19,
+      "community": 8,
       "norm_label": ".test_non_00_id_not_etf()",
       "community_name": "Company Type Detection",
       "id": "services_test_adaptive_engine_testdetectcompanytype_test_non_00_id_not_etf"
@@ -16263,7 +16183,7 @@
       "source_file": "tests/services/test_adaptive_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 50,
+      "community": 24,
       "norm_label": "smoke tests for adaptive_engine.py services.  tests: detect_revenue_event, detec",
       "community_name": "News Event Detection",
       "id": "services_test_adaptive_engine_rationale_1"
@@ -16560,7 +16480,7 @@
       "source_file": "tests/services/test_debate_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 106,
+      "community": 96,
       "norm_label": "test_debate_engine.py",
       "community_name": "Debate Summary Generation",
       "id": "services_test_debate_engine"
@@ -16890,7 +16810,7 @@
       "source_file": "tests/services/test_debate_engine.py",
       "source_location": "L290",
       "_origin": "ast",
-      "community": 106,
+      "community": 99,
       "norm_label": "testgetdebatesummary",
       "community_name": "Debate Summary Generation",
       "id": "services_test_debate_engine_testgetdebatesummary"
@@ -16901,7 +16821,7 @@
       "source_file": "tests/services/test_debate_engine.py",
       "source_location": "L291",
       "_origin": "ast",
-      "community": 106,
+      "community": 99,
       "norm_label": ".test_empty_points()",
       "community_name": "Debate Summary Generation",
       "id": "services_test_debate_engine_testgetdebatesummary_test_empty_points"
@@ -16912,7 +16832,7 @@
       "source_file": "tests/services/test_debate_engine.py",
       "source_location": "L299",
       "_origin": "ast",
-      "community": 106,
+      "community": 99,
       "norm_label": ".test_bull_strong()",
       "community_name": "Debate Summary Generation",
       "id": "services_test_debate_engine_testgetdebatesummary_test_bull_strong"
@@ -16923,7 +16843,7 @@
       "source_file": "tests/services/test_debate_engine.py",
       "source_location": "L310",
       "_origin": "ast",
-      "community": 106,
+      "community": 99,
       "norm_label": ".test_bear_strong()",
       "community_name": "Debate Summary Generation",
       "id": "services_test_debate_engine_testgetdebatesummary_test_bear_strong"
@@ -16934,7 +16854,7 @@
       "source_file": "tests/services/test_debate_engine.py",
       "source_location": "L321",
       "_origin": "ast",
-      "community": 106,
+      "community": 99,
       "norm_label": ".test_neutral_when_close()",
       "community_name": "Debate Summary Generation",
       "id": "services_test_debate_engine_testgetdebatesummary_test_neutral_when_close"
@@ -16945,7 +16865,7 @@
       "source_file": "tests/services/test_debate_engine.py",
       "source_location": "L329",
       "_origin": "ast",
-      "community": 106,
+      "community": 99,
       "norm_label": ".test_strength_values_summed()",
       "community_name": "Debate Summary Generation",
       "id": "services_test_debate_engine_testgetdebatesummary_test_strength_values_summed"
@@ -17077,7 +16997,7 @@
       "source_file": "tests/services/test_debate_engine.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 106,
+      "community": 96,
       "norm_label": "unit tests for debate_engine.py (c199).  tests cover: - generate_debate with sam",
       "community_name": "Debate Summary Generation",
       "id": "services_test_debate_engine_rationale_1"
@@ -18529,7 +18449,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": "test_delta_explanation_provider.py",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider"
@@ -18540,7 +18460,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": "provider()",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_provider"
@@ -18562,7 +18482,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L41",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": "testisavailable",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_testisavailable"
@@ -18573,7 +18493,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L44",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": ".test_is_available_returns_true()",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_testisavailable_test_is_available_returns_true"
@@ -18815,7 +18735,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L194",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": "testexplaingeneric",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_testexplaingeneric"
@@ -18826,7 +18746,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L197",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": ".test_generic_up()",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_testexplaingeneric_test_generic_up"
@@ -18837,7 +18757,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L204",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": ".test_generic_down()",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_testexplaingeneric_test_generic_down"
@@ -18848,7 +18768,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L214",
       "_origin": "ast",
-      "community": 110,
+      "community": 7,
       "norm_label": "testexplainstockname",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_testexplainstockname"
@@ -18859,7 +18779,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L217",
       "_origin": "ast",
-      "community": 110,
+      "community": 7,
       "norm_label": ".test_stock_name_prefix_present()",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_testexplainstockname_test_stock_name_prefix_present"
@@ -18870,7 +18790,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L224",
       "_origin": "ast",
-      "community": 110,
+      "community": 7,
       "norm_label": ".test_stock_name_empty_no_prefix()",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_testexplainstockname_test_stock_name_empty_no_prefix"
@@ -18881,7 +18801,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L231",
       "_origin": "ast",
-      "community": 110,
+      "community": 7,
       "norm_label": ".test_stock_name_prefix_generic()",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_testexplainstockname_test_stock_name_prefix_generic"
@@ -19101,7 +19021,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L333",
       "_origin": "ast",
-      "community": 121,
+      "community": 28,
       "norm_label": "testpicktemplatestockname",
       "community_name": "Explanation Template Selection",
       "id": "services_test_delta_explanation_provider_testpicktemplatestockname"
@@ -19112,7 +19032,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L336",
       "_origin": "ast",
-      "community": 121,
+      "community": 28,
       "norm_label": ".test_pick_template_with_stock_name()",
       "community_name": "Explanation Template Selection",
       "id": "services_test_delta_explanation_provider_testpicktemplatestockname_test_pick_template_with_stock_name"
@@ -19123,7 +19043,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L340",
       "_origin": "ast",
-      "community": 121,
+      "community": 28,
       "norm_label": ".test_pick_template_without_stock_name()",
       "community_name": "Explanation Template Selection",
       "id": "services_test_delta_explanation_provider_testpicktemplatestockname_test_pick_template_without_stock_name"
@@ -19134,7 +19054,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L344",
       "_origin": "ast",
-      "community": 121,
+      "community": 28,
       "norm_label": ".test_pick_template_generic_with_stock_name()",
       "community_name": "Explanation Template Selection",
       "id": "services_test_delta_explanation_provider_testpicktemplatestockname_test_pick_template_generic_with_stock_name"
@@ -19145,7 +19065,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": "regression tests for deltaexplanationprovider \u2014 d-103  tests the deltaexplanatio",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_rationale_1"
@@ -19156,7 +19076,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": "create a fresh deltaexplanationprovider instance.",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_rationale_19"
@@ -19178,7 +19098,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L42",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": "deltaexplanationprovider.is_available() always returns true.",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_rationale_42"
@@ -19222,7 +19142,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L195",
       "_origin": "ast",
-      "community": 2,
+      "community": 7,
       "norm_label": "generic fallback for unknown metric names.",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_rationale_195"
@@ -19233,7 +19153,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L215",
       "_origin": "ast",
-      "community": 110,
+      "community": 7,
       "norm_label": "stock_name prefix behavior in explain().",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_rationale_215"
@@ -19244,7 +19164,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L218",
       "_origin": "ast",
-      "community": 110,
+      "community": 7,
       "norm_label": "when stock_name='\u53f0\u7a4d\u96fb', prefix should be '\u53f0\u7a4d\u96fb '.",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_rationale_218"
@@ -19255,7 +19175,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L225",
       "_origin": "ast",
-      "community": 110,
+      "community": 7,
       "norm_label": "when stock_name='', no prefix and no leading space.",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_rationale_225"
@@ -19266,7 +19186,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L232",
       "_origin": "ast",
-      "community": 110,
+      "community": 7,
       "norm_label": "generic fallback also gets stock_name prefix.",
       "community_name": "Delta Explanation Tests",
       "id": "services_test_delta_explanation_provider_rationale_232"
@@ -19288,7 +19208,7 @@
       "source_file": "tests/services/test_delta_explanation_provider.py",
       "source_location": "L334",
       "_origin": "ast",
-      "community": 121,
+      "community": 28,
       "norm_label": "_pick_template() stock_name prefix behavior.",
       "community_name": "Explanation Template Selection",
       "id": "services_test_delta_explanation_provider_rationale_334"
@@ -20421,7 +20341,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 40,
+      "community": 78,
       "norm_label": "test_scenario_calculator.py",
       "community_name": "Scenario Calculator",
       "id": "services_test_scenario_calculator"
@@ -20619,7 +20539,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L126",
       "_origin": "ast",
-      "community": 40,
+      "community": 78,
       "norm_label": "testgetfirsttradingdate",
       "community_name": "Scenario Calculator",
       "id": "services_test_scenario_calculator_testgetfirsttradingdate"
@@ -20630,7 +20550,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L127",
       "_origin": "ast",
-      "community": 40,
+      "community": 78,
       "norm_label": ".test_returns_first()",
       "community_name": "Scenario Calculator",
       "id": "services_test_scenario_calculator_testgetfirsttradingdate_test_returns_first"
@@ -20641,7 +20561,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L131",
       "_origin": "ast",
-      "community": 40,
+      "community": 78,
       "norm_label": ".test_empty_returns_none()",
       "community_name": "Scenario Calculator",
       "id": "services_test_scenario_calculator_testgetfirsttradingdate_test_empty_returns_none"
@@ -21004,7 +20924,7 @@
       "source_file": "tests/services/test_scenario_calculator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 40,
+      "community": 78,
       "norm_label": "unit tests for scenario_calculator.py (c200).  tests cover: - calculate_scenario",
       "community_name": "Scenario Calculator",
       "id": "services_test_scenario_calculator_rationale_1"
@@ -21290,7 +21210,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 84,
+      "community": 65,
       "norm_label": "test_story_arc_detector.py",
       "community_name": "Date Bucketing for Story Arcs",
       "id": "services_test_story_arc_detector"
@@ -21323,7 +21243,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L59",
       "_origin": "ast",
-      "community": 84,
+      "community": 75,
       "norm_label": "testarckeyconstants",
       "community_name": "Arc Key I18n Validation",
       "id": "services_test_story_arc_detector_testarckeyconstants"
@@ -21334,7 +21254,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L60",
       "_origin": "ast",
-      "community": 84,
+      "community": 75,
       "norm_label": ".test_arc_keys_are_english()",
       "community_name": "Arc Key I18n Validation",
       "id": "services_test_story_arc_detector_testarckeyconstants_test_arc_keys_are_english"
@@ -21345,7 +21265,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 84,
+      "community": 75,
       "norm_label": ".test_arc_keys_not_chinese()",
       "community_name": "Arc Key I18n Validation",
       "id": "services_test_story_arc_detector_testarckeyconstants_test_arc_keys_not_chinese"
@@ -21433,7 +21353,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L97",
       "_origin": "ast",
-      "community": 117,
+      "community": 65,
       "norm_label": "testbucketlabel",
       "community_name": "Date Bucketing for Story Arcs",
       "id": "services_test_story_arc_detector_testbucketlabel"
@@ -21444,7 +21364,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L98",
       "_origin": "ast",
-      "community": 117,
+      "community": 65,
       "norm_label": ".test_h1_label()",
       "community_name": "Date Bucketing for Story Arcs",
       "id": "services_test_story_arc_detector_testbucketlabel_test_h1_label"
@@ -21455,7 +21375,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 117,
+      "community": 65,
       "norm_label": ".test_h2_label()",
       "community_name": "Date Bucketing for Story Arcs",
       "id": "services_test_story_arc_detector_testbucketlabel_test_h2_label"
@@ -21466,7 +21386,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L104",
       "_origin": "ast",
-      "community": 117,
+      "community": 65,
       "norm_label": ".test_empty_returns_empty()",
       "community_name": "Date Bucketing for Story Arcs",
       "id": "services_test_story_arc_detector_testbucketlabel_test_empty_returns_empty"
@@ -21873,7 +21793,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 84,
+      "community": 65,
       "norm_label": "unit tests for story_arc_detector.py (c202).  tests cover: - empty entries - sin",
       "community_name": "Date Bucketing for Story Arcs",
       "id": "services_test_story_arc_detector_rationale_1"
@@ -21906,7 +21826,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L61",
       "_origin": "ast",
-      "community": 84,
+      "community": 75,
       "norm_label": "arc constants must be english i18n keys, not chinese text.",
       "community_name": "Arc Key I18n Validation",
       "id": "services_test_story_arc_detector_rationale_61"
@@ -21917,7 +21837,7 @@
       "source_file": "tests/services/test_story_arc_detector.py",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 84,
+      "community": 75,
       "norm_label": "arc constants must not contain chinese characters.",
       "community_name": "Arc Key I18n Validation",
       "id": "services_test_story_arc_detector_rationale_68"
@@ -24370,7 +24290,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "test_daily_market.py",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market"
@@ -24381,7 +24301,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 69,
+      "community": 102,
       "norm_label": "_load_yaml()",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_load_yaml"
@@ -24403,7 +24323,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 69,
+      "community": 102,
       "norm_label": "_get_nested()",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_get_nested"
@@ -24579,7 +24499,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L180",
       "_origin": "ast",
-      "community": 69,
+      "community": 102,
       "norm_label": "testi18nkeys",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_testi18nkeys"
@@ -24590,7 +24510,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L184",
       "_origin": "ast",
-      "community": 69,
+      "community": 102,
       "norm_label": ".en_data()",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_testi18nkeys_en_data"
@@ -24601,7 +24521,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L188",
       "_origin": "ast",
-      "community": 69,
+      "community": 102,
       "norm_label": ".zhtw_data()",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_testi18nkeys_zhtw_data"
@@ -24612,7 +24532,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L192",
       "_origin": "ast",
-      "community": 69,
+      "community": 102,
       "norm_label": ".test_key_exists_en()",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_testi18nkeys_test_key_exists_en"
@@ -24623,7 +24543,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L198",
       "_origin": "ast",
-      "community": 69,
+      "community": 102,
       "norm_label": ".test_key_exists_zhtw()",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_testi18nkeys_test_key_exists_zhtw"
@@ -24733,7 +24653,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L334",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": "testcolorcompliance",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_testcolorcompliance"
@@ -24755,7 +24675,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L342",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": ".test_no_banned_colors()",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_testcolorcompliance_test_no_banned_colors"
@@ -24766,7 +24686,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L347",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": ".test_positive_color_present()",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_testcolorcompliance_test_positive_color_present"
@@ -24777,7 +24697,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L353",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": ".test_negative_color_present()",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_testcolorcompliance_test_negative_color_present"
@@ -24788,7 +24708,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L359",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": ".test_positive_for_gainers()",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_testcolorcompliance_test_positive_for_gainers"
@@ -24799,7 +24719,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L366",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": ".test_negative_for_losers()",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_testcolorcompliance_test_negative_for_losers"
@@ -24876,7 +24796,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 32,
       "norm_label": "qa test scaffolding \u2014 c201 daily market dashboard tests for imports, router inte",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_rationale_1"
@@ -24887,7 +24807,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 69,
+      "community": 102,
       "norm_label": "safely traverse nested dicts; returns none if any key is missing.",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_rationale_34"
@@ -24942,7 +24862,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L181",
       "_origin": "ast",
-      "community": 69,
+      "community": 102,
       "norm_label": "verify all required i18n keys exist in both locale files.",
       "community_name": "Daily Market Dashboard Tests",
       "id": "tests_test_daily_market_rationale_181"
@@ -25041,7 +24961,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L335",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": "verify color palette compliance in daily_market.py.",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_rationale_335"
@@ -25052,7 +24972,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L348",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": "green #27ae60 must be used for positive values.",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_rationale_348"
@@ -25063,7 +24983,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L354",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": "red #e74c3c must be used for negative values.",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_rationale_354"
@@ -25074,7 +24994,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L360",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": "#27ae60 should be associated with gainers/positive context.",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_rationale_360"
@@ -25085,7 +25005,7 @@
       "source_file": "tests/test_daily_market.py",
       "source_location": "L367",
       "_origin": "ast",
-      "community": 92,
+      "community": 102,
       "norm_label": "#e74c3c should be associated with losers/negative context.",
       "community_name": "Color Palette Compliance Tests",
       "id": "tests_test_daily_market_rationale_367"
@@ -26009,7 +25929,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L178",
       "_origin": "ast",
-      "community": 26,
+      "community": 2,
       "norm_label": ".test_cannot_instantiate_abc()",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "tests_test_plugin_chassis_testbaseplugin_test_cannot_instantiate_abc"
@@ -26273,7 +26193,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L571",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "testphase1plugins",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins"
@@ -26284,7 +26204,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L574",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_category_browser_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_category_browser_plugin_import"
@@ -26295,7 +26215,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L584",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_settings_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_settings_plugin_import"
@@ -26306,7 +26226,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L594",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_event_dashboard_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_event_dashboard_plugin_import"
@@ -26317,7 +26237,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L602",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_notification_center_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_notification_center_plugin_import"
@@ -26328,7 +26248,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L610",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": ".test_daily_market_plugin_import()",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_testphase1plugins_test_daily_market_plugin_import"
@@ -26504,7 +26424,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L179",
       "_origin": "ast",
-      "community": 26,
+      "community": 2,
       "norm_label": "baseplugin is abstract \u2014 cannot instantiate directly.",
       "community_name": "Plugin Protocol & Base Classes",
       "id": "tests_test_plugin_chassis_rationale_179"
@@ -26614,7 +26534,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L572",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "test that phase 1 plugin.py files can be imported and their plugins registered.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_572"
@@ -26625,7 +26545,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L575",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "category_browser plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_575"
@@ -26636,7 +26556,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L585",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "settings plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_585"
@@ -26647,7 +26567,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L595",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "event_dashboard plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_595"
@@ -26658,7 +26578,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L603",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "notification_center plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_603"
@@ -26669,7 +26589,7 @@
       "source_file": "tests/test_plugin_chassis.py",
       "source_location": "L611",
       "_origin": "ast",
-      "community": 13,
+      "community": 22,
       "norm_label": "daily_market plugin.py should be importable and create a valid plugin.",
       "community_name": "Plugin Discovery & Registration",
       "id": "tests_test_plugin_chassis_rationale_611"
@@ -27076,7 +26996,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L301",
       "_origin": "ast",
-      "community": 63,
+      "community": 34,
       "norm_label": "testhistoriantonecompliance",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_testhistoriantonecompliance"
@@ -27087,7 +27007,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L310",
       "_origin": "ast",
-      "community": 63,
+      "community": 34,
       "norm_label": "._get_all_explanations()",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_testhistoriantonecompliance_get_all_explanations"
@@ -27098,7 +27018,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L354",
       "_origin": "ast",
-      "community": 63,
+      "community": 34,
       "norm_label": ".test_no_blocked_words_in_explanations()",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_testhistoriantonecompliance_test_no_blocked_words_in_explanations"
@@ -27109,7 +27029,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L369",
       "_origin": "ast",
-      "community": 63,
+      "community": 34,
       "norm_label": ".test_all_explanations_end_with_disclaimer()",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_testhistoriantonecompliance_test_all_explanations_end_with_disclaimer"
@@ -27274,7 +27194,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L302",
       "_origin": "ast",
-      "community": 63,
+      "community": 34,
       "norm_label": "verify that explanations avoid prescriptive language.",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_rationale_302"
@@ -27285,7 +27205,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L311",
       "_origin": "ast",
-      "community": 63,
+      "community": 34,
       "norm_label": "generate all possible explanation variants.",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_rationale_311"
@@ -27296,7 +27216,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L355",
       "_origin": "ast",
-      "community": 63,
+      "community": 34,
       "norm_label": "no explanation template should contain prescriptive/blocked words.          note",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_rationale_355"
@@ -27307,7 +27227,7 @@
       "source_file": "tests/test_screener_explanation.py",
       "source_location": "L370",
       "_origin": "ast",
-      "community": 63,
+      "community": 34,
       "norm_label": "every explanation must end with the disclaimer.",
       "community_name": "Explanation Tone Compliance",
       "id": "tests_test_screener_explanation_rationale_370"
@@ -27329,7 +27249,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "provider()",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_provider"
@@ -27362,7 +27282,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "testscreenerexplanationproviderinstantiation",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_testscreenerexplanationproviderinstantiation"
@@ -27373,7 +27293,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L59",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": ".test_class_exists()",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_testscreenerexplanationproviderinstantiation_test_class_exists"
@@ -27384,7 +27304,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": ".test_has_explain_method()",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_testscreenerexplanationproviderinstantiation_test_has_explain_method"
@@ -27395,7 +27315,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": ".test_has_is_available_method()",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_testscreenerexplanationproviderinstantiation_test_has_is_available_method"
@@ -27406,7 +27326,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L77",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": ".test_is_available_returns_true()",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_testscreenerexplanationproviderinstantiation_test_is_available_returns_true"
@@ -27417,7 +27337,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": ".test_uses_template_provider_internally()",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_testscreenerexplanationproviderinstantiation_test_uses_template_provider_internally"
@@ -27747,7 +27667,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L270",
       "_origin": "ast",
-      "community": 124,
+      "community": 11,
       "norm_label": "testfallbackexplanationpath",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider_testfallbackexplanationpath"
@@ -27758,7 +27678,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L273",
       "_origin": "ast",
-      "community": 124,
+      "community": 11,
       "norm_label": ".test_no_preset_no_filters()",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider_testfallbackexplanationpath_test_no_preset_no_filters"
@@ -27835,7 +27755,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L314",
       "_origin": "ast",
-      "community": 119,
+      "community": 14,
       "norm_label": "testtemplateproviderintegration",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_testtemplateproviderintegration"
@@ -27846,7 +27766,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L317",
       "_origin": "ast",
-      "community": 119,
+      "community": 14,
       "norm_label": ".test_template_provider_is_available_called()",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_testtemplateproviderintegration_test_template_provider_is_available_called"
@@ -27857,7 +27777,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L328",
       "_origin": "ast",
-      "community": 119,
+      "community": 14,
       "norm_label": ".test_explain_works_with_mocked_template_provider()",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_testtemplateproviderintegration_test_explain_works_with_mocked_template_provider"
@@ -28066,7 +27986,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "create a fresh screenerexplanationprovider instance.",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_29"
@@ -28099,7 +28019,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L57",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "test that screenerexplanationprovider exists and can be instantiated.",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_57"
@@ -28110,7 +28030,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L60",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "screenerexplanationprovider should be importable and instantiable.",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_60"
@@ -28121,7 +28041,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L66",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "provider must have an explain() method.",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_66"
@@ -28132,7 +28052,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L72",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "provider must have an is_available() method.",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_72"
@@ -28143,7 +28063,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L78",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "provider should always be available (no external deps).",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_78"
@@ -28154,7 +28074,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 36,
+      "community": 14,
       "norm_label": "provider should compose with templateexplanationprovider.",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_83"
@@ -28275,7 +28195,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L271",
       "_origin": "ast",
-      "community": 124,
+      "community": 11,
       "norm_label": "test fallback when no preset or filters are set.",
       "community_name": "Screener Implication Builder",
       "id": "tests_test_screener_explanation_provider_rationale_271"
@@ -28297,7 +28217,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L315",
       "_origin": "ast",
-      "community": 119,
+      "community": 14,
       "norm_label": "test that screenerexplanationprovider uses templateexplanationprovider.",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_315"
@@ -28308,7 +28228,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L318",
       "_origin": "ast",
-      "community": 119,
+      "community": 14,
       "norm_label": "explain() should call is_available() on the template provider.",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_318"
@@ -28319,7 +28239,7 @@
       "source_file": "tests/test_screener_explanation_provider.py",
       "source_location": "L329",
       "_origin": "ast",
-      "community": 119,
+      "community": 14,
       "norm_label": "screenerexplanationprovider should work even with a mocked template provider.",
       "community_name": "Screener Explanation Provider",
       "id": "tests_test_screener_explanation_provider_rationale_329"
@@ -30147,9 +30067,9 @@
       "source_file": "src/main.py",
       "source_location": "L83",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_main_rationale_83",
-      "target": "src_main_render_sidebar_hot_stocks",
-      "confidence_score": 1.0
+      "target": "src_main_render_sidebar_hot_stocks"
     },
     {
       "relation": "calls",
@@ -30179,9 +30099,9 @@
       "source_file": "src/main.py",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_main_rationale_99",
-      "target": "src_main_render_sidebar_hot_etfs",
-      "confidence_score": 1.0
+      "target": "src_main_render_sidebar_hot_etfs"
     },
     {
       "relation": "calls",
@@ -30211,9 +30131,9 @@
       "source_file": "src/main.py",
       "source_location": "L112",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_main_rationale_112",
-      "target": "src_main_render_sidebar",
-      "confidence_score": 1.0
+      "target": "src_main_render_sidebar"
     },
     {
       "relation": "calls",
@@ -32336,36 +32256,6 @@
       "confidence_score": 1.0,
       "source": "agents_5_state_management",
       "target": "agents_problem_record_format"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "count_dict2.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "count_dict2",
-      "target": "count_dict2_replace_t"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "find_strings.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "find_strings",
-      "target": "find_strings_find_chinese_strings"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "find_strings2.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "find_strings2",
-      "target": "find_strings2_find_chinese_strings"
     },
     {
       "relation": "rationale_for",
@@ -88739,5 +88629,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1d59af16e9c530a9efc6e0b2ca6c4c92aee74ee1"
+  "built_at_commit": "b1c1f83412cd5b3b76f0e75fb29794978b1f13b2"
 }
