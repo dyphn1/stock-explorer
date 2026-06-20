@@ -2,6 +2,80 @@
 
 > **上次更新**: 2026-06-20
 
+## 2026-06-20 Session Summary — 修復 82 個 i18n 測試失敗
+
+### What was done
+- 發現 82 個測試失敗的 root cause：i18n 遷移將程式碼改為 `t()` 呼叫，但 locale YAML 檔缺少對應 key
+- Developer 在 `locales/en.yaml` 和 `locales/zh-TW.yaml` 中加入 38 個 missing keys（34 個 `daily_market.*` + 4 個 `validation.error.*` + 1 個 `page.daily_market`）
+- 測試失敗從 82 → 27（剩餘 27 個為 pre-existing，與本次 migration 無關）
+
+### Roles involved
+- PM: 判斷問題、派發 Developer、Gate Check
+- Developer: 加入 locale key、執行測試、commit + push
+
+### Result
+- ✅ PASS — 55 個 i18n key 測試 + 9 個 validation 測試全部通過
+
+### Files changed
+- `locales/en.yaml` — 新增 daily_market、validation、page sections
+- `locales/zh-TW.yaml` — 新增 daily_market、validation、page sections
+
+### Git commit + push
+- 3ebca99
+
+---
+
+## 2026-06-20 Session Summary — i18n 遷移 src/main.py
+
+### What was done
+- 將 `src/main.py` 中所有 hardcoded 中文 UI 字串替換為 `t()` 呼叫
+- 在 `locales/en.yaml` 和 `locales/zh-TW.yaml` 中加入 `main.*` section（~25 keys）
+- 遷移範圍：側邊欄導航標籤、首頁標題/副標題、搜尋 placeholder/錯誤訊息、expander 標題、免責聲明
+- 保留為 comments 和 stock names（台積電等專有名詞）— 這些不是 UI 字串
+- 無新 regression 引入
+
+### Roles involved
+- PM: 判斷、派發 Developer、Gate Check
+- Developer: 執行 i18n 遷移、commit
+
+### Result
+- ✅ PASS — src/main.py UI 字串已全面國際化
+
+### Files changed
+- `src/main.py` — 所有 UI 字串改用 t()
+- `locales/en.yaml` — 新增 main section
+- `locales/zh-TW.yaml` — 新增 main section
+
+### Git commit + push
+- 1d59af1
+
+---
+
+## 2026-06-20 Session Summary — 修復 delta_engine i18n regression
+
+### What was done
+- 發現 `tests/services/test_delta_engine.py` 失敗：`delta.metric.revenue_yoy` 的 locale key 不存在，導致 `t()` 返回 raw key string
+- 根本原因：之前的 commit (500858d) 將 delta_engine.py 遷移至 `t()` 呼叫，但忘記在 locale YAML 檔中加入對應的 `delta.metric` section
+- Developer 在 `locales/en.yaml` 和 `locales/zh-TW.yaml` 中加入 `delta.metric.revenue_monthly`、`delta.metric.price_30d`、`delta.metric.revenue_yoy`、`delta.previous_year_same_period` 四個 key
+- 所有 54 個 delta_engine 測試通過
+- 無新 regression 引入（剩餘 82 個失敗為先前 session 的 pre-existing issues）
+
+### Roles involved
+- PM: 判斷問題、派發 Developer、Gate Check
+- Developer: 加入 locale key、執行測試、commit + push
+
+### Result
+- ✅ PASS — delta_engine i18n regression 修復，commit 已推送
+
+### Files changed
+- `locales/en.yaml` — 新增 delta.metric section
+- `locales/zh-TW.yaml` — 新增 delta.metric section
+
+### Git commit + push
+- 5d8ac5a
+
+---
+
 ## 2026-06-20 Session Summary — i18n 微顆粒遷移 (academy.py)
 
 ### What was done

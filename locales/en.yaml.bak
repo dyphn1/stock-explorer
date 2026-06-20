@@ -1,0 +1,60 @@
+screener:
+  explanation:
+    disclaimer: "Screening results are for learning reference only and do not constitute investment advice."
+    fallback: "{stock_name} ({stock_id}) meets the screening criteria."
+    fields:
+    per: "PER"
+    pbr: "PBR"
+    dividend_yield: "Dividend Yield"
+    revenue_growth: "Revenue Growth"
+
+  preset:
+      dividend:
+        high_yield: "{stock_name} has a dividend yield of {dividend_yield:.2f}%, which is above the market average, indicating the company's ability to consistently pay dividends."
+        stable: "{stock_name} has a dividend yield of {dividend_yield:.2f}%, with low volatility, making it a relatively stable income target."
+        fallback: "{stock_name} ({stock_id}) meets the stable income selection criteria."
+        implication: "High dividend yield companies typically have stable cash flows; pay attention to the sustainability of dividends."
+      growth:
+        strong: "{stock_name} has a revenue year-on-year growth rate of {revenue_yoy:.1f}%, showing revenue expansion speed superior to the industry average."
+        moderate: "{stock_name} has a revenue year-on-year growth rate of {revenue_yoy:.1f}%, showing a moderate growth trend."
+        fallback: "{stock_name} ({stock_id}) meets the growth potential selection criteria."
+        implication: "Revenue growth companies may have expansion potential; observe whether profitability is simultaneously improving."
+      value:
+        deep_value: "{stock_name} has a P/E ratio of {per:.1f} and P/B ratio of {pbr:.2f}, with valuation below market average, indicating the market's relatively conservative valuation."
+        moderate_value: "{stock_name} has a P/E ratio of {per:.1f} and P/B ratio of {pbr:.2f}, with valuation in a reasonable range."
+        fallback: "{stock_name} ({stock_id}) meets the low valuation selection criteria."
+        implication: "Undervalued companies may be underestimated by the market; further evaluate their fundamentals for stability."
+    custom_filter:
+      revenue_positive: "{stock_name} has a revenue year-on-year growth rate of {revenue_yoy:.1f}%, showing revenue growth compared to the same period last year."
+      industry_match: "{stock_name} belongs to the {industry} industry, matching the selected industry classification."
+      per_range: "{stock_name} has a P/E ratio of {per:.1f}, falling within the selected range."
+      div_range: "{stock_name} has a dividend yield of {dividend_yield:.2f}%, falling within the selected range."
+      fallback: "{stock_name} ({stock_id}) meets the set selection criteria."
+      implication: "Companies meeting multiple selection criteria can be further compared on financial and valuation aspects."
+    implication:
+      dividend: "High dividend yield companies typically have stable cash flows; pay attention to the sustainability of dividends."
+      growth: "Revenue growth companies may have expansion potential; observe whether profitability is simultaneously improving."
+      value: "Undervalued companies may be underestimated by the market; further evaluate their fundamentals for stability."
+      custom_many: "Companies meeting multiple selection criteria can be further compared on financial and valuation aspects."
+      custom_fallback: "The stock meets the selected criteria."
+      default: "Needs further research"
+    filter:
+      revenue_positive: "Revenue Growth"
+      industry_match: "Industry Match"
+      per_range: "P/E Range"
+      div_range: "Dividend Yield Range"
+      all_industries: "All Industries"
+
+financial_wellness:
+  interpretation:
+    healthy:
+      title: "Financial Wellness"
+      description: "Your financial habits are generally good! You have basic financial discipline and risk awareness. Keep it up and continue learning."
+    average:
+      title: "Moderate Financial Wellness"
+      description: "Your financial habits have basic concepts, but there are areas for improvement. Refer to the suggestions below and gradually improve."
+    attention:
+      title: "Needs Attention"
+      description: "Your financial habits have room for improvement. Don't worry, everyone starts from zero. Begin with the simplest steps."
+  tips:
+    need_improvement: "\"{category}\" is an area that needs improvement; consider learning more about it."

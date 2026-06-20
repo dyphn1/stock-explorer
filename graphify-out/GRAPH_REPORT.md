@@ -1,7 +1,7 @@
 # Graph Report - stock-explorer  (2026-06-20)
 
 ## Corpus Check
-- 215 files · ~145,291 words
+- 224 files · ~128,778 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3f52cc15`
+- Built from commit: `1d59af16`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -585,7 +585,7 @@ Nodes (7): Edge cases: empty string, spaces, unicode., Empty string should still
 
 ### Community 87 - "Main App & Rate Limit Status"
 Cohesion: 0.24
-Nodes (10): get_rate_limit_status(), Return current rate limit detection status for UI integration.      Returns:, get_client(), 股識 Stock Explorer Streamlit 入口 — M2 完整版, Render hot stocks section with collapsible behavior., Render hot ETFs section., Main sidebar rendering function., _render_sidebar() (+2 more)
+Nodes (10): get_rate_limit_status(), Return current rate limit detection status for UI integration.      Returns:, get_client(), 股識 Stock Explorer Streamlit 入口 — M2 完整版, Main sidebar rendering function., Render hot stocks section with collapsible behavior., Render hot ETFs section., _render_sidebar() (+2 more)
 
 ### Community 88 - "Settings Page & Thresholds"
 Cohesion: 0.27
@@ -788,16 +788,16 @@ Nodes (8): _apply_template(), _generic_summary(), _get_implication(), _match_key
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `t()` connect `Peer Comparison Analysis` to `Business Card Rendering`, `Expert Analysis & Case Studies`, `Group Structure & Onboarding`, `Explanation Generation Protocol`, `Internationalization Utilities`, `Company Timeline & Market Narrative`, `Watchlist Management`, `Education Academy & Quizzes`, `Case Study Library & ETF Browser`, `Recent Delta Computation`, `News Summarization & Risk Analysis`, `Investor Story Feed & Timeline Controls`, `Dividend Frequency Classification`, `Screener Implication Builder`, `Stock ID Validation`, `Financial Chart Generation`, `Dividend Analysis Service`, `Scenario Calculator`, `Story Arc & Timeline Services`, `Narrative Peer Comparison`, `Notification Center Rendering`, `Business Card Helpers`, `Timeline Data Filtering`, `Sector Heatmap Visualization`, `Market Data Aggregation`, `Event Dashboard Rendering`, `Category Browser & Industry Lists`, `Plugin Protocol & Base Classes`, `Market Event Case Studies`, `Historical Case Study Library`, `Stock Screener Service`, `Main App & Rate Limit Status`, `Settings Page & Thresholds`, `Debate Summary Generation`, `Debate Engine & Rendering`, `ETF Detail Page`, `Market Chart Generation`, `Project Role Definitions`, `User Feedback Handling`, `Stock Valuation Charts`, `Screener Template Loading`?**
-  _High betweenness centrality (0.413) - this node is a cross-community bridge._
+  _High betweenness centrality (0.433) - this node is a cross-community bridge._
 - **Why does `ExplanationRequest` connect `Explanation Generation Protocol` to `Expert Analysis & Case Studies`, `Screener Implication Builder`, `Screener Explanation Tests`, `Delta Explanation Tests`, `Screener Explanation Builder`, `Metric Explanation Popovers`, `Explanation Response Tests`, `Explanation Tone Compliance`, `Screener Explanation Provider`, `Community 124`, `Stock Screener Service`, `Recent Delta Computation`, `Company Health Charts`, `Arc Key I18n Validation`, `Delta Explanation Engine`, `Explanation Template Selection`, `Adaptive Event Detection Engine`?**
   _High betweenness centrality (0.105) - this node is a cross-community bridge._
 - **Why does `FinMindClient` connect `FinMind API Client` to `Legacy Plugin Adapters`, `Group Structure & Onboarding`, `Session State Management`, `Watchlist Management`, `Education Academy & Quizzes`, `Case Study Library & ETF Browser`, `Plugin Metadata & Protocol`, `Plugin Base & Registry`, `Plugin Render Context & Middleware`, `Investor Story Feed & Timeline Controls`, `Peer Comparison Analysis`, `Screener Explanation Tests`, `Notification Center Rendering`, `Timeline Data Filtering`, `Category Browser & Industry Lists`, `Plugin Protocol & Base Classes`, `Historical Case Study Library`, `Stock Screener Service`, `Main App & Rate Limit Status`, `FinMind API Client & Errors`, `ETF Detail Page`, `Cache Cleanup Utilities`?**
-  _High betweenness centrality (0.095) - this node is a cross-community bridge._
+  _High betweenness centrality (0.077) - this node is a cross-community bridge._
 - **Are the 33 inferred relationships involving `FinMindClient` (e.g. with `BasePlugin` and `BasePlugin`) actually correct?**
   _`FinMindClient` has 33 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 35 inferred relationships involving `ExplanationRequest` (e.g. with `TemplateExplanationProvider` and `DeltaExplanationProvider`) actually correct?**
   _`ExplanationRequest` has 35 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Education Academy — C47 Structured investing lessons with quizzes in Traditional`, `Render a single content block based on its type.`, `Render a stock example block with live data.` to the rest of the system?**
+- **What connects `股識 Stock Explorer Streamlit 入口 — M2 完整版`, `Render hot stocks section with collapsible behavior.`, `Render hot ETFs section.` to the rest of the system?**
   _1057 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Business Card Rendering` be split into smaller, more focused modules?**
   _Cohesion score 0.061815336463223784 - nodes in this community are weakly interconnected._

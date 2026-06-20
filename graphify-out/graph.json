@@ -4,14 +4,104 @@
   "graph": {},
   "nodes": [
     {
+      "label": "main.py",
+      "file_type": "code",
+      "source_file": "src/main.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_main",
+      "community": 87,
+      "norm_label": "main.py"
+    },
+    {
+      "label": "get_client()",
+      "file_type": "code",
+      "source_file": "src/main.py",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "src_main_get_client",
+      "community": 87,
+      "norm_label": "get_client()"
+    },
+    {
+      "label": "_render_sidebar_hot_stocks()",
+      "file_type": "code",
+      "source_file": "src/main.py",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "src_main_render_sidebar_hot_stocks",
+      "community": 87,
+      "norm_label": "_render_sidebar_hot_stocks()"
+    },
+    {
+      "label": "_render_sidebar_hot_etfs()",
+      "file_type": "code",
+      "source_file": "src/main.py",
+      "source_location": "L98",
+      "_origin": "ast",
+      "id": "src_main_render_sidebar_hot_etfs",
+      "community": 87,
+      "norm_label": "_render_sidebar_hot_etfs()"
+    },
+    {
+      "label": "_render_sidebar()",
+      "file_type": "code",
+      "source_file": "src/main.py",
+      "source_location": "L111",
+      "_origin": "ast",
+      "id": "src_main_render_sidebar",
+      "community": 87,
+      "norm_label": "_render_sidebar()"
+    },
+    {
+      "label": "\u80a1\u8b58 Stock Explorer Streamlit \u5165\u53e3 \u2014 M2 \u5b8c\u6574\u7248",
+      "file_type": "rationale",
+      "source_file": "src/main.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_main_rationale_1",
+      "community": 87,
+      "norm_label": "\u80a1\u8b58 stock explorer streamlit \u5165\u53e3 \u2014 m2 \u5b8c\u6574\u7248"
+    },
+    {
+      "label": "Render hot stocks section with collapsible behavior.",
+      "file_type": "rationale",
+      "source_file": "src/main.py",
+      "source_location": "L83",
+      "_origin": "ast",
+      "id": "src_main_rationale_83",
+      "community": 87,
+      "norm_label": "render hot stocks section with collapsible behavior."
+    },
+    {
+      "label": "Render hot ETFs section.",
+      "file_type": "rationale",
+      "source_file": "src/main.py",
+      "source_location": "L99",
+      "_origin": "ast",
+      "id": "src_main_rationale_99",
+      "community": 87,
+      "norm_label": "render hot etfs section."
+    },
+    {
+      "label": "Main sidebar rendering function.",
+      "file_type": "rationale",
+      "source_file": "src/main.py",
+      "source_location": "L112",
+      "_origin": "ast",
+      "id": "src_main_rationale_112",
+      "community": 87,
+      "norm_label": "main sidebar rendering function."
+    },
+    {
       "label": "academy.py",
       "file_type": "code",
       "source_file": "src/pages/academy.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_academy",
       "community": 17,
-      "norm_label": "academy.py"
+      "norm_label": "academy.py",
+      "id": "pages_academy"
     },
     {
       "label": "_render_content_block()",
@@ -19,9 +109,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "pages_academy_render_content_block",
       "community": 17,
-      "norm_label": "_render_content_block()"
+      "norm_label": "_render_content_block()",
+      "id": "pages_academy_render_content_block"
     },
     {
       "label": "FinMindClient",
@@ -29,9 +119,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "finmindclient",
       "community": 17,
-      "norm_label": "finmindclient"
+      "norm_label": "finmindclient",
+      "id": "finmindclient"
     },
     {
       "label": "_render_stock_example()",
@@ -39,9 +129,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L50",
       "_origin": "ast",
-      "id": "pages_academy_render_stock_example",
       "community": 17,
-      "norm_label": "_render_stock_example()"
+      "norm_label": "_render_stock_example()",
+      "id": "pages_academy_render_stock_example"
     },
     {
       "label": "_get_score_style()",
@@ -49,9 +139,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L98",
       "_origin": "ast",
-      "id": "pages_academy_get_score_style",
       "community": 17,
-      "norm_label": "_get_score_style()"
+      "norm_label": "_get_score_style()",
+      "id": "pages_academy_get_score_style"
     },
     {
       "label": "_render_quiz()",
@@ -59,9 +149,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L120",
       "_origin": "ast",
-      "id": "pages_academy_render_quiz",
       "community": 17,
-      "norm_label": "_render_quiz()"
+      "norm_label": "_render_quiz()",
+      "id": "pages_academy_render_quiz"
     },
     {
       "label": "_render_academy()",
@@ -69,9 +159,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L242",
       "_origin": "ast",
-      "id": "pages_academy_render_academy",
       "community": 17,
-      "norm_label": "_render_academy()"
+      "norm_label": "_render_academy()",
+      "id": "pages_academy_render_academy"
     },
     {
       "label": "Education Academy \u2014 C47 Structured investing lessons with quizzes in Traditional",
@@ -79,9 +169,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_academy_rationale_1",
       "community": 17,
-      "norm_label": "education academy \u2014 c47 structured investing lessons with quizzes in traditional"
+      "norm_label": "education academy \u2014 c47 structured investing lessons with quizzes in traditional",
+      "id": "pages_academy_rationale_1"
     },
     {
       "label": "Render a single content block based on its type.",
@@ -89,9 +179,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L28",
       "_origin": "ast",
-      "id": "pages_academy_rationale_28",
       "community": 17,
-      "norm_label": "render a single content block based on its type."
+      "norm_label": "render a single content block based on its type.",
+      "id": "pages_academy_rationale_28"
     },
     {
       "label": "Render a stock example block with live data.",
@@ -99,9 +189,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L51",
       "_origin": "ast",
-      "id": "pages_academy_rationale_51",
       "community": 17,
-      "norm_label": "render a stock example block with live data."
+      "norm_label": "render a stock example block with live data.",
+      "id": "pages_academy_rationale_51"
     },
     {
       "label": "Get score styling based on percentage.",
@@ -109,9 +199,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L99",
       "_origin": "ast",
-      "id": "pages_academy_rationale_99",
       "community": 17,
-      "norm_label": "get score styling based on percentage."
+      "norm_label": "get score styling based on percentage.",
+      "id": "pages_academy_rationale_99"
     },
     {
       "label": "Render the quiz section for a lesson.",
@@ -119,9 +209,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L121",
       "_origin": "ast",
-      "id": "pages_academy_rationale_121",
       "community": 17,
-      "norm_label": "render the quiz section for a lesson."
+      "norm_label": "render the quiz section for a lesson.",
+      "id": "pages_academy_rationale_121"
     },
     {
       "label": "Education Academy main page \u2014 structured investing lessons with quizzes.",
@@ -129,9 +219,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L243",
       "_origin": "ast",
-      "id": "pages_academy_rationale_243",
       "community": 17,
-      "norm_label": "education academy main page \u2014 structured investing lessons with quizzes."
+      "norm_label": "education academy main page \u2014 structured investing lessons with quizzes.",
+      "id": "pages_academy_rationale_243"
     },
     {
       "label": "_helpers.py",
@@ -139,9 +229,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "business_card_helpers",
       "community": 56,
-      "norm_label": "_helpers.py"
+      "norm_label": "_helpers.py",
+      "id": "business_card_helpers"
     },
     {
       "label": "_get_health_metric_values()",
@@ -149,9 +239,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "business_card_helpers_get_health_metric_values",
       "community": 56,
-      "norm_label": "_get_health_metric_values()"
+      "norm_label": "_get_health_metric_values()",
+      "id": "business_card_helpers_get_health_metric_values"
     },
     {
       "label": "get_health_dimension_explanation()",
@@ -159,9 +249,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "business_card_helpers_get_health_dimension_explanation",
       "community": 56,
-      "norm_label": "get_health_dimension_explanation()"
+      "norm_label": "get_health_dimension_explanation()",
+      "id": "business_card_helpers_get_health_dimension_explanation"
     },
     {
       "label": "_render_risk_dimension()",
@@ -169,9 +259,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L81",
       "_origin": "ast",
-      "id": "business_card_helpers_render_risk_dimension",
       "community": 56,
-      "norm_label": "_render_risk_dimension()"
+      "norm_label": "_render_risk_dimension()",
+      "id": "business_card_helpers_render_risk_dimension"
     },
     {
       "label": "_section_header()",
@@ -179,9 +269,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L101",
       "_origin": "ast",
-      "id": "business_card_helpers_section_header",
       "community": 56,
-      "norm_label": "_section_header()"
+      "norm_label": "_section_header()",
+      "id": "business_card_helpers_section_header"
     },
     {
       "label": "_historian_disclaimer()",
@@ -189,9 +279,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L116",
       "_origin": "ast",
-      "id": "business_card_helpers_historian_disclaimer",
       "community": 32,
-      "norm_label": "_historian_disclaimer()"
+      "norm_label": "_historian_disclaimer()",
+      "id": "business_card_helpers_historian_disclaimer"
     },
     {
       "label": "_study_card()",
@@ -199,9 +289,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L137",
       "_origin": "ast",
-      "id": "business_card_helpers_study_card",
       "community": 51,
-      "norm_label": "_study_card()"
+      "norm_label": "_study_card()",
+      "id": "business_card_helpers_study_card"
     },
     {
       "label": "_expert_card()",
@@ -209,9 +299,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L150",
       "_origin": "ast",
-      "id": "business_card_helpers_expert_card",
       "community": 51,
-      "norm_label": "_expert_card()"
+      "norm_label": "_expert_card()",
+      "id": "business_card_helpers_expert_card"
     },
     {
       "label": "_scenario_card()",
@@ -219,9 +309,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L163",
       "_origin": "ast",
-      "id": "business_card_helpers_scenario_card",
       "community": 56,
-      "norm_label": "_scenario_card()"
+      "norm_label": "_scenario_card()",
+      "id": "business_card_helpers_scenario_card"
     },
     {
       "label": "Business card shared helpers and constants.",
@@ -229,9 +319,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "business_card_helpers_rationale_1",
       "community": 56,
-      "norm_label": "business card shared helpers and constants."
+      "norm_label": "business card shared helpers and constants.",
+      "id": "business_card_helpers_rationale_1"
     },
     {
       "label": "Return dict mapping dimension names to list of metric value strings.",
@@ -239,9 +329,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "business_card_helpers_rationale_7",
       "community": 56,
-      "norm_label": "return dict mapping dimension names to list of metric value strings."
+      "norm_label": "return dict mapping dimension names to list of metric value strings.",
+      "id": "business_card_helpers_rationale_7"
     },
     {
       "label": "Return a plain-language explanation for a health dimension score.",
@@ -249,9 +339,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "business_card_helpers_rationale_59",
       "community": 56,
-      "norm_label": "return a plain-language explanation for a health dimension score."
+      "norm_label": "return a plain-language explanation for a health dimension score.",
+      "id": "business_card_helpers_rationale_59"
     },
     {
       "label": "Render a single risk dimension as an expandable info card.",
@@ -259,9 +349,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L82",
       "_origin": "ast",
-      "id": "business_card_helpers_rationale_82",
       "community": 56,
-      "norm_label": "render a single risk dimension as an expandable info card."
+      "norm_label": "render a single risk dimension as an expandable info card.",
+      "id": "business_card_helpers_rationale_82"
     },
     {
       "label": "Render a standardized section header.      If collapsed=False: renders a markdow",
@@ -269,9 +359,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L102",
       "_origin": "ast",
-      "id": "business_card_helpers_rationale_102",
       "community": 56,
-      "norm_label": "render a standardized section header.      if collapsed=false: renders a markdow"
+      "norm_label": "render a standardized section header.      if collapsed=false: renders a markdow",
+      "id": "business_card_helpers_rationale_102"
     },
     {
       "label": "Render a standardized disclaimer caption.      Types:         'expert'   \u2014 for e",
@@ -279,9 +369,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L117",
       "_origin": "ast",
-      "id": "business_card_helpers_rationale_117",
       "community": 32,
-      "norm_label": "render a standardized disclaimer caption.      types:         'expert'   \u2014 for e"
+      "norm_label": "render a standardized disclaimer caption.      types:         'expert'   \u2014 for e",
+      "id": "business_card_helpers_rationale_117"
     },
     {
       "label": "Render a study log card with consistent styling.",
@@ -289,9 +379,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L138",
       "_origin": "ast",
-      "id": "business_card_helpers_rationale_138",
       "community": 51,
-      "norm_label": "render a study log card with consistent styling."
+      "norm_label": "render a study log card with consistent styling.",
+      "id": "business_card_helpers_rationale_138"
     },
     {
       "label": "Render an expert analysis card with consistent styling.",
@@ -299,9 +389,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L151",
       "_origin": "ast",
-      "id": "business_card_helpers_rationale_151",
       "community": 51,
-      "norm_label": "render an expert analysis card with consistent styling."
+      "norm_label": "render an expert analysis card with consistent styling.",
+      "id": "business_card_helpers_rationale_151"
     },
     {
       "label": "Render a historical scenario card with consistent styling.",
@@ -309,9 +399,9 @@
       "source_file": "src/pages/business_card/_helpers.py",
       "source_location": "L164",
       "_origin": "ast",
-      "id": "business_card_helpers_rationale_164",
       "community": 56,
-      "norm_label": "render a historical scenario card with consistent styling."
+      "norm_label": "render a historical scenario card with consistent styling.",
+      "id": "business_card_helpers_rationale_164"
     },
     {
       "label": "notification_center.py",
@@ -2955,105 +3045,6 @@
       "norm_label": "\u641c\u5c0b\u80a1\u7968:\u5b8c\u5168\u6bd4\u5c0d stock_id \u6216\u90e8\u5206\u6bd4\u5c0d stock_name(\u4e2d\u6587\u540d\u7a31)\u3002          args:             query: \u641c\u5c0b\u95dc",
       "community_name": "FinMind API Client",
       "id": "data_finmind_client_rationale_262"
-    },
-    {
-      "label": "main.py",
-      "file_type": "code",
-      "source_file": "src/main.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 87,
-      "norm_label": "main.py",
-      "community_name": "Main App & Rate Limit Status",
-      "id": "src_main"
-    },
-    {
-      "label": "get_client()",
-      "file_type": "code",
-      "source_file": "src/main.py",
-      "source_location": "L164",
-      "_origin": "ast",
-      "community": 87,
-      "norm_label": "get_client()",
-      "community_name": "Main App & Rate Limit Status",
-      "id": "src_main_get_client"
-    },
-    {
-      "label": "_render_sidebar_hot_stocks()",
-      "file_type": "code",
-      "source_file": "src/main.py",
-      "source_location": "L173",
-      "_origin": "ast",
-      "community": 87,
-      "norm_label": "_render_sidebar_hot_stocks()",
-      "community_name": "Main App & Rate Limit Status",
-      "id": "src_main_render_sidebar_hot_stocks"
-    },
-    {
-      "label": "_render_sidebar_hot_etfs()",
-      "file_type": "code",
-      "source_file": "src/main.py",
-      "source_location": "L189",
-      "_origin": "ast",
-      "community": 87,
-      "norm_label": "_render_sidebar_hot_etfs()",
-      "community_name": "Main App & Rate Limit Status",
-      "id": "src_main_render_sidebar_hot_etfs"
-    },
-    {
-      "label": "_render_sidebar()",
-      "file_type": "code",
-      "source_file": "src/main.py",
-      "source_location": "L202",
-      "_origin": "ast",
-      "community": 87,
-      "norm_label": "_render_sidebar()",
-      "community_name": "Main App & Rate Limit Status",
-      "id": "src_main_render_sidebar"
-    },
-    {
-      "label": "\u80a1\u8b58 Stock Explorer Streamlit \u5165\u53e3 \u2014 M2 \u5b8c\u6574\u7248",
-      "file_type": "rationale",
-      "source_file": "src/main.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 87,
-      "norm_label": "\u80a1\u8b58 stock explorer streamlit \u5165\u53e3 \u2014 m2 \u5b8c\u6574\u7248",
-      "community_name": "Main App & Rate Limit Status",
-      "id": "src_main_rationale_1"
-    },
-    {
-      "label": "Render hot stocks section with collapsible behavior.",
-      "file_type": "rationale",
-      "source_file": "src/main.py",
-      "source_location": "L174",
-      "_origin": "ast",
-      "community": 87,
-      "norm_label": "render hot stocks section with collapsible behavior.",
-      "community_name": "Main App & Rate Limit Status",
-      "id": "src_main_rationale_174"
-    },
-    {
-      "label": "Render hot ETFs section.",
-      "file_type": "rationale",
-      "source_file": "src/main.py",
-      "source_location": "L190",
-      "_origin": "ast",
-      "community": 87,
-      "norm_label": "render hot etfs section.",
-      "community_name": "Main App & Rate Limit Status",
-      "id": "src_main_rationale_190"
-    },
-    {
-      "label": "Main sidebar rendering function.",
-      "file_type": "rationale",
-      "source_file": "src/main.py",
-      "source_location": "L203",
-      "_origin": "ast",
-      "community": 87,
-      "norm_label": "main sidebar rendering function.",
-      "community_name": "Main App & Rate Limit Status",
-      "id": "src_main_rationale_203"
     },
     {
       "label": "__init__.py",
@@ -30038,6 +30029,229 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main",
+      "target": "core_i18n_t"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L165",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main",
+      "target": "data_finmind_client_finmindclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L158",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main",
+      "target": "data_finmind_client_get_rate_limit_status"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L157",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main",
+      "target": "pages_url_sync_navigate_to"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L157",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main",
+      "target": "pages_url_sync_sync_url_to_session"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main",
+      "target": "src_main_get_client"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L202",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main",
+      "target": "src_main_render_sidebar"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L189",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main",
+      "target": "src_main_render_sidebar_hot_etfs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L173",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main",
+      "target": "src_main_render_sidebar_hot_stocks"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_rationale_1",
+      "target": "src_main"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/main.py",
+      "source_location": "L166",
+      "weight": 1.0,
+      "source": "src_main_get_client",
+      "target": "data_finmind_client_finmindclient"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "src_main_rationale_83",
+      "target": "src_main_render_sidebar_hot_stocks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L245",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_render_sidebar",
+      "target": "src_main_render_sidebar_hot_stocks"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L187",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_render_sidebar_hot_stocks",
+      "target": "pages_url_sync_navigate_to"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "src_main_rationale_99",
+      "target": "src_main_render_sidebar_hot_etfs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L249",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_render_sidebar",
+      "target": "src_main_render_sidebar_hot_etfs"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L200",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_render_sidebar_hot_etfs",
+      "target": "pages_url_sync_navigate_to"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "src_main_rationale_112",
+      "target": "src_main_render_sidebar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L204",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_render_sidebar",
+      "target": "core_i18n_t"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L217",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_render_sidebar",
+      "target": "data_finmind_client_get_rate_limit_status"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.py",
+      "source_location": "L239",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_render_sidebar",
+      "target": "pages_url_sync_navigate_to"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/academy.py",
       "source_location": "L12",
       "weight": 1.0,
@@ -30287,9 +30501,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_academy_render_content_block",
-      "target": "finmindclient",
-      "confidence_score": 1.0
+      "target": "finmindclient"
     },
     {
       "relation": "calls",
@@ -30320,9 +30534,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L242",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_academy_render_academy",
-      "target": "finmindclient",
-      "confidence_score": 1.0
+      "target": "finmindclient"
     },
     {
       "relation": "references",
@@ -30331,9 +30545,9 @@
       "source_file": "src/pages/academy.py",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_academy_render_stock_example",
-      "target": "finmindclient",
-      "confidence_score": 1.0
+      "target": "finmindclient"
     },
     {
       "relation": "references",
@@ -35730,28 +35944,6 @@
       "target": "core_i18n_t"
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main",
-      "target": "core_i18n_t"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L204",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_render_sidebar",
-      "target": "core_i18n_t"
-    },
-    {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "src/core/i18n.py",
@@ -40160,28 +40352,6 @@
       "target": "data_finmind_client_get_rate_limit_status"
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L158",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main",
-      "target": "data_finmind_client_get_rate_limit_status"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L217",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_render_sidebar",
-      "target": "data_finmind_client_get_rate_limit_status"
-    },
-    {
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src/data/finmind_client.py",
@@ -40582,28 +40752,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "pages_stock_screener",
-      "target": "data_finmind_client_finmindclient"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L165",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main",
-      "target": "data_finmind_client_finmindclient"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/main.py",
-      "source_location": "L166",
-      "weight": 1.0,
-      "source": "src_main_get_client",
       "target": "data_finmind_client_finmindclient"
     },
     {
@@ -41330,163 +41478,6 @@
       "confidence_score": 1.0,
       "source": "data_finmind_client_finmindclient_get_latest_per_pbr",
       "target": "data_finmind_client_finmindclient_get_per_pbr"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L157",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main",
-      "target": "pages_url_sync_navigate_to"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L157",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main",
-      "target": "pages_url_sync_sync_url_to_session"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L164",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main",
-      "target": "src_main_get_client"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L202",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main",
-      "target": "src_main_render_sidebar"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L189",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main",
-      "target": "src_main_render_sidebar_hot_etfs"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L173",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main",
-      "target": "src_main_render_sidebar_hot_stocks"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_rationale_1",
-      "target": "src_main"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L174",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_rationale_174",
-      "target": "src_main_render_sidebar_hot_stocks"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L245",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_render_sidebar",
-      "target": "src_main_render_sidebar_hot_stocks"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L187",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_render_sidebar_hot_stocks",
-      "target": "pages_url_sync_navigate_to"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L190",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_rationale_190",
-      "target": "src_main_render_sidebar_hot_etfs"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L249",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_render_sidebar",
-      "target": "src_main_render_sidebar_hot_etfs"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L200",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_render_sidebar_hot_etfs",
-      "target": "pages_url_sync_navigate_to"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L203",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_rationale_203",
-      "target": "src_main_render_sidebar"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.py",
-      "source_location": "L239",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_render_sidebar",
-      "target": "pages_url_sync_navigate_to"
     },
     {
       "relation": "imports_from",
@@ -88748,5 +88739,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3f52cc15d06ec0db206b274b3e8b67e77ae5a285"
+  "built_at_commit": "1d59af16e9c530a9efc6e0b2ca6c4c92aee74ee1"
 }

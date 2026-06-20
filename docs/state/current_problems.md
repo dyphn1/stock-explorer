@@ -1,6 +1,6 @@
 # Current Problems — Stock Explorer (股識)
 
-> **上次更新**: 2026-06-18
+> **上次更新**: 2026-06-20
 > **維護者**: PM Agent
 
 ---
@@ -30,10 +30,10 @@
 - **類型**: Tech Debt / i18n
 - **報告者**: QA Agent
 - **日期**: 2026-06-18
-- **描述**: 掃描發現 2,877 行 hardcoded 中文字串未使用 `t()` 函數。影響國際化支援。Phase 1 已完成前 5 大頁面遷移（~300 字串），Phase 2 已遷移約 8 個檔案（含服務層遷移），剩餘約 41 個檔案約 1,200 字串待處理。
-- **影響檔案**: 全域（主要為 `src/pages/` 下的 UI 渲染檔案）
-- **狀態**: In Progress (Phase 1/3 完成)
-- **解決方案**: 逐頁將 hardcoded 字串替換為 `t()` 呼叫，在 locale YAML 檔中新增對應 key。Phase 1 完成：etf_browser, financial_health, group_structure, peer_comparison, etf_detail。
+- **描述**: 掃描發現 2,877 行 hardcoded 中文字串未使用 `t()` 函數。影響國際化支援。Phase 1 已完成前 5 大頁面遷移（~300 字串），Phase 2 已遷移 `src/main.py`（入口檔案）+ 約 8 個服務層檔案，剩餘大量 `src/services/` 檔案約 2,200 行字串待處理（多為 docstring 和內部字串）。
+- **影響檔案**: 全域（主要為 `src/main.py` 及 `src/services/` 下的服務檔案）
+- **狀態**: In Progress (Phase 1 完成, main.py 完成, locale keys 修復完成)
+- **解決方案**: 逐頁將 hardcoded 字串替換為 `t()` 呼叫，在 locale YAML 檔中新增對應 key。Phase 1 完成：etf_browser, financial_health, group_structure, peer_comparison, etf_detail。main.py 完成（1d59af1）。locale keys 修復完成（3ebca99）— daily_market.* 和 validation.error.* 已加入。剩餘 27 個 pre-existing 測試失敗（非 i18n 相關）。
 
 ## P1 — 高優先（需在 2 個 sprint 內修復）
 
