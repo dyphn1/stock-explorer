@@ -35,7 +35,7 @@ def _render_verdict_banner(summary: dict | DebateSummary) -> None:
         color = "#E74C3C"
     else:
         emoji = "🟡"
-        color = "#F39C12"
+        color = "#E67E22"
 
     verdict_text = t(verdict_key)
     st.markdown(
@@ -79,7 +79,7 @@ def _render_debate_card(point: DebatePoint, index: int, stock_id: str) -> None:
     # Color based on side
     if side == "bull":
         border_color = "#27AE60"
-        bg_color = "#EAFAF1"
+        bg_color = "#E8F8F0"
     else:
         border_color = "#E74C3C"
         bg_color = "#FDEDEC"
@@ -108,7 +108,7 @@ def _render_debate_card(point: DebatePoint, index: int, stock_id: str) -> None:
                     display: inline-block;
                     width: 60px;
                     height: 8px;
-                    background: #ECF0F1;
+                    background: #E1E4E8;
                     border-radius: 4px;
                     vertical-align: middle;
                     margin-left: 4px;

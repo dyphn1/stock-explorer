@@ -113,7 +113,7 @@ def _render_comprehension_check(client: FinMindClient):
             score_title = t("comprehension_check.excellent")
             score_desc = t("comprehension_check.excellent_desc")
         elif percentage >= 60:
-            score_color = "#F39C12"
+            score_color = "#E67E22"
             score_emoji = "🟡"
             score_title = t("comprehension_check.good")
             score_desc = t("comprehension_check.good_desc")

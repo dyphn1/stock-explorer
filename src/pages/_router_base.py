@@ -188,7 +188,7 @@ def _explain_button(
 
 def _白话_card(label: str, value: str, analogy: str = ""):
     st.markdown(f"""
-    <div style="background:white;border-radius:12px;padding:1.2rem;border:1px solid #ECF0F1;border-left:4px solid #3498DB;margin:0.5rem 0;">
+    <div style="background:white;border-radius:12px;padding:1.2rem;border:1px solid #E1E4E8;border-left:4px solid #3498DB;margin:0.5rem 0;">
         <div style="font-size:0.85rem;color:#7F8C8D;">{label}</div>
         <div style="font-size:1.6rem;font-weight:700;color:#2C3E50;">{value}</div>
         <div style="font-size:0.85rem;color:#27AE60;font-style:italic;margin-top:0.3rem;">{analogy}</div>
@@ -286,7 +286,7 @@ def _subsidiary_card(name: str, hold_label: str, hold_color: str,
         relation: Plain-language description of the parent-subsidiary relationship.
     """
     st.markdown(f"""
-    <div style="background:white;border-radius:12px;padding:1.5rem;border:1px solid #ECF0F1;margin:0.8rem 0;">
+    <div style="background:white;border-radius:12px;padding:1.5rem;border:1px solid #E1E4E8;margin:0.8rem 0;">
         <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
                 <span style="font-size:1.1rem;font-weight:700;color:#2C3E50;">{name}</span>
@@ -413,7 +413,7 @@ def _glossary_annotated_metric(
     icon = "💡" if beginner else "ℹ️"
     pop_key = f"glossary_metric_{term_key}_{hash(label) & 0xFFFFFF}"
 
-    border_color = "#3498DB" if beginner else "#ECF0F1"
+    border_color = "#3498DB" if beginner else "#E1E4E8"
 
     # Build popover content
     if term:
@@ -541,7 +541,7 @@ def _lesson_card(title: str, content: str, icon: str = "📖", visual_area: str 
     )
 
 
-def _progress_dots(current: int, total: int, active_color: str = "#27AE60", inactive_color: str = "#ECF0F1") -> None:
+def _progress_dots(current: int, total: int, active_color: str = "#27AE60", inactive_color: str = "#E1E4E8") -> None:
     """Lesson progress dot indicators."""
     dots = []
     for i in range(total):

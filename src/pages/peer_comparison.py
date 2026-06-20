@@ -13,7 +13,7 @@ from src.services.analogy_engine import (
     get_roe_analogy,
     get_per_analogy,
 )
-from src.pages._router_base import _section_title, _info_card
+from src.pages._router_base import _section_title, _info_card, _白话_card
 from src.services.financial_metrics import find_financial_value
 from src.services.benchmarks import get_industry_benchmarks
 from src.services.roe_calculator import calc_roe_ttm
@@ -62,8 +62,10 @@ def _render_single_company_view(data: dict, stock_name: str, industry: str):
                 metrics[t(label_key)] = latest_fs[field]
 
     if metrics:
-        for label, value in metrics.items():
-            st.metric(label, value)
+        cols = st.columns(min(len(metrics), 4))
+        for i, (label, value) in enumerate(metrics.items()):
+            with cols[i % 4]:
+                _白话_card(label, str(value), "")
     else:
         st.info(t("peer.comparison.no_metrics"))
     st.caption(t("peer.comparison.switch_industry"))

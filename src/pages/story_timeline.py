@@ -24,8 +24,8 @@ from src.services.story_arc_detector import detect_arcs, get_arc_legend, ArcLabe
 
 _SEVERITY_COLORS = {
     "high": "#E74C3C",
-    "medium": "#F39C12",
-    "low": "#27AE68",
+    "medium": "#E67E22",
+    "low": "#27AE60",
 }
 
 
@@ -50,9 +50,9 @@ def _render_arc_badge(arc: ArcLabel) -> None:
 
     # Determine badge color based on arc type
     _arc_colors = {
-        "growth": "#27AE68",
+        "growth": "#27AE60",
         "decline": "#E74C3C",
-        "volatile": "#F39C12",
+        "volatile": "#E67E22",
         "recovery": "#3498DB",
     }
     color = _arc_colors.get(arc_key, "#3498DB")

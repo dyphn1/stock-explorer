@@ -54,7 +54,7 @@ def _event_type_label(event_type: str) -> str:
 def _severity_color(severity: str) -> str:
     colors = {
         "high": "#E74C3C",
-        "medium": "#F39C12",
+        "medium": "#E67E22",
         "low": "#27AE60",
     }
     return colors.get(severity, "#7F8C8D")

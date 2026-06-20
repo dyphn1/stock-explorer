@@ -195,7 +195,7 @@ def _render_financial_wellness(client: FinMindClient):
                         color = "#27AE60"
                         emoji = "🟢"
                     elif cat_score == 2:
-                        color = "#F39C12"
+                        color = "#E67E22"
                         emoji = "🟡"
                     else:
                         color = "#E74C3C"
