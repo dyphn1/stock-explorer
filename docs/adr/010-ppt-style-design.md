@@ -1,51 +1,51 @@
-# ADR-010: PPT 風格設計原則
+# ADR-010: PPT-Style Design Principles
 
-## 狀態
-已接受
+## Status
+Accepted
 
-## 日期
+## Date
 2026-06-08
 
-## 背景
+## Background
 
-Stock Explorer 的目標用戶是新手投資人。傳統股票工具的數據密集表格和大量文字對新手不友善。
+Stock Explorer's target users are beginner investors. Traditional stock tools with data-dense tables and heavy text are not beginner-friendly.
 
-## 決策
+## Decision
 
-採用 **PPT 風格**作為核心設計原則：
+Adopt **PPT style** as the core design principle:
 
-1. **一頁一重點**：每個頁面只傳達一個核心訊息
-2. **圖片主導，文字輔助**：圖表佔 > 60% 頁面面積
-3. **十秒測試**：新手能在 10 秒內複述核心概念
-4. **漸進式揭露**：預設只顯示關鍵數據，細節按需展開
+1. **One key point per page**: Each page conveys only one core message
+2. **Visual-first, text-supporting**: Charts occupy > 60% of page area
+3. **Ten-second test**: A beginner can restate the core concept within 10 seconds
+4. **Progressive disclosure**: Only key data shown by default, details on demand
 
-## 具體規範
+## Specific Guidelines
 
-### 佈局
-- 每個頁面最多 1 個主要圖表
-- 圖表上方：一句話標題
-- 圖表下方：白話說明 + 生活化比喻
-- 禁止在一頁中堆疊 3+ 個圖表
+### Layout
+- Each page has at most 1 primary chart
+- Above the chart: a one-line title
+- Below the chart: plain-language explanation + real-life analogy
+- No stacking 3+ charts on a single page
 
-### 數據卡片
-- 每個卡片：標題 + 大字數據 + 白話說明
-- 最多 4 個卡片一行（桌面版）
-- 使用 `_白话_card()` 共享元件
+### Data Cards
+- Each card: title + large-font data + plain-language explanation
+- Maximum 4 cards per row (desktop)
+- Use `_plain_language_card()` shared component
 
-### 文字限制
-- 卡片說明文字 ≤ 200 字
-- 分析文字 ≤ 400 字
-- 超出時使用 `st.expander` 折疊
+### Text Limits
+- Card description text ≤ 200 characters
+- Analysis text ≤ 400 characters
+- When exceeded, use `st.expander` to collapse
 
-## 理由
+## Rationale
 
-1. **新手友善**：減少認知負擔
-2. **記憶點**：一頁一個重點更容易記住
-3. **差異化**：與財報狗等數據密集工具形成差異
+1. **Beginner-friendly**: Reduces cognitive load
+2. **Memorability**: One key point per page is easier to remember
+3. **Differentiation**: Creates distinction from data-dense tools like StatementDog
 
-## 後果
+## Consequences
 
-- ✅ 新手更容易理解
-- ✅ 頁面更清爽
-- ⚠️ 需要嚴格執行，否則容易退化回數據密集風格
-- ⚠️ 部分頁面需要重寫以符合規範
+- ✅ Easier for beginners to understand
+- ✅ Cleaner pages
+- ⚠️ Strict enforcement required, otherwise easy to regress to data-dense style
+- ⚠️ Some pages need to be rewritten to comply with guidelines

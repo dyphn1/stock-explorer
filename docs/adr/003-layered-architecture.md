@@ -1,60 +1,60 @@
-# ADR-003: 採用嚴格分層架構
+# ADR-003: Adopt Strict Layered Architecture
 
-## 狀態
-已接受
+## Status
+Accepted
 
-## 日期
+## Date
 2026-06-07
 
-## 背景
+## Background
 
-初始開發採用「code-first」方式，導致程式碼混雜了數據存取、業務邏輯和 UI 渲染，難以維護和測試。
+Initial development used a "code-first" approach, resulting in code that mixed data access, business logic, and UI rendering, making it difficult to maintain and test.
 
-## 決策
+## Decision
 
-採用**嚴格四層架構**，每層有明確職責和禁止事項。
+Adopt a **strict four-layer architecture**, with clear responsibilities and prohibitions for each layer.
 
-## 架構定義
+## Architecture Definition
 
 ```
 Presentation Layer (src/pages/)
-    ↕ 只依賴
+    ↕ depends only on
 Routing Layer (src/pages/router.py)
-    ↕ 只依賴
+    ↕ depends only on
 Business Logic Layer (src/services/)
-    ↕ 只依賴
+    ↕ depends only on
 Data Layer (src/data/)
 ```
 
-## 各層職責
+## Layer Responsibilities
 
 ### Data Layer (`src/data/`)
-- **職責**：FinMind API 封裝、快取管理
-- **返回**：pandas DataFrame 或 dict
-- **禁止**：import streamlit、包含業務邏輯
+- **Responsibility**: FinMind API encapsulation, cache management
+- **Returns**: pandas DataFrame or dict
+- **Prohibited**: import streamlit, include business logic
 
 ### Business Logic Layer (`src/services/`)
-- **職責**：計算指標、生成圖表、白話翻譯
-- **返回**：計算結果或圖表物件
-- **禁止**：import streamlit、直接呼叫 API、有 side effects
+- **Responsibility**: Calculate indicators, generate charts, plain-language translation
+- **Returns**: Calculation results or chart objects
+- **Prohibited**: import streamlit, direct API calls, side effects
 
 ### Routing Layer (`src/pages/router.py`)
-- **職責**：管理 session_state、選擇 View、協調數據載入
-- **禁止**：直接產生 UI 元件
+- **Responsibility**: Manage session_state, select View, coordinate data loading
+- **Prohibited**: Directly generate UI components
 
 ### Presentation Layer (`src/pages/*.py`)
-- **職責**：純渲染，接收 data dict，產生 Streamlit UI
-- **禁止**：直接呼叫 API、直接讀寫快取、複雜計算
+- **Responsibility**: Pure rendering, receive data dict, generate Streamlit UI
+- **Prohibited**: Direct API calls, direct cache read/write, complex calculations
 
-## 理由
+## Rationale
 
-1. **可測試性**：每層可獨立測試
-2. **可維護性**：修改一層不影響其他層
-3. **AI Agent 友好**：明確的邊界讓 AI 知道每個檔案該放在哪裡
+1. **Testability**: Each layer can be tested independently
+2. **Maintainability**: Modifying one layer does not affect others
+3. **AI Agent friendly**: Clear boundaries tell AI where each file belongs
 
-## 後果
+## Consequences
 
-- ✅ 程式碼有明確歸屬
-- ✅ 可獨立測試每層
-- ⚠️ 初期開發速度較慢（需要遵循分層）
-- ⚠️ 需要嚴格執行，否則容易退化
+- ✅ Code has clear ownership
+- ✅ Each layer can be tested independently
+- ⚠️ Slower initial development speed (must follow layering)
+- ⚠️ Strict enforcement required, otherwise easy to regress

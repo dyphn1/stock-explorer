@@ -1,23 +1,23 @@
-# ADR-006: 瀏覽器返回按鈕支援
+# ADR-006: Browser Back Button Support
 
-## 狀態
-已接受
+## Status
+Accepted
 
-## 日期
+## Date
 2026-06-12
 
-## 背景
+## Background
 
-使用者點擊瀏覽器返回按鈕時，頁面沒有正確回到上一頁，而是直接關閉應用程式。這是因為 Streamlit 的 `st.session_state` 與瀏覽器 URL 不同步。
+When users click the browser back button, the page does not correctly return to the previous page — instead, the application closes directly. This is because Streamlit's `st.session_state` is not synchronized with the browser URL.
 
-## 決策
+## Decision
 
-使用 `st.query_params` 與 `st.session_state` 雙向同步，實現瀏覽器返回按鈕支援。
+Use bidirectional synchronization between `st.query_params` and `st.session_state` to implement browser back button support.
 
-## 實作方式
+## Implementation
 
 ```python
-# URL → session（頁面載入時）
+# URL → session (on page load)
 def sync_url_to_session():
     params = st.query_params
     if "page" in params:
@@ -25,7 +25,7 @@ def sync_url_to_session():
     if "stock_id" in params:
         st.session_state["stock_id"] = params["stock_id"]
 
-# session → URL（導航時）
+# session → URL (on navigation)
 def navigate_to(page: str, stock_id: str = None):
     st.session_state["page"] = page
     if stock_id:
@@ -36,14 +36,14 @@ def navigate_to(page: str, stock_id: str = None):
     st.rerun()
 ```
 
-## 理由
+## Rationale
 
-1. **使用者預期**：瀏覽器返回按鈕應該要能正常運作
-2. **可分享性**：URL 包含頁面狀態，可以分享連結
-3. **簡單性**：不需要額外的路由套件
+1. **User expectations**: The browser back button should work correctly
+2. **Shareability**: URL contains page state, links can be shared
+3. **Simplicity**: No additional routing package needed
 
-## 後果
+## Consequences
 
-- ✅ 瀏覽器返回/前進按鈕正常運作
-- ✅ 可透過 URL 分享特定頁面
-- ⚠️ 需要每個導航操作都同時更新 session 和 query_params
+- ✅ Browser back/forward buttons work correctly
+- ✅ Specific pages can be shared via URL
+- ⚠️ Every navigation operation must update both session and query_params simultaneously

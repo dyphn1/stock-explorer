@@ -1,185 +1,185 @@
-# 開發指南 — Stock Explorer
+# Development Guide — Stock Explorer
 
-> **適用對象**: 開發者、AI Agent | **上次更新**: 2026-06-17
+> **Audience**: Developers, AI Agents | **Last Updated**: 2026-06-17
 
 ---
 
-## 1. 環境設置
+## 1. Environment Setup
 
-### 1.1 前置需求
+### 1.1 Prerequisites
 - Python 3.11+
 - Git
-- （可選）uv 套件管理器
+- (Optional) uv package manager
 
-### 1.2 安裝步驟
+### 1.2 Installation Steps
 ```bash
 # 1. Clone
 git clone https://github.com/your-username/stock-explorer.git
 cd stock-explorer
 
-# 2. 建立虛擬環境
+# 2. Create virtual environment
 python -m venv .venv
 source .venv/bin/activate  # macOS/Linux
 # .venv\Scripts\activate   # Windows
 
-# 3. 安裝依賴
+# 3. Install dependencies
 pip install -e .
 
-# 4. 啟動開發伺服器
+# 4. Start development server
 streamlit run src/main.py
 ```
 
-### 1.3 驗證環境
+### 1.3 Verify Environment
 ```bash
-# 執行測試
+# Run tests
 uv run pytest
 
-# 驗證語法
+# Verify syntax
 uv run python -c "import src; print('OK')"
 ```
 
 ---
 
-## 2. 分層架構規範
+## 2. Layered Architecture Standards
 
-### 2.1 嚴格分層
+### 2.1 Strict Layering
 ```
 Presentation (src/pages/) → Routing (src/pages/router.py) → Services (src/services/) → Data (src/data/)
 ```
 
-### 2.2 各層職責與禁止事項
+### 2.2 Layer Responsibilities and Restrictions
 
 #### Data Layer (`src/data/`)
 ```python
-# ✅ 正確：返回 DataFrame
+# ✅ Correct: return DataFrame
 def get_daily_price(self, stock_id: str) -> pd.DataFrame: ...
 
-# ✅ 正確：返回 None 表示無數據（不拋異常）
+# ✅ Correct: return None to indicate no data (don't raise exception)
 def get_latest_price(self, stock_id: str) -> dict | None: ...
 
-# ❌ 錯誤：在 data layer 決定是否顯示 spinner
-# ❌ 錯誤：在 data layer 做業務邏輯（如排序、取 top N）
+# ❌ Wrong: deciding whether to show spinner in data layer
+# ❌ Wrong: business logic in data layer (e.g., sorting, taking top N)
 ```
-- **禁止**：import streamlit、包含業務邏輯
+- **Forbidden**: import streamlit, containing business logic
 
 #### Service Layer (`src/services/`)
 ```python
-# ✅ 正確：純函數，輸入數據 → 輸出圖表
+# ✅ Correct: pure function, input data → output chart
 def create_revenue_trend_chart(revenue_df: pd.DataFrame) -> go.Figure: ...
 
-# ✅ 正確：純函數，輸入值 → 輸出文字
+# ✅ Correct: pure function, input value → output text
 def get_gross_margin_analogy(margin: float) -> str: ...
 
-# ❌ 錯誤：在 service layer 使用 st.plotly_chart()
-# ❌ 錯誤：在 service layer 直接呼叫 FinMind API
+# ❌ Wrong: using st.plotly_chart() in service layer
+# ❌ Wrong: calling FinMind API directly in service layer
 ```
-- **禁止**：import streamlit、直接呼叫 API、有 side effects
+- **Forbidden**: import streamlit, direct API calls, side effects
 
 #### Routing Layer (`src/pages/router.py`)
-- 唯一決定「何時載入什麼數據」的地方
-- 管理頁面切換的 loading state
-- **禁止**：直接產生 UI 元件
+- The only place that decides "when to load what data"
+- Manages loading state during page transitions
+- **Forbidden**: direct UI component generation
 
 #### Presentation Layer (`src/pages/*.py`)
 ```python
-# ✅ 正確：View 接收 data dict，呼叫 service 生成圖表
+# ✅ Correct: View receives data dict, calls service to generate charts
 def _render_business_card(data: dict, client: FinMindClient):
     st.markdown(f"## {data['stock_name']}")
     fig = create_revenue_pie_chart(data["monthly_revenue"])
     st.plotly_chart(fig)
 
-# ❌ 錯誤：在 View 重新載入 router 已載入的數據
-# ❌ 錯誤：在 View 做複雜數值計算
+# ❌ Wrong: reloading data in View that router already loaded
+# ❌ Wrong: complex calculations in View
 ```
-- **禁止**：直接讀寫快取、複雜計算、業務邏輯
+- **Forbidden**: direct cache read/write, complex calculations, business logic
 
 ---
 
-## 3. 編碼規範
+## 3. Coding Standards
 
-### 3.1 命名慣例
-- **檔案**：`snake_case.py`（如 `business_card.py`）
-- **函數**：`snake_case`（如 `get_revenue_data`）
-- **類**：`PascalCase`（如 `FinMindClient`）
-- **常數**：`UPPER_SNAKE_CASE`（如 `MAX_RETRIES`）
-- **i18n key**：`dot.notation`（如 `pages.business_card.title`）
+### 3.1 Naming Conventions
+- **Files**: `snake_case.py` (e.g., `business_card.py`)
+- **Functions**: `snake_case` (e.g., `get_revenue_data`)
+- **Classes**: `PascalCase` (e.g., `FinMindClient`)
+- **Constants**: `UPPER_SNAKE_CASE` (e.g., `MAX_RETRIES`)
+- **i18n key**: `dot.notation` (e.g., `pages.business_card.title`)
 
-### 3.2 字串處理
+### 3.2 String Handling
 ```python
-# ✅ 正確：使用 i18n
+# ✅ Correct: use i18n
 from src.core.i18n import t
 st.markdown(t("pages.business_card.title"))
 
-# ❌ 錯誤：hardcoded 中文
-st.markdown("公司名片")
+# ❌ Wrong: hardcoded Chinese
+st.markdown("Business Card")
 ```
 
-### 3.3 錯誤處理
+### 3.3 Error Handling
 ```python
-# ✅ 正確：優雅降級
+# ✅ Correct: graceful degradation
 data = client.get_daily_price(stock_id)
 if data is None or len(data) == 0:
     st.warning(t("errors.no_data"))
     return
 
-# ❌ 錯誤：讓異常崩潰整個頁面
-data = client.get_daily_price(stock_id)  # 可能拋異常
+# ❌ Wrong: letting exceptions crash the entire page
+data = client.get_daily_price(stock_id)  # may raise exception
 ```
 
-### 3.4 快取使用
+### 3.4 Cache Usage
 ```python
-# ✅ 正確：透過 FinMindClient（內建快取）
+# ✅ Correct: through FinMindClient (built-in cache)
 client = FinMindClient()
 data = client.get_daily_price(stock_id)
 
-# ❌ 錯誤：直接讀寫 .cache/ 目錄
+# ❌ Wrong: directly reading/writing .cache/ directory
 with open(".cache/some_file.json") as f: ...
 ```
 
 ---
 
-## 4. 新增頁面流程
+## 4. Adding a New Page
 
-### 4.1 目前流程（需修改 3 處）
-1. 在 `src/pages/` 建立新頁面檔案
-2. 在 `src/pages/router.py` 新增 import
-3. 在 `src/pages/router.py` 新增 if-elif 分支
+### 4.1 Current Process (requires modifying 3 places)
+1. Create new page file in `src/pages/`
+2. Add import in `src/pages/router.py`
+3. Add if-elif branch in `src/pages/router.py`
 
-### 4.2 目標流程（Plugin Chassis）
-1. 在 `src/plugins/` 建立新 plugin
-2. 繼承 `BasePlugin`，實作 `render()` 方法
-3. 自動掃描註冊，**零修改路由邏輯**
+### 4.2 Target Process (Plugin Chassis)
+1. Create new plugin in `src/plugins/`
+2. Inherit `BasePlugin`, implement `render()` method
+3. Auto-scan and register, **zero routing logic changes**
 
 ---
 
-## 5. 測試規範
+## 5. Testing Standards
 
-### 5.1 測試分層
-| 層級 | 檢查內容 | 通過標準 |
-|------|----------|----------|
-| **L0** | 語法、import、key 唯一性 | 必須在 commit 前通過 |
-| **L1** | 頁面渲染（所有頁面不崩潰） | 必須在 handoff 前通過 |
-| **L2** | 互動（按鈕、導航、表單） | 必須在 release 前通過 |
-| **L3** | 視覺/UX（截圖分析） | Designer 審核 |
+### 5.1 Test Layers
+| Layer | What It Checks | Pass Criteria |
+|-------|----------------|---------------|
+| **L0** | Syntax, imports, key uniqueness | Must pass before commit |
+| **L1** | Page rendering (all pages load without crash) | Must pass before handoff |
+| **L2** | Interactions (buttons, navigation, forms) | Must pass before release |
+| **L3** | Visual/UX (screenshot analysis) | Designer review |
 
-### 5.2 執行測試
+### 5.2 Running Tests
 ```bash
-# 全部測試
+# All tests
 uv run pytest
 
-# 特定檔案
+# Specific file
 uv run pytest tests/test_business_logic.py
 
-# 特定標記
+# Specific marker
 uv run pytest -m tone
 ```
 
 ---
 
-## 6. Git 規範
+## 6. Git Standards
 
-### 6.1 Commit 風格
-遵循 Angular-style Conventional Commits：
+### 6.1 Commit Style
+Follow Angular-style Conventional Commits:
 ```
 feat: add revenue pie chart to business card
 fix: resolve cache invalidation in get_daily_price
@@ -188,36 +188,12 @@ docs: update architecture overview
 test: add unit tests for analogy_engine
 ```
 
-### 6.2 分支策略
-- `main`：穩定版本
-- `feature/Cxxx-<name>`：新功能
-- `fix/Dxxx-<name>`：修復
-- `refactor/TDxxx-<name>`：重構
+### 6.2 Branch Strategy
+- `main`: Stable version
+- `feature/Cxxx-<name>`: New feature
+- `fix/Dxxx-<name>`: Bug fix
+- `refactor/TDxxx-<name>`: Refactor
 
 ---
 
-## 7. AI Agent 協作規範
-
-### 7.1 角色分工
-| 角色 | 職責 | 模型 |
-|------|------|------|
-| **PM** | 協調、整合、分配工作 | owl-alpha |
-| **Architect** | 架構分析、技術方案 | nemotron-3-super-120b |
-| **Developer** | 實作、修復、重構 | owl-alpha |
-| **Designer** | UX/UI 審核、視覺系統 | gemma-4-31b-it |
-| **QA** | 驗證、測試、競品分析 | gemma-4-31b-it |
-| **Challenger** | 交叉檢驗決策 | gpt-oss-120b |
-
-### 7.2 工作流程
-1. **PM** 讀取 `STATUS.md` 和 `docs/state/handoff.md`
-2. **PM** 分派任務給各角色
-3. **Architect** 分析技術可行性
-4. **Developer** 實作
-5. **QA** 驗證
-6. **Challenger** 挑戰決策（3 輪）
-7. **PM** 整合結果
-
-### 7.3 文件限制
-- `docs/state/*`：最多 100 行
-- `docs/logs/*`：最多 200 行
-- 超過時觸發 **Compression Cycle**：提煉至 `docs/adr/` 或 `docs/overview/`，然後截斷
+## 7. AI Agent Collaboration Standards

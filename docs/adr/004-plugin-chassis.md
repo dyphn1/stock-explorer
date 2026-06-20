@@ -1,101 +1,101 @@
-# ADR-004: Plugin Chassis 架構
+# ADR-004: Plugin Chassis Architecture
 
-## 狀態
-規劃中 → **已核准（待實施）**
+## Status
+Planned → **Approved (Pending Implementation)**
 
-## 日期
-2026-06-14 → **更新：2026-06-18**
-
----
-
-## 背景
-
-`src/pages/router.py` 目前有 **355 行**，包含 **33 個 if-elif 分支**。新增一個頁面需要修改 **3 個地方**：
-
-1. 新增 `import` 語句
-2. 在 `PAGE_KEYS` 列表中添加 key
-3. 在 `load_and_render_page()` 中添加 if-elif 分支
-
-這嚴重違反了**開放-封閉原則（Open-Closed Principle）**：對擴展開放，但對修改不封閉。
-
-此外，當前架構存在以下問題：
-- 所有頁面函數集中在 `src/pages/` 目錄，難以區分「需要股票數據的頁面」和「獨立頁面」
-- 導航渲染邏輯（`_render_navbar`、`_render_navbar_minimal`）與路由邏輯耦合
-- 無法動態啟用/停用頁面（feature flag）
-- 新增頁面時容易遺漏某處修改，導致運行時錯誤
+## Date
+2026-06-14 → **Updated: 2026-06-18**
 
 ---
 
-## 決策
+## Background
 
-將每個頁面設計為獨立 **Plugin**，遵循統一協議，核心框架自動掃描、註冊、路由。
+`src/pages/router.py` is currently **355 lines** with **33 if-elif branches**. Adding a page requires modifying **3 places**:
 
-**核心原則：新增頁面 = 新增一個 plugin 目錄，零修改路由邏輯。**
+1. Add an `import` statement
+2. Add the key to the `PAGE_KEYS` list
+3. Add an if-elif branch in `load_and_render_page()`
+
+This severely violates the **Open-Closed Principle**: open for extension, but not closed for modification.
+
+Additionally, the current architecture has the following problems:
+- All page functions are concentrated in `src/pages/`, making it hard to distinguish between "pages that require stock data" and "standalone pages"
+- Navigation rendering logic (`_render_navbar`, `_render_navbar_minimal`) is coupled with routing logic
+- Cannot dynamically enable/disable pages (feature flag)
+- Easy to miss a modification when adding a new page, causing runtime errors
 
 ---
 
-## 目標架構
+## Decision
+
+Design each page as an independent **Plugin** following a unified protocol, with the core framework automatically scanning, registering, and routing.
+
+**Core principle: Adding a page = adding a plugin directory, zero modifications to routing logic.**
+
+---
+
+## Target Architecture
 
 ```
 src/
-├── core/                           # 核心框架層
-│   ├── i18n.py                     # i18n 模組（已有）
-│   ├── plugin_protocol.py          # Plugin 介面定義（新增）
-│   └── plugin_registry.py          # Plugin 註冊表（新增）
+├── core/                           # Core framework layer
+│   ├── i18n.py                     # i18n module (existing)
+│   ├── plugin_protocol.py          # Plugin interface definition (new)
+│   └── plugin_registry.py          # Plugin registry (new)
 │
-├── plugins/                        # Plugin 目錄（新增，取代 pages/ 的路由功能）
-│   ├── __init__.py                 # 套件標記
-│   ├── business_card/              # 公司名片
+├── plugins/                        # Plugin directory (new, replaces routing function of pages/)
+│   ├── __init__.py                 # Package marker
+│   ├── business_card/              # Business card
 │   │   ├── plugin.py               # BusinessCardPlugin(BasePlugin)
-│   │   └── ...                     # 原有渲染邏輯（從 pages/ 遷移）
-│   ├── operation_checkup/          # 營運健檢
+│   │   └── ...                     # Original rendering logic (migrated from pages/)
+│   ├── operation_checkup/          # Operation checkup
 │   │   └── plugin.py
-│   ├── financial_health/           # 財務體質
+│   ├── financial_health/           # Financial health
 │   │   └── plugin.py
-│   ├── category_browser/           # 分類瀏覽（獨立頁面，不需要 stock_id）
+│   ├── category_browser/           # Category browser (standalone page, no stock_id needed)
 │   │   └── plugin.py
-│   └── ...                         # 其他頁面
+│   └── ...                         # Other pages
 │
-├── pages/                          # 視圖層（逐步遷移）
-│   ├── router.py                   # 頁面路由器（重構為使用 PluginRegistry）
-│   ├── _router_base.py             # 共享工具（保留）
-│   ├── url_sync.py                 # URL ↔ session 同步（保留）
-│   └── *.py                        # 原有頁面文件（遷移完成後移除）
+├── pages/                          # View layer (gradually migrating)
+│   ├── router.py                   # Page router (refactored to use PluginRegistry)
+│   ├── _router_base.py             # Shared utilities (kept)
+│   ├── url_sync.py                 # URL ↔ session sync (kept)
+│   └── *.py                        # Original page files (removed after migration)
 │
-├── services/                       # 業務邏輯層（不變）
-└── data/                           # 數據層（不變）
+├── services/                       # Business logic layer (unchanged)
+└── data/                           # Data layer (unchanged)
 ```
 
 ---
 
-## Plugin Protocol 設計
+## Plugin Protocol Design
 
-### PluginMetadata（元數據）
+### PluginMetadata
 
 ```python
 @dataclass(frozen=True)
 class PluginMetadata:
-    key: str                    # 唯一標識符（對應 i18n key: page.<key>）
-    icon: str                   # 圖示（emoji）
-    requires_stock_id: bool     # 是否需要股票代號
-    requires_data: bool         # 是否需要預載 data dict
-    category: str               # 分類：analysis | browse | tool | learn | system
-    order: int                  # 排序權重（越小越靠前）
-    enabled: bool               # 是否啟用（feature flag）
+    key: str                    # Unique identifier (maps to i18n key: page.<key>)
+    icon: str                   # Icon (emoji)
+    requires_stock_id: bool     # Whether stock_id is required
+    requires_data: bool         # Whether pre-loaded data dict is required
+    category: str               # Category: analysis | browse | tool | learn | system
+    order: int                  # Sort weight (smaller = earlier)
+    enabled: bool               # Whether enabled (feature flag)
 ```
 
-### PluginRenderContext（渲染上下文）
+### PluginRenderContext
 
 ```python
 @dataclass
 class PluginRenderContext:
     page_key: str
-    data: dict | None           # 預載的股票數據
+    data: dict | None           # Pre-loaded stock data
     client: FinMindClient
     stock_id: str | None
 ```
 
-### BasePlugin（抽象基類）
+### BasePlugin (Abstract Base Class)
 
 ```python
 class BasePlugin(ABC):
@@ -107,49 +107,49 @@ class BasePlugin(ABC):
     def render(self, ctx: PluginRenderContext) -> None: ...
 
     def can_render(self, ctx: PluginRenderContext) -> bool:
-        """默認實現：檢查 stock_id / data 是否滿足要求"""
+        """Default implementation: check if stock_id / data requirements are met"""
         ...
 ```
 
-### 分類常量
+### Category Constants
 
-| Category | 說明 | 示例頁面 |
-|----------|------|----------|
-| `analysis` | 股票分析類 | 名片、營運健檢、財務體質、同業比較 |
-| `browse` | 瀏覽類 | 分類瀏覽、ETF 專區、產業熱力圖 |
-| `tool` | 工具類 | 股票探索、投資備忘錄、理財健康檢查 |
-| `learn` | 學習類 | 學習學院、案例研究、理解力測驗 |
-| `system` | 系統類 | 設定、通知中心、事件儀表板 |
+| Category | Description | Example Pages |
+|----------|-------------|---------------|
+| `analysis` | Stock analysis | Business card, operation checkup, financial health, peer comparison |
+| `browse` | Browsing | Category browser, ETF section, sector heatmap |
+| `tool` | Tools | Stock screener, investment memo, financial wellness check |
+| `learn` | Learning | Academy, case studies, comprehension quiz |
+| `system` | System | Settings, notification center, event dashboard |
 
 ---
 
-## PluginRegistry 設計
+## PluginRegistry Design
 
-### 自動掃描策略
+### Auto-Discovery Strategy
 
 ```
 PluginRegistry.discover()
-    → 遍歷 src/plugins/ 下的所有子目錄
-    → 每個子目錄中查找 plugin.py
-    → 導入模塊，查找所有 BasePlugin 子類
-    → 實例化並註冊到 _plugins: dict[str, BasePlugin]
+    → Traverse all subdirectories under src/plugins/
+    → Find plugin.py in each subdirectory
+    → Import module, find all BasePlugin subclasses
+    → Instantiate and register to _plugins: dict[str, BasePlugin]
 ```
 
-### 核心 API
+### Core API
 
 ```python
 registry = PluginRegistry()
-registry.discover()                          # 自動掃描，返回新註冊數量
-registry.get("business_card")                # 根據 key 查找 plugin
-registry.has("business_card")                # 檢查是否存在
-registry.all_keys                            # 所有已註冊的 key 列表
-registry.all_plugins                         # 所有 plugin（按 category + order 排序）
-registry.get_by_category("analysis")         # 按分類獲取
+registry.discover()                          # Auto-scan, returns count of newly registered
+registry.get("business_card")                # Find plugin by key
+registry.has("business_card")                # Check if exists
+registry.all_keys                            # List of all registered keys
+registry.all_plugins                         # All plugins (sorted by category + order)
+registry.get_by_category("analysis")         # Get by category
 ```
 
-### LegacyPageAdapter（向後兼容）
+### LegacyPageAdapter (Backward Compatibility)
 
-在遷移過渡期，可將現有的 `_render_*` 函數包裝為 Plugin，無需立即重構：
+During the migration transition period, existing `_render_*` functions can be wrapped as Plugins without immediate refactoring:
 
 ```python
 adapter = LegacyPageAdapter(
@@ -164,18 +164,18 @@ registry.register(adapter)
 
 ---
 
-## 重構後的 router.py
+## Refactored router.py
 
-重構後的 `load_and_render_page()` 偽代碼：
+Pseudo-code for the refactored `load_and_render_page()`:
 
 ```python
 def load_and_render_page(client: FinMindClient, stock_id: str):
     page_key = st.session_state.get("page_key", "business_card")
 
-    # 從 registry 查找 plugin
+    # Find plugin from registry
     plugin = registry.get(page_key)
 
-    # 構建渲染上下文
+    # Build render context
     ctx = PluginRenderContext(
         page_key=page_key,
         data=None,
@@ -183,29 +183,29 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
         stock_id=stock_id,
     )
 
-    # 獨立頁面（不需要 stock_id）：直接渲染
+    # Standalone pages (no stock_id needed): render directly
     if not plugin.metadata.requires_stock_id:
         _render_navbar_minimal(page_key)
         plugin.render(ctx)
         return
 
-    # 需要 stock_id 的頁面：載入數據
+    # Pages requiring stock_id: load data
     with st.spinner(t("status.loading_stock")):
         data = get_stock_data(client, stock_id)
     if data is None:
         st.error(t("error.not_found", sid=stock_id))
         return
 
-    # M5 事件偵測（保持不變）
+    # M5 event detection (unchanged)
     _run_event_detection(stock_id, data)
 
-    # ETF 導向 ETF 詳細頁（保持不變）
+    # ETF redirect to ETF detail page (unchanged)
     if _is_etf(stock_id, data):
         _render_navbar(data, page_key)
         registry.get("etf_detail").render(ctx)
         return
 
-    # 渲染導航列 + 頁面
+    # Render navbar + page
     _render_navbar(data, page_key)
     ctx.data = data
     plugin.render(ctx)
@@ -213,37 +213,37 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
 
 ---
 
-## 遷移計畫
+## Migration Plan
 
-### 階段 0：基礎骨架（TD-01a）✅ 當前
-**目標**：建立 Plugin Protocol 和 Registry 骨架，不遷移任何頁面。
+### Phase 0: Foundation Skeleton (TD-01a) ✅ Current
+**Goal**: Build Plugin Protocol and Registry skeleton, migrate no pages.
 
-- [x] 建立 `src/core/plugin_protocol.py`
-- [x] 建立 `src/core/plugin_registry.py`
-- [x] 建立 `src/plugins/__init__.py`
-- [ ] 更新 `docs/adr/004-plugin-chassis.md`（本文檔）
+- [x] Create `src/core/plugin_protocol.py`
+- [x] Create `src/core/plugin_registry.py`
+- [x] Create `src/plugins/__init__.py`
+- [ ] Update `docs/adr/004-plugin-chassis.md` (this document)
 
-**風險**：無。不影響現有功能。
+**Risk**: None. Does not affect existing functionality.
 
-### 階段 1：向後兼容層（TD-01b）
-**目標**：使用 `LegacyPageAdapter` 將現有頁面包裝為 Plugin，驗證 Registry 功能。
+### Phase 1: Backward Compatibility Layer (TD-01b)
+**Goal**: Wrap existing pages as Plugins using `LegacyPageAdapter`, verify Registry functionality.
 
-遷移順序（低風險優先）：
-1. `category_browser` — 獨立頁面，不需要 stock_id
-2. `settings` — 系統頁面，無數據依賴
-3. `event_dashboard` — 獨立頁面
-4. `notification_center` — 獨立頁面
-5. `daily_market` — 獨立頁面
+Migration order (low risk first):
+1. `category_browser` — standalone page, no stock_id needed
+2. `settings` — system page, no data dependency
+3. `event_dashboard` — standalone page
+4. `notification_center` — standalone page
+5. `daily_market` — standalone page
 
-**驗證標準**：
-- 所有 5 個頁面通過 `LegacyPageAdapter` 註冊後，導航和渲染正常
-- 原有 `router.py` 的 if-elif 分支可被 registry 查找替代
+**Verification criteria**:
+- All 5 pages registered via `LegacyPageAdapter`, navigation and rendering work correctly
+- Original `router.py` if-elif branches can be replaced by registry lookups
 
-### 階段 2：核心分析頁面遷移（TD-01c）
-**目標**：遷移核心股票分析頁面到 `src/plugins/` 目錄。
+### Phase 2: Core Analysis Page Migration (TD-01c)
+**Goal**: Migrate core stock analysis pages to `src/plugins/` directory.
 
-遷移順序（按使用頻率）：
-1. `business_card` — 最高頻，作為標杆
+Migration order (by usage frequency):
+1. `business_card` — highest frequency, serves as the benchmark
 2. `operation_checkup`
 3. `financial_health`
 4. `peer_comparison`
@@ -255,17 +255,17 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
 10. `moat_comparison`
 11. `debate_cards`
 
-**每個頁面的遷移步驟**：
-1. 在 `src/plugins/<name>/` 建立 `plugin.py`
-2. 繼承 `BasePlugin`，定義 `metadata`
-3. 將原有 `_render_*` 函數的邏輯移入 `render()` 方法
-4. 更新 `router.py` 使用 `registry.get(name).render(ctx)`
-5. 運行測試驗證
+**Migration steps for each page**:
+1. Create `src/plugins/<name>/plugin.py`
+2. Inherit `BasePlugin`, define `metadata`
+3. Move original `_render_*` function logic into `render()` method
+4. Update `router.py` to use `registry.get(name).render(ctx)`
+5. Run tests to verify
 
-### 階段 3：瀏覽/工具/學習頁面遷移（TD-01d）
-**目標**：遷移剩餘頁面。
+### Phase 3: Browse/Tool/Learn Page Migration (TD-01d)
+**Goal**: Migrate remaining pages.
 
-遷移順序：
+Migration order:
 1. `etf_section` / `etf_browser`
 2. `watchlist`
 3. `investment_memo`
@@ -280,20 +280,20 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
 12. `daily_story` / `investor_story_feed`
 13. `sector_heatmap`
 
-### 階段 4：清理（TD-01e）
-**目標**：移除舊代碼，完成重構。
+### Phase 4: Cleanup (TD-01e)
+**Goal**: Remove old code, complete refactoring.
 
-- [ ] 移除 `router.py` 中所有 if-elif 分支
-- [ ] 移除 `router.py` 中所有 import（改為 registry 自動發現）
-- [ ] 移除 `PAGE_KEYS` 列表（改為 `registry.all_keys`）
-- [ ] 移除 `src/pages/` 中已遷移的 `.py` 文件
-- [ ] 更新 `url_sync.py` 的 `VALID_PAGES`（改為從 registry 動態獲取）
-- [ ] 更新 `main.py` 的 sidebar nav_items（改為從 registry 動態獲取）
-- [ ] 全面測試
+- [ ] Remove all if-elif branches from `router.py`
+- [ ] Remove all imports from `router.py` (replaced by registry auto-discovery)
+- [ ] Remove `PAGE_KEYS` list (replaced by `registry.all_keys`)
+- [ ] Remove migrated `.py` files from `src/pages/`
+- [ ] Update `url_sync.py` `VALID_PAGES` (replaced by dynamic registry lookup)
+- [ ] Update `main.py` sidebar nav_items (replaced by `registry.get_by_category()`)
+- [ ] Full test suite
 
 ---
 
-## 頁面分類與排序
+## Page Categories and Ordering
 
 | Key | Category | Order | requires_stock_id | requires_data | Icon |
 |-----|----------|-------|-------------------|---------------|------|
@@ -329,37 +329,37 @@ def load_and_render_page(client: FinMindClient, stock_id: str):
 
 ---
 
-## 理由
+## Rationale
 
-1. **開放-封閉原則**：新增功能不需修改現有程式碼，只需新增 plugin 目錄
-2. **獨立開發**：每個 plugin 可獨立開發/測試，降低耦合
-3. **動態啟用/停用**：通過 `metadata.enabled` 實現 feature flag
-4. **漸進式遷移**：`LegacyPageAdapter` 允許逐步遷移，降低風險
-5. **類型安全**：`PluginProtocol` + `BasePlugin` 提供靜態和運行時雙重檢查
-6. **自動發現**：無需手動註冊，減少遺漏風險
+1. **Open-Closed Principle**: Adding functionality doesn't require modifying existing code, just adding a plugin directory
+2. **Independent development**: Each plugin can be developed/tested independently, reducing coupling
+3. **Dynamic enable/disable**: Feature flags via `metadata.enabled`
+4. **Progressive migration**: `LegacyPageAdapter` allows gradual migration, reducing risk
+5. **Type safety**: `PluginProtocol` + `BasePlugin` provides static and runtime double checking
+6. **Auto-discovery**: No manual registration needed, reducing risk of omissions
 
-## 後果
+## Consequences
 
-### 正面
-- ✅ 新增/移除功能 = 新增/移除 plugin 目錄，零修改路由邏輯
-- ✅ 可獨立開發/測試單一 feature
-- ✅ 動態啟用/停用 feature（通過 `enabled` 屬性）
-- ✅ 頁面元數據集中管理（icon、order、category）
-- ✅ 導航自動從 registry 生成，消除 `PAGE_KEYS` 與路由不同步的風險
+### Positive
+- ✅ Adding/removing features = adding/removing plugin directory, zero routing logic changes
+- ✅ Independent development/testing of individual features
+- ✅ Dynamic feature enable/disable (via `enabled` property)
+- ✅ Centralized page metadata management (icon, order, category)
+- ✅ Navigation auto-generated from registry, eliminating risk of `PAGE_KEYS` and routing getting out of sync
 
-### 風險與緩解
-- ⚠️ **一次性重構成本**：緩解：分 5 個階段漸進遷移，每階段可獨立驗證
-- ⚠️ **團隊需要理解 plugin 概念**：緩解：提供清晰的文檔和 `LegacyPageAdapter` 示例
-- ⚠️ **Streamlit session_state 與 Plugin 生命週期耦合**：緩解：`PluginRenderContext` 封裝所有狀態，plugin 不直接訪問 session_state
-- ⚠️ **自動掃描可能導入不需要的模塊**：緩解：只掃描 `src/plugins/` 目錄，每個 plugin 必須有 `plugin.py`
+### Risks and Mitigation
+- ⚠️ **One-time refactoring cost**: Mitigation: 5-phase progressive migration, each phase independently verifiable
+- ⚠️ **Team needs to understand plugin concept**: Mitigation: Provide clear documentation and `LegacyPageAdapter` examples
+- ⚠️ **Streamlit session_state coupled with Plugin lifecycle**: Mitigation: `PluginRenderContext` encapsulates all state, plugins don't access session_state directly
+- ⚠️ **Auto-scan may import unwanted modules**: Mitigation: Only scan `src/plugins/` directory, each plugin must have `plugin.py`
 
 ---
 
-## 相關文件
+## Related Files
 
-- `src/core/plugin_protocol.py` — Plugin Protocol 定義
-- `src/core/plugin_registry.py` — Plugin Registry 實現
-- `src/plugins/__init__.py` — Plugin 目錄標記
-- `src/pages/router.py` — 待重構的路由器
-- `docs/overview/02-architecture.md` — 系統架構文件
-- `docs/overview/06-development-guide.md` — 開發指南
+- `src/core/plugin_protocol.py` — Plugin Protocol definition
+- `src/core/plugin_registry.py` — Plugin Registry implementation
+- `src/plugins/__init__.py` — Plugin directory marker
+- `src/pages/router.py` — Router to be refactored
+- `docs/overview/02-architecture.md` — System architecture document
+- `docs/overview/06-development-guide.md` — Development guide

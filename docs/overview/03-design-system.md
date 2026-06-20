@@ -1,180 +1,180 @@
-# 設計系統 — Stock Explorer
+# Design System — Stock Explorer
 
-> **狀態**: 基準規範 | **上次更新**: 2026-06-17
-
----
-
-## 1. 設計哲學
-
-### 核心原則
-1. **歷史學家，不是股評家** — 只說「這家公司發生了什麼事」，從不給買賣建議
-2. **PPT 風格** — 一頁一個重點，圖片主導，文字輔助
-3. **十秒測試** — 新手能在 10 秒內複述核心概念
-4. **新手友善** — 所有專業術語必須有白話翻譯
-
-### 設計決策優先級
-```
-正確性 > 清晰度 > 完整性 > 美觀度
-```
+> **Status**: Baseline specification | **Last Updated**: 2026-06-17
 
 ---
 
-## 2. 佈局分區
+## 1. Design Philosophy
 
-頁面嚴格分為三個區域，不可混用：
+### Core Principles
+1. **Historian, not stock picker** — Only say "what happened to this company," never give buy/sell advice
+2. **PPT style** — One key point per page, image-driven, text-assisted
+3. **10-second test** — Beginners can restate the core concept within 10 seconds
+4. **Beginner-friendly** — All professional terms must have plain-language translations
+
+### Design Decision Priority
+```
+Correctness > Clarity > Completeness > Aesthetics
+```
+
+---
+
+## 2. Layout Zones
+
+Pages are strictly divided into three zones that must not be mixed:
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  Zone A: 頂部導航列 (Navbar)                      │
-│  公司名稱 + 股價 + 分頁標籤                        │
+│  Zone A: Top Navigation Bar (Navbar)             │
+│  Company name + stock price + page tabs          │
 ├──────────┬──────────────────────────────────────┤
 │          │                                      │
-│  Zone B  │  Zone C: 主內容區域                    │
-│  側邊欄   │  純數據 + 圖表                         │
-│  導航     │  無互動控制項                          │
+│  Zone B  │  Zone C: Main Content Area            │
+│  Sidebar │  Pure data + charts                   │
+│  Navigation │  No interactive controls          │
 │          │                                      │
 └──────────┴──────────────────────────────────────┘
 ```
 
-### Zone A：頂部導航列
-- **左側**：公司名稱 + 股票代號 + 產業標籤
-- **右側**：目前價格 + 漲跌幅
-- **下方**：分頁標籤（名片 / 營運健檢 / 財務體質 / 同業比較 / 集團架構 / 分類瀏覽 / ETF 專區 / 我的關注 / 事件儀表板）
-- 禁止包含：搜尋框、篩選器、任何互動控制項
+### Zone A: Top Navigation Bar
+- **Left**: Company name + stock ID + industry tag
+- **Right**: Current price + change
+- **Bottom**: Page tabs (Business Card / Operations Checkup / Financial Health / Peer Comparison / Group Structure / Category Browser / ETF Section / My Watchlist / Event Dashboard)
+- Must NOT contain: search box, filters, any interactive controls
 
-### Zone B：側邊欄
-- **功能**：全域導航（搜尋、熱門股票、熱門 ETF、我的關注、事件儀表板）
-- **行為**：預設展開、可收合後重新展開
-- 禁止包含：圖表、數據表格、頁面內容
+### Zone B: Sidebar
+- **Function**: Global navigation (search, hot stocks, hot ETFs, my watchlist, event dashboard)
+- **Behavior**: Default expanded, can be collapsed and re-expanded
+- Must NOT contain: charts, data tables, page content
 
-### Zone C：主內容區域
-- **功能**：純數據展示 + 圖表
-- **原則**：一頁一個核心訊息，圖表空間大於文字
-- 互動控制項（時間範圍、指標切換）放在內容區頂部，與數據明確分隔
-
----
-
-## 3. 色彩系統
-
-| 用途 | 顏色 | Hex Code |
-|------|------|----------|
-| 主強調色 | 藍色 | `#3498DB` |
-| 正向 / 上漲 | 綠色 | `#27AE60` |
-| 負向 / 下跌 | 紅色 | `#E74C3C` |
-| 卡片背景 | 淺灰 | `#F8F9FA` |
-| 警告背景 | 淺黃 | `#FEF9E7` |
-| 提示背景 | 淺橙 | `#FFF8F0` |
-| 主要文字 | 深灰 | `#2C3E50` |
-| 次要文字 | 灰色 | `#7F8C8D` |
-
-**規則**：
-- 紅綠僅用於漲跌語境，不用於裝飾
-- 所有文字與背景對比度必須符合 WCAG AA 標準
-- 圖表色彩使用 Plotly 預設調色盤，保持一致性
+### Zone C: Main Content Area
+- **Function**: Pure data display + charts
+- **Principle**: One core message per page, chart space greater than text
+- Interactive controls (time range, metric toggles) placed at top of content area, clearly separated from data
 
 ---
 
-## 4. 字體規範
+## 3. Color System
 
-| 層級 | 用途 | 大小 |
-|------|------|------|
-| H1 | 頁面標題 | 24px |
-| H2 | 區塊標題 | 20px |
-| H3 | 卡片標題 | 16px |
-| Body | 內文 | 14px |
-| Caption | 輔助說明 | 12px |
+| Usage | Color | Hex Code |
+|-------|-------|----------|
+| Primary accent | Blue | `#3498DB` |
+| Positive / Up | Green | `#27AE60` |
+| Negative / Down | Red | `#E74C3C` |
+| Card background | Light gray | `#F8F9FA` |
+| Warning background | Light yellow | `#FEF9E7` |
+| Tip background | Light orange | `#FFF8F0` |
+| Primary text | Dark gray | `#2C3E50` |
+| Secondary text | Gray | `#7F8C8D` |
 
-**中文字型**：系統預設（蘋方 / 微軟正黑體）
-**英文字型**：系統預設（San Francisco / Segoe UI）
-**數字型**：等寬字體（用於數據對齊）
+**Rules**:
+- Red/green only used for price change context, never for decoration
+- All text-to-background contrast must meet WCAG AA standards
+- Chart colors use Plotly default palette for consistency
 
 ---
 
-## 5. 元件規範
+## 4. Typography
 
-### 5.1 數據卡片 (Metric Card)
+| Level | Usage | Size |
+|-------|-------|------|
+| H1 | Page title | 24px |
+| H2 | Section title | 20px |
+| H3 | Card title | 16px |
+| Body | Body text | 14px |
+| Caption | Supporting text | 12px |
+
+**Chinese font**: System default (PingFang / Microsoft JhengHei)
+**English font**: System default (San Francisco / Segoe UI)
+**Numeric font**: Monospace (for data alignment)
+
+---
+
+## 5. Component Specifications
+
+### 5.1 Metric Card
 ```
 ┌────────────────────────────┐
-│  📊 營收成長率              │
+│  📊 Revenue Growth Rate     │
 │  ────────────────────────  │
 │  +12.5%                    │
-│  比去年同月成長 12.5%       │
-│  「每 100 元營收多賺 12.5 元」│
+│  12.5% growth vs same month last year │
+│  "For every 100 dollars of revenue, 12.5 dollars more" │
 └────────────────────────────┘
 ```
-- 標題 + 圖示
-- 大字數據
-- 白話說明
-- 生活化比喻（選填）
+- Title + icon
+- Large number
+- Plain-language explanation
+- Real-world analogy (optional)
 
-### 5.2 圖表容器
-- 使用 Plotly 互動圖表
-- 每個圖表上方必須有標題
-- 下方必須有數據來源標註
-- Hover tooltip 顯示精確數值 + 白話說明
+### 5.2 Chart Container
+- Use Plotly interactive charts
+- Every chart must have a title above it
+- Data source annotation below
+- Hover tooltip shows exact value + plain-language explanation
 
-### 5.3 導航元件
-- 側邊欄按鈕：`st.button` + `use_container_width=True`
-- 分頁標籤：Active tab 用 `**▎分頁名稱**`，其餘用 `st.button`
-- 導覽後必須同時更新 `st.session_state` 和 `st.query_params`
-
----
-
-## 6. 狀態處理
-
-### 6.1 載入狀態
-- 頁面切換時顯示 `st.spinner`
-- 數據載入期間圖表區域顯示 skeleton placeholder
-
-### 6.2 錯誤狀態
-- API 失敗：顯示友善錯誤訊息 + 重試按鈕
-- 數據不存在：顯示「尚無資料」空狀態 + 引導文字
-- 單一區塊失敗不影響其他區塊顯示
-
-### 6.3 空狀態
-- 關注列表為空：顯示引導文字 + 「探索股票」按鈕
-- 搜尋無結果：顯示「找不到相符的股票」+ 建議
+### 5.3 Navigation Components
+- Sidebar buttons: `st.button` + `use_container_width=True`
+- Page tabs: Active tab uses `**▎Tab Name**`, others use `st.button`
+- After navigation, must update both `st.session_state` and `st.query_params`
 
 ---
 
-## 7. HTML 原型
+## 6. State Handling
 
-> 📁 所有頁面的 HTML 原型位於 `design/prototypes/`，由 UX Designer 維護。
+### 6.1 Loading State
+- Show `st.spinner` during page transitions
+- Chart area shows skeleton placeholder during data loading
 
-### 原型目錄
+### 6.2 Error State
+- API failure: Show friendly error message + retry button
+- No data: Show "No data available" empty state + guidance text
+- Single section failure does not affect other sections
+
+### 6.3 Empty State
+- Empty watchlist: Show guidance text + "Explore Stocks" button
+- No search results: Show "No matching stocks found" + suggestions
+
+---
+
+## 7. HTML Prototypes
+
+> 📁 HTML prototypes for all pages are in `design/prototypes/`, maintained by the UX Designer.
+
+### Prototype Directory
 ```
 design/
-├── index.html                 # 設計入口：所有頁面預覽索引
-├── prototypes/                # 各頁面 HTML 原型
-│   ├── business_card.html     # 公司名片頁 ✅
-│   ├── operation_checkup.html # 營運健檢
-│   ├── financial_health.html  # 財務體質
-│   ├── peer_comparison.html   # 同業比較
-│   ├── group_structure.html   # 集團架構
-│   ├── category_browser.html  # 分類瀏覽
-│   ├── etf_browser.html       # ETF 瀏覽
-│   ├── watchlist.html         # 我的關注
-│   ├── event_dashboard.html   # 事件儀表板
-│   └── daily_market.html      # 每日市場動態
-├── components/                # 可重用元件
-│   ├── _navbar.html           # 頂部導航列
-│   ├── _sidebar.html          # 側邊欄
-│   └── _card.html             # 數據卡片
-├── assets/                    # CSS、設計變數
-│   ├── design-tokens.css      # 設計系統變數
-│   └── base.css               # 全局基礎樣式
-├── specs/                     # 設計規格書
-└── reviews/                   # 設計審核報告
+├── index.html                 # Design entry: preview index of all pages
+├── prototypes/                # HTML prototypes for each page
+│   ├── business_card.html     # Business card page ✅
+│   ├── operation_checkup.html # Operations checkup
+│   ├── financial_health.html  # Financial health
+│   ├── peer_comparison.html   # Peer comparison
+│   ├── group_structure.html   # Group structure
+│   ├── category_browser.html  # Category browser
+│   ├── etf_browser.html       # ETF browser
+│   ├── watchlist.html         # My watchlist
+│   ├── event_dashboard.html   # Event dashboard
+│   └── daily_market.html      # Daily market overview
+├── components/                # Reusable components
+│   ├── _navbar.html           # Top navigation bar
+│   ├── _sidebar.html          # Sidebar
+│   └── _card.html             # Data card
+├── assets/                    # CSS, design variables
+│   ├── design-tokens.css      # Design system variables
+│   └── base.css               # Global base styles
+├── specs/                     # Design specifications
+└── reviews/                   # Design review reports
 ```
 
-### 原型使用方式
-1. **Daniel 審核**：開啟 `design/index.html` → 點擊頁面卡片 → 在瀏覽器中預覽
-2. **Developer 實作**：參考原型檔案中的佈局、間距、顏色
-3. **Design Reviewer 審核**：將 Streamlit 實現與原型並排比較
+### Prototype Usage
+1. **Daniel reviews**: Open `design/index.html` → click page card → preview in browser
+2. **Developer implements**: Reference layout, spacing, colors from prototype files
+3. **Design Reviewer reviews**: Compare Streamlit implementation side-by-side with prototype
 
-## 8. 無障礙
+## 8. Accessibility
 
-- 所有圖片必須有 alt text
-- 色彩不是傳達資訊的唯一方式（搭配圖示、文字）
-- 互動元件必須有明確的標籤
-- 鍵盤可導航所有互動元件
+- All images must have alt text
+- Color is not the only way to convey information (use icons, text)
+- Interactive elements must have clear labels
+- All interactive elements must be keyboard-navigable

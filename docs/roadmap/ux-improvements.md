@@ -1,121 +1,121 @@
-# UX 改進路線圖
+# UX Improvement Roadmap
 
-> **來源**: `docs/decisions/ux_improvements.md` (2026-06-08)
-> **狀態**: 待實作 | **優先級**: P0-P2
-
----
-
-## P0 — 立即修復（Crash / 嚴重 Bug）
-
-| ID | 問題 | 說明 | 影響檔案 |
-|----|------|------|----------|
-| UX-08 | DuplicateWidgetID crash | 事件儀表板按鈕 key 重複導致頁面崩潰 | `event_dashboard.py` |
-
-**修復方式**: 使用 `enumerate` index 確保 key 唯一性：`f"evt_{stock_id}_{idx}"`
+> **Source**: `docs/decisions/ux_improvements.md` (2026-06-08)
+> **Status**: Pending implementation | **Priority**: P0-P2
 
 ---
 
-## P1 — Sprint 1（低工作量，高影響）
+## P0 — Fix Immediately (Crash / Critical Bug)
 
-| ID | 問題 | 說明 | 影響檔案 |
-|----|------|------|----------|
-| UX-05 | ROE 年化不準確 | 季節性產業用 `*4` 年化失真，改用 TTM | `financial_health.py`, `peer_comparison.py` |
-| UX-07 | 關注列表無視覺反饋 | 加入/移除關注後無 toast 提示 | `business_card.py`, `watchlist_page.py` |
-| UX-11 | 快取永不清理 | `.cache/` 目錄無限增長 | `finmind_client.py` |
-| UX-14 | 關注列表並發寫入 | 多 session 同時寫入 watchlist.yaml 可能損壞 | `watchlist.py` |
+| ID | Issue | Description | Affected Files |
+|----|-------|-------------|----------------|
+| UX-08 | DuplicateWidgetID crash | Event dashboard button key duplication causes page crash | `event_dashboard.py` |
 
----
-
-## P2 — Sprint 2（中工作量，核心 UX）
-
-| ID | 問題 | 說明 | 影響檔案 |
-|----|------|------|----------|
-| UX-01 | 中文搜尋不支援 | 搜尋框只比對 stock_id，無法搜「台積電」 | `main.py`, `finmind_client.py` |
-| UX-02 | 頁面切換無載入指示 | 切換頁面時空白無 spinner | `router.py`, `_router_base.py` |
-| UX-04 | 單一期間圖表為空 | 數據不足時圖表空白，應降級顯示 | `chart.py` |
-| UX-06 | 同業比較無候補 | 無標竿公司時顯示死頁，應自動選同產業最大 | `peer_comparison.py` |
-| UX-09 | 時間軸篩選靜默失敗 | filter_by_timeline 異常時無錯誤提示 | `_router_base.py` |
-| UX-13 | 深色模式對比不足 | Plotly 圖表標籤在深色模式不可讀 | `chart.py` |
+**Fix**: Use `enumerate` index to ensure key uniqueness: `f"evt_{stock_id}_{idx}"`
 
 ---
 
-## P3 — Sprint 3（高工作量，架構級）
+## P1 — Sprint 1 (Low effort, high impact)
 
-| ID | 問題 | 說明 | 影響檔案 |
-|----|------|------|----------|
-| UX-03 | 瀏覽器返回按鈕 | 使用 `st.query_params` 同步 URL | `main.py`, `router.py`, 所有頁面 |
-| UX-10 | API 速率限制無警告 | 快速切換股票時無 rate limit 提示 | `finmind_client.py`, `_router_base.py` |
-| UX-12 | 小螢幕佈局崩潰 | 6-column 佈局在窄螢幕上擁擠 | `router.py`, `category_browser.py`, `etf_browser.py` |
-
----
-
-## 側邊欄改進項目
-
-> **來源**: `docs/decisions/sidebar_gap_analysis.md` + `docs/decisions/sidebar_research.md`
-
-### P0 — 側邊欄 Bug
-
-| ID | 問題 | 說明 |
-|----|------|------|
-| SB-04 | 側邊欄收合後無法再展開 | `initial_sidebar_state="auto"` 導致 |
-
-### P1 — 側邊欄核心功能
-
-| ID | 問題 | 說明 |
-|----|------|------|
-| SB-01 | Watchlist 無內聯數據 | 側邊欄應直接顯示價格、漲跌幅 |
-| SB-02 | 無法多清單管理 | 目前只有一個「我的關注」 |
-| SB-03 | 無市場總覽 | 側邊欄底部應顯示大盤指數 |
-| SB-05 | 分類瀏覽入口 | 側邊欄缺少分類瀏覽快捷入口 |
-| SB-06 | 最近瀏覽記錄 | 無法快速回到之前看過的股票 |
-| SB-07 | 側邊欄寬度可調整 | 固定寬度對不同螢幕不友善 |
-| SB-08 | 圖示+標籤導航 | 目前只有文字按鈕，缺乏視覺層次 |
-
-### P2 — 側邊欄加分功能
-
-| ID | 問題 | 說明 |
-|----|------|------|
-| SB-09 | Hover 預覽 | hover 股票顯示 mini chart tooltip |
-| SB-10 | 拖曳排序 | watchlist 可拖曳排序 |
-| SB-11 | 右鍵選單 | 右鍵股票可加入警示、移除等 |
-| SB-12 | 通知 badge | 事件儀表板有新事件時顯示紅點 |
-| SB-13 | 資料更新時間 | 顯示最後更新時間 |
+| ID | Issue | Description | Affected Files |
+|----|-------|-------------|----------------|
+| UX-05 | ROE annualization inaccurate | Seasonal industries using `*4` annualization is distorted, switch to TTM | `financial_health.py`, `peer_comparison.py` |
+| UX-07 | No visual feedback for watchlist | No toast notification after adding/removing from watchlist | `business_card.py`, `watchlist_page.py` |
+| UX-11 | Cache never cleaned | `.cache/` directory grows indefinitely | `finmind_client.py` |
+| UX-14 | Concurrent watchlist writes | Multiple sessions writing to watchlist.yaml simultaneously may corrupt it | `watchlist.py` |
 
 ---
 
-## 設計審查待修復項目
+## P2 — Sprint 2 (Medium effort, core UX)
 
-> **來源**: `docs/decisions/design_comparison_review.md` + `design_comparison_review_round5.md`
+| ID | Issue | Description | Affected Files |
+|----|-------|-------------|----------------|
+| UX-01 | No Chinese search support | Search box only matches stock_id, can't search by Chinese name | `main.py`, `finmind_client.py` |
+| UX-02 | No loading indicator on page switch | Blank screen with no spinner when switching pages | `router.py`, `_router_base.py` |
+| UX-04 | Single-period chart empty | Chart is blank when data is insufficient, should degrade gracefully | `chart.py` |
+| UX-06 | No peer comparison fallback | Shows dead page when no benchmark company, should auto-select largest in same industry | `peer_comparison.py` |
+| UX-09 | Timeline filter fails silently | No error message when filter_by_timeline encounters an exception | `_router_base.py` |
+| UX-13 | Insufficient dark mode contrast | Plotly chart labels unreadable in dark mode | `chart.py` |
 
-### 色彩系統違規
+---
 
-| ID | 問題 | 影響檔案 |
-|----|------|----------|
-| DC-006 | 使用 `#F39C12`（非系統色） | `financial_health.py` |
-| DC-013 | 使用 `#2E86C1`/`#1B4F72`/`#8E44AD`（非系統色） | `etf_browser.py`, `watchlist_page.py` |
-| DC-chart | Plotly 圖表使用非系統色 | `chart.py` |
+## P3 — Sprint 3 (High effort, architectural)
 
-### 元件不一致
+| ID | Issue | Description | Affected Files |
+|----|-------|-------------|----------------|
+| UX-03 | Browser back button | Use `st.query_params` to sync URL | `main.py`, `router.py`, all pages |
+| UX-10 | No API rate limit warning | No rate limit notification when switching stocks rapidly | `finmind_client.py`, `_router_base.py` |
+| UX-12 | Small screen layout broken | 6-column layout is cramped on narrow screens | `router.py`, `category_browser.py`, `etf_browser.py` |
 
-| ID | 問題 | 影響檔案 |
-|----|------|----------|
-| DC-001 | Watchlist 按鈕放在 Zone A | `business_card.py` |
-| DC-004 | 自定義 gradient 未使用共享元件 | `operation_checkup.py` |
-| DC-009 | 自定義 health assessment card | `financial_health.py` |
-| DC-011 | 使用 `st.metric()` 而非 `_白话_card()` | `peer_comparison.py` |
-| DC-025 | Raw flexbox HTML 而非 `_白话_card()` | `watchlist_page.py` |
-| DC-027 | 自定義 gradient banner | `event_dashboard.py` |
-| DC-028 | 內聯 HTML 硬編碼 border color | `watchlist_page.py` |
+---
 
-### 佈局問題
+## Sidebar Improvement Items
 
-| ID | 問題 | 影響檔案 |
-|----|------|----------|
-| DC-003 | `_info_card()` 文字過長 | `operation_checkup.py` |
-| DC-007 | 財務體質頁文字過多 | `financial_health.py` |
-| DC-008 | 圖表比例不足 60% | `financial_health.py` |
-| DC-010 | 同業比較分析文字過長 | `peer_comparison.py` |
-| DC-015 | 6-column ETF 佈局 | `etf_browser.py` |
-| DC-019 | 6-column 分類佈局 | `category_browser.py` |
-| DC-020 | `label_visibility="collapsed"` 無障礙問題 | `category_browser.py` |
-| DC-022 | severity badge 只有 emoji 無文字 | `event_dashboard.py` |
+> **Source**: `docs/decisions/sidebar_gap_analysis.md` + `docs/decisions/sidebar_research.md`
+
+### P0 — Sidebar Bug
+
+| ID | Issue | Description |
+|----|-------|-------------|
+| SB-04 | Sidebar cannot be expanded after collapsing | `initial_sidebar_state="auto"` causes this |
+
+### P1 — Sidebar Core Features
+
+| ID | Issue | Description |
+|----|-------|-------------|
+| SB-01 | Watchlist has no inline data | Sidebar should directly display price, change |
+| SB-02 | Cannot manage multiple lists | Currently only one "My Watchlist" |
+| SB-03 | No market overview | Bottom of sidebar should display market indices |
+| SB-05 | Category browser entry | Sidebar lacks category browser shortcut |
+| SB-06 | Recently viewed history | Cannot quickly return to previously viewed stocks |
+| SB-07 | Sidebar width adjustable | Fixed width is not friendly to different screens |
+| SB-08 | Icon + label navigation | Currently only text buttons, lacks visual hierarchy |
+
+### P2 — Sidebar Bonus Features
+
+| ID | Issue | Description |
+|----|-------|-------------|
+| SB-09 | Hover preview | Hovering over stock shows mini chart tooltip |
+| SB-10 | Drag-and-drop sorting | Watchlist items can be reordered by dragging |
+| SB-11 | Right-click menu | Right-click stock to add alert, remove, etc. |
+| SB-12 | Notification badge | Red dot when event dashboard has new events |
+| SB-13 | Data update time | Display last update time |
+
+---
+
+## Design Review Fixes
+
+> **Source**: `docs/decisions/design_comparison_review.md` + `design_comparison_review_round5.md`
+
+### Color System Violations
+
+| ID | Issue | Affected Files |
+|----|-------|----------------|
+| DC-006 | Uses `#F39C12` (non-system color) | `financial_health.py` |
+| DC-013 | Uses `#2E86C1`/`#1B4F72`/`#8E44AD` (non-system colors) | `etf_browser.py`, `watchlist_page.py` |
+| DC-chart | Plotly charts use non-system colors | `chart.py` |
+
+### Component Inconsistencies
+
+| ID | Issue | Affected Files |
+|----|-------|----------------|
+| DC-001 | Watchlist button placed in Zone A | `business_card.py` |
+| DC-004 | Custom gradient not using shared component | `operation_checkup.py` |
+| DC-009 | Custom health assessment card | `financial_health.py` |
+| DC-011 | Uses `st.metric()` instead of `_plain_card()` | `peer_comparison.py` |
+| DC-025 | Raw flexbox HTML instead of `_plain_card()` | `watchlist_page.py` |
+| DC-027 | Custom gradient banner | `event_dashboard.py` |
+| DC-028 | Inline HTML hardcoded border color | `watchlist_page.py` |
+
+### Layout Issues
+
+| ID | Issue | Affected Files |
+|----|-------|----------------|
+| DC-003 | `_info_card()` text too long | `operation_checkup.py` |
+| DC-007 | Financial health page has too much text | `financial_health.py` |
+| DC-008 | Chart ratio less than 60% | `financial_health.py` |
+| DC-010 | Peer comparison analysis text too long | `peer_comparison.py` |
+| DC-015 | 6-column ETF layout | `etf_browser.py` |
+| DC-019 | 6-column category layout | `category_browser.py` |
+| DC-020 | `label_visibility="collapsed"` accessibility issue | `category_browser.py` |
+| DC-022 | Severity badge has only emoji, no text | `event_dashboard.py` |

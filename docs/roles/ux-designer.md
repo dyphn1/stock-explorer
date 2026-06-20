@@ -27,28 +27,28 @@ You do not write production Python code. You create **HTML prototypes** that Dan
 ### Directory Structure
 ```
 design/
-├── index.html              # 設計入口：所有頁面的預覽索引
+├── index.html              # Design entry point: preview index of all pages
 ├── prototypes/
-│   ├── business_card.html      # 公司名片頁
-│   ├── operation_checkup.html  # 營運健檢頁
-│   ├── financial_health.html   # 財務體質頁
-│   ├── peer_comparison.html    # 同業比較頁
-│   ├── group_structure.html    # 集團架構頁
-│   ├── category_browser.html   # 分類瀏覽頁
-│   ├── etf_browser.html        # ETF 瀏覽頁
-│   ├── etf_detail.html         # ETF 詳細頁
-│   ├── watchlist.html          # 我的關注頁
-│   ├── event_dashboard.html    # 事件儀表板
-│   └── daily_market.html       # 每日市場動態
+│   ├── business_card.html      # Business card page
+│   ├── operation_checkup.html  # Operations checkup page
+│   ├── financial_health.html   # Financial health page
+│   ├── peer_comparison.html    # Peer comparison page
+│   ├── group_structure.html    # Group structure page
+│   ├── category_browser.html   # Category browser page
+│   ├── etf_browser.html        # ETF browser page
+│   ├── etf_detail.html         # ETF detail page
+│   ├── watchlist.html          # My watchlist page
+│   ├── event_dashboard.html    # Event dashboard
+│   └── daily_market.html       # Daily market overview
 ├── components/
-│   ├── _navbar.html            # 頂部導航列元件
-│   ├── _sidebar.html           # 側邊欄元件
-│   ├── _card.html              # 數據卡片元件
-│   ├── _chart_placeholder.html # 圖表佔位元件
-│   └── _fab.html               # 浮動操作按鈕元件
+│   ├── _navbar.html            # Top navigation bar component
+│   ├── _sidebar.html           # Sidebar component
+│   ├── _card.html              # Data card component
+│   ├── _chart_placeholder.html # Chart placeholder component
+│   └── _fab.html               # Floating action button component
 └── assets/
-    ├── design-tokens.css       # 設計系統變數（顏色、字體、間距）
-    └── base.css                # 全局基礎樣式
+    ├── design-tokens.css       # Design system variables (colors, fonts, spacing)
+    └── base.css                # Global base styles
 ```
 
 ### HTML Prototype Rules
@@ -56,7 +56,7 @@ design/
 1. **Self-contained**: Each HTML file must work standalone — open in browser, no server needed
 2. **Use `design/assets/design-tokens.css`** for all colors, fonts, spacing
 3. **Simulate interactions** with CSS `:hover`, `:focus`, and minimal JS for tab switching / expand-collapse
-4. **Use placeholder data** — mock stock data (e.g., 台積電 2330), not real API calls
+4. **Use placeholder data** — mock stock data (e.g., TSMC 2330), not real API calls
 5. **Mobile-first**: Include responsive breakpoints at 375px, 768px, 1024px, 1440px
 6. **Annotate**: Add HTML comments explaining interaction behavior (e.g., `<!-- On click: expand card to show details -->`)
 

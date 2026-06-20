@@ -1,80 +1,80 @@
-# ADR-009: 佈局重構 — 兩層導航架構
+# ADR-009: Layout Restructure — Two-Layer Navigation Architecture
 
-## 狀態
-規劃中
+## Status
+Planned
 
-## 日期
+## Date
 2026-06-14
 
-## 背景
+## Background
 
-目前所有頁面導航都放在側邊欄（sidebar），導致：
-1. 側邊欄項目過多（16+ 按鈕），缺乏層次
-2. 搜尋框放在側邊欄，不符合業界慣例
-3. 頁面功能（名片、營運健檢等）與全域功能（分類瀏覽、ETF）混在一起
+Currently all page navigation is placed in the sidebar, causing:
+1. Too many sidebar items (16+ buttons), lacking hierarchy
+2. Search box in the sidebar, which doesn't follow industry conventions
+3. Page functions (business card, operation checkup, etc.) mixed with global functions (category browser, ETF)
 
-## 決策
+## Decision
 
-採用**兩層導航架構**，參考 VS Code 和現代 SaaS App 的設計模式。
+Adopt a **two-layer navigation architecture**, referencing the design patterns of VS Code and modern SaaS apps.
 
-## 新佈局結構
+## New Layout Structure
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  🔍 [全域搜尋框]                                    │  ← Top Bar（常駐）
+│  🔍 [Global Search Box]                            │  ← Top Bar (persistent)
 ├────┬────────────────────────────────────────────────┤
 │ 📊 │                                                │
-│ 📈 │         主內容區域                              │
-│ ⭐ │         純數據 + 圖表                           │
-│ 🔔 │                                               │
+│ 📈 │         Main Content Area                      │
+│ │ │         Pure data + charts                      │
+│ 🔔 │                                                │
 │ ⚙️ │                                                │
 │    │    ┌─────────────────────────────┐             │
-│    │    │ + 名片                      │  ← FAB     │
-│    │    │   營運健檢                  │   (浮動)    │
-│    │    │   財務體質                  │             │
-│    │    │   同業比較                  │             │
-│    │    │   集團架構                  │             │
+│    │    │ + Business Card             │  ← FAB     │
+│    │    │   Operation Checkup         │   (floating)│
+│    │    │   Financial Health          │             │
+│    │    │   Peer Comparison           │             │
+│    │    │   Group Structure           │             │
 │    │    └─────────────────────────────┘             │
 └────┴────────────────────────────────────────────────┘
  ↑
- Activity Bar（圖示+文字，可收合）
+ Activity Bar (icon + text, collapsible)
 ```
 
-### 頂部搜尋列
-- 全域搜尋框常駐頂部
-- 無論在哪個頁面，都能切換觀察的股票
-- 取代目前側邊欄的搜尋框
+### Top Search Bar
+- Global search bar persists at the top
+- Regardless of which page you're on, you can switch the stock being observed
+- Replaces the current sidebar search box
 
-### 左側 Activity Bar
-- 只放**頂層全域導航**：總覽、分類瀏覽、ETF 專區、我的關注、事件儀表板
-- 圖示+文字設計
-- 收合時只顯示圖示
-- 設定按鈕獨立放在最底部
+### Left Activity Bar
+- Only contains **top-level global navigation**: Overview, Category Browser, ETF Section, My Watchlist, Event Dashboard
+- Icon + text design
+- When collapsed, only icons are shown
+- Settings button independently placed at the bottom
 
-### 浮動操作按鈕（FAB）
-- 右下角浮動按鈕
-- **上下文感知**：根據當前顯示的股票，展開該股票的所有分析功能
-- 點擊後主內容區域就地更新，頂部搜尋框保持不變
+### Floating Action Button (FAB)
+- Floating button in the bottom-right corner
+- **Context-aware**: Based on the currently displayed stock, expands all analysis functions for that stock
+- Clicking updates the main content area in-place, the top search bar remains unchanged
 
-## 理由
+## Rationale
 
-1. **業界慣例**：搜尋框在頂部是現代軟體的標準
-2. **層次清晰**：全域導航 vs 頁面功能分離
-3. **PPT 風格**：主內容區域更寬敞，符合「一頁一重點」
-4. **可擴展**：新增全域功能只需在 Activity Bar 加一個圖示
+1. **Industry convention**: Search bar at the top is the standard for modern software
+2. **Clear hierarchy**: Global navigation vs. page functions separated
+3. **PPT style**: Main content area is more spacious, fitting the "one key point per page" principle
+4. **Extensible**: Adding global functions only requires adding an icon to the Activity Bar
 
-## 替代方案
+## Alternatives
 
-| 方案 | 不選原因 |
-|------|----------|
-| 維持目前側邊欄 | 項目過多、缺乏層次、搜尋框位置不符慣例 |
-| Top nav + sidebar | Streamlit 原生支援有限，實作成本高 |
-| Hamburger menu | 隱藏了常用功能，不適合數據密集型應用 |
+| Option | Reason for Rejection |
+|--------|---------------------|
+| Keep current sidebar | Too many items, lacks hierarchy, search bar position doesn't follow convention |
+| Top nav + sidebar | Limited native Streamlit support, high implementation cost |
+| Hamburger menu | Hides commonly used functions, not suitable for data-intensive applications |
 
-## 後果
+## Consequences
 
-- ✅ 搜尋框位置符合使用者預期
-- ✅ 導航層次清晰
-- ✅ 主內容區域更寬敞
-- ⚠️ 需要重構 main.py 的佈局邏輯
-- ⚠️ FAB 需要自定義 Streamlit 元件
+- ✅ Search bar position matches user expectations
+- ✅ Clear navigation hierarchy
+- ✅ More spacious main content area
+- ⚠️ Need to refactor the layout logic in main.py
+- ⚠️ FAB requires custom Streamlit components

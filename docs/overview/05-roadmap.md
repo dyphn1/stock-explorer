@@ -1,134 +1,134 @@
-# 開發路線圖 — Stock Explorer
+# Development Roadmap — Stock Explorer
 
-> **當前階段**: Sprint 21 執行中 | **上次更新**: 2026-06-18
-
----
-
-## 1. 里程碑總覽
-
-| 里程碑 | 狀態 | 完成日期 | 說明 |
-|--------|------|----------|------|
-| **M0**: 專案基礎建立 | ✅ 完成 | 2026-06-06 | 環境、依賴、目錄結構 |
-| **M1**: MVP 名片頁 | ✅ 完成 | 2026-06-07 | 一句話定位、圓餅圖、關鍵數字 |
-| **M2**: 四大深度區塊 | ✅ 完成 | 2026-06-07 | 營運健檢、財務體質、同業比較、集團架構 |
-| **M3**: 時間軸與分類 | ✅ 完成 | 2026-06-07 | 時間軸元件、分類瀏覽 |
-| **M4**: ETF 與訂閱 | ✅ 完成 | 2026-06-07 | ETF 專區、關注列表 |
-| **M5**: 自適應更新 | ✅ 代碼完成 | 2026-06-07 | 事件偵測、新鮮度指標 |
+> **Current Phase**: Sprint 21 in progress | **Last Updated**: 2026-06-18
 
 ---
 
-## 2. 當前狀態（Sprint 20 → 21）
+## 1. Milestone Overview
 
-### 關鍵指標
-| 指標 | 值 |
-|------|-----|
-| L0 測試 | 319+ 通過 |
-| 設計評級 | B- |
-| 架構評級 | B+ |
-| 主要阻塞 | 無 |
-
-### 待 Daniel 決策項目
-| ID | 項目 | 說明 |
-|----|------|------|
-| D-126 | 深淺色主題切換 | 使用者偏好設定 |
-| D-127 | _infocard() 元件 | 視覺化指標卡片 |
-| D-128 | _calculator_card() 元件 | 互動財務工具 |
-| D-129 | _ai_explanation_card() 元件 | AI 解釋卡片 |
-| D-130 | 新手引導流程 | 結構化 onboarding |
+| Milestone | Status | Completion Date | Description |
+|-----------|--------|-----------------|-------------|
+| **M0**: Project foundation | ✅ Complete | 2026-06-06 | Environment, dependencies, directory structure |
+| **M1**: MVP business card page | ✅ Complete | 2026-06-07 | One-line positioning, pie chart, key metrics |
+| **M2**: Four deep-dive sections | ✅ Complete | 2026-06-07 | Operations checkup, financial health, peer comparison, group structure |
+| **M3**: Timeline and categories | ✅ Complete | 2026-06-07 | Timeline component, category browser |
+| **M4**: ETF and subscription | ✅ Complete | 2026-06-07 | ETF section, watchlist |
+| **M5**: Adaptive updates | ✅ Code complete | 2026-06-07 | Event detection, freshness indicators |
 
 ---
 
-## 3. Sprint 21 計畫
+## 2. Current Status (Sprint 20 → 21)
+
+### Key Metrics
+| Metric | Value |
+|--------|-------|
+| L0 tests | 319+ passing |
+| Design rating | B- |
+| Architecture rating | B+ |
+| Major blockers | None |
+
+### Items Awaiting Daniel's Decision
+| ID | Item | Description |
+|----|------|-------------|
+| D-126 | Light/dark theme toggle | User preference setting |
+| D-127 | _infocard() component | Visual metric card |
+| D-128 | _calculator_card() component | Interactive financial tool |
+| D-129 | _ai_explanation_card() component | AI explanation card |
+| D-130 | Beginner onboarding flow | Structured onboarding |
+
+---
+
+## 3. Sprint 21 Plan
 
 ### Week 1
-| 優先級 | 項目 | 說明 |
-|--------|------|------|
-| P0 | D-125 | chart_stock.py 拆分 |
-| P0 | D-126 | INDUSTRY_BENCHMARKS 去重 |
-| P1 | C170 | 可點擊 Glossary |
-| P1 | C205 | 閱讀時間指示器 |
+| Priority | Item | Description |
+|----------|------|-------------|
+| P0 | D-125 | chart_stock.py split |
+| P0 | D-126 | INDUSTRY_BENCHMARKS dedup |
+| P1 | C170 | Clickable Glossary |
+| P1 | C205 | Reading time indicator |
 
 ### Week 2
-| 優先級 | 項目 | 說明 |
-|--------|------|------|
-| P1 | C188 | 為什麼漲跌？(Why Did This Move?) |
-| P1 | C204 | 信心指標 (Confidence Indicator) |
-| P2 | 設計系統更新 | 快速見效項目 |
+| Priority | Item | Description |
+|----------|------|-------------|
+| P1 | C188 | Why Did This Move? |
+| P1 | C204 | Confidence Indicator |
+| P2 | Design system updates | Quick wins |
 
 ---
 
-## 4. 功能路線圖
+## 4. Feature Roadmap
 
-### 已完成功能（M0-M5）
-- [x] 公司名片頁（一句話定位、營收圓餅圖、關鍵數字比喻）
-- [x] 營運健檢（營收趨勢、股價走勢、法人動向）
-- [x] 財務體質（利潤漏斗、關鍵比率、資產負債結構、現金流量）
-- [x] 同業比較（並排比較表、雷達圖、差異分析、28 產業標竿）
-- [x] 集團架構（點對點關係、5 家集團資料）
-- [x] 時間軸（1Y/3Y/5Y/ALL 選擇器）
-- [x] 分類瀏覽（權值股、產業分類、熱門列表）
-- [x] ETF 專區（瀏覽頁、詳細頁、配息排行）
-- [x] 關注列表（YAML 基礎、價格提醒）
-- [x] 事件儀表板（事件偵測引擎）
-- [x] 自適應更新（營收異動、新聞事件、股價異常偵測）
+### Completed Features (M0-M5)
+- [x] Business card page (one-line positioning, revenue pie chart, key metric analogies)
+- [x] Operations checkup (revenue trends, stock price trends, institutional investor activity)
+- [x] Financial health (profit funnel, key ratios, balance sheet structure, cash flow)
+- [x] Peer comparison (side-by-side comparison table, radar chart, difference analysis, 28 industry benchmarks)
+- [x] Group structure (point-to-point relationships, 5 group data sets)
+- [x] Timeline (1Y/3Y/5Y/ALL selector)
+- [x] Category browser (blue-chip stocks, industry categories, hot lists)
+- [x] ETF section (browser page, detail page, dividend ranking)
+- [x] Watchlist (YAML-based, price alerts)
+- [x] Event dashboard (event detection engine)
+- [x] Adaptive updates (revenue changes, news events, stock price anomaly detection)
 
-### 待開發功能（優先排序）
+### Pending Features (Priority Order)
 
-> 📋 完整清單見 [`docs/roadmap/`](../roadmap/)
+> 📋 Full list at [`docs/roadmap/`](../roadmap/)
 
-| ID | 功能 | 優先級 | 說明 |
-|----|------|--------|------|
-| **UX 改進** | | | |
-| UX-01 | 中文搜尋支援 | P1 | 搜尋框支援中文股名 |
-| UX-02 | 載入指示器 | P1 | 頁面切換時顯示 spinner |
-| UX-03 | 瀏覽器返回按鈕 | P2 | URL query_params 同步 |
-| UX-05 | ROE TTM 修正 | P1 | 季節性產業用 TTM 年化 |
-| UX-07 | 關注列表反饋 | P1 | 加入/移除時顯示 toast |
-| UX-10 | Rate limit 警告 | P2 | API 速率限制提示 |
-| UX-12 | 響應式佈局 | P2 | 小螢幕適配 |
-| **新功能** | | | |
-| C170 | 可點擊 Glossary | P1 | 專業術語即時查詢 |
-| C188 | 為什麼漲跌？ | P1 | 股價異動白話解釋 |
-| C204 | 信心指標 | P1 | 數據可靠度指示 |
-| C205 | 閱讀時間指示器 | P1 | 預估閱讀時間 |
-| C199 | 今日市場動態 | P2 | 市場總覽儀表板 |
-| C201 | 每日市場動態 | P2 | 市場故事化呈現 |
-| C202 | 故事弧線偵測 | P2 | 公司歷史敘事分析 |
-| C206 | 產業熱力圖 | P2 | 產業板塊視覺化 |
-| **側邊欄** | | | |
-| SB-01~03 | 側邊欄核心 | P1 | 內聯數據、多清單、市場總覽 |
-| SB-05~08 | 側邊欄改進 | P1 | 分類入口、歷史記錄、寬度調整 |
-| **佈局重構** | | | |
-| ADR-009 | 兩層導航架構 | P1 | Activity Bar + FAB |
+| ID | Feature | Priority | Description |
+|----|---------|----------|-------------|
+| **UX Improvements** | | | |
+| UX-01 | Chinese search support | P1 | Search box supports Chinese stock names |
+| UX-02 | Loading indicator | P1 | Show spinner during page transitions |
+| UX-03 | Browser back button | P2 | URL query_params sync |
+| UX-05 | ROE TTM fix | P1 | Use TTM annualization for seasonal industries |
+| UX-07 | Watchlist feedback | P1 | Show toast when adding/removing |
+| UX-10 | Rate limit warning | P2 | API rate limit notification |
+| UX-12 | Responsive layout | P2 | Small screen adaptation |
+| **New Features** | | | |
+| C170 | Clickable Glossary | P1 | Real-time professional term lookup |
+| C188 | Why Did This Move? | P1 | Plain-language explanation of price changes |
+| C204 | Confidence Indicator | P1 | Data reliability indicator |
+| C205 | Reading Time Indicator | P1 | Estimated reading time |
+| C199 | Today's Market Overview | P2 | Market overview dashboard |
+| C201 | Daily Market Overview | P2 | Market story-driven presentation |
+| C202 | Story Arc Detection | P2 | Company historical narrative analysis |
+| C206 | Industry Heatmap | P2 | Industry sector visualization |
+| **Sidebar** | | | |
+| SB-01~03 | Sidebar core | P1 | Inline data, multi-list, market overview |
+| SB-05~08 | Sidebar improvements | P1 | Category entry, history, width adjustment |
+| **Layout Refactor** | | | |
+| ADR-009 | Two-layer navigation architecture | P1 | Activity Bar + FAB |
 
-### 技術債務（優先排序）
-| ID | 項目 | 優先級 | 說明 |
-|----|------|--------|------|
-| TD-01 | Plugin Chassis 重構 | ✅ 完成 | Phase 1+2 完成，24 頁面全部遷移至 PluginRegistry |
-| TD-02 | i18n 全面化 | P0 | Phase 1 完成（5 大頁面，~300 字串），剩餘 ~42 檔案約 ~1,200 字串 |
-| TD-03 | API 快取修復 | P1 | get_stock_info 全表拉取問題 |
-| TD-04 | business_card.py 拆分 | ✅ 完成 | 已拆分至 business_card/ 子目錄 |
-| TD-05 | 單元測試覆蓋率提升 | P1 | 目前 699 通過但覆蓋不足 |
-| TD-06 | 色彩系統統一 | P1 | 所有頁面使用設計系統色彩 |
-| TD-07 | 元件一致性 | P1 | 統一使用 `_白话_card()` |
+### Technical Debt (Priority Order)
+| ID | Item | Priority | Description |
+|----|------|----------|-------------|
+| TD-01 | Plugin Chassis refactor | ✅ Complete | Phase 1+2 complete, all 24 pages migrated to PluginRegistry |
+| TD-02 | Full i18n | P0 | Phase 1 complete (5 major pages, ~300 strings), remaining ~42 files with ~1,200 strings |
+| TD-03 | API cache fix | P1 | get_stock_info full table fetch issue |
+| TD-04 | business_card.py split | ✅ Complete | Split into business_card/ sub-directory |
+| TD-05 | Unit test coverage improvement | P1 | Currently 699 passing but insufficient coverage |
+| TD-06 | Color system unification | P1 | All pages use design system colors |
+| TD-07 | Component consistency | P1 | Standardize on `_plain_card()` |
 
 ---
 
-## 5. 長期願景
+## 5. Long-Term Vision
 
-### Phase 1：MVP 穩定（當前）
-- 完成 M0-M5 功能
-- 修復已知技術債務
-- 建立穩定的測試基礎
+### Phase 1: MVP Stabilization (Current)
+- Complete M0-M5 features
+- Fix known technical debt
+- Establish stable testing foundation
 
-### Phase 2：體驗提升
-- Plugin Chassis 架構
-- 完整 i18n 支援
-- 新手引導流程
-- 深淺色主題
+### Phase 2: Experience Enhancement
+- Plugin Chassis architecture
+- Full i18n support
+- Beginner onboarding flow
+- Light/dark theme
 
-### Phase 3：社群與擴展
-- 用戶自訂分析框架
-- 分享功能（公司分析報告匯出）
-- 多市場支援（美股、港股）
-- 行動版適配
+### Phase 3: Community and Expansion
+- User-customizable analysis frameworks
+- Sharing feature (company analysis report export)
+- Multi-market support (US stocks, HK stocks)
+- Mobile adaptation

@@ -1,189 +1,189 @@
-# Stock Explorer — PM 流程圖
+# Stock Explorer — PM Flow Diagrams
 
-> 本文件包含所有 PM 工作流的 Mermaid 視覺化。
-> AGENTS.md 引用本檔案作為視覺參考。
+> This file contains Mermaid visualizations of all PM workflows.
+> AGENTS.md references this file as a visual reference.
 
 ---
 
-## 圖 1: PM 進入 Cron Session 後的決策流程
+## Diagram 1: PM Decision Flow After Cron Session Wake-up
 
 ```mermaid
 flowchart TD
-    START([PM 被 cron 喚醒]) --> READ_STATE[Step 0: 讀取狀態<br/>STATUS.md + handoff.md<br/>current_problems.md + pending_review.md]
+    START([PM awakened by cron]) --> READ_STATE[Step 0: Read state<br/>STATUS.md + handoff.md<br/>current_problems.md + pending_review.md]
 
-    READ_STATE --> CHECK_TODO{判斷當前<br/>最高優先任務}
+    READ_STATE --> CHECK_TODO{Determine current<br/>highest priority task}
 
-    CHECK_TODO -->|P0: 重構 + UX Bug| TODO_REFACTOR[TODO: 重構/修復]
-    CHECK_TODO -->|P1: 新功能| TODO_FEATURE[TODO: 開發新功能]
-    CHECK_TODO -->|P2: 驗證/測試| TODO_VERIFY[TODO: 驗證]
-    CHECK_TODO -->|P3: 研究/討論| TODO_RESEARCH[TODO: 研究競品]
-    CHECK_TODO -->|無任務| SILENT([SILENT 結束])
+    CHECK_TODO -->|P0: Refactor + UX Bug| TODO_REFACTOR[TODO: Refactor/Fix]
+    CHECK_TODO -->|P1: New Feature| TODO_FEATURE[TODO: New Feature Development]
+    CHECK_TODO -->|P2: Verification/Testing| TODO_VERIFY[TODO: Verification]
+    CHECK_TODO -->|P3: Research/Discussion| TODO_RESEARCH[TODO: Competitor Research]
+    CHECK_TODO -->|No tasks| SILENT([SILENT end])
 
-    TODO_REFACTOR --> GATE1{ Gate Check 1<br/>設計完成?}
+    TODO_REFACTOR --> GATE1{ Gate Check 1<br/>Design complete?}
     TODO_FEATURE --> GATE1
-    TODO_VERIFY --> GATE2{ Gate Check 2<br/>實作完成?}
-    TODO_RESEARCH --> GATE3{Gate Check 3<br/>驗證通過?}
+    TODO_VERIFY --> GATE2{ Gate Check 2<br/>Implementation complete?}
+    TODO_RESEARCH --> GATE3{Gate Check 3<br/>Verification passed?}
 
-    GATE1 -->|NOT PASSED| BACK1[退回上一 TODO<br/>標明改善要求]
+    GATE1 -->|NOT PASSED| BACK1[Roll back to previous TODO<br/>Specify improvement requirements]
     BACK1 --> CHECK_TODO
-    GATE1 -->|PASSED| NEXT1[前進下一個 TODO]
+    GATE1 -->|PASSED| NEXT1[Advance to next TODO]
     NEXT1 --> GATE2
 
-    GATE2 -->|NOT PASSED| BACK2[退回 TODO 2<br/>標明問題重點]
+    GATE2 -->|NOT PASSED| BACK2[Roll back to TODO 2<br/>Specify key issues]
     BACK2 --> TODO_FEATURE
-    GATE2 -->|PASSED| NEXT2[前進下一個 TODO]
+    GATE2 -->|PASSED| NEXT2[Advance to next TODO]
     NEXT2 --> GATE3
 
-    GATE3 -->|NOT PASSED| BACK3[退回 TODO 2]
+    GATE3 -->|NOT PASSED| BACK3[Roll back to TODO 2]
     BACK3 --> TODO_FEATURE
-    GATE3 -->|PASSED| TODO4[TODO 4: 發布<br/>PM 自己動手]
+    GATE3 -->|PASSED| TODO4[TODO 4: Release<br/>PM does it personally]
 
-    TODO4 --> COMMIT[git commit + push<br/>更新狀態文件]
-    COMMIT --> END([Session 結束])
+    TODO4 --> COMMIT[git commit + push<br/>Update state files]
+    COMMIT --> END([Session ended])
 ```
 
 ---
 
-## 圖 2: TODO 1 — 重構/修復（Refactor / Bug Fix）
+## Diagram 2: TODO 1 — Refactor/Bug Fix
 
 ```mermaid
 flowchart TD
-    START([TODO 1 開始]) --> READ[PM 讀取 current_problems.md<br/>確認問題範圍和檔案]
+    START([TODO 1 Start]) --> READ[PM reads current_problems.md<br/>Confirm issue scope and files]
 
-    READ --> DELEGATE1[delegate_task → Architect<br/>分析可行性 + 技術方案<br/>model: nemotron-3]
-    READ --> DELEGATE2[delegate_task → Challenger<br/>3 回合挑戰計畫<br/>model: gpt-oss-120b]
+    READ --> DELEGATE1[delegate_task → Architect<br/>Feasibility analysis + technical solution<br/>model: nemotron-3]
+    READ --> DELEGATE2[delegate_task → Challenger<br/>3-round challenge of plan<br/>model: gpt-oss-120b]
 
-    DELEGATE1 --> GATE1{<br/>Gate 1: 設計完成?}
+    DELEGATE1 --> GATE1{<br/>Gate 1: Design complete?}
     DELEGATE2 --> GATE1
 
-    GATE1 -->|NOT PASSED<br/>設計不完整| BACK[退回重發<br/>指明不足處]
+    GATE1 -->|NOT PASSED<br/>Design incomplete| BACK[Re-dispatch<br/>Specify deficiencies]
     BACK --> READ
 
-    GATE1 -->|PASSED<br/>設計通過| TODO2[前進 TODO 2<br/>開始實作]
+    GATE1 -->|PASSED<br/>Design approved| TODO2[Advance to TODO 2<br/>Begin implementation]
 
     style GATE1 fill:#f9e79f,stroke:#d4ac0d
 ```
 
-**參與角色：** Architect (`nemotron-3`) + Challenger (`gpt-oss-120b`)
-**完成條件：** 技術分析/ADR 存在 + Challenger 3 回合通過
+**Participants:** Architect (`nemotron-3`) + Challenger (`gpt-oss-120b`)
+**Completion criteria:** Technical analysis/ADR exists + Challenger passes 3 rounds
 
 ---
 
-## 圖 3: TODO 2 — 開發新功能（New Feature / UI）
+## Diagram 3: TODO 2 — New Feature Development (New Feature / UI)
 
 ```mermaid
 flowchart TD
-    START([TODO 2 開始]) --> READ[PM 讀取設計產出<br/>HTML prototype + 技術分析]
+    START([TODO 2 Start]) --> READ[PM reads design deliverables<br/>HTML prototype + technical analysis]
 
     READ --> DELEGATE_UX[delegate_task → UX Designer<br/>Create HTML prototype<br/>model: gemma-4]
-    READ --> DELEGATE_ARCH[delegate_task → Architect<br/>技術可行性分析<br/>model: nemotron-3]
+    READ --> DELEGATE_ARCH[delegate_task → Architect<br/>Technical feasibility analysis<br/>model: nemotron-3]
 
-    DELEGATE_UX --> GATE1{<br/>Gate 1: 設計完成?}
+    DELEGATE_UX --> GATE1{<br/>Gate 1: Design complete?}
     DELEGATE_ARCH --> GATE1
 
-    GATE1 -->|NOT PASSED| BACK1[退回重發]
+    GATE1 -->|NOT PASSED| BACK1[Re-dispatch]
     BACK1 --> READ
 
-    GATE1 -->|PASSED| DELEGATE_SEC[delegate_task → Security Architect<br/>威脅建模 + 安全審查<br/>model: nemotron-3]
+    GATE1 -->|PASSED| DELEGATE_SEC[delegate_task → Security Architect<br/>Threat modeling + security review<br/>model: nemotron-3]
 
-    DELEGATE_SEC --> GATE2{<br/>Gate 2: 安全通過?}
+    DELEGATE_SEC --> GATE2{<br/>Gate 2: Security passed?}
 
-    GATE2 -->|NOT PASSED| BACK2[退回 Phase 1<br/>Architect 修正]
+    GATE2 -->|NOT PASSED| BACK2[Roll back to Phase 1<br/>Architect revises]
     BACK2 --> READ
 
-    GATE2 -->|PASSED| DELEGATE_DEV[delegate_task → Developer<br/>實作 + L0/L1 驗證<br/>model: owl-alpha]
+    GATE2 -->|PASSED| DELEGATE_DEV[delegate_task → Developer<br/>Implementation + L0/L1 verification<br/>model: owl-alpha]
 
-    DELEGATE_DEV --> GATE3{<br/>Gate 3: 實作完成?}
+    DELEGATE_DEV --> GATE3{<br/>Gate 3: Implementation complete?}
 
-    GATE3 -->|NOT PASSED<br/>L0/L1 失敗| BACK3[退回 Developer<br/>標明測試失敗項]
+    GATE3 -->|NOT PASSED<br/>L0/L1 failed| BACK3[Roll back to Developer<br/>Specify test failures]
     BACK3 --> DELEGATE_DEV
 
-    GATE3 -->|PASSED| TODO3[前進 TODO 3<br/>開始驗證]
+    GATE3 -->|PASSED| TODO3[Advance to TODO 3<br/>Begin verification]
 
     style GATE1 fill:#f9e79f,stroke:#d4ac0d
     style GATE2 fill:#f9e79f,stroke:#d4ac0d
     style GATE3 fill:#f9e79f,stroke:#d4ac0d
 ```
 
-**參與角色：** UX Designer (`gemma-4`) + Architect (`nemotron-3`) + Security (`nemotron-3`) + Developer (`owl-alpha`)
-**完成條件：** HTML prototype 存在 + Security pass + L0/L1 all pass + git commit
+**Participants:** UX Designer (`gemma-4`) + Architect (`nemotron-3`) + Security (`nemotron-3`) + Developer (`owl-alpha`)
+**Completion criteria:** HTML prototype exists + Security pass + L0/L1 all pass + git commit
 
 ---
 
-## 圖 4: TODO 3 — 驗證（Verify / Test）
+## Diagram 4: TODO 3 — Verification (Verify / Test)
 
 ```mermaid
 flowchart TD
-    START([TODO 3 開始]) --> READ[PM 確認實作完成<br/>git diff --stat + L0 pass]
+    START([TODO 3 Start]) --> READ[PM confirms implementation complete<br/>git diff --stat + L0 pass]
 
-    READ --> DELEGATE_QA[delegate_task → QA<br/>L0 + L1 + L2 測試<br/>model: gemma-4]
+    READ --> DELEGATE_QA[delegate_task → QA<br/>L0 + L1 + L2 testing<br/>model: gemma-4]
     READ --> DELEGATE_SEC[delegate_task → Security<br/>Code audit<br/>model: nemotron-3]
-    READ --> DELEGATE_REVIEW[delegate_task → Design Reviewer<br/>視覺 vs prototype<br/>model: gemma-4]
+    READ --> DELEGATE_REVIEW[delegate_task → Design Reviewer<br/>Visual vs prototype<br/>model: gemma-4]
 
-    DELEGATE_QA --> GATE{<br/>Gate: 全部通過?}
+    DELEGATE_QA --> GATE{<br/>Gate: All passed?}
     DELEGATE_SEC --> GATE
     DELEGATE_REVIEW --> GATE
 
-    GATE -->|NOT PASSED<br/>P0 問題| BACK[退回 TODO 2<br/>標明修復重點]
+    GATE -->|NOT PASSED<br/>P0 issues| BACK[Roll back to TODO 2<br/>Specify fix priorities]
     BACK --> START
 
-    GATE -->|PASSED<br/>All pass| TODO4[前進 TODO 4<br/>發布]
+    GATE -->|PASSED<br/>All pass| TODO4[Advance to TODO 4<br/>Release]
 
     style GATE fill:#f9e79f,stroke:#d4ac0d
 ```
 
-**參與角色：** QA (`gemma-4`) + Security (`nemotron-3`) + Design Reviewer (`gemma-4`)
-**完成條件：** L0 + L1 + L2 all pass + 安全無 critical + 視覺無 P0 偏差
+**Participants:** QA (`gemma-4`) + Security (`nemotron-3`) + Design Reviewer (`gemma-4`)
+**Completion criteria:** L0 + L1 + L2 all pass + no security critical issues + no P0 visual deviations
 
 ---
 
-## 圖 5: TODO 4 — 發布（PM 自己動手）
+## Diagram 5: TODO 4 — Release (PM Does It Personally)
 
 ```mermaid
 flowchart TD
-    START([TODO 4 開始]) --> PM1[更新 docs/state/handoff.md<br/>Session summary]
-    PM1 --> PM2[更新 docs/state/current_problems.md<br/>標記已解決]
-    PM2 --> PM3[更新 docs/state/pending_review.md<br/>清除已審核項目]
-    PM3 --> PM4[更新 docs/overview/05-roadmap.md<br/>標記功能完成]
+    START([TODO 4 Start]) --> PM1[Update docs/state/handoff.md<br/>Session summary]
+    PM1 --> PM2[Update docs/state/current_problems.md<br/>Mark resolved]
+    PM2 --> PM3[Update docs/state/pending_review.md<br/>Clear reviewed items]
+    PM3 --> PM4[Update docs/overview/05-roadmap.md<br/>Mark features complete]
     PM4 --> PM5[git add -A<br/>git commit -m "type: summary"<br/>git push]
-    PM5 --> END([✅ 任務完成])
+    PM5 --> END([✅ Task complete])
 
     style PM5 fill:#d5f5e3,stroke:#27ae60
 ```
 
-**只有 PM 自己動手，沒有 sub-agent。**
+**Only PM does this personally, no sub-agents.**
 
 ---
 
-## 圖 6: 研究/討論（Research / Discuss）
+## Diagram 6: Research/Discussion (Research / Discuss)
 
 ```mermaid
 flowchart TD
-    START([研究/討論開始]) --> READ[PM 定義研究範圍<br/>競品分析 or 下一步方向]
+    START([Research/Discussion Start]) --> READ[PM defines research scope<br/>Competitor analysis or next steps]
 
-    READ --> DELEGATE_QA[delegate_task → QA<br/>競品研究<br/>model: gemma-4]
-    READ --> DELEGATE_ARCH[delegate_task → Architect<br/>可行性評估<br/>model: nemotron-3]
-    READ --> DELEGATE_UX[delegate_task → UX Designer<br/>UX 建議<br/>model: gemma-4]
+    READ --> DELEGATE_QA[delegate_task → QA<br/>Competitor research<br/>model: gemma-4]
+    READ --> DELEGATE_ARCH[delegate_task → Architect<br/>Feasibility assessment<br/>model: nemotron-3]
+    READ --> DELEGATE_UX[delegate_task → UX Designer<br/>UX recommendations<br/>model: gemma-4]
 
-    DELEGATE_QA --> GATE1{<br/>Gate 1: 研究完成?}
+    DELEGATE_QA --> GATE1{<br/>Gate 1: Research complete?}
     DELEGATE_ARCH --> GATE1
     DELEGATE_UX --> GATE1
 
-    GATE1 -->|NOT PASSED| BACK[退回重發]
+    GATE1 -->|NOT PASSED| BACK[Re-dispatch]
     BACK --> READ
 
-    GATE1 -->|PASSED| SYNTHESIZE[PM 綜合結果<br/>→ 草案]
+    GATE1 -->|PASSED| SYNTHESIZE[PM synthesizes results<br/>→ Draft]
 
-    SYNTHESIZE --> DELEGATE_CHAL[delegate_task → Challenger<br/>3 回合挑戰<br/>model: gpt-oss-120b]
+    SYNTHESIZE --> DELEGATE_CHAL[delegate_task → Challenger<br/>3-round challenge<br/>model: gpt-oss-120b]
 
-    DELEGATE_CHAL --> GATE2{<br/>Gate 2: 挑戰通過?}
+    DELEGATE_CHAL --> GATE2{<br/>Gate 2: Challenge passed?}
 
-    GATE2 -->|NOT PASSED| REVISE[修正草案]
+    GATE2 -->|NOT PASSED| REVISE[Revise draft]
     REVISE --> SYNTHESIZE
 
-    GATE2 -->|PASSED| DOC[PM 寫 ADR<br/>更新 roadmap<br/>建立 handoff]
+    GATE2 -->|PASSED| DOC[PM writes ADR<br/>Updates roadmap<br/>Creates handoff]
     DOC --> COMMIT[git commit + push]
-    COMMIT --> END([✅ 完成])
+    COMMIT --> END([✅ Complete])
 
     style GATE1 fill:#f9e79f,stroke:#d4ac0d
     style GATE2 fill:#f9e79f,stroke:#d4ac0d
@@ -191,38 +191,38 @@ flowchart TD
 
 ---
 
-## 圖 7: 優化（Optimization / 設計審查修復）
+## Diagram 7: Optimization (Design Review Fixes)
 
 ```mermaid
 flowchart TD
-    START([優化任務開始]) --> READ[PM 讀取 design review 報告<br/>列出待修復項目]
+    START([Optimization task start]) --> READ[PM reads design review report<br/>Lists items to fix]
 
-    READ --> CLASSIFY{問題分類}
+    READ --> CLASSIFY{Issue classification}
 
-    CLASSIFY -->|色彩/元件違規| DELEGATE_DEV[delegate_task → Developer<br/>修正為設計系統色彩<br/>model: owl-alpha]
-    CLASSIFY -->|佈局/響應式| DELEGATE_UX[delegate_task → UX Designer<br/>更新 prototype<br/>model: gemma-4]
-    CLASSIFY -->|交互/流程| DELEGATE_UX
+    CLASSIFY -->|Color/Component violations| DELEGATE_DEV[delegate_task → Developer<br/>Fix to design system colors<br/>model: owl-alpha]
+    CLASSIFY -->|Layout/Responsive| DELEGATE_UX[delegate_task → UX Designer<br/>Update prototype<br/>model: gemma-4]
+    CLASSIFY -->|Interaction/Flow| DELEGATE_UX
 
-    DELEGATE_DEV --> GATE{<br/>Gate: 修正完成?}
+    DELEGATE_DEV --> GATE{<br/>Gate: Fix complete?}
     DELEGATE_UX --> GATE
 
-    GATE -->|NOT PASSED| BACK[退回重做]
+    GATE -->|NOT PASSED| BACK[Re-do]
     BACK --> READ
 
-    GATE -->|PASSED| VERIFY[PM 跑 L0 驗證<br/>確認無 regression]
+    GATE -->|PASSED| VERIFY[PM runs L0 verification<br/>Confirm no regression]
     VERIFY --> COMMIT[git commit + push]
-    COMMIT --> END([✅ 完成])
+    COMMIT --> END([✅ Complete])
 
     style GATE fill:#f9e79f,stroke:#d4ac0d
 ```
 
 ---
 
-## 角色與 Model 對照表
+## Role and Model Reference Table
 
-| Role | Model | 主要參與 TODO |
-|------|-------|-------------|
-| **PM** | `openrouter/owl-alpha` | TODO 4（自己動手）+ 所有 Gate Check |
+| Role | Model | Primary TODO Participation |
+|------|-------|---------------------------|
+| **PM** | `openrouter/owl-alpha` | TODO 4 (personal) + all Gate Checks |
 | **Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | TODO 1, 2, 6 |
 | **Security Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | TODO 2, 3 |
 | **UX Designer** | `openrouter/google/gemma-4-31b-it:free` | TODO 2, 6, 7 |

@@ -1,65 +1,65 @@
-# ADR-005: i18n 使用 YAML 單一檔案 per locale
+# ADR-005: i18n Using Single YAML File per Locale
 
-## 狀態
-已接受
+## Status
+Accepted
 
-## 日期
+## Date
 2026-06-14
 
-## 背景
+## Background
 
-專案目前有 3,146 處 hardcoded 中文字串散佈在 93 個 Python 檔案中。需要建立國際化（i18n）機制。
+The project currently has 3,146 hardcoded Chinese strings scattered across 93 Python files. An internationalization (i18n) mechanism needs to be established.
 
-## 決策
+## Decision
 
-使用 **YAML 單一檔案 per locale** 的方式管理翻譯字串。
+Use **single YAML file per locale** to manage translated strings.
 
-## 架構
+## Architecture
 
 ```
-src/core/i18n.py          # i18n 核心模組（唯一出入口）
+src/core/i18n.py          # i18n core module (single entry point)
 locales/
-├── zh-TW.yaml            # 繁體中文（預設）
-└── en.yaml               # 英文
+├── zh-TW.yaml            # Traditional Chinese (default)
+└── en.yaml               # English
 ```
 
-**不使用資料夾分類**（如 `locales/zh-TW/ui.yaml`）——單一檔案 per locale 是最簡單的方案。未來如果超過 500 行再拆分。
+**No folder categorization** (e.g., `locales/zh-TW/ui.yaml`) — single file per locale is the simplest approach. Split only if it exceeds 500 lines in the future.
 
-## 命名規範
+## Naming Convention
 
 ```
 <module>.<submodule>.<component>.<purpose>
 ```
 
-範例：
-- `pages.business_card.title` — 名片頁標題
-- `pages.router.nav_label` — 導航標籤
-- `errors.no_data` — 無數據錯誤
+Examples:
+- `pages.business_card.title` — Business card page title
+- `pages.router.nav_label` — Navigation label
+- `errors.no_data` — No data error
 
-## 使用方式
+## Usage
 
 ```python
 from src.core.i18n import t
 
-# 基本使用
+# Basic usage
 st.markdown(t("pages.business_card.title"))
 
-# 帶參數
+# With parameters
 st.markdown(t("pages.stock.price", price=100))
 ```
 
-## 替代方案
+## Alternatives
 
-| 方案 | 不選原因 |
-|------|----------|
-| Python dict | 無法與程式碼分離，不易維護 |
-| JSON | 不支援註解，可讀性較差 |
-| 資料庫 | MVP 階段過度設計 |
-| 多檔案 per locale | 增加查找成本 |
+| Option | Reason for Rejection |
+|--------|---------------------|
+| Python dict | Cannot be separated from code, hard to maintain |
+| JSON | No comment support, poor readability |
+| Database | Over-engineered for MVP stage |
+| Multiple files per locale | Increases lookup cost |
 
-## 後果
+## Consequences
 
-- ✅ 簡單易維護
-- ✅ 可切換語言
-- ⚠️ 需要將 3,146 處 hardcoded 字串逐一替換
-- ⚠️ 需要團隊紀律：新增 UI 字串必須用 `t()`
+- ✅ Simple and easy to maintain
+- ✅ Language switchable
+- ⚠️ Need to replace 3,146 hardcoded strings one by one
+- ⚠️ Team discipline required: all new UI strings must use `t()`

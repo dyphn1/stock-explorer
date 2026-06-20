@@ -1,38 +1,38 @@
-# 路線圖索引
+# Roadmap Index
 
-> **說明**: 本目錄記錄所有待開發功能、UX 改進、技術債務和成本估算。
-
----
-
-## 文件清單
-
-| 文件 | 說明 |
-|------|------|
-| [`ux-improvements.md`](./ux-improvements.md) | UX 改進項目（14 項，P0-P2） |
-| [`competitor-research-summary.md`](./competitor-research-summary.md) | 競品研究摘要（40+ 平台） |
-| [`cost-estimation.md`](./cost-estimation.md) | 成本估算（76+ 項目，~230h） |
+> **Description**: This directory records all pending features, UX improvements, technical debt, and cost estimates.
 
 ---
 
-## 優先級說明
+## File List
 
-| 優先級 | 說明 |
-|--------|------|
-| **P0** | 立即修復（Crash / 嚴重 Bug） |
-| **P1** | 下一個 Sprint（高價值、低/中工作量） |
-| **P2** | 規劃中（需要較多工作量） |
-| **P3** | 長期 backlog |
+| File | Description |
+|------|-------------|
+| [`ux-improvements.md`](./ux-improvements.md) | UX improvement items (14 items, P0-P2) |
+| [`competitor-research-summary.md`](./competitor-research-summary.md) | Competitor research summary (40+ platforms) |
+| [`cost-estimation.md`](./cost-estimation.md) | Cost estimation (76+ items, ~230h) |
 
 ---
 
-## 快速統計
+## Priority Levels
 
-| 類別 | 項目數 | 預估工時 |
-|------|--------|----------|
-| P0 修復 | 1 | ~0.1h |
-| P1 改進 | 10+ | ~25h |
-| P2 改進 | 15+ | ~40h |
-| 新功能 | 8+ | ~35h |
-| 側邊欄重構 | 13 | ~30h |
-| 技術債務 | 12+ | ~30h |
-| **總計** | **76+** | **~230h** |
+| Priority | Description |
+|----------|-------------|
+| **P0** | Fix immediately (Crash / Critical Bug) |
+| **P1** | Next Sprint (High value, low/medium effort) |
+| **P2** | Planned (Requires more effort) |
+| **P3** | Long-term backlog |
+
+---
+
+## Quick Stats
+
+| Category | Items | Estimated Hours |
+|----------|-------|-----------------|
+| P0 Fixes | 1 | ~0.1h |
+| P1 Improvements | 10+ | ~25h |
+| P2 Improvements | 15+ | ~40h |
+| New Features | 8+ | ~35h |
+| Sidebar Refactor | 13 | ~30h |
+| Technical Debt | 12+ | ~30h |
+| **Total** | **76+** | **~230h** |

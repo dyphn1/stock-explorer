@@ -150,8 +150,8 @@ When performing competitor research:
 ## Competitor Reference List
 
 ```
-Primary: 財報狗, GoodInfo, CMoney, 玩股網, FinMind, JZ Invest
-Extended: Yahoo奇摩股市, 鉅亨網, TEJ
+Primary: StatementDog, GoodInfo, CMoney, WantGoo, FinMind, JZ Invest
+Extended: Yahoo Finance Taiwan, Anue, TEJ
 Evaluate: Feature set, UX, education value, notification, watchlist, mobile experience
 ```
 

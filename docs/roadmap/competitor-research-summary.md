@@ -1,77 +1,77 @@
-# 競品研究摘要
+# Competitor Research Summary
 
-> **來源**: `docs/decisions/competitor_research.md` (R1-R5)
-> **研究輪次**: 5 輪，涵蓋 40+ 競品平台
-> **日期**: 2026-06-09 ~ 2026-06-12
-
----
-
-## 競品總覽
-
-### 台灣平台
-
-| 平台 | 定位 | 目標用戶 | 與股識差異 |
-|------|------|----------|------------|
-| **財報狗** | 財報分析專家 | 中階投資人 | 數據密集，缺乏白話說明 |
-| **GoodInfo** | 入口網站 | 所有投資人 | 傳統 portal 風格 |
-| **CMoney** | 投資決策平台 | 重度投資人 | App 風格，功能完整 |
-| **WantGoo** | 社群+數據 | 中短期交易者 | 論壇+基本圖表 |
-| **Yahoo 財經** | 入口網站 | 所有投資人 | 國際化，台灣數據不深 |
-| **Anue 鉅亨** | 新聞+數據 | 所有投資人 | 新聞導向 |
-| **TEJ** | 專業數據 | 機構投資人 | 付費、專業 |
-| **JZ Invest** | 投資工具 | 中階投資人 | 技術分析導向 |
-
-### 國際平台
-
-| 平台 | 定位 | 特色 |
-|------|------|------|
-| **Investopedia** | 金融教育 | 詞條+教學 |
-| **Stockopedia** | 股票分析 | 多因子評分 |
-| **Simply Wall St** | 視覺化分析 | Snowflake 圖表 |
-| **Finviz** | 篩選器 | 強大篩選+heatmap |
-| **Kavout** | AI 股票評分 | AI-native |
-| **TipRanks** | AI+分析師共識 | 社群+AI |
-| **Moomoo/Futubull** | AI 教育 | 2025 新功能 |
+> **Source**: `docs/decisions/competitor_research.md` (R1-R5)
+> **Research Rounds**: 5 rounds, covering 40+ competitor platforms
+> **Date**: 2026-06-09 ~ 2026-06-12
 
 ---
 
-## 關鍵發現
+## Competitor Overview
 
-### 1. 市場空白（White Space）
-- **新手教育導向**：沒有任何平台專注於「讓新手 10 秒內理解」
-- **故事化分析**：多數平台提供數據但缺乏敘事
-- **自適應框架**：沒有平台根據公司類型自動調整分析視角
-- **白話翻譯**：財報狗有但做得不夠徹底
+### Taiwanese Platforms
 
-### 2. 競品趨勢（2025-2026）
-- **AI-Native 分析**：Kavout、TipRanks、Yahoo Finance AI Reports
-- **微學習**：Taster.finance、Sensical（碎片化金融教育）
-- **行動優先**：Bottom-sheet、card-stack、swipe UX
-- **漸進式揭露**：預設只顯示一個數字+一句話，點擊展開
-- **深色模式**：所有平台都支援，WCAG AA 對比度
+| Platform | Positioning | Target Users | Difference from Stock Explorer |
+|----------|-------------|--------------|-------------------------------|
+| **StatementDog (Cai Bao Gou)** | Financial statement analysis expert | Intermediate investors | Data-intensive, lacks plain-language explanations |
+| **GoodInfo** | Portal site | All investors | Traditional portal style |
+| **CMoney** | Investment decision platform | Active investors | App-style, feature-complete |
+| **WantGoo** | Community + data | Short-to-medium-term traders | Forum + basic charts |
+| **Yahoo Finance Taiwan** | Portal site | All investors | International, shallow Taiwan data |
+| **Anue (Ju Heng)** | News + data | All investors | News-oriented |
+| **TEJ** | Professional data | Institutional investors | Paid, professional |
+| **JZ Invest** | Investment tools | Intermediate investors | Technical analysis-oriented |
 
-### 3. 功能差距（Stock Explorer 缺少）
+### International Platforms
 
-| 功能 | 競品參考 | 優先級 |
-|------|----------|--------|
-| 可點擊 Glossary | Investopedia | P1 |
-| 閱讀時間指示器 | Medium | P2 |
-| 信心指標 | TipRanks | P1 |
-| 產業熱力圖 | Finviz | P2 |
-| 今日市場動態 | Yahoo Finance | P2 |
-| 故事弧線偵測 | StockStory | P2 |
-| 除權息行事曆 | GoodInfo | P1 |
-| 新手引導流程 | Acorns/Stash | P1 |
-| 深淺色主題 | 所有平台 | P1 |
-| 響應式佈局 | 所有平台 | P1 |
+| Platform | Positioning | Highlights |
+|----------|-------------|------------|
+| **Investopedia** | Financial education | Glossary + tutorials |
+| **Stockopedia** | Stock analysis | Multi-factor scoring |
+| **Simply Wall St** | Visual analysis | Snowflake charts |
+| **Finviz** | Screener | Powerful screening + heatmap |
+| **Kavout** | AI stock scoring | AI-native |
+| **TipRanks** | AI + analyst consensus | Community + AI |
+| **Moomoo/Futubull** | AI education | 2025 new features |
 
 ---
 
-## 核心競爭優勢
+## Key Findings
 
-股識的差異化定位：
-1. **歷史學家定位**：不給投資建議，只講故事
-2. **PPT 風格**：一頁一個重點，圖片主導
-3. **十秒測試**：新手友善的核心設計原則
-4. **基準導向比較**：跟產業龍頭比，不是跟平均值比
-5. **免費開源**：所有競品都是付費或廣告支持
+### 1. White Space
+- **Beginner education focus**: No platform focuses on "helping beginners understand in 10 seconds"
+- **Story-driven analysis**: Most platforms provide data but lack narrative
+- **Adaptive framework**: No platform automatically adjusts analysis perspective based on company type
+- **Plain-language translation**: StatementDog has it but doesn't do it thoroughly enough
+
+### 2. Competitor Trends (2025-2026)
+- **AI-Native analysis**: Kavout, TipRanks, Yahoo Finance AI Reports
+- **Micro-learning**: Taster.finance, Sensical (bite-sized financial education)
+- **Mobile-first**: Bottom-sheet, card-stack, swipe UX
+- **Progressive disclosure**: Default shows only one number + one sentence, click to expand
+- **Dark mode**: All platforms support it, WCAG AA contrast ratio
+
+### 3. Feature Gaps (What Stock Explorer is Missing)
+
+| Feature | Competitor Reference | Priority |
+|---------|---------------------|----------|
+| Clickable Glossary | Investopedia | P1 |
+| Reading time indicator | Medium | P2 |
+| Confidence indicator | TipRanks | P1 |
+| Industry heatmap | Finviz | P2 |
+| Today's market overview | Yahoo Finance | P2 |
+| Story arc detection | StockStory | P2 |
+| Ex-dividend calendar | GoodInfo | P1 |
+| Beginner onboarding flow | Acorns/Stash | P1 |
+| Light/dark theme | All platforms | P1 |
+| Responsive layout | All platforms | P1 |
+
+---
+
+## Core Competitive Advantages
+
+Stock Explorer's differentiated positioning:
+1. **Historian positioning**: No investment advice, only storytelling
+2. **PPT style**: One key point per page, image-driven
+3. **10-second test**: Beginner-friendly core design principle
+4. **Benchmark-oriented comparison**: Compare against industry leaders, not averages
+5. **Free and open source**: All competitors are paid or ad-supported

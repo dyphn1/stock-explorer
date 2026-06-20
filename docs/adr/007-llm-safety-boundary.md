@@ -1,47 +1,47 @@
-# ADR-007: LLM 安全邊界 — 只翻譯不推導
+# ADR-007: LLM Safety Boundary — Translate Only, No Inference
 
-## 狀態
-已接受
+## Status
+Accepted
 
-## 日期
+## Date
 2026-06-07
 
-## 背景
+## Background
 
-Stock Explorer 使用 LLM 將財務術語翻譯為白話文。但 LLM 可能產生不準確的資訊或給出投資建議，這違反產品定位。
+Stock Explorer uses LLMs to translate financial terminology into plain language. However, LLMs may produce inaccurate information or give investment advice, which violates the product positioning.
 
-## 決策
+## Decision
 
-LLM 僅限於**翻譯財務術語為白話文**，嚴格禁止：
-1. 做出事實推導（如預測未來營收）
-2. 給出股票推薦（買進/賣出）
-3. 產生無法追溯至原始數據的內容
+LLMs are limited to **translating financial terminology into plain language**. Strictly prohibited from:
+1. Making factual inferences (e.g., predicting future revenue)
+2. Giving stock recommendations (buy/sell)
+3. Generating content that cannot be traced back to raw data
 
-## 實作方式
+## Implementation
 
-1. **模板優先**：優先使用預定義模板，LLM 僅為 fallback
-2. **輸出驗證**：LLM 輸出必須通過 tone blocklist 掃描
-3. **免責聲明**：所有頁面底部顯示「本工具不構成投資建議」
+1. **Template-first**: Pre-defined templates are preferred, LLM is only used as fallback
+2. **Output validation**: LLM output must pass tone blocklist scanning
+3. **Disclaimer**: "This tool does not constitute investment advice" displayed at the bottom of all pages
 
 ```python
-# ✅ 正確：翻譯術語
-explain_gross_margin(0.66) → "每賣 100 元商品，扣掉成本後剩 66 元"
+# ✅ Correct: Translate terminology
+explain_gross_margin(0.66) → "For every 100 dollars of goods sold, 66 dollars remain after costs"
 
-# ❌ 錯誤：預測未來
-predict_future("這家公司明年會漲") → 禁止
+# ❌ Wrong: Predict future
+predict_future("This company will rise next year") → Prohibited
 
-# ❌ 錯誤：投資建議
-recommend("建議買進") → 禁止
+# ❌ Wrong: Investment advice
+recommend("Recommend buying") → Prohibited
 ```
 
-## 理由
+## Rationale
 
-1. **產品定位**：歷史學家，不是股評家
-2. **法律風險**：投資建議需要相關牌照
-3. **用戶信任**：錯誤的 AI 建議會損害用戶利益
+1. **Product positioning**: Historian, not stock critic
+2. **Legal risk**: Investment advice requires relevant licenses
+3. **User trust**: Incorrect AI advice harms user interests
 
-## 後果
+## Consequences
 
-- ✅ 符合產品定位
-- ✅ 降低法律風險
-- ⚠️ LLM 能力受限，需要更多模板補充
+- ✅ Aligned with product positioning
+- ✅ Reduced legal risk
+- ⚠️ LLM capabilities limited, more templates needed to supplement

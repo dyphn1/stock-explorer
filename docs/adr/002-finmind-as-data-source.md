@@ -1,54 +1,54 @@
-# ADR-002: 選擇 FinMind 作為主要數據來源
+# ADR-002: Choose FinMind as the Primary Data Source
 
-## 狀態
-已接受
+## Status
+Accepted
 
-## 日期
+## Date
 2026-06-06
 
-## 背景
+## Background
 
-Stock Explorer 需要台灣股票的財務數據、價格數據、新聞等。需要選擇一個可靠的數據來源。
+Stock Explorer needs financial data, price data, news, etc. for Taiwan stocks. A reliable data source must be chosen.
 
-## 決策
+## Decision
 
-選擇 **FinMind API** 作為主要數據來源，使用免費 tier 的 13 個 API。
+Choose **FinMind API** as the primary data source, using 13 APIs from the free tier.
 
-## 理由
+## Rationale
 
-1. **台灣市場專注**：提供 50+ 台灣股票數據集
-2. **免費 tier 可用**：13 個免費 API 涵蓋核心需求
-3. **每日更新**：數據更新頻率符合需求
-4. **Python SDK**：官方提供 Python SDK
+1. **Taiwan market focus**: Provides 50+ Taiwan stock datasets
+2. **Free tier available**: 13 free APIs cover core needs
+3. **Daily updates**: Data update frequency meets requirements
+4. **Python SDK**: Official Python SDK provided
 
-## 已驗證的免費 API
+## Verified Free APIs
 
-| API | 數據內容 |
-|-----|----------|
-| `taiwan_stock_info` | 股票基本資訊 |
-| `taiwan_stock_daily` | 日收盤價 |
-| `taiwan_stock_month_revenue` | 月營收 |
-| `taiwan_stock_per_pbr` | PER/PBR/殖利率 |
-| `taiwan_stock_balance_sheet` | 資產負債表 |
-| `taiwan_stock_financial_statement` | 損益表 |
-| `taiwan_stock_cash_flows_statement` | 現金流量表 |
-| `taiwan_stock_institutional_investors` | 三大法人買賣超 |
-| `taiwan_stock_margin_purchase_short_sale` | 融資融券 |
-| `taiwan_stock_dividend` | 股利政策 |
-| `taiwan_stock_dividend_result` | 除權息結果 |
-| `taiwan_stock_shareholding` | 外資持股 |
-| `taiwan_stock_news` | 新聞 |
+| API | Data Content |
+|-----|--------------|
+| `taiwan_stock_info` | Stock basic information |
+| `taiwan_stock_daily` | Daily closing price |
+| `taiwan_stock_month_revenue` | Monthly revenue |
+| `taiwan_stock_per_pbr` | PER/PBR/dividend yield |
+| `taiwan_stock_balance_sheet` | Balance sheet |
+| `taiwan_stock_financial_statement` | Income statement |
+| `taiwan_stock_cash_flows_statement` | Cash flow statement |
+| `taiwan_stock_institutional_investors` | Institutional investor trading |
+| `taiwan_stock_margin_purchase_short_sale` | Margin trading |
+| `taiwan_stock_dividend` | Dividend policy |
+| `taiwan_stock_dividend_result` | Ex-dividend result |
+| `taiwan_stock_shareholding` | Foreign shareholding |
+| `taiwan_stock_news` | News |
 
-## 替代方案
+## Alternatives
 
-| 方案 | 不選原因 |
-|------|----------|
-| Yahoo Finance API | 台灣股票數據不完整 |
-| 證交所直接爬蟲 | 維護成本高、可能違反使用條款 |
-| 付費數據源（如 CMoney） | MVP 階段成本過高 |
+| Option | Reason for Rejection |
+|--------|---------------------|
+| Yahoo Finance API | Incomplete Taiwan stock data |
+| Direct TWSE scraping | High maintenance cost, may violate terms of service |
+| Paid data sources (e.g., CMoney) | Too costly for MVP stage |
 
-## 後果
+## Consequences
 
-- ✅ 零成本取得核心數據
-- ⚠️ 部分數據（如持股分級、產業供應鏈）需要付費
-- ⚠️ API 有速率限制，需要快取機制
+- ✅ Zero cost for core data
+- ⚠️ Some data (e.g., shareholding tiers, industry supply chain) requires paid tier
+- ⚠️ API has rate limits, caching mechanism needed
