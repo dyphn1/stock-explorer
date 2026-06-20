@@ -33,8 +33,6 @@ from src.services.benchmarks import (
     fetch_benchmark_health_scores,
 )
 
-# Re-export INDUSTRY_BENCHMARKS for backward compatibility
-INDUSTRY_BENCHMARKS = get_industry_benchmarks()
 
 
 def _render_story_card(data: dict, client) -> None:
@@ -169,8 +167,8 @@ def _render_story_card(data: dict, client) -> None:
     if health_scores:
         industry_for_benchmark = data.get("industry", "")
         stock_id_for_benchmark = data.get("stock_id", "")
-        if industry_for_benchmark and industry_for_benchmark in INDUSTRY_BENCHMARKS:
-            bench_id, bench_name = INDUSTRY_BENCHMARKS[industry_for_benchmark]
+        if industry_for_benchmark and industry_for_benchmark in get_industry_benchmarks():
+            bench_id, bench_name = get_industry_benchmarks()[industry_for_benchmark]
             if bench_id != stock_id_for_benchmark:
                 bench_scores = fetch_benchmark_health_scores(
                     client, industry_for_benchmark, stock_id_for_benchmark

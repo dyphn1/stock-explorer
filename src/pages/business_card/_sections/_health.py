@@ -16,8 +16,6 @@ from src.services.benchmarks import (
     fetch_benchmark_health_scores,
 )
 
-# Re-export INDUSTRY_BENCHMARKS for backward compatibility
-INDUSTRY_BENCHMARKS = get_industry_benchmarks()
 
 # Backward-compatible alias
 _fetch_benchmark_health_scores = fetch_benchmark_health_scores
@@ -55,7 +53,7 @@ def _render_health(data: dict, client) -> None:
             benchmark_scores = _fetch_benchmark_health_scores(client, industry, stock_id)
             if benchmark_scores:
                 # Determine label: use the benchmark company name
-                bench_info = INDUSTRY_BENCHMARKS.get(industry)
+                bench_info = get_industry_benchmarks().get(industry)
                 if bench_info:
                     _, bench_name = bench_info
                     benchmark_label = f"{bench_name}"

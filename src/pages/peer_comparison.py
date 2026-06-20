@@ -18,8 +18,6 @@ from src.services.financial_metrics import find_financial_value
 from src.services.benchmarks import get_industry_benchmarks
 from src.services.roe_calculator import calc_roe_ttm
 
-# Re-export INDUSTRY_BENCHMARKS for backward compatibility
-INDUSTRY_BENCHMARKS = get_industry_benchmarks()
 
 
 def _find_fallback_benchmark(industry: str, stock_id: str):
@@ -86,7 +84,7 @@ def _render_peer_comparison(data: dict, client):
     st.markdown("---")
 
     # 決定標竿公司
-    benchmark_id, benchmark_name = INDUSTRY_BENCHMARKS.get(industry, (None, None))
+    benchmark_id, benchmark_name = get_industry_benchmarks().get(industry, (None, None))
     is_fallback = False
 
     if benchmark_id is None:
