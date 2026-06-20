@@ -44,3 +44,30 @@ delta:
     price_30d: 股價（近 30 日均價）
     revenue_yoy: 營收年增率
   previous_year_same_period: 去年同期
+main:
+  sidebar:
+    nav_home: "名片"
+    nav_sector: "產業熱力圖"
+    nav_category: "分類瀏覽"
+    nav_etf: "ETF 專區"
+    nav_watchlist: "我的關注"
+    nav_events: "事件儀表板"
+    nav_notifications: "通知中心"
+    nav_memo: "投資備忘錄"
+    nav_wellness: "理財健康檢查"
+    nav_screener: "股票探索"
+    hot_stocks: "熱門股票"
+    hot_etfs: "熱門 ETF"
+  search:
+    multiple_results: "找到多筆符合的股票："
+    not_found: "找不到符合的股票"
+  home:
+    title: "股識"
+    lead1: "認識一家公司，從這裡開始"
+    lead2: "在左側輸入股票代號或名稱，開始認識一家公司"
+  disclaimer: |-
+        <div class="disclaimer">
+        ⚠️ 本工具僅供認識公司使用，<br>
+        不構成任何投資建議。<br>
+        投資有風險，請自行評估。
+        </div>

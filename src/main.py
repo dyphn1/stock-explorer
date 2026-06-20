@@ -27,98 +27,7 @@ st.set_page_config(
 )
 
 # ── 自定義 CSS（PPT 風格）────────────────────────────
-st.markdown("""
-<style>
-    /* 全局字型 */
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
-
-    * {
-        font-family: 'Noto Sans TC', sans-serif;
-    }
-
-    /* 隱藏 Streamlit 預設元素 */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    
-    /* 確保側邊欄收合時，展開按鈕不會被 header 的隱藏給蓋住 */
-    header [data-testid="stExpandSidebarButton"] {
-        visibility: visible;
-    }
-
-    /* 主容器 */
-    .main .block-container {
-        padding: 2rem 3rem;
-        max-width: 1200px;
-    }
-
-    /* 警語 */
-    .disclaimer {
-        background: #FEF9E7;
-        border-radius: 8px;
-        padding: 1rem;
-        font-size: 0.85rem;
-        color: #2C3E50;
-        margin-top: 2rem;
-    }
-
-    /* Responsive adjustments for small screens */
-    @media (max-width: 768px) {
-        .main .block-container {
-            padding: 1rem 1rem !important;
-        }
-    }
-    @media (max-width: 600px) {
-        .main .block-container {
-            padding: 0.5rem 0.5rem !important;
-        }
-    }
-
-    /* Responsive: make multi-column rows wrap gracefully on narrow screens */
-    @media (max-width: 900px) {
-        div[data-testid="column"] {
-            min-width: 0 !important;
-        }
-        /* Shrink font inside column containers on narrow screens */
-        div[data-testid="stHorizontalBlock"] div[data-testid="column"] p,
-        div[data-testid="stHorizontalBlock"] div[data-testid="column"] span {
-            font-size: 0.75rem !important;
-            word-break: break-all !important;
-        }
-        /* Make buttons inside multi-col rows smaller */
-        div[data-testid="stHorizontalBlock"] div[data-testid="column"] button {
-            font-size: 0.7rem !important;
-            padding: 0.2rem 0.4rem !important;
-            min-height: 0 !important;
-        }
-        /* Shrink markdown text in column rows */
-        div[data-testid="stHorizontalBlock"] div[data-testid="column"] .stMarkdown {
-            font-size: 0.75rem !important;
-        }
-    }
-
-    /* Style the collapse toggle button */
-    button[kind="header"] {
-        z-index: 999 !important;
-        position: relative !important;
-    }
-    /* Hide Streamlit's auto-generated page nav in sidebar */
-    section[data-testid="stSidebarNav"] {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        overflow: hidden !important;
-    }
-    /* Ensure search input text is visible */
-    section[data-testid="stSidebar"] input[type="text"] {
-        color: #2C3E50 !important;
-    }
-    section[data-testid="stSidebar"] input[type="text"]::placeholder {
-        color: #7F8C8D !important;
-        opacity: 1 !important;
-    }
-</style>
-""", unsafe_allow_html=True)
+    st.markdown(t("main.disclaimer"), unsafe_allow_html=True)
 
 # Hide Streamlit's auto-generated sidebar nav via JS injection
 _hide_nav_js = """
@@ -223,16 +132,16 @@ def _render_sidebar(client):
     \n    # Primary navigation
     st.markdown(t("main.sidebar.navigation_header"))
     nav_items = [
-        ("📊", "名片", "sidebar_nav_home"),
-        ("🗺️", "產業熱力圖", "sidebar_nav_sector"),
-        ("📈", "分類瀏覽", "sidebar_nav_category"),
-        ("🏷️", "ETF 專區", "sidebar_nav_etf"),
-        ("📋", "我的關注", "sidebar_nav_watchlist"),
-        ("🔔", "事件儀表板", "sidebar_nav_events"),
-        ("🔔", "通知中心", "sidebar_nav_notifications"),
-        ("📝", "投資備忘錄", "sidebar_nav_memo"),
-        ("💰", "理財健康檢查", "sidebar_nav_wellness"),
-        ("🔎", "股票探索", "sidebar_nav_screener"),
+        ("📊", t("main.sidebar.nav_home"), "sidebar_nav_home"),
+        ("🗺️", t("main.sidebar.nav_sector"), "sidebar_nav_sector"),
+        ("📈", t("main.sidebar.nav_category"), "sidebar_nav_category"),
+        ("🏷️", t("main.sidebar.nav_etf"), "sidebar_nav_etf"),
+        ("📋", t("main.sidebar.nav_watchlist"), "sidebar_nav_watchlist"),
+        ("🔔", t("main.sidebar.nav_events"), "sidebar_nav_events"),
+        ("🔔", t("main.sidebar.nav_notifications"), "sidebar_nav_notifications"),
+        ("📝", t("main.sidebar.nav_memo"), "sidebar_nav_memo"),
+        ("💰", t("main.sidebar.nav_wellness"), "sidebar_nav_wellness"),
+        ("🔎", t("main.sidebar.nav_screener"), "sidebar_nav_screener"),
     ]
     for icon, label, key in nav_items:
         if st.button(f"{icon} {label}", key=key, use_container_width=True):
@@ -241,23 +150,17 @@ def _render_sidebar(client):
     st.markdown("---")
 
     # Hot stocks (collapsible)
-    with st.expander("🔥 熱門股票", expanded=False):
+    with st.expander(f"🔥 {t(\"main.sidebar.hot_stocks\")}", expanded=False):
         _render_sidebar_hot_stocks(client)
 
     # Hot ETFs (collapsible)
-    with st.expander("🏷️ 熱門 ETF", expanded=False):
+    with st.expander(f"🏷️ {t(\"main.sidebar.hot_etfs\")}", expanded=False):
         _render_sidebar_hot_etfs(client)
 
     st.markdown("---")
 
     # Disclaimer
-    st.markdown("""
-    <div class="disclaimer">
-    ⚠️ 本工具僅供認識公司使用，<br>
-    不構成任何投資建議。<br>
-    投資有風險，請自行評估。
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(t("main.disclaimer"), unsafe_allow_html=True)
 
     return search_input
 
@@ -288,12 +191,12 @@ if search_input and search_input.strip():
         elif len(matches) > 1:
             # 多筆符合，讓使用者選擇
             options = [f"{row['stock_id']} {row['stock_name']}" for _, row in matches.iterrows()]
-            selected = st.sidebar.selectbox("找到多筆符合的股票：", options, key="search_select")
+            selected = st.sidebar.selectbox(t("main.search.multiple_results"), options, key="search_select")
             if selected:
                 stock_id = selected.split()[0]
         else:
             # 沒有符合
-            st.sidebar.error("找不到符合的股票")
+            st.sidebar.error(t("main.search.not_found"))
 else:
     stock_id = st.session_state.get("stock_id", None)
 
@@ -301,10 +204,10 @@ if not stock_id:
     # 歡迎頁面
     st.markdown("""
     <div style="text-align:center;padding:4rem 2rem;">
-        <h1>📊 股識</h1>
-        <p style="font-size:1.3rem;color:#7F8C8D;margin-top:1rem;">認識一家公司，從這裡開始</p>
+        <h1>📊 {t("main.home.title")}</h1>
+        <p style="font-size:1.3rem;color:#7F8C8D;margin-top:1rem;">{t("main.home.lead1")}</p>
         <p style="font-size:1rem;color:#7F8C8D;margin-top:2rem;">
-            在左側輸入股票代號或名稱，開始認識一家公司
+            {t("main.home.lead2")}
         </p>
     </div>
     """, unsafe_allow_html=True)
