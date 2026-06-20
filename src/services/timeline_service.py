@@ -59,7 +59,7 @@ _EVENT_ICONS: dict[str, str] = {
 _SEVERITY_COLORS: dict[str, str] = {
     "high": "#E74C3C",
     "medium": "#E67E22",
-    "low": "#279B68",
+    "low": "#27AE60",
 }
 
 # ── Milestone data loading ────────────────────────────────

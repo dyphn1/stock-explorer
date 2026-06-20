@@ -133,7 +133,7 @@ def _section_title_with_read_time(title: str, content: str) -> None:
 
     if content and len(content.strip()) > 50:
         badge = _read_time(content)
-        st.markdown(f"### {title} &nbsp;<span style='font-size:0.75rem;color:#7F8C8D;font-weight:400;vertical-align:middle;background:#F0F0F0;padding:2px 8px;border-radius:10px;'>⏱ {badge}</span>", unsafe_allow_html=True)
+        st.markdown(f"### {title} &nbsp;<span style='font-size:0.75rem;color:#7F8C8D;font-weight:400;vertical-align:middle;background:#ECF0F1;padding:2px 8px;border-radius:10px;'>⏱ {badge}</span>", unsafe_allow_html=True)
     else:
         _section_title(title)
 
