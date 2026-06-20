@@ -1,7 +1,94 @@
-# Stock Explorer — PM Flow Diagrams
+# Stock Explorer — PM Workflow
 
-> This file contains Mermaid visualizations of all PM workflows.
-> AGENTS.md references this file as a visual reference.
+> This file is the **single source of truth** for the PM workflow.
+> AGENTS.md references this file for all detailed steps.
+
+---
+
+## Bootstrap Protocol
+
+### Step 0: Check Previous Task
+1. Look for the latest `docs/state/task_*.md` file (sorted by name, newest first)
+2. If a task file exists:
+   - Read it to understand what was done
+   - If status is "Completed" → delete the task file, proceed to Step 1
+   - If status is "Failed" or "In Progress" → understand what happened, delete the task file, create a NEW task file with the same goal but improved approach
+3. If no task file exists → proceed to Step 1
+
+### Step 1: Create New Task File
+1. Create `docs/state/task_YYYYMMDDHHMM.md` (use current datetime)
+2. Write the task goal, participants, and expected outcome
+3. Sign in at the top:
+   ```
+   ## Sign-in: PM
+   - **Model**: openrouter/owl-alpha
+   - **Role**: Coordinator
+   - **Goal**: [what this cron run will accomplish]
+   ```
+
+### Step 2: Determine Current Task
+**Priority order:**
+1. **User feedback** (docs/feedback/) — ALWAYS first
+2. **Roadmap items** (docs/overview/05-roadmap.md) — by priority (P0 > P1 > P2)
+
+### Step 3: Assign Work
+- PM assigns tasks based on the workflow diagrams below
+- **Minimum 4 agents per cron run** — fewer than 4 = failure, roll back
+- Every task MUST include: goal, context (file paths), model, toolsets
+
+### Step 4: Execute
+- All work dispatched via `delegate_task`
+- PM does NOT write code or modify files directly
+- UI-first: HTML prototype → Daniel review → implementation → Design Reviewer verification
+
+### Step 5: Handoff (One-Shot)
+- Handoff is ONE-SHOT — no continuous writing
+- Update roadmap to reflect completed/failed items
+- Write brief summary in task file
+- Do NOT create long handoff documents
+
+---
+
+## Task File Template
+
+Each cron run creates ONE task file. Format:
+
+```markdown
+# Task YYYYMMDD-HHMM
+
+## Goal
+[Single clear objective for this cron run]
+
+## Source
+- [ ] docs/feedback/[file] (urgent)
+- [ ] docs/overview/05-roadmap.md: [item ID]
+
+## Participants
+| Agent | Model | Role | Goal |
+|-------|-------|------|------|
+| PM | owl-alpha | Coordinator | Assign and verify |
+| ... | ... | ... | ... |
+
+## Sign-ins
+(Each agent signs in here before starting work)
+
+## Result
+- **Status**: In Progress / Completed / Failed
+- **What was done**: [brief summary]
+- **Files changed**: [list of modified files]
+- **Next**: [what should happen next, if anything]
+```
+
+**Rules:**
+- Only ONE task file exists at a time
+- PM deletes the previous task file before creating a new one
+- If the same task spans multiple cron runs, reference the previous task file in the new one
+
+---
+
+## Mermaid Diagrams
+
+The following diagrams visualize the workflow steps described above.
 
 ---
 
