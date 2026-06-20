@@ -18,13 +18,51 @@
 ### Step 1: Create New Task File
 1. Create `docs/state/task_YYYYMMDDHHMM.md` (use current datetime)
 2. Write the task goal, participants, and expected outcome
-3. Sign in at the top:
-   ```
-   ## Sign-in: PM
-   - **Model**: openrouter/owl-alpha
-   - **Role**: Coordinator
-   - **Goal**: [what this cron run will accomplish]
-   ```
+3. PM signs in at the top (first sign-in)
+4. Dispatch to agents — each agent performs **double sign-in** (see below)
+
+---
+
+## Double Sign-in Protocol (ALL Agents)
+
+Every agent signs in **TWICE** in the task file: once BEFORE starting work, and once AFTER completing work.
+
+### First Sign-in (BEFORE starting work)
+
+Every agent must add their sign-in block at the top of the task file BEFORE doing any work:
+
+```markdown
+## Sign-in: [Role Name]
+- **Model**: [model name]
+- **Role**: [role description]
+- **Goal**: [what this agent will accomplish]
+- **Status**: In Progress
+```
+
+### Second Sign-in (AFTER completing work)
+
+Every agent must update their sign-in block AFTER completing work:
+
+```markdown
+## Sign-in: [Role Name]
+- **Model**: [model name]
+- **Role**: [role description]
+- **Goal**: [what this agent will accomplish]
+- **Status**: Completed ✅ / Failed ❌
+- **What was done**: [brief summary of changes]
+- **Files changed**: [list of files modified]
+- **Issues encountered**: [if any]
+```
+
+### PM Uses Sign-ins to Track Progress
+
+PM uses the difference between first and second sign-ins to:
+- **Verify all agents started** (first sign-in exists)
+- **Verify all agents finished** (second sign-in exists with status)
+- **Identify who failed** (second sign-in says "Failed")
+- **Re-dispatch missing agents** (no second sign-in = agent didn't complete)
+
+---
 
 ### Step 2: Determine Current Task
 **Priority order:**
@@ -70,7 +108,7 @@ Each cron run creates ONE task file. Format:
 | ... | ... | ... | ... |
 
 ## Sign-ins
-(Each agent signs in here before starting work)
+(Each agent signs in TWICE: first sign-in BEFORE work, second sign-in AFTER work — see Double Sign-in Protocol above)
 
 ## Result
 - **Status**: In Progress / Completed / Failed
