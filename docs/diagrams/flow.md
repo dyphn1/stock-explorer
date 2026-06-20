@@ -317,3 +317,67 @@ flowchart TD
 | **Design Reviewer** | `openrouter/google/gemma-4-31b-it:free` | TODO 3 |
 | **QA** | `openrouter/google/gemma-4-31b-it:free` | TODO 3, 6 |
 | **Challenger** | `openrouter/openai/gpt-oss-120b:free` | TODO 1, 6 |
+
+---
+
+## How PM Knows If a Sub-Agent Completed
+
+PM does NOT guess. PM verifies via **git diff**:
+
+```bash
+# After sub-agent reports "done"
+git diff --stat HEAD
+```
+
+- If `git diff --stat` shows relevant file changes → sub-agent completed
+- If no changes → sub-agent failed, PM re-dispatches with clearer instructions
+
+### Sub-agent timeout (600s)
+- If sub-agent times out → PM reduces scope (fewer files) and re-dispatches
+- Never take over the work yourself
+
+---
+
+## Error Handling — Re-dispatch Rules
+
+When a step fails:
+
+1. **Sub-agent reports failure** → PM reads the error, adds more context, re-dispatches
+2. **Sub-agent times out** → PM reduces scope (max 2 files per batch), re-dispatches
+3. **Sub-agent produces wrong output** → PM specifies exact fix needed, re-dispatches to SAME role
+4. **Same step fails 3 times** → PM escalates: adds Challenger to cross-examine, or changes approach
+
+### Re-dispatch format
+When re-dispatching, include:
+- Original goal
+- What went wrong (specific error)
+- What to do differently this time
+- Smaller scope if needed
+
+---
+
+## Verification Failure — Rollback Rules
+
+When Design Reviewer or QA reports "FAIL":
+
+1. PM reads the failure report
+2. PM identifies which step failed (design? implementation? test?)
+3. PM rolls back to the step BEFORE the failure:
+
+| Failed Step | Roll Back To |
+|-------------|-------------|
+| Design Review (visual QA) | Re-dispatch Developer to fix specific issues |
+| QA (functional test) | Re-dispatch Developer to fix bugs |
+| Security review | Re-dispatch Developer to fix security issues |
+| Challenger rejects plan | Re-design the plan, re-dispatch Architect |
+
+4. PM updates the task file with:
+   - What failed
+   - Why it failed
+   - What to fix
+5. PM re-dispatches with specific fix instructions
+
+### Never
+- Never skip a failed verification
+- Never proceed to next step with a failed verification
+- Never blame the agent — if it failed, the instructions were unclear
