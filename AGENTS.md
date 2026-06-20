@@ -31,18 +31,12 @@ description: "Entry point router for Stock Explorer multi-agent workflow."
 
 ### Step 0: Sign In
 1. PM creates `docs/state/task_YYYYMMDDHHMM.md` (use current datetime)
-2. ALL agents (including sub-agents) MUST sign in at the top of the task file:
-   ```
-   ## Sign-in: [Role Name]
-   - **Model**: [model name]
-   - **Role**: [role description]
-   - **Goal**: [what this agent will accomplish]
-   ```
+2. ALL agents (including sub-agents) MUST sign in at the top of the task file
 3. No agent starts work without signing in first
 
 ### Step 1: Read Context
-1. Read `docs/overview/05-roadmap.md` — this is the WORK LIST
-2. Read `docs/feedback/` — this is URGENT (highest priority, always process first)
+1. Read `docs/overview/05-roadmap.md` — the WORK LIST
+2. Read `docs/feedback/` — URGENT (highest priority, always process first)
 3. Read `docs/adr/000-index.md` for existing architectural decisions
 4. Read `docs/diagrams/flow.md` for workflow reference
 
@@ -93,48 +87,18 @@ description: "Entry point router for Stock Explorer multi-agent workflow."
 
 ## 5. Role Definitions
 
-### PM (Product Manager)
-- Read roadmap + feedback → determine task priority
-- Create task file, assign work to minimum 4 agents
-- Gate check: verify deliverables exist and are complete
-- Only PM does: git commit + push + update roadmap
+Detailed role definitions are in `docs/roles/`. Each role has its own file:
 
-### Architect
-- System architecture, data flow, infrastructure
-- Evaluate feasibility, design alternatives
-- Create ADRs for significant decisions
-- Guide Developer on architectural compliance
+| Role | File |
+|------|------|
+| PM | `docs/roles/pm.md` |
+| Architect | `docs/roles/architect.md` |
+| Developer | `docs/roles/developer.md` |
+| UX Designer | `docs/roles/ux-designer.md` |
+| Design Reviewer | `docs/roles/designer.md` |
+| QA | `docs/roles/qa.md` |
+| Security Architect | `docs/roles/security-architect.md` |
+| Challenger | `docs/roles/challenger.md` |
+| User Advocate | `docs/roles/user.md` |
 
-### UX Designer
-- Create HTML prototypes in `design/prototypes/`
-- Define interaction flows
-- Ensure design system compliance
-- All UI changes require prototype FIRST
-
-### Developer
-- Implement features, fix bugs
-- Follow layered architecture: Data → Service → Router → Presentation
-- All UI strings use `t()` — no hardcoded Chinese
-- Test after changes: `python3 -m pytest tests/ -x -q`
-
-### Design Reviewer
-- Verify implementation matches UX prototype
-- Check design system compliance
-- Visual QA — colors, typography, spacing
-
-### Security Architect
-- Security review, threat modeling
-- LLM safety: translate only, never infer
-- No hardcoded secrets, input validation
-
-### QA
-- Functional testing, competitor analysis
-- Quality gate before release
-
-### Challenger
-- Cross-examine all decisions
-- 3-round challenge on every major decision
-
-### User
-- End-user advocate, beginner perspective
-- 10-second test: can a beginner understand the UI?
+**When spawning a sub-agent, the PM MUST instruct it to read its role file first.**

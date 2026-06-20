@@ -865,18 +865,13 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1781962000.884872,
-    "ast_hash": "32e46c83c7dabaab098d1e1417927241",
+    "mtime": 1781965032.2935865,
+    "ast_hash": "42a5f983495a1a3a3dbcc3f851065c48",
     "semantic_hash": ""
   },
   "README.md": {
     "mtime": 1781709366.7096055,
     "ast_hash": "865cb1b23a4c41f7fe0f6e8c27b97d6d",
-    "semantic_hash": ""
-  },
-  "STATUS.md": {
-    "mtime": 1781961752.5813053,
-    "ast_hash": "7659b801d75b88b244473dc4d240795a",
     "semantic_hash": ""
   },
   "config/comprehension_quiz.yaml": {
@@ -1055,8 +1050,8 @@
     "semantic_hash": ""
   },
   "docs/overview/05-roadmap.md": {
-    "mtime": 1781963201.076895,
-    "ast_hash": "39c667c25c9c2a3627fe2bb97c9dfba1",
+    "mtime": 1781965034.8784797,
+    "ast_hash": "1ed24bcc66d1791fe8ffd313c1579320",
     "semantic_hash": ""
   },
   "docs/overview/06-development-guide.md": {
@@ -1082,56 +1077,6 @@
   "docs/roadmap/ux-improvements.md": {
     "mtime": 1781962860.984872,
     "ast_hash": "402b05277e881e6af71ef04f5ff5c604",
-    "semantic_hash": ""
-  },
-  "docs/roles/architect.md": {
-    "mtime": 1781711389.2098436,
-    "ast_hash": "4f6957effa1ff3920af503b806bf376a",
-    "semantic_hash": ""
-  },
-  "docs/roles/challenger.md": {
-    "mtime": 1781709408.8381102,
-    "ast_hash": "a36863870dc0ad71a16b90b1eddc3226",
-    "semantic_hash": ""
-  },
-  "docs/roles/designer.md": {
-    "mtime": 1781711389.2098758,
-    "ast_hash": "0a69394963afc22db3a4b00bd9523d0d",
-    "semantic_hash": ""
-  },
-  "docs/roles/developer.md": {
-    "mtime": 1781711389.2098892,
-    "ast_hash": "28dad7715fc7abcf6c2b6c9632547b53",
-    "semantic_hash": ""
-  },
-  "docs/roles/pm.md": {
-    "mtime": 1781742635.279885,
-    "ast_hash": "a38b33be9021c61fa2cbd5344b1edf1c",
-    "semantic_hash": ""
-  },
-  "docs/roles/qa.md": {
-    "mtime": 1781963026.693523,
-    "ast_hash": "72a0d367462b5ac7f07267c5167e40e5",
-    "semantic_hash": ""
-  },
-  "docs/roles/security-architect.md": {
-    "mtime": 1781712655.2391078,
-    "ast_hash": "e688b5810fe00c260bf3fd4be2faa6c5",
-    "semantic_hash": ""
-  },
-  "docs/roles/user.md": {
-    "mtime": 1781712655.239108,
-    "ast_hash": "eb746288ed992c3810e2f54530c879d2",
-    "semantic_hash": ""
-  },
-  "docs/roles/ux-designer.md": {
-    "mtime": 1781963026.693499,
-    "ast_hash": "c3a0d2f051ada21dca02affd0dc706a3",
-    "semantic_hash": ""
-  },
-  "docs/security-review-td01.md": {
-    "mtime": 1781963601.6519008,
-    "ast_hash": "2a5c35c123b7245c3301fc5b273acfba",
     "semantic_hash": ""
   },
   "locales/en.yaml": {
@@ -1262,6 +1207,11 @@
   "src/data/yaml/story_arcs.yaml": {
     "mtime": 1781568334.1608524,
     "ast_hash": "cef57e0ddb3eae1dd2ec55201ebf889f",
+    "semantic_hash": ""
+  },
+  "docs/feedback/README.md": {
+    "mtime": 1781964960.3041723,
+    "ast_hash": "ee0480998b339f2f970b61d5d2dc9e49",
     "semantic_hash": ""
   }
 }
