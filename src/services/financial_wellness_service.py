@@ -126,7 +126,7 @@ def get_interpretation(score: int) -> dict[str, Any]:
             "emoji": "🟡",
             "title": "理財一般",
             "description": "你的理財習慣有基本的概念，但還有一些地方可以加強。參考下方的建議，逐步改善。",
-            "color": "#F39C12",
+            "color": "#E67E22",
         }
     else:
         return {

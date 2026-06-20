@@ -73,7 +73,7 @@ _RISK_BADGES = {
 
 _RISK_COLORS = {
     "high":   "#E74C3C",
-    "medium": "#F39C12",
+    "medium": "#E67E22",
     "low":    "#27AE60",
 }
 

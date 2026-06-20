@@ -118,7 +118,7 @@ def _render_why_moved(data: dict, client) -> None:
     )
 
     border_color = "#27AE60" if explanation["direction"] == "up" else (
-        "#E74C3C" if explanation["direction"] == "down" else "#F39C12"
+        "#E74C3C" if explanation["direction"] == "down" else "#E67E22"
     )
     _summary_card(t("why_moved.stock_price_change"), movement_content, direction_emoji, border_color=border_color)
     # C204: confidence badge

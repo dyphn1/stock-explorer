@@ -22,8 +22,8 @@ from src.services.market_data import (
 # ── Sector color palette (PPT-style, distinct) ────────────
 _SECTOR_COLORS = [
     "#3498DB", "#27AE60", "#E74C3C", "#9B59B6",
-    "#F39C12", "#1ABC9C", "#E67E22", "#2980B9",
-    "#2ECC71", "#8E44AD", "#F1C40F", "#D35400",
+    "#E67E22", "#27AE60", "#E67E22", "#3498DB",
+    "#27AE60", "#9B59B6", "#E67E22", "#E67E22",
     "#16A085", "#C0392B", "#7F8C8D", "#2C3E50",
 ]
 
@@ -303,7 +303,7 @@ def _render_sector_grid(sector_metrics: dict):
                 _白话_card(
                     label=t('sector_heatmap.rank_col', rank=int(row["排名"])),
                     value=row["平均漲跌"],
-                    analogy=f"🔴{int(row["上漲"])} 🟢{int(row["下跌"])} ⚪{int(row["平盤"])}",
+                    analogy=f'🔴{int(row["上漲"])} 🟢{int(row["下跌"])} ⚪{int(row["平盤"])}',
                 )
 
 

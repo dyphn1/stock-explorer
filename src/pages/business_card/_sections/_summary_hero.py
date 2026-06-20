@@ -158,7 +158,7 @@ def _render_story_card(data: dict, client) -> None:
         if overall_health >= 70:
             health_border = "#27AE60"
         elif overall_health >= 40:
-            health_border = "#F39C12"
+            health_border = "#E67E22"
         else:
             health_border = "#E74C3C"
         _summary_card("整體健康度", f"{overall_health:.0f}/100 {health_label}", "🏥", border_color=health_border)

@@ -58,7 +58,7 @@ _EVENT_ICONS: dict[str, str] = {
 
 _SEVERITY_COLORS: dict[str, str] = {
     "high": "#E74C3C",
-    "medium": "#F39C12",
+    "medium": "#E67E22",
     "low": "#279B68",
 }
 
