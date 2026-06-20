@@ -37,3 +37,10 @@ screener:
       per_range: "P/E Range"
       div_range: "Dividend Yield Range"
       all_industries: "All Industries"
+
+delta:
+  metric:
+    revenue_monthly: Monthly Revenue
+    price_30d: 30-Day Price
+    revenue_yoy: Revenue YoY
+  previous_year_same_period: Same Period Last Year

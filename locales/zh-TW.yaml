@@ -37,3 +37,10 @@ screener:
       per_range: "本益比範圍"
       div_range: "殖利率範圍"
       all_industries: "所有產業"
+
+delta:
+  metric:
+    revenue_monthly: 月營收
+    price_30d: 股價（近 30 日均價）
+    revenue_yoy: 營收年增率
+  previous_year_same_period: 去年同期
