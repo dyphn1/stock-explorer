@@ -33,6 +33,10 @@ description: "Entry point router for Stock Explorer multi-agent workflow."
 4. **Feedback is urgent**: User feedback (`docs/feedback/`) always takes priority over roadmap.
 5. **Handoff is one-shot**: Each session is independent. PM summarizes → discord → delete task.
 6. **PM is coordinator only**: PM does NOT write code or modify src/ files. PM only: dispatches, modifies docs, commits, reports.
+7. **English only**: All files MUST be written in English, except:
+   - `locales/` directory (i18n translation files — contains Chinese/English)
+   - `README.md` (may contain the project's Chinese name "股識")
+   - Code comments and docstrings (keep original language)
 
 ---
 
