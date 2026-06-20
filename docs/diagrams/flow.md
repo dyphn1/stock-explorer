@@ -1,421 +1,128 @@
 # Stock Explorer — PM Workflow
 
-> This file is the **single source of truth** for the PM workflow.
-> AGENTS.md references this file for all detailed steps.
+> Single source of truth for all workflow logic.
 
 ---
 
 ## Bootstrap Protocol
 
 ### Step 0: Check Previous Task
-1. Look for the latest `docs/state/task_*.md` file (sorted by name, newest first)
-2. If a task file exists:
-   - Read it to understand what was done
-   - If status is "Completed" → delete the task file, proceed to Step 1
-   - If status is "Failed" or "In Progress" → understand what happened, delete the task file, create a NEW task file with the same goal but improved approach
-3. If no task file exists → proceed to Step 1
+1. Look for `docs/state/task_*.md` (newest first)
+2. If exists and status is "Completed" → delete it, proceed to Step 1
+3. If exists and status is "Failed" / "In Progress" → read what happened, delete it, create NEW task with same goal + improved approach
+4. If no task file → proceed to Step 1
 
-### Step 1: Create New Task File
-1. Create `docs/state/task_YYYYMMDDHHMM.md` (use current datetime)
-2. Write the task goal, participants, and expected outcome
-3. PM signs in at the top (first sign-in)
-4. Dispatch to agents — each agent performs **double sign-in** (see below)
+### Step 1: Create Task File
+Create `docs/state/task_YYYYMMDDHHMM.md`:
+```markdown
+# Task YYYYMMDD-HHMM
+
+## Goal
+[One sentence describing the goal]
+
+## Priority
+[Feedback / P0 / P1 / P2]
+
+## Context
+[Why this task now, what triggered it]
+
+## Sign-ins
+(Agents sign in here — see Double Sign-in Protocol)
+```
+
+### Step 2: Determine Task
+**Priority order:**
+1. `docs/feedback/` — ALWAYS first
+2. `docs/overview/05-roadmap.md` — by P0 > P1 > P2
+
+### Step 3: Assign Work
+- **Minimum 4 agents** — fewer = failure
+- Every task MUST include: goal, context, model, toolsets
+- PM dispatches via `delegate_task`
+
+### Step 4: Execute
+- All work via `delegate_task`
+- PM does NOT write code
+- UI-first: prototype → review → implement → verify
+
+### Step 5: Report
+- PM reads task file, summarizes
+- PM reports to discord
+- PM deletes task file
+- PM updates roadmap
 
 ---
 
 ## Double Sign-in Protocol (ALL Agents)
 
-Every agent signs in **TWICE** in the task file: once BEFORE starting work, and once AFTER completing work.
-
-### First Sign-in (BEFORE starting work)
-
-Every agent must add their sign-in block at the top of the task file BEFORE doing any work:
-
-```markdown
-## Sign-in: [Role Name]
-- **Model**: [model name]
-- **Role**: [role description]
-- **Goal**: [what this agent will accomplish]
+### First Sign-in (BEFORE work)
+```
+## Sign-in: [Role]
+- **Model**: [model]
+- **Role**: [role]
+- **Goal**: [what you will do]
 - **Status**: In Progress
 ```
 
-### Second Sign-in (AFTER completing work)
-
-Every agent must update their sign-in block AFTER completing work:
-
-```markdown
-## Sign-in: [Role Name]
-- **Model**: [model name]
-- **Role**: [role description]
-- **Goal**: [what this agent will accomplish]
+### Second Sign-in (AFTER work)
+```
+## Sign-in: [Role]
+- **Model**: [model]
+- **Role**: [role]
+- **Goal**: [what you will do]
 - **Status**: Completed ✅ / Failed ❌
-- **What was done**: [brief summary of changes]
-- **Files changed**: [list of files modified]
-- **Issues encountered**: [if any]
+- **Done**: [brief summary]
+- **Files**: [files changed]
+- **Issues**: [if any]
 ```
 
-### PM Uses Sign-ins to Track Progress
-
-PM uses the difference between first and second sign-ins to:
-- **Verify all agents started** (first sign-in exists)
-- **Verify all agents finished** (second sign-in exists with status)
-- **Identify who failed** (second sign-in says "Failed")
-- **Re-dispatch missing agents** (no second sign-in = agent didn't complete)
+PM uses the gap between first and second sign-ins to track progress.
 
 ---
 
-### Step 2: Determine Current Task
-**Priority order:**
-1. **User feedback** (docs/feedback/) — ALWAYS first
-2. **Roadmap items** (docs/overview/05-roadmap.md) — by priority (P0 > P1 > P2)
+## Error Handling
 
-### Step 3: Assign Work
-- PM assigns tasks based on the workflow diagrams below
-- **Minimum 4 agents per cron run** — fewer than 4 = failure, roll back
-- Every task MUST include: goal, context (file paths), model, toolsets
-
-### Step 4: Execute
-- All work dispatched via `delegate_task`
-- PM does NOT write code or modify files directly
-- UI-first: HTML prototype → Daniel review → implementation → Design Reviewer verification
-
-### Step 5: Handoff (One-Shot)
-- Handoff is ONE-SHOT — no continuous writing
-- Update roadmap to reflect completed/failed items
-- Write brief summary in task file
-- Do NOT create long handoff documents
+| Failure Type | PM Action |
+|-------------|-----------|
+| Sub-agent reports failure | Add context, re-dispatch |
+| Sub-agent timeout | Reduce scope (max 2 files), re-dispatch |
+| Wrong output | Specify exact fix, re-dispatch to SAME role |
+| Fails 3 times | Add Challenger, change approach |
 
 ---
 
-## Task File Template
-
-Each cron run creates ONE task file. Format:
-
-```markdown
-# Task YYYYMMDD-HHMM
-
-## Goal
-[Single clear objective for this cron run]
-
-## Source
-- [ ] docs/feedback/[file] (urgent)
-- [ ] docs/overview/05-roadmap.md: [item ID]
-
-## Participants
-| Agent | Model | Role | Goal |
-|-------|-------|------|------|
-| PM | owl-alpha | Coordinator | Assign and verify |
-| ... | ... | ... | ... |
-
-## Sign-ins
-(Each agent signs in TWICE: first sign-in BEFORE work, second sign-in AFTER work — see Double Sign-in Protocol above)
-
-## Result
-- **Status**: In Progress / Completed / Failed
-- **What was done**: [brief summary]
-- **Files changed**: [list of modified files]
-- **Next**: [what should happen next, if anything]
-```
-
-**Rules:**
-- Only ONE task file exists at a time
-- PM deletes the previous task file before creating a new one
-- If the same task spans multiple cron runs, reference the previous task file in the new one
-
----
-
-## Mermaid Diagrams
-
-The following diagrams visualize the workflow steps described above.
-
----
-
-## Diagram 1: PM Decision Flow After Cron Session Wake-up
-
-```mermaid
-flowchart TD
-    START([PM awakened by cron]) --> READ_STATE[Step 0: Read state<br/>STATUS.md + handoff.md<br/>current_problems.md + pending_review.md]
-
-    READ_STATE --> CHECK_TODO{Determine current<br/>highest priority task}
-
-    CHECK_TODO -->|P0: Refactor + UX Bug| TODO_REFACTOR[TODO: Refactor/Fix]
-    CHECK_TODO -->|P1: New Feature| TODO_FEATURE[TODO: New Feature Development]
-    CHECK_TODO -->|P2: Verification/Testing| TODO_VERIFY[TODO: Verification]
-    CHECK_TODO -->|P3: Research/Discussion| TODO_RESEARCH[TODO: Competitor Research]
-    CHECK_TODO -->|No tasks| SILENT([SILENT end])
-
-    TODO_REFACTOR --> GATE1{ Gate Check 1<br/>Design complete?}
-    TODO_FEATURE --> GATE1
-    TODO_VERIFY --> GATE2{ Gate Check 2<br/>Implementation complete?}
-    TODO_RESEARCH --> GATE3{Gate Check 3<br/>Verification passed?}
-
-    GATE1 -->|NOT PASSED| BACK1[Roll back to previous TODO<br/>Specify improvement requirements]
-    BACK1 --> CHECK_TODO
-    GATE1 -->|PASSED| NEXT1[Advance to next TODO]
-    NEXT1 --> GATE2
-
-    GATE2 -->|NOT PASSED| BACK2[Roll back to TODO 2<br/>Specify key issues]
-    BACK2 --> TODO_FEATURE
-    GATE2 -->|PASSED| NEXT2[Advance to next TODO]
-    NEXT2 --> GATE3
-
-    GATE3 -->|NOT PASSED| BACK3[Roll back to TODO 2]
-    BACK3 --> TODO_FEATURE
-    GATE3 -->|PASSED| TODO4[TODO 4: Release<br/>PM does it personally]
-
-    TODO4 --> COMMIT[git commit + push<br/>Update state files]
-    COMMIT --> END([Session ended])
-```
-
----
-
-## Diagram 2: TODO 1 — Refactor/Bug Fix
-
-```mermaid
-flowchart TD
-    START([TODO 1 Start]) --> READ[PM reads current_problems.md<br/>Confirm issue scope and files]
-
-    READ --> DELEGATE1[delegate_task → Architect<br/>Feasibility analysis + technical solution<br/>model: nemotron-3]
-    READ --> DELEGATE2[delegate_task → Challenger<br/>3-round challenge of plan<br/>model: gpt-oss-120b]
-
-    DELEGATE1 --> GATE1{<br/>Gate 1: Design complete?}
-    DELEGATE2 --> GATE1
-
-    GATE1 -->|NOT PASSED<br/>Design incomplete| BACK[Re-dispatch<br/>Specify deficiencies]
-    BACK --> READ
-
-    GATE1 -->|PASSED<br/>Design approved| TODO2[Advance to TODO 2<br/>Begin implementation]
-
-    style GATE1 fill:#f9e79f,stroke:#d4ac0d
-```
-
-**Participants:** Architect (`nemotron-3`) + Challenger (`gpt-oss-120b`)
-**Completion criteria:** Technical analysis/ADR exists + Challenger passes 3 rounds
-
----
-
-## Diagram 3: TODO 2 — New Feature Development (New Feature / UI)
-
-```mermaid
-flowchart TD
-    START([TODO 2 Start]) --> READ[PM reads design deliverables<br/>HTML prototype + technical analysis]
-
-    READ --> DELEGATE_UX[delegate_task → UX Designer<br/>Create HTML prototype<br/>model: gemma-4]
-    READ --> DELEGATE_ARCH[delegate_task → Architect<br/>Technical feasibility analysis<br/>model: nemotron-3]
-
-    DELEGATE_UX --> GATE1{<br/>Gate 1: Design complete?}
-    DELEGATE_ARCH --> GATE1
-
-    GATE1 -->|NOT PASSED| BACK1[Re-dispatch]
-    BACK1 --> READ
-
-    GATE1 -->|PASSED| DELEGATE_SEC[delegate_task → Security Architect<br/>Threat modeling + security review<br/>model: nemotron-3]
-
-    DELEGATE_SEC --> GATE2{<br/>Gate 2: Security passed?}
-
-    GATE2 -->|NOT PASSED| BACK2[Roll back to Phase 1<br/>Architect revises]
-    BACK2 --> READ
-
-    GATE2 -->|PASSED| DELEGATE_DEV[delegate_task → Developer<br/>Implementation + L0/L1 verification<br/>model: owl-alpha]
-
-    DELEGATE_DEV --> GATE3{<br/>Gate 3: Implementation complete?}
-
-    GATE3 -->|NOT PASSED<br/>L0/L1 failed| BACK3[Roll back to Developer<br/>Specify test failures]
-    BACK3 --> DELEGATE_DEV
-
-    GATE3 -->|PASSED| TODO3[Advance to TODO 3<br/>Begin verification]
-
-    style GATE1 fill:#f9e79f,stroke:#d4ac0d
-    style GATE2 fill:#f9e79f,stroke:#d4ac0d
-    style GATE3 fill:#f9e79f,stroke:#d4ac0d
-```
-
-**Participants:** UX Designer (`gemma-4`) + Architect (`nemotron-3`) + Security (`nemotron-3`) + Developer (`owl-alpha`)
-**Completion criteria:** HTML prototype exists + Security pass + L0/L1 all pass + git commit
-
----
-
-## Diagram 4: TODO 3 — Verification (Verify / Test)
-
-```mermaid
-flowchart TD
-    START([TODO 3 Start]) --> READ[PM confirms implementation complete<br/>git diff --stat + L0 pass]
-
-    READ --> DELEGATE_QA[delegate_task → QA<br/>L0 + L1 + L2 testing<br/>model: gemma-4]
-    READ --> DELEGATE_SEC[delegate_task → Security<br/>Code audit<br/>model: nemotron-3]
-    READ --> DELEGATE_REVIEW[delegate_task → Design Reviewer<br/>Visual vs prototype<br/>model: gemma-4]
-
-    DELEGATE_QA --> GATE{<br/>Gate: All passed?}
-    DELEGATE_SEC --> GATE
-    DELEGATE_REVIEW --> GATE
-
-    GATE -->|NOT PASSED<br/>P0 issues| BACK[Roll back to TODO 2<br/>Specify fix priorities]
-    BACK --> START
-
-    GATE -->|PASSED<br/>All pass| TODO4[Advance to TODO 4<br/>Release]
-
-    style GATE fill:#f9e79f,stroke:#d4ac0d
-```
-
-**Participants:** QA (`gemma-4`) + Security (`nemotron-3`) + Design Reviewer (`gemma-4`)
-**Completion criteria:** L0 + L1 + L2 all pass + no security critical issues + no P0 visual deviations
-
----
-
-## Diagram 5: TODO 4 — Release (PM Does It Personally)
-
-```mermaid
-flowchart TD
-    START([TODO 4 Start]) --> PM1[Update docs/state/handoff.md<br/>Session summary]
-    PM1 --> PM2[Update docs/state/current_problems.md<br/>Mark resolved]
-    PM2 --> PM3[Update docs/state/pending_review.md<br/>Clear reviewed items]
-    PM3 --> PM4[Update docs/overview/05-roadmap.md<br/>Mark features complete]
-    PM4 --> PM5[git add -A<br/>git commit -m "type: summary"<br/>git push]
-    PM5 --> END([✅ Task complete])
-
-    style PM5 fill:#d5f5e3,stroke:#27ae60
-```
-
-**Only PM does this personally, no sub-agents.**
-
----
-
-## Diagram 6: Research/Discussion (Research / Discuss)
-
-```mermaid
-flowchart TD
-    START([Research/Discussion Start]) --> READ[PM defines research scope<br/>Competitor analysis or next steps]
-
-    READ --> DELEGATE_QA[delegate_task → QA<br/>Competitor research<br/>model: gemma-4]
-    READ --> DELEGATE_ARCH[delegate_task → Architect<br/>Feasibility assessment<br/>model: nemotron-3]
-    READ --> DELEGATE_UX[delegate_task → UX Designer<br/>UX recommendations<br/>model: gemma-4]
-
-    DELEGATE_QA --> GATE1{<br/>Gate 1: Research complete?}
-    DELEGATE_ARCH --> GATE1
-    DELEGATE_UX --> GATE1
-
-    GATE1 -->|NOT PASSED| BACK[Re-dispatch]
-    BACK --> READ
-
-    GATE1 -->|PASSED| SYNTHESIZE[PM synthesizes results<br/>→ Draft]
-
-    SYNTHESIZE --> DELEGATE_CHAL[delegate_task → Challenger<br/>3-round challenge<br/>model: gpt-oss-120b]
-
-    DELEGATE_CHAL --> GATE2{<br/>Gate 2: Challenge passed?}
-
-    GATE2 -->|NOT PASSED| REVISE[Revise draft]
-    REVISE --> SYNTHESIZE
-
-    GATE2 -->|PASSED| DOC[PM writes ADR<br/>Updates roadmap<br/>Creates handoff]
-    DOC --> COMMIT[git commit + push]
-    COMMIT --> END([✅ Complete])
-
-    style GATE1 fill:#f9e79f,stroke:#d4ac0d
-    style GATE2 fill:#f9e79f,stroke:#d4ac0d
-```
-
----
-
-## Diagram 7: Optimization (Design Review Fixes)
-
-```mermaid
-flowchart TD
-    START([Optimization task start]) --> READ[PM reads design review report<br/>Lists items to fix]
-
-    READ --> CLASSIFY{Issue classification}
-
-    CLASSIFY -->|Color/Component violations| DELEGATE_DEV[delegate_task → Developer<br/>Fix to design system colors<br/>model: owl-alpha]
-    CLASSIFY -->|Layout/Responsive| DELEGATE_UX[delegate_task → UX Designer<br/>Update prototype<br/>model: gemma-4]
-    CLASSIFY -->|Interaction/Flow| DELEGATE_UX
-
-    DELEGATE_DEV --> GATE{<br/>Gate: Fix complete?}
-    DELEGATE_UX --> GATE
-
-    GATE -->|NOT PASSED| BACK[Re-do]
-    BACK --> READ
-
-    GATE -->|PASSED| VERIFY[PM runs L0 verification<br/>Confirm no regression]
-    VERIFY --> COMMIT[git commit + push]
-    COMMIT --> END([✅ Complete])
-
-    style GATE fill:#f9e79f,stroke:#d4ac0d
-```
-
----
-
-## Role and Model Reference Table
-
-| Role | Model | Primary TODO Participation |
-|------|-------|---------------------------|
-| **PM** | `openrouter/owl-alpha` | TODO 4 (personal) + all Gate Checks |
-| **Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | TODO 1, 2, 6 |
-| **Security Architect** | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` | TODO 2, 3 |
-| **UX Designer** | `openrouter/google/gemma-4-31b-it:free` | TODO 2, 6, 7 |
-| **Developer** | `openrouter/owl-alpha` | TODO 1, 2, 7 |
-| **Design Reviewer** | `openrouter/google/gemma-4-31b-it:free` | TODO 3 |
-| **QA** | `openrouter/google/gemma-4-31b-it:free` | TODO 3, 6 |
-| **Challenger** | `openrouter/openai/gpt-oss-120b:free` | TODO 1, 6 |
-
----
-
-## How PM Knows If a Sub-Agent Completed
-
-PM does NOT guess. PM verifies via **git diff**:
-
-```bash
-# After sub-agent reports "done"
-git diff --stat HEAD
-```
-
-- If `git diff --stat` shows relevant file changes → sub-agent completed
-- If no changes → sub-agent failed, PM re-dispatches with clearer instructions
-
-### Sub-agent timeout (600s)
-- If sub-agent times out → PM reduces scope (fewer files) and re-dispatches
-- Never take over the work yourself
-
----
-
-## Error Handling — Re-dispatch Rules
-
-When a step fails:
-
-1. **Sub-agent reports failure** → PM reads the error, adds more context, re-dispatches
-2. **Sub-agent times out** → PM reduces scope (max 2 files per batch), re-dispatches
-3. **Sub-agent produces wrong output** → PM specifies exact fix needed, re-dispatches to SAME role
-4. **Same step fails 3 times** → PM escalates: adds Challenger to cross-examine, or changes approach
-
-### Re-dispatch format
-When re-dispatching, include:
-- Original goal
-- What went wrong (specific error)
-- What to do differently this time
-- Smaller scope if needed
-
----
-
-## Verification Failure — Rollback Rules
-
-When Design Reviewer or QA reports "FAIL":
-
-1. PM reads the failure report
-2. PM identifies which step failed (design? implementation? test?)
-3. PM rolls back to the step BEFORE the failure:
+## Verification Failure — Rollback
 
 | Failed Step | Roll Back To |
 |-------------|-------------|
-| Design Review (visual QA) | Re-dispatch Developer to fix specific issues |
-| QA (functional test) | Re-dispatch Developer to fix bugs |
-| Security review | Re-dispatch Developer to fix security issues |
-| Challenger rejects plan | Re-design the plan, re-dispatch Architect |
+| Design Review | Fix specific visual issues |
+| QA (functional test) | Fix bugs |
+| Security review | Fix security issues |
+| Challenger rejects plan | Re-design |
 
-4. PM updates the task file with:
-   - What failed
-   - Why it failed
-   - What to fix
-5. PM re-dispatches with specific fix instructions
+Never proceed with a failed verification.
 
-### Never
-- Never skip a failed verification
-- Never proceed to next step with a failed verification
-- Never blame the agent — if it failed, the instructions were unclear
+---
+
+## PM Workflow Summary
+
+```
+1. Check previous task → delete if exists
+2. Read feedback → read roadmap → determine task
+3. Create task file
+4. Dispatch to ≥4 agents
+5. Monitor sign-ins (git diff to verify)
+6. If failure → re-dispatch with fix instructions
+7. When all sign-ins complete → summarize → discord → delete task
+8. Update roadmap + commit + push
+```
+
+---
+
+## Task File Lifecycle
+
+```
+Created by PM → Agents sign in → Work done → Agents sign out → PM reads → PM reports → Deleted
+```
+
+Only ONE task file exists at a time. No accumulation.

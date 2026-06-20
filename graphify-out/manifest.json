@@ -865,8 +865,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1781965032.2935865,
-    "ast_hash": "42a5f983495a1a3a3dbcc3f851065c48",
+    "mtime": 1781966851.362317,
+    "ast_hash": "3b26b88bb0e00f359b8e9f42173fdd35",
     "semantic_hash": ""
   },
   "README.md": {
@@ -1020,8 +1020,8 @@
     "semantic_hash": ""
   },
   "docs/diagrams/flow.md": {
-    "mtime": 1781963284.7555208,
-    "ast_hash": "a2739799b70ce3e2f2b8cf1214146a3a",
+    "mtime": 1781967536.7721527,
+    "ast_hash": "e939303513fa706ffa650e674216e300",
     "semantic_hash": ""
   },
   "docs/overview/00-index.md": {
@@ -1210,8 +1210,53 @@
     "semantic_hash": ""
   },
   "docs/feedback/README.md": {
-    "mtime": 1781964960.3041723,
+    "mtime": 1781965359.7684762,
     "ast_hash": "ee0480998b339f2f970b61d5d2dc9e49",
+    "semantic_hash": ""
+  },
+  "docs/roles/architect.md": {
+    "mtime": 1781965778.203398,
+    "ast_hash": "f70987ea6e914a2ff208c5ec8c93bd7b",
+    "semantic_hash": ""
+  },
+  "docs/roles/challenger.md": {
+    "mtime": 1781965778.2089567,
+    "ast_hash": "78ce42ffee5f07348aad586476d2716f",
+    "semantic_hash": ""
+  },
+  "docs/roles/designer.md": {
+    "mtime": 1781965778.2034667,
+    "ast_hash": "87f7c86eac6daa3beae82e27f2e8e2a1",
+    "semantic_hash": ""
+  },
+  "docs/roles/developer.md": {
+    "mtime": 1781965778.2034447,
+    "ast_hash": "f8ffac458aff0892a9208e385a8d1965",
+    "semantic_hash": ""
+  },
+  "docs/roles/pm.md": {
+    "mtime": 1781965778.2033842,
+    "ast_hash": "657eecfe6def1284287ccfd430e5b51d",
+    "semantic_hash": ""
+  },
+  "docs/roles/qa.md": {
+    "mtime": 1781965778.2031198,
+    "ast_hash": "8f414fabeacff04008a3db9470839f25",
+    "semantic_hash": ""
+  },
+  "docs/roles/security-architect.md": {
+    "mtime": 1781965778.2089427,
+    "ast_hash": "5cf34af73cb3afcc02b12832a7108caf",
+    "semantic_hash": ""
+  },
+  "docs/roles/user.md": {
+    "mtime": 1781965778.2089674,
+    "ast_hash": "49f05f8648825d40f936371006fade91",
+    "semantic_hash": ""
+  },
+  "docs/roles/ux-designer.md": {
+    "mtime": 1781965778.203103,
+    "ast_hash": "dc5b8816e7af3e1e1a955d7694e047fb",
     "semantic_hash": ""
   }
 }
