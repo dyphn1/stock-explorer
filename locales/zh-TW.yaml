@@ -110,6 +110,12 @@ daily_market:
     empty: "今日無重大事件"
   disclaimer: "⚠️ 本工具僅供公司教育使用，<br>不構成任何投資建議。<br>投資有風險，請自行評估。"
 
+unit:
+  yuan: "元"
+  hundred_million: "億"
+  ten_thousand: "萬"
+  percent: "%"
+
 validation:
   error:
     empty: "請輸入股票代號"
@@ -163,3 +169,111 @@ revenue_analyzer:
     other_investments_description: "投資收益或非營業收入"
     new_business: "新業務"
     new_business_description: "新興發展中的業務線"
+
+metric_education:
+  roe_display_name: 股東權益報酬率
+  roe_explanation: >-
+    ROE 衡量公司用股東的錢賺錢的效率。ROE 15% 表示每 100 元股東資本，
+    公司一年賺 15 元。越高代表公司越會賺錢。
+  roe_historical_context: >-
+    台股平均 ROE 約 10-12%。ROE 長期維持 15% 以上的公司通常具備
+    競爭優勢（護城河）。巴菲特偏好 ROE 長期高於 20% 的公司。
+  gross_margin_display_name: 毛利率
+  gross_margin_explanation: >-
+    毛利率是賣出商品後，扣掉直接成本（原料、人工）剩下的利潤比例。
+    毛利率 40% 表示每賣 100 元，扣掉成本還剩 40 元。越高代表產品
+    越有定價能力。
+  gross_margin_historical_context: >-
+    不同產業毛利率差異很大：軟體業可達 80%以上，代工廠可能只有
+    5-10%。跟自己過去的毛利率比較，比跟不同產業比較更有意義。
+  net_margin_display_name: 淨利率
+  net_margin_explanation: >-
+    淨利率是扣掉所有成本（營業費用、利息、稅金）後，真正賺到的錢。
+    淨利率 10% 表示每賣 100 元，公司最後口袋剩 10 元。越高代表公司
+    控制成本的能力越好。
+  net_margin_historical_context: >-
+    淨利率會受一次性業外損益影響，建議看近 4-8 季的趨勢而非單季數字。
+    科技業淨利率通常 10-30%，零售業可能只有 1-5%。
+  debt_ratio_display_name: 負債比
+  debt_ratio_explanation: >-
+    負債比是公司資產中有多少比例是借來的錢。負債比 60% 表示每 100 元
+    資產中，有 60 元是借來的。越低代表財務越保守，但適度借錢可以
+    加速成長。
+  debt_ratio_historical_context: >-
+    金融業負債比通常 80-90%（因為存款算負債），這是正常的。製造業
+    建議負債比控制在 50% 以下。景氣差時高負債比風險較大。
+  revenue_yoy_display_name: 營收年增率
+  revenue_yoy_explanation: >-
+    營收年增率是跟去年同月比較，營收成長或衰退的幅度。年增 20% 表示
+    今年營收比去年同月多 20%。正數代表成長，負數代表衰退。
+  revenue_yoy_historical_context: >-
+    單月營收年增率波動較大，建議看 3-6 個月的趨勢更有參考價值。
+    季節性產業（如冷飲、觀光）需考慮淡旺季因素。
+  per_display_name: 本益比
+  per_explanation: >-
+    本益比是股價除以每股盈餘，代表市場願意為公司每賺 1 元付多少錢。
+    本益比 15 倍表示市場願意為每 1 元獲利付 15 元。越低代表回本
+    越快，但也可能反映市場不看好。
+  per_historical_context: >-
+    台股歷史本益比區間約 10-25 倍。不同產業合理本益比不同：成長股
+    可能 20-30 倍，景氣循環股可能 8-12 倍。虧損公司沒有本益比。
+  pbr_display_name: 淨值比
+  pbr_explanation: >-
+    淨值比是股價除以每股淨值，代表股價相對於公司帳面價值的倍數。
+    淨值比 1.5 表示股價是淨值的 1.5 倍。低於 1 表示股價比淨值還便宜
+    （但可能有原因）。
+  pbr_historical_context: >-
+    淨值比適合評估資產密集型產業（如銀行、營建）。輕資產公司
+    （如軟體、品牌）淨值比通常較高，因為價值在無形資產。巴菲特
+    早期偏好淨值比低於 1 的股票。
+  dividend_yield_display_name: 殖利率
+  dividend_yield_explanation: >-
+    殖利率是每年配發的股利除以股價，代表投資一年能領回的現金比例。
+    殖利率 4% 表示每投資 100 元，一年約領回 4 元股利。越高代表配息
+    多，但太高可能代表股價下跌或配息不可持續。
+  dividend_yield_historical_context: >-
+    台股平均殖利率約 3-4%。殖利率 5% 以上算高息股，但要注意：
+    1) 是否為一次性業外收入造成的超高殖利率；2) 公司是否有賺錢。
+    過去 5 年穩定配息的公司較可靠.
+
+delta_explanation_provider:
+  revenue_up_extreme: "{stock_prefix}{metric_name}暴增 {abs_pct:.0f}%，可能是大訂單入帳或旺季效應，可持續觀察其變化"
+  revenue_up_strong: "{stock_prefix}{metric_name}成長 {abs_pct:.0f}%，表現相對正面，可能是需求回溫或新產品貢獻"
+  revenue_up_moderate: "{stock_prefix}{metric_name}成長 {abs_pct:.0f}%，溫和成長中"
+  revenue_down_extreme: "{stock_prefix}{metric_name}驟降 {abs_pct:.0f}%，可能是淡季或失去大客戶，可留意其趨勢"
+  revenue_down_strong: "{stock_prefix}{metric_name}衰退 {abs_pct:.0f}%，表現不如預期，可能是需求下滑或訂單遞延"
+  revenue_down_moderate: "{stock_prefix}{metric_name}小跌 {abs_pct:.0f}%，略有衰退但仍在合理範圍"
+  price_up_large: "{stock_prefix}股價近 30 日大漲 {abs_pct:.0f}%，市場情緒樂觀，可能是基本面改善或利多消息推動"
+  price_up_medium: "{stock_prefix}股價近 30 日上漲 {abs_pct:.0f}%，多頭趨勢明顯"
+  price_up_small: "{stock_prefix}股價近 30 日上漲 {abs_pct:.0f}%，穩步走揚"
+  price_down_large: "{stock_prefix}股價近 30 日大跌 {abs_pct:.0f}%，市場信心不足，可能是利空消息或基本面惡化"
+  price_down_medium: "{stock_prefix}股價近 30 日下跌 {abs_pct:.0f}%，空頭趨勢明顯"
+  price_down_small: "{stock_prefix}股價近 30 日小跌 {abs_pct:.0f}%，略有回檔"
+  yoy_up_strong: "{stock_prefix}營收年增 {abs_pct:.0f}%，成長非常強勁，可能是新產品大賣或市場需求爆發"
+  yoy_up_moderate: "{stock_prefix}營收年增 {abs_pct:.0f}%，穩定成長，公司經營績效良好"
+  yoy_up_mild: "{stock_prefix}營收年增 {abs_pct:.0f}%，溫和成長"
+  yoy_down_extreme: "{stock_prefix}營收年減 {abs_pct:.0f}%，大幅衰退，可能有結構性問題需要關注"
+  yoy_down_strong: "{stock_prefix}營收年減 {abs_pct:.0f}%，比去年差，需留意原因"
+  yoy_down_moderate: "{stock_prefix}營收年減 {abs_pct:.0f}%，略有衰退"
+  implication_revenue_up_extreme: "營收大幅成長，未來變化值得持續觀察"
+  implication_revenue_up_strong: "營收表現正向，趨勢值得關注"
+  implication_revenue_up_moderate: "營收溫和成長，表現穩定"
+  implication_revenue_down_extreme: "營收大幅下滑，未來變化值得注意"
+  implication_revenue_down_strong: "營收表現偏弱，原因值得持續追蹤"
+  implication_revenue_down_moderate: "營收小幅波動，仍在合理範圍內"
+  implication_price_up_extreme: "股價大漲，市場評價變化值得關注"
+  implication_price_up_strong: "股價多頭走勢，未來動能值得觀察"
+  implication_price_up_moderate: "股價穩步上漲，趨勢穩定"
+  implication_price_down_extreme: "股價大跌，市場反應值得持續觀察"
+  implication_price_down_strong: "股價空頭走勢，未來變化值得注意"
+  implication_price_down_moderate: "股價小幅回檔，屬正常波動"
+  implication_yoy_up_extreme: "營收年增強勁，未來季度表現值得關注"
+  implication_yoy_up_strong: "營收年增穩健，趨勢值得持續觀察"
+  implication_yoy_up_moderate: "營收年增溫和，表現穩定"
+  implication_yoy_down_extreme: "營收年減顯著，值得持續追蹤"
+  implication_yoy_down_strong: "營收年同期表現轉弱，改善幅度值得關注"
+  implication_yoy_down_moderate: "營收年同期小幅波動，仍在合理範圍內"
+  generic_implication_up: "指標較前期成長，未來變化值得留意"
+  generic_implication_down: "指標較前期衰退，原因值得持續追蹤"
+  generic_template_up: "{stock_prefix}{metric_name} 較前期成長 {abs_pct:.1f}%"
+  generic_template_down: "{stock_prefix}{metric_name} 較前期衰退 {abs_pct:.1f}%"

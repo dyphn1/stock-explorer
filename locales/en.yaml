@@ -107,6 +107,12 @@ daily_market:
     title: "Key Events"
     empty: "No events today"
   disclaimer: "⚠️ This tool is for company education only,<br>does not constitute any investment advice.<br>Investing involves risk, please assess on your own."
+
+unit:
+  yuan: "TWD"
+  hundred_million: "B"
+  ten_thousand: "M"
+  percent: "%"
 validation:
   error:
     empty: "Please enter a stock ID"
@@ -193,3 +199,117 @@ financial_wellness:
     attention_description: "Your financial habits have plenty of room for improvement. Don't worry, everyone starts from zero. Start with the simplest steps."
   tips:
     need_improvement: "{category} is the area you most need to improve; we recommend learning more about related knowledge."
+metric_education:
+  debt_ratio_display_name: Debt Ratio
+  debt_ratio_explanation: Debt ratio indicates the proportion of a company's assets
+    financed by debt. A debt ratio of 60% means that 60% of the company's assets are
+    funded by debt. Lower indicates more conservative financial leverage, though moderate
+    borrowing can accelerate growth.
+  debt_ratio_historical_context: Financial industries typically have debt ratios of
+    80-90% (as deposits are considered liabilities), which is normal. Manufacturing
+    industries are advised to keep debt ratio below 50%. High debt ratios pose greater
+    risk during economic downturns.
+  dividend_yield_display_name: Dividend Yield
+  dividend_yield_explanation: Dividend yield is the annual dividend per share divided
+    by stock price, representing the return on investment in the form of cash dividends.
+    A dividend yield of 4% means an investment of $100 yields approximately $4 in
+    dividends per year. Higher indicates higher dividend payout, but excessively high
+    yields may signal falling stock price or unsustainable dividends.
+  dividend_yield_historical_context: 'The average dividend yield for Taiwan stocks
+    is about 3-4%. A yield of 5% or above is considered high-yield, but caution is
+    needed: 1) whether the high yield is due to one-time non-operating income; 2)
+    whether the company is profitable. Companies with stable dividend payouts over
+    the past 5 years are more reliable.'
+  gross_margin_display_name: Gross Margin
+  gross_margin_explanation: Gross margin is the percentage of revenue remaining after
+    deducting the cost of goods sold (direct materials and labor). A gross margin
+    of 40% means that for every $100 of revenue, $40 remains after subtracting the
+    cost of goods sold. Higher indicates stronger pricing power.
+  gross_margin_historical_context: 'Gross margin varies significantly across industries:
+    software can exceed 80%, while contract manufacturing may be only 5-10%. Comparing
+    a company''s gross margin to its own past performance is more meaningful than
+    comparing across industries.'
+  net_margin_display_name: Net Margin
+  net_margin_explanation: Net margin is the percentage of revenue remaining after
+    deducting all expenses (operating costs, interest, and taxes). A net margin of
+    10% means the company keeps $10 profit for every $100 of revenue. Higher indicates
+    better cost control.
+  net_margin_historical_context: Net margin can be affected by one-time non-operating
+    gains or losses; it's better to look at trends over the past 4-8 quarters rather
+    than a single quarter. Technology companies typically have net margins of 10-30%,
+    while retail may be only 1-5%.
+  pbr_display_name: Price-to-Book Ratio (PBR)
+  pbr_explanation: The price-to-book ratio (PBR) is stock price divided by book value
+    per share, representing how the market values the company relative to its accounting
+    book value. A PBR of 1.5 means the stock price is 1.5 times the book value. Below
+    1 may indicate the stock is cheaper than book value (but there could be reasons).
+  pbr_historical_context: PBR is suitable for evaluating asset-intensive industries
+    (e.g., banking, construction). Light-asset companies (e.g., software, brands)
+    often have higher PBRs because value lies in intangible assets. Buffett early
+    on preferred stocks with PBR below 1.
+  per_display_name: Price-to-Earnings Ratio (PER)
+  per_explanation: The price-to-earnings ratio (PER) is stock price divided by earnings
+    per share, indicating how much the market is willing to pay for each dollar of
+    earnings. A PER of 15 means the market is willing to pay $15 for each $1 of earnings.
+    Lower suggests faster payback, but may also reflect lack of market confidence.
+  per_historical_context: 'Taiwan''s historical PER range is approximately 10-25 times.
+    Different industries have different reasonable PERs: growth stocks may be 20-30
+    times, cyclical stocks 8-12 times. Loss-making companies do not have a PER.'
+  revenue_yoy_display_name: Revenue Year-over-Year Growth
+  revenue_yoy_explanation: Revenue year-over-year growth compares revenue with the
+    same month of the previous year to show growth or decline. A 20% increase means
+    revenue is 20% higher than the same month last year. Positive indicates growth,
+    negative indicates decline.
+  revenue_yoy_historical_context: Monthly revenue year-over-year growth can be volatile;
+    it's better to look at trends over 3-6 months. Seasonal industries (e.g., beverages,
+    tourism) need to consider off-peak and peak season factors.
+  roe_display_name: Return on Equity (ROE)
+  roe_explanation: ROE measures how efficiently a company uses shareholders' equity
+    to generate profit. ROE 15% means the company earns $15 for every $100 of shareholders'
+    equity. Higher indicates better profitability.
+  roe_historical_context: The average ROE for Taiwan stocks is around 10-12%. Companies
+    maintaining ROE above 15% long-term often have competitive advantages (moats).
+    Buffett prefers companies with long-term ROE above 20%.
+test_key: test value
+
+delta_explanation_provider:
+  revenue_up_extreme: "{stock_prefix} revenue surged {abs_pct:.0f}%, possibly due to large orders or seasonal effects, worth monitoring"
+  revenue_up_strong: "{stock_prefix} revenue grew {abs_pct:.0f}%, relatively positive performance, possibly due to demand recovery or new product contributions"
+  revenue_up_moderate: "{stock_prefix} revenue grew {abs_pct:.0f}%, moderate growth"
+  revenue_down_extreme: "{stock_prefix} revenue plummeted {abs_pct:.0f}%, significant decline, possible structural issues needing attention"
+  revenue_down_strong: "{stock_prefix} revenue declined {abs_pct:.0f}%, worse than last year, reasons needing attention"
+  revenue_down_moderate: "{stock_prefix} revenue dipped {abs_pct:.0f}%, slight decline but still within reasonable range"
+  price_up_large: "{stock_prefix} stock price rose sharply {abs_pct:.0f}%, market evaluation changes worth noting"
+  price_up_medium: "{stock_prefix} stock price rose {abs_pct:.0f}%, bullish trend, future momentum worth observing"
+  price_up_small: "{stock_prefix} stock price edged up {abs_pct:.0f}%, steady rise, trend stable"
+  price_down_large: "{stock_prefix} stock price fell sharply {abs_pct:.0f}%, market reaction worth continuous observation"
+  price_down_medium: "{stock_prefix} stock price fell {abs_pct:.0f}%, bearish trend, future changes worth noting"
+  price_down_small: "{stock_prefix} stock price dipped {abs_pct:.0f}%, slight pullback, normal fluctuation"
+  yoy_up_strong: "{stock_prefix} revenue YoY strong growth {abs_pct:.0f}%, future quarter performance worth noting"
+  yoy_up_moderate: "{stock_prefix} revenue YoY steady growth {abs_pct:.0f}%, trend worth continuous observation"
+  yoy_up_mild: "{stock_prefix} revenue YoY moderate growth {abs_pct:.0f}%, performance stable"
+  yoy_down_extreme: "{stock_prefix} revenue YoY decreased by {abs_pct:.0f}%, significant decline, possible structural issues needing attention"
+  yoy_down_strong: "{stock_prefix} revenue YoY decreased by {abs_pct:.0f}%, worse than last year, reasons needing attention"
+  yoy_down_moderate: "{stock_prefix} revenue YoY decreased by {abs_pct:.0f}%, slight decline"
+  implication_revenue_up_extreme: "Revenue grew significantly, future changes worth continuous observation"
+  implication_revenue_up_strong: "Revenue showed positive performance, trend worth noting"
+  implication_revenue_up_moderate: "Revenue grew moderately, performance stable"
+  implication_revenue_down_extreme: "Revenue declined significantly, future changes worth noting"
+  implication_revenue_down_strong: "Revenue performance weak, reasons worth continuous tracking"
+  implication_revenue_down_moderate: "Revenue fluctuated slightly, still within reasonable range"
+  implication_price_up_extreme: "Stock price rose significantly, market worth noting changes in evaluation"
+  implication_price_up_strong: "Stock price showed bullish trend, future momentum worth observing"
+  implication_price_up_moderate: "Stock price steadily rose, trend stable"
+  implication_price_down_extreme: "Stock price fell significantly, market reaction worth continuous observation"
+  implication_price_down_strong: "Stock price showed bearish trend, future changes worth noting"
+  implication_price_down_moderate: "Stock price slightly pulled back, normal fluctuation"
+  implication_yoy_up_extreme: "Revenue YoY growth strong, future quarter performance worth noting"
+  implication_yoy_up_strong: "Revenue YoY steady growth, trend worth continuous observation"
+  implication_yoy_up_moderate: "Revenue YoY grew moderately, performance stable"
+  implication_yoy_down_extreme: "Revenue YoY decline significant, worth continuous tracking"
+  implication_yoy_down_strong: "Revenue YoY weaker than last year same period, improvement worth noting"
+  implication_yoy_down_moderate: "Revenue YoY fluctuated slightly, still within reasonable range"
+  generic_implication_up: "Indicator grew compared to previous period, future changes worth noting"
+  generic_implication_down: "Indicator declined compared to previous period, reasons worth continuous tracking"
+  generic_template_up: "{stock_prefix}{metric_name} increased compared to previous period by {abs_pct:.1f}%"
+  generic_template_down: "{stock_prefix}{metric_name} decreased compared to previous period by {abs_pct:.1f}%"
