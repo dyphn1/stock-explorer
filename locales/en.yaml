@@ -314,3 +314,11 @@ delta_explanation_provider:
   generic_implication_down: "Indicator declined compared to previous period, reasons worth continuous tracking"
   generic_template_up: "{stock_prefix}{metric_name} increased compared to previous period by {abs_pct:.1f}%"
   generic_template_down: "{stock_prefix}{metric_name} decreased compared to previous period by {abs_pct:.1f}%"
+
+etf:
+  detail:
+    metric:
+      expense_ratio: "Expense Ratio"
+      tracking_error: "Tracking Error"
+      dividend_yield: "Dividend Yield"
+      sample_data_note: "Values are sample data for demonstration purposes."

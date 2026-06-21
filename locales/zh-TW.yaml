@@ -288,3 +288,11 @@ delta_explanation_provider:
   generic_implication_down: "指標較前期衰退，原因值得持續追蹤"
   generic_template_up: "{stock_prefix}{metric_name} 較前期成長 {abs_pct:.1f}%"
   generic_template_down: "{stock_prefix}{metric_name} 較前期衰退 {abs_pct:.1f}%"
+
+etf:
+  detail:
+    metric:
+      expense_ratio: "內扣費用"
+      tracking_error: "追蹤誤差"
+      dividend_yield: "殖利率"
+      sample_data_note: "數值僅為樣本資料，僅用於示範目的。"

@@ -90,6 +90,29 @@ def _render_etf_detail(data: dict, client: FinMindClient):
 
     st.markdown("---")
 
+    # ── ETF Specific Metrics ────────────────────────────────────────
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        _info_card(
+            t("etf.detail.metric.expense_ratio"),
+            "0.35%",  # placeholder
+            icon="📉",
+        )
+    with col2:
+        _info_card(
+            t("etf.detail.metric.tracking_error"),
+            "0.02%",  # placeholder
+            icon="🎯",
+        )
+    with col3:
+        _info_card(
+            t("etf.detail.metric.dividend_yield"),
+            "2.5%",  # placeholder
+            icon="💰",
+        )
+    st.caption(t("etf.detail.metric.sample_data_note"))
+    st.markdown("---")
+
     # ── 一句話定位 ──────────────────────────────────────────
     one_liner = _get_etf_one_liner(stock_name)
     _info_card(f"💡 {one_liner}", "", "💡")
