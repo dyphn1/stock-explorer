@@ -167,11 +167,11 @@ def _render_sidebar(client):
     st.markdown("---")
 
     # Hot stocks (collapsible)
-    with st.expander(f"🔥 {t("main.sidebar.hot_stocks")}", expanded=False):
+    with st.expander(f"🔥 {t('main.sidebar.hot_stocks')}", expanded=False):
         _render_sidebar_hot_stocks(client)
 
     # Hot ETFs (collapsible)
-    with st.expander(f"🏷️ {t("main.sidebar.hot_etfs")}", expanded=False):
+    with st.expander(f"🏷️ {t('main.sidebar.hot_etfs')}", expanded=False):
         _render_sidebar_hot_etfs(client)
 
     st.markdown("---")
