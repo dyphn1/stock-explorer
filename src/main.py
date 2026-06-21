@@ -212,4 +212,7 @@ if not stock_id:
     """, unsafe_allow_html=True)
 else:
     # 使用路由器載入並渲染頁面
-    load_and_render_page(client, stock_id)
+    loading_text = t("main.loading.text")
+    loading_subtext = t("main.loading.subtext")
+    with st.spinner(f"{loading_text}\n{loading_subtext}"):
+        load_and_render_page(client, stock_id)

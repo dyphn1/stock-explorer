@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Explorer - ETF Redesign</title>
+    <style>
+        :root {
+            --primary-accent: #3498DB;
+            --positive: #27AE60;
+            --negative: #E74C3C;
+            --card-bg: #F8F9FA;
+            --primary-text: #2C3E50;
+            --secondary-text: #7F8C8D;
+            --border-light: #E1E4E8;
+            --white: #FFFFFF;
+            --sidebar-width: 260px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            color: var(--primary-text);
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .nav-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: var(--card-bg);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item.active {
+            background: var(--primary-accent);
+            color: white;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .navbar {
+            height: 60px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            padding: 0 20px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .tab {
+            padding: 10px 15px;
+            font-size: 13px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--secondary-text);
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--primary-accent);
+            border-bottom: 2px solid var(--primary-accent);
+            font-weight: bold;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            background: #F0F2F5;
+            overflow-y: auto;
+        }
+
+        .etf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .etf-title h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .etf-title p {
+            margin: 5px 0 0 0;
+            color: var(--secondary-text);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-light);
+        }
+
+        .card-title {
+            font-size: 14px;
+            color: var(--secondary-text);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .highlight-blue { color: var(--primary-accent); }
+
+        .span-2 { grid-column: span 2; }
+        .span-4 { grid-column: span 4; }
+
+        .holdings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .holdings-table th {
+            text-align: left;
+            color: var(--secondary-text);
+            font-size: 13px;
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .holdings-table td {
+            padding: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #f9f9f9;
+            border: 1px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: #E8F8F0;
+            color: var(--positive);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div style="font-weight: bold; margin-bottom: 20px;">🔍 Stock Explorer</div>
+        <button class="nav-item">2330 台積電</button>
+        <button class="nav-item active">0050 元大台灣50</button>
+        <button class="nav-item">0056 元大高股息</button>
+    </div>
+
+    <div class="main-container">
+        <div class="navbar">
+            <div class="navbar-left">
+                <h1>元大台灣50 <span style="font-size: 14px; color: var(--secondary-text);">0050</span></h1>
+                <span class="tag">ETF</span>
+            </div>
+            <div class="navbar-right">
+                <span>Price: <strong>120.50</strong></span>
+                <span class="price-up">▲ +0.50 (0.42%)</span>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active">ETF Overview</button>
+            <button class="tab">Holdings Analysis</button>
+            <button class="tab">Dividend History</button>
+            <button class="tab">Tracking Error</button>
+        </div>
+
+        <div class="content-area">
+            <div class="dashboard-grid">
+                <!-- ETF Specific Metrics -->
+                <div class="card">
+                    <div class="card-title">📉 Expense Ratio</div>
+                    <div class="metric-value highlight-blue">0.35%</div>
+                    <div style="font-size: 12px; color: var(--secondary-text);">Annual management fee</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🎯 Tracking Error</div>
+                    <div class="metric-value">0.02%</div>
+                    <div style="font-size: 12px; color: var(--secondary-text);"> deviation from index</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🏦 Underlying Index</div>
+                    <div class="metric-value" style="font-size: 18px;">Taiwan 50 Index</div>
+                    <div style="font-size: 12px; color: var(--secondary-text);">TSE Top 50 Capitalization</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">📅 Dividend Frequency</div>
+                    <div class="metric-value" style="font-size: 18px;">Quarterly</div>
+                    <div style="font-size: 12px; color: var(--secondary-text);">Typical payout: Jan, Apr, Jul, Oct</div>
+                </div>
+
+                <!-- Top Holdings -->
+                <div class="card span-2">
+                    <div class="card-title">🏆 Top 10 Holdings</div>
+                    <table class="holdings-table">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Weight</th>
+                                <th>Contribution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>台積電 (2330)</td>
+                                <td>12.5%</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>聯發科 (2454)</td>
+                                <td>6.2%</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>鴻海 (2317)</td>
+                                <td>5.1%</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>台達電 (2308)</td>
+                                <td>3.8%</td>
+                                <td>Low</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Benchmark Comparison -->
+                <div class="card span-2">
+                    <div class="card-title">📈 Perf vs Benchmark (TW50 Index)</div>
+                    <div class="chart-placeholder">
+                        [ Plotly Line Chart: ETF Return vs Index Return ]
+                    </div>
+                </div>
+
+                <!-- Dividend Yield -->
+                <div class="card span-4">
+                    <div class="card-title">💰 Dividend Yield Trend</div>
+                    <div class="chart-placeholder" style="height: 150px;">
+                        [ Plotly Bar Chart: Annual Dividend Yields ]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

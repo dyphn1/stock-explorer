@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Explorer - Consolidated Main Page</title>
+    <style>
+        :root {
+            --primary-accent: #3498DB;
+            --positive: #27AE60;
+            --negative: #E74C3C;
+            --card-bg: #F8F9FA;
+            --primary-text: #2C3E50;
+            --secondary-text: #7F8C8D;
+            --border-light: #E1E4E8;
+            --white: #FFFFFF;
+            --sidebar-width: 260px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            color: var(--primary-text);
+            overflow: hidden;
+        }
+
+        /* Zone B: Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary-text);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .nav-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: var(--card-bg);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+            text-align: left;
+            border: none;
+            width: 100%;
+            color: var(--primary-text);
+        }
+
+        .nav-item:hover {
+            background: #E2E6EA;
+        }
+
+        .nav-item.active {
+            background: var(--primary-accent);
+            color: white;
+        }
+
+        /* Main Layout */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Zone A: Navbar */
+        .navbar {
+            height: 60px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar-left h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .industry-tag {
+            background: var(--card-bg);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--secondary-text);
+            border: 1px solid var(--border-light);
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        .price-up { color: var(--positive); }
+        .price-down { color: var(--negative); }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            padding: 0 20px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .tab {
+            padding: 10px 15px;
+            font-size: 13px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--secondary-text);
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--primary-accent);
+            border-bottom: 2px solid var(--primary-accent);
+            font-weight: bold;
+        }
+
+        /* Zone C: Main Content Area */
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            background: #F0F2F5;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Consolidated Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-light);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-family: monospace;
+        }
+
+        .metric-desc {
+            font-size: 14px;
+            color: var(--secondary-text);
+            line-height: 1.5;
+        }
+
+        .analogy {
+            margin-top: 12px;
+            font-size: 12px;
+            font-style: italic;
+            color: var(--secondary-text);
+            background: var(--card-bg);
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 200px;
+            background: #f9f9f9;
+            border: 1px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .span-2 {
+            grid-column: span 2;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>🔍 Stock Explorer</h2>
+        <input type="text" class="search-box" placeholder="Search stock ID or name...">
+        <div style="margin-bottom: 10px; font-size: 12px; color: var(--secondary-text);">Hot Stocks</div>
+        <button class="nav-item">2330 台積電</button>
+        <button class="nav-item">2317 鴻海</button>
+        <button class="nav-item">2454 聯發科</button>
+        <div style="margin-top: 20px; margin-bottom: 10px; font-size: 12px; color: var(--secondary-text);">Hot ETFs</div>
+        <button class="nav-item">0050 元大台灣50</button>
+        <button class="nav-item">0056 元大高股息</button>
+    </div>
+
+    <div class="main-container">
+        <div class="navbar">
+            <div class="navbar-left">
+                <h1>台積電 <span style="font-size: 14px; color: var(--secondary-text);">2330</span></h1>
+                <span class="industry-tag">Semiconductor</span>
+            </div>
+            <div class="navbar-right">
+                <span>Price: <strong>1,050.00</strong></span>
+                <span class="price-up">▲ +12.50 (1.20%)</span>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active">Business Card</button>
+            <button class="tab">Operations Checkup</button>
+            <button class="tab">Financial Health</button>
+            <button class="tab">Peer Comparison</button>
+            <button class="tab">ETF Section</button>
+        </div>
+
+        <div class="content-area">
+            <div class="dashboard-grid">
+                <!-- Card 1: Revenue Growth -->
+                <div class="card">
+                    <div class="card-title">📊 Revenue Growth Rate</div>
+                    <div class="metric-value price-up">+12.5%</div>
+                    <div class="metric-desc">12.5% growth vs same month last year.</div>
+                    <div class="analogy">"For every 100 dollars of revenue, 12.5 dollars more"</div>
+                </div>
+
+                <!-- Card 2: Net Profit Margin -->
+                <div class="card">
+                    <div class="card-title">💰 Net Profit Margin</div>
+                    <div class="metric-value">35.2%</div>
+                    <div class="metric-desc">The company keeps 35.2 cents of every dollar earned as profit.</div>
+                    <div class="analogy">"Very high efficiency in converting sales to profit"</div>
+                </div>
+
+                <!-- Card 3: ROE -->
+                <div class="card">
+                    <div class="card-title">📈 Return on Equity (ROE)</div>
+                    <div class="metric-value">22.1%</div>
+                    <div class="metric-desc">Return generated on shareholders' equity.</div>
+                    <div class="analogy">"Investing 100 dollars of equity yields 22.1 dollars profit"</div>
+                </div>
+
+                <!-- Card 4: Revenue Trend (Large Chart) -->
+                <div class="card span-2">
+                    <div class="card-title">📉 Revenue Trend (Last 12 Months)</div>
+                    <div class="chart-placeholder">
+                        [ Plotly Line Chart: Monthly Revenue Trend ]
+                    </div>
+                    <div style="font-size: 12px; color: var(--secondary-text); margin-top: 10px; text-align: right;">Source: FinMind API</div>
+                </div>
+
+                <!-- Card 5: Debt-to-Equity -->
+                <div class="card">
+                    <div class="card-title">⚖️ Debt-to-Equity Ratio</div>
+                    <div class="metric-value">0.25</div>
+                    <div class="metric-desc">Low leverage, indicating strong financial stability.</div>
+                    <div class="analogy">"Debt is only 1/4 of the company's own capital"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

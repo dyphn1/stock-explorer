@@ -40,7 +40,11 @@ def t(key: str, **kwargs) -> str:
 
     If key not found, returns the key itself (no crash).
     """
-    lang = st.session_state.get("lang", "zh-TW")
+    try:
+        lang = st.session_state.get("lang", "zh-TW")
+    except RuntimeError:
+        # st.session_state not available (outside Streamlit context)
+        lang = "zh-TW"
     data = _load_locale(lang)
 
     # Support nested key: "page.title" → data["page"]["title"]

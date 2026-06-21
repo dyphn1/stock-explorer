@@ -54,7 +54,6 @@ main:
     search_header: "搜尋"
     search_label: "輸入股票名稱"
     search_placeholder: "例如：台積電 或 2330"
-    navigation_header: "導覽"
     api_warning: "⚠️ API 頻率限制中，請稍後再試"
     nav_home: "名片"
     nav_sector: "產業熱力圖"
@@ -68,6 +67,9 @@ main:
     nav_screener: "股票探索"
     hot_stocks: "熱門股票"
     hot_etfs: "熱門 ETF"
+  loading:
+    text: "載入資料中..."
+    subtext: "請稍候片刻"
   search:
     multiple_results: "找到多筆符合的股票："
     not_found: "找不到符合的股票"

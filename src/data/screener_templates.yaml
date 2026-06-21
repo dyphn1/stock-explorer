@@ -20,12 +20,12 @@ preset_explanations:
     implication: "screener.explanation.preset.value.implication"
 
 custom_filter_explanations:
-  revenue_positive: "screener.explanation.custom_filter.revenue_positive"
-  industry_match: "screener.explanation.custom_filter.industry_match"
-  per_range: "screener.explanation.custom_filter.per_range"
-  div_range: "screener.explanation.custom_filter.div_range"
-  fallback: "screener.explanation.custom_filter.fallback"
-  implication: "screener.explanation.custom_filter.implication"
+  revenue_positive: "screener.explanation.preset.custom_filter.revenue_positive"
+  industry_match: "screener.explanation.preset.custom_filter.industry_match"
+  per_range: "screener.explanation.preset.custom_filter.per_range"
+  div_range: "screener.explanation.preset.custom_filter.div_range"
+  fallback: "screener.explanation.preset.custom_filter.fallback"
+  implication: "screener.explanation.preset.custom_filter.implication"
 
 thresholds:
   dividend:

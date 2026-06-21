@@ -19,6 +19,7 @@ from src.services.screener_explanation_provider import (
     _DISCLAIMER,
 )
 from src.services.llm.base import ExplanationRequest, ExplanationResponse
+from src.core.i18n import t
 
 
 # ── Fixtures ────────────────────────────────────────────────────
@@ -130,7 +131,7 @@ class TestHistorianTone:
         "不構成投資建議" — this is a legal requirement and is excluded.
         """
         for text in self._get_all_explanation_texts():
-            template_text = text.replace(f"。{_DISCLAIMER}", "")
+            template_text = text.replace(f"。{t(_DISCLAIMER)}", "")
             for word in self.BLOCKED_WORDS:
                 assert word not in template_text, (
                     f"Blocked word '{word}' found in: {template_text[:100]}"
@@ -174,7 +175,7 @@ class TestDisclaimer:
 
     def test_disclaimer_constant_value(self):
         """The disclaimer constant should contain the expected text."""
-        assert "僅供學習參考" in _DISCLAIMER
+        assert "僅供學習參考" in t(_DISCLAIMER)
 
 
 # ── Part 4: Explanation Paths ──────────────────────────────────
@@ -274,7 +275,7 @@ class TestFallbackExplanationPath:
         resp = provider.explain(_req())
         assert "台積電" in resp.text
         assert "2330" in resp.text
-        assert _DISCLAIMER in resp.text
+        assert t(_DISCLAIMER) in resp.text
 
 
 # ── Part 5: Response Structure ─────────────────────────────────
@@ -334,7 +335,7 @@ class TestTemplateProviderIntegration:
         resp = provider.explain(_req(preset="growth", revenue_yoy=25.0))
         assert resp.source == "screener_template"
         assert "營收年增率" in resp.text
-        assert _DISCLAIMER in resp.text
+        assert t(_DISCLAIMER) in resp.text
 
 
 # ── Part 7: _build_screener_explanation function ───────────────
@@ -349,7 +350,7 @@ class TestBuildScreenerExplanation:
             preset="dividend", row={"dividend_yield": 5.0},
         )
         assert "5.00%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_dividend_stable(self):
         result = _build_screener_explanation(
@@ -357,7 +358,7 @@ class TestBuildScreenerExplanation:
             preset="dividend", row={"dividend_yield": 3.5},
         )
         assert "3.50%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_growth_strong(self):
         result = _build_screener_explanation(
@@ -365,7 +366,7 @@ class TestBuildScreenerExplanation:
             preset="growth", row={"revenue_yoy": 30.0},
         )
         assert "30.0%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_growth_moderate(self):
         result = _build_screener_explanation(
@@ -373,7 +374,7 @@ class TestBuildScreenerExplanation:
             preset="growth", row={"revenue_yoy": 12.0},
         )
         assert "12.0%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_value_deep(self):
         result = _build_screener_explanation(
@@ -382,7 +383,7 @@ class TestBuildScreenerExplanation:
         )
         assert "8.0" in result
         assert "1.20" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_value_moderate(self):
         result = _build_screener_explanation(
@@ -391,7 +392,7 @@ class TestBuildScreenerExplanation:
         )
         assert "13.0" in result
         assert "1.80" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_custom_revenue_growth(self):
         result = _build_screener_explanation(
@@ -399,7 +400,7 @@ class TestBuildScreenerExplanation:
             filters={"revenue_growth": True}, row={"revenue_yoy": 15.0},
         )
         assert "15.0%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_custom_industry_match(self):
         result = _build_screener_explanation(
@@ -407,20 +408,20 @@ class TestBuildScreenerExplanation:
             filters={"industry": "半導體業"}, row={"industry": "半導體業"},
         )
         assert "半導體業" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_fallback_no_data(self):
         result = _build_screener_explanation(stock_name="台積電", stock_id="2330")
         assert "台積電" in result
         assert "2330" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_empty_stock_name(self):
         result = _build_screener_explanation(
             stock_name="", stock_id="2330",
             preset="dividend", row={"dividend_yield": 4.0},
         )
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
 
 # ── Part 8: _build_screener_implication function ───────────────

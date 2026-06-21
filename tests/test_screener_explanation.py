@@ -10,6 +10,7 @@ from src.services.screener_explanation_provider import (
     _build_screener_implication,
     _DISCLAIMER,
 )
+from src.core.i18n import t
 from src.services.llm.base import ExplanationRequest
 
 
@@ -51,7 +52,7 @@ class TestScreenerExplanationProvider:
             },
         )
         response = self.provider.explain(request)
-        assert _DISCLAIMER in response.text
+        assert t(_DISCLAIMER) in response.text
 
     def test_explain_dividend_preset(self):
         """Dividend preset should produce dividend-specific explanation."""
@@ -165,7 +166,7 @@ class TestScreenerExplanationProvider:
         response = self.provider.explain(request)
         assert "台積電" in response.text
         assert "2330" in response.text
-        assert _DISCLAIMER in response.text
+        assert t(_DISCLAIMER) in response.text
 
 
 class TestBuildScreenerExplanation:
@@ -179,7 +180,7 @@ class TestBuildScreenerExplanation:
             row={"dividend_yield": 5.0},
         )
         assert "5.00%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_dividend_stable(self):
         result = _build_screener_explanation(
@@ -189,7 +190,7 @@ class TestBuildScreenerExplanation:
             row={"dividend_yield": 3.5},
         )
         assert "3.50%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_growth_strong(self):
         result = _build_screener_explanation(
@@ -199,7 +200,7 @@ class TestBuildScreenerExplanation:
             row={"revenue_yoy": 30.0},
         )
         assert "30.0%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_growth_moderate(self):
         result = _build_screener_explanation(
@@ -209,7 +210,7 @@ class TestBuildScreenerExplanation:
             row={"revenue_yoy": 12.0},
         )
         assert "12.0%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_value_deep(self):
         result = _build_screener_explanation(
@@ -220,7 +221,7 @@ class TestBuildScreenerExplanation:
         )
         assert "8.0" in result
         assert "1.20" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_value_moderate(self):
         result = _build_screener_explanation(
@@ -231,7 +232,7 @@ class TestBuildScreenerExplanation:
         )
         assert "13.0" in result
         assert "1.80" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_custom_revenue_growth(self):
         result = _build_screener_explanation(
@@ -241,7 +242,7 @@ class TestBuildScreenerExplanation:
             row={"revenue_yoy": 15.0},
         )
         assert "15.0%" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_custom_industry_match(self):
         result = _build_screener_explanation(
@@ -251,7 +252,7 @@ class TestBuildScreenerExplanation:
             row={"industry": "半導體業"},
         )
         assert "半導體業" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_fallback_no_data(self):
         result = _build_screener_explanation(
@@ -260,7 +261,7 @@ class TestBuildScreenerExplanation:
         )
         assert "台積電" in result
         assert "2330" in result
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
     def test_empty_stock_name(self):
         result = _build_screener_explanation(
@@ -269,7 +270,7 @@ class TestBuildScreenerExplanation:
             preset="dividend",
             row={"dividend_yield": 4.0},
         )
-        assert _DISCLAIMER in result
+        assert t(_DISCLAIMER) in result
 
 
 class TestBuildScreenerImplication:
@@ -360,7 +361,7 @@ class TestHistorianToneCompliance:
         """
         for text in self._get_all_explanations():
             # Remove the mandatory disclaimer before checking
-            template_text = text.replace(f"。{_DISCLAIMER}", "")
+            template_text = text.replace(f"。{t(_DISCLAIMER)}", "")
             for word in self.BLOCKED_WORDS:
                 assert word not in template_text, (
                     f"Blocked word '{word}' found in explanation template: {template_text[:100]}"
@@ -369,6 +370,6 @@ class TestHistorianToneCompliance:
     def test_all_explanations_end_with_disclaimer(self):
         """Every explanation must end with the disclaimer."""
         for text in self._get_all_explanations():
-            assert _DISCLAIMER in text, (
+            assert t(_DISCLAIMER) in text, (
                 f"Missing disclaimer in: {text[:100]}"
             )
