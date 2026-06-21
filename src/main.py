@@ -27,7 +27,7 @@ st.set_page_config(
 )
 
 # ── 自定義 CSS（PPT 風格）────────────────────────────
-    st.markdown(t("main.disclaimer"), unsafe_allow_html=True)
+st.markdown(t("main.disclaimer"), unsafe_allow_html=True)
 
 # Hide Streamlit's auto-generated sidebar nav via JS injection
 _hide_nav_js = """
@@ -145,7 +145,8 @@ def _render_sidebar(client):
 
     st.markdown("---")
     st.markdown("--")
-    \n    # Primary navigation
+
+    # Primary navigation
     st.markdown(t("main.sidebar.navigation_header"))
     nav_items = [
         ("📊", t("main.sidebar.nav_home"), "sidebar_nav_home"),
@@ -166,11 +167,11 @@ def _render_sidebar(client):
     st.markdown("---")
 
     # Hot stocks (collapsible)
-    with st.expander(f"🔥 {t(\"main.sidebar.hot_stocks\")}", expanded=False):
+    with st.expander(f"🔥 {t("main.sidebar.hot_stocks")}", expanded=False):
         _render_sidebar_hot_stocks(client)
 
     # Hot ETFs (collapsible)
-    with st.expander(f"🏷️ {t(\"main.sidebar.hot_etfs\")}", expanded=False):
+    with st.expander(f"🏷️ {t("main.sidebar.hot_etfs")}", expanded=False):
         _render_sidebar_hot_etfs(client)
 
     st.markdown("---")

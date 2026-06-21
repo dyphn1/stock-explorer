@@ -64,8 +64,7 @@ main:
     title: "股識"
     lead1: "認識一家公司，從這裡開始"
     lead2: "在左側輸入股票代號或名稱，開始認識一家公司"
-  disclaimer: |-
-        <div class=\\\"disclaimer\\\">\\n        ⚠️ 本工具僅供認識公司使用，<br>\\n        不構成任何投資建議。<br>\\n        投資有風險，請自行評估。\\n        </div>
+  disclaimer: "⚠️ 本工具僅供認識公司使用，<br>不構成任何投資建議。<br>投資有風險，請自行評估。"
 
 daily_market:
   title: "今日市場動態"
