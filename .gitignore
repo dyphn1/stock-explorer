@@ -92,3 +92,8 @@ scripts/index_memory.py
 scripts/restore_syspath.py
 scripts/screenshot.py
 .worktrees/
+
+# Generated artifacts
+graphify-out/
+README_CHALLENGER_SUMMARY.md
+summary_challenger1.md
