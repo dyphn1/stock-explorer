@@ -34,7 +34,7 @@
 ### P0 — Critical
 | ID | Item | Description |
 |----|------|-------------|
-||| TD-02 | Full i18n | Phase 1 complete (5 major pages, ~300 strings), Phase 2a complete (zh-TW translations for adaptive_engine, dividend, revenue_analyzer — 5 tests fixed), Phase 2b complete (delta_explanation_provider 15 keys added, daily_market 31 keys re-nested — 36 tests fixed), remaining ~42 files with ~1,200 strings |
+||| TD-02 | Full i18n | ✅ Complete (2026-06-21) — All src/ Python files migrated, all locale keys present, 699 tests passing |
 || D-125 | chart_stock.py split | ~~Split chart_stock.py into smaller modules~~ ✅ Already done (split into chart_stock_financial.py, chart_stock_health.py, chart_stock_valuation.py) |
 || D-126 | INDUSTRY_BENCHMARKS dedup | Remove duplicate industry benchmark data ✅ Complete (2026-06-21) |
 
