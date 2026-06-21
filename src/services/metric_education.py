@@ -23,131 +23,70 @@ _METRIC_REGISTRY: dict[str, dict] = {
         "display_name": t('metric_education.roe_display_name'),
         "unit": "%",
         "is_higher_better": True,
-        "explanation": (
-            "ROE 衡量公司用股東的錢賺錢的效率。"
-            "ROE 15% 表示每 100 元股東資本，公司一年賺 15 元。"
-            "越高代表公司越會賺錢。"
-        ),
+        "explanation": t('metric_education.roe_explanation'),
         "analogy_fn": get_roe_analogy,
-        "historical_context": (
-            "台股平均 ROE 約 10-12%。ROE 長期維持 15% 以上的公司通常具備競爭優勢（護城河）。"
-            "巴菲特偏好 ROE 長期高於 20% 的公司。"
-        ),
+        "historical_context": t('metric_education.roe_historical_context'),
     },
     "gross_margin": {
-        "display_name": "毛利率",
+        "display_name": t('metric_education.gross_margin_display_name'),
         "unit": "%",
         "is_higher_better": True,
-        "explanation": (
-            "毛利率是賣出商品後，扣掉直接成本（原料、人工）剩下的利潤比例。"
-            "毛利率 40% 表示每賣 100 元，扣掉成本還剩 40 元。"
-            "越高代表產品越有定價能力。"
-        ),
+        "explanation": t('metric_education.gross_margin_explanation'),
         "analogy_fn": get_gross_margin_analogy,
-        "historical_context": (
-            "不同產業毛利率差異很大：軟體業可達 80%以上，代工廠可能只有 5-10%。"
-            "跟自己過去的毛利率比較，比跟不同產業比較更有意義。"
-        ),
+        "historical_context": t('metric_education.gross_margin_historical_context'),
     },
     "net_margin": {
-        "display_name": "淨利率",
+        "display_name": t('metric_education.net_margin_display_name'),
         "unit": "%",
         "is_higher_better": True,
-        "explanation": (
-            "淨利率是扣掉所有成本（營業費用、利息、稅金）後，真正賺到的錢。"
-            "淨利率 10% 表示每賣 100 元，公司最後口袋剩 10 元。"
-            "越高代表公司控制成本的能力越好。"
-        ),
+        "explanation": t('metric_education.net_margin_explanation'),
         "analogy_fn": lambda val: (
             f"每賣 100 元東西，扣掉所有開銷後剩 {val:.1f} 元 — "
             + ("獲利能力不錯" if val >= 15 else "利潤空間有限" if val >= 5 else "賺錢很辛苦")
         ),
-        "historical_context": (
-            "淨利率會受一次性業外損益影響，建議看近 4-8 季的趨勢而非單季數字。"
-            "科技業淨利率通常 10-30%，零售業可能只有 1-5%。"
-        ),
+        "historical_context": t('metric_education.net_margin_historical_context'),
     },
     "debt_ratio": {
-        "display_name": "負債比",
+        "display_name": t('metric_education.debt_ratio_display_name'),
         "unit": "%",
         "is_higher_better": False,
-        "explanation": (
-            "負債比是公司資產中有多少比例是借來的錢。"
-            "負債比 60% 表示每 100 元資產中，有 60 元是借來的。"
-            "越低代表財務越保守，但適度借錢可以加速成長。"
-        ),
+        "explanation": t('metric_education.debt_ratio_explanation'),
         "analogy_fn": get_debt_ratio_analogy,
-        "historical_context": (
-            "金融業負債比通常 80-90%（因為存款算負債），這是正常的。"
-            "製造業建議負債比控制在 50% 以下。景氣差時高負債比風險較大。"
-        ),
+        "historical_context": t('metric_education.debt_ratio_historical_context'),
     },
     "revenue_yoy": {
-        "display_name": "營收年增率",
+        "display_name": t('metric_education.revenue_yoy_display_name'),
         "unit": "%",
         "is_higher_better": True,
-        "explanation": (
-            "營收年增率是跟去年同月比較，營收成長或衰退的幅度。"
-            "年增 20% 表示今年營收比去年同月多 20%。"
-            "正數代表成長，負數代表衰退。"
-        ),
+        "explanation": t('metric_education.revenue_yoy_explanation'),
         "analogy_fn": get_yoy_analogy,
-        "historical_context": (
-            "單月營收年增率波動較大，建議看 3-6 個月的趨勢更有參考價值。"
-            "季節性產業（如冷飲、觀光）需考慮淡旺季因素。"
-        ),
+        "historical_context": t('metric_education.revenue_yoy_historical_context'),
     },
     "PER": {
-        "display_name": "本益比 (PER)",
+        "display_name": t('metric_education.per_display_name'),
         "unit": "倍",
         "is_higher_better": False,
-        "explanation": (
-            "本益比是股價除以每股盈餘，代表市場願意為公司每賺 1 元付多少錢。"
-            "本益比 15 倍表示市場願意為每 1 元獲利付 15 元。"
-            "越低代表回本越快，但也可能反映市場不看好。"
-        ),
+        "explanation": t('metric_education.per_explanation'),
         "analogy_fn": get_per_analogy,
-        "historical_context": (
-            "台股歷史本益比區間約 10-25 倍。不同產業合理本益比不同："
-            "成長股可能 20-30 倍，景氣循環股可能 8-12 倍。"
-            "虧損公司沒有本益比。"
-        ),
+        "historical_context": t('metric_education.per_historical_context'),
     },
     "PBR": {
-        "display_name": "淨值比 (PBR)",
+        "display_name": t('metric_education.pbr_display_name'),
         "unit": "倍",
         "is_higher_better": False,
-        "explanation": (
-            "淨值比是股價除以每股淨值，代表股價相對於公司帳面價值的倍數。"
-            "淨值比 1.5 表示股價是淨值的 1.5 倍。"
-            "低於 1 表示股價比淨值還便宜（但可能有原因）。"
-        ),
+        "explanation": t('metric_education.pbr_explanation'),
         "analogy_fn": get_pbr_analogy,
-        "historical_context": (
-            "淨值比適合評估資產密集型產業（如銀行、營建）。"
-            "輕資產公司（如軟體、品牌）淨值比通常較高，因為價值在無形資產。"
-            "巴菲特早期偏好淨值比低於 1 的股票。"
-        ),
+        "historical_context": t('metric_education.pbr_historical_context'),
     },
     "dividend_yield": {
-        "display_name": "殖利率",
+        "display_name": t('metric_education.dividend_yield_display_name'),
         "unit": "%",
         "is_higher_better": True,
-        "explanation": (
-            "殖利率是每年配發的股利除以股價，代表投資一年能領回的現金比例。"
-            "殖利率 4% 表示每投資 100 元，一年約領回 4 元股利。"
-            "越高代表配息越多，但太高可能代表股價下跌或配息不可持續。"
-        ),
+        "explanation": t('metric_education.dividend_yield_explanation'),
         "analogy_fn": get_dividend_analogy,
-        "historical_context": (
-            "台股平均殖利率約 3-4%。殖利率 5% 以上算高息股，但要注意："
-            "1) 是否為一次性業外收入造成的超高殖利率；2) 公司是否有賺錢。"
-            "過去 5 年穩定配息的公司較可靠。"
-        ),
+        "historical_context": t('metric_education.dividend_yield_historical_context'),
     },
 }
-
-
 def get_metric_explanation(metric_name: str, value: float, stock_id: str) -> dict:
     """
     取得單一財務指標的完整解釋。

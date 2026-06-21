@@ -1,0 +1,52 @@
+KNOWN_COMPANY_REVENUE = {
+    "2330": {  # 台積電
+        t("revenue_analyzer_known_2330_3nm"): {"value": 30, "description": t("revenue_analyzer_known_2330_3nm_desc")},
+        t("revenue_analyzer_known_2330_5nm"): {"value": 25, "description": t("revenue_analyzer_known_2330_5nm_desc")},
+        t("revenue_analyzer_known_2330_7nm"): {"value": 15, "description": t("revenue_analyzer_known_2330_7nm_desc")},
+        t("revenue_analyzer_known_2330_mature_process"): {"value": 20, "description": t("revenue_analyzer_known_2330_mature_process_desc")},
+        t("revenue_analyzer_known_2330_other"): {"value": 10, "description": t("revenue_analyzer_known_2330_other_desc")},
+    },
+    "2317": {  # 鴻海
+        t("revenue_analyzer_known_2317_consumer_electronics"): {"value": 50, "description": t("revenue_analyzer_known_2317_consumer_electronics_desc")},
+        t("revenue_analyzer_known_2317_cloud_server"): {"value": 20, "description": t("revenue_analyzer_known_2317_cloud_server_desc")},
+        t("revenue_analyzer_known_2317_components"): {"value": 15, "description": t("revenue_analyzer_known_2317_components_desc")},
+        t("revenue_analyzer_known_2317_other"): {"value": 15, "description": t("revenue_analyzer_known_2317_other_desc")},
+    },
+    "2454": {  # 聯發科
+        t("revenue_analyzer_known_2454_mobile_chip"): {"value": 55, "description": t("revenue_analyzer_known_2454_mobile_chip_desc")},
+        t("revenue_analyzer_known_2454_smart_terminal"): {"value": 25, "description": t("revenue_analyzer_known_2454_smart_terminal_desc")},
+        t("revenue_analyzer_known_2454_power_management"): {"value": 10, "description": t("revenue_analyzer_known_2454_power_management_desc")},
+        t("revenue_analyzer_known_2454_other"): {"value": 10, "description": t("revenue_analyzer_known_2454_other_desc")},
+    },
+    "2308": {  # 台達電
+        t("revenue_analyzer_known_2308_power_supply"): {"value": 35, "description": t("revenue_analyzer_known_2308_power_supply_desc")},
+        t("revenue_analyzer_known_2308_infrastructure"): {"value": 25, "description": t("revenue_analyzer_known_2308_infrastructure_desc")},
+        t("revenue_analyzer_known_2308_automation"): {"value": 20, "description": t("revenue_analyzer_known_2308_automation_desc")},
+        t("revenue_analyzer_known_2308_fan_and_cooling"): {"value": 10, "description": t("revenue_analyzer_known_2308_fan_and_cooling_desc")},
+        t("revenue_analyzer_known_2308_other"): {"value": 10, "description": t("revenue_analyzer_known_2308_other_desc")},
+    },
+    "2881": {  # 富邦金
+        t("revenue_analyzer_known_2881_fubon_life_insurance"): {"value": 45, "description": t("revenue_analyzer_known_2881_fubon_life_insurance_desc")},
+        t("revenue_analyzer_known_2881_taipei_fubon_bank"): {"value": 30, "description": t("revenue_analyzer_known_2881_taipei_fubon_bank_desc")},
+        t("revenue_analyzer_known_2881_fubon_securities"): {"value": 15, "description": t("revenue_analyzer_known_2881_fubon_securities_desc")},
+        t("revenue_analyzer_known_2881_other"): {"value": 10, "description": t("revenue_analyzer_known_2881_other_desc")},
+    },
+    "1101": {  # 台泥
+        t("revenue_analyzer_known_1101_cement"): {"value": 50, "description": t("revenue_analyzer_known_1101_cement_desc")},
+        t("revenue_analyzer_known_1101_electricity"): {"value": 20, "description": t("revenue_analyzer_known_1101_electricity_desc")},
+        t("revenue_analyzer_known_1101_waste_management"): {"value": 15, "description": t("revenue_analyzer_known_1101_waste_management_desc")},
+        t("revenue_analyzer_known_1101_other"): {"value": 15, "description": t("revenue_analyzer_known_1101_other_desc")},
+    },
+    "2002": {  # 中鋼
+        t("revenue_analyzer_known_2002_bar_steel"): {"value": 30, "description": t("revenue_analyzer_known_2002_bar_steel_desc")},
+        t("revenue_analyzer_known_2002_hot_rolled_steel"): {"value": 25, "description": t("revenue_analyzer_known_2002_hot_rolled_steel_desc")},
+        t("revenue_analyzer_known_2002_cold_rolled_steel"): {"value": 20, "description": t("revenue_analyzer_known_2002_cold_rolled_steel_desc")},
+        t("revenue_analyzer_known_2002_other"): {"value": 25, "description": t("revenue_analyzer_known_2002_other_desc")},
+    },
+    "1301": {  # 台塑
+        t("revenue_analyzer_known_1301_plastics"): {"value": 40, "description": t("revenue_analyzer_known_1301_plastics_desc")},
+        t("revenue_analyzer_known_1301_petrochemical"): {"value": 30, "description": t("revenue_analyzer_known_1301_petrochemical_desc")},
+        t("revenue_analyzer_known_1301_fiber"): {"value": 15, "description": t("revenue_analyzer_known_1301_fiber_desc")},
+        t("revenue_analyzer_known_1301_other"): {"value": 15, "description": t("revenue_analyzer_known_1301_other_desc")},
+    },
+}

@@ -109,20 +109,17 @@ daily_market:
     title: "今日事件"
     empty: "今日無重大事件"
   disclaimer: "⚠️ 本工具僅供公司教育使用，<br>不構成任何投資建議。<br>投資有風險，請自行評估。"
-
 unit:
   yuan: "元"
   hundred_million: "億"
   ten_thousand: "萬"
   percent: "%"
-
 validation:
   error:
     empty: "請輸入股票代號"
     not_digit: "股票代號必須為數字：{input}"
     not_four_digit: "股票代號必須為 4 位數字：{input}（目前長度：{length}）"
     format: "股票代號格式不正確：{input}"
-
 page:
   daily_market: "今日市場動態"
 adaptive_engine_severity_high: "高"

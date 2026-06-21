@@ -12,7 +12,6 @@ from __future__ import annotations
 
 from src.services.llm.base import ExplanationProvider, ExplanationRequest, ExplanationResponse
 from src.services.llm.template_provider import TemplateExplanationProvider
-from src.core.i18n import t
 
 # ── Metric name → template key mapping ─────────────────────────
 _METRIC_KEY_MAP: dict[str, str] = {
@@ -28,40 +27,40 @@ _METRIC_KEY_MAP: dict[str, str] = {
 
 _REVENUE_TEMPLATES = {
     "up": [
-        (50, t('delta_explanation_provider.revenue_up_extreme')),
-        (30, t('delta_explanation_provider.revenue_up_strong')),
-        (0,  t('delta_explanation_provider.revenue_up_moderate')),
+        (50, "{stock_prefix}月營收暴增 {abs_pct:.0f}%，可能是大訂單入帳或旺季效應，可持續觀察其變化"),
+        (30, "{stock_prefix}月營收成長 {abs_pct:.0f}%，表現相對正面，可能是需求回溫或新產品貢獻"),
+        (0,  "{stock_prefix}月營收成長 {abs_pct:.0f}%，溫和成長中"),
     ],
     "down": [
-        (50, t('delta_explanation_provider.revenue_down_extreme')),
-        (30, t('delta_explanation_provider.revenue_down_strong')),
-        (0,  t('delta_explanation_provider.revenue_down_moderate')),
+        (50, "{stock_prefix}月營收驟降 {abs_pct:.0f}%，可能是淡季或失去大客戶，可留意其趨勢"),
+        (30, "{stock_prefix}月營收衰退 {abs_pct:.0f}%，表現不如預期，可能是需求下滑或訂單遞延"),
+        (0,  "{stock_prefix}月營收小跌 {abs_pct:.0f}%，略有衰退但仍在合理範圍"),
     ],
 }
 
 _PRICE_TEMPLATES = {
     "up": [
-        (30, t('delta_explanation_provider.price_up_large')),
-        (20, t('delta_explanation_provider.price_up_medium')),
-        (0,  t('delta_explanation_provider.price_up_small')),
+        (30, "{stock_prefix}股價近 30 日大漲 {abs_pct:.0f}%，市場情緒樂觀，可能是基本面改善或利多消息推動"),
+        (20, "{stock_prefix}股價近 30 日上漲 {abs_pct:.0f}%，多頭趨勢明顯"),
+        (0,  "{stock_prefix}股價近 30 日上漲 {abs_pct:.0f}%，穩步走揚"),
     ],
     "down": [
-        (30, t('delta_explanation_provider.price_down_large')),
-        (20, t('delta_explanation_provider.price_down_medium')),
-        (0,  t('delta_explanation_provider.price_down_small')),
+        (30, "{stock_prefix}股價近 30 日大跌 {abs_pct:.0f}%，市場信心不足，可能是利空消息或基本面惡化"),
+        (20, "{stock_prefix}股價近 30 日下跌 {abs_pct:.0f}%，空頭趨勢明顯"),
+        (0,  "{stock_prefix}股價近 30 日小跌 {abs_pct:.0f}%，略有回檔"),
     ],
 }
 
 _YOY_TEMPLATES = {
     "up": [
-        (50, t('delta_explanation_provider.yoy_up_strong')),
-        (20, t('delta_explanation_provider.yoy_up_moderate')),
-        (0,  t('delta_explanation_provider.yoy_up_mild')),
+        (50, "{stock_prefix}營收年增 {abs_pct:.0f}%，成長非常強勁，可能是新產品大賣或市場需求爆發"),
+        (20, "{stock_prefix}營收年增 {abs_pct:.0f}%，穩定成長，公司經營績效良好"),
+        (0,  "{stock_prefix}營收年增 {abs_pct:.0f}%，溫和成長"),
     ],
     "down": [
-        (50, t('delta_explanation_provider.yoy_down_extreme')),
-        (20, t('delta_explanation_provider.yoy_down_strong')),
-        (0,  t('delta_explanation_provider.yoy_down_moderate')),
+        (50, "{stock_prefix}營收年減 {abs_pct:.0f}%，大幅衰退，可能有結構性問題需要關注"),
+        (20, "{stock_prefix}營收年減 {abs_pct:.0f}%，比去年差，需留意原因"),
+        (0,  "{stock_prefix}營收年減 {abs_pct:.0f}%，略有衰退"),
     ],
 }
 
@@ -80,52 +79,52 @@ _METRIC_TEMPLATES: dict[str, dict[str, list[tuple[int, str]]]] = {
 _IMPLICATION_TEMPLATES: dict[str, dict[str, list[tuple[int, str]]]] = {
     "月營收": {
         "up": [
-            (50, t('delta_explanation_provider.implication_revenue_up_extreme')),
-            (30, t('delta_explanation_provider.implication_revenue_up_strong')),
-            (0, t('delta_explanation_provider.implication_revenue_up_moderate')),
+            (50, "此營收大幅成長，後續可持續觀察其變化"),
+            (30, "此營收正向表現，可留意其趨勢"),
+            (0, "此營收溫和成長，屬穩定表現"),
         ],
         "down": [
-            (50, t('delta_explanation_provider.implication_revenue_down_extreme')),
-            (30, t('delta_explanation_provider.implication_revenue_down_strong')),
-            (0, t('delta_explanation_provider.implication_revenue_down_moderate')),
+            (50, "此營收大幅衰退，後續變化值得觀察"),
+            (30, "此營收表現偏弱，可持續追蹤原因"),
+            (0, "此營收小幅波動，仍在合理範圍"),
         ],
     },
     "股價（近 30 日均價）": {
         "up": [
-            (30, t('delta_explanation_provider.implication_price_up_extreme')),
-            (20, t('delta_explanation_provider.implication_price_up_strong')),
-            (0, t('delta_explanation_provider.implication_price_up_moderate')),
+            (30, "此股價漲幅較大，可留意市場評價變化"),
+            (20, "此股價呈多頭走勢，可觀察後續動能"),
+            (0, "此股價穩步走揚，趨勢平穩"),
         ],
         "down": [
-            (30, t('delta_explanation_provider.implication_price_down_extreme')),
-            (20, t('delta_explanation_provider.implication_price_down_strong')),
-            (0, t('delta_explanation_provider.implication_price_down_moderate')),
+            (30, "此股價跌幅較大，可持續觀察市場反應"),
+            (20, "此股價呈空頭走勢，可留意後續變化"),
+            (0, "此股價小幅回檔，屬正常波動"),
         ],
     },
     "營收年增率": {
         "up": [
-            (50, t('delta_explanation_provider.implication_yoy_up_extreme')),
-            (20, t('delta_explanation_provider.implication_yoy_up_strong')),
-            (0, t('delta_explanation_provider.implication_yoy_up_moderate')),
+            (50, "此營收年增強勁，可留意後續季度表現"),
+            (20, "此營收穩定成長，可持續觀察趨勢"),
+            (0, "此營收溫和成長，表現平穩"),
         ],
         "down": [
-            (50, t('delta_explanation_provider.implication_yoy_down_extreme')),
-            (20, t('delta_explanation_provider.implication_yoy_down_strong')),
-            (0, t('delta_explanation_provider.implication_yoy_down_moderate')),
+            (50, "此營收年減幅度較大，可持續追蹤"),
+            (20, "此營收較去年同期偏弱，可留意改善情況"),
+            (0, "此營收略有波動，仍在合理範圍"),
         ],
     },
 }
 
 # Generic fallback implications for unknown metrics
 _GENERIC_IMPLICATION_TEMPLATES: dict[str, str] = {
-    "up": t('delta_explanation_provider.generic_implication_up'),
-    "down": t('delta_explanation_provider.generic_implication_down'),
+    "up": "此指標較前期成長，可留意其後續變化",
+    "down": "此指標較前期衰減，可持續追蹤原因",
 }
 
 # ── Generic fallback templates ────────────────────────────────
 _GENERIC_TEMPLATES = {
-    "up":   t('delta_explanation_provider.generic_template_up'),
-    "down": t('delta_explanation_provider.generic_template_down'),
+    "up":   "{stock_prefix}{metric_name} 較前期成長 {abs_pct:.1f}%",
+    "down": "{stock_prefix}{metric_name} 較前期衰退 {abs_pct:.1f}%",
 }
 
 
@@ -159,7 +158,6 @@ def _pick_template(
                 return template.format(
                     stock_prefix=stock_prefix,
                     abs_pct=abs_pct,
-                    metric_name=metric_name,
                 )
 
     # Generic fallback

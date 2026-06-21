@@ -107,7 +107,6 @@ daily_market:
     title: "Key Events"
     empty: "No events today"
   disclaimer: "⚠️ This tool is for company education only,<br>does not constitute any investment advice.<br>Investing involves risk, please assess on your own."
-
 unit:
   yuan: "TWD"
   hundred_million: "B"
@@ -271,7 +270,6 @@ metric_education:
     maintaining ROE above 15% long-term often have competitive advantages (moats).
     Buffett prefers companies with long-term ROE above 20%.
 test_key: test value
-
 delta_explanation_provider:
   revenue_up_extreme: "{stock_prefix} revenue surged {abs_pct:.0f}%, possibly due to large orders or seasonal effects, worth monitoring"
   revenue_up_strong: "{stock_prefix} revenue grew {abs_pct:.0f}%, relatively positive performance, possibly due to demand recovery or new product contributions"
