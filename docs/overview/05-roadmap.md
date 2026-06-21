@@ -34,7 +34,7 @@
 ### P0 — Critical
 | ID | Item | Description |
 |----|------|-------------|
-| TD-02 | Full i18n | Phase 1 complete (5 major pages, ~300 strings), remaining ~42 files with ~1,200 strings |
+|| TD-02 | Full i18n | Phase 1 complete (5 major pages, ~300 strings), Phase 2a complete (zh-TW translations for adaptive_engine, dividend, revenue_analyzer — 5 tests fixed), remaining ~42 files with ~1,200 strings |
 || D-125 | chart_stock.py split | ~~Split chart_stock.py into smaller modules~~ ✅ Already done (split into chart_stock_financial.py, chart_stock_health.py, chart_stock_valuation.py) |
 || D-126 | INDUSTRY_BENCHMARKS dedup | Remove duplicate industry benchmark data ✅ Complete (2026-06-21) |
 
@@ -52,7 +52,7 @@
 | TD-03 | API cache fix | get_stock_info full table fetch issue |
 | TD-05 | Unit test coverage improvement | Currently 699 passing but insufficient coverage |
 || TD-06 | Color system unification | All pages use design system colors | ✅ Complete (2026-06-21) |
-| TD-07 | Component consistency | Standardize on `_plain_card()` |
+| TD-07 | Component consistency | Standardize on `_plain_card()` | ✅ Complete (2026-06-21) |
 | SB-01~03 | Sidebar core | Inline data, multi-list, market overview |
 | SB-05~08 | Sidebar improvements | Category entry, history, width adjustment |
 | ADR-009 | Two-layer navigation architecture | Activity Bar + FAB |
