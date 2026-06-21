@@ -75,8 +75,8 @@
     "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
   },
   "src/pages/_router_base.py": {
-    "mtime": 1781989470.2382514,
-    "ast_hash": "101ccf1a1219c9d28f8a6879a86a2351",
+    "mtime": 1782002749.0106153,
+    "ast_hash": "0c278eb2c574b3f8a36c1e30af7de926",
     "semantic_hash": ""
   },
   "src/pages/academy.py": {
@@ -155,8 +155,8 @@
     "semantic_hash": "b76b4520619fdc461d1adc9452fc34dc"
   },
   "src/pages/business_card/_sections/_summary_hero.py": {
-    "mtime": 1781978932.5279465,
-    "ast_hash": "d65337d77a1effb1e448da432fe0e837",
+    "mtime": 1782003768.21842,
+    "ast_hash": "7c44654c22946fbc5061dad5d2d72a66",
     "semantic_hash": ""
   },
   "src/pages/business_card/_sections/_why_moved.py": {
@@ -320,8 +320,8 @@
     "semantic_hash": "cf76e6466a260f3a878389a5f08cc942"
   },
   "src/pages/watchlist_page.py": {
-    "mtime": 1781856964.5551362,
-    "ast_hash": "e41bf54cd53595583224e6b7829600c0",
+    "mtime": 1782003405.398111,
+    "ast_hash": "9d5103bfc826cd61477362021dfba700",
     "semantic_hash": ""
   },
   "src/plugins/__init__.py": {
@@ -485,7 +485,7 @@
     "semantic_hash": "f05ff877afe051e9255ac49ad30c8ca7"
   },
   "src/services/adaptive_engine.py": {
-    "mtime": 1781994207.2143435,
+    "mtime": 1782024247.4505785,
     "ast_hash": "4dfa8bb7826eebeac288da19ef8ef8e8",
     "semantic_hash": ""
   },
@@ -565,9 +565,9 @@
     "semantic_hash": "138ffee0bbf803bcf1d6f66148ff4105"
   },
   "src/services/delta_explanation_provider.py": {
-    "mtime": 1781410737.2493048,
-    "ast_hash": "9479690deea0f425ffaadaf0f997ebda",
-    "semantic_hash": "9479690deea0f425ffaadaf0f997ebda"
+    "mtime": 1782037476.8713067,
+    "ast_hash": "2d60514507406b021ec8b2203d6bfb65",
+    "semantic_hash": ""
   },
   "src/services/dividend_analyzer.py": {
     "mtime": 1781833183.9639432,
@@ -655,8 +655,8 @@
     "semantic_hash": "4e8449871ee4634d16040bd4b050930c"
   },
   "src/services/metric_education.py": {
-    "mtime": 1781861626.6682007,
-    "ast_hash": "045cd01cb057e9aadebad4f18fcfaa60",
+    "mtime": 1782030570.4997382,
+    "ast_hash": "f8d46f3f9ca426bf6bd66a4b68fe19f5",
     "semantic_hash": ""
   },
   "src/services/metric_explainer.py": {
@@ -670,7 +670,7 @@
     "semantic_hash": "16ab3cd6859a16e83cce8ce48000c995"
   },
   "src/services/news_summarizer.py": {
-    "mtime": 1781994207.2145336,
+    "mtime": 1782024247.4507473,
     "ast_hash": "9d6f7e403fd3be59073a85420fff696d",
     "semantic_hash": ""
   },
@@ -695,7 +695,7 @@
     "semantic_hash": "01f368747a239525ca7e54d110facff4"
   },
   "src/services/revenue_analyzer.py": {
-    "mtime": 1781994207.2146173,
+    "mtime": 1782024247.4510803,
     "ast_hash": "b1d921db40f600ca30094a88f6f5f4cc",
     "semantic_hash": ""
   },
@@ -1050,8 +1050,8 @@
     "semantic_hash": ""
   },
   "docs/overview/05-roadmap.md": {
-    "mtime": 1781990230.0693398,
-    "ast_hash": "6a2644c162a3942a91fdfa709c94bd4b",
+    "mtime": 1782044472.4248862,
+    "ast_hash": "c92248303173a41144652d66adce34af",
     "semantic_hash": ""
   },
   "docs/overview/06-development-guide.md": {
@@ -1080,13 +1080,13 @@
     "semantic_hash": ""
   },
   "locales/en.yaml": {
-    "mtime": 1781994207.2140474,
-    "ast_hash": "87fb575eb00c6bd10fb404967675d6d2",
+    "mtime": 1782044322.2460184,
+    "ast_hash": "a194d0abc2ef3dabdf5e2c343b9cc1ee",
     "semantic_hash": ""
   },
   "locales/zh-TW.yaml": {
-    "mtime": 1781997264.1916819,
-    "ast_hash": "6e506ca3a82b190ec25cff4c5eff5c28",
+    "mtime": 1782044408.5724359,
+    "ast_hash": "38712a38db861f71665189e42492e737",
     "semantic_hash": ""
   },
   "src/data/case_studies.yaml": {
@@ -1262,6 +1262,36 @@
   "docs/adr/010-i18n-phase2-plan.md": {
     "mtime": 1781992763.7188933,
     "ast_hash": "ecf381c06776fd6694e5e8644b74a33b",
+    "semantic_hash": ""
+  },
+  "docs/design/2026-06-21_plain_card_spec.md": {
+    "mtime": 1782000087.270807,
+    "ast_hash": "cdd9bdfab3edb384ec3e80e495273fa7",
+    "semantic_hash": ""
+  },
+  "process_metric_education.py": {
+    "mtime": 1782028321.0404952,
+    "ast_hash": "c684c6560d1c4c15e63909b01c106cf4",
+    "semantic_hash": ""
+  },
+  "inserted_en.txt": {
+    "mtime": 1782010281.831969,
+    "ast_hash": "ebc6c8054284148ed90b9f747071fec1",
+    "semantic_hash": ""
+  },
+  "inserted_en_corrected.txt": {
+    "mtime": 1782010299.1281672,
+    "ast_hash": "d84cc7e19c0fb6723b4918d4ef06881b",
+    "semantic_hash": ""
+  },
+  "inserted_zh.txt": {
+    "mtime": 1782010495.883222,
+    "ast_hash": "08d419d1f1c43186f00d819ab7d0b7b5",
+    "semantic_hash": ""
+  },
+  "new_revenue_dict.txt": {
+    "mtime": 1782010659.911963,
+    "ast_hash": "fd96a2ca3b889c34dbec50abb2e5d7fe",
     "semantic_hash": ""
   }
 }

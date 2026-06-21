@@ -230,3 +230,10 @@ events:
   summary: 收盤價 102 元，較前一交易日漲 2.1%。單日波動劇烈，建議關注相關公告。
   title: 股價單日漲 2.1%
   type: price_abnormal
+- date: '2026-06-21'
+  detected_at: '2026-06-21T20:39:55'
+  severity: high
+  stock_id: '0050'
+  summary: 收盤價 107 元，較前一交易日漲 1.2%。單日波動劇烈，建議關注相關公告。
+  title: 股價單日漲 1.2%
+  type: price_abnormal

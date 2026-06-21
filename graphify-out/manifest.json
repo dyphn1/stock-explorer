@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "src/main.py": {
-    "mtime": 1781944624.5649865,
-    "ast_hash": "f9764d6b3cd37f7a2ecf3a6239695882",
+    "mtime": 1782045385.1703205,
+    "ast_hash": "63d688d7974e756d24d9d6cf9bd4e64e",
     "semantic_hash": ""
   },
   "src/pages/__init__.py": {
@@ -640,9 +640,9 @@
     "semantic_hash": "b3d26f3d443c6a8b2397895d9b9f6ce4"
   },
   "src/services/llm/template_provider.py": {
-    "mtime": 1781476454.9835677,
-    "ast_hash": "2b60943737d29419a4299a7ea36c2e29",
-    "semantic_hash": "2b60943737d29419a4299a7ea36c2e29"
+    "mtime": 1782045171.159722,
+    "ast_hash": "99742a63128e83cbf224b47fff7b0272",
+    "semantic_hash": ""
   },
   "src/services/market_data.py": {
     "mtime": 1781282476.6237981,
@@ -1050,8 +1050,8 @@
     "semantic_hash": ""
   },
   "docs/overview/05-roadmap.md": {
-    "mtime": 1782040036.7370007,
-    "ast_hash": "a1dc91b327ff2112657aeb26f335aff2",
+    "mtime": 1782044472.4248862,
+    "ast_hash": "c92248303173a41144652d66adce34af",
     "semantic_hash": ""
   },
   "docs/overview/06-development-guide.md": {
@@ -1080,13 +1080,13 @@
     "semantic_hash": ""
   },
   "locales/en.yaml": {
-    "mtime": 1782038924.236272,
-    "ast_hash": "ec0ffdae7f65286186540153b27942e3",
+    "mtime": 1782044322.2460184,
+    "ast_hash": "a194d0abc2ef3dabdf5e2c343b9cc1ee",
     "semantic_hash": ""
   },
   "locales/zh-TW.yaml": {
-    "mtime": 1782039061.692733,
-    "ast_hash": "e9d20457f63f7f5e6fdd7025d001e296",
+    "mtime": 1782045143.8346877,
+    "ast_hash": "12d49f16b3632ff06bf7fd3e7d50c8ff",
     "semantic_hash": ""
   },
   "src/data/case_studies.yaml": {

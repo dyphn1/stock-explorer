@@ -146,24 +146,6 @@ def _render_sidebar(client):
     st.markdown("---")
     st.markdown("--")
 
-    # Primary navigation
-    st.markdown(t("main.sidebar.navigation_header"))
-    nav_items = [
-        ("📊", t("main.sidebar.nav_home"), "sidebar_nav_home"),
-        ("🗺️", t("main.sidebar.nav_sector"), "sidebar_nav_sector"),
-        ("📈", t("main.sidebar.nav_category"), "sidebar_nav_category"),
-        ("🏷️", t("main.sidebar.nav_etf"), "sidebar_nav_etf"),
-        ("📋", t("main.sidebar.nav_watchlist"), "sidebar_nav_watchlist"),
-        ("🔔", t("main.sidebar.nav_events"), "sidebar_nav_events"),
-        ("🔔", t("main.sidebar.nav_notifications"), "sidebar_nav_notifications"),
-        ("📝", t("main.sidebar.nav_memo"), "sidebar_nav_memo"),
-        ("💰", t("main.sidebar.nav_wellness"), "sidebar_nav_wellness"),
-        ("🔎", t("main.sidebar.nav_screener"), "sidebar_nav_screener"),
-    ]
-    for icon, label, key in nav_items:
-        if st.button(f"{icon} {label}", key=key, use_container_width=True):
-            navigate_to(page=label)
-
     st.markdown("---")
 
     # Hot stocks (collapsible)

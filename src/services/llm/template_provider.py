@@ -9,6 +9,7 @@ No LLM API calls — pure Python string formatting.
 from __future__ import annotations
 
 from src.services.llm.base import ExplanationProvider, ExplanationRequest, ExplanationResponse
+from src.core.i18n import t
 
 # ── Templates ──────────────────────────────────────────────────
 # Template keys (after the metric name) are matched by direction:
@@ -18,13 +19,13 @@ from src.services.llm.base import ExplanationProvider, ExplanationRequest, Expla
 
 TEMPLATES: dict[str, dict[str, str]] = {
     "revenue": {
-        "increase": "{name}較上期成長{value}，代表公司營收持續擴大",
-        "decrease": "{name}較上期減少{value}，需要關注後續趨勢",
-        "neutral": "{name}維持在{value}左右，表現穩定",
+        "increase": t("template_provider.revenue_increase"),
+        "decrease": t("template_provider.revenue_decrease"),
+        "neutral": t("template_provider.revenue_neutral"),
     },
     "eps": {
-        "increase": "{name}成長至{value}，每股獲利能力提升",
-        "decrease": "{name}下降至{value}，每股獲利能力減弱",
+        "increase": t("template_provider.eps_increase"),
+        "decrease": t("template_provider.eps_decrease"),
         "neutral": "{name}維持在{value}，獲利表現穩定",
     },
     "pe_ratio": {
