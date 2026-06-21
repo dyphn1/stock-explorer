@@ -37,6 +37,12 @@ description: "Entry point router for Stock Explorer multi-agent workflow."
    - `locales/` directory (i18n translation files — contains Chinese/English)
    - `README.md` (may contain the project's Chinese name "股識")
    - Code comments and docstrings (keep original language)
+8. **Delegate failure handling**: If delegate_task fails (rate limit, timeout, error):
+   - NEVER fill in the agent's sign-in yourself — that is falsifying records
+   - Mark the agent as "Failed ❌" in the task file with the error reason
+   - Retry with the fallback model (see Model table)
+   - If fallback also fails, report the failure in your final response and STOP — do not proceed as if the agent completed
+9. **Minimum 2 challengers per cron run**: Every cron run must involve at least 2 different Challenger perspectives (can be same model with different prompts, or different models). Challenger must cross-examine decisions BEFORE development starts.
 
 ---
 
