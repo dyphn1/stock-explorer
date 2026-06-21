@@ -127,8 +127,6 @@ def _render_sidebar_hot_etfs(client):
 def _render_sidebar(client):
     """Main sidebar rendering function."""
     st.markdown(t("sidebar.search_header"))
-    st.markdown(t("main.welcome.subtitle"))
-    st.markdown("---")
 
     # Search box
     search_input = st.text_input(
@@ -137,6 +135,9 @@ def _render_sidebar(client):
         label_visibility="collapsed",
         key="sidebar_search",
     )
+
+    st.markdown(t("main.welcome.subtitle"))
+    st.markdown("---")
 
     # Rate limit banner
     _rate_status = get_rate_limit_status()
