@@ -32,6 +32,15 @@
 - 目前 Challenger 只有 1 個
 - **Action needed**: 每次 cron 執行至少要 Challenger 質疑 2 次以上
 
+### 7. 畫面行為驗證 — 需要 Playwright 自動化測試
+- 目前只有 unit test，沒有畫面層級的自動化驗證
+- **Action needed**: 
+  - 導入 Playwright（或類似工具）做 headless browser 測試
+  - 驗證關鍵 UI 元素是否有正確渲染（不只是測邏輯）
+  - 截圖比對：預期畫面 vs 實際畫面
+  - 驗證 t() 翻譯是否正確顯示（不是顯示 raw key）
+  - 驗證互動行為（按鈕點擊、頁面切換等）
+
 ## Acceptance Criteria
 - [ ] 所有 t() key 都存在，介面不再顯示 raw key
 - [ ] 主畫面不用滾動就能看完所有卡片
@@ -39,3 +48,4 @@
 - [ ] ETF 頁面有獨立功能設計
 - [ ] UI/UX 自動化測試已加入
 - [ ] 每次 cron 有 ≥2 次質疑
+- [ ] Playwright 畫面驗證測試已加入

@@ -143,11 +143,6 @@ def _render_sidebar(client):
     if _rate_status["is_limited"]:
         st.warning(t("main.sidebar.api_warning"))
 
-    st.markdown("---")
-    st.markdown("--")
-
-    st.markdown("---")
-
     # Hot stocks (collapsible)
     with st.expander(f"🔥 {t('main.sidebar.hot_stocks')}", expanded=False):
         _render_sidebar_hot_stocks(client)
@@ -205,7 +200,7 @@ else:
 
 if not stock_id:
     # 歡迎頁面
-    st.markdown("""
+    st.markdown(f"""
     <div style="text-align:center;padding:4rem 2rem;">
         <h1>📊 {t("main.home.title")}</h1>
         <p style="font-size:1.3rem;color:#7F8C8D;margin-top:1rem;">{t("main.home.lead1")}</p>
