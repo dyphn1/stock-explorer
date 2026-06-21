@@ -14,7 +14,7 @@ if _project_root not in sys.path:
 import streamlit as st
 from src.services.validation import validate_stock_id
 from src.core.i18n import t
-from src.pages.router import load_and_render_page
+from src.pages.router import load_and_render_page, get_stock_data
 from src.services.benchmarks import get_industry_benchmarks
 
 # ── 頁面設定 ──────────────────────────────────────────
@@ -160,6 +160,92 @@ def _render_sidebar(client):
     return search_input
 
 
+def render_navbar(data: dict):
+    """頂部導航列：公司名稱 + 價格 + 分頁標籤 (copied from _router_base.py)"""
+    import streamlit as st
+    from src.core.i18n import t
+    from src.pages.router import _get_localized_page_labels, _get_label_to_key_map
+    from src.pages.url_sync import navigate_to
+
+    stock_name = data["stock_name"]
+    stock_id = data["stock_id"]
+    industry = data["industry"]
+    latest_price = data["latest_price"]
+
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        st.markdown(f"**{stock_name}** `{stock_id}` ｜ {industry}")
+    with col2:
+        if latest_price:
+            price = latest_price["close"]
+            change = latest_price["change"]
+            sign = "+" if change >= 0 else ""
+            st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
+
+    # 分頁標籤
+    page_labels = _get_localized_page_labels()
+    # Get current label from the page key
+    current_page_key = st.session_state.get("page_key", "business_card")
+    current_label = t(f"page.{current_page_key}")
+    try:
+        current_idx = page_labels.index(current_label)
+    except ValueError:
+        current_idx = 0
+
+    selected_label = st.radio(
+        t("router.page_navigation"),
+        page_labels,
+        index=current_idx,
+        horizontal=True,
+        label_visibility="collapsed",
+        key="navbar_radio",
+    )
+
+    # Map selected label back to page key
+    label_to_key = _get_label_to_key_map()
+    selected_key = label_to_key.get(selected_label)
+    if selected_key is None:
+        selected_key = "business_card"
+
+    if selected_key != current_page_key:
+        navigate_to(page=selected_key)
+
+    st.markdown("--\"")
+
+
+def render_metric_card(title: str, value_str: str, description: str, analogy: str = "", is_positive: bool | None = None):
+    """Render a metric card similar to the prototype."""
+    import streamlit as st
+    from src.core.i18n import t
+
+    # Determine value color
+    value_color = ""
+    if is_positive is not None:
+        if is_positive:
+            value_color = "price-up"
+        else:
+            value_color = "price-down"
+    else:
+        value_color = ""
+
+    # Analogy background
+    analogy_bg = ""
+    if analogy:
+        analogy_bg = 'style="background:#F8F9FA;padding:8px;border-radius:4px;font-size:12px;font-style:italic;color:#7F8C8D;"'
+
+    st.markdown(
+        f"""
+    <div class="card" style="background:white;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid #E1E4E8;">
+        <div class="card-title">{title}</div>
+        <div class="metric-value {value_color}">{value_str}</div>
+        <div class="metric-desc">{description}</div>
+        <div class="analogy" {analogy_bg}>{analogy}</div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+
 search_input = _render_sidebar(client)
 
 
@@ -211,8 +297,91 @@ if not stock_id:
     </div>
     """, unsafe_allow_html=True)
 else:
-    # 使用路由器載入並渲染頁面
-    loading_text = t("main.loading.text")
-    loading_subtext = t("main.loading.subtext")
-    with st.spinner(f"{loading_text}\n{loading_subtext}"):
-        load_and_render_page(client, stock_id)
+    data = get_stock_data(client, stock_id)
+    if data is None:
+        st.error(t("error.not_found", sid=stock_id))
+    else:
+        render_navbar(data)
+        # compute metrics
+        from src.services.financial_metrics import calc_extra_metrics, find_financial_value
+        extra_metrics = calc_extra_metrics(
+            data.get("financial"),
+            data.get("balance_sheet"),
+            data.get("monthly_revenue"),
+        )
+        revenue_yoy = extra_metrics.get("revenue_yoy")
+        net_margin = extra_metrics.get("net_margin")
+        # compute ROE and debt-to-equity
+        net_income = None
+        total_equity = None
+        total_liabilities = None
+        if data.get("financial") is not None and len(data["financial"]) > 0:
+            latest_date = data["financial"]["date"].max()
+            latest_fin = data["financial"][data["financial"]["date"] == latest_date]
+            net_income = find_financial_value(latest_fin, ["淨利", "本期淨利", "Net Income", "net_income"])
+        if data.get("balance_sheet") is not None and len(data["balance_sheet"]) > 0:
+            latest_date = data["balance_sheet"]["date"].max()
+            latest_bs = data["balance_sheet"][data["balance_sheet"]["date"] == latest_date]
+            total_equity = find_financial_value(latest_bs, ["權益總計", "股東權益", "Total Equity", "total_equity"])
+            total_liabilities = find_financial_value(latest_bs, ["負債總計", "總負債", "Total Liabilities", "total_liabilities"])
+        roe = None
+        if net_income is not None and total_equity is not None and total_equity != 0:
+            roe = round(net_income / total_equity * 100, 1)
+        debt_to_equity = None
+        if total_liabilities is not None and total_equity is not None and total_equity != 0:
+            debt_to_equity = round(total_liabilities / total_equity, 2)
+        # format values
+        def fmt_percent(val):
+            if val is None:
+                return "-"
+            from src.core.i18n import format_percent
+            return format_percent(val)
+        # render cards
+        st.markdown("<br>", unsafe_allow_html=True)
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            render_metric_card(
+                title=f"📊 {t('metric_education.revenue_yoy_display_name')}",
+                value=fmt_percent(revenue_yoy),
+                description=t("metric_education.revenue_yoy_explanation") if revenue_yoy is not None else "",
+                analogy="",
+                is_positive=(revenue_yoy is not None and revenue_yoy >= 0),
+            )
+        with col2:
+            render_metric_card(
+                title=f"💰 {t('metric_education.net_margin_display_name')}",
+                value=fmt_percent(net_margin),
+                description=t("metric_education.net_margin_explanation") if net_margin is not None else "",
+                analogy="",
+                is_positive=(net_margin is not None and net_margin >= 0),
+            )
+        with col3:
+            render_metric_card(
+                title=f"📈 {t('metric_education.roe_display_name')}",
+                value=fmt_percent(roe),
+                description=t("metric_education.roe_explanation") if roe is not None else "",
+                analogy="",
+                is_positive=(roe is not None and roe >= 0),
+            )
+        col_chart, col_debt = st.columns([2, 1])
+        with col_chart:
+            st.markdown(
+                """
+                <div class="card" style="background:white;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid #E1E4E8;">
+                    <div class="card-title">📉 Revenue Trend (Last 12 Months)</div>
+                    <div class="chart-placeholder" style="width:100%;height:200px;background:#f9f9f9;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;color:#aaa;border-radius:8px;margin-top:10px;">
+                        [ Plotly Line Chart: Monthly Revenue Trend ]
+                    </div>
+                    <div style="font-size:12px;color:#7F8C8D;margin-top:10px;text-align:right;">Source: FinMind API</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with col_debt:
+            render_metric_card(
+                title=f"⚖️ {t('metric_education.debt_ratio_display_name')}",
+                value=f"{debt_to_equity:.2f}" if debt_to_equity is not None else "-",
+                description=t("metric_education.debt_ratio_explanation") if debt_to_equity is not None else "",
+                analogy="",
+                is_positive=False,
+            )
