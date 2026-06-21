@@ -1,6 +1,6 @@
 # Development Roadmap — Stock Explorer
 
-> **Current Phase**: Sprint 21 in progress | **Last Updated**: 2026-06-21 (20:00)
+> **Current Phase**: Sprint 22 in progress | **Last Updated**: 2026-06-22 (01:30)
 
 ---
 
@@ -22,7 +22,7 @@
 ### Key Metrics
 | Metric | Value |
 |--------|-------|
-| L0 tests | 319+ passing |
+| L0 tests | 706 passing |
 | Design rating | B- |
 | Architecture rating | B+ |
 | Major blockers | None |
@@ -35,6 +35,8 @@
 | ID | Item | Description |
 |----|------|-------------|
 ||| TD-02 | Full i18n | ✅ Complete (2026-06-21) — All src/ Python files migrated, all locale keys present, 699 tests passing |
+||| TD-08 | Screener explanation lazy translation fix | ✅ Complete (2026-06-22) — _DISCLAIMER and _FALLBACK_TEMPLATE now store raw locale keys, t() applied at runtime |
+||| TD-09 | Playwright import skip | ✅ Complete (2026-06-22) — pytest.importorskip added to test_ui_streamlit.py |
 || D-125 | chart_stock.py split | ~~Split chart_stock.py into smaller modules~~ ✅ Already done (split into chart_stock_financial.py, chart_stock_health.py, chart_stock_valuation.py) |
 || D-126 | INDUSTRY_BENCHMARKS dedup | Remove duplicate industry benchmark data ✅ Complete (2026-06-21) |
 
@@ -42,7 +44,7 @@
 | ID | Item | Description |
 |----|------|-------------|
 | UX-01 | Chinese search support | Search box supports Chinese stock names |
-| UX-02 | Loading indicator | Show spinner during page transitions |
+| UX-02 | Loading indicator | ✅ Complete (2026-06-22) — st.spinner() with locale keys main.loading.text/subtext |
 | UX-05 | ROE TTM fix | Use TTM annualization for seasonal industries |
 | UX-07 | Watchlist feedback | Show toast when adding/removing |
 | C170 | Clickable Glossary | Real-time professional term lookup |
