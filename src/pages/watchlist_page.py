@@ -1,5 +1,4 @@
-"""
-關注列表頁 — 顯示使用者關注的股票與 ETF
+"""關注列表頁 — 顯示使用者關注的股票與 ETF
 提供摘要卡片、價格列表、警示狀態與移除功能
 支援多個命名清單
 """
@@ -18,7 +17,7 @@ from src.services.watchlist import (
     rename_list,
     list_names,
 )
-from src.pages._router_base import _白话_card, _info_card
+from src.pages._router_base import _白话_card, _plain_card
 
 def _render_watchlist_page(client: FinMindClient):
     """關注列表主頁"""
@@ -93,10 +92,10 @@ def _render_watchlist_page(client: FinMindClient):
 
     # ── Empty State ────────────────────────────────────────────
     if total == 0:
-        _info_card(
+        _plain_card(
             t("watchlist.empty_title"),
             t("watchlist.empty_message"),
-            "📌",
+            icon="📌",
         )
         # Still show list management buttons for the empty list
         # We'll show rename/delete buttons below
@@ -131,7 +130,7 @@ def _render_watchlist_page(client: FinMindClient):
                 if etf_type == "etf":
                     badge = f'<span style="background:#27AE60;color:white;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;margin-right:0.4rem;">{t("watchlist.type_etf_badge")}</span>'
                 else:
-                    badge = '<span style="background:#3498DB;color:white;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;margin-right:0.4rem;">{t("watchlist.type_stock_badge")}</span>'
+                    badge = f'<span style="background:#3498DB;color:white;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;margin-right:0.4rem;">{t("watchlist.type_stock_badge")}</span>'
 
                 # Price and change formatting
                 if latest_price is not None:
@@ -168,10 +167,10 @@ def _render_watchlist_page(client: FinMindClient):
                     change_display = f"{change_sign}{change:,.2f}"
                 else:
                     change_display = "—"
-                _info_card(
+                _plain_card(
                     f"{name} ({stock_id}){alert_triggered_str}",
                     t("watchlist.card_content", price=price_str, change=change_display, alert=alert_str),
-                    "📈" if etf_type != "etf" else "🏷️",
+                    icon="📈" if etf_type != "etf" else "🏷️",
                 )
 
                 # Action buttons row
@@ -269,8 +268,8 @@ def _render_watchlist_page(client: FinMindClient):
 
     # ── Footer hint ────────────────────────────────────────────
     st.markdown("---\n")
-    _info_card(
+    _plain_card(
         t("watchlist.footer_title"),
         t("watchlist.footer_message"),
-        "💡",
+        icon="💡",
     )

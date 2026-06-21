@@ -25,14 +25,13 @@ from src.services.watchlist import (
     create_list,
     list_names,
 )
-from src.pages._router_base import _白话_card, _info_card, _summary_card, _explain_button, _glossary_tooltip, _confidence_badge, _section_title_with_read_time
+from src.pages._router_base import _白话_card, _plain_card, _explain_button, _glossary_tooltip, _confidence_badge, _section_title_with_read_time
 from src.services import glossary_service
 from src.core.i18n import t
 from src.services.benchmarks import (
     get_industry_benchmarks,
     fetch_benchmark_health_scores,
 )
-
 
 
 def _render_story_card(data: dict, client) -> None:
@@ -128,7 +127,7 @@ def _render_story_card(data: dict, client) -> None:
     st.markdown(f"*{industry}*")
 
     # One-liner
-    _info_card(t("business_card.summary_hero.one_liner_title"), one_liner, "💡")
+    _plain_card(t("business_card.summary_hero.one_liner_title"), one_liner, icon="💡")
     # C204: confidence badge for the one-liner explanation
     st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
@@ -159,7 +158,7 @@ def _render_story_card(data: dict, client) -> None:
             health_border = "#E67E22"
         else:
             health_border = "#E74C3C"
-        _summary_card("整體健康度", f"{overall_health:.0f}/100 {health_label}", "🏥", border_color=health_border)
+        _plain_card("整體健康度", f"{overall_health:.0f}/100 {health_label}", icon="🏥", border_color=health_border, bg_color="#FFF8F0")
         # C204: confidence badge
         st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
@@ -187,13 +186,13 @@ def _render_story_card(data: dict, client) -> None:
                         vs_text = t("summary_hero.vs_below", name=bench_name, diff=abs(diff))
 
                     vs_content = t("summary_hero.vs_content", health=overall_health, bench_name=bench_name, bench_overall=bench_overall) + f"\n\n{vs_emoji} {vs_text}"
-                    _info_card(t("business_card.summary_hero.vs_industry_title"), vs_content, "🏭")
+                    _plain_card(t("business_card.summary_hero.vs_industry_title"), vs_content, icon="🏭")
                     # C204: confidence badge
                     st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
     # Did You Know?
     if fact_text:
-        _info_card(t("business_card.summary_hero.did_you_know_title"), fact_text, "🤔")
+        _plain_card(t("business_card.summary_hero.did_you_know_title"), fact_text, icon="🤔")
         # C204: confidence badge
         st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
@@ -214,7 +213,9 @@ def _render_header(data: dict, client) -> None:
             price = latest_price["close"]
             change = latest_price["change"]
             sign = "+" if change >= 0 else ""
-            st.markdown(f"**{price:,.0f}** `{sign}{change:,.0f}`")
+            st.markdown(f"**{price:,.0f}`{sign}{change:,.0f}`")
+        else:
+            st.markdown(" — ")
     with col3:
         # Watchlist buttons
         watchlist_lists = get_lists_for_stock(stock_id)
@@ -271,11 +272,11 @@ def _render_header(data: dict, client) -> None:
                         st.error(t("business_card.watchlist.name_required"))
 
             # Add stock button
-            if st.button(t("business_card.watchlist.add_button"), key=f"add_stock_btn_{stock_id}", type="primary"):
+            if st.button(t("business_card.watchlist.add_button"), key=f"add_btn_{stock_id}", type="primary"):
                 if target_list:
                     success = add_to_watchlist(
                         stock_id=stock_id,
-                        name=stock_name,
+                        stock_name=stock_name,
                         alert_above=None,
                         alert_below=None,
                         industry_category=industry,
@@ -283,11 +284,11 @@ def _render_header(data: dict, client) -> None:
                     )
                     if success:
                         st.session_state[f"show_watchlist_popup_{stock_id}"] = False
-                        st.toast(ft("summary_hero.added_to_list", name=target_list))
+                        st.toast(t("summary_hero.added_to_list", name=target_list))
                         st.rerun()
                     else:
                         st.error(t("business_card.watchlist.add_failed"))
                 else:
                     st.error(t("business_card.watchlist.select_required"))
 
-    st.markdown("---")
+    st.markdown("---\n")

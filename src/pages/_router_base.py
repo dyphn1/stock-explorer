@@ -195,6 +195,29 @@ def _白话_card(label: str, value: str, analogy: str = ""):
     </div>
     """, unsafe_allow_html=True)
 
+def _plain_card(
+    title: str,
+    content: str,
+    icon: str = "📋",
+    border_color: str = "#3498DB",
+    bg_color: str = "#F8F9FA",
+) -> None:
+    """Render a unified card component.
+
+    Args:
+        title: Card title displayed with icon.
+        content: Card body content.
+        icon: Emoji or text icon to display before title (default: "📋").
+        border_color: CSS color for left border (default: "#3498DB").
+        bg_color: CSS background color for the card (default: "#F8F9FA").
+    """
+    st.markdown(f"""
+    <div style="background:{bg_color};border-radius:12px;padding:1.2rem;border-left:4px solid {border_color};margin:0.5rem 0;">
+        <div style="font-weight:600;color:#2C3E50;">{icon} {title}</div>
+        <div style="font-size:0.9rem;color:#7F8C8D;margin-top:0.3rem;line-height:1.6;">{content}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
 def _summary_card(title: str, content: str, icon: str = "📋", border_color: str = "#3498DB"):
     st.markdown(f"""
     <div style="background:#FFF8F0;border-radius:12px;padding:1.2rem;border-left:4px solid {border_color};margin:0.5rem 0;">
