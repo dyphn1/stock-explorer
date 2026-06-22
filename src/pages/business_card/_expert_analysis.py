@@ -1,6 +1,7 @@
 """C73 Expert Analysis (專家分析) — curated expert analysis for major Taiwan stocks."""
 import streamlit as st
 import yaml
+import pathlib
 from src.core.i18n import t
 from src.pages.business_card._helpers import (
     _expert_card,
@@ -9,7 +10,8 @@ from src.pages.business_card._helpers import (
 from src.pages._router_base import _section_title
 
 # Load expert analysis data from YAML
-with open('../../data/yaml/expert_analysis.yaml', 'r', encoding='utf-8') as f:
+yaml_path = pathlib.Path(__file__).resolve().parent.parent.parent / 'data' / 'yaml' / 'expert_analysis.yaml'
+with open(yaml_path, 'r', encoding='utf-8') as f:
     EXPERT_ANALYSIS_DATA = yaml.safe_load(f)
 
 

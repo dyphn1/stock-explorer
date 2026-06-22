@@ -49,13 +49,11 @@ _hide_nav_js = """
     } catch (e) {}
 
     function hideNav() {
-        var nav = document.querySelector('section[data-testid="stSidebarNav"]');
+        var nav = document.querySelector("section[data-testid="stSidebarNav"]");
         if (nav) {
-            nav.style.cssText = 'display:none!important;height:0!important;overflow:hidden!important;visibility:hidden!important;';
+            nav.remove();
         }
-    }
-    hideNav();
-    // Use MutationObserver to catch Streamlit re-renders
+    }\n    hideNav();\n    // Use MutationObserver to catch Streamlit re-renders\n
     var target = document.querySelector('section[data-testid="stSidebar"]') || document.body;
     var observer = new MutationObserver(hideNav);
     observer.observe(target, { childList: true, subtree: true, attributes: true });
@@ -296,10 +294,10 @@ else:
 if not stock_id:
     # 歡迎頁面
     st.markdown(f"""
-    <div style="text-align:center;padding:4rem 2rem;">
-        <h1>📊 {t("main.home.title")}</h1>
-        <p style="font-size:1.3rem;color:#7F8C8D;margin-top:1rem;">{t("main.home.lead1")}</p>
-        <p style="font-size:1rem;color:#7F8C8D;margin-top:2rem;">
+    <div style="text-align:center;padding:1.5rem 2rem;">
+        <h1 style=\"font-size:2rem;\">📊 {t("main.home.title")}</h1>
+        <p style="font-size:1.1rem;color:#7F8C8D;margin-top:0.5rem;">{t("main.home.lead1")}</p>
+        <p style="font-size:0.9rem;color:#7F8C8D;margin-top:0.5rem;">
             {t("main.home.lead2")}
         </p>
     </div>

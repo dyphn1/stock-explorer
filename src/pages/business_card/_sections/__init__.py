@@ -1,4 +1,4 @@
-"""Business card sections — split into sub-modules by concern."""
+"Business card sections — split into sub-modules by concern."
 
 from src.pages.business_card._sections._summary_hero import (
     _render_header,
@@ -28,6 +28,9 @@ from src.pages.business_card._sections._story import (
 from src.pages.business_card._sections._why_moved import (
     _render_why_moved,
 )
+from src.pages.business_card._sections._why_did_this_move import (
+    _render_why_did_this_move,
+)
 from src.pages.business_card._sections._detail import (
     _render_share_section,
     _render_footer,
@@ -49,11 +52,12 @@ __all__ = [
     "_render_revenue_breakdown",
     "_render_revenue_trend",
     "_render_valuation",
-    "_render_compare_stories",
     "_render_news",
-    "_render_read_next",
-    "_render_why_moved",
     "_render_share_section",
     "_render_footer",
     "_render_historical_pattern",
+    "_render_why_moved",
+    "_render_why_did_this_move",
+    "_render_compare_stories",
+    "_render_read_next",
 ]

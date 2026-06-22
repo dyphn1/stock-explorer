@@ -282,9 +282,9 @@ metric_education:
   roe_warning_seasonal_insufficient: "{industry} is a seasonal industry. Only {quarters} quarter(s) of data available, which may not reflect full-year performance. Current ROE is a TTM estimate."
   roe_warning_seasonal_sufficient: "{industry} is a seasonal industry. TTM calculation covers all four quarters, but quarterly fluctuations are significant. Consider reviewing multi-year trends."
 watchlist:
-  removed_toast: "Removed from watchlist"
+  removed_toast: "Removed {stock_name} from watchlist"
 summary_hero:
-  added_to_list: "Added to {name}"
+  added_to_list: "Added {stock_name} to watchlist"
 test_key: test value
 delta_explanation_provider:
   revenue_up_extreme: "{stock_prefix} revenue surged {abs_pct:.0f}%, possibly due to large orders or seasonal effects, worth monitoring"
@@ -335,3 +335,19 @@ etf:
       tracking_error: "Tracking Error"
       dividend_yield: "Dividend Yield"
       sample_data_note: "Values are sample data for demonstration purposes."
+    comparison:
+      title: "ETF Comparison"
+      expense_ratio: "Expense Ratio"
+      tracking_error: "Tracking Error"
+      dividend_yield: "Dividend Yield"
+      current_etf: "Current ETF"
+      note: "Note: Comparison data is sample data for demonstration purposes."
+
+why_did_this_move:
+  title: "Why Did This Move?"
+  institutional_buying: "法人買進，可能看好公司前景"
+  institutional_selling: "法人賣出，可能獲利了結或看壞後市"
+  price_surge: "股價大漲，可能受好消息推動"
+  price_drop: "股價大跌，可能受壞消息影響"
+  check_news: "建議查看相關新聞了解原因"
+  no_data: "目前沒有足夠數據分析漲跌原因"

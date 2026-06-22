@@ -1,4 +1,5 @@
-"""Business card section: hero components (story card, header).
+"""
+Business card section: hero components (story card, header).
 
 Moved from _summary.py to keep file sizes under the 500-line threshold.
 """
@@ -25,7 +26,7 @@ from src.services.watchlist import (
     create_list,
     list_names,
 )
-from src.pages._router_base import _白话_card, _plain_card, _explain_button, _glossary_tooltip, _confidence_badge, _section_title_with_read_time
+from src.pages._router_base import _plain_card, _explain_button, _glossary_tooltip, _confidence_badge, _section_title_with_read_time
 from src.services import glossary_service
 from src.core.i18n import t
 from src.services.benchmarks import (
@@ -127,18 +128,18 @@ def _render_story_card(data: dict, client) -> None:
     st.markdown(f"*{industry}*")
 
     # One-liner
-    _plain_card(t("business_card.summary_hero.one_liner_title"), one_liner, icon="💡")
+    _plain_card(t("business_card.summary_hero.one_liner_title"), one_liner)
     # C204: confidence badge for the one-liner explanation
     st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
-    # Key metrics row — use _白话_card for each + 💡 explain button + glossary tooltip
+    # Key metrics row — use _plain_card for each + 💡 explain button + glossary tooltip
     # C170: beginner mode → more prominent glossary indicators
     _is_beginner = st.session_state.get("simple_mode", False) or st.session_state.get("user_experience_level", "beginner") == "beginner"
     if top_metrics:
         cols = st.columns(len(top_metrics))
         for col, (label, value, analogy) in zip(cols, top_metrics):
             with col:
-                _白话_card(label, value, analogy)
+                _plain_card(label, value, analogy)
                 _explain_button(
                     metric_name=label,
                     metric_value=value,
@@ -196,6 +197,11 @@ def _render_story_card(data: dict, client) -> None:
         # C204: confidence badge
         st.caption(f"{_confidence_badge(0.9)} · {t('summary_hero.confidence_note')}")
 
+    # AFTER THE STORY CARD SECTION - ADD CALL TO WHY DID THIS MOVE
+    # Import here to avoid circular imports
+    from src.pages.business_card._sections._why_did_this_move import _render_why_did_this_move
+    _render_why_did_this_move(data, client)
+
 
 def _render_header(data: dict, client) -> None:
     """Watchlist header with stock name, price, watchlist buttons."""
@@ -224,7 +230,7 @@ def _render_header(data: dict, client) -> None:
             st.markdown(t("summary_hero.in_lists", lists=", ".join(watchlist_lists)))
             if st.button(t("business_card.watchlist.remove_all"), key=f"unwatch_{stock_id}", use_container_width=True):
                 if remove_from_all_lists(stock_id):
-                    st.toast(t("business_card.watchlist.removed"))
+                    st.toast(t("business_card.watchlist.removed", stock_name=stock_name), icon="🗑️")
                 else:
                     st.error(t("business_card.watchlist.remove_failed"))
                 st.rerun()
@@ -284,11 +290,20 @@ def _render_header(data: dict, client) -> None:
                     )
                     if success:
                         st.session_state[f"show_watchlist_popup_{stock_id}"] = False
-                        st.toast(t("summary_hero.added_to_list", name=target_list))
+                        st.toast(t("summary_hero.added_to_list", stock_name=stock_name), icon="✅")
                         st.rerun()
                     else:
                         st.error(t("business_card.watchlist.add_failed"))
                 else:
                     st.error(t("business_card.watchlist.select_required"))
 
-    st.markdown("---\n")
+    st.markdown("---\n\n")
+
+
+# AFTER THE STORY CARD SECTION - ADD CALL TO WHY DID THIS MOVE
+def _render_story_card_with_why_moved(data: dict, client) -> None:
+    """Render story card followed by Why Did This Move? section."""
+    _render_story_card(data, client)
+    # Import here to avoid circular imports
+    from src.pages.business_card._sections._why_did_this_move import _render_why_did_this_move
+    _render_why_did_this_move(data, client)

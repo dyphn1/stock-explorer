@@ -57,12 +57,13 @@ from src.pages.business_card._sections import (
     _render_share_section,
     _render_footer,
     _render_historical_pattern,
-    _render_why_moved,
 )
 from src.pages.business_card._study_log import _render_study_log
 from src.pages.business_card._expert_analysis import _render_expert_analysis
 from src.pages.business_card._historical_scenarios import _render_historical_scenarios
 from src.pages.business_card._sections._moat import _render_moat
+from src.pages.business_card._sections._why_moved import _render_why_moved
+from src.pages.business_card._sections._why_did_this_move import _render_why_did_this_move
 from src.services.feedback_service import record_feedback, get_feedback_count
 
 
@@ -240,6 +241,7 @@ def _render_business_card(data: dict, client):
 
     # C188: Why Did This Move? — plain-language movement explanation
     _render_why_moved(data, client)
+    _render_why_did_this_move(data, client)
 
     # C43: Health Snowflake
     if beginner_mode:

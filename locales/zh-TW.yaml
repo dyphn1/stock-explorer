@@ -253,9 +253,9 @@ metric_education:
     過去 5 年穩定配息的公司較可靠.
 
 watchlist:
-  removed_toast: "已從關注列表移除"
+  removed_toast: "已將 {stock_name} 從關注列表移除"
 summary_hero:
-  added_to_list: "已加入 {name}"
+  added_to_list: "已將 {stock_name} 加入關注列表"
 delta_explanation_provider:
   revenue_up_extreme: "{stock_prefix}{metric_name}暴增 {abs_pct:.0f}%，可能是大訂單入帳或旺季效應，可持續觀察其變化"
   revenue_up_strong: "{stock_prefix}{metric_name}成長 {abs_pct:.0f}%，表現相對正面，可能是需求回溫或新產品貢獻"
@@ -305,3 +305,19 @@ etf:
       tracking_error: "追蹤誤差"
       dividend_yield: "殖利率"
       sample_data_note: "數值僅為樣本資料，僅用於示範目的。"
+    comparison:
+      title: "ETF 比較"
+      expense_ratio: "內扣費用"
+      tracking_error: "追蹤誤差"
+      dividend_yield: "殖利率"
+      current_etf: "目前 ETF"
+      note: "備註：比較數據僅為樣本資料，用於示範目的。"
+
+why_did_this_move:
+  title: "為什麼會漲跌？"
+  institutional_buying: "法人買進，可能看好公司前景"
+  institutional_selling: "法人賣出，可能獲利了結或看壞後市"
+  price_surge: "股價大漲，可能受好消息推動"
+  price_drop: "股價大跌，可能受壞消息影響"
+  check_news: "建議查看相關新聞了解原因"
+  no_data: "目前沒有足夠數據分析漲跌原因"

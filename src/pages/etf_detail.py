@@ -111,6 +111,78 @@ def _render_etf_detail(data: dict, client: FinMindClient):
             icon="💰",
         )
     st.caption(t("etf.detail.metric.sample_data_note"))
+
+    _section_title(t("etf.detail.comparison.title"))
+
+    # Get current ETF metrics
+    current_id = data["stock_id"]
+    exp_ratio = extra_metrics.get("expense_ratio", "N/A")
+    track_err = extra_metrics.get("tracking_error", "N/A")
+    div_yield = extra_metrics.get("dividend_yield", "N/A")
+
+    # Format as percentage if numeric
+    def fmt_metric(v):
+        if isinstance(v, (int, float)):
+            return f"{v}%"
+        return v
+
+    # Current ETF row (highlighted by bolding the ETF ID)
+    current_data = {
+        "ETF": f"**{current_id}**" if current_id else current_id,
+        "Expense Ratio": fmt_metric(exp_ratio),
+        "Tracking Error": fmt_metric(track_err),
+        "Dividend Yield": fmt_metric(div_yield),
+    }
+
+    # Sample data for popular ETFs
+    popular = [
+        {"id": "0050", "expense_ratio": 0.09, "tracking_error": 0.05, "dividend_yield": 4.2},
+        {"id": "0056", "expense_ratio": 0.09, "tracking_error": 0.03, "dividend_yield": 5.0},
+        {"id": "00878", "expense_ratio": 0.15, "tracking_error": 0.07, "dividend_yield": 3.8},
+        {"id": "00919", "expense_ratio": 0.10, "tracking_error": 0.04, "dividend_yield": 4.5},
+    ]
+
+    popular_data = []
+    for etf in popular:
+        popular_data.append({
+            "ETF": etf["id"],
+            "Expense Ratio": fmt_metric(etf["expense_ratio"]),
+            "Tracking Error": fmt_metric(etf["tracking_error"]),
+            "Dividend Yield": fmt_metric(etf["dividend_yield"]),
+        })
+
+    # Combine: current ETF first, then popular
+    all_data = [current_data] + popular_data
+    df = pd.DataFrame(all_data)
+
+    # Build markdown table
+    headers = ["ETF", "Expense Ratio", "Tracking Error", "Dividend Yield"]
+    rows = []
+    # Current ETF row
+    rows.append([
+        f"**{current_id}**" if current_id else current_id,
+        fmt_metric(exp_ratio),
+        fmt_metric(track_err),
+        fmt_metric(div_yield),
+    ])
+    # Popular ETFs rows
+    for etf in popular:
+        rows.append([
+            etf["id"],
+            fmt_metric(etf["expense_ratio"]),
+            fmt_metric(etf["tracking_error"]),
+            fmt_metric(etf["dividend_yield"]),
+        ])
+    
+    # Create markdown table
+    md = "| " + " | ".join(headers) + " |\n"
+    md += "| " + " | ".join(["---"] * len(headers)) + " |\n"
+    for row in rows:
+        md += "| " + " | ".join(row) + " |\n"
+    
+    st.markdown(md)
+
+    st.caption(t("etf.detail.comparison.note"))
     st.markdown("---")
 
     # ── 一句話定位 ──────────────────────────────────────────

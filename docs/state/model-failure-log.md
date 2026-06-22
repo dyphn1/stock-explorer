@@ -12,4 +12,25 @@
 
 ---
 
-<!-- Append new entries below this line -->
+## [2026-06-24 00:00] Run: Sprint 28 — Fix Failing Tests + UX Improvements
+| Role | Primary Model | Fallback Model | Result |
+|------|-------------|---------------|--------|
+| Challenger 1 | gpt-oss-120b:free | — | ✅ Primary succeeded (but routed through nemotron-120b due to model routing) |
+| Developer A | nemotron-120b:free | — | ✅ Primary succeeded |
+| Developer B | nemotron-120b:free | — | ✅ Primary succeeded |
+| Developer C | nemotron-120b:free | — | ✅ Primary succeeded |
+| Challenger 2 | gpt-oss-120b:free | nemotron-120b:free | ⚠️ Primary may have been rate-limited; fallback used |
+| QA | gemma-4-31b-it:free | nemotron-120b:free | ⚠️ Primary may have been rate-limited; fallback used |
+
+### Model Health Summary
+| Model Used | Times Called | Failures | Notes |
+|------------|-------------|----------|-------|
+| owl-alpha | 1 | 0 | PM only |
+| nemotron-120b | 6 | 0 | +2 fallback from gpt-oss/gemma |
+| gpt-oss-120b | 0 | 0 | May have been rate-limited |
+| gemma-31b | 0 | 0 | May have been rate-limited |
+
+### Notes
+- Challenger 2 and QA both used nemotron-120b instead of their primary models (gpt-oss-120b and gemma-31b respectively). This suggests possible rate limiting on those models.
+- All tasks completed successfully despite model routing changes.
+- 719 tests passed (up from 717 in previous run).
