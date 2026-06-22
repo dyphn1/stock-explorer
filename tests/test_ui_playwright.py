@@ -3,80 +3,10 @@ Playwright UI tests for Stock Explorer.
 Focuses on navigation and UI element verification.
 """
 import pytest
-import subprocess
 import time
-import socket
-import signal
-import os
-import sys
-pytest.importorskip('playwright')
 from playwright.sync_api import sync_playwright
 
-# ── Streamlit server management ──────────────────────────────
-
-def find_free_port():
-    """Find a free port for Streamlit."""
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind(('', 0))
-        return s.getsockname()[1]
-
-
-@pytest.fixture(scope="module")
-def streamlit_server():
-    """Start Streamlit server for testing, stop after tests complete."""
-    port = find_free_port()
-    env = os.environ.copy()
-    env["STREAMLIT_SERVER_HEADLESS"] = "true"
-    env["STREAMLIT_BROWSER_GATHER_USAGE_STATS"] = "false"
-
-    proc = subprocess.Popen(
-        [sys.executable, "-m", "streamlit", "run", "src/main.py",
-         "--server.port", str(port),
-         "--server.headless", "true",
-         "--browser.gatherUsageStats", "false",
-         "--server.enableCORS", "false",
-         "--server.enableXsrfProtection", "false"],
-        env=env,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        cwd=os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    )
-
-    # Wait for server to start
-    for _ in range(60):
-        try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect(('localhost', port))
-                break
-        except ConnectionRefusedError:
-            time.sleep(0.5)
-    else:
-        proc.terminate()
-        proc.wait(timeout=30)
-        raise RuntimeError(f"Streamlit server failed to start on port {port}")
-
-    yield f"http://localhost:{port}"
-
-    proc.send_signal(signal.SIGTERM)
-    proc.wait(timeout=30)
-
-
-@pytest.fixture(scope="module")
-def browser():
-    """Launch headless browser."""
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        yield browser
-        browser.close()
-
-
-@pytest.fixture
-def page(browser):
-    """Create a new page for each test."""
-    page = browser.new_page()
-    yield page
-    page.close()
-
+pytestmark = pytest.mark.ui
 
 # ── Test cases ────────────────────────────────────────────────
 

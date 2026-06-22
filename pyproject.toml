@@ -29,4 +29,6 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 markers = [
     "tone: tone blocklist QA scan (tests/test_tone_qa.py)",
+    "ui: UI tests that need Streamlit server",
+    "playwright: Playwright UI tests",
 ]
