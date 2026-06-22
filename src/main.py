@@ -15,6 +15,7 @@ import streamlit as st
 from src.services.validation import validate_stock_id
 from src.core.i18n import t
 from src.pages.router import load_and_render_page, get_stock_data
+from src.pages._router_base import _infocard
 from src.services.benchmarks import get_industry_benchmarks
 from src.services.roe_calculator import calc_roe_ttm
 import os
@@ -100,23 +101,7 @@ def get_all_stocks():
     return df[['stock_id', 'stock_name']].copy()
 
 
-# Chinese name to stock ID mapping for common stocks
-CHINESE_NAME_TO_STOCK_ID = {
-    "台積電": "2330",
-    "鴻海": "2317",
-    "聯發科": "2454",
-    "台達電": "2308",
-    "富邦金": "2881",
-    "台泥": "1101",
-    "中鋼": "2002",
-    "台塑": "1301",
-    "元大台灣50": "0050",
-    "元大高股息": "0056",
-    "國泰永續高股息": "00878",
-    "群益台灣精選高息": "00919",
-    "富邦台50": "006208",
 
- 
 # ── 側邊欄 ──────────────────────────────────────────────
 
 def _render_sidebar_hot_stocks(client):

@@ -9,6 +9,7 @@ annualizing a single quarter's result.
 from __future__ import annotations
 
 from src.services.financial_metrics import find_financial_value
+from src.core.i18n import t
 
 SEASONAL_INDUSTRIES = frozenset({
     "觀光餐旅",
@@ -113,14 +114,12 @@ def calc_roe_ttm(financial_df, balance_sheet_df, industry: str = "") -> dict | N
         is_seasonal = is_seasonal_industry(industry)
         warning = None
         if is_seasonal and quarters_used < 4:
-            warning = (
-                f"{industry}屬季節性產業，僅{quarters_used}季資料可能無法反映"
-                f"完整年度表現。目前ROE為TTM估算值。"
+            warning = t("metric_education.roe_warning_seasonal_insufficient").format(
+                industry=industry, quarters=quarters_used
             )
         elif is_seasonal:
-            warning = (
-                f"{industry}屬季節性產業，TTM計算已涵蓋完整四季，"
-                f"但各季波動較大，建議參考多年趨勢。"
+            warning = t("metric_education.roe_warning_seasonal_sufficient").format(
+                industry=industry
             )
 
         return {

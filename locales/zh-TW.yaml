@@ -192,6 +192,8 @@ metric_education:
   roe_historical_context: >-
     台股平均 ROE 約 10-12%。ROE 長期維持 15% 以上的公司通常具備
     競爭優勢（護城河）。巴菲特偏好 ROE 長期高於 20% 的公司。
+  roe_warning_seasonal_insufficient: "{industry} 屬季節性產業，僅{quarters}季資料可能無法反映完整年度表現。目前 ROE 為 TTM 估算值。"
+  roe_warning_seasonal_sufficient: "{industry} 屬季節性產業，TTM 計算已涵蓋完整四季，但各季波動較大，建議參考多年趨勢。"
   gross_margin_display_name: 毛利率
   gross_margin_explanation: >-
     毛利率是賣出商品後，扣掉直接成本（原料、人工）剩下的利潤比例。
@@ -250,6 +252,10 @@ metric_education:
     1) 是否為一次性業外收入造成的超高殖利率；2) 公司是否有賺錢。
     過去 5 年穩定配息的公司較可靠.
 
+watchlist:
+  removed_toast: "已從關注列表移除"
+summary_hero:
+  added_to_list: "已加入 {name}"
 delta_explanation_provider:
   revenue_up_extreme: "{stock_prefix}{metric_name}暴增 {abs_pct:.0f}%，可能是大訂單入帳或旺季效應，可持續觀察其變化"
   revenue_up_strong: "{stock_prefix}{metric_name}成長 {abs_pct:.0f}%，表現相對正面，可能是需求回溫或新產品貢獻"

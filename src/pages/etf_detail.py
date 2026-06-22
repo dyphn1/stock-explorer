@@ -95,19 +95,19 @@ def _render_etf_detail(data: dict, client: FinMindClient):
     with col1:
         _info_card(
             t("etf.detail.metric.expense_ratio"),
-            "0.35%",  # placeholder
+            (lambda v: f"{v}%" if isinstance(v, (int, float)) else v)(extra_metrics.get("expense_ratio", "N/A")),
             icon="📉",
         )
     with col2:
         _info_card(
             t("etf.detail.metric.tracking_error"),
-            "0.02%",  # placeholder
+            (lambda v: f"{v}%" if isinstance(v, (int, float)) else v)(extra_metrics.get("tracking_error", "N/A")),
             icon="🎯",
         )
     with col3:
         _info_card(
             t("etf.detail.metric.dividend_yield"),
-            "2.5%",  # placeholder
+            (lambda v: f"{v}%" if isinstance(v, (int, float)) else v)(extra_metrics.get("dividend_yield", "N/A")),
             icon="💰",
         )
     st.caption(t("etf.detail.metric.sample_data_note"))

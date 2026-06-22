@@ -66,11 +66,7 @@ def test_sidebar_hot_stocks_section_works(streamlit_server, page):
 
     # Verify clicking a hot stock button navigates to that stock's detail page
     # We'll look for a button with a stock pattern like "2330 台積電"
-    hot_stock_button = page.query_selector("text=2330 台積電") >> "button"
-    if hot_stock_button is None:
-        # Try without the button specifier
-        hot_stock_button = page.query_selector("text=2330 台積電")
-    
+    hot_stock_button = page.query_selector("text=2330 台積電")    
     # Note: We won't actually click as it might navigate away and complicate test independence
     # Just verify the element exists
     # assert hot_stock_button is not None, "Hot stock button not found"
@@ -82,8 +78,8 @@ def test_sidebar_hot_etfs_section_works(streamlit_server, page):
     page.wait_for_load_state("networkidle")
     page.wait_for_timeout(3000)
 
-    # Verify the "熱門ETF" / "Hot ETFs" expander is present
-    hot_etfs_expander = page.query_selector("text=熱門ETF")
+    # Verify the "熱門 ETF" / "Hot ETFs" expander is present
+    hot_etfs_expander = page.query_selector("text=熱門 ETF")
     assert hot_etfs_expander is not None, "Hot ETFs expander not found"
 
     # Click the expander to open it
@@ -223,11 +219,18 @@ def test_responsive_behavior(streamlit_server, page):
     page.set_viewport_size({"width": 320, "height": 568})
     page.wait_for_timeout(1000)  # Wait for resize
 
+    # Search for a stock to navigate to detail page
+    search_input = page.query_selector("input[placeholder*='台積電']")
+    assert search_input is not None, "Search input not found"
+    search_input.fill("2330")
+    page.keyboard.press("Enter")
+    page.wait_for_timeout(3000)  # Wait for detail page to load
+
     # Verify the tabbed layout still functions and content is accessible
     # Check that tabs are still present and usable
     key_metrics_tab = page.query_selector("text=主要指標") or page.query_selector("text=Key Metrics")
     financial_chart_tab = page.query_selector("text=財務圖表") or page.query_selector("text=Financial Chart")
-    
+
     assert key_metrics_tab is not None, "Key Metrics tab not found in mobile view"
     assert financial_chart_tab is not None, "Financial Chart tab not found in mobile view"
 
@@ -236,11 +239,11 @@ def test_responsive_behavior(streamlit_server, page):
     page.wait_for_timeout(500)
     financial_chart_tab.click()
     page.wait_for_timeout(500)
-    
+
     # Verify no overlapping elements by checking that elements are visible
-    # Simple check: verify we can still see some basic elements
-    welcome_visible = (
-        page.query_selector("text=認識一家公司，從這裡開始") is not None
-        or page.query_selector("text=Get to know a company") is not None
+    # Simple check: verify we can still see some basic elements (sidebar search)
+    search_visible = (
+        page.query_selector("text=搜尋") is not None
+        or page.query_selector("text=Search") is not None
     )
-    assert welcome_visible, "Welcome message not visible in mobile view"
+    assert search_visible, "Search element not visible in mobile view"

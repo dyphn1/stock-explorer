@@ -279,6 +279,12 @@ metric_education:
   roe_historical_context: The average ROE for Taiwan stocks is around 10-12%. Companies
     maintaining ROE above 15% long-term often have competitive advantages (moats).
     Buffett prefers companies with long-term ROE above 20%.
+  roe_warning_seasonal_insufficient: "{industry} is a seasonal industry. Only {quarters} quarter(s) of data available, which may not reflect full-year performance. Current ROE is a TTM estimate."
+  roe_warning_seasonal_sufficient: "{industry} is a seasonal industry. TTM calculation covers all four quarters, but quarterly fluctuations are significant. Consider reviewing multi-year trends."
+watchlist:
+  removed_toast: "Removed from watchlist"
+summary_hero:
+  added_to_list: "Added to {name}"
 test_key: test value
 delta_explanation_provider:
   revenue_up_extreme: "{stock_prefix} revenue surged {abs_pct:.0f}%, possibly due to large orders or seasonal effects, worth monitoring"
