@@ -336,52 +336,57 @@ else:
                 return "-"
             from src.core.i18n import format_percent
             return format_percent(val)
-        # render cards
-        st.markdown("<br>", unsafe_allow_html=True)
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            render_metric_card(
-                title=f"📊 {t('metric_education.revenue_yoy_display_name')}",
-                value=fmt_percent(revenue_yoy),
-                description=t("metric_education.revenue_yoy_explanation") if revenue_yoy is not None else "",
-                analogy="",
-                is_positive=(revenue_yoy is not None and revenue_yoy >= 0),
-            )
-        with col2:
-            render_metric_card(
-                title=f"💰 {t('metric_education.net_margin_display_name')}",
-                value=fmt_percent(net_margin),
-                description=t("metric_education.net_margin_explanation") if net_margin is not None else "",
-                analogy="",
-                is_positive=(net_margin is not None and net_margin >= 0),
-            )
-        with col3:
-            render_metric_card(
-                title=f"📈 {t('metric_education.roe_display_name')}",
-                value=fmt_percent(roe),
-                description=t("metric_education.roe_explanation") if roe is not None else "",
-                analogy="",
-                is_positive=(roe is not None and roe >= 0),
-            )
-        col_chart, col_debt = st.columns([2, 1])
-        with col_chart:
+        # render cards using tabs
+        tab1, tab2 = st.tabs([t("main.tab.key_metrics"), t("main.tab.financial_chart")])
+
+        with tab1:
+            # 2x2 grid for metric cards
+            m_col1, m_col2 = st.columns(2)
+            with m_col1:
+                render_metric_card(
+                    title=f"📊 {t('metric_education.revenue_yoy_display_name')}",
+                    value_str=fmt_percent(revenue_yoy),
+                    description=t("metric_education.revenue_yoy_explanation") if revenue_yoy is not None else "",
+                    analogy="",
+                    is_positive=(revenue_yoy is not None and revenue_yoy >= 0),
+                )
+            with m_col2:
+                render_metric_card(
+                    title=f"💰 {t('metric_education.net_margin_display_name')}",
+                    value_str=fmt_percent(net_margin),
+                    description=t("metric_education.net_margin_explanation") if net_margin is not None else "",
+                    analogy="",
+                    is_positive=(net_margin is not None and net_margin >= 0),
+                )
+            m_col3, m_col4 = st.columns(2)
+            with m_col3:
+                render_metric_card(
+                    title=f"📈 {t('metric_education.roe_display_name')}",
+                    value_str=fmt_percent(roe),
+                    description=t("metric_education.roe_explanation") if roe is not None else "",
+                    analogy="",
+                    is_positive=(roe is not None and roe >= 0),
+                )
+            with m_col4:
+                render_metric_card(
+                    title=f"⚖️ {t('metric_education.debt_ratio_display_name')}",
+                    value_str=f"{debt_to_equity:.2f}" if debt_to_equity is not None else "-",
+                    description=t("metric_education.debt_ratio_explanation") if debt_to_equity is not None else "",
+                    analogy="",
+                    is_positive=False,
+                )
+
+        with tab2:
+            # Financial chart (full width)
             st.markdown(
                 """
                 <div class="card" style="background:white;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid #E1E4E8;">
                     <div class="card-title">📉 Revenue Trend (Last 12 Months)</div>
-                    <div class="chart-placeholder" style="width:100%;height:200px;background:#f9f9f9;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;color:#aaa;border-radius:8px;margin-top:10px;">
+                    <div class="chart-placeholder" style="width:100%;height:250px;background:#f9f9f9;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;color:#aaa;border-radius:8px;margin-top:10px;">
                         [ Plotly Line Chart: Monthly Revenue Trend ]
                     </div>
                     <div style="font-size:12px;color:#7F8C8D;margin-top:10px;text-align:right;">Source: FinMind API</div>
                 </div>
                 """,
                 unsafe_allow_html=True,
-            )
-        with col_debt:
-            render_metric_card(
-                title=f"⚖️ {t('metric_education.debt_ratio_display_name')}",
-                value=f"{debt_to_equity:.2f}" if debt_to_equity is not None else "-",
-                description=t("metric_education.debt_ratio_explanation") if debt_to_equity is not None else "",
-                analogy="",
-                is_positive=False,
             )

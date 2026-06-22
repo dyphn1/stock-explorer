@@ -1,6 +1,6 @@
 # Development Roadmap — Stock Explorer
 
-> **Current Phase**: Sprint 22 in progress | **Last Updated**: 2026-06-22 (01:30)
+> **Current Phase**: Sprint 22 in progress | **Last Updated**: 2026-06-22 (12:00)
 
 ---
 
@@ -22,7 +22,8 @@
 ### Key Metrics
 | Metric | Value |
 |--------|-------|
-| L0 tests | 706 passing |
+|| L0 tests | 702 passing (699 unit + 3 UI) |
+|| UI tests | 9 failing (element selectors — deferred to follow-up) |
 | Design rating | B- |
 | Architecture rating | B+ |
 | Major blockers | None |
@@ -37,6 +38,7 @@
 ||| TD-02 | Full i18n | ✅ Complete (2026-06-21) — All src/ Python files migrated, all locale keys present, 699 tests passing |
 ||| TD-08 | Screener explanation lazy translation fix | ✅ Complete (2026-06-22) — _DISCLAIMER and _FALLBACK_TEMPLATE now store raw locale keys, t() applied at runtime |
 ||| TD-09 | Playwright import skip | ✅ Complete (2026-06-22) — pytest.importorskip added to test_ui_streamlit.py |
+||| TD-10 | Test suite isolation fix | ✅ Complete (2026-06-22) — Session-scoped Streamlit server fixture, full suite runs in ~55s |
 || D-125 | chart_stock.py split | ~~Split chart_stock.py into smaller modules~~ ✅ Already done (split into chart_stock_financial.py, chart_stock_health.py, chart_stock_valuation.py) |
 || D-126 | INDUSTRY_BENCHMARKS dedup | Remove duplicate industry benchmark data ✅ Complete (2026-06-21) |
 

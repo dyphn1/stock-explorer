@@ -43,6 +43,8 @@ delta:
     price_30d: 30-Day Price
     revenue_yoy: Revenue YoY
   previous_year_same_period: Same Period Last Year
+app:
+  title: "Stock Explorer"
 main:
   sidebar:
     nav_home: "Home"
@@ -68,6 +70,9 @@ main:
     lead1: "Get to know a company, start here"
     lead2: "Enter a stock code or name in the left sidebar to begin getting to know a company"
   disclaimer: "⚠️ This tool is for company education only,<br>does not constitute any investment advice.<br>Investing involves risk, please assess on your own."
+  tab:
+    key_metrics: "Key Metrics"
+    financial_chart: "Financial Chart"
 daily_market:
   title: "Today's Market Dynamics"
   subtitle: "Narrative-driven market overview: what happened in the Taiwan market today."

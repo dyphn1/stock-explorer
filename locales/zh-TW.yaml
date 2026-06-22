@@ -80,7 +80,10 @@ main:
   welcome:
     subtitle: "認識一家公司，從這裡開始"
   disclaimer: "⚠️ 本工具僅供認識公司使用，<br>不構成任何投資建議。<br>投資有風險，請自行評估。"
-
+  tab:
+    key_metrics: "主要指標"
+    financial_chart: "財務圖表"
+daily_market:
 daily_market:
   title: "今日市場動態"
   subtitle: "今日台灣市場動態概覽"
