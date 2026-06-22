@@ -16,6 +16,8 @@ from src.services.validation import validate_stock_id
 from src.core.i18n import t
 from src.pages.router import load_and_render_page, get_stock_data
 from src.services.benchmarks import get_industry_benchmarks
+from src.services.roe_calculator import calc_roe_ttm
+import os
 
 # ── 頁面設定 ──────────────────────────────────────────
 # ── 頁面設定 ──────────────────────────────────────────
@@ -76,6 +78,28 @@ def get_client():
 
 
 client = get_client()
+
+@st.cache_data(ttl=24*3600)
+def get_chinese_name_mapping():
+    mapping = {}
+    yaml_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'chinese_names.yaml')
+    if os.path.exists(yaml_path):
+        with open(yaml_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    if ': ' in line:
+                        key, value = line.split(': ', 1)
+                        mapping[key] = value
+    return mapping
+
+@st.cache_data(ttl=24*3600)
+def get_all_stocks():
+    client = get_client()
+    df = client._fetch_all_stock_info()
+    return df[['stock_id', 'stock_name']].copy()
+
+
 # Chinese name to stock ID mapping for common stocks
 CHINESE_NAME_TO_STOCK_ID = {
     "台積電": "2330",
@@ -91,7 +115,7 @@ CHINESE_NAME_TO_STOCK_ID = {
     "國泰永續高股息": "00878",
     "群益台灣精選高息": "00919",
     "富邦台50": "006208",
-}
+
  
 # ── 側邊欄 ──────────────────────────────────────────────
 
@@ -265,23 +289,22 @@ if search_input and search_input.strip():
             st.sidebar.error(f"❌ {result}")
     else:
         # 可能是中文名稱，使用搜尋
-        # First check hardcoded mapping for exact match
-        if query in CHINESE_NAME_TO_STOCK_ID:
-            stock_id = CHINESE_NAME_TO_STOCK_ID[query]
+        chinese_name_map = get_chinese_name_mapping()
+        if query in chinese_name_map:
+            stock_id = chinese_name_map[query]
         else:
-            matches = client.search_stocks(query)
-        if len(matches) == 1:
-            # 只有 1 筆符合，自動導航
-            stock_id = matches.iloc[0]["stock_id"]
-        elif len(matches) > 1:
-            # 多筆符合，讓使用者選擇
-            options = [f"{row['stock_id']} {row['stock_name']}" for _, row in matches.iterrows()]
-            selected = st.sidebar.selectbox(t("main.search.multiple_results"), options, key="search_select")
-            if selected:
-                stock_id = selected.split()[0]
-        else:
-            # 沒有符合
-            st.sidebar.error(t("main.search.not_found"))
+            all_stocks = get_all_stocks()
+            # Filter where stock_name contains query (case-insensitive)
+            matches = all_stocks[all_stocks['stock_name'].str.contains(query, case=False, na=False)]
+            if len(matches) == 1:
+                stock_id = matches.iloc[0]['stock_id']
+            elif len(matches) > 1:
+                options = [f"{row['stock_id']} {row['stock_name']}" for _, row in matches.iterrows()]
+                selected = st.sidebar.selectbox(t("main.search.multiple_results"), options, key="search_select")
+                if selected:
+                    stock_id = selected.split()[0]
+            else:
+                st.sidebar.error(t("main.search.not_found"))
 else:
     stock_id = st.session_state.get("stock_id", None)
 
@@ -311,22 +334,26 @@ else:
         )
         revenue_yoy = extra_metrics.get("revenue_yoy")
         net_margin = extra_metrics.get("net_margin")
-        # compute ROE and debt-to-equity
-        net_income = None
+        # compute ROE using TTM
+        roe = None
+        roe_warning = None
+        if data.get("financial") is not None and len(data["financial"]) > 0 and data.get("balance_sheet") is not None and len(data["balance_sheet"]) > 0:
+            roe_dict = calc_roe_ttm(
+                data.get("financial"),
+                data.get("balance_sheet"),
+                industry=data.get("industry", ""),
+            )
+            if roe_dict is not None:
+                roe = roe_dict.get("roe")
+                roe_warning = roe_dict.get("warning")
+        # compute debt-to-equity (still needs latest total_equity and total_liabilities)
         total_equity = None
         total_liabilities = None
-        if data.get("financial") is not None and len(data["financial"]) > 0:
-            latest_date = data["financial"]["date"].max()
-            latest_fin = data["financial"][data["financial"]["date"] == latest_date]
-            net_income = find_financial_value(latest_fin, ["淨利", "本期淨利", "Net Income", "net_income"])
         if data.get("balance_sheet") is not None and len(data["balance_sheet"]) > 0:
             latest_date = data["balance_sheet"]["date"].max()
             latest_bs = data["balance_sheet"][data["balance_sheet"]["date"] == latest_date]
             total_equity = find_financial_value(latest_bs, ["權益總計", "股東權益", "Total Equity", "total_equity"])
             total_liabilities = find_financial_value(latest_bs, ["負債總計", "總負債", "Total Liabilities", "total_liabilities"])
-        roe = None
-        if net_income is not None and total_equity is not None and total_equity != 0:
-            roe = round(net_income / total_equity * 100, 1)
         debt_to_equity = None
         if total_liabilities is not None and total_equity is not None and total_equity != 0:
             debt_to_equity = round(total_liabilities / total_equity, 2)

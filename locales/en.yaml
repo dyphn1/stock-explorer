@@ -59,6 +59,8 @@ main:
     nav_screener: "Stock Screener"
     hot_stocks: "Hot Stocks"
     hot_etfs: "Hot ETFs"
+    search_label: "Enter stock name or ID"
+    search_placeholder: "e.g. TSMC or 2330"
   loading:
     text: "Loading data..."
     subtext: "Please wait a moment"
