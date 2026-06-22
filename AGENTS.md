@@ -37,12 +37,14 @@ description: "Entry point router for Stock Explorer multi-agent workflow."
    - `locales/` directory (i18n translation files — contains Chinese/English)
    - `README.md` (may contain the project's Chinese name "股識")
    - Code comments and docstrings (keep original language)
-8. **Delegate failure handling**: If delegate_task fails (rate limit, timeout, error):
-   - NEVER fill in the agent's sign-in yourself — that is falsifying records
-   - Mark the agent as "Failed ❌" in the task file with the error reason
-   - Retry with the fallback model (see Model table)
-   - If fallback also fails, report the failure in your final response and STOP — do not proceed as if the agent completed
+8. **Delegate failure handling & fallback logging**: If delegate_task fails (rate limit, timeout, error):
+   - **First**: Try the fallback model (see Model table). No fallback = no shortcut.
+   - **NEVER fill in the agent's sign-in yourself** — that is falsifying records
+   - If fallback also fails, mark the agent as "Failed ❌" in the task file
+   - **ALWAYS log the failure in `docs/state/model-failure-log.md`** (format below)
+   - If a role is Failed and cannot be retried, proceed without it but MUST note it in the final report
 9. **Minimum 2 challengers per cron run**: Every cron run must involve at least 2 different Challenger perspectives (can be same model with different prompts, or different models). Challenger must cross-examine decisions BEFORE development starts.
+10. **Model sharing is ONLY allowed as fallback**: Different roles may share a model ONLY when the primary model failed and the fallback was used. Directly assigning the same model to multiple roles without attempting the primary first is a rule violation.
 
 ---
 

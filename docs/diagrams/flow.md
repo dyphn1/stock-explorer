@@ -129,7 +129,48 @@ Each role has a primary and fallback model:
 | Challenger | `openrouter/openai/gpt-oss-120b:free` | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` |
 | User | `openrouter/google/gemma-4-31b-it:free` | `openrouter/meta-llama/llama-3.2-3b-instruct:free` |
 
-If primary model fails (timeout, rate limit, error), automatically retry with fallback.
+### Fallback Protocol
+
+When `delegate_task` fails for a role:
+1. Retry with the **fallback model** from the table above
+2. If fallback also fails → mark role as "Failed ❌" in task file
+3. **Log the failure in the Model Failure Log** (see format below)
+4. Do NOT assign the same working model to multiple roles just to save calls
+
+---
+
+## Model Failure Log
+
+All model call failures MUST be logged in `docs/state/model-failure-log.md`.
+
+### Log Entry Format
+
+```markdown
+## [YYYY-MM-DD HH:MM] Run: [task description]
+| Role | Primary Model | Fallback Model | Result |
+|------|-------------|---------------|--------|
+| Challenger 1 | gpt-oss-120b:free (429 rate limit) | nemotron-120b ✅ used | Fallback succeeded |
+| Developer | nemotron-120b ✅ (primary worked) | — | — |
+| QA | gemma-31b ✅ (primary worked) | — | — |
+```
+
+### Summary Section (PM adds at end of each run)
+
+```
+### Model Health Summary
+| Model Used | Times Called | Failures | Notes |
+|------------|-------------|----------|-------|
+| owl-alpha | 1 | 0 | PM only |
+| nemotron-120b | 3 | 0 | +1 fallback from gpt-oss |
+| gpt-oss-120b | 0 | 1 | 429 rate limited |
+```
+
+### Purpose
+
+This log is used to:
+- Track which models are chronically failing (rate limits, timeouts)
+- Decide when to permanently swap a primary/fallback model
+- Provide evidence-based data instead of anecdotal complaints
 
 ---
 
