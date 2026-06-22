@@ -26,12 +26,28 @@
 1. `docs/feedback/` — ALWAYS first (urgent)
 2. `docs/overview/05-roadmap.md` — by P0 > P1 > P2 (incomplete items only)
 
-### Step 3: Assign Work (≥4 agents, sequential)
+### Step 3: Assign Work (≥4 agents, parallel)
+
 - **Minimum 4 agents** — fewer = failure
-- **Assign sequentially** — never concurrent. Each agent finishes before next starts.
+- **Assign in parallel** — dispatch all independent sub-agents at once, not sequentially
+- **Task granularity**: Each sub-agent gets ONE small task (1 file or 1 specific change). If a task is too big, split it into multiple sub-agents.
+- **Max 2 minutes per sub-agent task** — if a task takes longer, it's too big, split it
 - Every task MUST include: goal, context, model, toolsets
 - **Challenger participates in planning** — review approach BEFORE development starts
-- PM dispatches via `delegate_task`
+- PM dispatches via `delegate_task` (all at once, then wait for all to complete)
+
+### Step 3.5: Parallel Dispatch Pattern
+
+```
+# CORRECT: Dispatch all at once
+delegate_task(model="gpt-oss-120b", goal="Review plan for X")  → Challenger
+delegate_task(model="nemotron-120b", goal="Analyze architecture of Y") → Architect  
+delegate_task(model="nemotron-120b", goal="Implement fix for Z") → Developer
+# Then wait for all to complete
+
+# WRONG: Sequential dispatch
+dispatch Challenger → wait → dispatch Architect → wait → dispatch Developer → wait
+```
 
 ### Step 4: Execute
 - All work via `delegate_task`
