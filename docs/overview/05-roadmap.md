@@ -1,6 +1,6 @@
 # Development Roadmap — Stock Explorer
 
-> **Current Phase**: Sprint 31 complete | **Last Updated**: 2026-06-24 (12:00)
+> **Current Phase**: Sprint 32 complete | **Last Updated**: 2026-06-24 (12:00)
 
 ---
 
@@ -48,7 +48,7 @@
 | UX-01 | Chinese search support | Search box supports Chinese stock names |
 | UX-02 | Loading indicator | ✅ Complete (2026-06-22) — st.spinner() with locale keys main.loading.text/subtext |
 | UX-05 | ROE TTM fix | Use TTM annualization for seasonal industries |
-| UX-07 | Watchlist feedback | Show toast when adding/removing |
+|| UX-07 | Watchlist feedback | ✅ Complete (2026-06-24) — st.toast() already implemented in _summary_hero.py and watchlist_page.py, locale keys present |
 | C170 | Clickable Glossary | Real-time professional term lookup |
 | C188 | Why Did This Move? | Plain-language explanation of price changes |
 | C204 | Confidence Indicator | Data reliability indicator |
@@ -60,8 +60,10 @@
 | SB-01~03 | Sidebar core | Inline data, multi-list, market overview |
 | SB-05~08 | Sidebar improvements | Category entry, history, width adjustment |
 || ADR-009 | Two-layer navigation architecture | Activity Bar + FAB |
-|| ADR-010 | Chinese search support architecture | Analyze and simplify Chinese search (ADR complete) |
-| D-127 | _infocard() component | Visual metric card |
+||| ADR-010 | Chinese search support architecture | Analyze and simplify Chinese search (ADR complete) |
+||| ADR-011 | ETF page architecture | ETF detail as Plugin under src/plugins/etf_detail/ (ADR complete) |
+|| ETF-01 | ETF detail plugin implementation | Create src/plugins/etf_detail/ per ADR-011 — plugin skeleton, router update, ETF-specific sections |
+|| D-127 | _infocard() component | Visual metric card |
 | D-128 | _calculator_card() component | Interactive financial tool |
 | D-129 | _ai_explanation_card() component | AI explanation card |
 | D-130 | Beginner onboarding flow | Structured onboarding |
