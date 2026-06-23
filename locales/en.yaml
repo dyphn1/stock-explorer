@@ -61,6 +61,7 @@ main:
     hot_etfs: "Hot ETFs"
     search_label: "Enter stock name or ID"
     search_placeholder: "e.g. TSMC or 2330"
+    api_warning: "⚠️ API rate limited, please try again later"
   loading:
     text: "Loading data..."
     subtext: "Please wait a moment"
@@ -310,11 +311,27 @@ metric_education:
     Buffett prefers companies with long-term ROE above 20%.
   roe_warning_seasonal_insufficient: "{industry} is a seasonal industry. Only {quarters} quarter(s) of data available, which may not reflect full-year performance. Current ROE is a TTM estimate."
   roe_warning_seasonal_sufficient: "{industry} is a seasonal industry. TTM calculation covers all four quarters, but quarterly fluctuations are significant. Consider reviewing multi-year trends."
+  net_margin_analogy_good: "For every NT$100 sold, after all expenses, {val:.1f} remains — good profitability"
+  net_margin_analogy_ok: "For every NT$100 sold, after all expenses, {val:.1f} remains — limited profit margin"
+  net_margin_analogy_poor: "For every NT$100 sold, after all expenses, {val:.1f} remains — barely profitable"
+  fallback_title: "{metric_name} is one of the indicators measuring company performance"
+  fallback_context: "This indicator requires more background information for an analogy"
+  fallback_suggestion: "We suggest looking up more information about this indicator"
+  net_margin_analogy_high: "For every NT$100 sold, after all expenses, {val:.1f} remains — good profitability"
+  net_margin_analogy_mid: "For every NT$100 sold, after all expenses, {val:.1f} remains — limited profit margin"
+  net_margin_analogy_low: "For every NT$100 sold, after all expenses, {val:.1f} remains — barely profitable"
+  fallback:
+    explanation: "{metric_name} is one of the indicators measuring company performance"
+    analogy: "This indicator requires more background information to provide an analogy"
+    historical_context: "We suggest looking up more information about this indicator"
+  analogy_error: "Unable to generate analogy at this time."
+  roe_analogy_fallback: "Unable to generate analogy at this time."
 watchlist:
   removed_toast: "Removed {stock_name} from watchlist"
   toast:
     added: "✅ Added {stock_name} to watchlist"
     removed: "❌ Removed {stock_name} from watchlist"
+  default_list_name: "Default List"
 summary_hero:
   added_to_list: "Added {stock_name} to watchlist"
 test_key: test value
@@ -359,6 +376,10 @@ delta_explanation_provider:
   generic_implication_down: "Indicator declined compared to previous period, reasons worth continuous tracking"
   generic_template_up: "{stock_prefix}{metric_name} increased compared to previous period by {abs_pct:.1f}%"
   generic_template_down: "{stock_prefix}{metric_name} decreased compared to previous period by {abs_pct:.1f}%"
+  metric:
+    monthly_revenue: "Monthly Revenue"
+    revenue_yoy: "Revenue YoY"
+    price_30d: "Price (30-day avg)"
 
 etf:
   detail:
@@ -428,11 +449,218 @@ why_did_this_move:
   title: "Why Did This Move?"
   institutional_buying: "Institutional buying — may indicate positive outlook"
   institutional_selling: "Institutional selling — may indicate profit-taking or negative outlook"
-  price_surge: "股價大漲，可能受好消息推動"
-  price_drop: "股價大跌，可能受壞消息影響"
-  check_news: "建議查看相關新聞了解原因"
-  no_data: "目前沒有足夠數據分析漲跌原因"
+  price_surge: "Stock price surged, possibly driven by good news"
+  price_drop: "Stock price dropped, possibly affected by bad news"
+  check_news: "Check related news to understand the reason"
+  no_data: "Insufficient data to analyze the reason for the price movement"
 ai_explanation:
   title: "AI Explanation"
   explanation: "AI-generated explanation"
   confidence: "Confidence"
+
+glossary:
+  tooltip_hint: "Click to learn more"
+  definition: "Definition"
+  example: "Example"
+  analogy: "Analogy"
+  category: "Category"
+  not_found: "No definition found for this term"
+  search_placeholder: "Search financial terms..."
+
+# Missing critical keys
+rate_limited: "⚠️ API rate limited, please try again later"
+sidebar:
+  search_header: "Search"
+
+# Health scoring
+health:
+  status:
+    unable_to_assess: "Unable to assess overall health"
+    good: "Good"
+    average: "Average"
+    needs_attention: "Needs Attention"
+  summary:
+    overall: "{emoji} Overall Health: {status} (Avg {avg:.0f} pts)"
+    strong_dims: "💪 Strengths: {dims}"
+    weak_dims: "⚠️ Areas to Watch: {dims}"
+    unable_to_assess: "Unable to assess overall health"
+  strengths: "💪 Strengths: {dims}"
+  weaknesses: "⚠️ Areas to Watch: {dims}"
+  dimension:
+    profitability: "Profitability"
+    growth: "Growth"
+    financial_health: "Financial Health"
+    dividend_quality: "Dividend Quality"
+    valuation: "Valuation"
+
+# Moat analyzer
+moat:
+  dimension:
+    brand: "Brand Power"
+    cost: "Cost Advantage"
+    cost_advantage: "Cost Advantage"
+    network: "Network Effect"
+    network_effect: "Network Effect"
+    switching: "Switching Cost"
+    switching_cost: "Switching Cost"
+    scale: "Economies of Scale"
+    economy_of_scale: "Economies of Scale"
+  type:
+    none: "No Clear Moat"
+    brand: "Brand Power Moat"
+    cost: "Cost Advantage Moat"
+    network: "Network Effect Moat"
+    switching: "Switching Cost Moat"
+    scale: "Economies of Scale Moat"
+  description:
+    none: "This company does not exhibit a clear competitive advantage."
+    brand: "This company benefits from strong brand recognition and customer loyalty."
+    cost: "This company benefits from a structural cost advantage over competitors."
+    network: "This company benefits from network effects that grow stronger with more users."
+    switching: "This company benefits from high customer switching costs."
+    scale: "This company benefits from economies of scale."
+  evidence:
+    auto_score: "Auto-scored based on financial data. Primary moat type: {moat_type}."
+  score: "{score:.0f} pts"
+
+# Investment memo
+investment_memo:
+  validation:
+    one_liner_required: "Please fill in 'One-Liner Positioning'"
+    one_liner_empty: "Please fill in 'One-Liner Positioning'"
+    reason_required: "Please fill in 'Investment Rationale'"
+    reasons_empty: "Please fill in 'Investment Rationale'"
+    target_price_negative: "Target price cannot be negative"
+    target_price_range: "Target price lower bound cannot exceed upper bound"
+    target_price_low_gt_high: "Target price lower bound cannot exceed upper bound"
+    confidence_range: "Confidence level must be between 1-5"
+    confidence_out_of_range: "Confidence level must be between 1-5"
+  confidence:
+    very_low: "⭐ Very Low"
+    low: "⭐⭐ Low"
+    medium: "⭐⭐⭐ Medium"
+    high: "⭐⭐⭐⭐ High"
+    very_high: "⭐⭐⭐⭐⭐ Very High"
+  default:
+    not_set: "Not set"
+    price_range_unset: "Not set"
+    not_filled: "Not filled"
+
+# Metric explainer labels
+metric_explainer:
+  monthly_revenue: "Monthly Revenue"
+  revenue_yoy: "Revenue YoY"
+  gross_margin: "Gross Margin"
+  net_margin: "Net Margin"
+  operating_margin: "Operating Margin"
+  per: "P/E Ratio"
+  pbr: "P/B Ratio"
+  debt_ratio: "Debt Ratio"
+  dividend_yield: "Dividend Yield"
+  roe: "ROE"
+
+# ROE calculator
+roe:
+  method:
+    cumulative_3q: "3-Quarter Cumulative"
+    cumulative_2q: "2-Quarter Cumulative"
+    single_quarter: "Single Quarter"
+
+roe_calculator:
+  method:
+    1q: "Single Quarter"
+    2q: "2-Quarter Cumulative"
+    3q: "3-Quarter Cumulative"
+
+# Risk simplifier
+risk:
+  level:
+    very_low: "Very Low Risk"
+    low: "Low Risk"
+    medium: "Medium Risk"
+    high: "High Risk"
+    very_high: "Very High Risk"
+  simplifier:
+    level:
+      "1":
+        label: "Very Low Risk"
+        description: "Overall health score is {health_avg:.0f} — relatively healthy. Note: this is a simplified reference and should not be the sole basis for investment decisions."
+      "2":
+        label: "Low Risk"
+        description: "Overall health score is {health_avg:.0f} — above average. Most dimensions are performing well, but individual items still need monitoring."
+      "3":
+        label: "Medium Risk"
+        description:
+          weak: "Overall health score is {health_avg:.0f} — moderate. The following dimensions need attention: {weak_dims}. Further investigation recommended."
+          mixed: "Overall health score is {health_avg:.0f} — moderate. Risk and health indicators are mixed. Further analysis is recommended."
+      "4":
+        label: "High Risk"
+        description: "Overall health score is {health_avg:.0f} — needs attention. High-risk indicators detected, requiring extra vigilance."
+      "5":
+        label: "Very High Risk"
+        description: "Overall health score is {health_avg:.0f} — needs significant attention. Multiple high-risk signals detected, exercise caution."
+  customer_concentration_title: "Customer Concentration Risk"
+  customer_high_concentration: "Revenue concentration is high at {pct}% — may overly depend on a few customers"
+  customer_medium_concentration: "Revenue concentration is {pct}% — moderate customer concentration"
+  customer_low_concentration: "Revenue concentration is {pct}% — relatively diversified customer base"
+  revenue_unstable: "Revenue stability CV is {cv} — significant fluctuation"
+  revenue_unstable_note: ", suggesting unstable revenue and potentially higher risk"
+  revenue_normal: "Revenue stability CV is {cv} — moderate fluctuation"
+  revenue_normal_note: ""
+  revenue_stable: "Revenue stability CV is {cv} — stable revenue"
+  financial_health_title: "Financial Health Risk"
+  debt_high: "Debt ratio is {ratio}% — relatively high"
+  debt_medium: "Debt ratio is {ratio}% — moderate"
+  debt_low: "Debt ratio is {ratio}% — relatively conservative"
+  margin_very_low: "Net margin is {margin}% — very low profitability"
+  margin_medium: "Net margin is {margin}% — moderate profitability"
+  margin_high: "Net margin is {margin}% — good profitability"
+  cashflow_negative: "Operating cash flow has been negative for multiple quarters"
+  cashflow_mixed: "Operating cash flow shows mixed positive and negative values"
+  cashflow_positive: "Operating cash flow is positive"
+  event_risk_title: "Event Risk"
+  event_high_count: "Recent {count} risk events detected"
+  event_includes: "Including: {events}"
+  event_high_impact: "{count} high-impact events"
+  event_foreign_selling: "Foreign investors are net selling"
+  event_medium_count: "Recent {count} medium-risk events detected"
+  event_foreign_neutral: "Foreign investor activity is neutral"
+  event_low: "No significant risk events in the near term"
+  event_foreign_buying: "Foreign investors are relatively positive"
+  insufficient_data: "Insufficient data for risk assessment"
+  dim_customer: "Customer Concentration"
+  dim_financial: "Financial Health"
+  dim_event: "Events"
+  summary_high_risk: "High risk in: {dims}"
+  summary_normal: "Risk assessment is normal"
+
+# Compare stories unit
+compare_stories:
+  unit_hundred_million: "B"
+
+# Assessment
+comprehension_check:
+  not_found: "Question not found"
+
+# Timeline
+timeline_service:
+  event_interpretation: '"{title}" indicates a noteworthy change in the market.'
+
+# Adaptive engine
+adaptive_engine:
+  event_summary_major: "Major Events: {events}"
+  event_summary_attention: "Events to Note: {events}"
+  price_alert_title: "Stock price {direction} {pct:.1f}% in a single day"
+  price_alert_body: "Closing price {price:.0f} yuan, ..."
+  price_alert_advice: "Sharp daily volatility, recommend monitoring related announcements."
+  framework_standard_name: "Standard Analysis"
+  framework_standard_desc: "Complete analysis using four deep-dive sections"
+  framework_standard_focus: "Comprehensive understanding of company operations and financials"
+  framework_etf_name: "ETF Analysis"
+  framework_etf_desc: "Analyze ETF composition and performance"
+  framework_group_name: "Group Analysis"
+  framework_group_desc: "Analyze parent-subsidiary structure and contributions"
+  freshness_label_price: "Price Data"
+  freshness_label_revenue: "Revenue Data"
+  direction_up: "up"
+  direction_down: "down"

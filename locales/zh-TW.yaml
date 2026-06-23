@@ -279,12 +279,28 @@ metric_education:
     台股平均殖利率約 3-4%。殖利率 5% 以上算高息股，但要注意：
     1) 是否為一次性業外收入造成的超高殖利率；2) 公司是否有賺錢。
     過去 5 年穩定配息的公司較可靠.
+  net_margin_analogy_good: "每賣 100 元東西，扣掉所有開銷後剩 {val:.1f} 元 — 獲利能力不錯"
+  net_margin_analogy_ok: "每賣 100 元東西，扣掉所有開銷後剩 {val:.1f} 元 — 利潤空間有限"
+  net_margin_analogy_poor: "每賣 100 元東西，扣掉所有開銷後剩 {val:.1f} 元 — 賺錢很辛苦"
+  fallback_title: "{metric_name} 是衡量公司表現的指標之一。"
+  fallback_context: "這個指標需要更多背景資料才能提供比喻。"
+  fallback_suggestion: "建議查閱更多關於此指標的資料。"
+  net_margin_analogy_high: "每賣 100 元，扣掉所有開銷後剩 {val:.1f} 元 — 獲利能力不錯"
+  net_margin_analogy_mid: "每賣 100 元，扣掉所有開銷後剩 {val:.1f} 元 — 利潤空間有限"
+  net_margin_analogy_low: "每賣 100 元，扣掉所有開銷後剩 {val:.1f} 元 — 賺錢很辛苦"
+  fallback:
+    explanation: "{metric_name} 是衡量公司表現的指標之一。"
+    analogy: "這個指標需要更多背景資料才能提供比喻。"
+    historical_context: "建議查閱更多關於此指標的資料。"
+  analogy_error: "暫時無法產生比喻。"
+  roe_analogy_fallback: "暫時無法產生比喻。"
 
 watchlist:
   removed_toast: "已將 {stock_name} 從關注列表移除"
   toast:
     added: "✅ 已將 {stock_name} 加入關注列表"
     removed: "❌ 已將 {stock_name} 從關注列表移除"
+  default_list_name: "預設清單"
 summary_hero:
   added_to_list: "已將 {stock_name} 加入關注列表"
 delta_explanation_provider:
@@ -328,26 +344,30 @@ delta_explanation_provider:
   generic_implication_down: "指標較前期衰退，原因值得持續追蹤"
   generic_template_up: "{stock_prefix}{metric_name} 較前期成長 {abs_pct:.1f}%"
   generic_template_down: "{stock_prefix}{metric_name} 較前期衰退 {abs_pct:.1f}%"
+  metric:
+    monthly_revenue: "月營收"
+    revenue_yoy: "營收年增率"
+    price_30d: "股價(近30日均價)"
 
 etf:
   detail:
     metric:
-      expense_ratio: 「內扣費用」
-      tracking_error: 「追蹤誤差」
-      dividend_yield: 「殖利率」
-      sample_data_note: 「數值僅為樣本資料，僅用於示範目的。」
+      expense_ratio: "內扣費用"
+      tracking_error: "追蹤誤差"
+      dividend_yield: "殖利率"
+      sample_data_note: "數值僅為樣本資料，僅用於示範目的。"
     comparison:
-      title: 「ETF 比較」
-      expense_ratio: 「內扣費用」
-      tracking_error: 「追蹤誤差」
-      dividend_yield: 「殖利率」
-      current_etf: 「目前 ETF」
-      note: 「備註：比較數據僅為樣本資料，用於示範目的。」
-    section_performance: 「績效走勢」
-    section_dividend: 「配息資訊」
-    section_institutional: 「法人動向」
-    section_fees: 「費用說明」
-    section_knowledge: 「ETF 小知識」
+      title: "ETF 比較"
+      expense_ratio: "內扣費用"
+      tracking_error: "追蹤誤差"
+      dividend_yield: "殖利率"
+      current_etf: "目前 ETF"
+      note: "備註：比較數據僅為樣本資料，用於示範目的。"
+    section_performance: "績效走勢"
+    section_dividend: "配息資訊"
+    section_institutional: "法人動向"
+    section_fees: "費用說明"
+    section_knowledge: "ETF 小知識"
     one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
     one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
     one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
@@ -397,197 +417,6 @@ etf:
     section_institutional: 「法人動向」
     section_fees: 「費用說明」
     section_knowledge: 「ETF 小知識」
-    one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
-    one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
-    one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
-    one_liner_esg: 「永續ESG ETF，結合投資與環境社會治理」
-    one_liner_default: 「多元化ETF，適合分散投資的長期持有」
-    knowledge_50: 「台灣50指數追蹤台灣前50大市值股票，代表台灣股市整體表現」
-    knowledge_dividend: 「高股息ETF專注於高殖利率股票，提供定期現金流入」
-    knowledge_bond: 「債券ETF投資於政府或企業債券，提供相對穩定的利息收入」
-    knowledge_esg: 「ESG ETF考慮環境、社會和治理因素，追求永續投資報酬」
-    knowledge_default: 「這只ETF透過多元化投資降低單一股票風險，適合長期持有」
-    dividend_explanation_title: 「配息說明」
-    dividend_explanation_content: 「顯示最近的配息紀錄及其頻率」
-    dividend_frequency_quarterly: 「每季配息」
-    dividend_frequency_semi: 「每半年配息」
-    dividend_frequency_annual: 「每年配息」
-    dividend_frequency_irregular: 「不定期配息」
-    no_dividend_data: 「暫無配息資料」
-    dividend_data_processing: 「配息資料載入中...」
-    col_cash_dividend: 「現金股利」
-    col_ex_dividend_date: 「除息日」
-    col_stock_dividend: 「股票股利」
-    col_ex_right_date: 「除權日」
-    institutional_explanation_title: 「法人動向說明」
-    institutional_explanation_content: 「顯示最近30天外資、投信及自營商的買賣超變化」
-    no_institutional_data: 「暫無法人動向資料」
-    no_institutional_data_30d: 「近30天無法人交易資料」
-    institutional_data_processing: 「法人資料載入中...」
-    buy_label: 「買進」
-    sell_label: 「賣出」
-    fee_management_label: 「管理費用」
-    fee_management_value: 「0.XX%」
-    fee_management_analogy: 「就像購買基金時需要支付的管理費用」
-    fee_custody_label: 「保管費用」
-    fee_custody_value: 「0.XX%」
-    fee_custody_analogy: 「像是保管箱的保管費，用於保護ETF的資產安全」
-    fee_reminder_title: 「費用提醒」
-    fee_reminder_content: 「ETF的費用會直接從基金資產中扣除，影響實際報酬率」
-    disclaimer: 「免責聲明」
-    disclaimer_content: 「本工具所提供的資訊僅供參考，不構成投資建議。過去表現不代表未來表現，投資有風險，請謹慎評估。」
-    no_price_data: 「暫無價格資料」
-    no_price_data_1y: 「近一年無價格資料」
-    price_data_processing: 「價格資料載入中...」
-    chart_date: 「日期」
-    chart_shares: 「股數」(單位)
-    section_performance: 「績效走勢」
-    section_dividend: 「配息資訊」
-    section_institutional: 「法人動向」
-    section_fees: 「費用說明」
-    section_knowledge: 「ETF 小知識」
-    one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
-    one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
-    one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
-    one_liner_esg: 「永續ESG ETF，結合投資與環境社會治理」
-    one_liner_default: 「多元化ETF，適合分散投資的長期持有"""
-    knowledge_50: 「台灣50指數追蹤台灣前50大市值股票，代表台灣股市整體表現"""
-    knowledge_dividend: 「高股息ETF專注於高殖利率股票，提供定期現金流入"""
-    knowledge_bond: 「債券ETF投資於政府或企業債券，提供相對穩定的利息收入"""
-    knowledge_esg: 「ESG ETF考慮環境、社會和治理因素，追求永續投資報酬"""
-    knowledge_default: 「這只ETF透過多元化投資降低單一股票風險，適合長期持有"""
-    dividend_explanation_title: 「配息說明"""
-    dividend_explanation_content: 「顯示最近的配息紀錄及其頻率"""
-    dividend_frequency_quarterly: 「每季配息"""
-    dividend_frequency_semi: 「每半年配息"""
-    dividend_frequency_annual: 「每年配息"""
-    dividend_frequency_irregular: 「不定期配息"""
-    no_dividend_data: 「暫無配息資料"""
-    dividend_data_processing: 「配息資料載入中..."""
-    col_cash_dividend: 「現金股利"""
-    col_ex_dividend_date: 「除息日"""
-    col_stock_dividend: 「股票股利"""
-    col_ex_right_date: 「除權日"""
-    institutional_explanation_title: 「法人動向說明"""
-    institutional_explanation_content: 「顯示最近30天外資、投信及自營商的買賣超變化"""
-    no_institutional_data: 「暫無法人動向資料"""
-    no_institutional_data_30d: 「近30天無法人交易資料"""
-    institutional_data_processing: 「法人資料載入中..."""
-    buy_label: 「買進"""
-    sell_label: 「賣出"""
-    fee_management_label: 「管理費用"""
-    fee_management_value: 「0.XX%"""
-    fee_management_analogy: 「就像購買基金時需要支付的管理費用"""
-    fee_custody_label: 「保管費用"""
-    fee_custody_value: 「0.XX%"""
-    fee_custody_analogy: 「像是保管箱的保管費，用於保護ETF的資產安全"""
-    fee_reminder_title: 「費用提醒"""
-    fee_reminder_content: 「ETF的費用會直接從基金資產中扣除，影響實際報酬率"""
-    disclaimer: 「免責聲明"""
-    disclaimer_content: 「本工具所提供的資訊僅供參考，不構成投資建議。過去表現不代表未來表現，投資有風險，請謹慎評估."""
-    no_price_data: 「暫無價格資料"""
-    no_price_data_1y: 「近一年無價格資料"""
-    price_data_processing: 「價格資料載入中..."""
-    chart_date: 「日期"""
-    chart_shares: 「股數」(單位)
-    section_performance: 「績效走勢」
-    section_dividend: 「配息資訊」
-    section_institutional: 「法人動向」
-    section_fees: 「費用說明」
-    section_knowledge: 「ETF 小知識」
-    one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
-    one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
-    one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
-    one_liner_esg: 「永續ESG ETF，結合投資與環境社會治理」
-    one_liner_default: 「多元化ETF，適合分散投資的長期持有"""
-    knowledge_50: 「台灣50指數追蹤台灣前50大市值股票，代表台灣股市整體表現"""
-    knowledge_dividend: 「高股息ETF專注於高殖利率股票，提供定期現金流入"""
-    knowledge_bond: 「債券ETF投資於政府或企業債券，提供相對穩定的利息收入"""
-    knowledge_esg: 「ESG ETF考慮環境、社會和治理因素，追求永續投資報酬"""
-    knowledge_default: 「這只ETF透過多元化投資降低單一股票風險，適合長期持有"""
-    dividend_explanation_title: 「配息說明"""
-    dividend_explanation_content: 「顯示最近的配息紀錄及其頻率"""
-    dividend_frequency_quarterly: 「每季配息"""
-    dividend_frequency_semi: 「每半年配息"""
-    dividend_frequency_annual: 「每年配息"""
-    dividend_frequency_irregular: 「不定期配息"""
-    no_dividend_data: 「暫無配息資料"""
-    dividend_data_processing: 「配息資料載入中..."""
-    col_cash_dividend: 「現金股利"""
-    col_ex_dividend_date: 「除息日"""
-    col_stock_dividend: 「股票股利"""
-    col_ex_right_date: 「除權日"""
-    institutional_explanation_title: 「法人動向說明"""
-    institutional_explanation_content: 「顯示最近30天外資、投信及自營商的買賣超變化"""
-    no_institutional_data: 「暫無法人動向資料"""
-    no_institutional_data_30d: 「近30天無法人交易資料"""
-    institutional_data_processing: 「法人資料載入中..."""
-    buy_label: 「買進"""
-    sell_label: 「賣出"""
-    fee_management_label: 「管理費用"""
-    fee_management_value: 「0.XX%"""
-    fee_management_analogy: 「就像購買基金時需要支付的管理費用"""
-    fee_custody_label: 「保管費用"""
-    fee_custody_value: 「0.XX%"""
-    fee_custody_analogy: 「像是保管箱的保管費，用於保護ETF的資產安全"""
-    fee_reminder_title: 「費用提醒"""
-    fee_reminder_content: 「ETF的費用會直接從基金資產中扣除，影響實際報酬率"""
-    disclaimer: 「免責聲明"""
-    disclaimer_content: 「本工具所提供的資訊僅供參考，不構成投資建議。過去表現不代表未來表現，投資有風險，請謹慎評估."""
-    no_price_data: 「暫無價格資料"""
-    no_price_data_1y: 「近一年無價格資料"""
-    price_data_processing: 「價格資料載入中..."""
-    chart_date: 「日期"""
-    chart_shares: 「股數」(單位)
-    section_performance: 「績效走勢」
-    section_dividend: 「配息資訊」
-    section_institutional: 「法人動向」
-    section_fees: 「費用說明」
-    section_knowledge: 「ETF 小知識」
-    one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
-    one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
-    one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
-    one_liner_esg: 「永續ESG ETF，結合投資與環境社會治理」
-    one_liner_default: 「多元化ETF，適合分散投資的長期持有"""
-    knowledge_50: 「台灣50指數追蹤台灣前50大市值股票，代表台灣股市整體表現"""
-    knowledge_dividend: 「高股息ETF專注於高殖利率股票，提供定期現金流入"""
-    knowledge_bond: 「債券ETF投資於政府或企業債券，提供相對穩定的利息收入"""
-    knowledge_esg: 「ESG ETF考慮環境、社會和治理因素，追求永續投資報酬"""
-    knowledge_default: 「這只ETF透過多元化投資降低單一股票風險，適合長期持有"""
-    dividend_explanation_title: 「配息說明"""
-    dividend_explanation_content: 「顯示最近的配息紀錄及其頻率"""
-    dividend_frequency_quarterly: 「每季配息"""
-    dividend_frequency_semi: 「每半年配息"""
-    dividend_frequency_annual: 「每年配息"""
-    dividend_frequency_irregular: 「不定期配息"""
-    no_dividend_data: 「暫無配息資料"""
-    dividend_data_processing: 「配息資料載入中..."""
-    col_cash_dividend: 「現金股利"""
-    col_ex_dividend_date: 「除息日"""
-    col_stock_dividend: 「股票股利"""
-    col_ex_right_date: 「除權日"""
-    institutional_explanation_title: 「法人動向說明"""
-    institutional_explanation_content: 「顯示最近30天外資、投信及自營商的買賣超變化"""
-    no_institutional_data: 「暫無法人動向資料"""
-    no_institutional_data_30d: 「近30天無法人交易資料"""
-    institutional_data_processing: 「法人資料載入中..."""
-    buy_label: 「買進"""
-    sell_label: 「賣出"""
-    fee_management_label: 「管理費用"""
-    fee_management_value: 「0.XX%"""
-    fee_management_analogy: 「就像購買基金時需要支付的管理費用"""
-    fee_custody_label: 「保管費用"""
-    fee_custody_value: 「0.XX%"""
-    fee_custody_analogy: 「像是保管箱的保管費，用於保護ETF的資產安全"""
-    fee_reminder_title: 「費用提醒"""
-    fee_reminder_content: 「ETF的費用會直接從基金資產中扣除，影響實際報酬率"""
-    disclaimer: 「免責聲明"""
-    disclaimer_content: 「本工具所提供的資訊僅供參考，不構成投資建議。過去表現不代表未來表現，投資有風險，請謹慎評估."""
-    no_price_data: 「暫無價格資料"""
-    no_price_data_1y: 「近一年無價格資料"""
-    price_data_processing: 「價格資料載入中..."""
-    chart_date: 「日期"""
-    chart_shares: 「股數」(單位)
 
 why_did_this_move:
   title: "為什麼會漲跌？"
@@ -601,3 +430,213 @@ ai_explanation:
   title: "AI 解釋"
   explanation: "AI 生成的解釋內容"
   confidence: "信心度"
+glossary:
+  tooltip_hint: "點擊了解更多"
+  definition: "解釋"
+  example: "例子"
+  analogy: "比喻"
+  category: "分類"
+  not_found: "找不到此詞彙的定義"
+  search_placeholder: "搜尋財經術語..."
+
+# Missing zh-TW keys
+rate_limited: "⚠️ API 頻率限制中，請稍後再試"
+news_summarizer:
+  template:
+    financial_report: "{company} 公布最新財報：{rephrase}。對投資人來說，{implication}。"
+    dividend: "{company} 公布股利政策：{rephrase}。如果您持有這家公司股票，{implication}。"
+    capital_increase: "{company} 計畫籌資：{rephrase}。籌資可能短期稀釋獲利，但資金用途是長期成長關鍵。"
+    factory_expansion: "{company} 計畫擴廠：{rephrase}。這顯示公司預期未來需求成長。"
+    order: "{company} 獲得新訂單：{rephrase}。這表示公司產品有市場需求。"
+    price_increase: "{company} 計畫漲價：{rephrase}。漲價可能改善毛利率，但客戶接受度是關鍵。"
+    management_rights: "{company} 經營權有變動：{rephrase}。經營團隊穩定性影響公司策略。"
+    new_product: "{company} 推出新產品：{rephrase}。這表示公司在創新，但產品能否成功仍需觀察。"
+    lawsuit: "{company} 有法律相關消息：{rephrase}。法律糾紛可能影響公司聲譽與財務狀況。"
+    rating: "分析師調整對 {company} 的評等：{rephrase}。分析師評等變動可能影響市場信心。"
+  implication:
+    financial_report: "可觀察公司獲利能力是否改變。"
+    dividend: "可觀察配息金額是否符合預期。"
+    capital_increase: "短期可能稀釋每股盈餘，長期影響取決於資金運用效益。"
+    factory_expansion: "短期會增加費用，但長期可能帶來更多營收。"
+    order: "這表示公司產品有市場需求。"
+    price_increase: "可能改善毛利率，但需觀察客戶是否接受漲價。"
+    management_rights: "經營團隊穩定性影響公司策略延續性。"
+    new_product: "這表示公司在創新，但產品能否成功仍需觀察。"
+    lawsuit: "需關注訴訟結果及對公司的影響。"
+    rating: "可參考分析師看法，但最終還是要看公司基本面。"
+    default: "值得持續關注。"
+  generic_summary: "{company_name} 有新消息：{simplified}，請留意後續發展及對公司的影響。"
+  no_news: "{company_name} 近期無重大新聞。"
+health:
+  status:
+    unable_to_assess: "無法評估整體健康狀況"
+    good: "良好"
+    average: "普通"
+    needs_attention: "需關注"
+  summary:
+    overall: "{emoji} 整體健康狀況：{status}（平均 {avg:.0f} 分）"
+    strong_dims: "💪 表現較佳：{dims}"
+    weak_dims: "⚠️ 需要留意：{dims}"
+    unable_to_assess: "無法評估整體健康狀況"
+  strengths: "💪 表現較佳：{dims}"
+  weaknesses: "⚠️ 需要留意：{dims}"
+  dimension:
+    profitability: "獲利能力"
+    growth: "成長性"
+    financial_health: "財務健康"
+    dividend_quality: "股利品質"
+    valuation: "估值合理性"
+moat:
+  dimension:
+    brand: "品牌力"
+    cost: "成本優勢"
+    cost_advantage: "成本優勢"
+    network: "網路效應"
+    network_effect: "網路效應"
+    switching: "轉換成本"
+    switching_cost: "轉換成本"
+    scale: "規模經濟"
+    economy_of_scale: "規模經濟"
+  type:
+    none: "無明顯護城河"
+    brand: "品牌力護城河"
+    cost: "成本優勢護城河"
+    network: "網路效應護城河"
+    switching: "轉換成本護城河"
+    scale: "規模經濟護城河"
+  description:
+    none: "該公司目前未展現出明顯的競爭優勢。"
+    brand: "該公司受益於強大的品牌辨識度與客戶忠誠度。"
+    cost: "該公司具有結構性的成本優勢。"
+    network: "該公司受益於網路效應，用戶越多價值越高。"
+    switching: "該公司客戶轉換成本高，有助於維持客戶忠誠度。"
+    scale: "該公司具有規模經濟優勢。"
+  evidence:
+    auto_score: "根據財務數據自動評分。主要護城河類型：{moat_type}。"
+  score: "{score:.0f} 分"
+investment_memo:
+  validation:
+    one_liner_required: "請填寫「一句話定位」"
+    one_liner_empty: "請填寫「一句話定位」"
+    reason_required: "請填寫「投資理由」"
+    reasons_empty: "請填寫「投資理由」"
+    target_price_negative: "目標價不能為負數"
+    target_price_range: "目標價下限不能大於上限"
+    target_price_low_gt_high: "目標價下限不能大於上限"
+    confidence_range: "信心水平必須在 1-5 之間"
+    confidence_out_of_range: "信心水平必須在 1-5 之間"
+  confidence:
+    very_low: "⭐ 很低"
+    low: "⭐⭐ 低"
+    medium: "⭐⭐⭐ 中等"
+    high: "⭐⭐⭐⭐ 高"
+    very_high: "⭐⭐⭐⭐⭐ 很高"
+  default:
+    not_set: "未設定"
+    price_range_unset: "未設定"
+    not_filled: "未填寫"
+metric_explainer:
+  monthly_revenue: "月營收"
+  revenue_yoy: "營收年增率"
+  gross_margin: "毛利率"
+  net_margin: "淨利率"
+  operating_margin: "營業利益率"
+  per: "本益比"
+  pbr: "股價淨值比"
+  debt_ratio: "負債比"
+  dividend_yield: "殖利率"
+  roe: "股東權益報酬率"
+roe:
+  method:
+    cumulative_3q: "3季累計"
+    cumulative_2q: "2季累計"
+    single_quarter: "單季"
+
+roe_calculator:
+  method:
+    1q: "單季"
+    2q: "2季累計"
+    3q: "3季累計"
+risk:
+  level:
+    very_low: "非常低風險"
+    low: "低風險"
+    medium: "中等風險"
+    high: "高風險"
+    very_high: "非常高風險"
+  simplifier:
+    level:
+      "1":
+        label: "非常低風險"
+        description: "整體健康分數 {health_avg:.0f} 分 — 相對健康。請注意此為簡化參考，不應作為投資決策的唯一依據。"
+      "2":
+        label: "低風險"
+        description: "整體健康分數 {health_avg:.0f} 分 — 水準以上。多數面向表現良好，但仍需留意個別項目。"
+      "3":
+        label: "中等風險"
+        description:
+          weak: "整體健康分數 {health_avg:.0f} 分 — 中等。以下面向需留意：{weak_dims}。建議進一步了解。"
+          mixed: "整體健康分數 {health_avg:.0f} 分 — 中等。風險與健康指標混合，建議進一步分析。"
+      "4":
+        label: "高風險"
+        description: "整體健康分數 {health_avg:.0f} 分 — 需要關注。偵測到高風險指標，需特別留意。"
+      "5":
+        label: "非常高風險"
+        description: "整體健康分數 {health_avg:.0f} 分 — 需要高度關注。多項高風險訊號，請謹慎評估。"
+  customer_concentration_title: "客戶集中風險"
+  customer_high_concentration: "營收集中度偏高 {pct}% — 可能過度依賴少數客戶"
+  customer_medium_concentration: "營收集中度 {pct}% — 客戶集中度中等"
+  customer_low_concentration: "營收集中度 {pct}% — 客戶基礎相對分散"
+  revenue_unstable: "營收穩定度 CV 值為 {cv} — 波動較大"
+  revenue_unstable_note: "，營收不穩定，可能代表較高風險"
+  revenue_normal: "營收穩定度 CV 值為 {cv} — 波動適中"
+  revenue_normal_note: ""
+  revenue_stable: "營收穩定度 CV 值為 {cv} — 營收穩定"
+  financial_health_title: "財務健康風險"
+  debt_high: "負債比 {ratio}% — 偏高"
+  debt_medium: "負債比 {ratio}% — 中等"
+  debt_low: "負債比 {ratio}% — 相對保守"
+  margin_very_low: "淨利率 {margin}% — 獲利能力很低"
+  margin_medium: "淨利率 {margin}% — 獲利能力中等"
+  margin_high: "淨利率 {margin}% — 獲利能力良好"
+  cashflow_negative: "營業現金流連續多季為負"
+  cashflow_mixed: "營業現金流正負交錯"
+  cashflow_positive: "營業現金流為正"
+  event_risk_title: "事件風險"
+  event_high_count: "近期偵測到 {count} 件風險事件"
+  event_includes: "包含：{events}"
+  event_high_impact: "{count} 件高衝擊事件"
+  event_foreign_selling: "外資正在賣超"
+  event_medium_count: "近期偵測到 {count} 件中等風險事件"
+  event_foreign_neutral: "外資動向中性"
+  event_low: "近期無重大風險事件"
+  event_foreign_buying: "外資相對正向"
+  insufficient_data: "資料不足，無法進行風險評估"
+  dim_customer: "客戶集中度"
+  dim_financial: "財務健康"
+  dim_event: "事件風險"
+  summary_high_risk: "高風險面向：{dims}"
+  summary_normal: "風險評估正常"
+compare_stories:
+  unit_hundred_million: "億"
+comprehension_check:
+  not_found: "找不到題目"
+timeline_service:
+  event_interpretation: '"{title}" 代表市場出現了值得關注的變化。'
+adaptive_engine:
+  event_summary_major: "重大事件：{events}"
+  event_summary_attention: "注意事件：{events}"
+  price_alert_title: "股價單日{direction} {abs(change_pct):.1f}%"
+  price_alert_body: "收盤價 {latest[close_col]:.0f} 元，..."
+  price_alert_advice: "單日波動劇烈，建議關注相關公告。"
+  framework_standard_name: "標準分析"
+  framework_standard_desc: "使用四大深度區塊完整分析"
+  framework_standard_focus: "全面理解公司營運與財務狀況"
+  framework_etf_name: "ETF 分析"
+  framework_etf_desc: "分析 ETF 成分與績效"
+  framework_group_name: "集團分析"
+  framework_group_desc: "分析母子公司結構與貢獻"
+  freshness_label_price: "股價資料"
+  freshness_label_revenue: "營收資料"
+  direction_up: "漲"
+  direction_down: "跌"

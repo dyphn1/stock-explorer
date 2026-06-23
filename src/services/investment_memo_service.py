@@ -11,6 +11,8 @@ from typing import Any
 
 import pandas as pd
 
+from src.core.i18n import t
+
 logger = logging.getLogger(__name__)
 
 
@@ -43,19 +45,19 @@ def validate_memo_input(data: dict) -> tuple[bool, str]:
         (is_valid, error_message) — error_message empty if valid.
     """
     if not data.get("one_liner", "").strip():
-        return False, "請填寫「一句話定位」"
+        return False, t("investment_memo.validation.one_liner_empty")
     if not data.get("reasons", "").strip():
-        return False, "請填寫「投資理由」"
+        return False, t("investment_memo.validation.reasons_empty")
     low = data.get("target_low")
     high = data.get("target_high")
     if low is not None and high is not None:
         if low < 0 or high < 0:
-            return False, "目標價不能為負數"
+            return False, t("investment_memo.validation.target_price_negative")
         if low > high:
-            return False, "目標價下限不能大於上限"
+            return False, t("investment_memo.validation.target_price_low_gt_high")
     confidence = data.get("confidence", 3)
     if not (1 <= confidence <= 5):
-        return False, "信心水平必須在 1-5 之間"
+        return False, t("investment_memo.validation.confidence_out_of_range")
     return True, ""
 
 
@@ -70,24 +72,24 @@ def format_memo_summary(memo_data: dict) -> dict:
     """
     confidence = memo_data.get("confidence", 3)
     confidence_labels = {
-        1: "⭐ 很低",
-        2: "⭐⭐ 低",
-        3: "⭐⭐⭐ 中等",
-        4: "⭐⭐⭐⭐ 高",
-        5: "⭐⭐⭐⭐⭐ 很高",
+        1: t("investment_memo.confidence.very_low"),
+        2: t("investment_memo.confidence.low"),
+        3: t("investment_memo.confidence.medium"),
+        4: t("investment_memo.confidence.high"),
+        5: t("investment_memo.confidence.very_high"),
     }
     low = memo_data.get("target_low")
     high = memo_data.get("target_high")
     if low is not None and high is not None:
         price_range = f"NT$ {low:,.0f} — {high:,.0f}"
     else:
-        price_range = "未設定"
+        price_range = t("investment_memo.default.price_range_unset")
 
     return {
         "one_liner": memo_data.get("one_liner", ""),
         "reasons": memo_data.get("reasons", ""),
-        "concerns": memo_data.get("concerns", "未填寫"),
-        "key_metrics": memo_data.get("key_metrics", "未填寫"),
+        "concerns": memo_data.get("concerns", t("investment_memo.default.not_filled")),
+        "key_metrics": memo_data.get("key_metrics", t("investment_memo.default.not_filled")),
         "price_range": price_range,
         "confidence_label": confidence_labels.get(confidence, "⭐⭐⭐"),
         "notes": memo_data.get("notes", ""),

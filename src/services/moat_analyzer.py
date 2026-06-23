@@ -60,11 +60,11 @@ def get_moat_summary(
             "moat_type": yaml_data.get("moat_type", t("moat.type.none")),
             "moat_score": yaml_data.get("moat_score", 0),
             "dimensions": {
-                "品牌力": dimensions.get("品牌力", 0),
-                "成本優勢": dimensions.get("成本優勢", 0),
-                "網路效應": dimensions.get("網路效應", 0),
-                "轉換成本": dimensions.get("轉換成本", 0),
-                "規模經濟": dimensions.get("規模經濟", 0),
+                t("moat.dimension.brand"): dimensions.get("品牌力", 0),
+                t("moat.dimension.cost"): dimensions.get("成本優勢", 0),
+                t("moat.dimension.network"): dimensions.get("網路效應", 0),
+                t("moat.dimension.switching"): dimensions.get("轉換成本", 0),
+                t("moat.dimension.scale"): dimensions.get("規模經濟", 0),
             },
             "evidence": yaml_data.get("evidence", []),
             "moat_type_description": yaml_data.get("moat_type_description", ""),
@@ -138,11 +138,11 @@ def compute_moat_dimensions(
         scale_score = 40
 
     return {
-        "品牌力": round(brand_score, 1),
-        "成本優勢": round(cost_score, 1),
-        "網路效應": round(network_score, 1),
-        "轉換成本": round(switching_score, 1),
-        "規模經濟": round(scale_score, 1),
+        t("moat.dimension.brand"): round(brand_score, 1),
+        t("moat.dimension.cost"): round(cost_score, 1),
+        t("moat.dimension.network"): round(network_score, 1),
+        t("moat.dimension.switching"): round(switching_score, 1),
+        t("moat.dimension.scale"): round(scale_score, 1),
     }
 
 
@@ -155,11 +155,11 @@ def _classify_moat_type(dimensions: dict) -> tuple:
     max_score = dimensions[max_dim]
 
     descriptions = {
-        "品牌力": (t("moat.type.brand"), t("moat.description.brand")),
-        "成本優勢": (t("moat.type.cost"), t("moat.description.cost")),
-        "網路效應": (t("moat.type.network"), t("moat.description.network")),
-        "轉換成本": (t("moat.type.switching"), t("moat.description.switching")),
-        "規模經濟": (t("moat.type.scale"), t("moat.description.scale")),
+        t("moat.dimension.brand"): (t("moat.type.brand"), t("moat.description.brand")),
+        t("moat.dimension.cost"): (t("moat.type.cost"), t("moat.description.cost")),
+        t("moat.dimension.network"): (t("moat.type.network"), t("moat.description.network")),
+        t("moat.dimension.switching"): (t("moat.type.switching"), t("moat.description.switching")),
+        t("moat.dimension.scale"): (t("moat.type.scale"), t("moat.description.scale")),
     }
 
     if max_score < 40:

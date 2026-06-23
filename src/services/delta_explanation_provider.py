@@ -16,8 +16,8 @@ from src.core.i18n import t
 
 # ── Metric name → template key mapping ─────────────────────────
 _METRIC_KEY_MAP: dict[str, str] = {
-    "月營收": "revenue",
-    "營收年增率": "revenue",
+    t("delta.metric.revenue_monthly"): "revenue",
+    t("delta.metric.revenue_yoy"): "revenue",
     # "股價（近 30 日均價）" → no direct template match, uses fallback
 }
 
@@ -66,9 +66,9 @@ _YOY_TEMPLATES = {
 }
 
 _METRIC_TEMPLATES: dict[str, dict[str, list[tuple[int, str]]]] = {
-    "月營收": _REVENUE_TEMPLATES,
-    "股價（近 30 日均價）": _PRICE_TEMPLATES,
-    "營收年增率": _YOY_TEMPLATES,
+    t("delta.metric.revenue_monthly"): _REVENUE_TEMPLATES,
+    t("delta.metric.price_30d"): _PRICE_TEMPLATES,
+    t("delta.metric.revenue_yoy"): _YOY_TEMPLATES,
 }
 
 # ── Implication templates (C143) ──────────────────────────────
@@ -78,7 +78,7 @@ _METRIC_TEMPLATES: dict[str, dict[str, list[tuple[int, str]]]] = {
 # Safe alternatives used: 可留意, 可觀察, 可持續追蹤
 
 _IMPLICATION_TEMPLATES: dict[str, dict[str, list[tuple[int, str]]]] = {
-    "月營收": {
+    t("delta.metric.revenue_monthly"): {
         "up": [
             (50, t('delta_explanation_provider.implication_revenue_up_extreme')),
             (30, t('delta_explanation_provider.implication_revenue_up_strong')),
@@ -90,7 +90,7 @@ _IMPLICATION_TEMPLATES: dict[str, dict[str, list[tuple[int, str]]]] = {
             (0, t('delta_explanation_provider.implication_revenue_down_moderate')),
         ],
     },
-    "股價（近 30 日均價）": {
+    t("delta.metric.price_30d"): {
         "up": [
             (30, t('delta_explanation_provider.implication_price_up_extreme')),
             (20, t('delta_explanation_provider.implication_price_up_strong')),
@@ -102,7 +102,7 @@ _IMPLICATION_TEMPLATES: dict[str, dict[str, list[tuple[int, str]]]] = {
             (0, t('delta_explanation_provider.implication_price_down_moderate')),
         ],
     },
-    "營收年增率": {
+    t("delta.metric.revenue_yoy"): {
         "up": [
             (50, t('delta_explanation_provider.implication_yoy_up_extreme')),
             (20, t('delta_explanation_provider.implication_yoy_up_strong')),

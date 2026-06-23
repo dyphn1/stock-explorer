@@ -41,8 +41,9 @@ _METRIC_REGISTRY: dict[str, dict] = {
         "is_higher_better": True,
         "explanation": t('metric_education.net_margin_explanation'),
         "analogy_fn": lambda val: (
-            f"每賣 100 元東西，扣掉所有開銷後剩 {val:.1f} 元 — "
-            + ("獲利能力不錯" if val >= 15 else "利潤空間有限" if val >= 5 else "賺錢很辛苦")
+            t("metric_education.net_margin_analogy_high", val=val) if val >= 15
+            else t("metric_education.net_margin_analogy_mid", val=val) if val >= 5
+            else t("metric_education.net_margin_analogy_low", val=val)
         ),
         "historical_context": t('metric_education.net_margin_historical_context'),
     },
@@ -109,10 +110,10 @@ def get_metric_explanation(metric_name: str, value: float, stock_id: str) -> dic
     entry = _METRIC_REGISTRY.get(metric_name)
     if entry is None:
         return {
-            "explanation": f"{metric_name} 是衡量公司表現的指標之一。",
-            "analogy": "這個指標需要更多背景資料才能提供比喻。",
+            "explanation": t("metric_education.fallback.explanation", metric_name=metric_name),
+            "analogy": t("metric_education.fallback.analogy"),
             "is_higher_better": True,
-            "historical_context": "建議查閱更多關於此指標的資料。",
+            "historical_context": t("metric_education.fallback.historical_context"),
             "display_name": metric_name,
             "unit": "",
             "value": value,
@@ -122,7 +123,7 @@ def get_metric_explanation(metric_name: str, value: float, stock_id: str) -> dic
     try:
         analogy = analogy_fn(value)
     except Exception:
-        analogy = "暫時無法產生比喻。"
+        analogy = t("metric_education.analogy_error")
 
     return {
         "explanation": entry["explanation"],

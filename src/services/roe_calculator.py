@@ -104,11 +104,11 @@ def calc_roe_ttm(financial_df, balance_sheet_df, industry: str = "") -> dict | N
         if quarters_used >= 4:
             method = "TTM"
         elif quarters_used == 3:
-            method = "3季累計"
+            method = t("roe_calculator.method.3q")
         elif quarters_used == 2:
-            method = "2季累計"
+            method = t("roe_calculator.method.2q")
         else:
-            method = "單季"
+            method = t("roe_calculator.method.1q")
 
         # ── Step 5: Seasonal warning ──
         is_seasonal = is_seasonal_industry(industry)

@@ -4,6 +4,7 @@
 """
 
 from src.services.financial_metrics import extract_quarterly_eps
+from src.core.i18n import t
 
 import yaml
 from pathlib import Path
@@ -227,11 +228,11 @@ def compute_health_scores(
     valuation = _score_valuation(per, pbr)
 
     return {
-        "獲利能力": round(profitability, 1),
-        "成長性": round(growth, 1),
-        "財務健康": round(financial_health, 1),
-        "股利品質": round(dividend_quality, 1),
-        "估值合理性": round(valuation, 1),
+        t("health.dimension.profitability"): round(profitability, 1),
+        t("health.dimension.growth"): round(growth, 1),
+        t("health.dimension.financial_health"): round(financial_health, 1),
+        t("health.dimension.dividend_quality"): round(dividend_quality, 1),
+        t("health.dimension.valuation"): round(valuation, 1),
     }
 
 
@@ -242,7 +243,7 @@ def get_health_summary(health_scores: dict) -> str:
     回傳中文（zh-TW）的健康摘要字串。
     """
     if not health_scores:
-        return "整體健康狀況：無法評估"
+        return t("health.summary.unable_to_assess")
 
     values = list(health_scores.values())
     avg = sum(values) / len(values)
@@ -250,23 +251,23 @@ def get_health_summary(health_scores: dict) -> str:
     sorted_dims = sorted(health_scores.items(), key=lambda x: x[1], reverse=True)
 
     if avg >= 70:
-        status = "良好"
+        status = t("health.status.good")
         emoji = "🟢"
     elif avg >= 40:
-        status = "普通"
+        status = t("health.status.average")
         emoji = "🟡"
     else:
-        status = "需關注"
+        status = t("health.status.needs_attention")
         emoji = "🔴"
 
     weak_dims = [name for name, score in health_scores.items() if score < 40]
     strong_dims = [name for name, score in health_scores.items() if score >= 70]
 
-    parts = [f"{emoji} 整體健康狀況：{status}（平均 {avg:.0f} 分）"]
+    parts = [t("health.summary.overall", emoji=emoji, status=status, avg=avg)]
 
     if strong_dims:
-        parts.append(f"💪 表現較佳：{'、'.join(strong_dims)}")
+        parts.append(t("health.summary.strong_dims", dims="、".join(strong_dims)))
     if weak_dims:
-        parts.append(f"⚠️ 需要留意：{'、'.join(weak_dims)}")
+        parts.append(t("health.summary.weak_dims", dims="、".join(weak_dims)))
 
     return "\n".join(parts)
