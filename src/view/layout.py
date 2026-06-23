@@ -8,6 +8,42 @@ from src.view.fab import render_fab
 
 def _inject_global_styles():
     st.html("""
+<style>
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FA;
+  --text-primary: #1C1C1E;
+  --text-secondary: #7F8C8D;
+  --border-color: #E5E5EA;
+  --accent: #007AFF;
+  --sidebar-width: 260px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1C1C1E;
+    --bg-secondary: #2C2C2E;
+    --text-primary: #F2F2F7;
+    --text-secondary: #8E8E93;
+    --border-color: #38383A;
+    --accent: #0A84FF;
+  }
+}
+
+* { transition: background-color 0.2s ease, color 0.2s ease; }
+
+@media (max-width: 768px) {
+  section[data-testid="stSidebar"] { min-width: 200px !important; width: 200px !important; }
+}
+
+@media (max-width: 480px) {
+  section[data-testid="stSidebar"] { min-width: 100% !important; width: 100% !important; }
+  .stRadio [role="radiogroup"] { flex-wrap: wrap; }
+}
+</style>
+""")
+
+    st.html("""
 <script>
 (function(){
     function h(){var n=document.querySelector('section[data-testid="stSidebarNav"]');if(n)n.remove();}
