@@ -288,6 +288,26 @@ watchlist:
   default_list_name: Default List
 summary_hero:
   added_to_list: Added {stock_name} to watchlist
+  revenue: Revenue
+  per: P/E
+  dividend_yield: Div. Yield
+  health_fair: Fair
+  health_good: Good
+  health_poor: Needs Attention
+  confidence_note: Confidence Note
+  roe: ROE
+  gross_margin: Gross Margin
+  pbr: P/B
+  system_estimate: (Est.)
+  choose_list: Choose a list
+  create_new_list: Create new list
+  new_list_name: New list name
+  new_list_placeholder: Enter name...
+  select_existing_list: Select existing list
+  select_list: Select list
+  one_liner_title: 📋 One-Liner
+  did_you_know_title: 🤔 Did You Know?
+  vs_industry_title: 📊 vs Industry
 test_key: test value
 delta_explanation_provider:
   revenue_up_extreme: '{stock_prefix} revenue surged {abs_pct:.0f}%, possibly due to large orders or seasonal effects, worth monitoring'
@@ -597,3 +617,143 @@ router:
 event_dashboard:
   high_events_alert: ⚠️ High-Impact Events
   medium_events_alert: 📌 Medium-Impact Events
+business_card:
+  watchlist:
+    add_to: Add to Watchlist
+  mode_toggle:
+    beginner: Beginner
+    beginner_banner: 🌱 New to investing? Here is a simplified view.
+    beginner_caption: Switch to Expert mode for more details.
+    expert_caption: Switch to Beginner mode for a simpler view.
+  expander:
+    one_liner_news: One-Liner News
+    study_log: Study Log
+    moat_analysis: 🏰 Moat Analysis
+    risk_analysis: ⚠️ Risk Analysis
+    valuation: 💰 Valuation
+    historical_pattern: 📜 Historical Pattern
+    historical_scenarios: 🎯 Historical Scenarios
+    key_metrics_dividend: 📊 Key Metrics & Dividend
+    more_analysis: 🔍 More Analysis
+  simple_mode:
+    risk_title: ⚠️ Risk Level
+    health_title: 🏥 Health Score
+    key_financial_title: 💰 Key Financials
+    dividend_overview_title: 💵 Dividend Overview
+    revenue_overview_title: 📈 Revenue Overview
+    dividend_latest: Latest Dividend
+    dividend_yield_actual: Actual Yield
+    dividend_yield_est: Est. Yield
+    per_label: P/E Ratio
+    dividend_yield_label: Div. Yield
+    dividend_no_data: No dividend data
+    revenue_latest: Latest Revenue
+    revenue_yoy_growth: YoY Growth
+    revenue_yoy_decline: YoY Decline
+    risk_level: Risk Level
+    gross_margin_label: Gross Margin
+    roe_label: ROE
+  summary_hero:
+    one_liner_title: 📋 One-Liner
+    did_you_know_title: 🤔 Did You Know?
+    vs_industry_title: 📊 vs Industry
+    health_fair: Fair
+    health_good: Good
+    health_poor: Needs Attention
+    dividend_yield: Div. Yield
+    per: P/E
+    revenue: Revenue
+    roe: ROE
+    gross_margin: Gross Margin
+    pbr: P/B
+    system_estimate: (Est.)
+    confidence_note: Confidence Note
+    choose_list: Choose a list
+    create_new_list: Create new list
+    new_list_name: New list name
+    new_list_placeholder: Enter name...
+    select_existing_list: Select existing list
+    select_list: Select list
+analogy:
+  oneliner:
+    '2330': World's largest semiconductor foundry, pivotal to global chip supply.
+  dividend:
+    low: Low yield
+  per:
+    high: High valuation
+    negative: Negative earnings
+  revenue:
+    trillion: Scale in trillions
+  yoy:
+    good: Strong growth
+why_moved:
+  section_title: Why Did This Move?
+  key_concept: Key Concept
+  detail_explanation: Detailed Explanation
+  stock_price_change: Stock Price Change
+  confidence_note: Confidence Note
+  direction_change: Direction of Change
+  direction_up: Upward
+  direction_down: Downward
+  direction_sideways: Sideways
+  magnitude_major: Major
+  magnitude_significant: Significant
+story:
+  previous_period: Prev. Period
+  full_timeline: Full Timeline
+  more_analysis: More Analysis
+  no_recommendations: No recommendations at this time.
+  read_next: Read Next
+  read_next_fallback: Explore more stories
+  timeline_caption: Timeline
+  you_might_wonder: You Might Wonder...
+  did_you_know: Did you know?
+  recent_changes: Recent Changes
+  confidence_note: Confidence Note
+  timeline: Timeline
+  peer_comparison: Peer Comparison
+  unknown_industry: Unknown Industry
+  feed:
+    analogy:
+      default: Analogy
+      revenue_surge: Revenue Surge
+      price_abnormal: Price Anomaly
+      institutional_shift: Institutional Shift
+      news: News Impact
+    education:
+      analogy_default: Learning Analogy
+    historian:
+      '1': Looking back at similar situations...
+      '2': Historical context helps understand...
+    sector:
+      direction:
+        up: Sector rising
+        down: Sector falling
+        flat: Sector flat
+    event:
+      unknown: Unknown Event
+summary:
+  one_liner: One-Liner Summary
+  title: Summary
+  fact_title: Key Facts
+router_base:
+  confidence_high: High Confidence
+  confidence_medium: Medium Confidence
+  confidence_low: Low Confidence
+  explain_error: An error occurred while generating the explanation.
+  glossary_tip: Hover over terms for definitions.
+  no_data_in_range: No data in this range.
+  source_estimate: Estimated
+  read_time: Read Time
+study_log:
+  title: Study Log
+  progress_title: Study Progress
+  recent_7_days: Recent 7 Days
+  today_suffix: today
+  start_today: Start studying today!
+template_provider:
+  revenue_increase: Revenue Increase
+  revenue_decrease: Revenue Decrease
+  revenue_neutral: Revenue Stable
+  eps_increase: EPS Increase
+  eps_decrease: EPS Decrease

@@ -257,6 +257,26 @@ watchlist:
   default_list_name: 預設清單
 summary_hero:
   added_to_list: 已將 {stock_name} 加入關注列表
+  revenue: 營收
+  per: 本益比
+  dividend_yield: 殖利率
+  health_fair: 普通
+  health_good: 良好
+  health_poor: 需注意
+  confidence_note: 信心備註
+  roe: 股東權益報酬率
+  gross_margin: 毛利率
+  pbr: 股價淨值比
+  system_estimate: (估)
+  choose_list: 選擇清單
+  create_new_list: 建立新清單
+  new_list_name: 新清單名稱
+  new_list_placeholder: 輸入名稱...
+  select_existing_list: 選擇現有清單
+  select_list: 選擇清單
+  one_liner_title: 📋 一句話摘要
+  did_you_know_title: 🤔 你知道嗎？
+  vs_industry_title: 📊 與同業比較
 delta_explanation_provider:
   revenue_up_extreme: '{stock_prefix}{metric_name}暴增 {abs_pct:.0f}%，可能是大訂單入帳或旺季效應，可持續觀察其變化'
   revenue_up_strong: '{stock_prefix}{metric_name}成長 {abs_pct:.0f}%，表現相對正面，可能是需求回溫或新產品貢獻'
@@ -589,3 +609,143 @@ router:
 event_dashboard:
   high_events_alert: ⚠️ 高影響事件
   medium_events_alert: 📌 中影響事件
+business_card:
+  watchlist:
+    add_to: 加入關注
+  mode_toggle:
+    beginner: 新手
+    beginner_banner: 🌱 投資新手？這是為你簡化的畫面。
+    beginner_caption: 切換到專家模式以查看更多細節。
+    expert_caption: 切換到新手模式以查看簡化畫面。
+  expander:
+    one_liner_news: 一句話新聞
+    study_log: 學習紀錄
+    moat_analysis: 🏰 護城河分析
+    risk_analysis: ⚠️ 風險分析
+    valuation: 💰 估值分析
+    historical_pattern: 📜 歷史模式
+    historical_scenarios: 🎯 歷史情境
+    key_metrics_dividend: 📊 關鍵指標與股利
+    more_analysis: 🔍 更多分析
+  simple_mode:
+    risk_title: ⚠️ 風險等級
+    health_title: 🏥 健康度評分
+    key_financial_title: 💰 關鍵財務
+    dividend_overview_title: 💵 股利概覽
+    revenue_overview_title: 📈 營收概覽
+    dividend_latest: 近期股利
+    dividend_yield_actual: 實際殖利率
+    dividend_yield_est: 估計殖利率
+    per_label: 本益比
+    dividend_yield_label: 殖利率
+    dividend_no_data: 無股利資料
+    revenue_latest: 近期營收
+    revenue_yoy_growth: 年增率
+    revenue_yoy_decline: 年減幅
+    risk_level: 風險等級
+    gross_margin_label: 毛利率
+    roe_label: 股東權益報酬率
+  summary_hero:
+    one_liner_title: 📋 一句話摘要
+    did_you_know_title: 🤔 你知道嗎？
+    vs_industry_title: 📊 與同業比較
+    health_fair: 普通
+    health_good: 良好
+    health_poor: 需注意
+    dividend_yield: 殖利率
+    per: 本益比
+    revenue: 營收
+    roe: 股東權益報酬率
+    gross_margin: 毛利率
+    pbr: 股價淨值比
+    system_estimate: (估)
+    confidence_note: 信心備註
+    choose_list: 選擇清單
+    create_new_list: 建立新清單
+    new_list_name: 新清單名稱
+    new_list_placeholder: 輸入名稱...
+    select_existing_list: 選擇現有清單
+    select_list: 選擇清單
+analogy:
+  oneliner:
+    '2330': 全球最大半導體晶圓代工廠，先進製程領先者。
+  dividend:
+    low: 殖利率較低
+  per:
+    high: 本益比較高
+    negative: 獲利為負
+  revenue:
+    trillion: 營收規模巨大
+  yoy:
+    good: 強勁成長
+why_moved:
+  section_title: 為什麼會這樣波動？
+  key_concept: 關鍵概念
+  detail_explanation: 詳細說明
+  stock_price_change: 股價變動
+  confidence_note: 信心程度
+  direction_change: 變動方向
+  direction_up: 上漲
+  direction_down: 下跌
+  direction_sideways: 持平
+  magnitude_major: 重大
+  magnitude_significant: 顯著
+story:
+  previous_period: 去年同期
+  full_timeline: 完整時間軸
+  more_analysis: 更多分析
+  no_recommendations: 目前尚無建議。
+  read_next: 繼續閱讀
+  read_next_fallback: 探索更多故事
+  timeline_caption: 時間軸
+  you_might_wonder: 你可能會好奇...
+  did_you_know: 你知道嗎？
+  recent_changes: 近期變化
+  confidence_note: 信心備註
+  timeline: 時間軸
+  peer_comparison: 同業比較
+  unknown_industry: 未知產業
+  feed:
+    analogy:
+      default: 比喻
+      revenue_surge: 營收暴增
+      price_abnormal: 價格異常
+      institutional_shift: 法人變動
+      news: 新聞影響
+    education:
+      analogy_default: 學習比喻
+    historian:
+      '1': 回顧過去類似情況...
+      '2': 歷史背景有助於理解...
+    sector:
+      direction:
+        up: 產業上漲
+        down: 產業下跌
+        flat: 產業持平
+    event:
+      unknown: 未知事件
+summary:
+  one_liner: 一句話總結
+  title: 摘要
+  fact_title: 關鍵事實
+router_base:
+  confidence_high: 高信心度
+  confidence_medium: 中信心度
+  confidence_low: 低信心度
+  explain_error: 產生解釋時發生錯誤。
+  glossary_tip: 滑鼠懸停查看名詞定義。
+  no_data_in_range: 此區間無資料。
+  source_estimate: 估計值
+  read_time: 閱讀時間
+study_log:
+  title: 學習紀錄
+  progress_title: 學習進度
+  recent_7_days: 近 7 天
+  today_suffix: 今天
+  start_today: 今天開始學習吧！
+template_provider:
+  revenue_increase: 營收成長
+  revenue_decrease: 營收衰退
+  revenue_neutral: 營收持平
+  eps_increase: EPS 成長
+  eps_decrease: EPS 衰退
