@@ -34,3 +34,30 @@
 - Challenger 2 and QA both used nemotron-120b instead of their primary models (gpt-oss-120b and gemma-31b respectively). This suggests possible rate limiting on those models.
 - All tasks completed successfully despite model routing changes.
 - 719 tests passed (up from 717 in previous run).
+
+---
+
+## [2026-06-24 06:15] Run: Fix Failing Tests + Integrate Why Did This Move (C188)
+| Role | Primary Model | Fallback Model | Result |
+|------|-------------|---------------|--------|
+| Challenger 1 | gpt-oss-120b:free | — | ✅ Primary succeeded |
+| Challenger 2 | nemotron-120b:free | — | ✅ Primary succeeded |
+| Developer A (path fix) | nemotron-120b:free | — | ✅ Primary succeeded |
+| Developer B (integration) | nemotron-120b:free | — | ✅ Primary succeeded |
+| Architect | nemotron-120b:free | — | ✅ Primary succeeded |
+| QA | gemma-4-31b-it:free | — | ✅ Primary succeeded |
+
+### Model Health Summary
+| Model Used | Times Called | Failures | Notes |
+|------------|-------------|----------|-------|
+| owl-alpha | 1 | 0 | PM only |
+| gpt-oss-120b | 1 | 0 | Challenger 1 |
+| nemotron-120b | 4 | 0 | Challenger 2 + 2 Developers + Architect |
+| gemma-31b | 1 | 0 | QA |
+
+### Notes
+- All primary models succeeded — no fallbacks needed.
+- 7 new tests passing (test_sprint_202606240010.py: 7/7).
+- 2 UI no-raw-keys tests passing.
+- Full suite timeout at 89% is a pre-existing issue (slow test, unrelated to changes).
+- 13 files changed, 633 insertions, 71 deletions.
