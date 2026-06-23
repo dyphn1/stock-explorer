@@ -1,42 +1,42 @@
 screener:
   explanation:
-    disclaimer: "Screening results are for learning reference only and do not constitute investment advice."
+    disclaimer: Screening results are for learning reference only and do not constitute investment advice.
     preset:
       dividend:
-        high_yield: "{stock_name} has a dividend yield of {dividend_yield:.2f}%, which is above the market average, indicating the company's ability to consistently pay dividends."
-        stable: "{stock_name} has a dividend yield of {dividend_yield:.2f}%, with low volatility, making it a relatively stable income target."
-        fallback: "{stock_name} ({stock_id}) meets the stable income selection criteria."
-        implication: "High dividend yield companies typically have stable cash flows; pay attention to the sustainability of dividends."
+        high_yield: '{stock_name} has a dividend yield of {dividend_yield:.2f}%, which is above the market average, indicating the company''s ability to consistently pay dividends.'
+        stable: '{stock_name} has a dividend yield of {dividend_yield:.2f}%, with low volatility, making it a relatively stable income target.'
+        fallback: '{stock_name} ({stock_id}) meets the stable income selection criteria.'
+        implication: High dividend yield companies typically have stable cash flows; pay attention to the sustainability of dividends.
       growth:
-        strong: "{stock_name} has a revenue year-on-year growth rate of {revenue_yoy:.1f}%, showing revenue expansion speed superior to the industry average."
-        moderate: "{stock_name} has a revenue year-on-year growth rate of {revenue_yoy:.1f}%, showing a moderate growth trend."
-        fallback: "{stock_name} ({stock_id}) meets the growth potential selection criteria."
-        implication: "Revenue growth companies may have expansion potential; observe whether profitability is simultaneously improving."
+        strong: '{stock_name} has a revenue year-on-year growth rate of {revenue_yoy:.1f}%, showing revenue expansion speed superior to the industry average.'
+        moderate: '{stock_name} has a revenue year-on-year growth rate of {revenue_yoy:.1f}%, showing a moderate growth trend.'
+        fallback: '{stock_name} ({stock_id}) meets the growth potential selection criteria.'
+        implication: Revenue growth companies may have expansion potential; observe whether profitability is simultaneously improving.
       value:
-        deep_value: "{stock_name} has a P/E ratio of {per:.1f} and P/B ratio of {pbr:.2f}, with valuation below market average, indicating the market's relatively conservative valuation."
-        moderate_value: "{stock_name} has a P/E ratio of {per:.1f} and P/B ratio of {pbr:.2f}, with valuation in a reasonable range."
-        fallback: "{stock_name} ({stock_id}) meets the low valuation selection criteria."
-        implication: "Undervalued companies may be underestimated by the market; further evaluate their fundamentals for stability."
+        deep_value: '{stock_name} has a P/E ratio of {per:.1f} and P/B ratio of {pbr:.2f}, with valuation below market average, indicating the market''s relatively conservative valuation.'
+        moderate_value: '{stock_name} has a P/E ratio of {per:.1f} and P/B ratio of {pbr:.2f}, with valuation in a reasonable range.'
+        fallback: '{stock_name} ({stock_id}) meets the low valuation selection criteria.'
+        implication: Undervalued companies may be underestimated by the market; further evaluate their fundamentals for stability.
       custom_filter:
-        revenue_positive: "{stock_name} has a revenue year-on-year growth rate of {revenue_yoy:.1f}%, showing revenue growth compared to the same period last year."
-        industry_match: "{stock_name} belongs to the {industry} industry, matching the selected industry classification."
-        per_range: "{stock_name} has a P/E ratio of {per:.1f}, falling within the selected range."
-        div_range: "{stock_name} has a dividend yield of {dividend_yield:.2f}%, falling within the selected range."
-        fallback: "{stock_name} ({stock_id}) meets the set selection criteria."
-        implication: "Companies meeting multiple selection criteria can be further compared on financial and valuation aspects."
+        revenue_positive: '{stock_name} has a revenue year-on-year growth rate of {revenue_yoy:.1f}%, showing revenue growth compared to the same period last year.'
+        industry_match: '{stock_name} belongs to the {industry} industry, matching the selected industry classification.'
+        per_range: '{stock_name} has a P/E ratio of {per:.1f}, falling within the selected range.'
+        div_range: '{stock_name} has a dividend yield of {dividend_yield:.2f}%, falling within the selected range.'
+        fallback: '{stock_name} ({stock_id}) meets the set selection criteria.'
+        implication: Companies meeting multiple selection criteria can be further compared on financial and valuation aspects.
       implication:
-        dividend: "High dividend yield companies typically have stable cash flows; pay attention to the sustainability of dividends."
-        growth: "Revenue growth companies may have expansion potential; observe whether profitability is simultaneously improving."
-        value: "Undervalued companies may be underestimated by the market; further evaluate their fundamentals for stability."
-        custom_many: "Companies meeting multiple selection criteria can be further compared on financial and valuation aspects."
-        custom_fallback: "The stock meets the selected criteria."
-        default: "Needs further research"
+        dividend: High dividend yield companies typically have stable cash flows; pay attention to the sustainability of dividends.
+        growth: Revenue growth companies may have expansion potential; observe whether profitability is simultaneously improving.
+        value: Undervalued companies may be underestimated by the market; further evaluate their fundamentals for stability.
+        custom_many: Companies meeting multiple selection criteria can be further compared on financial and valuation aspects.
+        custom_fallback: The stock meets the selected criteria.
+        default: Needs further research
       filter:
-        revenue_positive: "Revenue Growth"
-        industry_match: "Industry Match"
-        per_range: "P/E Range"
-        div_range: "Dividend Yield Range"
-        all_industries: "All Industries"
+        revenue_positive: Revenue Growth
+        industry_match: Industry Match
+        per_range: P/E Range
+        div_range: Dividend Yield Range
+        all_industries: All Industries
 delta:
   metric:
     revenue_monthly: Monthly Revenue
@@ -44,623 +44,556 @@ delta:
     revenue_yoy: Revenue YoY
   previous_year_same_period: Same Period Last Year
 app:
-  title: "Stock Explorer"
+  title: Stock Explorer
 main:
   sidebar:
-    nav_home: "Home"
-    nav_sector: "Sector Heatmap"
-    nav_category: "Category Browse"
-    nav_etf: "ETF Zone"
-    nav_watchlist: "Watchlist"
-    nav_events: "Events Dashboard"
-    nav_notifications: "Notifications"
-    nav_memo: "Investment Memo"
-    nav_wellness: "Financial Wellness Check"
-    nav_screener: "Stock Screener"
-    hot_stocks: "Hot Stocks"
-    hot_etfs: "Hot ETFs"
-    search_label: "Enter stock name or ID"
-    search_placeholder: "e.g. TSMC or 2330"
-    api_warning: "⚠️ API rate limited, please try again later"
+    nav_home: Home
+    nav_sector: Sector Heatmap
+    nav_category: Category Browse
+    nav_etf: ETF Zone
+    nav_watchlist: Watchlist
+    nav_events: Events Dashboard
+    nav_notifications: Notifications
+    nav_memo: Investment Memo
+    nav_wellness: Financial Wellness Check
+    nav_screener: Stock Screener
+    hot_stocks: Hot Stocks
+    hot_etfs: Hot ETFs
+    search_label: Enter stock name or ID
+    search_placeholder: e.g. TSMC or 2330
+    api_warning: ⚠️ API rate limited, please try again later
   loading:
-    text: "Loading data..."
-    subtext: "Please wait a moment"
+    text: Loading data...
+    subtext: Please wait a moment
   search:
-    multiple_results: "Multiple matching stocks found:"
-    not_found: "No matching stocks found"
-    searching: "Searching..."
+    multiple_results: 'Multiple matching stocks found:'
+    not_found: No matching stocks found
+    searching: Searching...
   home:
-    title: "Stock Explorer"
-    lead1: "Get to know a company, start here"
-    lead2: "Enter a stock code or name in the left sidebar to begin getting to know a company"
-    quick_hint: "💡 Type a stock name or ID in the sidebar to get started"
-  disclaimer: "⚠️ This tool is for company education only,<br>does not constitute any investment advice.<br>Investing involves risk, please assess on your own."
+    title: Stock Explorer
+    lead1: Get to know a company, start here
+    lead2: Enter a stock code or name in the left sidebar to begin getting to know a company
+    quick_hint: 💡 Type a stock name or ID in the sidebar to get started
+  disclaimer: ⚠️ This tool is for company education only,<br>does not constitute any investment advice.<br>Investing involves risk, please assess on your own.
   tab:
-    key_metrics: "Key Metrics"
-    financial_chart: "Financial Chart"
+    key_metrics: Key Metrics
+    financial_chart: Financial Chart
 daily_market:
-  title: "Today's Market Dynamics"
-  subtitle: "Narrative-driven market overview: what happened in the Taiwan market today."
-  last_updated: "Last updated"
-  freshness_fresh: "Fresh"
-  freshness_stale: "Stale"
-  freshness_unknown: "Unknown"
+  title: Today's Market Dynamics
+  subtitle: 'Narrative-driven market overview: what happened in the Taiwan market today.'
+  last_updated: Last updated
+  freshness_fresh: Fresh
+  freshness_stale: Stale
+  freshness_unknown: Unknown
   overview:
-    title: "Market Overview"
-    template_bull: "Bullish template"
-    template_bear: "Bearish template"
-    template_flat: "Flat template"
-    volume_above: "Volume above average"
-    volume_below: "Volume below average"
-    volume_normal: "Volume normal"
-    sector_lead_up: "Leading sector: {sector} (+{pct}%)"
-    sector_lead_down: "Lagging sector: {sector} ({pct}%)"
+    title: Market Overview
+    template_bull: Bullish template
+    template_bear: Bearish template
+    template_flat: Flat template
+    volume_above: Volume above average
+    volume_below: Volume below average
+    volume_normal: Volume normal
+    sector_lead_up: 'Leading sector: {sector} (+{pct}%)'
+    sector_lead_down: 'Lagging sector: {sector} ({pct}%)'
   sentiment:
-    title: "Market Sentiment"
-    ad_ratio: "Advance-Decline Ratio"
-    ad_ratio_value: "{up} up, {down} down"
-    volume: "Total Volume"
-    volume_unit: "stocks"
-    mood: "Market Mood"
-    mood_bullish: "Bullish"
-    mood_neutral: "Neutral"
-    mood_bearish: "Bearish"
-    up_count: "Advancing"
-    down_count: "Declining"
+    title: Market Sentiment
+    ad_ratio: Advance-Decline Ratio
+    ad_ratio_value: '{up} up, {down} down'
+    volume: Total Volume
+    volume_unit: stocks
+    mood: Market Mood
+    mood_bullish: Bullish
+    mood_neutral: Neutral
+    mood_bearish: Bearish
+    up_count: Advancing
+    down_count: Declining
   sectors:
-    title: "Sector Performance"
-    top_n: "Top {n} Sectors"
+    title: Sector Performance
+    top_n: Top {n} Sectors
   movers:
-    title: "Top Movers"
-    gainers: "Gainers"
-    losers: "Losers"
-    rank: "Rank {rank}"
-    price: "Price: {price}"
+    title: Top Movers
+    gainers: Gainers
+    losers: Losers
+    rank: Rank {rank}
+    price: 'Price: {price}'
   events:
-    title: "Key Events"
-    empty: "No events today"
-  disclaimer: "⚠️ This tool is for company education only,<br>does not constitute any investment advice.<br>Investing involves risk, please assess on your own."
+    title: Key Events
+    empty: No events today
+  disclaimer: ⚠️ This tool is for company education only,<br>does not constitute any investment advice.<br>Investing involves risk, please assess on your own.
 unit:
-  yuan: "TWD"
-  hundred_million: "B"
-  ten_thousand: "M"
-  percent: "%"
+  yuan: TWD
+  hundred_million: B
+  ten_thousand: M
+  percent: '%'
 validation:
   error:
-    empty: "Please enter a stock ID"
-    not_digit: "Stock ID must be numeric: {input}"
-    not_four_digit: "Stock ID must be 4 digits: {input} (current length: {length})"
-    format: "Invalid stock ID format: {input}"
+    empty: Please enter a stock ID
+    not_digit: 'Stock ID must be numeric: {input}'
+    not_four_digit: 'Stock ID must be 4 digits: {input} (current length: {length})'
+    format: 'Invalid stock ID format: {input}'
 page:
-  daily_market: "Daily Market Dashboard"
-  business_card: "Business Card"
-  operation_checkup: "Operations Checkup"
-  financial_health: "Financial Health"
-  peer_comparison: "Peer Comparison"
-  group_structure: "Group Structure"
-  category_browser: "Category Browser"
-  etf_section: "ETF Zone"
-  watchlist: "Watchlist"
-  event_dashboard: "Events Dashboard"
-  notification_center: "Notifications"
-  investment_memo: "Investment Memo"
-  financial_wellness: "Financial Wellness Check"
-  stock_screener: "Stock Screener"
-  settings: "Settings"
-  sector_heatmap: "Sector Heatmap"
-  case_study: "Case Study"
-  comprehension_check: "Comprehension Check"
-  academy: "Academy"
-  case_study_library: "Case Study Library"
-  first_visit_guide: "First Visit Guide"
-  story_timeline: "Story Timeline"
-  full_story_timeline: "Full Story Timeline"
-  daily_story: "Daily Story"
-  revenue_tree: "Revenue Tree"
-  compare_stories: "Compare Stories"
-  moat_comparison: "Moat Comparison"
-  debate_cards: "Debate Cards"
+  daily_market: Daily Market Dashboard
+  business_card: Business Card
+  operation_checkup: Operations Checkup
+  financial_health: Financial Health
+  peer_comparison: Peer Comparison
+  group_structure: Group Structure
+  category_browser: Category Browser
+  etf_section: ETF Zone
+  watchlist: Watchlist
+  event_dashboard: Events Dashboard
+  notification_center: Notifications
+  investment_memo: Investment Memo
+  financial_wellness: Financial Wellness Check
+  stock_screener: Stock Screener
+  settings: Settings
+  sector_heatmap: Sector Heatmap
+  case_study: Case Study
+  comprehension_check: Comprehension Check
+  academy: Academy
+  case_study_library: Case Study Library
+  first_visit_guide: First Visit Guide
+  story_timeline: Story Timeline
+  full_story_timeline: Full Story Timeline
+  daily_story: Daily Story
+  revenue_tree: Revenue Tree
+  compare_stories: Compare Stories
+  moat_comparison: Moat Comparison
+  debate_cards: Debate Cards
 news_summarizer:
   template:
-    financial_report: "{company} announced its latest financial results: {rephrase}. For investors, this means {implication}."
-    dividend: "{company} announced its dividend policy: {rephrase}. If you hold shares in this company, {implication}."
-    capital_increase: "{company} plans to raise funds: {rephrase}. Raising capital may dilute earnings in the short term, but the use of funds is key for long-term growth."
-    factory_expansion: "{company} plans to expand its scale: {rephrase}. This indicates the company expects future demand to grow."
-    order: "{company} has received a new order: {rephrase}. This indicates the company's products have market demand."
-    price_increase: "{company} plans to raise prices: {rephrase}. Price increases may improve gross margin, but customer acceptance is important."
-    management_rights: "{company} has a change in management control: {rephrase}. The stability of the management team affects company strategy."
-    new_product: "{company} has launched a new product: {rephrase}. This indicates the company is innovating, but the product's success remains to be seen."
-    lawsuit: "{company} has legal-related news: {rephrase}. Legal disputes may affect the company's reputation and financial situation."
-    rating: "Analysts have changed their rating for {company}: {rephrase}. Changes in analyst ratings can affect market confidence."
+    financial_report: '{company} announced its latest financial results: {rephrase}. For investors, this means {implication}.'
+    dividend: '{company} announced its dividend policy: {rephrase}. If you hold shares in this company, {implication}.'
+    capital_increase: '{company} plans to raise funds: {rephrase}. Raising capital may dilute earnings in the short term, but the use of funds is key for long-term growth.'
+    factory_expansion: '{company} plans to expand its scale: {rephrase}. This indicates the company expects future demand to grow.'
+    order: '{company} has received a new order: {rephrase}. This indicates the company''s products have market demand.'
+    price_increase: '{company} plans to raise prices: {rephrase}. Price increases may improve gross margin, but customer acceptance is important.'
+    management_rights: '{company} has a change in management control: {rephrase}. The stability of the management team affects company strategy.'
+    new_product: '{company} has launched a new product: {rephrase}. This indicates the company is innovating, but the product''s success remains to be seen.'
+    lawsuit: '{company} has legal-related news: {rephrase}. Legal disputes may affect the company''s reputation and financial situation.'
+    rating: 'Analysts have changed their rating for {company}: {rephrase}. Changes in analyst ratings can affect market confidence.'
   implication:
-    financial_report: "Check if the company's profitability has changed."
-    dividend: "Check if the dividend amount meets expectations."
-    capital_increase: "In the short term, this may dilute earnings per share, but the long-term impact depends on how the funds are used."
-    factory_expansion: "In the short term, this will increase expenses, but long-term it may bring more revenue."
-    order: "This indicates the company's products have market demand."
-    price_increase: "This may improve gross margin, but we need to see if customers accept the higher price."
-    management_rights: "The stability of the management team affects company strategy."
-    new_product: "{company} has launched a new product: {rephrase}. This indicates the company is innovating, but the product's success remains to be seen."
-    lawsuit: "It is important to monitor the outcome of the lawsuit and its impact on the company."
-    rating: "Consider the analysts' views, but ultimately focus on the company's fundamentals."
-    default: "Worth keeping an eye on."
-  generic_summary: "{company_name} has new news: {simplified}. Please pay attention to subsequent developments and their impact on the company."
-  no_news: "No significant recent news about {company_name}."
+    financial_report: Check if the company's profitability has changed.
+    dividend: Check if the dividend amount meets expectations.
+    capital_increase: In the short term, this may dilute earnings per share, but the long-term impact depends on how the funds are used.
+    factory_expansion: In the short term, this will increase expenses, but long-term it may bring more revenue.
+    order: This indicates the company's products have market demand.
+    price_increase: This may improve gross margin, but we need to see if customers accept the higher price.
+    management_rights: The stability of the management team affects company strategy.
+    new_product: '{company} has launched a new product: {rephrase}. This indicates the company is innovating, but the product''s success remains to be seen.'
+    lawsuit: It is important to monitor the outcome of the lawsuit and its impact on the company.
+    rating: Consider the analysts' views, but ultimately focus on the company's fundamentals.
+    default: Worth keeping an eye on.
+  generic_summary: '{company_name} has new news: {simplified}. Please pay attention to subsequent developments and their impact on the company.'
+  no_news: No significant recent news about {company_name}.
 dividend:
-  no_record: "No dividend record"
-  no_record_recent: "No recent dividend record"
-  stable_years: "Stable years: {n_years}"
-  quarterly_dividend: "Quarterly dividend: {amount}"
-  quarterly_yield: "{label} Quarterly yield: {yield_pct}%"
-  annual_dividend: "Annual dividend: {amount}"
-  annual_yield: "{label} Annual yield: {yield_pct}%"
-  irregular: "Irregular dividend: {amount}"
-  record_years: "Record years: {n_years}"
-  estimated_label: "(estimated)"
-adaptive_engine_severity_high: "High"
-adaptive_engine_severity_medium: "Medium"
-adaptive_engine_direction_growth: "Growth"
-adaptive_engine_direction_decline: "Decline"
-adaptive_engine_title_revenue_surge: "Revenue YoY {direction} {yoy_pct}%"
-adaptive_engine_summary_part1: "Recent monthly revenue: {latest_rev} hundred million yuan,"
-adaptive_engine_summary_part2_increase: "Compared to the same period last year, increased by {yoy_pct}%."
-adaptive_engine_summary_part2_decrease: "Compared to the same period last year, decreased by {yoy_pct}%."
-adaptive_engine_summary_part3_increase: "Performance is strong, pay attention to subsequent momentum."
-adaptive_engine_summary_part3_decrease: "Need to be aware of possible short-term factors."
+  no_record: No dividend record
+  no_record_recent: No recent dividend record
+  stable_years: 'Stable years: {n_years}'
+  quarterly_dividend: 'Quarterly dividend: {amount}'
+  quarterly_yield: '{label} Quarterly yield: {yield_pct}%'
+  annual_dividend: 'Annual dividend: {amount}'
+  annual_yield: '{label} Annual yield: {yield_pct}%'
+  irregular: 'Irregular dividend: {amount}'
+  record_years: 'Record years: {n_years}'
+  estimated_label: (estimated)
+adaptive_engine_severity_high: High
+adaptive_engine_severity_medium: Medium
+adaptive_engine_direction_growth: Growth
+adaptive_engine_direction_decline: Decline
+adaptive_engine_title_revenue_surge: Revenue YoY {direction} {yoy_pct}%
+adaptive_engine_summary_part1: 'Recent monthly revenue: {latest_rev} hundred million yuan,'
+adaptive_engine_summary_part2_increase: Compared to the same period last year, increased by {yoy_pct}%.
+adaptive_engine_summary_part2_decrease: Compared to the same period last year, decreased by {yoy_pct}%.
+adaptive_engine_summary_part3_increase: Performance is strong, pay attention to subsequent momentum.
+adaptive_engine_summary_part3_decrease: Need to be aware of possible short-term factors.
 revenue_analyzer:
   auto_describe:
-    wafer_foundry: "Wafer foundry services"
-    ic_design: "IC design services"
-    packaging_testing: "IC packaging and testing services"
-    contract_manufacturing: "Contract manufacturing"
-    consumer_electronics: "Consumer electronics"
-    bank: "Banking services"
-    insurance: "Insurance services"
-    securities: "Securities services"
-    cement: "Cement production"
-    pharmaceuticals: "Pharmaceuticals"
-    medical_equipment: "Medical equipment"
-    fallback: "Unknown business segment: {segment}"
+    wafer_foundry: Wafer foundry services
+    ic_design: IC design services
+    packaging_testing: IC packaging and testing services
+    contract_manufacturing: Contract manufacturing
+    consumer_electronics: Consumer electronics
+    bank: Banking services
+    insurance: Insurance services
+    securities: Securities services
+    cement: Cement production
+    pharmaceuticals: Pharmaceuticals
+    medical_equipment: Medical equipment
+    fallback: 'Unknown business segment: {segment}'
   generic_breakdown:
-    primary_business: "Primary Business"
-    primary_business_description: "{industry}'s core business revenue"
-    other_investments: "Other Investments"
-    other_investments_description: "Investment income or non-operating income"
-    new_business: "New Business"
-    new_business_description: "Emerging business segments under development"
+    primary_business: Primary Business
+    primary_business_description: '{industry}''s core business revenue'
+    other_investments: Other Investments
+    other_investments_description: Investment income or non-operating income
+    new_business: New Business
+    new_business_description: Emerging business segments under development
 financial_wellness:
   interpretation:
-    healthy_title: "Financial Health"
-    healthy_description: "Your financial habits are generally good! You have basic financial discipline and risk awareness. Keep it up and continue learning."
-    average_title: "Average Financial Health"
-    average_description: "Your financial habits have basic concepts, but there are some areas for improvement. Refer to the suggestions below and make gradual improvements."
-    attention_title: "Needs Attention"
-    attention_description: "Your financial habits have plenty of room for improvement. Don't worry, everyone starts from zero. Start with the simplest steps."
+    healthy_title: Financial Health
+    healthy_description: Your financial habits are generally good! You have basic financial discipline and risk awareness. Keep it up and continue learning.
+    average_title: Average Financial Health
+    average_description: Your financial habits have basic concepts, but there are some areas for improvement. Refer to the suggestions below and make gradual improvements.
+    attention_title: Needs Attention
+    attention_description: Your financial habits have plenty of room for improvement. Don't worry, everyone starts from zero. Start with the simplest steps.
   tips:
-    need_improvement: "{category} is the area you most need to improve; we recommend learning more about related knowledge."
+    need_improvement: '{category} is the area you most need to improve; we recommend learning more about related knowledge.'
 metric_education:
   debt_ratio_display_name: Debt Ratio
-  debt_ratio_explanation: Debt ratio indicates the proportion of a company's assets
-    financed by debt. A debt ratio of 60% means that 60% of the company's assets are
-    funded by debt. Lower indicates more conservative financial leverage, though moderate
-    borrowing can accelerate growth.
-  debt_ratio_historical_context: Financial industries typically have debt ratios of
-    80-90% (as deposits are considered liabilities), which is normal. Manufacturing
-    industries are advised to keep debt ratio below 50%. High debt ratios pose greater
-    risk during economic downturns.
+  debt_ratio_explanation: Debt ratio indicates the proportion of a company's assets financed by debt. A debt ratio of 60% means that 60% of the company's assets are funded by debt. Lower indicates more conservative financial leverage, though moderate borrowing can accelerate growth.
+  debt_ratio_historical_context: Financial industries typically have debt ratios of 80-90% (as deposits are considered liabilities), which is normal. Manufacturing industries are advised to keep debt ratio below 50%. High debt ratios pose greater risk during economic downturns.
   dividend_yield_display_name: Dividend Yield
-  dividend_yield_explanation: Dividend yield is the annual dividend per share divided
-    by stock price, representing the return on investment in the form of cash dividends.
-    A dividend yield of 4% means an investment of $100 yields approximately $4 in
-    dividends per year. Higher indicates higher dividend payout, but excessively high
-    yields may signal falling stock price or unsustainable dividends.
-  dividend_yield_historical_context: 'The average dividend yield for Taiwan stocks
-    is about 3-4%. A yield of 5% or above is considered high-yield, but caution is
-    needed: 1) whether the high yield is due to one-time non-operating income; 2)
-    whether the company is profitable. Companies with stable dividend payouts over
-    the past 5 years are more reliable.'
+  dividend_yield_explanation: Dividend yield is the annual dividend per share divided by stock price, representing the return on investment in the form of cash dividends. A dividend yield of 4% means an investment of $100 yields approximately $4 in dividends per year. Higher indicates higher dividend payout, but excessively high yields may signal falling stock price or unsustainable dividends.
+  dividend_yield_historical_context: 'The average dividend yield for Taiwan stocks is about 3-4%. A yield of 5% or above is considered high-yield, but caution is needed: 1) whether the high yield is due to one-time non-operating income; 2) whether the company is profitable. Companies with stable dividend payouts over the past 5 years are more reliable.'
   gross_margin_display_name: Gross Margin
-  gross_margin_explanation: Gross margin is the percentage of revenue remaining after
-    deducting the cost of goods sold (direct materials and labor). A gross margin
-    of 40% means that for every $100 of revenue, $40 remains after subtracting the
-    cost of goods sold. Higher indicates stronger pricing power.
-  gross_margin_historical_context: 'Gross margin varies significantly across industries:
-    software can exceed 80%, while contract manufacturing may be only 5-10%. Comparing
-    a company''s gross margin to its own past performance is more meaningful than
-    comparing across industries.'
+  gross_margin_explanation: Gross margin is the percentage of revenue remaining after deducting the cost of goods sold (direct materials and labor). A gross margin of 40% means that for every $100 of revenue, $40 remains after subtracting the cost of goods sold. Higher indicates stronger pricing power.
+  gross_margin_historical_context: 'Gross margin varies significantly across industries: software can exceed 80%, while contract manufacturing may be only 5-10%. Comparing a company''s gross margin to its own past performance is more meaningful than comparing across industries.'
   net_margin_display_name: Net Margin
-  net_margin_explanation: Net margin is the percentage of revenue remaining after
-    deducting all expenses (operating costs, interest, and taxes). A net margin of
-    10% means the company keeps $10 profit for every $100 of revenue. Higher indicates
-    better cost control.
-  net_margin_historical_context: Net margin can be affected by one-time non-operating
-    gains or losses; it's better to look at trends over the past 4-8 quarters rather
-    than a single quarter. Technology companies typically have net margins of 10-30%,
-    while retail may be only 1-5%.
+  net_margin_explanation: Net margin is the percentage of revenue remaining after deducting all expenses (operating costs, interest, and taxes). A net margin of 10% means the company keeps $10 profit for every $100 of revenue. Higher indicates better cost control.
+  net_margin_historical_context: Net margin can be affected by one-time non-operating gains or losses; it's better to look at trends over the past 4-8 quarters rather than a single quarter. Technology companies typically have net margins of 10-30%, while retail may be only 1-5%.
   pbr_display_name: Price-to-Book Ratio (PBR)
-  pbr_explanation: The price-to-book ratio (PBR) is stock price divided by book value
-    per share, representing how the market values the company relative to its accounting
-    book value. A PBR of 1.5 means the stock price is 1.5 times the book value. Below
-    1 may indicate the stock is cheaper than book value (but there could be reasons).
-  pbr_historical_context: PBR is suitable for evaluating asset-intensive industries
-    (e.g., banking, construction). Light-asset companies (e.g., software, brands)
-    often have higher PBRs because value lies in intangible assets. Buffett early
-    on preferred stocks with PBR below 1.
+  pbr_explanation: The price-to-book ratio (PBR) is stock price divided by book value per share, representing how the market values the company relative to its accounting book value. A PBR of 1.5 means the stock price is 1.5 times the book value. Below 1 may indicate the stock is cheaper than book value (but there could be reasons).
+  pbr_historical_context: PBR is suitable for evaluating asset-intensive industries (e.g., banking, construction). Light-asset companies (e.g., software, brands) often have higher PBRs because value lies in intangible assets. Buffett early on preferred stocks with PBR below 1.
   per_display_name: Price-to-Earnings Ratio (PER)
-  per_explanation: The price-to-earnings ratio (PER) is stock price divided by earnings
-    per share, indicating how much the market is willing to pay for each dollar of
-    earnings. A PER of 15 means the market is willing to pay $15 for each $1 of earnings.
-    Lower suggests faster payback, but may also reflect lack of market confidence.
-  per_historical_context: 'Taiwan''s historical PER range is approximately 10-25 times.
-    Different industries have different reasonable PERs: growth stocks may be 20-30
-    times, cyclical stocks 8-12 times. Loss-making companies do not have a PER.'
+  per_explanation: The price-to-earnings ratio (PER) is stock price divided by earnings per share, indicating how much the market is willing to pay for each dollar of earnings. A PER of 15 means the market is willing to pay $15 for each $1 of earnings. Lower suggests faster payback, but may also reflect lack of market confidence.
+  per_historical_context: 'Taiwan''s historical PER range is approximately 10-25 times. Different industries have different reasonable PERs: growth stocks may be 20-30 times, cyclical stocks 8-12 times. Loss-making companies do not have a PER.'
   revenue_yoy_display_name: Revenue Year-over-Year Growth
-  revenue_yoy_explanation: Revenue year-over-year growth compares revenue with the
-    same month of the previous year to show growth or decline. A 20% increase means
-    revenue is 20% higher than the same month last year. Positive indicates growth,
-    negative indicates decline.
-  revenue_yoy_historical_context: Monthly revenue year-over-year growth can be volatile;
-    it's better to look at trends over 3-6 months. Seasonal industries (e.g., beverages,
-    tourism) need to consider off-peak and peak season factors.
+  revenue_yoy_explanation: Revenue year-over-year growth compares revenue with the same month of the previous year to show growth or decline. A 20% increase means revenue is 20% higher than the same month last year. Positive indicates growth, negative indicates decline.
+  revenue_yoy_historical_context: Monthly revenue year-over-year growth can be volatile; it's better to look at trends over 3-6 months. Seasonal industries (e.g., beverages, tourism) need to consider off-peak and peak season factors.
   roe_display_name: Return on Equity (ROE)
-  roe_explanation: ROE measures how efficiently a company uses shareholders' equity
-    to generate profit. ROE 15% means the company earns $15 for every $100 of shareholders'
-    equity. Higher indicates better profitability.
-  roe_historical_context: The average ROE for Taiwan stocks is around 10-12%. Companies
-    maintaining ROE above 15% long-term often have competitive advantages (moats).
-    Buffett prefers companies with long-term ROE above 20%.
-  roe_warning_seasonal_insufficient: "{industry} is a seasonal industry. Only {quarters} quarter(s) of data available, which may not reflect full-year performance. Current ROE is a TTM estimate."
-  roe_warning_seasonal_sufficient: "{industry} is a seasonal industry. TTM calculation covers all four quarters, but quarterly fluctuations are significant. Consider reviewing multi-year trends."
-  net_margin_analogy_good: "For every NT$100 sold, after all expenses, {val:.1f} remains — good profitability"
-  net_margin_analogy_ok: "For every NT$100 sold, after all expenses, {val:.1f} remains — limited profit margin"
-  net_margin_analogy_poor: "For every NT$100 sold, after all expenses, {val:.1f} remains — barely profitable"
-  fallback_title: "{metric_name} is one of the indicators measuring company performance"
-  fallback_context: "This indicator requires more background information for an analogy"
-  fallback_suggestion: "We suggest looking up more information about this indicator"
-  net_margin_analogy_high: "For every NT$100 sold, after all expenses, {val:.1f} remains — good profitability"
-  net_margin_analogy_mid: "For every NT$100 sold, after all expenses, {val:.1f} remains — limited profit margin"
-  net_margin_analogy_low: "For every NT$100 sold, after all expenses, {val:.1f} remains — barely profitable"
+  roe_explanation: ROE measures how efficiently a company uses shareholders' equity to generate profit. ROE 15% means the company earns $15 for every $100 of shareholders' equity. Higher indicates better profitability.
+  roe_historical_context: The average ROE for Taiwan stocks is around 10-12%. Companies maintaining ROE above 15% long-term often have competitive advantages (moats). Buffett prefers companies with long-term ROE above 20%.
+  roe_warning_seasonal_insufficient: '{industry} is a seasonal industry. Only {quarters} quarter(s) of data available, which may not reflect full-year performance. Current ROE is a TTM estimate.'
+  roe_warning_seasonal_sufficient: '{industry} is a seasonal industry. TTM calculation covers all four quarters, but quarterly fluctuations are significant. Consider reviewing multi-year trends.'
+  net_margin_analogy_good: For every NT$100 sold, after all expenses, {val:.1f} remains — good profitability
+  net_margin_analogy_ok: For every NT$100 sold, after all expenses, {val:.1f} remains — limited profit margin
+  net_margin_analogy_poor: For every NT$100 sold, after all expenses, {val:.1f} remains — barely profitable
+  fallback_title: '{metric_name} is one of the indicators measuring company performance'
+  fallback_context: This indicator requires more background information for an analogy
+  fallback_suggestion: We suggest looking up more information about this indicator
+  net_margin_analogy_high: For every NT$100 sold, after all expenses, {val:.1f} remains — good profitability
+  net_margin_analogy_mid: For every NT$100 sold, after all expenses, {val:.1f} remains — limited profit margin
+  net_margin_analogy_low: For every NT$100 sold, after all expenses, {val:.1f} remains — barely profitable
   fallback:
-    explanation: "{metric_name} is one of the indicators measuring company performance"
-    analogy: "This indicator requires more background information to provide an analogy"
-    historical_context: "We suggest looking up more information about this indicator"
-  analogy_error: "Unable to generate analogy at this time."
-  roe_analogy_fallback: "Unable to generate analogy at this time."
+    explanation: '{metric_name} is one of the indicators measuring company performance'
+    analogy: This indicator requires more background information to provide an analogy
+    historical_context: We suggest looking up more information about this indicator
+  analogy_error: Unable to generate analogy at this time.
+  roe_analogy_fallback: Unable to generate analogy at this time.
 watchlist:
-  removed_toast: "Removed {stock_name} from watchlist"
+  removed_toast: Removed {stock_name} from watchlist
   toast:
-    added: "✅ Added {stock_name} to watchlist"
-    removed: "❌ Removed {stock_name} from watchlist"
-  default_list_name: "Default List"
+    added: ✅ Added {stock_name} to watchlist
+    removed: ❌ Removed {stock_name} from watchlist
+  default_list_name: Default List
 summary_hero:
-  added_to_list: "Added {stock_name} to watchlist"
+  added_to_list: Added {stock_name} to watchlist
 test_key: test value
 delta_explanation_provider:
-  revenue_up_extreme: "{stock_prefix} revenue surged {abs_pct:.0f}%, possibly due to large orders or seasonal effects, worth monitoring"
-  revenue_up_strong: "{stock_prefix} revenue grew {abs_pct:.0f}%, relatively positive performance, possibly due to demand recovery or new product contributions"
-  revenue_up_moderate: "{stock_prefix} revenue grew {abs_pct:.0f}%, moderate growth"
-  revenue_down_extreme: "{stock_prefix} revenue plummeted {abs_pct:.0f}%, significant decline, possible structural issues needing attention"
-  revenue_down_strong: "{stock_prefix} revenue declined {abs_pct:.0f}%, worse than last year, reasons needing attention"
-  revenue_down_moderate: "{stock_prefix} revenue dipped {abs_pct:.0f}%, slight decline but still within reasonable range"
-  price_up_large: "{stock_prefix} stock price rose sharply {abs_pct:.0f}%, market evaluation changes worth noting"
-  price_up_medium: "{stock_prefix} stock price rose {abs_pct:.0f}%, bullish trend, future momentum worth observing"
-  price_up_small: "{stock_prefix} stock price edged up {abs_pct:.0f}%, steady rise, trend stable"
-  price_down_large: "{stock_prefix} stock price fell sharply {abs_pct:.0f}%, market reaction worth continuous observation"
-  price_down_medium: "{stock_prefix} stock price fell {abs_pct:.0f}%, bearish trend, future changes worth noting"
-  price_down_small: "{stock_prefix} stock price dipped {abs_pct:.0f}%, slight pullback, normal fluctuation"
-  yoy_up_strong: "{stock_prefix} revenue YoY strong growth {abs_pct:.0f}%, future quarter performance worth noting"
-  yoy_up_moderate: "{stock_prefix} revenue YoY steady growth {abs_pct:.0f}%, trend worth continuous observation"
-  yoy_up_mild: "{stock_prefix} revenue YoY moderate growth {abs_pct:.0f}%, performance stable"
-  yoy_down_extreme: "{stock_prefix} revenue YoY decreased by {abs_pct:.0f}%, significant decline, possible structural issues needing attention"
-  yoy_down_strong: "{stock_prefix} revenue YoY decreased by {abs_pct:.0f}%, worse than last year, reasons needing attention"
-  yoy_down_moderate: "{stock_prefix} revenue YoY decreased by {abs_pct:.0f}%, slight decline"
-  implication_revenue_up_extreme: "Revenue grew significantly, future changes worth continuous observation"
-  implication_revenue_up_strong: "Revenue showed positive performance, trend worth noting"
-  implication_revenue_up_moderate: "Revenue grew moderately, performance stable"
-  implication_revenue_down_extreme: "Revenue declined significantly, future changes worth noting"
-  implication_revenue_down_strong: "Revenue performance weak, reasons worth continuous tracking"
-  implication_revenue_down_moderate: "Revenue fluctuated slightly, still within reasonable range"
-  implication_price_up_extreme: "Stock price rose significantly, market worth noting changes in evaluation"
-  implication_price_up_strong: "Stock price showed bullish trend, future momentum worth observing"
-  implication_price_up_moderate: "Stock price steadily rose, trend stable"
-  implication_price_down_extreme: "Stock price fell significantly, market reaction worth continuous observation"
-  implication_price_down_strong: "Stock price showed bearish trend, future changes worth noting"
-  implication_price_down_moderate: "Stock price slightly pulled back, normal fluctuation"
-  implication_yoy_up_extreme: "Revenue YoY growth strong, future quarter performance worth noting"
-  implication_yoy_up_strong: "Revenue YoY steady growth, trend worth continuous observation"
-  implication_yoy_up_moderate: "Revenue YoY grew moderately, performance stable"
-  implication_yoy_down_extreme: "Revenue YoY decline significant, worth continuous tracking"
-  implication_yoy_down_strong: "Revenue YoY weaker than last year same period, improvement worth noting"
-  implication_yoy_down_moderate: "Revenue YoY fluctuated slightly, still within reasonable range"
-  generic_implication_up: "Indicator grew compared to previous period, future changes worth noting"
-  generic_implication_down: "Indicator declined compared to previous period, reasons worth continuous tracking"
-  generic_template_up: "{stock_prefix}{metric_name} increased compared to previous period by {abs_pct:.1f}%"
-  generic_template_down: "{stock_prefix}{metric_name} decreased compared to previous period by {abs_pct:.1f}%"
+  revenue_up_extreme: '{stock_prefix} revenue surged {abs_pct:.0f}%, possibly due to large orders or seasonal effects, worth monitoring'
+  revenue_up_strong: '{stock_prefix} revenue grew {abs_pct:.0f}%, relatively positive performance, possibly due to demand recovery or new product contributions'
+  revenue_up_moderate: '{stock_prefix} revenue grew {abs_pct:.0f}%, moderate growth'
+  revenue_down_extreme: '{stock_prefix} revenue plummeted {abs_pct:.0f}%, significant decline, possible structural issues needing attention'
+  revenue_down_strong: '{stock_prefix} revenue declined {abs_pct:.0f}%, worse than last year, reasons needing attention'
+  revenue_down_moderate: '{stock_prefix} revenue dipped {abs_pct:.0f}%, slight decline but still within reasonable range'
+  price_up_large: '{stock_prefix} stock price rose sharply {abs_pct:.0f}%, market evaluation changes worth noting'
+  price_up_medium: '{stock_prefix} stock price rose {abs_pct:.0f}%, bullish trend, future momentum worth observing'
+  price_up_small: '{stock_prefix} stock price edged up {abs_pct:.0f}%, steady rise, trend stable'
+  price_down_large: '{stock_prefix} stock price fell sharply {abs_pct:.0f}%, market reaction worth continuous observation'
+  price_down_medium: '{stock_prefix} stock price fell {abs_pct:.0f}%, bearish trend, future changes worth noting'
+  price_down_small: '{stock_prefix} stock price dipped {abs_pct:.0f}%, slight pullback, normal fluctuation'
+  yoy_up_strong: '{stock_prefix} revenue YoY strong growth {abs_pct:.0f}%, future quarter performance worth noting'
+  yoy_up_moderate: '{stock_prefix} revenue YoY steady growth {abs_pct:.0f}%, trend worth continuous observation'
+  yoy_up_mild: '{stock_prefix} revenue YoY moderate growth {abs_pct:.0f}%, performance stable'
+  yoy_down_extreme: '{stock_prefix} revenue YoY decreased by {abs_pct:.0f}%, significant decline, possible structural issues needing attention'
+  yoy_down_strong: '{stock_prefix} revenue YoY decreased by {abs_pct:.0f}%, worse than last year, reasons needing attention'
+  yoy_down_moderate: '{stock_prefix} revenue YoY decreased by {abs_pct:.0f}%, slight decline'
+  implication_revenue_up_extreme: Revenue grew significantly, future changes worth continuous observation
+  implication_revenue_up_strong: Revenue showed positive performance, trend worth noting
+  implication_revenue_up_moderate: Revenue grew moderately, performance stable
+  implication_revenue_down_extreme: Revenue declined significantly, future changes worth noting
+  implication_revenue_down_strong: Revenue performance weak, reasons worth continuous tracking
+  implication_revenue_down_moderate: Revenue fluctuated slightly, still within reasonable range
+  implication_price_up_extreme: Stock price rose significantly, market worth noting changes in evaluation
+  implication_price_up_strong: Stock price showed bullish trend, future momentum worth observing
+  implication_price_up_moderate: Stock price steadily rose, trend stable
+  implication_price_down_extreme: Stock price fell significantly, market reaction worth continuous observation
+  implication_price_down_strong: Stock price showed bearish trend, future changes worth noting
+  implication_price_down_moderate: Stock price slightly pulled back, normal fluctuation
+  implication_yoy_up_extreme: Revenue YoY growth strong, future quarter performance worth noting
+  implication_yoy_up_strong: Revenue YoY steady growth, trend worth continuous observation
+  implication_yoy_up_moderate: Revenue YoY grew moderately, performance stable
+  implication_yoy_down_extreme: Revenue YoY decline significant, worth continuous tracking
+  implication_yoy_down_strong: Revenue YoY weaker than last year same period, improvement worth noting
+  implication_yoy_down_moderate: Revenue YoY fluctuated slightly, still within reasonable range
+  generic_implication_up: Indicator grew compared to previous period, future changes worth noting
+  generic_implication_down: Indicator declined compared to previous period, reasons worth continuous tracking
+  generic_template_up: '{stock_prefix}{metric_name} increased compared to previous period by {abs_pct:.1f}%'
+  generic_template_down: '{stock_prefix}{metric_name} decreased compared to previous period by {abs_pct:.1f}%'
   metric:
-    monthly_revenue: "Monthly Revenue"
-    revenue_yoy: "Revenue YoY"
-    price_30d: "Price (30-day avg)"
-
+    monthly_revenue: Monthly Revenue
+    revenue_yoy: Revenue YoY
+    price_30d: Price (30-day avg)
 etf:
   detail:
     metric:
-      expense_ratio: "Expense Ratio"
-      tracking_error: "Tracking Error"
-      dividend_yield: "Dividend Yield"
-      sample_data_note: "Values are sample data for demonstration purposes."
+      expense_ratio: Expense Ratio
+      tracking_error: Tracking Error
+      dividend_yield: Dividend Yield
+      sample_data_note: Values are sample data for demonstration purposes.
     comparison:
-      title: "ETF Comparison"
-      expense_ratio: "Expense Ratio"
-      tracking_error: "Tracking Error"
-      dividend_yield: "Dividend Yield"
-      current_etf: "Current ETF"
-      note: "Note: Comparison data is sample data for demonstration purposes."
-    section_performance: "Performance"
-    section_dividend: "Dividend"
-    section_institutional: "Institutional"
-    section_fees: "Fees"
-    section_knowledge: "ETF Knowledge"
-    one_liner_50: "Tracks Taiwan 50 Index, suitable for long-term Taiwan stock market exposure"
-    one_liner_dividend: "High-dividend ETF, suitable for investors focused on cash flow"
-    one_liner_bond: "Bond ETF, provides stable income and reduces portfolio volatility"
-    one_liner_esg: "Sustainable ESG ETF, combining investment with environmental and social governance"
-    one_liner_default: "Diversified ETF, suitable for long-term holding with diversified exposure"
-    knowledge_50: "Taiwan 50 Index tracks the top 50 largest-cap stocks in Taiwan, representing overall market performance"
-    knowledge_dividend: "High-dividend ETFs focus on high-yield stocks, providing regular cash inflows"
-    knowledge_bond: "Bond ETFs invest in government or corporate bonds, offering relatively stable interest income"
-    knowledge_esg: "ESG ETFs consider environmental, social, and governance factors for sustainable returns"
-    knowledge_default: "This ETF reduces single-stock risk through diversification, suitable for long-term holding"
-    dividend_explanation_title: "Dividend Explanation"
-    dividend_explanation_content: "Shows recent dividend records and their frequency"
-    dividend_frequency_quarterly: "Quarterly dividend"
-    dividend_frequency_semi: "Semi-annual dividend"
-    dividend_frequency_annual: "Annual dividend"
-    dividend_frequency_irregular: "Irregular dividend"
-    no_dividend_data: "No dividend data available"
-    dividend_data_processing: "Loading dividend data..."
-    col_cash_dividend: "Cash Dividend"
-    col_ex_dividend_date: "Ex-Dividend Date"
-    col_stock_dividend: "Stock Dividend"
-    col_ex_right_date: "Ex-Rights Date"
-    institutional_explanation_title: "Institutional Activity Explanation"
-    institutional_explanation_content: "Shows recent 30-day foreign institutional and dealer trading changes"
-    no_institutional_data: "No institutional activity data available"
-    no_institutional_data_30d: "No institutional trading data for the last 30 days"
-    institutional_data_processing: "Loading institutional data..."
-    buy_label: "Buy"
-    sell_label: "Sell"
-    fee_management_label: "Management Fee"
-    fee_management_value: "Annual management fee charged by the fund"
-    fee_management_analogy: "Like a subscription fee for professional management"
-    fee_custody_label: "Custody Fee"
-    fee_custody_value: "Annual fee for safekeeping fund assets"
-    fee_custody_analogy: "Like a bank vault fee for your investments"
-    fee_reminder_title: "Fee Reminder"
-    fee_reminder_content: "All fees are already reflected in the fund's net asset value"
-    disclaimer: "Disclaimer"
-    disclaimer_content: "This information is for reference only and does not constitute investment advice"
-    no_price_data: "No price data available"
-    no_price_data_1y: "No price data for the last year"
-    price_data_processing: "Loading price data..."
-    chart_date: "Date"
-    chart_shares: "Shares (thousands)"
-
+      title: ETF Comparison
+      expense_ratio: Expense Ratio
+      tracking_error: Tracking Error
+      dividend_yield: Dividend Yield
+      current_etf: Current ETF
+      note: 'Note: Comparison data is sample data for demonstration purposes.'
+    section_performance: Performance
+    section_dividend: Dividend
+    section_institutional: Institutional
+    section_fees: Fees
+    section_knowledge: ETF Knowledge
+    one_liner_50: Tracks Taiwan 50 Index, suitable for long-term Taiwan stock market exposure
+    one_liner_dividend: High-dividend ETF, suitable for investors focused on cash flow
+    one_liner_bond: Bond ETF, provides stable income and reduces portfolio volatility
+    one_liner_esg: Sustainable ESG ETF, combining investment with environmental and social governance
+    one_liner_default: Diversified ETF, suitable for long-term holding with diversified exposure
+    knowledge_50: Taiwan 50 Index tracks the top 50 largest-cap stocks in Taiwan, representing overall market performance
+    knowledge_dividend: High-dividend ETFs focus on high-yield stocks, providing regular cash inflows
+    knowledge_bond: Bond ETFs invest in government or corporate bonds, offering relatively stable interest income
+    knowledge_esg: ESG ETFs consider environmental, social, and governance factors for sustainable returns
+    knowledge_default: This ETF reduces single-stock risk through diversification, suitable for long-term holding
+    dividend_explanation_title: Dividend Explanation
+    dividend_explanation_content: Shows recent dividend records and their frequency
+    dividend_frequency_quarterly: Quarterly dividend
+    dividend_frequency_semi: Semi-annual dividend
+    dividend_frequency_annual: Annual dividend
+    dividend_frequency_irregular: Irregular dividend
+    no_dividend_data: No dividend data available
+    dividend_data_processing: Loading dividend data...
+    col_cash_dividend: Cash Dividend
+    col_ex_dividend_date: Ex-Dividend Date
+    col_stock_dividend: Stock Dividend
+    col_ex_right_date: Ex-Rights Date
+    institutional_explanation_title: Institutional Activity Explanation
+    institutional_explanation_content: Shows recent 30-day foreign institutional and dealer trading changes
+    no_institutional_data: No institutional activity data available
+    no_institutional_data_30d: No institutional trading data for the last 30 days
+    institutional_data_processing: Loading institutional data...
+    buy_label: Buy
+    sell_label: Sell
+    fee_management_label: Management Fee
+    fee_management_value: Annual management fee charged by the fund
+    fee_management_analogy: Like a subscription fee for professional management
+    fee_custody_label: Custody Fee
+    fee_custody_value: Annual fee for safekeeping fund assets
+    fee_custody_analogy: Like a bank vault fee for your investments
+    fee_reminder_title: Fee Reminder
+    fee_reminder_content: All fees are already reflected in the fund's net asset value
+    disclaimer: Disclaimer
+    disclaimer_content: This information is for reference only and does not constitute investment advice
+    no_price_data: No price data available
+    no_price_data_1y: No price data for the last year
+    price_data_processing: Loading price data...
+    chart_date: Date
+    chart_shares: Shares (thousands)
 why_did_this_move:
-  title: "Why Did This Move?"
-  institutional_buying: "Institutional buying — may indicate positive outlook"
-  institutional_selling: "Institutional selling — may indicate profit-taking or negative outlook"
-  price_surge: "Stock price surged, possibly driven by good news"
-  price_drop: "Stock price dropped, possibly affected by bad news"
-  check_news: "Check related news to understand the reason"
-  no_data: "Insufficient data to analyze the reason for the price movement"
+  title: Why Did This Move?
+  institutional_buying: Institutional buying — may indicate positive outlook
+  institutional_selling: Institutional selling — may indicate profit-taking or negative outlook
+  price_surge: Stock price surged, possibly driven by good news
+  price_drop: Stock price dropped, possibly affected by bad news
+  check_news: Check related news to understand the reason
+  no_data: Insufficient data to analyze the reason for the price movement
 ai_explanation:
-  title: "AI Explanation"
-  explanation: "AI-generated explanation"
-  confidence: "Confidence"
-
+  title: AI Explanation
+  explanation: AI-generated explanation
+  confidence: Confidence
 glossary:
-  tooltip_hint: "Click to learn more"
-  definition: "Definition"
-  example: "Example"
-  analogy: "Analogy"
-  category: "Category"
-  not_found: "No definition found for this term"
-  search_placeholder: "Search financial terms..."
-
-# Missing critical keys
-rate_limited: "⚠️ API rate limited, please try again later"
+  tooltip_hint: Click to learn more
+  definition: Definition
+  example: Example
+  analogy: Analogy
+  category: Category
+  not_found: No definition found for this term
+  search_placeholder: Search financial terms...
+rate_limited: ⚠️ API rate limited, please try again later
 sidebar:
-  search_header: "Search"
-
-# Health scoring
+  search_header: Search
 health:
   status:
-    unable_to_assess: "Unable to assess overall health"
-    good: "Good"
-    average: "Average"
-    needs_attention: "Needs Attention"
+    unable_to_assess: Unable to assess overall health
+    good: Good
+    average: Average
+    needs_attention: Needs Attention
   summary:
-    overall: "{emoji} Overall Health: {status} (Avg {avg:.0f} pts)"
-    strong_dims: "💪 Strengths: {dims}"
-    weak_dims: "⚠️ Areas to Watch: {dims}"
-    unable_to_assess: "Unable to assess overall health"
-  strengths: "💪 Strengths: {dims}"
-  weaknesses: "⚠️ Areas to Watch: {dims}"
+    overall: '{emoji} Overall Health: {status} (Avg {avg:.0f} pts)'
+    strong_dims: '💪 Strengths: {dims}'
+    weak_dims: '⚠️ Areas to Watch: {dims}'
+    unable_to_assess: Unable to assess overall health
+  strengths: '💪 Strengths: {dims}'
+  weaknesses: '⚠️ Areas to Watch: {dims}'
   dimension:
-    profitability: "Profitability"
-    growth: "Growth"
-    financial_health: "Financial Health"
-    dividend_quality: "Dividend Quality"
-    valuation: "Valuation"
-
-# Moat analyzer
+    profitability: Profitability
+    growth: Growth
+    financial_health: Financial Health
+    dividend_quality: Dividend Quality
+    valuation: Valuation
 moat:
   dimension:
-    brand: "Brand Power"
-    cost: "Cost Advantage"
-    cost_advantage: "Cost Advantage"
-    network: "Network Effect"
-    network_effect: "Network Effect"
-    switching: "Switching Cost"
-    switching_cost: "Switching Cost"
-    scale: "Economies of Scale"
-    economy_of_scale: "Economies of Scale"
+    brand: Brand Power
+    cost: Cost Advantage
+    cost_advantage: Cost Advantage
+    network: Network Effect
+    network_effect: Network Effect
+    switching: Switching Cost
+    switching_cost: Switching Cost
+    scale: Economies of Scale
+    economy_of_scale: Economies of Scale
   type:
-    none: "No Clear Moat"
-    brand: "Brand Power Moat"
-    cost: "Cost Advantage Moat"
-    network: "Network Effect Moat"
-    switching: "Switching Cost Moat"
-    scale: "Economies of Scale Moat"
+    none: No Clear Moat
+    brand: Brand Power Moat
+    cost: Cost Advantage Moat
+    network: Network Effect Moat
+    switching: Switching Cost Moat
+    scale: Economies of Scale Moat
   description:
-    none: "This company does not exhibit a clear competitive advantage."
-    brand: "This company benefits from strong brand recognition and customer loyalty."
-    cost: "This company benefits from a structural cost advantage over competitors."
-    network: "This company benefits from network effects that grow stronger with more users."
-    switching: "This company benefits from high customer switching costs."
-    scale: "This company benefits from economies of scale."
+    none: This company does not exhibit a clear competitive advantage.
+    brand: This company benefits from strong brand recognition and customer loyalty.
+    cost: This company benefits from a structural cost advantage over competitors.
+    network: This company benefits from network effects that grow stronger with more users.
+    switching: This company benefits from high customer switching costs.
+    scale: This company benefits from economies of scale.
   evidence:
-    auto_score: "Auto-scored based on financial data. Primary moat type: {moat_type}."
-  score: "{score:.0f} pts"
-
-# Investment memo
+    auto_score: 'Auto-scored based on financial data. Primary moat type: {moat_type}.'
+  score: '{score:.0f} pts'
 investment_memo:
   validation:
-    one_liner_required: "Please fill in 'One-Liner Positioning'"
-    one_liner_empty: "Please fill in 'One-Liner Positioning'"
-    reason_required: "Please fill in 'Investment Rationale'"
-    reasons_empty: "Please fill in 'Investment Rationale'"
-    target_price_negative: "Target price cannot be negative"
-    target_price_range: "Target price lower bound cannot exceed upper bound"
-    target_price_low_gt_high: "Target price lower bound cannot exceed upper bound"
-    confidence_range: "Confidence level must be between 1-5"
-    confidence_out_of_range: "Confidence level must be between 1-5"
+    one_liner_required: Please fill in 'One-Liner Positioning'
+    one_liner_empty: Please fill in 'One-Liner Positioning'
+    reason_required: Please fill in 'Investment Rationale'
+    reasons_empty: Please fill in 'Investment Rationale'
+    target_price_negative: Target price cannot be negative
+    target_price_range: Target price lower bound cannot exceed upper bound
+    target_price_low_gt_high: Target price lower bound cannot exceed upper bound
+    confidence_range: Confidence level must be between 1-5
+    confidence_out_of_range: Confidence level must be between 1-5
   confidence:
-    very_low: "⭐ Very Low"
-    low: "⭐⭐ Low"
-    medium: "⭐⭐⭐ Medium"
-    high: "⭐⭐⭐⭐ High"
-    very_high: "⭐⭐⭐⭐⭐ Very High"
+    very_low: ⭐ Very Low
+    low: ⭐⭐ Low
+    medium: ⭐⭐⭐ Medium
+    high: ⭐⭐⭐⭐ High
+    very_high: ⭐⭐⭐⭐⭐ Very High
   default:
-    not_set: "Not set"
-    price_range_unset: "Not set"
-    not_filled: "Not filled"
-
-# Metric explainer labels
+    not_set: Not set
+    price_range_unset: Not set
+    not_filled: Not filled
 metric_explainer:
-  monthly_revenue: "Monthly Revenue"
-  revenue_yoy: "Revenue YoY"
-  gross_margin: "Gross Margin"
-  net_margin: "Net Margin"
-  operating_margin: "Operating Margin"
-  per: "P/E Ratio"
-  pbr: "P/B Ratio"
-  debt_ratio: "Debt Ratio"
-  dividend_yield: "Dividend Yield"
-  roe: "ROE"
-
-# ROE calculator
+  monthly_revenue: Monthly Revenue
+  revenue_yoy: Revenue YoY
+  gross_margin: Gross Margin
+  net_margin: Net Margin
+  operating_margin: Operating Margin
+  per: P/E Ratio
+  pbr: P/B Ratio
+  debt_ratio: Debt Ratio
+  dividend_yield: Dividend Yield
+  roe: ROE
 roe:
   method:
-    cumulative_3q: "3-Quarter Cumulative"
-    cumulative_2q: "2-Quarter Cumulative"
-    single_quarter: "Single Quarter"
-
+    cumulative_3q: 3-Quarter Cumulative
+    cumulative_2q: 2-Quarter Cumulative
+    single_quarter: Single Quarter
 roe_calculator:
   method:
-    1q: "Single Quarter"
-    2q: "2-Quarter Cumulative"
-    3q: "3-Quarter Cumulative"
-
-# Risk simplifier
+    1q: Single Quarter
+    2q: 2-Quarter Cumulative
+    3q: 3-Quarter Cumulative
 risk:
   level:
-    very_low: "Very Low Risk"
-    low: "Low Risk"
-    medium: "Medium Risk"
-    high: "High Risk"
-    very_high: "Very High Risk"
+    very_low: Very Low Risk
+    low: Low Risk
+    medium: Medium Risk
+    high: High Risk
+    very_high: Very High Risk
   simplifier:
     level:
-      "1":
-        label: "Very Low Risk"
-        description: "Overall health score is {health_avg:.0f} — relatively healthy. Note: this is a simplified reference and should not be the sole basis for investment decisions."
-      "2":
-        label: "Low Risk"
-        description: "Overall health score is {health_avg:.0f} — above average. Most dimensions are performing well, but individual items still need monitoring."
-      "3":
-        label: "Medium Risk"
+      '1':
+        label: Very Low Risk
+        description: 'Overall health score is {health_avg:.0f} — relatively healthy. Note: this is a simplified reference and should not be the sole basis for investment decisions.'
+      '2':
+        label: Low Risk
+        description: Overall health score is {health_avg:.0f} — above average. Most dimensions are performing well, but individual items still need monitoring.
+      '3':
+        label: Medium Risk
         description:
-          weak: "Overall health score is {health_avg:.0f} — moderate. The following dimensions need attention: {weak_dims}. Further investigation recommended."
-          mixed: "Overall health score is {health_avg:.0f} — moderate. Risk and health indicators are mixed. Further analysis is recommended."
-      "4":
-        label: "High Risk"
-        description: "Overall health score is {health_avg:.0f} — needs attention. High-risk indicators detected, requiring extra vigilance."
-      "5":
-        label: "Very High Risk"
-        description: "Overall health score is {health_avg:.0f} — needs significant attention. Multiple high-risk signals detected, exercise caution."
-  customer_concentration_title: "Customer Concentration Risk"
-  customer_high_concentration: "Revenue concentration is high at {pct}% — may overly depend on a few customers"
-  customer_medium_concentration: "Revenue concentration is {pct}% — moderate customer concentration"
-  customer_low_concentration: "Revenue concentration is {pct}% — relatively diversified customer base"
-  revenue_unstable: "Revenue stability CV is {cv} — significant fluctuation"
-  revenue_unstable_note: ", suggesting unstable revenue and potentially higher risk"
-  revenue_normal: "Revenue stability CV is {cv} — moderate fluctuation"
-  revenue_normal_note: ""
-  revenue_stable: "Revenue stability CV is {cv} — stable revenue"
-  financial_health_title: "Financial Health Risk"
-  debt_high: "Debt ratio is {ratio}% — relatively high"
-  debt_medium: "Debt ratio is {ratio}% — moderate"
-  debt_low: "Debt ratio is {ratio}% — relatively conservative"
-  margin_very_low: "Net margin is {margin}% — very low profitability"
-  margin_medium: "Net margin is {margin}% — moderate profitability"
-  margin_high: "Net margin is {margin}% — good profitability"
-  cashflow_negative: "Operating cash flow has been negative for multiple quarters"
-  cashflow_mixed: "Operating cash flow shows mixed positive and negative values"
-  cashflow_positive: "Operating cash flow is positive"
-  event_risk_title: "Event Risk"
-  event_high_count: "Recent {count} risk events detected"
-  event_includes: "Including: {events}"
-  event_high_impact: "{count} high-impact events"
-  event_foreign_selling: "Foreign investors are net selling"
-  event_medium_count: "Recent {count} medium-risk events detected"
-  event_foreign_neutral: "Foreign investor activity is neutral"
-  event_low: "No significant risk events in the near term"
-  event_foreign_buying: "Foreign investors are relatively positive"
-  insufficient_data: "Insufficient data for risk assessment"
-  dim_customer: "Customer Concentration"
-  dim_financial: "Financial Health"
-  dim_event: "Events"
-  summary_high_risk: "High risk in: {dims}"
-  summary_normal: "Risk assessment is normal"
-
-# Compare stories unit
+          weak: 'Overall health score is {health_avg:.0f} — moderate. The following dimensions need attention: {weak_dims}. Further investigation recommended.'
+          mixed: Overall health score is {health_avg:.0f} — moderate. Risk and health indicators are mixed. Further analysis is recommended.
+      '4':
+        label: High Risk
+        description: Overall health score is {health_avg:.0f} — needs attention. High-risk indicators detected, requiring extra vigilance.
+      '5':
+        label: Very High Risk
+        description: Overall health score is {health_avg:.0f} — needs significant attention. Multiple high-risk signals detected, exercise caution.
+  customer_concentration_title: Customer Concentration Risk
+  customer_high_concentration: Revenue concentration is high at {pct}% — may overly depend on a few customers
+  customer_medium_concentration: Revenue concentration is {pct}% — moderate customer concentration
+  customer_low_concentration: Revenue concentration is {pct}% — relatively diversified customer base
+  revenue_unstable: Revenue stability CV is {cv} — significant fluctuation
+  revenue_unstable_note: ', suggesting unstable revenue and potentially higher risk'
+  revenue_normal: Revenue stability CV is {cv} — moderate fluctuation
+  revenue_normal_note: ''
+  revenue_stable: Revenue stability CV is {cv} — stable revenue
+  financial_health_title: Financial Health Risk
+  debt_high: Debt ratio is {ratio}% — relatively high
+  debt_medium: Debt ratio is {ratio}% — moderate
+  debt_low: Debt ratio is {ratio}% — relatively conservative
+  margin_very_low: Net margin is {margin}% — very low profitability
+  margin_medium: Net margin is {margin}% — moderate profitability
+  margin_high: Net margin is {margin}% — good profitability
+  cashflow_negative: Operating cash flow has been negative for multiple quarters
+  cashflow_mixed: Operating cash flow shows mixed positive and negative values
+  cashflow_positive: Operating cash flow is positive
+  event_risk_title: Event Risk
+  event_high_count: Recent {count} risk events detected
+  event_includes: 'Including: {events}'
+  event_high_impact: '{count} high-impact events'
+  event_foreign_selling: Foreign investors are net selling
+  event_medium_count: Recent {count} medium-risk events detected
+  event_foreign_neutral: Foreign investor activity is neutral
+  event_low: No significant risk events in the near term
+  event_foreign_buying: Foreign investors are relatively positive
+  insufficient_data: Insufficient data for risk assessment
+  dim_customer: Customer Concentration
+  dim_financial: Financial Health
+  dim_event: Events
+  summary_high_risk: 'High risk in: {dims}'
+  summary_normal: Risk assessment is normal
 compare_stories:
-  unit_hundred_million: "B"
-
-# Assessment
+  unit_hundred_million: B
 comprehension_check:
-  not_found: "Question not found"
-
-# Timeline
+  not_found: Question not found
 timeline_service:
   event_interpretation: '"{title}" indicates a noteworthy change in the market.'
-
-# Adaptive engine
 adaptive_engine:
-  event_summary_major: "Major Events: {events}"
-  event_summary_attention: "Events to Note: {events}"
-  price_alert_title: "Stock price {direction} {pct:.1f}% in a single day"
-  price_alert_body: "Closing price {price:.0f} yuan, ..."
-  price_alert_advice: "Sharp daily volatility, recommend monitoring related announcements."
-  framework_standard_name: "Standard Analysis"
-  framework_standard_desc: "Complete analysis using four deep-dive sections"
-  framework_standard_focus: "Comprehensive understanding of company operations and financials"
-  framework_etf_name: "ETF Analysis"
-  framework_etf_desc: "Analyze ETF composition and performance"
-  framework_group_name: "Group Analysis"
-  framework_group_desc: "Analyze parent-subsidiary structure and contributions"
-  freshness_label_price: "Price Data"
-  freshness_label_revenue: "Revenue Data"
-  direction_up: "up"
-  direction_down: "down"
+  event_summary_major: 'Major Events: {events}'
+  event_summary_attention: 'Events to Note: {events}'
+  price_alert_title: Stock price {direction} {pct:.1f}% in a single day
+  price_alert_body: Closing price {price:.0f} yuan, ...
+  price_alert_advice: Sharp daily volatility, recommend monitoring related announcements.
+  framework_standard_name: Standard Analysis
+  framework_standard_desc: Complete analysis using four deep-dive sections
+  framework_standard_focus: Comprehensive understanding of company operations and financials
+  framework_etf_name: ETF Analysis
+  framework_etf_desc: Analyze ETF composition and performance
+  framework_group_name: Group Analysis
+  framework_group_desc: Analyze parent-subsidiary structure and contributions
+  freshness_label_price: Price Data
+  freshness_label_revenue: Revenue Data
+  direction_up: up
+  direction_down: down
+router:
+  page_navigation: Page Navigation
+event_dashboard:
+  high_events_alert: ⚠️ High-Impact Events
+  medium_events_alert: 📌 Medium-Impact Events

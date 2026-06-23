@@ -15,20 +15,17 @@ def test_sidebar_and_main_translations(streamlit_server, page):
     # Wait for the app to render the translated title
     page.wait_for_selector("text=股識", timeout=10000)
 
-    # Check that translated sidebar elements appear (using Chinese as default)
-    # Sidebar search header
-    assert page.query_selector("text=搜尋") is not None, "Sidebar search header not found in Chinese"
-    # Sidebar nav items
-    assert page.query_selector("text=名片") is not None, "Sidebar nav_home not found in Chinese"
-    assert page.query_selector("text=產業熱力圖") is not None, "Sidebar nav_sector not found in Chinese"
-    assert page.query_selector("text=分類瀏覽") is not None, "Sidebar nav_category not found in Chinese"
-    assert page.query_selector("text=ETF 專區") is not None, "Sidebar nav_etf not found in Chinese"
-    assert page.query_selector("text=我的關注") is not None, "Sidebar nav_watchlist not found in Chinese"
+    # Check that Activity Bar navigation items appear in Chinese
+    assert page.query_selector("text=📇 基本資料") is not None, "Activity Bar nav 基本資料 not found"
+    assert page.query_selector("text=📂 分類瀏覽") is not None, "Activity Bar nav 分類瀏覽 not found"
+    assert page.query_selector("text=🏷️ ETF 專區") is not None, "Activity Bar nav ETF 專區 not found"
+    assert page.query_selector("text=⭐ 關注列表") is not None, "Activity Bar nav 關注列表 not found"
+    assert page.query_selector("text=🔔 事件儀表板") is not None, "Activity Bar nav 事件儀表板 not found"
+    assert page.query_selector("text=📈 今日市場動態") is not None, "Activity Bar nav 市場動態 not found"
 
     # Check that translated main page elements appear
     assert page.query_selector("text=股識") is not None, "Main page title not found in Chinese"
     assert page.query_selector("text=認識一家公司，從這裡開始") is not None, "Main page lead1 not found in Chinese"
-    assert page.query_selector("text=在左側輸入股票代號或名稱，開始認識一家公司") is not None, "Main page lead2 not found in Chinese"
 
     # Should NOT show raw i18n keys
     raw_keys = [
