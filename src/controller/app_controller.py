@@ -1,10 +1,11 @@
 import streamlit as st
 from src.core.i18n import t
-from src.pages.url_sync import sync_url_to_session, navigate_to
+from src.controller.url_sync import sync_url_to_session, navigate_to
 from src.controller.router import (
     get_page_key, is_standalone, is_stock_plugin,
     load_stock_data, resolve_plugin, run_event_detection,
-    render_etf_detail_page,
+    render_etf_detail_page, get_activity_items, get_hot_stocks,
+    get_hot_etfs, get_fab_menu_items,
 )
 from src.services.validation import validate_stock_id
 from src.view.layout import render_layout, render_fab_bottom
@@ -26,6 +27,10 @@ class AppController:
         return get_page_key()
 
     def _navigate(self, page_key: str):
+        navigate_to(page=page_key)
+
+    def _navigate_and_set_stock(self, page_key: str, stock_id: str):
+        st.session_state["stock_id"] = stock_id
         navigate_to(page=page_key)
 
     def _process_search(self, query: str) -> str | None:
@@ -95,7 +100,14 @@ class AppController:
         current_key = self._get_page_key()
         stock_id = st.session_state.get("stock_id")
 
-        search_val = render_layout(current_key, self._navigate)
+        search_val = render_layout(
+            current_key,
+            self._navigate,
+            get_activity_items(),
+            get_hot_stocks(),
+            get_hot_etfs(),
+            on_hot_stock_click=self._navigate_and_set_stock,
+        )
         stock_id = self._process_search(search_val) or stock_id
 
         if stock_id:
@@ -103,4 +115,4 @@ class AppController:
         else:
             render_welcome_page()
 
-        render_fab_bottom(stock_id or "")
+        render_fab_bottom(stock_id or "", get_fab_menu_items())

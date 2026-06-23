@@ -1,6 +1,6 @@
 import streamlit as st
 from src.core.i18n import t
-from src.pages.url_sync import navigate_to
+from src.controller.url_sync import navigate_to
 
 
 PAGE_KEYS = [

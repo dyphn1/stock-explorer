@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 import streamlit as st
 from src.core.i18n import t
 from src.data.finmind_client import get_rate_limit_status
@@ -8,7 +10,8 @@ def render_activity_bar(
     current_key: str,
     hot_stocks: list[tuple[str, str]],
     hot_etfs: list[tuple[str, str]],
-    on_navigate: callable,
+    on_navigate: Callable[[str], None],
+    on_hot_stock_click: Callable[[str, str], None] | None = None,
 ):
     st.markdown(f"### 📊 {t('app.title')}")
     st.markdown("---")
@@ -27,17 +30,17 @@ def render_activity_bar(
     if status["is_limited"]:
         st.warning(t("main.sidebar.api_warning"))
 
+    click_handler = on_hot_stock_click or on_navigate
+
     with st.expander(f"🔥 {t('main.sidebar.hot_stocks')}", expanded=False):
         for sid, name in hot_stocks:
             if st.button(f"{sid} {name}", key=f"hot_{sid}", use_container_width=True):
-                st.session_state["stock_id"] = sid
-                on_navigate("business_card")
+                click_handler("business_card", sid)
 
     with st.expander(f"🏷️ {t('main.sidebar.hot_etfs')}", expanded=False):
         for sid, name in hot_etfs:
             if st.button(f"{sid} {name}", key=f"hot_etf_{sid}", use_container_width=True):
-                st.session_state["stock_id"] = sid
-                on_navigate("business_card")
+                click_handler("business_card", sid)
 
     st.markdown("---")
     st.markdown(t("main.disclaimer"), unsafe_allow_html=True)

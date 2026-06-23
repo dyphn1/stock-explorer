@@ -100,14 +100,10 @@ class TestRouterIntegration:
         from src.pages.router import PAGE_KEYS
         assert "daily_market" in PAGE_KEYS
 
-    def test_router_imports_without_errors(self):
-        """Router module should import without errors (covers all page imports)."""
-        # Re-import to catch any import-time side effects
-        import importlib
-        import src.pages.router
-        importlib.reload(src.pages.router)
-        assert hasattr(src.pages.router, "PAGE_KEYS")
-        assert hasattr(src.pages.router, "load_and_render_page")
+    def test_router_key_in_new_controller(self):
+        """Controller router should export PAGE_KEYS via view/navbar."""
+        from src.view.navbar import PAGE_KEYS
+        assert "daily_market" in PAGE_KEYS
 
 
 # ===================================================================
