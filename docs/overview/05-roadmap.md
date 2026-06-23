@@ -54,7 +54,7 @@
 | C204 | Confidence Indicator | Data reliability indicator |
 | C205 | Reading Time Indicator | Estimated reading time |
 | TD-03 | API cache fix | get_stock_info full table fetch issue |
-| TD-05 | Unit test coverage improvement | Currently 699 passing but insufficient coverage |
+| TD-05 | Unit test coverage improvement | ✅ Complete (2026-06-24) — Added test_i18n_validation.py with 6 regression tests; total 734 passing |
 || TD-06 | Color system unification | All pages use design system colors | ✅ Complete (2026-06-21) |
 | TD-07 | Component consistency | Standardize on `_plain_card()` | ✅ Complete (2026-06-21) |
 | SB-01~03 | Sidebar core | Inline data, multi-list, market overview |

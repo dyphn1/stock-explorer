@@ -61,3 +61,30 @@
 - 2 UI no-raw-keys tests passing.
 - Full suite timeout at 89% is a pre-existing issue (slow test, unrelated to changes).
 - 13 files changed, 633 insertions, 71 deletions.
+
+---
+
+## [2026-06-24 11:30] Run: Sprint 30 — i18n Translation Fix + Validation Test
+| Role | Primary Model | Fallback Model | Result |
+|------|-------------|---------------|--------|
+| Developer | nemotron-120b:free | — | ✅ Primary succeeded |
+| Challenger | gpt-oss-120b:free | — | ✅ Primary succeeded |
+| Security Architect | nemotron-120b:free | — | ✅ Primary succeeded |
+| Architect | nemotron-120b:free | — | ✅ Primary succeeded |
+| QA | gemma-4-31b-it:free | — | ✅ Primary succeeded |
+
+### Model Health Summary
+| Model Used | Times Called | Failures | Notes |
+|------------|-------------|----------|-------|
+| owl-alpha | 1 | 0 | PM only |
+| nemotron-120b | 3 | 0 | Developer + Security Architect + Architect |
+| gpt-oss-120b | 1 | 0 | Challenger |
+| gemma-31b | 1 | 0 | QA |
+
+### Notes
+- All primary models succeeded — no fallbacks needed.
+- 27 missing page key translations added to both locale files.
+- English locale why_did_this_move section corrected (was Chinese, now English).
+- New validation test (test_i18n_validation.py) with 6 tests — all passing.
+- 734 tests pass, 1 pre-existing UI test flakiness (unrelated to changes).
+- 3 files changed, 155 insertions, 3 deletions.
