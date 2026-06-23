@@ -1,5 +1,4 @@
-"""
-FinMind API Client 封裝
+"""FinMind API Client 封裝
 統一管理所有 FinMind 資料接口，提供快取和錯誤處理
 """
 
@@ -23,6 +22,7 @@ except ImportError:
 
 
 # ── Rate Limit Detection ──────────────────────────────
+
 
 class FinMindRateLimitError(Exception):
     """Raised when FinMind API rate limit is detected (e.g. HTTP 429)."""
@@ -84,7 +84,7 @@ class FinMindClient:
         self._all_stock_info_memory = None
         self._all_stock_info_memory_time = None
 
-    # ── 內部快取方法 ──────────────────────────────────
+    # ── 內部快取方法 ────────────────────────────────
 
     def _cache_key(self, prefix: str, **params) -> str:
         """生成快取 key，並標準化滑動窗口開始日期以防止每日快取失效"""
@@ -224,7 +224,7 @@ class FinMindClient:
         except Exception:
             pass  # Non-critical; don't crash on cache cleanup
 
-    # ── 內部資料取得 ──────────────────────────────────
+    # ── 內部資料取得 ────────────────────────────────
 
     def _fetch_all_stock_info(self) -> pd.DataFrame:
         """取得全部股票基本資訊，使用單一快取 key（不含 stock_id）。
@@ -250,7 +250,7 @@ class FinMindClient:
             logger.debug("Updated memory cache for all stock info")
         return df
 
-    # ── 公開 API ──────────────────────────────────────
+    # ── 公開 API ────────────────────────────────────
 
     @functools.lru_cache(maxsize=128)
     def get_stock_info(self, stock_id: str = None) -> pd.DataFrame:
@@ -260,11 +260,12 @@ class FinMindClient:
             df = df[df["stock_id"] == stock_id]
         return df
 
-    def search_stocks(self, query: str) -> pd.DataFrame:
+    def search_stocks(self, query: str, case_sensitive: bool = True) -> pd.DataFrame:
         """搜尋股票：完全比對 stock_id 或部分比對 stock_name（中文名稱）。
 
         Args:
             query: 搜尋關鍵字（股票代號或中文名稱）
+            case_sensitive: 是否區分大小寫（預設 True，向後相容）
 
         Returns:
             符合條件的股票 DataFrame，無符合則回傳空 DataFrame
@@ -274,7 +275,7 @@ class FinMindClient:
             return df.iloc[:0]  # empty DataFrame with same schema
 
         mask_id = df["stock_id"] == query.strip()
-        mask_name = df["stock_name"].str.contains(query.strip(), na=False)
+        mask_name = df["stock_name"].str.contains(query.strip(), case=case_sensitive, na=False)
         return df[mask_id | mask_name]
 
     def get_daily_price(self, stock_id: str, start_date: str = None, end_date: str = None) -> pd.DataFrame:
@@ -386,7 +387,6 @@ class FinMindClient:
 
     def get_dividend(self, stock_id: str, start_date: str = "2015-01-01") -> pd.DataFrame:
         """取得股利政策"""
-
         def fetch():
             return self._loader.taiwan_stock_dividend(
                 stock_id=stock_id, start_date=start_date
@@ -421,7 +421,7 @@ class FinMindClient:
         return self._fetch_or_cache("foreign_holding", fetch,
                                      stock_id=stock_id, start=start_date)
 
-    # ── 輔助方法 ──────────────────────────────────────
+    # ── 輔助方法 ────────────────────────────────────
 
     def get_stock_name(self, stock_id: str) -> str:
         """取得股票名稱"""

@@ -18,7 +18,7 @@ from src.pages.router import load_and_render_page, get_stock_data
 from src.pages._router_base import _infocard
 from src.services.benchmarks import get_industry_benchmarks
 from src.services.roe_calculator import calc_roe_ttm
-import os
+
 
 # ── 頁面設定 ──────────────────────────────────────────
 # ── 頁面設定 ──────────────────────────────────────────
@@ -78,19 +78,7 @@ def get_client():
 
 client = get_client()
 
-@st.cache_data(ttl=24*3600)
-def get_chinese_name_mapping():
-    mapping = {}
-    yaml_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'chinese_names.yaml')
-    if os.path.exists(yaml_path):
-        with open(yaml_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith('#'):
-                    if ': ' in line:
-                        key, value = line.split(': ', 1)
-                        mapping[key] = value
-    return mapping
+
 
 @st.cache_data(ttl=24*3600)
 def get_all_stocks():
@@ -271,23 +259,18 @@ if search_input and search_input.strip():
         else:
             st.sidebar.error(f"❌ {result}")
     else:
-        # 可能是中文名稱，使用搜尋
-        chinese_name_map = get_chinese_name_mapping()
-        if query in chinese_name_map:
-            stock_id = chinese_name_map[query]
+        # Non-numeric input: use FinMind search
+        with st.spinner(t("main.search.searching")):
+            results = client.search_stocks(query, case_sensitive=False)
+        if results is None or results.empty:
+            st.sidebar.error(t("main.search.not_found"))
+        elif len(results) == 1:
+            stock_id = results.iloc[0]['stock_id']
         else:
-            all_stocks = get_all_stocks()
-            # Filter where stock_name contains query (case-insensitive)
-            matches = all_stocks[all_stocks['stock_name'].str.contains(query, case=False, na=False)]
-            if len(matches) == 1:
-                stock_id = matches.iloc[0]['stock_id']
-            elif len(matches) > 1:
-                options = [f"{row['stock_id']} {row['stock_name']}" for _, row in matches.iterrows()]
-                selected = st.sidebar.selectbox(t("main.search.multiple_results"), options, key="search_select")
-                if selected:
-                    stock_id = selected.split()[0]
-            else:
-                st.sidebar.error(t("main.search.not_found"))
+            options = [f"{row['stock_id']} {row['stock_name']}" for _, row in results.iterrows()]
+            selected = st.sidebar.selectbox(t("main.search.multiple_results"), options, key="search_select")
+            if selected:
+                stock_id = selected.split()[0]
 else:
     stock_id = st.session_state.get("stock_id", None)
 

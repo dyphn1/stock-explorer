@@ -63,8 +63,8 @@
 ||| ADR-010 | Chinese search support architecture | Analyze and simplify Chinese search (ADR complete) |
 ||| ADR-011 | ETF page architecture | ETF detail as Plugin under src/plugins/etf_detail/ (ADR complete) |
 || ETF-01 | ETF detail plugin implementation | Create src/plugins/etf_detail/ per ADR-011 — plugin skeleton, router update, ETF-specific sections |
-|| D-127 | _infocard() component | Visual metric card |
-| D-128 | _calculator_card() component | Interactive financial tool |
+|| D-127 | _infocard() component | ✅ Complete (2026-06-24) — Visual metric card |
+|| D-128 | _calculator_card() component | ✅ Complete (2026-06-24) — Interactive financial tool |
 | D-129 | _ai_explanation_card() component | AI explanation card |
 | D-130 | Beginner onboarding flow | Structured onboarding |
 

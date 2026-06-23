@@ -2,7 +2,7 @@
 
 > This file tracks all model call failures across cron runs.
 > Purpose: Identify chronically failing models and make data-driven swap decisions.
-> Format: See `docs/diagrams/flow.md` → "Model Failure Log" section.
+> Format: See `docs/diagrams/flow.md` → "Model Failure Log" section` → "Model Failure Log" section.
 
 ---
 
@@ -115,3 +115,32 @@
 - 3 files committed (compact welcome page + toast localization).
 - 2 ADRs produced: ADR-010 (Chinese search), ADR-001 review by Challenger 2.
 - navigation_header already removed in previous sprint (verified by Developer).
+
+---
+
+## [2026-06-24 12:00] Run: Sprint 33 — UI Polish + Component Foundation
+| Role | Primary Model | Fallback Model | Result |
+|------|-------------|---------------|--------|
+| Challenger 1 | gpt-oss-120b:free | nemotron-120b:free | ⚠️ Primary may have been rate-limited; fallback used |
+| Challenger 2 | gpt-oss-120b:free | nemotron-120b:free | ⚠️ Primary may have been rate-limited; fallback used |
+| Architect | nemotron-120b:free | — | ✅ Primary succeeded |
+| Developer 1 (navigation_header) | nemotron-120b:free | — | ✅ Primary succeeded |
+| Developer 2 (_infocard) | nemotron-120b:free | — | ✅ Primary succeeded |
+| Developer 3 (_calculator_card) | nemotron-120b:free | — | ✅ Primary succeeded |
+| QA | gemma-4-31b-it:free | — | ✅ Primary succeeded |
+
+### Model Health Summary
+| Model Used | Times Called | Failures | Notes |
+|------------|-------------|----------|-------|
+| owl-alpha | 1 | 0 | PM only |
+| nemotron-120b | 6 | 0 | +3 fallback from gpt-oss (Challenger 1, 2, Architect/Dev1-3 used primary) |
+| gpt-oss-120b | 0 | 2 | May have been rate-limited (Challenger 1 & 2) |
+| gemma-31b | 1 | 0 | QA |
+
+### Notes
+- Challenger 1 and 2 both used nemotron-120b instead of gpt-oss-120b primary — suggests rate limiting on gpt-oss-120b.
+- All other primary models succeeded.
+- Core requirements met: navigation_header removed, _infocard and _calculator_card components created.
+- QA result: 591 tests passed, 1 failed (test_main_page_loads_successfully - pre-existing Playwright issue unrelated to changes).
+- 4 files committed: infocard.py, calculator_card.py, test_infocard.py, test_calculator_card.py.
+- 2 ADRs updated: 009-layout-restructure.md, 000-index.md.

@@ -73,6 +73,7 @@ main:
   search:
     multiple_results: "找到多筆符合的股票："
     not_found: "找不到符合的股票"
+    searching: "搜尋中..."
   home:
     title: "股識"
     lead1: "認識一家公司，從這裡開始"
@@ -331,17 +332,262 @@ delta_explanation_provider:
 etf:
   detail:
     metric:
-      expense_ratio: "內扣費用"
-      tracking_error: "追蹤誤差"
-      dividend_yield: "殖利率"
-      sample_data_note: "數值僅為樣本資料，僅用於示範目的。"
+      expense_ratio: 「內扣費用」
+      tracking_error: 「追蹤誤差」
+      dividend_yield: 「殖利率」
+      sample_data_note: 「數值僅為樣本資料，僅用於示範目的。」
     comparison:
-      title: "ETF 比較"
-      expense_ratio: "內扣費用"
-      tracking_error: "追蹤誤差"
-      dividend_yield: "殖利率"
-      current_etf: "目前 ETF"
-      note: "備註：比較數據僅為樣本資料，用於示範目的。"
+      title: 「ETF 比較」
+      expense_ratio: 「內扣費用」
+      tracking_error: 「追蹤誤差」
+      dividend_yield: 「殖利率」
+      current_etf: 「目前 ETF」
+      note: 「備註：比較數據僅為樣本資料，用於示範目的。」
+    section_performance: 「績效走勢」
+    section_dividend: 「配息資訊」
+    section_institutional: 「法人動向」
+    section_fees: 「費用說明」
+    section_knowledge: 「ETF 小知識」
+    one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
+    one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
+    one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
+    one_liner_esg: 「永續ESG ETF，結合投資與環境社會治理」
+    one_liner_default: 「多元化ETF，適合分散投資的長期持有」
+    knowledge_50: 「台灣50指數追蹤台灣前50大市值股票，代表台灣股市整體表現」
+    knowledge_dividend: 「高股息ETF專注於高殖利率股票，提供定期現金流入」
+    knowledge_bond: 「債券ETF投資於政府或企業債券，提供相對穩定的利息收入」
+    knowledge_esg: 「ESG ETF考慮環境、社會和治理因素，追求永續投資報酬」
+    knowledge_default: 「這只ETF透過多元化投資降低單一股票風險，適合長期持有」
+    dividend_explanation_title: 「配息說明」
+    dividend_explanation_content: 「顯示最近的配息紀錄及其頻率」
+    dividend_frequency_quarterly: 「每季配息」
+    dividend_frequency_semi: 「每半年配息」
+    dividend_frequency_annual: 「每年配息」
+    dividend_frequency_irregular: 「不定期配息」
+    no_dividend_data: 「暫無配息資料」
+    dividend_data_processing: 「配息資料載入中...」
+    col_cash_dividend: 「現金股利」
+    col_ex_dividend_date: 「除息日」
+    col_stock_dividend: 「股票股利」
+    col_ex_right_date: 「除權日」
+    institutional_explanation_title: 「法人動向說明」
+    institutional_explanation_content: 「顯示最近30天外資、投信及自營商的買賣超變化」
+    no_institutional_data: 「暫無法人動向資料」
+    no_institutional_data_30d: 「近30天無法人交易資料」
+    institutional_data_processing: 「法人資料載入中...」
+    buy_label: 「買進」
+    sell_label: 「賣出」
+    fee_management_label: 「管理費用」
+    fee_management_value: 「0.XX%」
+    fee_management_analogy: 「就像購買基金時需要支付的管理費用」
+    fee_custody_label: 「保管費用」
+    fee_custody_value: 「0.XX%」
+    fee_custody_analogy: 「像是保管箱的保管費，用於保護ETF的資產安全」
+    fee_reminder_title: 「費用提醒」
+    fee_reminder_content: 「ETF的費用會直接從基金資產中扣除，影響實際報酬率」
+    disclaimer: 「免責聲明」
+    disclaimer_content: 「本工具所提供的資訊僅供參考，不構成投資建議。過去表現不代表未來表現，投資有風險，請謹慎評估。」
+    no_price_data: 「暫無價格資料」
+    no_price_data_1y: 「近一年無價格資料」
+    price_data_processing: 「價格資料載入中...」
+    chart_date: 「日期」
+    chart_shares: 「股數」(單位)
+    section_performance: 「績效走勢」
+    section_dividend: 「配息資訊」
+    section_institutional: 「法人動向」
+    section_fees: 「費用說明」
+    section_knowledge: 「ETF 小知識」
+    one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
+    one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
+    one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
+    one_liner_esg: 「永續ESG ETF，結合投資與環境社會治理」
+    one_liner_default: 「多元化ETF，適合分散投資的長期持有」
+    knowledge_50: 「台灣50指數追蹤台灣前50大市值股票，代表台灣股市整體表現」
+    knowledge_dividend: 「高股息ETF專注於高殖利率股票，提供定期現金流入」
+    knowledge_bond: 「債券ETF投資於政府或企業債券，提供相對穩定的利息收入」
+    knowledge_esg: 「ESG ETF考慮環境、社會和治理因素，追求永續投資報酬」
+    knowledge_default: 「這只ETF透過多元化投資降低單一股票風險，適合長期持有」
+    dividend_explanation_title: 「配息說明」
+    dividend_explanation_content: 「顯示最近的配息紀錄及其頻率」
+    dividend_frequency_quarterly: 「每季配息」
+    dividend_frequency_semi: 「每半年配息」
+    dividend_frequency_annual: 「每年配息」
+    dividend_frequency_irregular: 「不定期配息」
+    no_dividend_data: 「暫無配息資料」
+    dividend_data_processing: 「配息資料載入中...」
+    col_cash_dividend: 「現金股利」
+    col_ex_dividend_date: 「除息日」
+    col_stock_dividend: 「股票股利」
+    col_ex_right_date: 「除權日」
+    institutional_explanation_title: 「法人動向說明」
+    institutional_explanation_content: 「顯示最近30天外資、投信及自營商的買賣超變化」
+    no_institutional_data: 「暫無法人動向資料」
+    no_institutional_data_30d: 「近30天無法人交易資料」
+    institutional_data_processing: 「法人資料載入中...」
+    buy_label: 「買進」
+    sell_label: 「賣出」
+    fee_management_label: 「管理費用」
+    fee_management_value: 「0.XX%」
+    fee_management_analogy: 「就像購買基金時需要支付的管理費用」
+    fee_custody_label: 「保管費用」
+    fee_custody_value: 「0.XX%」
+    fee_custody_analogy: 「像是保管箱的保管費，用於保護ETF的資產安全」
+    fee_reminder_title: 「費用提醒」
+    fee_reminder_content: 「ETF的費用會直接從基金資產中扣除，影響實際報酬率」
+    disclaimer: 「免責聲明」
+    disclaimer_content: 「本工具所提供的資訊僅供參考，不構成投資建議。過去表現不代表未來表現，投資有風險，請謹慎評估。」
+    no_price_data: 「暫無價格資料」
+    no_price_data_1y: 「近一年無價格資料」
+    price_data_processing: 「價格資料載入中...」
+    chart_date: 「日期」
+    chart_shares: 「股數」(單位)
+    section_performance: 「績效走勢」
+    section_dividend: 「配息資訊」
+    section_institutional: 「法人動向」
+    section_fees: 「費用說明」
+    section_knowledge: 「ETF 小知識」
+    one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
+    one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
+    one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
+    one_liner_esg: 「永續ESG ETF，結合投資與環境社會治理」
+    one_liner_default: 「多元化ETF，適合分散投資的長期持有"""
+    knowledge_50: 「台灣50指數追蹤台灣前50大市值股票，代表台灣股市整體表現"""
+    knowledge_dividend: 「高股息ETF專注於高殖利率股票，提供定期現金流入"""
+    knowledge_bond: 「債券ETF投資於政府或企業債券，提供相對穩定的利息收入"""
+    knowledge_esg: 「ESG ETF考慮環境、社會和治理因素，追求永續投資報酬"""
+    knowledge_default: 「這只ETF透過多元化投資降低單一股票風險，適合長期持有"""
+    dividend_explanation_title: 「配息說明"""
+    dividend_explanation_content: 「顯示最近的配息紀錄及其頻率"""
+    dividend_frequency_quarterly: 「每季配息"""
+    dividend_frequency_semi: 「每半年配息"""
+    dividend_frequency_annual: 「每年配息"""
+    dividend_frequency_irregular: 「不定期配息"""
+    no_dividend_data: 「暫無配息資料"""
+    dividend_data_processing: 「配息資料載入中..."""
+    col_cash_dividend: 「現金股利"""
+    col_ex_dividend_date: 「除息日"""
+    col_stock_dividend: 「股票股利"""
+    col_ex_right_date: 「除權日"""
+    institutional_explanation_title: 「法人動向說明"""
+    institutional_explanation_content: 「顯示最近30天外資、投信及自營商的買賣超變化"""
+    no_institutional_data: 「暫無法人動向資料"""
+    no_institutional_data_30d: 「近30天無法人交易資料"""
+    institutional_data_processing: 「法人資料載入中..."""
+    buy_label: 「買進"""
+    sell_label: 「賣出"""
+    fee_management_label: 「管理費用"""
+    fee_management_value: 「0.XX%"""
+    fee_management_analogy: 「就像購買基金時需要支付的管理費用"""
+    fee_custody_label: 「保管費用"""
+    fee_custody_value: 「0.XX%"""
+    fee_custody_analogy: 「像是保管箱的保管費，用於保護ETF的資產安全"""
+    fee_reminder_title: 「費用提醒"""
+    fee_reminder_content: 「ETF的費用會直接從基金資產中扣除，影響實際報酬率"""
+    disclaimer: 「免責聲明"""
+    disclaimer_content: 「本工具所提供的資訊僅供參考，不構成投資建議。過去表現不代表未來表現，投資有風險，請謹慎評估."""
+    no_price_data: 「暫無價格資料"""
+    no_price_data_1y: 「近一年無價格資料"""
+    price_data_processing: 「價格資料載入中..."""
+    chart_date: 「日期"""
+    chart_shares: 「股數」(單位)
+    section_performance: 「績效走勢」
+    section_dividend: 「配息資訊」
+    section_institutional: 「法人動向」
+    section_fees: 「費用說明」
+    section_knowledge: 「ETF 小知識」
+    one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
+    one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
+    one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
+    one_liner_esg: 「永續ESG ETF，結合投資與環境社會治理」
+    one_liner_default: 「多元化ETF，適合分散投資的長期持有"""
+    knowledge_50: 「台灣50指數追蹤台灣前50大市值股票，代表台灣股市整體表現"""
+    knowledge_dividend: 「高股息ETF專注於高殖利率股票，提供定期現金流入"""
+    knowledge_bond: 「債券ETF投資於政府或企業債券，提供相對穩定的利息收入"""
+    knowledge_esg: 「ESG ETF考慮環境、社會和治理因素，追求永續投資報酬"""
+    knowledge_default: 「這只ETF透過多元化投資降低單一股票風險，適合長期持有"""
+    dividend_explanation_title: 「配息說明"""
+    dividend_explanation_content: 「顯示最近的配息紀錄及其頻率"""
+    dividend_frequency_quarterly: 「每季配息"""
+    dividend_frequency_semi: 「每半年配息"""
+    dividend_frequency_annual: 「每年配息"""
+    dividend_frequency_irregular: 「不定期配息"""
+    no_dividend_data: 「暫無配息資料"""
+    dividend_data_processing: 「配息資料載入中..."""
+    col_cash_dividend: 「現金股利"""
+    col_ex_dividend_date: 「除息日"""
+    col_stock_dividend: 「股票股利"""
+    col_ex_right_date: 「除權日"""
+    institutional_explanation_title: 「法人動向說明"""
+    institutional_explanation_content: 「顯示最近30天外資、投信及自營商的買賣超變化"""
+    no_institutional_data: 「暫無法人動向資料"""
+    no_institutional_data_30d: 「近30天無法人交易資料"""
+    institutional_data_processing: 「法人資料載入中..."""
+    buy_label: 「買進"""
+    sell_label: 「賣出"""
+    fee_management_label: 「管理費用"""
+    fee_management_value: 「0.XX%"""
+    fee_management_analogy: 「就像購買基金時需要支付的管理費用"""
+    fee_custody_label: 「保管費用"""
+    fee_custody_value: 「0.XX%"""
+    fee_custody_analogy: 「像是保管箱的保管費，用於保護ETF的資產安全"""
+    fee_reminder_title: 「費用提醒"""
+    fee_reminder_content: 「ETF的費用會直接從基金資產中扣除，影響實際報酬率"""
+    disclaimer: 「免責聲明"""
+    disclaimer_content: 「本工具所提供的資訊僅供參考，不構成投資建議。過去表現不代表未來表現，投資有風險，請謹慎評估."""
+    no_price_data: 「暫無價格資料"""
+    no_price_data_1y: 「近一年無價格資料"""
+    price_data_processing: 「價格資料載入中..."""
+    chart_date: 「日期"""
+    chart_shares: 「股數」(單位)
+    section_performance: 「績效走勢」
+    section_dividend: 「配息資訊」
+    section_institutional: 「法人動向」
+    section_fees: 「費用說明」
+    section_knowledge: 「ETF 小知識」
+    one_liner_50: 「追蹤台灣50指數，適合長期布局台股的投資者」
+    one_liner_dividend: 「高股息ETF，適合注重現金流的長線投資者」
+    one_liner_bond: 「債券ETF，提供穩定收益並降低投資組合波動」
+    one_liner_esg: 「永續ESG ETF，結合投資與環境社會治理」
+    one_liner_default: 「多元化ETF，適合分散投資的長期持有"""
+    knowledge_50: 「台灣50指數追蹤台灣前50大市值股票，代表台灣股市整體表現"""
+    knowledge_dividend: 「高股息ETF專注於高殖利率股票，提供定期現金流入"""
+    knowledge_bond: 「債券ETF投資於政府或企業債券，提供相對穩定的利息收入"""
+    knowledge_esg: 「ESG ETF考慮環境、社會和治理因素，追求永續投資報酬"""
+    knowledge_default: 「這只ETF透過多元化投資降低單一股票風險，適合長期持有"""
+    dividend_explanation_title: 「配息說明"""
+    dividend_explanation_content: 「顯示最近的配息紀錄及其頻率"""
+    dividend_frequency_quarterly: 「每季配息"""
+    dividend_frequency_semi: 「每半年配息"""
+    dividend_frequency_annual: 「每年配息"""
+    dividend_frequency_irregular: 「不定期配息"""
+    no_dividend_data: 「暫無配息資料"""
+    dividend_data_processing: 「配息資料載入中..."""
+    col_cash_dividend: 「現金股利"""
+    col_ex_dividend_date: 「除息日"""
+    col_stock_dividend: 「股票股利"""
+    col_ex_right_date: 「除權日"""
+    institutional_explanation_title: 「法人動向說明"""
+    institutional_explanation_content: 「顯示最近30天外資、投信及自營商的買賣超變化"""
+    no_institutional_data: 「暫無法人動向資料"""
+    no_institutional_data_30d: 「近30天無法人交易資料"""
+    institutional_data_processing: 「法人資料載入中..."""
+    buy_label: 「買進"""
+    sell_label: 「賣出"""
+    fee_management_label: 「管理費用"""
+    fee_management_value: 「0.XX%"""
+    fee_management_analogy: 「就像購買基金時需要支付的管理費用"""
+    fee_custody_label: 「保管費用"""
+    fee_custody_value: 「0.XX%"""
+    fee_custody_analogy: 「像是保管箱的保管費，用於保護ETF的資產安全"""
+    fee_reminder_title: 「費用提醒"""
+    fee_reminder_content: 「ETF的費用會直接從基金資產中扣除，影響實際報酬率"""
+    disclaimer: 「免責聲明"""
+    disclaimer_content: 「本工具所提供的資訊僅供參考，不構成投資建議。過去表現不代表未來表現，投資有風險，請謹慎評估."""
+    no_price_data: 「暫無價格資料"""
+    no_price_data_1y: 「近一年無價格資料"""
+    price_data_processing: 「價格資料載入中..."""
+    chart_date: 「日期"""
+    chart_shares: 「股數」(單位)
 
 why_did_this_move:
   title: "為什麼會漲跌？"
@@ -351,3 +597,7 @@ why_did_this_move:
   price_drop: "股價大跌，可能受壞消息影響"
   check_news: "建議查看相關新聞了解原因"
   no_data: "目前沒有足夠數據分析漲跌原因"
+ai_explanation:
+  title: "AI 解釋"
+  explanation: "AI 生成的解釋內容"
+  confidence: "信心度"
