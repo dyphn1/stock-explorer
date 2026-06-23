@@ -71,6 +71,7 @@ main:
     title: "Stock Explorer"
     lead1: "Get to know a company, start here"
     lead2: "Enter a stock code or name in the left sidebar to begin getting to know a company"
+    quick_hint: "💡 Type a stock name or ID in the sidebar to get started"
   disclaimer: "⚠️ This tool is for company education only,<br>does not constitute any investment advice.<br>Investing involves risk, please assess on your own."
   tab:
     key_metrics: "Key Metrics"
@@ -130,6 +131,33 @@ validation:
     format: "Invalid stock ID format: {input}"
 page:
   daily_market: "Daily Market Dashboard"
+  business_card: "Business Card"
+  operation_checkup: "Operations Checkup"
+  financial_health: "Financial Health"
+  peer_comparison: "Peer Comparison"
+  group_structure: "Group Structure"
+  category_browser: "Category Browser"
+  etf_section: "ETF Zone"
+  watchlist: "Watchlist"
+  event_dashboard: "Events Dashboard"
+  notification_center: "Notifications"
+  investment_memo: "Investment Memo"
+  financial_wellness: "Financial Wellness Check"
+  stock_screener: "Stock Screener"
+  settings: "Settings"
+  sector_heatmap: "Sector Heatmap"
+  case_study: "Case Study"
+  comprehension_check: "Comprehension Check"
+  academy: "Academy"
+  case_study_library: "Case Study Library"
+  first_visit_guide: "First Visit Guide"
+  story_timeline: "Story Timeline"
+  full_story_timeline: "Full Story Timeline"
+  daily_story: "Daily Story"
+  revenue_tree: "Revenue Tree"
+  compare_stories: "Compare Stories"
+  moat_comparison: "Moat Comparison"
+  debate_cards: "Debate Cards"
 news_summarizer:
   template:
     financial_report: "{company} announced its latest financial results: {rephrase}. For investors, this means {implication}."
@@ -283,6 +311,9 @@ metric_education:
   roe_warning_seasonal_sufficient: "{industry} is a seasonal industry. TTM calculation covers all four quarters, but quarterly fluctuations are significant. Consider reviewing multi-year trends."
 watchlist:
   removed_toast: "Removed {stock_name} from watchlist"
+  toast:
+    added: "✅ Added {stock_name} to watchlist"
+    removed: "❌ Removed {stock_name} from watchlist"
 summary_hero:
   added_to_list: "Added {stock_name} to watchlist"
 test_key: test value
@@ -345,8 +376,8 @@ etf:
 
 why_did_this_move:
   title: "Why Did This Move?"
-  institutional_buying: "法人買進，可能看好公司前景"
-  institutional_selling: "法人賣出，可能獲利了結或看壞後市"
+  institutional_buying: "Institutional buying — may indicate positive outlook"
+  institutional_selling: "Institutional selling — may indicate profit-taking or negative outlook"
   price_surge: "股價大漲，可能受好消息推動"
   price_drop: "股價大跌，可能受壞消息影響"
   check_news: "建議查看相關新聞了解原因"
