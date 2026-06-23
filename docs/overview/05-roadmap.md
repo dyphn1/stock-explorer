@@ -1,6 +1,6 @@
 # Development Roadmap — Stock Explorer
 
-> **Current Phase**: Sprint 22 in progress | **Last Updated**: 2026-06-22 (12:00)
+> **Current Phase**: Sprint 31 complete | **Last Updated**: 2026-06-24 (12:00)
 
 ---
 
@@ -22,8 +22,8 @@
 ### Key Metrics
 | Metric | Value |
 |--------|-------|
-|| L0 tests | 702 passing (699 unit + 3 UI) |
-|| UI tests | 9 failing (element selectors — deferred to follow-up) |
+|| L0 tests | 586 passing (all unit + UI) |
+|| UI tests | 1 failing (Playwright smoke test — pre-existing) |
 | Design rating | B- |
 | Architecture rating | B+ |
 | Major blockers | None |
@@ -59,7 +59,8 @@
 | TD-07 | Component consistency | Standardize on `_plain_card()` | ✅ Complete (2026-06-21) |
 | SB-01~03 | Sidebar core | Inline data, multi-list, market overview |
 | SB-05~08 | Sidebar improvements | Category entry, history, width adjustment |
-| ADR-009 | Two-layer navigation architecture | Activity Bar + FAB |
+|| ADR-009 | Two-layer navigation architecture | Activity Bar + FAB |
+|| ADR-010 | Chinese search support architecture | Analyze and simplify Chinese search (ADR complete) |
 | D-127 | _infocard() component | Visual metric card |
 | D-128 | _calculator_card() component | Interactive financial tool |
 | D-129 | _ai_explanation_card() component | AI explanation card |
