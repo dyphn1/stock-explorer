@@ -30,39 +30,10 @@ from src.pages.etf_detail import _render_etf_detail
 from src.core.plugin_protocol import PluginRenderContext, PluginCategory
 from src.core.plugin_registry import PluginRegistry
 
-# Page keys for i18n (must match keys in locale files under 'page:' section)
-PAGE_KEYS = [
-    "business_card",
-    "operation_checkup",
-    "financial_health",
-    "peer_comparison",
-    "group_structure",
-    "category_browser",
-    "etf_section",
-    "watchlist",
-    "event_dashboard",
-    "notification_center",
-    "investment_memo",
-    "financial_wellness",
-    "stock_screener",
-    "settings",
-    "sector_heatmap",
-    "daily_market",
-    "case_study",
-    "comprehension_check",
-    "academy",
-    "case_study_library",
-    "first_visit_guide",
-    "story_timeline",
-    "full_story_timeline",
-    "daily_story",
-    "revenue_tree",
-    "compare_stories",
-    "moat_comparison",
-    "debate_cards",
-]
-
 logger = logging.getLogger(__name__)
+
+# Re-export PAGE_KEYS from view/navbar for backward compat (tests still import it)
+from src.view.navbar import PAGE_KEYS
 
 
 def _get_localized_page_labels():
