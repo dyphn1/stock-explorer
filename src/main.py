@@ -292,13 +292,16 @@ else:
     stock_id = st.session_state.get("stock_id", None)
 
 if not stock_id:
-    # 歡迎頁面
+    # 歡迎頁面 — compact layout
     st.markdown(f"""
-    <div style="text-align:center;padding:1.5rem 2rem;">
-        <h1 style=\"font-size:2rem;\">📊 {t("main.home.title")}</h1>
-        <p style="font-size:1.1rem;color:#7F8C8D;margin-top:0.5rem;">{t("main.home.lead1")}</p>
-        <p style="font-size:0.9rem;color:#7F8C8D;margin-top:0.5rem;">
+    <div style="text-align:center;padding:0.75rem 1.5rem;">
+        <h1 style="font-size:1.3rem;margin-bottom:0.25rem;">📊 {t("main.home.title")}</h1>
+        <p style="font-size:0.9rem;color:#7F8C8D;margin-top:0.25rem;">{t("main.home.lead1")}</p>
+        <p style="font-size:0.8rem;color:#7F8C8D;margin-top:0.25rem;">
             {t("main.home.lead2")}
+        </p>
+        <p style="font-size:0.8rem;color:#5A6B7D;margin-top:0.5rem;font-style:italic;">
+            {t("main.home.quick_hint")}
         </p>
     </div>
     """, unsafe_allow_html=True)

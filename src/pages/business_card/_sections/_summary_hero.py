@@ -219,7 +219,7 @@ def _render_header(data: dict, client) -> None:
             price = latest_price["close"]
             change = latest_price["change"]
             sign = "+" if change >= 0 else ""
-            st.markdown(f"**{price:,.0f}`{sign}{change:,.0f}`")
+            st.markdown(f"**{price:,.0f}`{sign}{change:,.0f}`**")
         else:
             st.markdown(" — ")
     with col3:
@@ -230,7 +230,7 @@ def _render_header(data: dict, client) -> None:
             st.markdown(t("summary_hero.in_lists", lists=", ".join(watchlist_lists)))
             if st.button(t("business_card.watchlist.remove_all"), key=f"unwatch_{stock_id}", use_container_width=True):
                 if remove_from_all_lists(stock_id):
-                    st.toast(t("business_card.watchlist.removed", stock_name=stock_name), icon="🗑️")
+                    st.toast(t("watchlist.toast.removed").format(stock_name=stock_name), icon="🗑️")
                 else:
                     st.error(t("business_card.watchlist.remove_failed"))
                 st.rerun()
@@ -290,7 +290,7 @@ def _render_header(data: dict, client) -> None:
                     )
                     if success:
                         st.session_state[f"show_watchlist_popup_{stock_id}"] = False
-                        st.toast(t("summary_hero.added_to_list", stock_name=stock_name), icon="✅")
+                        st.toast(t("watchlist.toast.added").format(stock_name=stock_name), icon="✅")
                         st.rerun()
                     else:
                         st.error(t("business_card.watchlist.add_failed"))

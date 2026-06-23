@@ -181,7 +181,7 @@ def _render_watchlist_page(client: FinMindClient):
                 with col2:
                     if st.button(t("watchlist.btn_remove"), key=f"wl_remove_{stock_id}_{selected_list}", use_container_width=True):
                         if remove_from_watchlist(stock_id, selected_list):
-                            st.toast(t("watchlist.removed_toast"))
+                            st.toast(t("watchlist.toast.removed").format(stock_name=name))
                             st.rerun()
                         else:
                             st.error(t("watchlist.remove_failed"))
