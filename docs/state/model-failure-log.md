@@ -88,3 +88,30 @@
 - New validation test (test_i18n_validation.py) with 6 tests — all passing.
 - 734 tests pass, 1 pre-existing UI test flakiness (unrelated to changes).
 - 3 files changed, 155 insertions, 3 deletions.
+
+---
+
+## [2026-06-24 12:00] Run: Sprint 31 — Navigation Header + UX Scrolling + Chinese Search Arch
+| Role | Primary Model | Fallback Model | Result |
+|------|-------------|---------------|--------|
+| Challenger 1 | gpt-oss-120b:free | nemotron-120b:free | ⚠️ Primary routed to fallback; fallback succeeded |
+| Architect | nemotron-120b:free | — | ✅ Primary succeeded |
+| Developer | nemotron-120b:free | — | ✅ Primary succeeded |
+| QA | gemma-4-31b-it:free | — | ✅ Primary succeeded |
+| Challenger 2 | nemotron-120b:free | — | ✅ Primary succeeded |
+
+### Model Health Summary
+| Model Used | Times Called | Failures | Notes |
+|------------|-------------|----------|-------|
+| owl-alpha | 1 | 0 | PM only |
+| nemotron-120b | 4 | 0 | Challenger 1 (fallback) + Architect + Developer + Challenger 2 |
+| gpt-oss-120b | 0 | 0 | Routed to nemotron-120b |
+| gemma-31b | 1 | 0 | QA |
+
+### Notes
+- Challenger 1 (gpt-oss-120b) was routed to nemotron-120b — possible rate limiting again.
+- All other primary models succeeded.
+- 586 tests passed, 1 pre-existing Playwright failure.
+- 3 files committed (compact welcome page + toast localization).
+- 2 ADRs produced: ADR-010 (Chinese search), ADR-001 review by Challenger 2.
+- navigation_header already removed in previous sprint (verified by Developer).
