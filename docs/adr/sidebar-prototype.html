@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sidebar Prototype v4 — Toggle at bottom, chevron on right, FAB</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f5f5;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── State toggles ── */
+body.expanded .sidebar { width: 240px; }
+body.collapsed .sidebar { width: 48px; }
+body.expanded .nav-text { display: inline; }
+body.collapsed .nav-text { display: none; }
+body.expanded .home-title { display: inline; }
+body.collapsed .home-title { display: none; }
+body.expanded .extra { display: block; }
+body.collapsed .extra { display: none; }
+body.expanded .toggle-text { display: inline; }
+body.collapsed .toggle-text { display: none; }
+
+/* ── Sidebar base ── */
+.sidebar {
+  background: #fff;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s ease;
+  overflow: hidden;
+}
+
+/* ── Home / logo section ── */
+.home-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1c1c1e;
+  cursor: pointer;
+  min-height: 48px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.home-section:hover { background: #f0f0f0; }
+.home-icon { font-size: 24px; }
+.home-title { font-size: 18px; white-space: nowrap; }
+
+/* ── Nav items ── */
+.nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  margin: 1px 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #1c1c1e;
+  border: none;
+  background: transparent;
+  width: calc(100% - 8px);
+  text-align: left;
+  min-height: 36px;
+}
+.nav-item:hover { background: #f0f0f0; }
+.nav-item.active { background: #007AFF; color: #fff; }
+.nav-item .nav-icon { font-size: 18px; min-width: 24px; text-align: center; }
+.nav-item .nav-text { font-size: 14px; white-space: nowrap; }
+.nav-item .active-indicator { font-size: 14px; margin-right: 2px; }
+
+/* ── Bottom section: settings separator + collapse toggle ── */
+.bottom-section {
+  border-top: 1px solid #e0e0e0;
+  padding: 4px 0;
+}
+.collapse-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  margin: 1px 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  border: none;
+  background: transparent;
+  width: calc(100% - 8px);
+  text-align: left;
+  min-height: 36px;
+}
+.collapse-btn:hover { background: #f0f0f0; color: #333; }
+
+/* ── FAB (Apple Assistive Touch-style) ── */
+#fabBtn {{
+  position: fixed;
+  z-index: 999;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(120,120,128,0.25);
+  border: 1px solid rgba(120,120,128,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  color: #555;
+  font-size: 22px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  user-select: none;
+  touch-action: none;
+  outline: none;
+}}
+#fabBtn:hover {{ background: rgba(120,120,128,0.35); }}
+#fabBtn:active {{ cursor: grabbing; transform: scale(1.08); }}
+#fabBtn.dragging {{ cursor: grabbing; transform: scale(1.12); transition: none; }}
+
+/* ── FAB Menu ── */
+.fab-menu-container {{
+  position: fixed; z-index: 998; display: none;
+}}
+.fab-menu-container.show {{ display: block; }}
+#fabMenu {{
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  padding: 6px;
+  min-width: 210px;
+}}
+.fab-menu-item {{
+  padding: 10px 16px; cursor: pointer; border-radius: 10px; font-size: 14px;
+  color: #1C1C1E; display: flex; align-items: center; gap: 10px;
+  text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}}
+.fab-menu-item:hover {{ background: #F2F2F7; }}
+.fab-divider {{ height: 1px; background: #E5E5EA; margin: 4px 12px; }}
+#fabOverlay {{
+  display: none; position: fixed; top:0;left:0;right:0;bottom:0; z-index: 997;
+}}
+#fabOverlay.show {{ display: block; }}
+
+/* ── Content area ── */
+.content {
+  flex: 1;
+  padding: 24px;
+  background: #fafafa;
+  position: relative;
+}
+.content h1 { font-size: 24px; color: #333; }
+.content p { margin-top: 12px; color: #666; }
+</style>
+</head>
+<body class="expanded">
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar">
+  <!-- Home / logo — first section, clickable -->
+  <div class="home-section" onclick="goHome()">
+    <span class="home-icon">📊</span>
+    <span class="home-title">股識</span>
+  </div>
+
+  <!-- Nav items -->
+  <div class="nav-section">
+    <button class="nav-item active">
+      <span class="nav-icon">📇</span>
+      <span class="nav-text"><span class="active-indicator">▸</span>基本資料</span>
+    </button>
+    <button class="nav-item">
+      <span class="nav-icon">📂</span>
+      <span class="nav-text">分類瀏覽</span>
+    </button>
+    <button class="nav-item">
+      <span class="nav-icon">🏷️</span>
+      <span class="nav-text">ETF 專區</span>
+    </button>
+    <button class="nav-item">
+      <span class="nav-icon">⭐</span>
+      <span class="nav-text">關注清單</span>
+    </button>
+    <button class="nav-item">
+      <span class="nav-icon">🔔</span>
+      <span class="nav-text">事件儀表板</span>
+    </button>
+    <button class="nav-item">
+      <span class="nav-icon">📈</span>
+      <span class="nav-text">市場動態</span>
+    </button>
+  </div>
+
+  <!-- Bottom section: settings + collapse toggle -->
+  <div class="bottom-section">
+    <button class="nav-item">
+      <span class="nav-icon">⚙️</span>
+      <span class="nav-text">設定</span>
+    </button>
+    <hr style="margin:2px 8px;border:none;border-top:1px solid #e0e0e0;">
+    <button class="collapse-btn" onclick="toggleCollapse()">
+      <span class="toggle-text">收合側欄 ▶</span>
+    </button>
+  </div>
+</aside>
+
+<!-- ── Content ── -->
+<main class="content">
+  <h1>Welcome</h1>
+  <p>Sidebar v3 — Toggle is a standalone button at the bottom, below settings.</p>
+  <p>
+    • Home icon in its own section (separated by border), clickable → go home<br>
+    • Collapse toggle at bottom, chevron on right (<b>收合側欄 ▶</b>)<br>
+    • <b>Chevron represents state</b>: ▶ = expanded, ◀ = collapsed<br>
+    • Settings in a separate bottom section above toggle<br>
+    • All nav buttons: clean, no borders/frames<br>
+    • <b>FAB</b> (Apple Assistive Touch-style): draggable, tap for menu
+  </p>
+</main>
+
+<!-- ── FAB ── -->
+<div id="fabOverlay" onclick="closeFabMenu()"></div>
+<div class="fab-menu-container" id="fabMenuContainer">
+  <div id="fabMenu">
+    <a class="fab-menu-item">📇 基本資料</a>
+    <a class="fab-menu-item">🔧 營運健檢</a>
+    <a class="fab-menu-item">💊 財務體質</a>
+    <a class="fab-menu-item">📊 同業比較</a>
+    <a class="fab-menu-item">🏗️ 集團架構</a>
+    <div class="fab-divider"></div>
+    <a class="fab-menu-item">🌳 營收結構樹</a>
+    <a class="fab-menu-item">📚 同業比較故事</a>
+    <a class="fab-menu-item">🏰 護城河比較</a>
+  </div>
+</div>
+<button id="fabBtn" aria-label="Menu">⊞</button>
+
+<script>
+// ── Sidebar collapse ──
+function toggleCollapse() {
+  const body = document.body;
+  const wasCollapsed = body.classList.contains('collapsed');
+  body.classList.toggle('expanded', wasCollapsed);
+  body.classList.toggle('collapsed', !wasCollapsed);
+  // chevron represents state: ▶ = expanded, ◀ = collapsed
+  document.querySelector('.toggle-text').textContent = wasCollapsed ? '收合側欄 ▶' : '◀';
+}
+function goHome() {
+  alert('Navigate to welcome/home page');
+}
+
+// ── Draggable FAB (Apple Assistive Touch-style) ──
+(function(){
+var btn = document.getElementById('fabBtn');
+var menu = document.getElementById('fabMenu');
+var overlay = document.getElementById('fabOverlay');
+var menuContainer = document.getElementById('fabMenuContainer');
+
+var DEFAULT_X = window.innerWidth - 80;
+var DEFAULT_Y = window.innerHeight - 100;
+var isDragging = false, isOpen = false;
+var startX, startY, origX, origY;
+
+function clampPos(x, y) {
+  var sw = document.querySelector('.sidebar').offsetWidth;
+  var bw = 50, bh = 50;
+  return {
+    x: Math.max(sw + 8, Math.min(window.innerWidth - bw - 8, x)),
+    y: Math.max(60, Math.min(window.innerHeight - bh - 20, y))
+  };
+}
+
+function setPos(x, y) {
+  btn.style.left = x + 'px';
+  btn.style.top = y + 'px';
+  btn.style.right = 'auto';
+  btn.style.bottom = 'auto';
+}
+
+function toggleFab(e) {
+  if (e) e.stopPropagation();
+  isOpen = !isOpen;
+  menu.classList.toggle('show', isOpen);
+  overlay.classList.toggle('show', isOpen);
+}
+function closeFabMenu() { isOpen = false; menu.classList.remove('show'); overlay.classList.remove('show'); }
+
+setPos(DEFAULT_X, DEFAULT_Y);
+
+var dragThreshold = 5;
+btn.addEventListener('mousedown', function(e) {
+  isDragging = false;
+  startX = e.clientX; startY = e.clientY;
+  origX = DEFAULT_X; origY = DEFAULT_Y;
+  document.addEventListener('mousemove', onMM);
+  document.addEventListener('mouseup', onMU);
+});
+function onMM(e) {
+  var dx = e.clientX - startX, dy = e.clientY - startY;
+  if (!isDragging && (Math.abs(dx) > dragThreshold || Math.abs(dy) > dragThreshold)) {
+    isDragging = true; btn.classList.add('dragging');
+  }
+  if (isDragging) { var p = clampPos(origX + dx, origY + dy); setPos(p.x, p.y); }
+}
+function onMU(e) {
+  document.removeEventListener('mousemove', onMM);
+  document.removeEventListener('mouseup', onMU);
+  btn.classList.remove('dragging');
+  if (!isDragging) toggleFab(e);
+  isDragging = false;
+}
+})();
+
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeFabMenu(); });
+</script>
+</body>
+</html>

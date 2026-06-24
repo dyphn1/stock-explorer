@@ -237,3 +237,17 @@ events:
   summary: 收盤價 107 元，較前一交易日漲 1.2%。單日波動劇烈，建議關注相關公告。
   title: 股價單日漲 1.2%
   type: price_abnormal
+- date: '2026-06-24'
+  detected_at: '2026-06-24T21:47:39'
+  severity: medium
+  stock_id: '2330'
+  summary: 最近月營收：4169.75163 億元，較去年同期成長 30.094980202716965%。表現強勁，留意後續動能。
+  title: 營收 YoY 成長 30.094980202716965%
+  type: revenue_surge
+- date: '2026-06-24'
+  detected_at: '2026-06-24T21:47:39'
+  severity: high
+  stock_id: '2330'
+  summary: 收盤價 2390 元，較前一交易日跌 4.0%。單日波動劇烈，建議關注相關公告。
+  title: 股價單日跌 4.0%
+  type: price_abnormal

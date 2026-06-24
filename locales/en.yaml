@@ -440,6 +440,8 @@ glossary:
 rate_limited: ⚠️ API rate limited, please try again later
 sidebar:
   search_header: Search
+  collapse: Collapse sidebar
+  expand: Expand sidebar
 health:
   status:
     unable_to_assess: Unable to assess overall health

@@ -7,6 +7,10 @@ description: "Entry point router for Stock Explorer multi-agent workflow."
 
 > **WARNING**: This is the PM's operational manual. When awakened by cron, read this file FIRST, then follow the workflow.
 
+> **Memory layers**: This project uses **two-tier memory** — read BOTH before starting:
+> - **Global** (`~/.config/opencode/MEMORY.md`) — Universal Cognitive OS loop (Think → Try → Summarize → Record)
+> - **Project** (`MEMORY.md`) — Compressed project knowledge, recurring failure patterns, error boundaries
+
 ---
 
 ## 1. Team Roster

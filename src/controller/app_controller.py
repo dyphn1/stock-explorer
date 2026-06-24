@@ -8,7 +8,7 @@ from src.controller.router import (
     get_hot_etfs, get_fab_menu_items,
 )
 from src.services.validation import validate_stock_id
-from src.view.layout import render_layout, render_fab_bottom
+from src.view.layout import render_layout
 from src.view.navbar import render_navbar, render_navbar_minimal
 from src.view.welcome_page import render_welcome_page
 
@@ -28,6 +28,12 @@ class AppController:
 
     def _navigate(self, page_key: str):
         navigate_to(page=page_key)
+
+    def _go_home(self):
+        st.session_state["stock_id"] = ""
+        if "stock_id" in st.query_params:
+            del st.query_params["stock_id"]
+        st.rerun()
 
     def _navigate_and_set_stock(self, page_key: str, stock_id: str):
         st.session_state["stock_id"] = stock_id
@@ -107,6 +113,9 @@ class AppController:
             get_hot_stocks(),
             get_hot_etfs(),
             on_hot_stock_click=self._navigate_and_set_stock,
+            on_go_home=self._go_home,
+            stock_id=stock_id,
+            fab_menu_items=get_fab_menu_items(),
         )
         stock_id = self._process_search(search_val) or stock_id
 
@@ -114,5 +123,3 @@ class AppController:
             self._render_content(stock_id, current_key)
         else:
             render_welcome_page()
-
-        render_fab_bottom(stock_id or "", get_fab_menu_items())

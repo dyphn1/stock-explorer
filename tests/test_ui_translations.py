@@ -15,8 +15,8 @@ def test_sidebar_and_main_translations(streamlit_server, page):
     # Wait for the app to render the translated title
     page.wait_for_selector("text=股識", timeout=10000)
 
-    # Check that Activity Bar navigation items appear in Chinese
-    assert page.query_selector("text=📇 基本資料") is not None, "Activity Bar nav 基本資料 not found"
+    # Check that Activity Bar navigation items appear in Chinese (translated page keys)
+    assert page.query_selector("text=📇 名片") is not None, "Activity Bar nav 名片 not found"
     assert page.query_selector("text=📂 分類瀏覽") is not None, "Activity Bar nav 分類瀏覽 not found"
     assert page.query_selector("text=🏷️ ETF 專區") is not None, "Activity Bar nav ETF 專區 not found"
     assert page.query_selector("text=⭐ 關注列表") is not None, "Activity Bar nav 關注列表 not found"

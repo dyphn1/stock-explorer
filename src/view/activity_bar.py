@@ -12,16 +12,31 @@ def render_activity_bar(
     hot_etfs: list[tuple[str, str]],
     on_navigate: Callable[[str], None],
     on_hot_stock_click: Callable[[str, str], None] | None = None,
+    on_go_home: Callable[[], None] | None = None,
 ):
-    st.markdown(f"### 📊 {t('app.title')}")
+    collapsed = st.session_state.get("sidebar_collapsed", False)
+
+    # ── Home button (app logo) ──
+    home_label = "📊" if collapsed else "📊 " + t('app.title')
+    if st.button(home_label, key="sd_home", use_container_width=True):
+        if on_go_home:
+            on_go_home()
+
     st.markdown("---")
 
+    # ── Nav items ──
     for key, icon, label in items:
         is_active = (key == current_key)
-        btn_label = f"{icon} {t(f'page.{key}') if key != 'business_card' else label}"
-        if is_active:
-            btn_label = f"▸ {btn_label}"
-        if st.button(btn_label, key=f"nav_{key}", use_container_width=True, type="secondary" if not is_active else "primary"):
+        prefix = ""
+        if is_active and not collapsed:
+            prefix = "▸ "
+        nav_label = icon if collapsed else f"{prefix}{icon} {t(f'page.{key}')}"
+        if st.button(
+            nav_label,
+            key=f"nav_{key}",
+            use_container_width=True,
+            help=t(f'page.{key}') if collapsed else None,
+        ):
             on_navigate(key)
 
     st.markdown("---")
@@ -32,15 +47,25 @@ def render_activity_bar(
 
     click_handler = on_hot_stock_click or on_navigate
 
-    with st.expander(f"🔥 {t('main.sidebar.hot_stocks')}", expanded=False):
-        for sid, name in hot_stocks:
-            if st.button(f"{sid} {name}", key=f"hot_{sid}", use_container_width=True):
-                click_handler("business_card", sid)
+    if not collapsed:
+        with st.expander(f"🔥 {t('main.sidebar.hot_stocks')}", expanded=False):
+            for sid, name in hot_stocks:
+                if st.button(f"{sid} {name}", key=f"hot_{sid}", use_container_width=True):
+                    click_handler("business_card", sid)
 
-    with st.expander(f"🏷️ {t('main.sidebar.hot_etfs')}", expanded=False):
-        for sid, name in hot_etfs:
-            if st.button(f"{sid} {name}", key=f"hot_etf_{sid}", use_container_width=True):
-                click_handler("business_card", sid)
+        with st.expander(f"🏷️ {t('main.sidebar.hot_etfs')}", expanded=False):
+            for sid, name in hot_etfs:
+                if st.button(f"{sid} {name}", key=f"hot_etf_{sid}", use_container_width=True):
+                    click_handler("business_card", sid)
+
+        st.markdown("---")
+        st.markdown(t("main.disclaimer"), unsafe_allow_html=True)
 
     st.markdown("---")
-    st.markdown(t("main.disclaimer"), unsafe_allow_html=True)
+    # ── Collapse toggle as standalone bottom button ──
+    chevron = "◀" if collapsed else "▶"
+    label = t('sidebar.collapse') if not collapsed else t('sidebar.expand')
+    toggle_text = chevron if collapsed else f"{label} {chevron}"
+    if st.button(toggle_text, key="sd_toggle", use_container_width=True):
+        st.session_state["sidebar_collapsed"] = not collapsed
+        st.rerun()

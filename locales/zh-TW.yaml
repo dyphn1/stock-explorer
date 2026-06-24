@@ -44,9 +44,11 @@ delta:
     revenue_yoy: 營收年增率
   previous_year_same_period: 去年同期
 app:
-  title: 股識 Stock Explorer
+  title: 股識
 sidebar:
   search_header: 搜尋
+  collapse: 收合側邊欄
+  expand: 展開側邊欄
 main:
   sidebar:
     search_header: 搜尋
